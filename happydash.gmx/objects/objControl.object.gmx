@@ -57,7 +57,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
     //global routines here
     if (!global.pause)
     {
-
+    
         //PAUSE GAME
         if (mouse_check_button_pressed(global.key) &amp;&amp; mouse_x &gt;= WIDTH-2*TILE &amp;&amp; mouse_y &gt;= HEIGHT-2*TILE)
             || keyboard_check_pressed(ord('P'))
@@ -196,12 +196,13 @@ window_center();
 
 with (objGameOverMenu)
     instance_destroy();
+    
 global.gameOver = false;
 
 if (room == INIT)
 {
     instance_create(0,0,objTitleMenu);
-    loadProgress();
+    //loadProgress();
 
 }
 else
@@ -252,7 +253,6 @@ depth = HUDDEPTH;
 global.gameTitle = "HAPPY DASH";
 
 //GRAPHICS
-
 global.sprTiles = spriteTiles;//sprite_add("gfx/sprTiles.png",0,true,false,0,0);
 global.sprEnemies = spriteEnemies;//sprite_add("gfx/sprEnemies.png",0,true,false,0,0);
 
@@ -264,9 +264,9 @@ global.sprHud = spriteHud;//sprite_add("gfx/sprHud.png",0,true,false,0,0);
 global.sprPlayer = spritePlayer;//sprite_add("gfx/sprPlayer.png",0,true,false,0,0);
 
 //FONTS
-global.fntBig = font_add_sprite(spriteFontBig,ord('!'),1,0);
-global.fntDefault = font_add_sprite(spriteFontDefault,ord('!'),1,0);
-global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),1,0);
+global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,0);
+global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
+global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
 
 //PARTICLE RECYCLE
 global.mParticle = 1024;
@@ -276,9 +276,11 @@ for (i = 0; i &lt; global.mParticle; i+=1)
 
 
 //SEGMENTS
+/*
 global.maxSegments = 20;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
-    global.segment[i] = importSegment("seg"+string(i)+".tmx");//importSegment("seg/seg"+string(i)+".tmx");
+    global.segment[i] = importSegment("seg"+string(i)+".tmx");
+*/
 
 //local stuff
 alarm0 = FPS;
@@ -321,7 +323,7 @@ global.theme = 0;//background theme
 global.maxTheme = 1; //maximum number of available themes
 
 // SAVE FILE MANAGEMENT &amp; ENCRYPTION
-
+/*
 dll="Crypt.dll";
 global.encD_md5_fil=external_define(dll,"md5_hash_file",dll_stdcall,ty_string,1,ty_string);
 global.encD_md5_str=external_define(dll,"md5_hash_string",dll_stdcall,ty_string,1,ty_string);
@@ -353,6 +355,7 @@ else if (string(md5File(global.saveFile))+string(md5(global.mdpw)) != checksum)
     saveProgress();
 
 loadProgress();
+
 </string>
           </argument>
         </arguments>

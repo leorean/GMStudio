@@ -286,8 +286,23 @@ if (state == DEAD)
     yGrav = yGravDefault;
 
 yVel += yGrav;
+    
+v = abs(round(yVel));
+repeat(v)
+    if (state == DEAD || !place_meeting(x,y+sign(yVel),objSolid))
+        && !(state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0)
+    {
+        y += yVel/v;
+    }
+    else
+    {
+        if (state == JUMP && (state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0))
+            state = RUN;
+        yVel = 0;
+    }
 
-repeat(abs(yVel))
+
+/*repeat(abs(yVel))
     if (state == DEAD || !place_meeting(x,y+sign(yVel),objSolid))
         && !(state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0)
     {
@@ -299,6 +314,7 @@ repeat(abs(yVel))
             state = RUN;
         yVel = 0;
     }
+*/
 
 
 //prev/end variables

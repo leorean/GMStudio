@@ -30,10 +30,7 @@ maxIndex = 3;
 showHelp = false;
 showHighscore = false;
 
-row = 7.5;
-
-borderMain = drawBorder(9*TILE,7*TILE,7,7);
-borderHighscore = drawBorder(2*TILE,2*TILE,20,10);
+row = 7;
 
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Start!";
@@ -239,9 +236,8 @@ draw_sprite_part(global.sprTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 if (!showHelp &amp;&amp; !showHighscore)
     draw_text(WIDTH/2,TILE+z,global.gameTitle);
 
-
 if (!showHelp &amp;&amp; !showHighscore)
-    drawBorder(9.5*TILE,7*TILE,6*TILE,7*TILE);
+    drawBorder(8.5*TILE,6*TILE,8*TILE,8*TILE);
 if (showHighscore)
     drawBorder(2*TILE,4*TILE,21*TILE,9*TILE);
 //if (showHelp)
@@ -249,6 +245,21 @@ if (showHighscore)
 
 
 draw_set_font(global.fntDefault);
+
+if (showHelp || showHighscore)
+{
+    btn[0].visible = false;
+    btn[1].visible = false;
+    btn[2].visible = false;
+    btn[3].visible = false;
+} else
+{
+    btn[0].visible = true;
+    btn[1].visible = true;
+    btn[2].visible = true;
+    btn[3].visible = true;
+}
+
 
 //HELP
 if (showHelp)

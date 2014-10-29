@@ -446,7 +446,6 @@
     </scripts>
     <script>scripts\drawBorder.gml</script>
   </scripts>
-  <fonts name="fonts"/>
   <objects name="objects">
     <objects name="MISC">
       <objects name="hierarchy">

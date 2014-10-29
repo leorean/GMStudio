@@ -66,28 +66,28 @@
   <option_hasloadimage>false</option_hasloadimage>
   <option_helpkey>true</option_helpkey>
   <option_html5_CreationEventOrder>true</option_html5_CreationEventOrder>
-  <option_html5_WebGL>0</option_html5_WebGL>
+  <option_html5_WebGL>2</option_html5_WebGL>
   <option_html5_advertising_enable>0</option_html5_advertising_enable>
   <option_html5_advertising_key></option_html5_advertising_key>
   <option_html5_advertising_type>Supersonic Ads</option_html5_advertising_type>
-  <option_html5_allow_fullscreen>True</option_html5_allow_fullscreen>
+  <option_html5_allow_fullscreen>False</option_html5_allow_fullscreen>
   <option_html5_alwaysreload>False</option_html5_alwaysreload>
   <option_html5_centergame>False</option_html5_centergame>
   <option_html5_flurry_enable>0</option_html5_flurry_enable>
   <option_html5_flurry_id></option_html5_flurry_id>
-  <option_html5_foldername>html5game</option_html5_foldername>
+  <option_html5_foldername>happydash</option_html5_foldername>
   <option_html5_generate_spotify_app>0</option_html5_generate_spotify_app>
   <option_html5_google_analytics_enable>0</option_html5_google_analytics_enable>
   <option_html5_google_tracking_id></option_html5_google_tracking_id>
   <option_html5_icon>Configs\Default\html5\fav.ico</option_html5_icon>
   <option_html5_index>-1</option_html5_index>
-  <option_html5_interpolate>-1</option_html5_interpolate>
+  <option_html5_interpolate>0</option_html5_interpolate>
   <option_html5_loadingbar></option_html5_loadingbar>
   <option_html5_scale>-1</option_html5_scale>
   <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
-  <option_html5_texture_page>2048</option_html5_texture_page>
+  <option_html5_texture_page>4096</option_html5_texture_page>
   <option_html5_use_test_ads>0</option_html5_use_test_ads>
-  <option_html5_usesplash>False</option_html5_usesplash>
+  <option_html5_usesplash>True</option_html5_usesplash>
   <option_icon>nil</option_icon>
   <option_in_app_purchase_enable>0</option_in_app_purchase_enable>
   <option_in_app_purchase_sandbox_mode>0</option_in_app_purchase_sandbox_mode>
@@ -154,7 +154,7 @@
   <option_quitkey>true</option_quitkey>
   <option_resolution>0</option_resolution>
   <option_savekey>true</option_savekey>
-  <option_scale>-1</option_scale>
+  <option_scale>0</option_scale>
   <option_scaleprogress>true</option_scaleprogress>
   <option_screenkey>False</option_screenkey>
   <option_screenshotkey>true</option_screenshotkey>
@@ -165,7 +165,8 @@
   <option_sync_vertex>0</option_sync_vertex>
   <option_textureGroup0_border>2</option_textureGroup0_border>
   <option_textureGroup0_nocropping>0</option_textureGroup0_nocropping>
-  <option_textureGroup0_scaled>0</option_textureGroup0_scaled>
+  <option_textureGroup0_scaled>-1</option_textureGroup0_scaled>
+  <option_textureGroup1_nocropping>0</option_textureGroup1_nocropping>
   <option_textureGroup_count>1</option_textureGroup_count>
   <option_textureGroups0>Default</option_textureGroups0>
   <option_tizen_WebGL>0</option_tizen_WebGL>
