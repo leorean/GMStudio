@@ -1,3 +1,4 @@
+/*
 var file, loadlist;
 blub = "";
 

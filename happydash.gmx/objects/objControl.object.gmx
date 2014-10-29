@@ -73,7 +73,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             global.level += 1;
             global.coins = 0;
             t = instance_create(objPlayer.cx,objPlayer.cy,objText);
-            t.text = "LEVEL UP!";//+string(global.level)+"!";
+            t.text = "LEVEL UP!";
 
         }
         //the scrolling speed!!
@@ -88,7 +88,6 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.hasControl = true;
                 global.startSignal = true;
             }                
-            //global.xSpeed = global.xSpeedDefault*((objPlayer.state == ATTACK)+1);
             global.xSpeed = global.xSpeedDefault*((2-(objPlayer.pow/objPlayer.maxPow)/2));
         }
       
@@ -96,10 +95,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
         global.segX -= global.xSpeed;
     
         //SPAWN NEW SEGMENT
-        if(floor(global.segX) &lt; global.xSpeed)//-frac(global.xSpeed))
+        if(floor(global.segX) &lt; global.xSpeed)
         {
-            global.segX = global.xSpeed + global.segX + WIDTH;// frac(global.xSpeed);
-            //global.xSpeed = 0;
+            global.segX = global.xSpeed + global.segX + WIDTH;
             if (objPlayer.state != DEAD)
             {
                 var a; //formula to choose next segment
@@ -192,7 +190,7 @@ view_wport[0] = WIDTH;
 view_hport[0] = HEIGHT;
 
 window_set_size(3*WIDTH,3*HEIGHT);
-window_center();
+//window_center();
 
 with (objGameOverMenu)
     instance_destroy();
@@ -203,7 +201,6 @@ if (room == INIT)
 {
     instance_create(0,0,objTitleMenu);
     //loadProgress();
-
 }
 else
 {
@@ -223,6 +220,7 @@ else
     global.xSpeedDefault = global.xSpeedMin;
     //load start segment
     constructSegment(global.segment[0], global.segX-global.xSpeed, 0);
+    
 }
 </string>
           </argument>
@@ -264,7 +262,7 @@ global.sprHud = spriteHud;//sprite_add("gfx/sprHud.png",0,true,false,0,0);
 global.sprPlayer = spritePlayer;//sprite_add("gfx/sprPlayer.png",0,true,false,0,0);
 
 //FONTS
-global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,0);
+global.fntBig = font_add_sprite(spriteFontBig,ord('!'),true,1);
 global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
 global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
 
@@ -276,11 +274,11 @@ for (i = 0; i &lt; global.mParticle; i+=1)
 
 
 //SEGMENTS
-/*
+
 global.maxSegments = 20;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
     global.segment[i] = importSegment("seg"+string(i)+".tmx");
-*/
+
 
 //local stuff
 alarm0 = FPS;
@@ -355,7 +353,7 @@ else if (string(md5File(global.saveFile))+string(md5(global.mdpw)) != checksum)
     saveProgress();
 
 loadProgress();
-
+*/
 </string>
           </argument>
         </arguments>

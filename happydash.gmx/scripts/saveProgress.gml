@@ -1,3 +1,4 @@
+/*
 var savelist, file;
 savelist = ds_list_create();
 
