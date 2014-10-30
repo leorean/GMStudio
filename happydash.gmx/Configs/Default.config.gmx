@@ -178,7 +178,7 @@
   <option_quitkey>true</option_quitkey>
   <option_resolution>0</option_resolution>
   <option_savekey>true</option_savekey>
-  <option_scale>0</option_scale>
+  <option_scale>-1</option_scale>
   <option_scaleprogress>true</option_scaleprogress>
   <option_screenkey>False</option_screenkey>
   <option_screenshotkey>true</option_screenshotkey>

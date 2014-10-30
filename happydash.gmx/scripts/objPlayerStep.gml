@@ -282,10 +282,10 @@ else //IF NOT DEAD
     }
 }
 
+yVel += yGrav;
+
 if (state == DEAD)
     yGrav = yGravDefault;
-
-yVel += yGrav;
     
 v = abs(round(yVel));
 repeat(v)

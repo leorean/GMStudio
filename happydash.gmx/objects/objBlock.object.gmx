@@ -50,8 +50,15 @@ xVel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
-draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
+            <string>x -= global.xSpeed;
+
+if (x &lt; WIDTH)
+{
+    draw_set_alpha(1);
+    draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
+}
+if (x &lt; -TILE)
+    instance_destroy();
 
 </string>
           </argument>

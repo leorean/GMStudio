@@ -48,6 +48,7 @@
           <argument>
             <kind>1</kind>
             <string>//step
+window_center();
 
 //ticker for timed obstacles etc.
 global.timer = (global.timer + 1) mod INFINITE;
@@ -115,19 +116,24 @@ if (room != INIT &amp;&amp; !global.gameOver)
             }
         } else
         {
-            with(objAll) x -= global.xSpeed;
+            //with(objAll) x -= global.xSpeed;
+            //objAll.x -= global.xSpeed;
         }
         
-        with(objLiving)
+/*        if (!alarm[1]) // check this only every once in a while
         {
-            if (x &lt; -TILE)
-                instance_destroy();
-        }
-        with(objSolid)
-        {
-            if (x &lt; -TILE)
-                instance_destroy();
-        }
+            with(objLiving)
+            {
+                if (x &lt; -TILE)
+                    instance_destroy();
+            }
+            with(objSolid)
+            {
+                if (x &lt; -TILE)
+                    instance_destroy();
+            }
+            alarm[1] = alarm1;
+        }*/
     }
     else //THIS IS PAUSE MODE!
     {
@@ -189,8 +195,7 @@ view_hview[0] = HEIGHT;
 view_wport[0] = WIDTH;
 view_hport[0] = HEIGHT;
 
-window_set_size(3*WIDTH,3*HEIGHT);
-//window_center();
+window_center();
 
 with (objGameOverMenu)
     instance_destroy();
@@ -249,6 +254,8 @@ else
 depth = HUDDEPTH;
 
 global.gameTitle = "HAPPY DASH";
+//window_set_position(window_get_x() -WIDTH,window_get_y()-HEIGHT);
+window_set_size(3*WIDTH,3*HEIGHT);
 
 //GRAPHICS
 global.sprTiles = spriteTiles;//sprite_add("gfx/sprTiles.png",0,true,false,0,0);
@@ -267,7 +274,7 @@ global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
 global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
 
 //PARTICLE RECYCLE
-global.mParticle = 1024;
+global.mParticle = 256;
 global.iParticle = 0;
 for (i = 0; i &lt; global.mParticle; i+=1)
     global.particle[i] = instance_create(TILE+i,TILE,objParticle);

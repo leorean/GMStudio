@@ -23,7 +23,7 @@ while (!file_text_eof(file))
     }
     else //handle tile data
     {
-        ds_grid_add(ds,i,j,floor(real(string_digits(f))));
+        ds_grid_add(ds,i,j,floor(real(string_digits(f))+1));
         i += 1;
         if (i >= WIDTH/TILE)
         {

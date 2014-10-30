@@ -54,7 +54,9 @@ depth = PLAYERDEPTH-3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>x -= global.xSpeed;
+
+draw_set_alpha(1);
 fCur = fCur + fSpeed;
 
 frame = floor(fCur);

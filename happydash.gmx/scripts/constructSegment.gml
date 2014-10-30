@@ -7,7 +7,7 @@ var t,s;
 for (i = 0; i<WIDTH/TILE; i += 1)
     for (j = 0; j<HEIGHT/TILE; j+=1)
     {
-        s = floor(real(ds_grid_get(segment,i,j)));
+        s = floor(ds_grid_get(segment,i,j));
         if (in(s,0,4*TILE)) //the first 4 rows in the tileset are reserved for normal blocks
         {
             t = instance_create(a+i*TILE,b+j*TILE,objBlock);
@@ -21,14 +21,14 @@ for (i = 0; i<WIDTH/TILE; i += 1)
         else if (s == 66) //platforms
         {
             t = instance_create(a+i*TILE,b+j*TILE,objPlatform);
-            t.px = (s-1) mod TILE;
-            t.py = (s-1) div TILE;
+            t.px = floor((s-1) mod TILE);
+            t.py = floor((s-1) div TILE);
         }
         else if (s == 67) //destroyable block
         {
             t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-            t.px = (s-1) mod TILE;
-            t.py = (s-1) div TILE;
+            t.px = floor((s-1) mod TILE);
+            t.py = floor((s-1) div TILE);
             t.type = 0;
         }
         else if (s == 68) //coins
@@ -46,8 +46,8 @@ for (i = 0; i<WIDTH/TILE; i += 1)
         else if (s == 71) //coinblock
         {
             t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-            t.px = (s-0) mod TILE;
-            t.py = (s-0) div TILE;
+            t.px = floor((s-1) mod TILE);
+            t.py = floor((s-1) div TILE);
             t.type = 1;
         }
         else if (s == 72) //enemy type 2
@@ -59,8 +59,8 @@ for (i = 0; i<WIDTH/TILE; i += 1)
         else if (s >= 96) //background objects
         {
             t = instance_create(a+i*TILE,b+j*TILE,objTile);
-            t.px = (s-1) mod TILE;
-            t.py = (s-1) div TILE;
+            t.px = floor((s-1) mod TILE);
+            t.py = floor((s-1) div TILE);
 
         }        
     }

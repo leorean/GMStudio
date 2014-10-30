@@ -75,6 +75,7 @@ y = HEIGHT+TILE;
             <string>if (active)
 {   
     x -= global.xSpeed;
+    
     yVel += yGrav;
         
     if (place_meeting(x+xVel,y,objAny))
@@ -122,8 +123,11 @@ y = HEIGHT+TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
-draw_sprite_ext(sprParticleMask,-1,floor(x),floor(y),size,size,1,color,1);
+            <string>if (active)
+{
+    draw_set_alpha(1);
+    draw_sprite_ext(sprParticleMask,-1,floor(x),floor(y),size,size,1,color,1);
+}
 </string>
           </argument>
         </arguments>

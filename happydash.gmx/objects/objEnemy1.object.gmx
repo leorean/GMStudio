@@ -134,21 +134,29 @@ fSpeed = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frame = floor(fCur);
+            <string>x -= global.xSpeed;
 
-switch(state)
+if (x &lt; WIDTH)
 {
-    case IDLE:
-        row = 0;
-        fSpeed = .2;
-    break;
-    case DEAD:
-        row = 1;
-        fSpeed = .3;
-    break;
+    frame = floor(fCur);
+    
+    switch(state)
+    {
+        case IDLE:
+            row = 0;
+            fSpeed = .2;
+        break;
+        case DEAD:
+            row = 1;
+            fSpeed = .3;
+        break;
+    }
+    
+    draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
 }
+if (x &lt; -TILE)
+    instance_destroy();
 
-draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
 </string>
           </argument>
         </arguments>

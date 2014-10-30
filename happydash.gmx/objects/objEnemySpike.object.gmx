@@ -110,7 +110,13 @@ if (checking)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);
+            <string>x -= global.xSpeed;
+
+if (x &lt; WIDTH)
+    draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);
+if (x &lt; -TILE)
+    instance_destroy();
+
 
 </string>
           </argument>

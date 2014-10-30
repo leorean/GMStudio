@@ -486,8 +486,6 @@
       <object>objects\objBlock</object>
       <object>objects\objTile</object>
       <object>objects\objPlatform</object>
-      <object>objects\objPlayerAttack</object>
-      <object>objects\objParticlePlayer</object>
       <object>objects\objEffectDust</object>
       <object>objects\objText</object>
       <object>objects\objParticle</object>
@@ -497,13 +495,11 @@
     </objects>
     <objects name="projectiles">
       <object>objects\objProjectile</object>
-      <object>objects\objSword</object>
     </objects>
     <object>objects\objDestroyBlock</object>
     <objects name="enemies">
       <object>objects\objEnemyAutoSpike</object>
       <object>objects\objEnemySpike</object>
-      <object>objects\objEnemyBlob</object>
       <object>objects\objEnemy1</object>
       <object>objects\objEnemy2</object>
     </objects>

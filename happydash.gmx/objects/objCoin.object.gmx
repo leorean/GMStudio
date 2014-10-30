@@ -190,14 +190,16 @@ magnet = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
-fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
-frame = floor(fCur);
+            <string>x -= global.xSpeed;
 
-depth = PLAYERDEPTH-1;
-
-draw_sprite_part_ext(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y,1,1,c_white,alpha);
-//draw_sprite_part(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y);
+if (x &lt; WIDTH)
+{
+    draw_set_alpha(1);
+    fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
+    frame = floor(fCur);
+    
+    draw_sprite_part_ext(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y,1,1,c_white,alpha);
+}
 </string>
           </argument>
         </arguments>
