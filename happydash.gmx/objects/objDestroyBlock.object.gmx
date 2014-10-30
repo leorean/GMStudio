@@ -69,7 +69,7 @@ if (state == DEAD)
         }
             
 
-    repeat(50)
+    repeat(5)
         spawnParticle(x+TILE/2,y+TILE/2,make_color_rgb(49,33,27));
 
     instance_create(x,y,objEffectDust);

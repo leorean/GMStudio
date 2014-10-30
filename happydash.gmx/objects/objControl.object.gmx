@@ -269,7 +269,7 @@ global.sprHud = spriteHud;//sprite_add("gfx/sprHud.png",0,true,false,0,0);
 global.sprPlayer = spritePlayer;//sprite_add("gfx/sprPlayer.png",0,true,false,0,0);
 
 //FONTS
-global.fntBig = font_add_sprite(spriteFontBig,ord('!'),true,1);
+global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);
 global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
 global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
 

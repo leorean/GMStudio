@@ -52,6 +52,9 @@ btn[3].text = "Quit";
 btn[3].index = 3;
 btn[3].parent = id;
 
+textCredits = "Made by Peter Sperl (c) 2014";
+textCreditsX = WIDTH;
+
 page = 0;
 
 t = pi/2;
@@ -258,6 +261,12 @@ if (showHelp || showHighscore)
     btn[1].visible = true;
     btn[2].visible = true;
     btn[3].visible = true;
+    
+    textCreditsX -= .5;
+    if (textCreditsX &lt; 0)
+        textCreditsX = WIDTH + string_width(textCredits);
+    draw_set_halign(fa_right);
+    draw_text(floor(textCreditsX),HEIGHT-TILE,textCredits);
 }
 
 
@@ -271,6 +280,7 @@ if (showHighscore)
 {
     var suffix, row;
     row = 5*TILE;
+    draw_set_halign(fa_center);  
     draw_text(WIDTH/2,row-z,"Highscores!");
 
     for (i = 0; i &lt; global.scoreCount; i+=1)

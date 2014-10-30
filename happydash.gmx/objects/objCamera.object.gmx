@@ -88,7 +88,7 @@ fade = 0;
             <string>//DRAW BACKGROUND
 
 draw_set_color(c_white);
-draw_set_alpha(alpha);
+draw_set_alpha(1);
 
 //BG parallax drawing:
 
@@ -112,6 +112,8 @@ draw_sprite_part_ext(global.sprBg,-1,theme,1*h,w,h,floor(b+w),0,1,1,c_white,1);
 
 draw_sprite_part_ext(global.sprBg,-1,theme,2*h,w,h,floor(c),0,1,1,c_white,1);
 draw_sprite_part_ext(global.sprBg,-1,theme,2*h,w,h,floor(c+w),0,1,1,c_white,1);
+
+draw_set_alpha(alpha);
 
 if (fade == 1)
 {
