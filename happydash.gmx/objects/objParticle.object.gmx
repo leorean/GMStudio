@@ -74,8 +74,9 @@ y = HEIGHT+TILE;
             <kind>1</kind>
             <string>if (active)
 {   
-    x -= global.xSpeed;
-    
+    if (!global.spawnSegment)
+        x -= global.xSpeed;
+
     yVel += yGrav;
         
     if (place_meeting(x+xVel,y,objAny))

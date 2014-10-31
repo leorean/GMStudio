@@ -153,19 +153,12 @@ magnet = false;
     }
     else
     {
-        //y -= 1;
-        //x = objPlayer.x;
-        x += global.xSpeed;
-        xVel = (0 - x) / 25;
-        yVel = (0 - y) / 25;
-        x += xVel;
-        y += yVel;
-    
-        alpha -= .01;
+        xVel = 0;
+        yVel = 0;
+        y -= 1.5;
+        alpha -= .05;
         if (alpha &lt;= 0)
-        {
             instance_destroy();
-        }
     }
 }
 </string>
@@ -190,7 +183,9 @@ magnet = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x -= global.xSpeed;
+            <string>if (alive)
+    if (!global.spawnSegment)
+        x -= global.xSpeed;
 
 if (x &lt; WIDTH)
 {
@@ -198,7 +193,7 @@ if (x &lt; WIDTH)
     fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
     frame = floor(fCur);
     
-    draw_sprite_part_ext(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y,1,1,c_white,alpha);
+    draw_sprite_part(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y);
 }
 </string>
           </argument>

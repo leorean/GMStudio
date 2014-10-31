@@ -110,7 +110,8 @@ if (checking)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x -= global.xSpeed;
+            <string>if (!global.spawnSegment)
+    x -= global.xSpeed;
 
 if (x &lt; WIDTH)
     draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);

@@ -94,7 +94,7 @@ fSpeed = 0;
     if (!alive) state = DEAD;
     
     if (state != DEAD)
-    repeat(abs(yVel))
+    repeat(floor(abs(yVel)))
         if ((!place_meeting(x,y+sign(yVel),objSolid))
             &amp;&amp; !(collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) &amp;&amp; yVel &gt; 0))
         {
@@ -132,7 +132,8 @@ fSpeed = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x -= global.xSpeed;
+            <string>if (!global.spawnSegment)
+    x -= global.xSpeed;
 
 if (x &lt; WIDTH)
 {

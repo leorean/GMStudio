@@ -52,7 +52,7 @@ btn[3].text = "Quit";
 btn[3].index = 3;
 btn[3].parent = id;
 
-textCredits = "Made by Peter Sperl (c) 2014";
+textCredits = "Made by Peter Sperl ~ 2014";
 textCreditsX = WIDTH;
 
 page = 0;

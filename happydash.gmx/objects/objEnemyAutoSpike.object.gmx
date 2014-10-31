@@ -147,7 +147,8 @@ if (!global.pause)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x -= global.xSpeed;
+            <string>if (!global.spawnSegment)
+    x -= global.xSpeed;
 
 if (x &lt; WIDTH)
 {

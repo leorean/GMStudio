@@ -30,8 +30,11 @@ if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
 
 if (keyRightPressed)
     state = ATTACK;
-if (keyDownPressed)
+
+if (keyDown)
     state = IDLE;
+else if (state == IDLE)
+    state = RUN;
 
 if (state == ATTACK)
 {
@@ -139,7 +142,7 @@ if (instance_exists(enemy) && state != DEAD)
     //enemies who are killable
     if (real(object_get_parent(enemy.object_index)) == real(objLivingEnemy))
     {
-        if (state == ATTACK || (/*state == JUMP && */yVel < 0 && y > enemy.y) || (/*state == JUMP && yVel > 0 &&*/ y < enemy.y))
+        if (state == ATTACK || (yVel < 0 && y > enemy.y) || (y < enemy.y))
         {
             //jump on enemies
             if (yVel > 0 && y < enemy.y)
@@ -213,7 +216,9 @@ else //IF NOT DEAD
             t = instance_create(x-TILE/2,y,objEffectDust);
             t.type = 3;
         }
-        xVel = 1-x/WIDTH;
+        
+        xVel = 2*(1-(x/WIDTH*2));
+        
         yVel = 0;
         yGrav = 0;
 
@@ -240,10 +245,8 @@ else //IF NOT DEAD
         combo = 0;
         y = floor(y);
         jumpPerformed = 0;
-        if (state != IDLE)//(global.xSpeed > 0)
+        if (state != IDLE)
             state = RUN;
-        else
-            state = IDLE;
     }    
 
     if (x > WIDTH-TILE) x = WIDTH-TILE;
@@ -300,22 +303,6 @@ repeat(v)
             state = RUN;
         yVel = 0;
     }
-
-
-/*repeat(abs(yVel))
-    if (state == DEAD || !place_meeting(x,y+sign(yVel),objSolid))
-        && !(state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0)
-    {
-        y += sign(yVel);
-    }
-    else
-    {
-        if (state == JUMP && (state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0))
-            state = RUN;
-        yVel = 0;
-    }
-*/
-
 
 //prev/end variables
 fCur = (fCur+fSpeed) mod fMax;

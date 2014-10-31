@@ -153,7 +153,7 @@ if (global.hasControl &amp;&amp; !global.pause)
     //keyboard
     keyUpPressed = keyboard_check_pressed(vk_up);
     keyRightPressed = keyboard_check_pressed(vk_right);
-    keyDownPressed = keyboard_check_pressed(vk_left);
+    keyDown = keyboard_check(vk_left);
 
     //mouse
     mouseLeftPressed = mouse_check_button_pressed(mb_left) &amp;&amp; !mouse_check_button_pressed(mb_right);
@@ -162,7 +162,7 @@ if (global.hasControl &amp;&amp; !global.pause)
     mouseAny = mouse_check_button(mb_any);
 
     //MOUSE VISIBILITY
-    if (keyUpPressed || keyRightPressed || keyDownPressed)
+    if (keyUpPressed || keyRightPressed || keyDown)
         global.mouseVisible = false;
 
     if (mouseAny || mouse_x != mouse_prevx || mouse_y != mouse_prevy)
@@ -188,7 +188,7 @@ if (global.hasControl &amp;&amp; !global.pause)
     //keyboard
     keyUpPressed = false;
     keyRightPressed = false;
-    keyDownPressed = false;
+    keyDown = false;
 
 }
 

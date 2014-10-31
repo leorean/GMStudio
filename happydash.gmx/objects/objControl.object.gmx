@@ -88,24 +88,25 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 t.yVel = 0;
                 global.hasControl = true;
                 global.startSignal = true;
-            }                
-            global.xSpeed = global.xSpeedDefault*((2-(objPlayer.pow/objPlayer.maxPow)/2));
+            }
+            //if player dashes, speed is higher.
+            global.xSpeed = global.xSpeedDefault*((3-1.5*(objPlayer.pow/objPlayer.maxPow)));
+            //global.xSpeed = global.xSpeedDefault*((2-(objPlayer.pow/objPlayer.maxPow)/2));
         }
       
         global.distance += global.xSpeed;
         global.segX -= global.xSpeed;
-    
+        
+        global.spawnSegment = (floor(global.segX) &lt; global.xSpeed);
         //SPAWN NEW SEGMENT
-        if(floor(global.segX) &lt; global.xSpeed)
+        if(global.spawnSegment)
         {
             global.segX = global.xSpeed + global.segX + WIDTH;
+            //global.segX += WIDTH;
             if (objPlayer.state != DEAD)
             {
                 var a; //formula to choose next segment
                 a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
-
-                //change the background theme if necessary
-                //global.theme = min(max(floor(global.level / global.levelsPerTheme),0),global.maxTheme);
 
                 constructSegment(global.segment[
                     min(max(
@@ -114,27 +115,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
                         global.maxSegments)
                 ],global.segX,0);
             }
-        } else
-        {
-            //with(objAll) x -= global.xSpeed;
-            //objAll.x -= global.xSpeed;
-        }
-        
-/*        if (!alarm[1]) // check this only every once in a while
-        {
-            with(objLiving)
-            {
-                if (x &lt; -TILE)
-                    instance_destroy();
-            }
-            with(objSolid)
-            {
-                if (x &lt; -TILE)
-                    instance_destroy();
-            }
-            alarm[1] = alarm1;
-        }*/
+        }  
     }
+    
     else //THIS IS PAUSE MODE!
     {
         //unpause
@@ -224,7 +207,8 @@ else
     global.xSpeed = 0;
     global.xSpeedDefault = global.xSpeedMin;
     //load start segment
-    constructSegment(global.segment[0], global.segX-global.xSpeed, 0);
+    //constructSegment(global.segment[0], global.segX-global.xSpeed, 0);
+    constructSegment(global.segment[0], 0, 0);
     
 }
 </string>
@@ -320,7 +304,8 @@ global.xSpeedMax = 4; // maximum speed
 global.xSpeedDefault = global.xSpeedMin; // storage for the speed. this shall be increased over time/achievement/distance
 
 global.distance = 0;
-global.xSeg = WIDTH;
+global.xSeg = 0;
+global.spawnSegment = false;
 
 global.levelsPerTheme = 5; //n levels until next theme
 global.segmentsPerTheme = 10; //n segments for each theme
