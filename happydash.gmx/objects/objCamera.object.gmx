@@ -32,11 +32,38 @@ w = WIDTH;
 h = HEIGHT;
 
 theme = 0;
-themePrev = 0;
 alpha = 0;
 fade = 0;
 
 depth = CAMERADEPTH;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//BG parallax drawing:
+
+a = ((a - global.xSpeed*.3) mod w);
+b = ((b - global.xSpeed*.5) mod w);
+c = ((c - global.xSpeed*.7) mod w);
+
 </string>
           </argument>
         </arguments>
@@ -90,20 +117,18 @@ fade = 0;
 draw_set_color(c_white);
 draw_set_alpha(1);
 
-//BG parallax drawing:
-
-a = ((a - global.xSpeed*.3) mod w);
-b = ((b - global.xSpeed*.5) mod w);
-c = ((c - global.xSpeed*.7) mod w);
 
 //change the background theme if necessary
-global.theme = min(max(floor(global.level / global.levelsPerTheme),0),global.maxTheme);
+//global.theme = min(max(floor(global.level / global.levelsPerTheme),0),global.maxTheme);
 
-if (global.theme != themePrev &amp;&amp; fade == 0)
+if (global.theme != global.themePrev &amp;&amp; fade == 0)
+{
     fade = 1;
+    global.themePrev = global.theme;
+}
 
-draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,a,0,1,1,c_white,1);
-draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,a+w,0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,floor(a),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,floor(a+w),0,1,1,c_white,1);
 
 
 draw_sprite_part_ext(global.sprBg,-1,theme,1*h,w,h,floor(b),0,1,1,c_white,1);
@@ -132,8 +157,6 @@ if (fade == 2)
     if (alpha == 0)
         fade = 0;
 }
-
-themePrev = global.theme;
 </string>
           </argument>
         </arguments>

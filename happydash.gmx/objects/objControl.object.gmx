@@ -67,14 +67,20 @@ if (room != INIT &amp;&amp; !global.gameOver)
         }
 
         //EXP SYSTEM FORMULA AND LEVEL UP
-        global.maxCoins = 6 * floor(3 + global.level * power(3, global.level / 45 ) );
+        global.maxCoins = 6 * floor(3 + global.level * power(3, global.level * .022 ) );
         if (global.coins&gt;=global.maxCoins)
         {
             global.xSpeedDefault = min(global.xSpeedDefault + .05, global.xSpeedMax);
             global.level += 1;
             global.coins = 0;
-            t = instance_create(objPlayer.cx,objPlayer.cy,objText);
+            t = instance_create(global.player.cx,global.player.cy,objText);
             t.text = "LEVEL UP!";
+            if (global.level mod 5 == 0)
+            {
+                while (global.theme == global.themePrev)
+                    global.theme = choose(0,1);
+                    
+            }
 
         }
         //the scrolling speed!!
@@ -82,7 +88,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
         {
             if (!global.startSignal)
             {
-                t = instance_create(WIDTH/2,HEIGHT/2,objText);
+                t = instance_create(WIDTH*.5,HEIGHT*.5,objText);
                 t.fnt = global.fntBig;
                 t.text = "go!";
                 t.yVel = 0;
@@ -90,7 +96,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.startSignal = true;
             }
             //if player dashes, speed is higher.
-            global.xSpeed = global.xSpeedDefault*((3-1.5*(objPlayer.pow/objPlayer.maxPow)));
+            global.xSpeed = global.xSpeedDefault*((3-1.5*(global.player.pow/global.player.maxPow)));
             //global.xSpeed = global.xSpeedDefault*((2-(objPlayer.pow/objPlayer.maxPow)/2));
         }
       
@@ -103,11 +109,12 @@ if (room != INIT &amp;&amp; !global.gameOver)
         {
             global.segX = global.xSpeed + global.segX + WIDTH;
             //global.segX += WIDTH;
-            if (objPlayer.state != DEAD)
+            if (global.player.state != DEAD)
             {
                 var a; //formula to choose next segment
-                a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
-
+                //a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
+                a = global.theme * global.segmentsPerTheme + irandom(global.segmentsPerTheme - 1);
+                
                 constructSegment(global.segment[
                     min(max(
                         a,
@@ -115,6 +122,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                         global.maxSegments)
                 ],global.segX,0);
             }
+            global.difficulty += 1;
         }  
     }
     
@@ -134,13 +142,13 @@ if (room != INIT &amp;&amp; !global.gameOver)
     if keyboard_check_pressed(ord('R'))
         room_restart();
 
-    if keyboard_check_pressed(ord('Q'))
-        game_restart();
+    //if keyboard_check_pressed(ord('Q'))
+    //    game_restart();
 
     if keyboard_check_pressed(ord('E'))
         {
             global.coins = global.maxCoins-1;
-            instance_create(objPlayer.x+TILE/2,objPlayer.y,objCoin);
+            instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
         }
 
 //GAME OVER
@@ -196,16 +204,18 @@ else
     global.curScore = 0;
     global.addScore = 0;
     global.level = 1;
-    global.distMagnet = TILE/2;
 
     alarm[0]= alarm0;
 
     global.startSignal = false;
-
+    
+    global.difficulty = 0;
+    
     global.segX = 0;
     global.distance = 0;
     global.xSpeed = 0;
     global.xSpeedDefault = global.xSpeedMin;
+    
     //load start segment
     //constructSegment(global.segment[0], global.segX-global.xSpeed, 0);
     constructSegment(global.segment[0], 0, 0);
@@ -270,7 +280,9 @@ global.maxSegments = 20;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
     global.segment[i] = importSegment("seg"+string(i)+".tmx");
 
-
+//PLAYER VARIABLE
+global.player = noone;
+    
 //local stuff
 alarm0 = FPS;
 alarm[0] = alarm0;
@@ -290,7 +302,7 @@ global.gameOver = false;
 global.coins = 0;
 global.maxCoins = 0;
 global.level = 1; //difficulty display
-global.distMagnet = TILE/2; //distance to catch coins and items
+global.distMagnet = TILE; //distance to catch coins and items
 
 global.key = mb_left;
 global.hasControl = true;
@@ -303,13 +315,16 @@ global.xSpeedMin = 1; // speed at each start
 global.xSpeedMax = 4; // maximum speed
 global.xSpeedDefault = global.xSpeedMin; // storage for the speed. this shall be increased over time/achievement/distance
 
+global.difficulty = 0;//used for randomizing objects within segments
+
 global.distance = 0;
 global.xSeg = 0;
 global.spawnSegment = false;
 
-global.levelsPerTheme = 5; //n levels until next theme
+//global.levelsPerTheme = 5; //n levels until next theme
 global.segmentsPerTheme = 10; //n segments for each theme
 global.theme = 0;//background theme
+global.themePrev = global.theme;
 global.maxTheme = 1; //maximum number of available themes
 
 // SAVE FILE MANAGEMENT &amp; ENCRYPTION
@@ -390,7 +405,7 @@ if (room != INIT)
         
         draw_set_halign(fa_center);
         draw_set_valign(fa_center);
-        draw_text(WIDTH/2,HEIGHT/2,"PAUSE");
+        draw_text(WIDTH*.5,HEIGHT*.5,"PAUSE");
         draw_set_valign(fa_top);
     
     }
@@ -411,11 +426,15 @@ if (room != INIT)
     draw_text(WIDTH,0,"LVL " + string(global.level) + " ");
 
     //CHARGE BAR
-    draw_sprite_part(global.sprHud,-1,0,2*TILE,4*TILE,TILE/2,WIDTH/2-2*TILE,HEIGHT-3*TILE/4);
-    draw_sprite_part(global.sprHud,-1,0,2.5*TILE,4*TILE*min(max((objPlayer.pow/objPlayer.maxPow),0),1),TILE/2,WIDTH/2-2*TILE,HEIGHT-3*TILE/4);
+    draw_sprite_part(global.sprHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
+    draw_sprite_part(global.sprHud,-1,0,2.5*TILE,4*TILE*min(max((global.player.pow/global.player.maxPow),0),1),TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
     
     //PAUSE BUTTON
     draw_sprite_part(global.sprHud,-1,2*TILE*global.pause,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
+
+    //meters
+    draw_set_halign(fa_center);
+    draw_text(WIDTH/2,HEIGHT-1.5*TILE,string(floor(global.distance*.1))+"m");
 }
 
 //MOUSE CURSOR

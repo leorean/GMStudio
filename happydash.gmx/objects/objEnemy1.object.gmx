@@ -96,16 +96,16 @@ fSpeed = 0;
     if (!alive) state = DEAD;
     
     if (state != DEAD)
-    repeat(abs(yVel))
-        if ((!place_meeting(x,y+sign(yVel),objSolid))
-            &amp;&amp; !(collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) &amp;&amp; yVel &gt; 0))
-        {
-            y += sign(yVel);
-        }
-        else
-        {
-            yVel = 0;
-        }
+        repeat(abs(yVel))
+            if ((!place_meeting(x,y+sign(yVel),objSolid))
+                &amp;&amp; !(collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) &amp;&amp; yVel &gt; 0))
+            {
+                y += sign(yVel);
+            }
+            else
+            {
+                yVel = 0;
+            }
     
     if (x &lt; -TILE || y &gt; HEIGHT)
         instance_destroy();
@@ -153,7 +153,7 @@ if (x &lt; WIDTH)
         break;
     }
     
-    draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
+    draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
 }
 if (x &lt; -TILE)
     instance_destroy();

@@ -55,7 +55,7 @@
 if (x &lt; WIDTH)
 {
     draw_set_alpha(1);
-    draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
+    draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,floor(x),y);
 }
 if (x &lt; -TILE)
     instance_destroy();

@@ -35,16 +35,16 @@ active = true;
 depth = BLOCKDEPTH-1;
 
 //if (!variable_local_exists("look"))
-    look = UP;
+look = UP;
 
 //if (!variable_local_exists("t"))
-    t = 1*FPS;
+t = 1*FPS;
 
 //if (!variable_local_exists("o"))
-    o = 0;
+o = choose(0,t);
 
 //if (!variable_local_exists("dir"))
-    dir = NONE;
+dir = NONE;
 
 fCur = 0;
 fSpeed = .25;
@@ -157,16 +157,16 @@ if (x &lt; WIDTH)
     switch(dir)
     {
         case UP:
-            draw_sprite_part(global.sprGfx,-1,frame*TILE,5*TILE,TILE,TILE,x,y);
+            draw_sprite_part(global.sprGfx,-1,frame*TILE,5*TILE,TILE,TILE,floor(x),y);
         break;
         case DOWN:
-            draw_sprite_part(global.sprGfx,-1,frame*TILE,6*TILE,TILE,TILE,x,y);
+            draw_sprite_part(global.sprGfx,-1,frame*TILE,6*TILE,TILE,TILE,floor(x),y);
         break;
         case LEFT:
-            draw_sprite_part(global.sprGfx,-1,frame*TILE,7*TILE,TILE,TILE,x,y);
+            draw_sprite_part(global.sprGfx,-1,frame*TILE,7*TILE,TILE,TILE,floor(x),y);
         break;
         case RIGHT:
-            draw_sprite_part(global.sprGfx,-1,frame*TILE,8*TILE,TILE,TILE,x,y);
+            draw_sprite_part(global.sprGfx,-1,frame*TILE,8*TILE,TILE,TILE,floor(x),y);
         break;
     }
 }

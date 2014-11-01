@@ -362,23 +362,6 @@
       <filename>seg20.tmx</filename>
     </datafile>
     <datafile>
-      <name>Crypt.dll</name>
-      <exists>-1</exists>
-      <size>16896</size>
-      <exportAction>2</exportAction>
-      <exportDir></exportDir>
-      <overwrite>0</overwrite>
-      <freeData>-1</freeData>
-      <removeEnd>0</removeEnd>
-      <store>0</store>
-      <ConfigOptions>
-        <Config name="Default">
-          <CopyToMask>102510</CopyToMask>
-        </Config>
-      </ConfigOptions>
-      <filename>Crypt.dll</filename>
-    </datafile>
-    <datafile>
       <name>tiles.tsx</name>
       <exists>-1</exists>
       <size>183</size>

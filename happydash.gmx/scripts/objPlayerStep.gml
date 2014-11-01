@@ -1,8 +1,5 @@
 //PLAYER ROUTINE
 
-//speed factor used for various things
-factor = ((WIDTH-xO ) / xO) - x / (xO);
-
 //INPUT HANDLING ...
 if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
 {
@@ -121,8 +118,8 @@ if (!touch)
 
 
 //local variables && flags
-cx = floor(x+TILE/2);
-cy = floor(y+TILE/2);
+cx = floor(x+TILE*.5);
+cy = floor(y+TILE*.5);
 onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
 onPlatform = state != DEAD && (collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true)
     && yVel > 0);
@@ -137,7 +134,7 @@ if (instance_exists(enemy) && state != DEAD)
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
         if (enemy.state != DEAD)
-            objPlayer.alive = false;
+            global.player.alive = false;
 
     //enemies who are killable
     if (real(object_get_parent(enemy.object_index)) == real(objLivingEnemy))
@@ -162,7 +159,7 @@ if (instance_exists(enemy) && state != DEAD)
             }
         }
         if (enemy.state != DEAD)
-            objPlayer.alive = false;
+            global.player.alive = false;
     }
 
 }
@@ -184,6 +181,7 @@ if (!alive)
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
+        //currently does nothing
         loadProgress();
         saveProgress();
     }
@@ -205,7 +203,8 @@ else //IF NOT DEAD
 {
 
     //SCORE COUNTING
-    global.curScore = 10*floor(global.distance/TILE) + global.addScore;
+    //*0.0625 = 1 / TILE
+    global.curScore = 10*floor(global.distance*0.0625) + global.addScore;
 
     //ATTACKING
     if (state == ATTACK)
@@ -213,11 +212,11 @@ else //IF NOT DEAD
 
         if (global.timer mod 5 == 0)
         {
-            t = instance_create(x-TILE/2,y,objEffectDust);
+            t = instance_create(x-TILE*.5,y,objEffectDust);
             t.type = 3;
         }
-        
-        xVel = 2*(1-(x/WIDTH*2));
+        //.005 = 1/WIDTH*2
+        xVel = 2*(1-(x*.005));
         
         yVel = 0;
         yGrav = 0;
@@ -235,7 +234,8 @@ else //IF NOT DEAD
             state = JUMP;
     } else
     {
-        pow = min(pow+2*(1-(x/WIDTH)),maxPow);
+        //.0025 = 1/WIDTH
+        pow = min(pow+2*(1-(x*.0025)),maxPow);
         yGrav = yGravDefault;
     }
         
@@ -289,7 +289,17 @@ yVel += yGrav;
 
 if (state == DEAD)
     yGrav = yGravDefault;
-    
+
+if (state != DEAD)
+{
+    repeat(round(abs(yVel)))
+        if (!place_meeting(x,y+sign(yVel),objSolid) && (!collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objPlatform,true,true) || yVel < 0))
+            y += sign(yVel);
+        else
+            yVel = 0;
+} else
+    y += yVel;
+/*
 v = abs(round(yVel));
 repeat(v)
     if (state == DEAD || !place_meeting(x,y+sign(yVel),objSolid))
@@ -303,6 +313,7 @@ repeat(v)
             state = RUN;
         yVel = 0;
     }
+*/
 
 //prev/end variables
 fCur = (fCur+fSpeed) mod fMax;

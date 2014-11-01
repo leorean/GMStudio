@@ -114,7 +114,7 @@ if (checking)
     x -= global.xSpeed;
 
 if (x &lt; WIDTH)
-    draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);
+    draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,floor(x),y);
 if (x &lt; -TILE)
     instance_destroy();
 

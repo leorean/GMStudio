@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>//create
+global.player = id;
+
 depth = PLAYERDEPTH;
 
 global.hasControl = false;
@@ -262,7 +264,7 @@ switch(state)
     break;
 }
 
-draw_sprite_part(global.sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,xDraw-TILE/2,yDraw-TILE/2);
+draw_sprite_part(global.sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,xDraw-TILE*.5,yDraw-TILE*.5);
 
 </string>
           </argument>

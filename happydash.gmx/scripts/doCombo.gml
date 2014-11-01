@@ -5,7 +5,7 @@ if (true)
     t = instance_create(cx,cy,objText);
     t.text = "x"+string(combo);
     t.fnt = global.fntCombo;
-    t.color = make_color_hsv(max(50 - (combo/10 * 50),0),255,255);
+    t.color = make_color_hsv(max(50 - (combo*5),0),255,255);
 
     global.addScore += combo*10;
     repeat(combo-1)

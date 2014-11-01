@@ -52,11 +52,12 @@ state = IDLE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (place_meeting(x,y+1-objPlayer.yVel,objPlayer) &amp;&amp; objPlayer.state != DEAD &amp;&amp; objPlayer.yVel &lt; 0)
-{
-    state = DEAD;
-    with(objPlayer) doCombo();
-}
+            <string>if (global.player.state == JUMP &amp;&amp; global.player.yVel &lt; 0 &amp;&amp; global.player.y &gt; y)
+    if (place_meeting(x,y+1-global.player.yVel,global.player))
+    {
+        state = DEAD;
+        with(global.player) doCombo();
+    }
 
 if (state == DEAD)
 {
@@ -64,13 +65,13 @@ if (state == DEAD)
     if (type == 1)
         repeat(5)
         {
-            c = instance_create(x+TILE/2,y,objCoin);
+            c = instance_create(x+TILE*.5,y,objCoin);
             c.spawn = true;
         }
             
 
     repeat(5)
-        spawnParticle(x+TILE/2,y+TILE/2,make_color_rgb(49,33,27));
+        spawnParticle(x+TILE*.5,y+TILE*.5,make_color_rgb(49,33,27));
 
     instance_create(x,y,objEffectDust);
     instance_destroy();
@@ -103,7 +104,7 @@ if (state == DEAD)
 if (x &lt; WIDTH)
 {
     draw_set_alpha(1);
-    draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
+    draw_sprite_part(global.sprGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y);
 }
 if (x &lt; -TILE)
     instance_destroy();
