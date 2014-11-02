@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-1000</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="2" enumb="0">
@@ -48,7 +48,13 @@
           <argument>
             <kind>1</kind>
             <string>//step
+//SCREEN STUFF
 window_center();
+with (objAll)
+{
+    if (surface_exists(global.drawBuffer))
+        surface_set_target(global.drawBuffer);
+}       
 
 //ticker for timed obstacles etc.
 global.timer = (global.timer + 1) mod INFINITE;
@@ -97,10 +103,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
             }
             //if player dashes, speed is higher.
             global.xSpeed = global.xSpeedDefault*((3-1.5*(global.player.pow/global.player.maxPow)));
-            //global.xSpeed = global.xSpeedDefault*((2-(objPlayer.pow/objPlayer.maxPow)/2));
         }
-      
-        global.distance += global.xSpeed;
+        if (objPlayer.state != DEAD)
+            global.distance += global.xSpeed;
         global.segX -= global.xSpeed;
         
         global.spawnSegment = (floor(global.segX) &lt; global.xSpeed);
@@ -113,7 +118,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             {
                 var a; //formula to choose next segment
                 //a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
-                a = global.theme * global.segmentsPerTheme + irandom(global.segmentsPerTheme - 1);
+                a = 1 + global.theme * global.segmentsPerTheme + irandom(global.segmentsPerTheme - 1);
                 
                 constructSegment(global.segment[
                     min(max(
@@ -247,9 +252,13 @@ else
 
 depth = HUDDEPTH;
 
+//surface_set_target(global.drawBuffer);
+//surface_reset_target();
+
 global.gameTitle = "HAPPY DASH";
-//window_set_position(window_get_x() -WIDTH,window_get_y()-HEIGHT);
 window_set_size(3*WIDTH,3*HEIGHT);
+
+global.drawBuffer = -1;//surface_create(400,240);
 
 //GRAPHICS
 global.sprTiles = spriteTiles;//sprite_add("gfx/sprTiles.png",0,true,false,0,0);
@@ -270,6 +279,7 @@ global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
 //PARTICLE RECYCLE
 global.mParticle = 256;
 global.iParticle = 0;
+global.particle[global.mParticle] = 0;
 for (i = 0; i &lt; global.mParticle; i+=1)
     global.particle[i] = instance_create(TILE+i,TILE,objParticle);
 
@@ -277,6 +287,7 @@ for (i = 0; i &lt; global.mParticle; i+=1)
 //SEGMENTS
 
 global.maxSegments = 20;
+global.segment[global.maxSegments] = 0;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
     global.segment[i] = importSegment("seg"+string(i)+".tmx");
 
@@ -302,7 +313,7 @@ global.gameOver = false;
 global.coins = 0;
 global.maxCoins = 0;
 global.level = 1; //difficulty display
-global.distMagnet = TILE; //distance to catch coins and items
+global.distMagnet = 1.5*TILE; //distance to catch coins and items
 
 global.key = mb_left;
 global.hasControl = true;
@@ -384,6 +395,13 @@ loadProgress();
           <argument>
             <kind>1</kind>
             <string>//draw
+if (!surface_exists(global.drawBuffer))
+    global.drawBuffer = surface_create(400,240);
+else
+{
+    view_surface_id[0] = global.drawBuffer;
+    draw_surface_stretched(global.drawBuffer,0,0,3*WIDTH,3*HEIGHT);
+}
 
 //GUI etc
 draw_set_font(global.fntDefault);
@@ -440,6 +458,9 @@ if (room != INIT)
 //MOUSE CURSOR
 if (global.mouseVisible)
     draw_sprite_part(global.sprHud,-1,0+2*TILE*mouse_check_button(mb_left),0,2*TILE,2*TILE,mouse_x-TILE,mouse_y-TILE);
+    
+surface_reset_target();
+surface_free(global.drawBuffer);
 
 </string>
           </argument>

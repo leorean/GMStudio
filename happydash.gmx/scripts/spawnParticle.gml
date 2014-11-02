@@ -6,4 +6,3 @@ _color = argument2;
 
 initParticle(_x,_y,global.particle[global.iParticle],_color);
 global.iParticle = (global.iParticle + 1) mod (global.mParticle);
-

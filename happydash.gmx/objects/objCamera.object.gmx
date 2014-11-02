@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -117,7 +117,6 @@ fade = 0;
 draw_set_color(c_white);
 draw_set_alpha(1);
 
-
 //change the background theme if necessary
 //global.theme = min(max(floor(global.level / global.levelsPerTheme),0),global.maxTheme);
 
@@ -127,16 +126,16 @@ if (global.theme != global.themePrev &amp;&amp; fade == 0)
     global.themePrev = global.theme;
 }
 
-draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,floor(a),0,1,1,c_white,1);
-draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,floor(a+w),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,(a),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,0*h,w,h,(a+w),0,1,1,c_white,1);
 
 
-draw_sprite_part_ext(global.sprBg,-1,theme,1*h,w,h,floor(b),0,1,1,c_white,1);
-draw_sprite_part_ext(global.sprBg,-1,theme,1*h,w,h,floor(b+w),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,1*h,w,h,(b),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,1*h,w,h,(b+w),0,1,1,c_white,1);
 
 
-draw_sprite_part_ext(global.sprBg,-1,theme,2*h,w,h,floor(c),0,1,1,c_white,1);
-draw_sprite_part_ext(global.sprBg,-1,theme,2*h,w,h,floor(c+w),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,2*h,w,h,(c),0,1,1,c_white,1);
+draw_sprite_part_ext(global.sprBg,-1,theme,2*h,w,h,(c+w),0,1,1,c_white,1);
 
 draw_set_alpha(alpha);
 
@@ -157,6 +156,8 @@ if (fade == 2)
     if (alpha == 0)
         fade = 0;
 }
+
+draw_set_alpha(1);
 </string>
           </argument>
         </arguments>

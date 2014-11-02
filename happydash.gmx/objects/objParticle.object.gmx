@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -79,12 +79,12 @@ y = HEIGHT+TILE;
 
     yVel += yGrav;
         
-    if (place_meeting(x+xVel,y,objAny))
+    if (collision_point(x+xVel,y,objAny,false,true))
         active = false;
     else
         x += xVel;
 
-    if (place_meeting(x,y+yVel,objAny))
+    if (collision_point(x,y+yVel,objAny,false,true))
     {
         active = false;
     }

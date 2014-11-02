@@ -37,6 +37,30 @@ depth = PLAYERDEPTH-3;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>cycle ();
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -54,18 +78,14 @@ depth = PLAYERDEPTH-3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.spawnSegment)
-    x -= global.xSpeed;
-
-draw_set_alpha(1);
-fCur = fCur + fSpeed;
+            <string>fCur = fCur + fSpeed;
 
 frame = floor(fCur);
 
 if (fCur &gt;= fMax+1)
     instance_destroy();
 
-draw_sprite_part_ext(global.sprGfx,-1,min(frame,fMax) * TILE,9*TILE+type*TILE,TILE,TILE,floor(x),y,1,1,c_white,1);
+draw_sprite_part_ext(global.sprGfx,-1,min(frame,fMax) * TILE,9*TILE+type*TILE,TILE,TILE,x,y,1,1,c_white,1);
 </string>
           </argument>
         </arguments>

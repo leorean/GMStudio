@@ -2,7 +2,7 @@
 <object>
   <spriteName>sprCoinMask</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>objLiving</parentName>
@@ -31,7 +31,7 @@ fMax = 4;
 fCur = random(fMax);
 alpha = 1;
 
-alarm0 = FPS*.1;
+alarm0 = FPS*.25;
 alarm[0] = alarm0;
 
 alive = true;
@@ -93,12 +93,10 @@ magnet = false;
             <kind>1</kind>
             <string>if (!global.pause)
 {
-    if (x &lt; -TILE)
-        instance_destroy();
+    cycle();
     
     if (alive)
     {
-        //x -= global.xSpeed;
 
         if (spawn)
         {
@@ -107,21 +105,26 @@ magnet = false;
             yGrav = .15;
             spawn = false;
         }
-        if (in(x,global.player.x-TILE,global.player.x+TILE) &amp;&amp; in(y,global.player.y-TILE,global.player.y+TILE)) //optimize
-        if (!alarm[0] &amp;&amp; magnet &amp;&amp; global.player.state != DEAD)
-            if (place_meeting(x,y,global.player))    
-            {
-                global.coins += 1;
-                //each n levels, the coin is worth more!!
-                global.addScore += (global.theme+1);
-                alive = false;
-            }
+        if (in(x,global.player.x-TILE,global.player.x+TILE) &amp;&amp; in(y,global.player.y-TILE,global.player.y+TILE)) //optimized
+            if (!alarm[0] &amp;&amp; magnet &amp;&amp; global.player.state != DEAD)
+                if (collision_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,global.player,false,true))    
+                {
+                    global.coins += 1;
+                    //each 5 segments, the coin is worth more!!
+                    global.addScore += (global.difficulty div 5);
+                    alive = false;
+                }
     
         if (!magnet)
         {   
-            if (!alarm[0] &amp;&amp; ((!inWall &amp;&amp; place_meeting(x+xVel,y,objSolid)) || x&gt;WIDTH))
+            if (x &gt; WIDTH) xVel = 0;
+            
+            if (!alarm[0] &amp;&amp; !inWall)
             {
-                xVel = 0;
+                if (place_meeting(x+xVel,y,objSolid))
+                    xVel = 0;
+                else
+                    x += xVel;
             } else
                 x += xVel;
     
@@ -129,14 +132,18 @@ magnet = false;
                 inWall = false;
         
             yVel += yGrav;
-            if (!alarm[0] &amp;&amp; !inWall &amp;&amp; place_meeting(x,y+yVel,objSolid))
+            if (!alarm[0] &amp;&amp; !inWall)
             {
-                if (yVel &gt;= 0) xVel = 0;
-                yVel = 0;
+                if (place_meeting(x,y+yVel,objAny))
+                {
+                    if (yVel &gt;= 0) xVel = 0;
+                        yVel = 0;
+                } else
+                    y += yVel;
             } else
                 y += yVel;
-        if (!alarm[0] &amp;&amp; !magnet &amp;&amp; in(global.player.x,x-global.distMagnet,x+global.distMagnet) &amp;&amp; in(global.player.y,y-global.distMagnet,y+global.distMagnet)) //optimize
-        //if (!alarm[0] &amp;&amp; collision_rectangle(x-global.distMagnet,y-global.distMagnet,x+2*global.distMagnet,y+2*global.distMagnet,global.player,true,true))
+                
+        if (!alarm[0] &amp;&amp; !magnet &amp;&amp; in(global.player.x,x-global.distMagnet,x+global.distMagnet) &amp;&amp; in(global.player.y,y-global.distMagnet,y+global.distMagnet)) //optimized
             magnet = true;
             
         } else
@@ -184,18 +191,11 @@ magnet = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (alive)
-    if (!global.spawnSegment)
-        x -= global.xSpeed;
+            <string>fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
+frame = floor(fCur);
 
-if (x &lt; WIDTH)
-{
-    draw_set_alpha(1);
-    fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
-    frame = floor(fCur);
-    
-    draw_sprite_part(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,floor(x),y);
-}
+draw_sprite_part(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y);
+
 </string>
           </argument>
         </arguments>

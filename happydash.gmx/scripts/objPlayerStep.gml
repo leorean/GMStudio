@@ -45,12 +45,6 @@ if (state == ATTACK)
 
 if (mouseBoth)
     state = IDLE;
-//if (state == ATTACK && mouseRightPressed)//(keyDown || mouseBoth)
-//    state = IDLE;
-
-
-
-
 /*
 //swipe gesture registration
 if (touchPressed && !on)
@@ -118,14 +112,18 @@ if (!touch)
 
 
 //local variables && flags
-cx = floor(x+TILE*.5);
-cy = floor(y+TILE*.5);
-onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
-onPlatform = state != DEAD && (collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true)
-    && yVel > 0);
+cx = x+TILE*.5;
+cy = y+TILE*.5;
+if (yVel >= 0)
+    onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objAny);//position_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);//place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
+else
+    onGround = false;
+    
+//onPlatform = state != DEAD && (collision_line(bbox_left-global.xSpeed,bbox_bottom+max(yVel,1),bbox_right-global.xSpeed,bbox_bottom+max(yVel,1),objPlatform,true,true)
+//    && yVel > 0);
 
-if (onPlatform)
-    onGround = true;
+//if (onPlatform)
+//    onGround = true;
 
 //ENEMY INTERACTION
 enemy = instance_place(x+xVel,y+yVel,objEnemy);
@@ -191,7 +189,7 @@ if (!alive)
 
 if (state == DEAD)
 {
-    global.xSpeed *= .8;
+    global.xSpeed = 0;
     if (!alarm[0])
     {
         instance_create(0,0,objGameOverMenu);
@@ -222,6 +220,7 @@ else //IF NOT DEAD
         yGrav = 0;
 
         //dash through destroyblock
+        //if (x - TILE > objDestroyBlock.x < x + 2*TILE) && (y - TILE > objDestroyBlock.y < y + 2*TILE)
         db = instance_place(x + max(xVel+ceil(global.xSpeed),global.xSpeedMax),y,objDestroyBlock);
         if (db != noone)
         {
@@ -251,7 +250,7 @@ else //IF NOT DEAD
 
     if (x > WIDTH-TILE) x = WIDTH-TILE;
 
-    if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objSolid))
+    if (place_free(x+ceil(global.xSpeed)+xVel,y))//!place_meeting(x+ceil(global.xSpeed) + xVel,y, objSolid))
     {
         x += xVel;
 
@@ -278,8 +277,9 @@ else //IF NOT DEAD
             xVel = max(xVel - 4*xAcc, -global.xSpeed);
     } else
     {
-        if (state == ATTACK && !place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
-            state = JUMP;
+        if (state == ATTACK)
+            if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
+                state = JUMP;
         xVel = 0;
         x -= global.xSpeed;
     }
@@ -293,12 +293,25 @@ if (state == DEAD)
 if (state != DEAD)
 {
     repeat(round(abs(yVel)))
-        if (!place_meeting(x,y+sign(yVel),objSolid) && (!collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objPlatform,true,true) || yVel < 0))
+    {
+        if (place_free(x,y+sign(yVel))
+            && (!collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objPlatform,false,true) || yVel < 0))
+                y += sign(yVel);
+        else
+            yVel = 0;
+            
+        
+        /*
+        if (!place_meeting(x,y+sign(yVel),objBlock) && (!collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objPlatform,false,true) || yVel < 0))
             y += sign(yVel);
         else
             yVel = 0;
+        */
+    }
+
 } else
     y += yVel;
+    
 /*
 v = abs(round(yVel));
 repeat(v)

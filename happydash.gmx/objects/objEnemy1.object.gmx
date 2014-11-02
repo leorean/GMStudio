@@ -2,7 +2,7 @@
 <object>
   <spriteName>sprEnemy1Mask</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>objLivingEnemy</parentName>
@@ -64,7 +64,7 @@ fSpeed = 0;
             <kind>1</kind>
             <string>if (!global.pause)
 {
-    //x -= global.xSpeed;
+    cycle ();
 
     if (state != DEAD)
     {
@@ -106,9 +106,6 @@ fSpeed = 0;
             {
                 yVel = 0;
             }
-    
-    if (x &lt; -TILE || y &gt; HEIGHT)
-        instance_destroy();
 
     fCur = (fCur + fSpeed) mod fMax;
 }
@@ -134,29 +131,21 @@ fSpeed = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.spawnSegment)
-    x -= global.xSpeed;
+            <string>frame = floor(fCur);
 
-if (x &lt; WIDTH)
+switch(state)
 {
-    frame = floor(fCur);
-    
-    switch(state)
-    {
-        case IDLE:
-            row = 0;
-            fSpeed = .2;
-        break;
-        case DEAD:
-            row = 1;
-            fSpeed = .3;
-        break;
-    }
-    
-    draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
+    case IDLE:
+        row = 0;
+        fSpeed = .2;
+    break;
+    case DEAD:
+        row = 1;
+        fSpeed = .3;
+    break;
 }
-if (x &lt; -TILE)
-    instance_destroy();
+
+draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

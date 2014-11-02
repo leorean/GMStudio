@@ -2,7 +2,7 @@
 <object>
   <spriteName>sprEnemySpikeMask</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>objEnemy</parentName>
@@ -52,12 +52,7 @@ checking = TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//x -= global.xSpeed;
-
-if (x &lt; -TILE)
-    instance_destroy();
-
-if (checking)
+            <string>if (checking)
 {
     l = place_meeting(x-TILE+global.xSpeed,y,objBlock);
     r = place_meeting(x+TILE+global.xSpeed,y,objBlock);
@@ -88,6 +83,9 @@ if (checking)
 
     checking -= 1;
 }
+
+cycle ();
+
 </string>
           </argument>
         </arguments>
@@ -110,14 +108,7 @@ if (checking)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.spawnSegment)
-    x -= global.xSpeed;
-
-if (x &lt; WIDTH)
-    draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,floor(x),y);
-if (x &lt; -TILE)
-    instance_destroy();
-
+            <string>draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);
 
 </string>
           </argument>

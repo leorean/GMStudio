@@ -37,6 +37,7 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 67) //destroyable block
         {
+            
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(100);
