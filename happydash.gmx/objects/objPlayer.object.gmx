@@ -224,7 +224,7 @@ mouse_prevy = mouse_y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>image_speed = 0;
 var xDraw,yDraw,angle,xA,yA,off, frame, row;
 
 frame = floor(fCur);
@@ -265,7 +265,6 @@ switch(state)
 }
 
 draw_sprite_part(global.sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,xDraw-TILE*.5,yDraw-TILE*.5);
-
 </string>
           </argument>
         </arguments>

@@ -72,7 +72,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
+            <string>image_speed = 0;
+draw_sprite_part(global.sprTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
 
 </string>
           </argument>

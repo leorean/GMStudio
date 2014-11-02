@@ -56,16 +56,16 @@ for (i = 0; i<w; i += 1)
         {
             instance_create(a+i*TILE,b+j*TILE,objCoin);
         }
-        else if (s == 69) //enemy type 1
+        else if (s == 69) //enemies
         {
-            /*
+            
             var c;
             c = choose(true,false);
             if (c)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy1);
             else
                 instance_create(a+i*TILE,b+j*TILE,objEnemy2);
-            */
+            
         }
         else if (s == 70) //auto spikes
         {

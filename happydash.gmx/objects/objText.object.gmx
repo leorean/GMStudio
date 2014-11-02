@@ -92,7 +92,8 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(color);
+            <string>image_speed = 0;
+draw_set_color(color);
 draw_set_font(fnt);
 draw_set_halign(halign);
 draw_set_valign(fa_center);

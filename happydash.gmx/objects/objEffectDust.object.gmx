@@ -78,7 +78,8 @@ depth = PLAYERDEPTH-3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = fCur + fSpeed;
+            <string>image_speed = 0;
+fCur = fCur + fSpeed;
 
 frame = floor(fCur);
 

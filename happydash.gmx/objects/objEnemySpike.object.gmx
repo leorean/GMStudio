@@ -108,7 +108,8 @@ cycle ();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);
+            <string>image_speed = 0;
+draw_sprite_part(global.sprGfx,-1,mask*TILE,0,TILE,TILE,x,y);
 
 </string>
           </argument>

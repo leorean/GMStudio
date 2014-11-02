@@ -191,7 +191,8 @@ magnet = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
+            <string>image_speed = 0;
+fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
 frame = floor(fCur);
 
 draw_sprite_part(global.sprGfx,-1,frame*TILE,TILE,TILE,TILE,x,y);

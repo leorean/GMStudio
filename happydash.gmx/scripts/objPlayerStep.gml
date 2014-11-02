@@ -290,44 +290,8 @@ yVel += yGrav;
 if (state == DEAD)
     yGrav = yGravDefault;
 
-if (state != DEAD)
-{
-    repeat(round(abs(yVel)))
-    {
-        if (place_free(x,y+sign(yVel))
-            && (!collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objPlatform,false,true) || yVel < 0))
-                y += sign(yVel);
-        else
-            yVel = 0;
-            
+yCollision();
         
-        /*
-        if (!place_meeting(x,y+sign(yVel),objBlock) && (!collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objPlatform,false,true) || yVel < 0))
-            y += sign(yVel);
-        else
-            yVel = 0;
-        */
-    }
-
-} else
-    y += yVel;
-    
-/*
-v = abs(round(yVel));
-repeat(v)
-    if (state == DEAD || !place_meeting(x,y+sign(yVel),objSolid))
-        && !(state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0)
-    {
-        y += yVel/v;
-    }
-    else
-    {
-        if (state == JUMP && (state != DEAD && collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) && yVel > 0))
-            state = RUN;
-        yVel = 0;
-    }
-*/
-
 //prev/end variables
 fCur = (fCur+fSpeed) mod fMax;
 

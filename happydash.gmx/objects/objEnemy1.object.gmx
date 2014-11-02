@@ -70,7 +70,7 @@ fSpeed = 0;
     {
         if (x &lt; WIDTH)
             xVel = sign(dir)*spd;
-        if (!place_meeting(x+ceil(global.xSpeed) + xVel + sign(dir)*2,y, objSolid))
+        if (place_free(x-ceil(global.xSpeed)+xVel,y))//!place_meeting(x+ceil(global.xSpeed) + xVel + sign(dir)*2,y, objSolid))
             x += xVel;
         else
             dir = -dir;
@@ -79,11 +79,6 @@ fSpeed = 0;
     {
         if (alive)
         {
-            /*repeat(objPlayer.combo)
-            {
-                c = instance_create(x+TILE/2,y,objCoin);
-                c.spawn = true;
-            }*/
             yVel = -3;
         }
         alive = false;
@@ -95,17 +90,8 @@ fSpeed = 0;
     
     if (!alive) state = DEAD;
     
-    if (state != DEAD)
-        repeat(abs(yVel))
-            if ((!place_meeting(x,y+sign(yVel),objSolid))
-                &amp;&amp; !(collision_line(bbox_left-global.xSpeed,bbox_bottom+1,bbox_right-global.xSpeed,bbox_bottom+1,objPlatform,true,true) &amp;&amp; yVel &gt; 0))
-            {
-                y += sign(yVel);
-            }
-            else
-            {
-                yVel = 0;
-            }
+    yCollision();
+
 
     fCur = (fCur + fSpeed) mod fMax;
 }
@@ -131,7 +117,8 @@ fSpeed = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frame = floor(fCur);
+            <string>image_speed = 0;
+frame = floor(fCur);
 
 switch(state)
 {

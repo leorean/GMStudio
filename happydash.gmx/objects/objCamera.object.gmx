@@ -113,7 +113,7 @@ fade = 0;
           <argument>
             <kind>1</kind>
             <string>//DRAW BACKGROUND
-
+image_speed = 0;
 draw_set_color(c_white);
 draw_set_alpha(1);
 

@@ -100,7 +100,8 @@ if (state == DEAD)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(global.sprGfx,-1,type*TILE,3*TILE,TILE,TILE,x,y);
+            <string>image_speed = 0;
+draw_sprite_part(global.sprGfx,-1,type*TILE,3*TILE,TILE,TILE,x,y);
 
 </string>
           </argument>

@@ -74,6 +74,7 @@ y = HEIGHT+TILE;
             <kind>1</kind>
             <string>if (active)
 {   
+
     if (!global.spawnSegment)
         x -= global.xSpeed;
 
@@ -99,8 +100,9 @@ y = HEIGHT+TILE;
         active = false;
     }
 
-}/* else
-/*    visible = false;
+    visible = true;
+} else
+    visible = false;
 </string>
           </argument>
         </arguments>
@@ -123,11 +125,9 @@ y = HEIGHT+TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (active)
-{
-    draw_set_alpha(1);
-    draw_sprite_ext(sprParticleMask,-1,floor(x),floor(y),size,size,1,color,1);
-}
+            <string>image_speed = 0;
+draw_sprite_ext(sprParticleMask,-1,floor(x),floor(y),size,size,1,color,1);
+
 </string>
           </argument>
         </arguments>

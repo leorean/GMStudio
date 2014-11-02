@@ -449,7 +449,11 @@
     <script>scripts\drawBorder.gml</script>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
+    <script>scripts\yCollision.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fntMenu</font>
+  </fonts>
   <objects name="objects">
     <objects name="MISC">
       <objects name="hierarchy">
@@ -474,7 +478,6 @@
       <object>objects\objEffectDust</object>
       <object>objects\objText</object>
       <object>objects\objParticle</object>
-      <object>objects\objDestroyer</object>
     </objects>
     <objects name="items">
       <object>objects\objCoin</object>

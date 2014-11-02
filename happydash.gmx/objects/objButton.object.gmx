@@ -54,7 +54,8 @@ colorInactive = c_gray;//make_color_rgb(209,152,105)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_font(global.fntDefault);
+            <string>image_speed = 0;
+draw_set_font(global.fntDefault);
 draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);

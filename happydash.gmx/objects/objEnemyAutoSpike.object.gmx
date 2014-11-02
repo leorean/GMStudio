@@ -147,7 +147,8 @@ if (!global.pause)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frame = floor(fCur);
+            <string>image_speed = 0;
+frame = floor(fCur);
 
 switch(dir)
 {

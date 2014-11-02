@@ -106,6 +106,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;
+        else
+            global.xSpeed = 0;
+            
         global.segX -= global.xSpeed;
         
         global.spawnSegment = (floor(global.segX) &lt; global.xSpeed);
@@ -209,7 +212,8 @@ else
     global.curScore = 0;
     global.addScore = 0;
     global.level = 1;
-
+    global.theme = 0;
+    
     alarm[0]= alarm0;
 
     global.startSignal = false;
@@ -403,10 +407,12 @@ else
     draw_surface_stretched(global.drawBuffer,0,0,3*WIDTH,3*HEIGHT);
 }
 
+with(objAll)
+    draw_set_alpha(1);
+
 //GUI etc
 draw_set_font(global.fntDefault);
 draw_set_color(c_white);
-draw_set_alpha(1);
 draw_set_valign(fa_top);
 
 if (room != INIT)
