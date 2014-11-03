@@ -142,8 +142,11 @@ fSpeed = .1;
             <string>//step
 depth = PLAYERDEPTH;
 
+//MUTE/UNMUTE disables other input
+pressedMute = (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,0,2*TILE)));
+
 //CONTROLS
-if (global.hasControl &amp;&amp; !global.pause)
+if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
 {
     //mouse/touch gestures
     touch = mouse_check_button(mb_left);
@@ -193,6 +196,8 @@ if (global.hasControl &amp;&amp; !global.pause)
     keyDown = false;
 
 }
+
+pressedMute = false;
 
 if (!global.pause &amp;&amp; !global.gameOver)
 {

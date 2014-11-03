@@ -15,6 +15,7 @@ if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
 
         yVel = -jumpVel*jumpVelMax;
         state = JUMP;
+        playSound(sfxJump);
 }
 
 /*if (mouseRightPressed)

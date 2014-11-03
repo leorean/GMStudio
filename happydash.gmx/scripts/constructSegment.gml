@@ -18,16 +18,7 @@ for (i = 0; i<w; i += 1)
         else if (s == 65) //spikes
         {
             if (min(global.difficulty,15) > random(20))
-            {
-                var c;
-                c = choose(true,false);
-                
-                if (c)
-                    instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
-                else
-                    instance_create(a+i*TILE,b+j*TILE,objEnemyAutoSpike);
-                
-            }
+                instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
         }
         else if (s == 66) //platforms
         {
@@ -67,9 +58,19 @@ for (i = 0; i<w; i += 1)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy2);
             
         }
-        else if (s == 70) //auto spikes
+        else if (s == 70) //spikes and auto spikes
         {
-            instance_create(a+i*TILE,b+j*TILE,objEnemyAutoSpike);
+            if (min(global.difficulty,15) > random(20))
+            {
+                var c;
+                c = choose(true,false);
+                
+                if (c)
+                    instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
+                else
+                    instance_create(a+i*TILE,b+j*TILE,objEnemyAutoSpike);
+            }
+
         }/*
         else if (s == 71) //coinblock
         {

@@ -59,18 +59,23 @@ with (objAll)
 //ticker for timed obstacles etc.
 global.timer = (global.timer + 1) mod INFINITE;
 
+//MUTE/UNMUTE
+if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,0,2*TILE)))
+    || keyboard_check_pressed(ord('M'))
+        global.mute = !global.mute;
+
+
 if (room != INIT &amp;&amp; !global.gameOver)
 {
+
     //global routines here
     if (!global.pause)
     {
     
         //PAUSE GAME
-        if (mouse_check_button_pressed(global.key) &amp;&amp; mouse_x &gt;= WIDTH-2*TILE &amp;&amp; mouse_y &gt;= HEIGHT-2*TILE)
+        if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
             || keyboard_check_pressed(ord('P'))
-        {
-            global.pause = true;
-        }
+                global.pause = true;
 
         //EXP SYSTEM FORMULA AND LEVEL UP
         global.maxCoins = 6 * floor(3 + global.level * power(3, global.level * .022 ) );
@@ -137,8 +142,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
     else //THIS IS PAUSE MODE!
     {
         //unpause
-        if (mouse_check_button_pressed(global.key)
-            || keyboard_check_pressed(ord('P')))// &amp;&amp; mouse_x &lt; WIDTH-2*TILE &amp;&amp; mouse_y &lt; HEIGHT-2*TILE)
+        if (keyboard_check_pressed(ord('P'))
+            || (mouse_check_button_pressed(mb_any) &amp;&amp; (!in(mouse_x,WIDTH-2*TILE,WIDTH) || !in(mouse_y,0,2*TILE))))
             global.pause = false;
 
         global.xSpeed = 0;
@@ -264,6 +269,9 @@ window_set_size(3*WIDTH,3*HEIGHT);
 
 global.drawBuffer = -1;//surface_create(400,240);
 
+//SOUNDS
+global.mute = true;
+
 //GRAPHICS
 global.sprTiles = spriteTiles;//sprite_add("gfx/sprTiles.png",0,true,false,0,0);
 global.sprEnemies = spriteEnemies;//sprite_add("gfx/sprEnemies.png",0,true,false,0,0);
@@ -281,7 +289,7 @@ global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
 global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
 
 //PARTICLE RECYCLE
-global.mParticle = 256;
+global.mParticle = 50;
 global.iParticle = 0;
 global.particle[global.mParticle] = 0;
 for (i = 0; i &lt; global.mParticle; i+=1)
@@ -319,7 +327,6 @@ global.maxCoins = 0;
 global.level = 1; //difficulty display
 global.distMagnet = 1.5*TILE; //distance to catch coins and items
 
-global.key = mb_left;
 global.hasControl = true;
 global.timer = 0;
 
@@ -415,6 +422,10 @@ draw_set_font(global.fntDefault);
 draw_set_color(c_white);
 draw_set_valign(fa_top);
 
+//MUTE BUTTON
+draw_sprite_part(global.sprHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
+
+
 if (room != INIT)
 {
 
@@ -446,8 +457,8 @@ if (room != INIT)
     draw_text(a,HEIGHT-TILE," &amp; " + string(global.curScore));
 
     //LEVEL    
-    draw_set_halign(fa_right);
-    draw_text(WIDTH,0,"LVL " + string(global.level) + " ");
+    //draw_set_halign(fa_right);
+    draw_text(0,TILE," LVL " + string(global.level) + " ");
 
     //CHARGE BAR
     draw_sprite_part(global.sprHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
@@ -455,7 +466,7 @@ if (room != INIT)
     
     //PAUSE BUTTON
     draw_sprite_part(global.sprHud,-1,2*TILE*global.pause,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
-
+    
     //meters
     draw_set_halign(fa_center);
     draw_text(WIDTH/2,HEIGHT-1.5*TILE,string(floor(global.distance*.1))+"m");
