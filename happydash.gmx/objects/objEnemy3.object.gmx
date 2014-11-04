@@ -31,13 +31,14 @@ mask_index = sprEnemyMask;
 xVel = 0;
 yVel = 0;
 dir = LEFT;
-spd = 1;
-yGrav = .15;
+spd = 0;
+maxSpd = 2;
+yGrav = 0;
 
 state = IDLE;
 alive = true;
 
-canJump = false;
+t = choose(-pi*.5,pi*.5);
 
 fCur = 0;
 fMax = 4;
@@ -72,39 +73,20 @@ fSpeed = 0;
     if (state != DEAD)
     {
         if (x &lt; WIDTH)
+        {
+        
+            t += .1;
+            if (t &gt;= 2*pi)
+                t = 0;
+                
+            yVel = sin(t);
+            
+            spd = min(spd+.01,maxSpd);
             xVel = sign(dir)*spd;
+        }
         else
             yVel = 0;
             
-        if (canJump)
-            xVel = 0;
-            
-        if (place_free(x-ceil(global.xSpeed)+2*xVel,y))
-            x += xVel;
-        else
-        {
-            xVel = global.xSpeed;
-            dir = -dir;
-        }
-
-        if (collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objAny,false,true) &amp;&amp; yVel &gt; 0)
-        {
-            if (!canJump)
-            {   
-                yVel = 0;
-                xVel = 0;
-                fCur = 0;
-                canJump = true;
-            }
-            
-            if (fCur &gt;= fMax - fSpeed)
-            {
-                yVel = -3;
-                canJump = false;
-            }
-            
-        }
-    
     } else
     {
         if (alive)
@@ -114,20 +96,15 @@ fSpeed = 0;
         }
         alive = false;
         xVel = 0;
-        y += yVel;
+        yVel += yGrav;
     }
     
-    yVel += yGrav;
+    x += xVel;
+    y += yVel;
     
     if (!alive) state = DEAD;
-    
-    if (x &lt; WIDTH)
-        yCollision();
         
-    if (state == DEAD)
-        fCur = (fCur + fSpeed) mod fMax;
-    else
-        fCur = min(fCur + fSpeed, fMax - fSpeed);
+    fCur = (fCur + fSpeed) mod fMax;
 }
 </string>
           </argument>

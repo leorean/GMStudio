@@ -78,11 +78,11 @@ for (i = 0; i<w; i += 1)
             t.px = floor((s-1) mod TILE);
             t.py = floor((s-1) div TILE);
             t.type = 1;
-        }
-        else if (s == 72) //enemy type 2
-        {
-            instance_create(a+i*TILE,b+j*TILE,objEnemy2);
         }*/
+        else if (s == 72) //flying enemy
+        {
+            instance_create(a+i*TILE,b+j*TILE,objEnemy3);
+        }
 
         //insert here
         else if (s >= 96) //background objects

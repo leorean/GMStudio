@@ -417,15 +417,13 @@
       <sprite>sprites\sprDoorMask</sprite>
       <sprite>sprites\sprNone</sprite>
       <sprite>sprites\sprLockMask</sprite>
-      <sprite>sprites\sprEnemy1Mask</sprite>
+      <sprite>sprites\sprEnemyMask</sprite>
       <sprite>sprites\sprMovingPlatform</sprite>
       <sprite>sprites\sprEnemyAutoSpikeMask</sprite>
-      <sprite>sprites\sprEnemyMask</sprite>
       <sprite>sprites\sprSpawnPlatformMask</sprite>
       <sprite>sprites\sprCoinMask</sprite>
       <sprite>sprites\sprTouchMask</sprite>
       <sprite>sprites\sprEnemyMaskRight</sprite>
-      <sprite>sprites\sprEnemy2Mask</sprite>
     </sprites>
     <sprite>sprites\spriteTitleMenu</sprite>
     <sprite>sprites\spriteBg</sprite>
@@ -506,6 +504,7 @@
       <object>objects\objEnemySpike</object>
       <object>objects\objEnemy1</object>
       <object>objects\objEnemy2</object>
+      <object>objects\objEnemy3</object>
     </objects>
   </objects>
   <rooms name="rooms">
