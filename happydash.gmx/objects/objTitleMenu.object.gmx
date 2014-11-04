@@ -237,10 +237,10 @@ draw_sprite_part(global.sprTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
 draw_sprite_part(global.sprTitleMenu,-1,0,0,WIDTH,HEIGHT,xx-WIDTH,yy);
 draw_sprite_part(global.sprTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
-//title
+/*
 if (!showHelp &amp;&amp; !showHighscore)
     draw_text(WIDTH/2,TILE+z,global.gameTitle);
-
+*/
 if (!showHelp &amp;&amp; !showHighscore)
     drawBorder(8.5*TILE,6*TILE,8*TILE,8*TILE);
 if (showHighscore)
@@ -248,6 +248,14 @@ if (showHighscore)
 //if (showHelp)
 //    drawBorder(1*TILE,1*TILE,23*TILE,13*TILE);
 
+//title
+if (!showHelp &amp;&amp; !showHighscore)
+{
+    draw_set_alpha(.5);
+    draw_sprite_part_ext(global.sprTitleMenu,-1,0,2.5*HEIGHT,WIDTH,HEIGHT*.5,0,-z,1,1,c_white,.5);
+    draw_set_alpha(1);
+    draw_sprite_part(global.sprTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT*.5,0,-z);
+}
 
 draw_set_font(global.fntDefault);
 

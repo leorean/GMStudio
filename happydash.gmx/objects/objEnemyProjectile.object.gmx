@@ -2,7 +2,7 @@
 <object>
   <spriteName>sprProjectileMask</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>objEnemy</parentName>
@@ -34,6 +34,10 @@ yF = -cos(degtorad(angle));
 
 xVel = 1.5*xF;
 yVel = 1.5*yF;
+
+fCur = 0;
+fMax = 4;
+fSpeed = .2;
 </string>
           </argument>
         </arguments>
@@ -63,8 +67,39 @@ cycle();
 
 if (collision_point(x,y,objAny,false,true)
     || x &lt; -TILE || y &gt; HEIGHT+TILE || x &gt; WIDTH+TILE || y &lt; -TILE)
-    instance_destroy();
+    {
+        t = instance_create(x-TILE*.5,y-TILE*.5,objEffectDust);
+        t.type = 5;
+        instance_destroy();
+    }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>fCur = (fCur + fSpeed) mod fMax;
+
+frame = floor(fCur);
+
+draw_sprite_part(global.sprGfx,-1,frame*TILE,4*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

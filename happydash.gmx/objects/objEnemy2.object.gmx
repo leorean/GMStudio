@@ -30,11 +30,13 @@
 xVel = 0;
 yVel = 0;
 dir = LEFT;
-spd = .25;
+spd = 1;
 yGrav = .15;
 
 state = IDLE;
 alive = true;
+
+canJump = false;
 
 fCur = 0;
 fMax = 4;
@@ -70,13 +72,35 @@ fSpeed = 0;
     {
         if (x &lt; WIDTH)
             xVel = sign(dir)*spd;
-        if (place_free(x-ceil(global.xSpeed)+xVel,y))//(!place_meeting(x+ceil(global.xSpeed) + xVel + sign(dir)*2,y, objSolid))
+            
+        if (canJump)
+            xVel = 0;
+            
+        if (place_free(x-ceil(global.xSpeed)+2*xVel,y))
             x += xVel;
         else
-            xVel = 0;
+        {
+            xVel = global.xSpeed;
+            dir = -dir;
+        }
 
-        if (place_meeting(x,y+yVel+1,objAny) &amp;&amp; yVel &gt; 0)
-            yVel = -3;
+        if (collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objAny,false,true) &amp;&amp; yVel &gt; 0)
+        {
+            if (!canJump)
+            {   
+                yVel = 0;
+                xVel = 0;
+                fCur = 0;
+                canJump = true;
+            }
+            
+            if (fCur &gt;= fMax - fSpeed)
+            {
+                yVel = -3;
+                canJump = false;
+            }
+            
+        }
     
     } else
     {
@@ -95,8 +119,10 @@ fSpeed = 0;
     if (!alive) state = DEAD;
     
     yCollision();
-    
-    fCur = (fCur + fSpeed) mod fMax;
+    if (state == DEAD)
+        fCur = (fCur + fSpeed) mod fMax;
+    else
+        fCur = min(fCur + fSpeed, fMax - fSpeed);
 }
 </string>
           </argument>
@@ -135,7 +161,7 @@ switch(state)
     break;
 }
 
-if (dir == LEFT)
+if (dir == RIGHT)
     draw_sprite_part(global.sprEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),y);
 else
     draw_sprite_part_ext(global.sprEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,y,-1,1,c_white,1);

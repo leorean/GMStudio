@@ -62,7 +62,9 @@ global.timer = (global.timer + 1) mod INFINITE;
 //MUTE/UNMUTE
 if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,0,2*TILE)))
     || keyboard_check_pressed(ord('M'))
+    {
         global.mute = !global.mute;
+    }
 
 
 if (room != INIT &amp;&amp; !global.gameOver)
@@ -154,10 +156,12 @@ if (room != INIT &amp;&amp; !global.gameOver)
 }
 
 //if in title menu:
-if (room == INIT)
+
+if (room == INIT || global.gameOver)
     playMusic(sfxBgm,false);
 else
-    playMusic(sfxBgm,global.mute);
+    playMusic(sfxBgm,!global.mute);
+    
 
     //debug keys:   
     if keyboard_check_pressed(ord('R'))
@@ -268,6 +272,7 @@ else
             <string>//THIS EVENT SHALL BE CALLED ONCE PER GAME ONLY!!!
 
 depth = HUDDEPTH;
+randomize();
 
 //surface_set_target(global.drawBuffer);
 //surface_reset_target();

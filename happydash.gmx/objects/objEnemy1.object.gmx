@@ -70,10 +70,13 @@ fSpeed = 0;
     {
         if (x &lt; WIDTH)
             xVel = sign(dir)*spd;
-        if (place_free(x-ceil(global.xSpeed)+xVel,y))//!place_meeting(x+ceil(global.xSpeed) + xVel + sign(dir)*2,y, objSolid))
+        if (place_free(x-ceil(global.xSpeed)+2*xVel,y))
             x += xVel;
         else
+        {
+            xVel = global.xSpeed;
             dir = -dir;
+        }
     
     } else
     {
