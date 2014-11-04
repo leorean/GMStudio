@@ -86,6 +86,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             global.coins = 0;
             t = instance_create(global.player.cx,global.player.cy,objText);
             t.text = "LEVEL UP!";
+            playSound(sfxLevelUp);
             if (global.level mod 5 == 0)
             {
                 while (global.theme == global.themePrev)
@@ -103,6 +104,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 t.fnt = global.fntBig;
                 t.text = "go!";
                 t.yVel = 0;
+                playSound(sfxStart);
                 global.hasControl = true;
                 global.startSignal = true;
             }
@@ -150,6 +152,12 @@ if (room != INIT &amp;&amp; !global.gameOver)
     }
 
 }
+
+//if in title menu:
+if (room == INIT)
+    playMusic(sfxBgm,false);
+else
+    playMusic(sfxBgm,global.mute);
 
     //debug keys:   
     if keyboard_check_pressed(ord('R'))
@@ -270,7 +278,7 @@ window_set_size(3*WIDTH,3*HEIGHT);
 global.drawBuffer = -1;//surface_create(400,240);
 
 //SOUNDS
-global.mute = true;
+global.mute = false;
 
 //GRAPHICS
 global.sprTiles = spriteTiles;//sprite_add("gfx/sprTiles.png",0,true,false,0,0);

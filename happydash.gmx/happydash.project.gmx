@@ -382,6 +382,16 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\sfxJump</sound>
+    <sound>sound\sfxDoubleJump</sound>
+    <sound>sound\sfxDash</sound>
+    <sound>sound\sfxEnemyDie</sound>
+    <sound>sound\sfxLevelUp</sound>
+    <sound>sound\sfxCoin</sound>
+    <sound>sound\sfxDie</sound>
+    <sound>sound\sfxStart</sound>
+    <sound>sound\sfxDestroyBlock</sound>
+    <sound>sound\sfxOnGround</sound>
+    <sound>sound\sfxBgm</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -453,6 +463,8 @@
     <script>scripts\cycle.gml</script>
     <script>scripts\yCollision.gml</script>
     <script>scripts\playSound.gml</script>
+    <script>scripts\playMusic.gml</script>
+    <script>scripts\stopMusic.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>
@@ -486,7 +498,7 @@
       <object>objects\objCoin</object>
     </objects>
     <objects name="projectiles">
-      <object>objects\objProjectile</object>
+      <object>objects\objEnemyProjectile</object>
     </objects>
     <object>objects\objDestroyBlock</object>
     <objects name="enemies">

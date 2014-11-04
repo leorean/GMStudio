@@ -29,21 +29,11 @@
 
 state = DEAD;
 
-//if (!variable_local_exists("active"))
 active = true;
-
 depth = BLOCKDEPTH-1;
-
-//if (!variable_local_exists("look"))
 look = UP;
-
-//if (!variable_local_exists("t"))
 t = 1*FPS;
-
-//if (!variable_local_exists("o"))
 o = choose(0,t);
-
-//if (!variable_local_exists("dir"))
 dir = NONE;
 
 fCur = 0;
@@ -108,6 +98,8 @@ if (!global.pause)
     
     if ((global.timer) mod t == 0)
     {
+        if (!active &amp;&amp; look == UP &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
+                instance_create(x+TILE*.5,y+TILE*.5,objEnemyProjectile);
         active = true;
         look = -look;
     }

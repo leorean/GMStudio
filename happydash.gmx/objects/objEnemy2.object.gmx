@@ -81,8 +81,10 @@ fSpeed = 0;
     } else
     {
         if (alive)
+        {
             yVel = -3;
-
+            playSound(sfxEnemyDie);
+        }
         alive = false;
         xVel = 0;
         y += yVel;

@@ -113,6 +113,7 @@ magnet = false;
                     //each 5 segments, the coin is worth more!!
                     global.addScore += (global.difficulty div 5);
                     alive = false;
+                    playSound(sfxCoin);
                 }
     
         if (!magnet)

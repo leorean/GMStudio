@@ -7,15 +7,16 @@ if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
 
         if(jumpPerformed == 2)
         {
+            playSound(sfxDoubleJump);
             t = instance_create(x,y,objEffectDust);
             t.type = 1;
-        }
+        } else
+            playSound(sfxJump);
 
         jumpVel = 1.2;
 
         yVel = -jumpVel*jumpVelMax;
         state = JUMP;
-        playSound(sfxJump);
 }
 
 /*if (mouseRightPressed)
@@ -119,7 +120,7 @@ if (yVel >= 0)
     onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objAny);//position_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);//place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
 else
     onGround = false;
-    
+
 //onPlatform = state != DEAD && (collision_line(bbox_left-global.xSpeed,bbox_bottom+max(yVel,1),bbox_right-global.xSpeed,bbox_bottom+max(yVel,1),objPlatform,true,true)
 //    && yVel > 0);
 
@@ -175,6 +176,7 @@ if (!alive)
         yVel = -3;
         alarm[0] = alarm0;
         fCur = choose(0,1,2);
+        playSound(sfxDie);
         repeat(50)
             spawnParticle(x+random(TILE),y+random(TILE),c_white);//make_color_hsv(246,248,103));
         t = instance_create(x,y,objEffectDust);
@@ -211,6 +213,7 @@ else //IF NOT DEAD
 
         if (global.timer mod 5 == 0)
         {
+            playSound(sfxDash);
             t = instance_create(x-TILE*.5,y,objEffectDust);
             t.type = 3;
         }
@@ -292,7 +295,11 @@ if (state == DEAD)
     yGrav = yGravDefault;
 
 yCollision();
-        
+
+if (statePrev == JUMP && (state == IDLE || state == RUN))
+    playSound(sfxOnGround);
+
+
 //prev/end variables
 fCur = (fCur+fSpeed) mod fMax;
 

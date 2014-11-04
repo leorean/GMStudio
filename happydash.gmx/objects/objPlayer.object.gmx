@@ -38,6 +38,8 @@ global.hasControl = false;
 onGround = false;
 onPlatform = false;
 
+onGroundSoundPlayed = false;
+
 //death variables
 alarm[0] = 0;
 alarm0 = 90;

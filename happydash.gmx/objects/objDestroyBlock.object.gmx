@@ -75,6 +75,7 @@ if (state == DEAD)
     repeat(5)
         spawnParticle(x+TILE*.5,y+TILE*.5,make_color_rgb(49,33,27));
 
+    playSound(sfxDestroyBlock);
     instance_create(x,y,objEffectDust);
     instance_destroy();
 }
