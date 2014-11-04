@@ -70,6 +70,9 @@ fSpeed = 0;
     {
         if (x &lt; WIDTH)
             xVel = sign(dir)*spd;
+        else
+            yVel = 0;
+            
         if (place_free(x-ceil(global.xSpeed)+2*xVel,y))
             x += xVel;
         else
@@ -94,7 +97,8 @@ fSpeed = 0;
     
     if (!alive) state = DEAD;
     
-    yCollision();
+    if (x &lt; WIDTH)
+        yCollision();
 
     fCur = (fCur + fSpeed) mod fMax;
 }
@@ -135,7 +139,7 @@ switch(state)
     break;
 }
 
-draw_sprite_part(global.sprEnemies,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
+draw_sprite_part(spriteEnemies,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

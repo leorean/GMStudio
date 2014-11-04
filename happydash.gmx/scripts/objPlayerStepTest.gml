@@ -116,10 +116,7 @@ if (!touch)
 //local variables && flags
 cx = x+TILE*.5;
 cy = y+TILE*.5;
-if (yVel >= 0)
-    onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objAny);//position_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);//place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
-else
-    onGround = false;
+onGround = false;
 
 //onPlatform = state != DEAD && (collision_line(bbox_left-global.xSpeed,bbox_bottom+max(yVel,1),bbox_right-global.xSpeed,bbox_bottom+max(yVel,1),objPlatform,true,true)
 //    && yVel > 0);
@@ -128,41 +125,6 @@ else
 //    onGround = true;
 
 //ENEMY INTERACTION
-enemy = instance_place(x+xVel,y+yVel,objEnemy);
-if (instance_exists(enemy) && state != DEAD)
-{
-    //enemies who are not killable
-    if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
-        if (enemy.state != DEAD)
-            global.player.alive = false;
-
-    //enemies who are killable
-    if (real(object_get_parent(enemy.object_index)) == real(objLivingEnemy))
-    {
-        if (state == ATTACK || (yVel < 0 && y > enemy.y) || (y < enemy.y))
-        {
-            //jump on enemies
-            if (yVel > 0 && y < enemy.y)
-            {
-                yVel = -3;
-                xVel = 0;
-                state = JUMP;
-                jumpPerformed = 0;
-            }
-
-            if (enemy.state != DEAD)
-            {
-                t = instance_create(enemy.x,enemy.y,objEffectDust);
-                t.type = 2;
-                doCombo();
-                enemy.state = DEAD;
-            }
-        }
-        if (enemy.state != DEAD)
-            global.player.alive = false;
-    }
-
-}
 
 //DEATH
 if (y+TILE > room_height || x < 0)
@@ -224,14 +186,7 @@ else //IF NOT DEAD
         yGrav = 0;
 
         //dash through destroyblock
-        //if (x - TILE > objDestroyBlock.x < x + 2*TILE) && (y - TILE > objDestroyBlock.y < y + 2*TILE)
-        db = instance_place(x + max(xVel+ceil(global.xSpeed),global.xSpeedMax),y,objDestroyBlock);
-        if (db != noone)
-        {
-            doCombo();
-            db.state = DEAD;
-            db = noone;
-        }
+
         pow = max(pow - 1, 0);
         if (pow == 0 && enemy == noone)
             state = JUMP;
@@ -253,7 +208,7 @@ else //IF NOT DEAD
     }    
 
     if (x > WIDTH-TILE) x = WIDTH-TILE;
-
+/*
     if (place_free(x+ceil(global.xSpeed)+xVel,y))//!place_meeting(x+ceil(global.xSpeed) + xVel,y, objSolid))
     {
         x += xVel;
@@ -287,19 +242,24 @@ else //IF NOT DEAD
         xVel = -global.xSpeed;
         x -= ceil(global.xSpeed);
     }
+    */
 }
 
-yVel += yGrav;
+//yVel += yGrav;
 
 if (state == DEAD)
     yGrav = yGravDefault;
 
-yCollision();
+//yCollision();
 
 if (statePrev == JUMP && (state == IDLE || state == RUN))
     playSound(sfxOnGround);
 
 
+yVel = 0;
+xVel = 0;
+
+    
 //prev/end variables
 fCur = (fCur+fSpeed) mod fMax;
 

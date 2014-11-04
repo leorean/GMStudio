@@ -72,6 +72,8 @@ fSpeed = 0;
     {
         if (x &lt; WIDTH)
             xVel = sign(dir)*spd;
+        else
+            yVel = 0;
             
         if (canJump)
             xVel = 0;
@@ -118,7 +120,9 @@ fSpeed = 0;
     
     if (!alive) state = DEAD;
     
-    yCollision();
+    if (x &lt; WIDTH)
+        yCollision();
+        
     if (state == DEAD)
         fCur = (fCur + fSpeed) mod fMax;
     else
@@ -162,9 +166,9 @@ switch(state)
 }
 
 if (dir == RIGHT)
-    draw_sprite_part(global.sprEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),y);
+    draw_sprite_part(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),y);
 else
-    draw_sprite_part_ext(global.sprEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,y,-1,1,c_white,1);
+    draw_sprite_part_ext(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,y,-1,1,c_white,1);
 
 </string>
           </argument>

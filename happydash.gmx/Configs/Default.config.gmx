@@ -64,8 +64,8 @@
   <option_frequency>0</option_frequency>
   <option_frontimage>nil</option_frontimage>
   <option_fullscreen>False</option_fullscreen>
-  <option_gameguid>{EC6100B7-A76E-4A30-AFBB-31DCFAF0E10D}</option_gameguid>
-  <option_gameid>305069446</option_gameid>
+  <option_gameguid>{BD9E6A26-5522-4CC6-8006-82B2DAA692E8}</option_gameguid>
+  <option_gameid>967318880</option_gameid>
   <option_haptic_effects>0</option_haptic_effects>
   <option_hasloadimage>false</option_hasloadimage>
   <option_helpkey>true</option_helpkey>
@@ -89,14 +89,14 @@
   <option_html5_loadingbar></option_html5_loadingbar>
   <option_html5_scale>-1</option_html5_scale>
   <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
-  <option_html5_texture_page>4096</option_html5_texture_page>
+  <option_html5_texture_page>2048</option_html5_texture_page>
   <option_html5_use_test_ads>0</option_html5_use_test_ads>
   <option_html5_usesplash>False</option_html5_usesplash>
   <option_icon>nil</option_icon>
   <option_in_app_purchase_enable>0</option_in_app_purchase_enable>
   <option_in_app_purchase_sandbox_mode>0</option_in_app_purchase_sandbox_mode>
   <option_in_app_purchase_server_url></option_in_app_purchase_server_url>
-  <option_information></option_information>
+  <option_information>(c) Peter Sperl 2014</option_information>
   <option_interpolate>False</option_interpolate>
   <option_ios_adcolony_enable_V4VC>0</option_ios_adcolony_enable_V4VC>
   <option_ios_advertising_enable>0</option_ios_advertising_enable>
@@ -197,9 +197,15 @@
   <option_textureGroup1_parent>&lt;none&gt;</option_textureGroup1_parent>
   <option_textureGroup1_scaled>-1</option_textureGroup1_scaled>
   <option_textureGroup1_targets>9223372036854775807</option_textureGroup1_targets>
-  <option_textureGroup_count>2</option_textureGroup_count>
+  <option_textureGroup2_border>2</option_textureGroup2_border>
+  <option_textureGroup2_nocropping>-1</option_textureGroup2_nocropping>
+  <option_textureGroup2_parent>&lt;none&gt;</option_textureGroup2_parent>
+  <option_textureGroup2_scaled>0</option_textureGroup2_scaled>
+  <option_textureGroup2_targets>9223372036854775807</option_textureGroup2_targets>
+  <option_textureGroup_count>3</option_textureGroup_count>
   <option_textureGroups0>Default</option_textureGroups0>
   <option_textureGroups1>Text</option_textureGroups1>
+  <option_textureGroups2>BackGround</option_textureGroups2>
   <option_tizen_WebGL>0</option_tizen_WebGL>
   <option_tizen_app_id>http://yourdomain/happydash</option_tizen_app_id>
   <option_tizen_build_version>0</option_tizen_build_version>

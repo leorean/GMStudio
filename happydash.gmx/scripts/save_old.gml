@@ -1,4 +1,4 @@
-var savelist, file;
+/*var savelist, file;
 savelist = ds_list_create();
 
 for (i = 0; i < global.scoreCount; i+=1)
@@ -34,5 +34,5 @@ file = file_text_open_write(global.checkFile);
 file_text_write_string(file,string(md5File(global.saveFile))+string(md5(global.mdpw)));
 file_text_writeln(file);
 file_text_close(file);
-
+*/
 

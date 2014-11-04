@@ -164,7 +164,7 @@ switch(dir)
         row = 8;
     break;
 }
-draw_sprite_part(global.sprGfx,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
+draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
 
 
 </string>

@@ -27,5 +27,5 @@ for (j = 0; j <= h;j+=TILE)
     else if (j == h)
     {row = 1; col = 2}
 
-    draw_sprite_part(global.sprHud,-1,row*TILE,5*TILE+col*TILE,TILE,TILE,a+i,b+j);
+    draw_sprite_part(spriteHud,-1,row*TILE,5*TILE+col*TILE,TILE,TILE,a+i,b+j);
 }

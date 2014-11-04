@@ -437,20 +437,18 @@
     <sprite>sprites\spriteFontCombo</sprite>
     <sprite>sprites\spriteFontDefault</sprite>
     <sprite>sprites\spriteGfx</sprite>
+    <sprite>sprites\spriteStartLevel</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\objPlayerStep.gml</script>
+    <script>scripts\objPlayerStepTest.gml</script>
     <script>scripts\in.gml</script>
     <script>scripts\doCombo.gml</script>
     <script>scripts\spawnParticle.gml</script>
     <script>scripts\initParticle.gml</script>
     <scripts name="manage">
-      <scripts name="crypt">
-        <script>scripts\md5File.gml</script>
-        <script>scripts\md5.gml</script>
-      </scripts>
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>
       <script>scripts\save_old.gml</script>
@@ -482,6 +480,7 @@
         <object>objects\objAll</object>
       </objects>
       <object>objects\objControl</object>
+      <object>objects\objDrawBuffer</object>
       <object>objects\objTitleMenu</object>
       <object>objects\objGameOverMenu</object>
       <object>objects\objButton</object>
@@ -493,6 +492,7 @@
       <object>objects\objEffectDust</object>
       <object>objects\objText</object>
       <object>objects\objParticle</object>
+      <object>objects\objStartLevel</object>
     </objects>
     <objects name="items">
       <object>objects\objCoin</object>
@@ -518,7 +518,7 @@
     <constant name="TILE">16</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
-    <constant name="HUDDEPTH">-5</constant>
+    <constant name="HUDDEPTH">-10</constant>
     <constant name="PLAYERDEPTH">0</constant>
     <constant name="BLOCKDEPTH">4</constant>
     <constant name="TILEDEPTH">8</constant>

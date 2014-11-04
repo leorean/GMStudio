@@ -25,12 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>index = 0;
+            <string>image_index = 0;
+depth = 2;
+
+index = 0;
 maxIndex = 3;
 showHelp = false;
 showHighscore = false;
 
 row = 7;
+
+with(objButton)
+    instance_destroy();
 
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Start!";
@@ -233,9 +239,9 @@ z = 2*sin(t);
 //background
 xx = (xx + 1) mod WIDTH;
 
-draw_sprite_part(global.sprTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
-draw_sprite_part(global.sprTitleMenu,-1,0,0,WIDTH,HEIGHT,xx-WIDTH,yy);
-draw_sprite_part(global.sprTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
+draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
+draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx-WIDTH,yy);
+draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
 /*
 if (!showHelp &amp;&amp; !showHighscore)
@@ -252,9 +258,9 @@ if (showHighscore)
 if (!showHelp &amp;&amp; !showHighscore)
 {
     draw_set_alpha(.5);
-    draw_sprite_part_ext(global.sprTitleMenu,-1,0,2.5*HEIGHT,WIDTH,HEIGHT*.5,0,-z,1,1,c_white,.5);
+    draw_sprite_part_ext(spriteTitleMenu,-1,0,2.5*HEIGHT,WIDTH,HEIGHT*.5,0,-z,1,1,c_white,.5);
     draw_set_alpha(1);
-    draw_sprite_part(global.sprTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT*.5,0,-z);
+    draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT*.5,0,-z);
 }
 
 draw_set_font(global.fntDefault);
@@ -285,7 +291,7 @@ if (showHelp || showHighscore)
 //HELP
 if (showHelp)
 {
-    draw_sprite_part(global.sprTitleMenu,-1,WIDTH,page*HEIGHT,WIDTH,HEIGHT,0,0);
+    draw_sprite_part(spriteTitleMenu,-1,WIDTH,page*HEIGHT,WIDTH,HEIGHT,0,0);
 }
 
 if (showHighscore)

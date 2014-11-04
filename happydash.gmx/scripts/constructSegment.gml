@@ -5,6 +5,7 @@ b = argument2;
 var t,s,w,h;
 w = WIDTH/TILE;
 h = HEIGHT/TILE;
+
 for (i = 0; i<w; i += 1)
     for (j = 0; j<h; j+=1)
     {
@@ -49,14 +50,13 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 69) //enemies
         {
-            
             var c;
             c = choose(true,false);
             if (c)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy1);
             else
                 instance_create(a+i*TILE,b+j*TILE,objEnemy2);
-            
+           
         }
         else if (s == 70) //spikes and auto spikes
         {
@@ -93,3 +93,4 @@ for (i = 0; i<w; i += 1)
 
         }        
     }
+    
