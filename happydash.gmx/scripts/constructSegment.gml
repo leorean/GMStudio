@@ -51,11 +51,12 @@ for (i = 0; i<w; i += 1)
         else if (s == 69) //enemies
         {
             var c;
-            c = choose(true,false);
-            if (c)
+            c = choose(0,1,2);
+            if (c == 0)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy1);
-            else
+            if (c == 1)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy2);
+            if (c == 2){}; //do nothing
            
         }
         else if (s == 70) //spikes and auto spikes
@@ -71,14 +72,7 @@ for (i = 0; i<w; i += 1)
                     instance_create(a+i*TILE,b+j*TILE,objEnemyAutoSpike);
             }
 
-        }/*
-        else if (s == 71) //coinblock
-        {
-            t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-            t.px = floor((s-1) mod TILE);
-            t.py = floor((s-1) div TILE);
-            t.type = 1;
-        }*/
+        }
         else if (s == 72) //flying enemy
         {
             if (min(global.difficulty,20) > random(30))

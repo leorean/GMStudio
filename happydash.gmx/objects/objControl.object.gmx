@@ -76,7 +76,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
         global.maxCoins = 6 * floor(3 + global.level * power(3, global.level * .022 ) );
         if (global.coins&gt;=global.maxCoins)
         {
-            global.xSpeedDefault = min(global.xSpeedDefault + .05, global.xSpeedMax);
+            global.xSpeedDefault = min(global.xSpeedDefault + .025, global.xSpeedMax);
             global.level += 1;
             global.coins = 0;
             t = instance_create(global.player.cx,global.player.cy,objText);
