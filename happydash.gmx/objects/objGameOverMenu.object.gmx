@@ -28,6 +28,10 @@
             <string>index = 0;
 maxIndex = 1;
 
+
+with(objButton)
+    instance_destroy();
+    
 btn[0] = instance_create(WIDTH/2,HEIGHT/2-TILE,objButton);
 btn[0].text = "Retry";
 btn[0].index = 0;

@@ -33,7 +33,7 @@ yVel = 0;
 dir = LEFT;
 spd = 0;
 maxSpd = 2;
-yGrav = 0;
+yGrav = .15;
 
 state = IDLE;
 alive = true;
@@ -144,9 +144,9 @@ switch(state)
 }
 
 if (dir == RIGHT)
-    draw_sprite_part(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),y);
+    draw_sprite_part(spriteEnemies,-1,2*frame*TILE,4*TILE+row*TILE,2*TILE,TILE,x-TILE*.5,y);
 else
-    draw_sprite_part_ext(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,y,-1,1,c_white,1);
+    draw_sprite_part_ext(spriteEnemies,-1,2*frame*TILE,4*TILE+row*TILE,2*TILE,TILE,x+TILE*.5,y,-1,1,c_white,1);
 
 </string>
           </argument>

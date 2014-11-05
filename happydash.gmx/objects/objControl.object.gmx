@@ -148,13 +148,19 @@ if (room != INIT &amp;&amp; !global.gameOver)
 
 }
 
+if (global.gameOver)
+    global.pause = false;
+
 //if in title menu:
 
 if (room == INIT || global.gameOver)
     playMusic(sfxBgm,false);
 else
     playMusic(sfxBgm,!global.mute);
-    
+
+
+    if keyboard_check_pressed(vk_escape)
+        game_end();
 
     //debug keys:   
     if keyboard_check_pressed(ord('R'))
@@ -163,6 +169,7 @@ else
     if keyboard_check_pressed(ord('Q'))
         room_goto(INIT);
 
+    //TODO: REMOVE THIS
     if keyboard_check_pressed(ord('E'))
         {
             global.coins = global.maxCoins-1;
@@ -315,7 +322,7 @@ global.sprStartLevel = spriteStartLevel;
 //FONTS
 global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);
 global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
-global.fntCombo = font_add_sprite(spriteFontCombo,ord('!'),true,0);
+global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
 
 //PARTICLE RECYCLE
 global.mParticle = 50;

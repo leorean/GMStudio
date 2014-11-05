@@ -142,7 +142,7 @@ if (instance_exists(enemy) && state != DEAD)
         if (state == ATTACK || (yVel < 0 && y > enemy.y) || (y < enemy.y))
         {
             //jump on enemies
-            if (yVel > 0 && y < enemy.y)
+            if (state != ATTACK)
             {
                 yVel = -3;
                 xVel = 0;
@@ -190,14 +190,14 @@ if (!alive)
     state = DEAD;
 }
 
-if (state == DEAD)
+if (state == DEAD && !global.gameOver)
 {
     global.xSpeed = 0;
     if (!alarm[0])
     {
-        instance_create(0,0,objGameOverMenu);
+        if (!instance_exists(objGameOverMenu))
+            instance_create(0,0,objGameOverMenu);
         global.gameOver = true;
-        //room_restart();
     }
 }
 else //IF NOT DEAD
