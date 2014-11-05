@@ -81,7 +81,8 @@ for (i = 0; i<w; i += 1)
         }*/
         else if (s == 72) //flying enemy
         {
-            instance_create(a+i*TILE,b+j*TILE,objEnemy3);
+            if (min(global.difficulty,20) > random(30))
+                instance_create(a+i*TILE,b+j*TILE,objEnemy3);
         }
 
         //insert here
@@ -93,4 +94,11 @@ for (i = 0; i<w; i += 1)
 
         }        
     }
-    
+
+//ADD SEGMENT-INDEPENDANT THINGS:
+//RANDOM ENEMY SPAWNING
+/*
+if (min(global.difficulty,2) > random(4))
+{
+    instance_create(WIDTH, 2*TILE+irandom(5)*TILE,objEnemy3);
+}*/

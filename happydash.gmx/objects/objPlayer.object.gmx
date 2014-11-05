@@ -275,23 +275,7 @@ switch(state)
 
 draw_sprite_part(spritePlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,xDraw-TILE*.5,yDraw-TILE*.5);
 
-if (combo &gt; 0 &amp;&amp; state != DEAD)
-{
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_top);
-    draw_set_font(global.fntCombo);
-
-    draw_set_alpha(.5);
-    draw_set_color(c_black);
-    draw_text(cx+2,y-TILE+2,":"+string(combo));
-
-    draw_set_alpha(1);
-    draw_set_color(make_color_hsv(max(50 - (combo*5),0),255,255));
-    draw_text(cx,y-TILE,":"+string(combo));
-
-}
-
-draw_set_color(c_white);
+//draw_set_color(c_white);
 
 </string>
           </argument>

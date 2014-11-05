@@ -2,9 +2,9 @@
 <object>
   <spriteName>sprParticleMask</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,9 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>initParticle(x,y,id,c_white);
-x = WIDTH/2;
-y = HEIGHT+TILE;
+            <string>active = true;
+depth = PLAYERDEPTH-1;
+xVel = -2+random(4);
+yVel = -3+random(2);
+yGrav = .1;
+size = 1+random(1);
+alarm[0] = 2*FPS;
+
+color = c_white;
 </string>
           </argument>
         </arguments>
@@ -72,11 +78,10 @@ y = HEIGHT+TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (active)
+            <string>cycle();
+    
+if (active)
 {   
-
-    if (!global.spawnSegment)
-        x -= global.xSpeed;
 
     yVel += yGrav;
         
@@ -91,18 +96,9 @@ y = HEIGHT+TILE;
     }
     else
         y += yVel;
-    
-    
-    if (!alarm[0] || x &lt; 0 || y&gt;HEIGHT || !global.startSignal)
-    {
-        x = WIDTH/2;
-        y = HEIGHT+TILE;
-        active = false;
-    }
 
-    visible = true;
 } else
-    visible = false;
+    instance_destroy();
 </string>
           </argument>
         </arguments>

@@ -144,7 +144,8 @@ if (instance_exists(enemy) && state != DEAD)
             //jump on enemies
             if (state != ATTACK)
             {
-                yVel = -3;
+                if (yVel >= 0)
+                    yVel = -3;
                 xVel = 0;
                 state = JUMP;
                 jumpPerformed = 0;
