@@ -74,7 +74,7 @@
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteTiles,-1,px*TILE,py*TILE,TILE,TILE,x,y);
+draw_sprite_part(spriteTiles,-1,px*TILE,py*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

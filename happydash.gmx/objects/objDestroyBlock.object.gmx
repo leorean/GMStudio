@@ -102,7 +102,7 @@ if (state == DEAD)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,x,y);
+draw_sprite_part(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

@@ -484,27 +484,27 @@
       <object>objects\objButton</object>
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
-      <object>objects\objBlock</object>
-      <object>objects\objTile</object>
-      <object>objects\objPlatform</object>
-      <object>objects\objEffectDust</object>
       <object>objects\objText</object>
       <object>objects\objParticle</object>
       <object>objects\objStartLevel</object>
-    </objects>
-    <objects name="items">
-      <object>objects\objCoin</object>
+      <objects name="content">
+        <object>objects\objBlock</object>
+        <object>objects\objTile</object>
+        <object>objects\objPlatform</object>
+        <object>objects\objDestroyBlock</object>
+        <object>objects\objCoin</object>
+        <object>objects\objEffectDust</object>
+        <objects name="enemies">
+          <object>objects\objEnemyAutoSpike</object>
+          <object>objects\objEnemySpike</object>
+          <object>objects\objEnemy1</object>
+          <object>objects\objEnemy2</object>
+          <object>objects\objEnemy3</object>
+        </objects>
+      </objects>
     </objects>
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>
-    </objects>
-    <object>objects\objDestroyBlock</object>
-    <objects name="enemies">
-      <object>objects\objEnemyAutoSpike</object>
-      <object>objects\objEnemySpike</object>
-      <object>objects\objEnemy1</object>
-      <object>objects\objEnemy2</object>
-      <object>objects\objEnemy3</object>
     </objects>
   </objects>
   <rooms name="rooms">

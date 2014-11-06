@@ -76,10 +76,10 @@ if (!global.pause)
     {
         if (dir == NONE)
         {
-        r = place_meeting(x-TILE+global.xSpeed,y,objBlock);
-        l = place_meeting(x+TILE+global.xSpeed,y,objBlock);
-        d = place_meeting(x+global.xSpeed,y-TILE,objBlock);
-        u = place_meeting(x+global.xSpeed,y+TILE,objBlock);
+        r = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
+        l = place_meeting(x+TILE-ceil(global.xSpeed),y,objBlock);
+        d = place_meeting(x-ceil(global.xSpeed),y-TILE,objBlock);
+        u = place_meeting(x-ceil(global.xSpeed),y+TILE,objBlock);
     
             if (l &amp;&amp; !r) dir = LEFT;
             if (r &amp;&amp; !l) dir = RIGHT;
@@ -164,7 +164,7 @@ switch(dir)
         row = 8;
     break;
 }
-draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
+draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
 
 
 </string>

@@ -199,7 +199,7 @@ magnet = false;
 fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
 frame = floor(fCur);
 
-draw_sprite_part(spriteGfx,-1,frame*TILE,TILE,TILE,TILE,x,y);
+draw_sprite_part(spriteGfx,-1,frame*TILE,TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

@@ -30,6 +30,7 @@ mask = -1;
 
 state = IDLE;
 checking = TILE;
+l = false; r = false; u = false; d = false;
 </string>
           </argument>
         </arguments>
@@ -54,10 +55,10 @@ checking = TILE;
             <kind>1</kind>
             <string>if (checking)
 {
-    l = place_meeting(x-TILE+global.xSpeed,y,objBlock);
-    r = place_meeting(x+TILE+global.xSpeed,y,objBlock);
-    u = place_meeting(x+global.xSpeed,y-TILE,objBlock);
-    d = place_meeting(x+global.xSpeed,y+TILE,objBlock);
+    l = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
+    r = place_meeting(x-ceil(global.xSpeed)+TILE,y,objBlock);
+    u = place_meeting(x-ceil(global.xSpeed),y-TILE,objBlock);
+    d = place_meeting(x-ceil(global.xSpeed),y+TILE,objBlock);
 
     if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d)
         mask = 4;
@@ -75,9 +76,9 @@ checking = TILE;
     if (mask == 1)
         mask_index = sprEnemyMaskDown;
     if (mask == 2)
-        mask_index = sprEnemyMaskLeft;
-    if (mask == 3)
         mask_index = sprEnemyMaskRight;
+    if (mask == 3)
+        mask_index = sprEnemyMaskLeft;
     if (mask == 4)
         mask_index = sprEnemySpikeMask;
 
@@ -109,7 +110,7 @@ cycle ();
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,mask*TILE,0,TILE,TILE,x,y);
+draw_sprite_part(spriteGfx,-1,mask*TILE,0,TILE,TILE,floor(x),y);
 
 </string>
           </argument>
