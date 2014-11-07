@@ -231,6 +231,9 @@ if (room == INIT)
 }
 else
 {
+    global.coinsCollected = 0;
+    global.enemiesKilled = 0;
+    global.maxCombo = 0;
     global.coins = 0;
     global.curScore = 0;
     global.addScore = 0;
@@ -313,32 +316,10 @@ randomize();
 //SOUNDS
 global.mute = true;
 
-//GRAPHICS
-/*
-global.sprTiles = spriteTiles;
-global.sprEnemies = spriteEnemies;
-global.sprBg = spriteBg;
-global.sprTitleMenu = spriteTitleMenu;
-global.sprGfx = spriteGfx;
-global.sprHud = spriteHud;
-global.sprPlayer = spritePlayer;
-global.sprStartLevel = spriteStartLevel;
-*/
-
 //FONTS
 global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);
 global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
 global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
-
-//PARTICLE RECYCLE .. sucks.
-/*
-global.mParticle = 25;
-global.iParticle = 0;
-global.particle[global.mParticle] = 0;
-for (i = 0; i &lt; global.mParticle; i+=1)
-    global.particle[i] = instance_create(TILE+i,TILE,objParticle);
-*/
-
 
 //SEGMENTS
 
@@ -355,6 +336,7 @@ alarm0 = FPS;
 alarm[0] = alarm0;
 
 //score stuff
+global.maxCombo = 0; //highest combo
 global.curScore = 0; //main score
 global.addScore = 0; //pieces of score due to combos and coins
 global.scoreCount = 5;
@@ -365,6 +347,9 @@ for (i = 0; i &lt; global.scoreCount; i+=1)
 global.pause = false;
 global.mouseVisible = false;
 global.gameOver = false;
+
+global.coinsCollected = 0;
+global.enemiesKilled = 0;
 
 global.coins = 0;
 global.maxCoins = 0;
@@ -457,7 +442,7 @@ draw_set_valign(fa_top);
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
-if (room != INIT)
+if (room != INIT &amp;&amp; !global.gameOver)
 {
 
     if (global.pause)

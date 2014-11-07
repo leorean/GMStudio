@@ -113,6 +113,7 @@ magnet = false;
                 if (collision_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,global.player,false,true))    
                 {
                     global.coins += 1;
+                    global.coinsCollected += 1;
                     //each 5 segments, the coin is worth more!!
                     global.addScore += (global.difficulty div 5);
                     alive = false;

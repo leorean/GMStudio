@@ -33,7 +33,7 @@
 colorActive = c_white;
 colorInactive = c_gray;//make_color_rgb(209,152,105)
 
-depth = 1;
+depth = 0;
 </string>
           </argument>
         </arguments>

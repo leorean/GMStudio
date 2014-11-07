@@ -1,5 +1,7 @@
 combo += 1;
 
+global.maxCombo = max(global.maxCombo, combo);
+
 if (true)
 {
 /*

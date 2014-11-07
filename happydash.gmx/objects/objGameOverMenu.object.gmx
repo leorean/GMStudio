@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -31,20 +31,19 @@ maxIndex = 1;
 
 with(objButton)
     instance_destroy();
-    
-btn[0] = instance_create(WIDTH/2,HEIGHT/2-TILE,objButton);
+   
+btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
 btn[0].text = "Retry";
 btn[0].index = 0;
 btn[0].parent = id;
 
-btn[1] = instance_create(WIDTH/2,HEIGHT/2+TILE,objButton);
+btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
 btn[1].text = "Quit";
 btn[1].index = 1;
 btn[1].parent = id;
 
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
-
 </string>
           </argument>
         </arguments>
@@ -170,12 +169,42 @@ mouse_yprev = mouse_y;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
+draw_set_alpha(.5);
+draw_set_color(c_black);
+draw_rectangle(0,0,WIDTH,HEIGHT,0);
+
 draw_set_font(global.fntDefault);
 draw_set_color(c_white);
 draw_set_alpha(1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
+var row,d;
+row = 3;
+d = 7*TILE;
+
+draw_set_halign(fa_center);
+draw_text(WIDTH*.5, 1.5*TILE,"&amp;&amp;&amp; " + "Final Score: " + string(global.curScore) + " &amp;&amp;&amp;");
+
+draw_set_halign(fa_left);
+draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
+draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
+draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
+draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
+draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
+
+draw_set_halign(fa_right);
+draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
+draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
+draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
+draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
+draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
+
+//draw_rectangle(WIDTH*.5-4*TILE,6.7*TILE,WIDTH*.5+4*TILE,7.2*TILE,2);
+
+drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
+
+/* OLD GAME OVER MENU
 var highScore;
 highScore = 0;//global.curScore;
 

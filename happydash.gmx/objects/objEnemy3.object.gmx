@@ -91,6 +91,7 @@ fSpeed = 0;
     {
         if (alive)
         {
+            global.enemiesKilled += 1;
             yVel = -3;
             playSound(sfxEnemyDie);
         }
