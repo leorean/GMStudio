@@ -1,3 +1,9 @@
+ini_open(global.saveFile);
+
+ini_write_real('score','score1',1337);
+
+ini_close();
+
 /*
 var savelist, file;
 savelist = ds_list_create();

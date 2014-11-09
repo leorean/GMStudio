@@ -86,7 +86,7 @@ c = ((c - global.xSpeed*.7) mod w);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.theme = 0;
+            <string>global.theme = 2;
 global.themePrev = 0;
 alpha = 0;
 fade = 0;
