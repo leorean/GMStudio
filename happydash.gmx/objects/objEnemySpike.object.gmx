@@ -29,7 +29,7 @@
 mask = -1;
 
 state = IDLE;
-checking = TILE;
+checked = false;
 l = false; r = false; u = false; d = false;
 </string>
           </argument>
@@ -53,7 +53,7 @@ l = false; r = false; u = false; d = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (checking)
+            <string>if (!checked)
 {
     l = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
     r = place_meeting(x-ceil(global.xSpeed)+TILE,y,objBlock);
@@ -82,7 +82,7 @@ l = false; r = false; u = false; d = false;
     if (mask == 4)
         mask_index = sprEnemySpikeMask;
 
-    checking -= 1;
+    checked = true;
 }
 
 cycle ();

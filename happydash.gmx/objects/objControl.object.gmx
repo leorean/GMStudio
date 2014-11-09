@@ -124,7 +124,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 var a; //formula to choose next segment
                 //a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
                 a = 1 + global.theme * global.segmentsPerTheme + irandom(global.segmentsPerTheme - 1);
-                
+                if ( global.theme == 2)
+                    a = 21;
                 constructSegment(global.segment[
                     min(max(
                         a,

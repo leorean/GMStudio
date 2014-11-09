@@ -62,19 +62,21 @@ fSpeed = .2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x += xVel;
-y += yVel;
-
-cycle();
-
-if (collision_point(x,y,objAny,false,true)
-    || x &lt; -TILE || y &gt; HEIGHT+TILE || x &gt; WIDTH+TILE || y &lt; -TILE)
-    {
-        t = instance_create(x-TILE*.5,y-TILE*.5,objEffectDust);
-        t.type = 5;
-        instance_destroy();
-    }
-
+            <string>if (!global.pause)
+{
+    x += xVel;
+    y += yVel;
+    
+    cycle();
+    
+    if (collision_point(x,y,objAny,false,true)
+        || x &lt; -TILE || y &gt; HEIGHT+TILE || x &gt; WIDTH+TILE || y &lt; -TILE)
+        {
+            t = instance_create(x-TILE*.5,y-TILE*.5,objEffectDust);
+            t.type = 5;
+            instance_destroy();
+        }
+}
 </string>
           </argument>
         </arguments>

@@ -1,3 +1,6 @@
+repeat(5)
+    spawnParticle(x+TILE*.5,y+TILE*.5,make_color_rgb(49,33,27));
+
 combo += 1;
 
 global.maxCombo = max(global.maxCombo, combo);
