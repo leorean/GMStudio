@@ -226,7 +226,7 @@ global.gameOver = false;
 if (room == INIT)
 {
     instance_create(0,0,objTitleMenu);
-    //loadProgress();
+    loadProgress();
 }
 else
 {
@@ -377,8 +377,6 @@ global.themePrev = global.theme;
 global.maxTheme = 2; //maximum number of available themes
 
 global.saveFile = 'sv.ini';
-saveProgress();
-
 
 // SAVE FILE MANAGEMENT &amp; ENCRYPTION
 /*

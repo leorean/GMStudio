@@ -5,7 +5,7 @@
   <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>objEnemy</parentName>
+  <parentName>objLivingEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -43,6 +43,11 @@ fMax = 4;
 hasShot = true;
 
 checked = false;
+
+knockedUp = false;
+alive = true;
+yGrav = .15;
+yVel = 0;
 </string>
           </argument>
         </arguments>
@@ -71,58 +76,75 @@ if (!global.pause)
 {
 
     cycle ();
-    
-    if (!checked)
+    if (alive)
     {
-        if (dir == NONE)
+        if (!checked)
         {
-        r = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
-        l = place_meeting(x+TILE-ceil(global.xSpeed),y,objBlock);
-        d = place_meeting(x-ceil(global.xSpeed),y-TILE,objBlock);
-        u = place_meeting(x-ceil(global.xSpeed),y+TILE,objBlock);
-    
-            if (l &amp;&amp; !r) dir = LEFT;
-            if (r &amp;&amp; !l) dir = RIGHT;
-    
-            if (d &amp;&amp; !u) dir = DOWN;
-            if (u) dir = UP;
-            if (l &amp;&amp; r) dir = UP;
-            if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d) dir = UP;
+            if (dir == NONE)
+            {
+            r = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
+            l = place_meeting(x+TILE-ceil(global.xSpeed),y,objBlock);
+            d = place_meeting(x-ceil(global.xSpeed),y-TILE,objBlock);
+            u = place_meeting(x-ceil(global.xSpeed),y+TILE,objBlock);
+        
+                if (l &amp;&amp; !r) dir = LEFT;
+                if (r &amp;&amp; !l) dir = RIGHT;
+        
+                if (d &amp;&amp; !u) dir = DOWN;
+                if (u) dir = UP;
+                if (l &amp;&amp; r) dir = UP;
+                if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d) dir = UP;
+            }
+            
+            if (dir == UP) mask_index = sprEnemyMaskUp;;
+            if (dir == DOWN) mask_index = sprEnemyMaskDown;
+            if (dir == LEFT) mask_index = sprEnemyMaskLeft;
+            if (dir == RIGHT) mask_index = sprEnemyMaskRight;
+            
+            checked = true;
         }
         
-        if (dir == UP) mask_index = sprEnemyMaskUp;;
-        if (dir == DOWN) mask_index = sprEnemyMaskDown;
-        if (dir == LEFT) mask_index = sprEnemyMaskLeft;
-        if (dir == RIGHT) mask_index = sprEnemyMaskRight;
-        
-        checked = true;
-    }
-    
-    if ((global.timer) mod t == 0)
-    {
-        active = true;
-        look = -look;
-        hasShot = false;
-    }
-    
-    if (active)
-    {
-        fCur = max(min(fCur + fSpeed*sign(look), fMax),0);
-    
-        if (fCur &gt;= fMax - fSpeed &amp;&amp; !hasShot &amp;&amp; look == DOWN &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
+        if ((global.timer) mod t == 0)
         {
-            instance_create(x+TILE*.5,y+TILE*.5,objEnemyProjectile);
-            hasShot = true;
+            active = true;
+            look = -look;
+            hasShot = false;
         }
-
-        if (fCur &lt;= 0 || fCur &gt;= fMax)
-            active = false;
-    }
+        
+        if (active)
+        {
+            fCur = max(min(fCur + fSpeed*sign(look), fMax),0);
+        
+            if (fCur &gt;= fMax - fSpeed &amp;&amp; !hasShot &amp;&amp; look == DOWN &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
+            {
+                instance_create(x+TILE*.5,y+TILE*.5,objEnemyProjectile);
+                hasShot = true;
+            }
     
-    if (fCur &gt;= fMax)
-        state = IDLE;
-    else
+            if (fCur &lt;= 0 || fCur &gt;= fMax)
+                active = false;
+        }
+        
+        if (fCur &gt;= fMax)
+            state = IDLE;
+        else
+            state = DEAD;
+    } else //DEAD
+    {
         state = DEAD;
+        if (!knockedUp)
+        {   
+            fCur = 0;
+            global.enemiesKilled += 1;
+            playSound(sfxEnemyDie);
+            yVel = -3;
+            knockedUp = true;
+        }
+        fCur = (fCur + .2) mod 4;
+        yVel += yGrav;
+        y += yVel;
+    }
+        
 }
 </string>
           </argument>
@@ -164,7 +186,12 @@ switch(dir)
         row = 8;
     break;
 }
-draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
+
+if (alive)
+    draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
+else
+    draw_sprite_part(spriteGfx,-1,5*TILE+frame*TILE,5*TILE,TILE,TILE,floor(x),y);
+
 
 
 </string>

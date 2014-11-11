@@ -152,6 +152,16 @@ if (instance_exists(enemy) && state != DEAD)
 
             jumpPerformed = 0;
 
+            if (real(enemy.object_index) == real(objEnemyAutoSpike))
+            {
+                if (enemy.alive)
+                {
+                    t = instance_create(enemy.x,enemy.y,objEffectDust);
+                    t.type = 2;
+                    doCombo();
+                }
+                enemy.alive = false;
+            } else
             if (enemy.state != DEAD)
             {
                 t = instance_create(enemy.x,enemy.y,objEffectDust);
@@ -184,8 +194,6 @@ if (!alive)
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
-        //currently does nothing
-        loadProgress();
         saveProgress();
     }
     global.hasControl = false;

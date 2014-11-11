@@ -1,6 +1,23 @@
+if (file_exists(working_directory + global.saveFile))
+{
+    ini_open(working_directory + global.saveFile);
+    
+    var file, loadlist;
+    loadlist = ds_list_create();
+    
+    for (i = 0; i < global.scoreCount; i+=1)
+        ds_list_add(loadlist,real(ini_read_string('Score','score'+string(i),'0')));
+    
+    ds_list_sort(loadlist,false);
+    
+    for (i = 0; i < global.scoreCount; i+=1)
+        global.scores[i] = ds_list_find_value(loadlist,i);
+    
+    ds_list_destroy(loadlist);
+    ini_close();
+}
 /*
 var file, loadlist;
-blub = "";
 
 if (file_exists(global.saveFile))
     file = file_text_open_read(global.saveFile);
