@@ -226,6 +226,7 @@ else //IF NOT DEAD
             playSound(sfxDash);
             t = instance_create(x-TILE*.5,y,objEffectDust);
             t.type = 3;
+            //t.color = make_color_hsv(random(255),255,255);
         }
         //.005 = 1/WIDTH*2
         xVel = 2*(1-(x*.005));
@@ -294,8 +295,8 @@ else //IF NOT DEAD
         if (state == ATTACK)
             if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
                 state = JUMP;
-        xVel = -global.xSpeed;
-        x -= ceil(global.xSpeed);
+        xVel = 0;//-global.xSpeed;
+        x -= global.xSpeed;
     }
 }
 

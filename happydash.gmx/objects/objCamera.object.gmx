@@ -32,8 +32,8 @@ w = WIDTH;
 h = HEIGHT;
 
 theme = 0;
-alpha = 0;
-fade = 0;
+alpha = 1;
+fade = 2;
 
 depth = CAMERADEPTH;
 </string>
@@ -86,10 +86,8 @@ c = ((c - global.xSpeed*.7) mod w);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.theme = 2;
-global.themePrev = 0;
-alpha = 0;
-fade = 0;
+            <string>alpha = 1;
+fade = 2;
 </string>
           </argument>
         </arguments>
@@ -152,6 +150,7 @@ if (fade == 1)
 if (fade == 2)
 {
     draw_rectangle(0,0,WIDTH,HEIGHT,0);
+    if (global.prevSeg != 0)
     alpha = max(alpha - .01,0);
     if (alpha == 0)
         fade = 0;

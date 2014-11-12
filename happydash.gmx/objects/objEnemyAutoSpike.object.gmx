@@ -32,8 +32,7 @@ state = DEAD;
 active = true;
 depth = BLOCKDEPTH-1;
 look = UP;
-t = 1*FPS;
-o = choose(0,t);
+t = 2*FPS;
 dir = NONE;
 
 fCur = 0;
@@ -42,7 +41,7 @@ fMax = 4;
 
 hasShot = true;
 
-checked = false;
+checking = TILE;
 
 knockedUp = false;
 alive = true;
@@ -78,30 +77,30 @@ if (!global.pause)
     cycle ();
     if (alive)
     {
-        if (!checked)
+        if (checking &gt; 0)
         {
-            if (dir == NONE)
-            {
-            r = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
-            l = place_meeting(x+TILE-ceil(global.xSpeed),y,objBlock);
-            d = place_meeting(x-ceil(global.xSpeed),y-TILE,objBlock);
-            u = place_meeting(x-ceil(global.xSpeed),y+TILE,objBlock);
-        
-                if (l &amp;&amp; !r) dir = LEFT;
-                if (r &amp;&amp; !l) dir = RIGHT;
-        
-                if (d &amp;&amp; !u) dir = DOWN;
-                if (u) dir = UP;
-                if (l &amp;&amp; r) dir = UP;
-                if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d) dir = UP;
-            }
-            
+            cx = x+TILE*.5-ceil(global.xSpeed);
+            cy = y+TILE*.5;
+
+            r = collision_point(cx-TILE,cy,objSolid,false,true);
+            l = collision_point(cx+TILE,cy,objSolid,false,true);
+            d = collision_point(cx,cy-TILE,objSolid,false,true);
+            u = collision_point(cx,cy+TILE,objSolid,false,true);
+    
+            if (l &amp;&amp; !r) dir = LEFT;
+            if (r &amp;&amp; !l) dir = RIGHT;
+    
+            if (d &amp;&amp; !u) dir = DOWN;
+            if (u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) || (u &amp;&amp; l &amp;&amp; r) dir = UP;
+
             if (dir == UP) mask_index = sprEnemyMaskUp;;
             if (dir == DOWN) mask_index = sprEnemyMaskDown;
             if (dir == LEFT) mask_index = sprEnemyMaskLeft;
             if (dir == RIGHT) mask_index = sprEnemyMaskRight;
-            
-            checked = true;
+
+            if (!u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) instance_destroy();
+                        
+            checking = max(checking - 1, 0);
         }
         
         if ((global.timer) mod t == 0)
@@ -115,7 +114,7 @@ if (!global.pause)
         {
             fCur = max(min(fCur + fSpeed*sign(look), fMax),0);
         
-            if (fCur &gt;= fMax - fSpeed &amp;&amp; !hasShot &amp;&amp; look == DOWN &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
+            if (fCur &gt;= fMax - fSpeed &amp;&amp; !hasShot &amp;&amp; look == UP &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
             {
                 instance_create(x+TILE*.5,y+TILE*.5,objEnemyProjectile);
                 hasShot = true;
@@ -184,6 +183,9 @@ switch(dir)
     break;
     case RIGHT:
         row = 8;
+    break;
+    default:
+        row = 5;
     break;
 }
 

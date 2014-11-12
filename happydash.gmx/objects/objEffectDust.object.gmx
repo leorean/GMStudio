@@ -30,8 +30,8 @@ fMax = 6;
 fSpeed = .3;
 depth = PLAYERDEPTH-3;
 
-//if (!variable_local_exists("type"))
-    type = 0;
+type = 0;
+color = c_white;
 </string>
           </argument>
         </arguments>
@@ -86,7 +86,9 @@ frame = floor(fCur);
 if (fCur &gt;= fMax+1)
     instance_destroy();
 
-draw_sprite_part_ext(spriteGfx,-1,min(frame,fMax) * TILE,9*TILE+type*TILE,TILE,TILE,floor(x),y,1,1,c_white,1);
+draw_set_color(color);
+draw_sprite_part_ext(spriteGfx,-1,min(frame,fMax) * TILE,9*TILE+type*TILE,TILE,TILE,floor(x),y,1,1,color,1);
+draw_set_color(c_white);
 </string>
           </argument>
         </arguments>

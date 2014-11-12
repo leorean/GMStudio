@@ -6,11 +6,6 @@ var t,s,w,h;
 w = WIDTH/TILE;
 h = HEIGHT/TILE;
 
-var spawnCoins, spawnSpikes;
-
-spawnCoins = choose(true,false);
-spawnSpikes = choose(true,false);
-
 for (i = 0; i<w; i += 1)
     for (j = 0; j<h; j+=1)
     {
@@ -23,9 +18,8 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 65) //spikes
         {
-            if (spawnSpikes)
-                if (min(global.difficulty,15) > random(20))
-                    instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
+            if (min(global.difficulty,15) > random(20))
+                instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
         }
         else if (s == 66) //platforms
         {
@@ -52,8 +46,7 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 68) //coins
         {
-            if (spawnCoins)
-                instance_create(a+i*TILE,b+j*TILE,objCoin);
+            instance_create(a+i*TILE,b+j*TILE,objCoin);
         }
         else if (s == 69) //enemies
         {

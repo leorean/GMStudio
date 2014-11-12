@@ -26,10 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>depth = PLAYERDEPTH+3;
-mask = -1;
+mask = 4;
 
 state = IDLE;
-checked = false;
+checking = TILE;
 l = false; r = false; u = false; d = false;
 </string>
           </argument>
@@ -53,12 +53,15 @@ l = false; r = false; u = false; d = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!checked)
+            <string>if (checking &gt; 0)
 {
-    l = place_meeting(x-TILE-ceil(global.xSpeed),y,objBlock);
-    r = place_meeting(x-ceil(global.xSpeed)+TILE,y,objBlock);
-    u = place_meeting(x-ceil(global.xSpeed),y-TILE,objBlock);
-    d = place_meeting(x-ceil(global.xSpeed),y+TILE,objBlock);
+    cx = x+TILE*.5-ceil(global.xSpeed);
+    cy = y+TILE*.5;
+    
+    l = collision_point(cx-TILE,cy,objSolid,false,true);
+    r = collision_point(cx+TILE,cy,objSolid,false,true);
+    u = collision_point(cx,cy-TILE,objSolid,false,true);
+    d = collision_point(cx,cy+TILE,objSolid,false,true);
 
     if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d)
         mask = 4;
@@ -66,10 +69,10 @@ l = false; r = false; u = false; d = false;
     if (l) mask = 2;
     if (r) mask = 3;    
 
-    if (u) mask = 1;
-    if (d) mask = 0;
+    if (u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) mask = 1;
+    if (d &amp;&amp; !u &amp;&amp; !l &amp;&amp; !r) mask = 0;
 
-    if (l &amp;&amp; r &amp;&amp; !d) mask = 4;
+    //if (l &amp;&amp; r &amp;&amp; !d) mask = 4;
 
     if (mask == 0)
         mask_index = sprEnemyMaskUp;
@@ -82,7 +85,7 @@ l = false; r = false; u = false; d = false;
     if (mask == 4)
         mask_index = sprEnemySpikeMask;
 
-    checked = true;
+    checking = max(checking - 1, 0);
 }
 
 cycle ();
