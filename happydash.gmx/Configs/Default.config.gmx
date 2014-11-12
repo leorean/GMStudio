@@ -7,8 +7,8 @@
   <option_android_advertising_key></option_android_advertising_key>
   <option_android_advertising_type>MoPub</option_android_advertising_type>
   <option_android_amazon_game_circle>0</option_android_amazon_game_circle>
-  <option_android_amazon_gc_achievements>-1</option_android_amazon_gc_achievements>
-  <option_android_amazon_gc_leaderboards>-1</option_android_amazon_gc_leaderboards>
+  <option_android_amazon_gc_achievements>0</option_android_amazon_gc_achievements>
+  <option_android_amazon_gc_leaderboards>0</option_android_amazon_gc_leaderboards>
   <option_android_amazon_gc_whispersync>0</option_android_amazon_gc_whispersync>
   <option_android_amazon_iap>0</option_android_amazon_iap>
   <option_android_arch_armv5>True</option_android_arch_armv5>
@@ -31,7 +31,7 @@
   <option_android_icon_48>Configs\Default\android\icons\icon48.png</option_android_icon_48>
   <option_android_icon_72>Configs\Default\android\icons\icon72.png</option_android_icon_72>
   <option_android_install_location>auto</option_android_install_location>
-  <option_android_interpolate>-1</option_android_interpolate>
+  <option_android_interpolate>0</option_android_interpolate>
   <option_android_licensing_enable>0</option_android_licensing_enable>
   <option_android_licensing_key></option_android_licensing_key>
   <option_android_major_version>1</option_android_major_version>
@@ -39,15 +39,15 @@
   <option_android_orient_landscape>true</option_android_orient_landscape>
   <option_android_orient_portrait>true</option_android_orient_portrait>
   <option_android_orientation>1</option_android_orientation>
-  <option_android_package_company>companyname</option_android_package_company>
+  <option_android_package_company>shinypixelgames</option_android_package_company>
   <option_android_package_domain>com</option_android_package_domain>
   <option_android_package_product>happydash</option_android_package_product>
-  <option_android_permission_flags>8</option_android_permission_flags>
+  <option_android_permission_flags>3</option_android_permission_flags>
   <option_android_pocketchange_enable>0</option_android_pocketchange_enable>
   <option_android_pocketchange_id></option_android_pocketchange_id>
   <option_android_set_device_id></option_android_set_device_id>
   <option_android_splash_png>Configs\Default\android\splash.png</option_android_splash_png>
-  <option_android_texture_page>1024</option_android_texture_page>
+  <option_android_texture_page>2048</option_android_texture_page>
   <option_android_use_test_ads>0</option_android_use_test_ads>
   <option_argumenterrors>True</option_argumenterrors>
   <option_author>Peter Sperl</option_author>
@@ -66,7 +66,7 @@
   <option_fullscreen>False</option_fullscreen>
   <option_gameguid>{BD9E6A26-5522-4CC6-8006-82B2DAA692E8}</option_gameguid>
   <option_gameid>967318880</option_gameid>
-  <option_haptic_effects>0</option_haptic_effects>
+  <option_haptic_effects>-1</option_haptic_effects>
   <option_hasloadimage>false</option_hasloadimage>
   <option_helpkey>true</option_helpkey>
   <option_html5_CreationEventOrder>true</option_html5_CreationEventOrder>
@@ -91,7 +91,7 @@
   <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
   <option_html5_texture_page>2048</option_html5_texture_page>
   <option_html5_use_test_ads>0</option_html5_use_test_ads>
-  <option_html5_usesplash>False</option_html5_usesplash>
+  <option_html5_usesplash>True</option_html5_usesplash>
   <option_icon>nil</option_icon>
   <option_in_app_purchase_enable>0</option_in_app_purchase_enable>
   <option_in_app_purchase_sandbox_mode>0</option_in_app_purchase_sandbox_mode>

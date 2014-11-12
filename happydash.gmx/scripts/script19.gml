@@ -1,8 +1,13 @@
-//check which audio system is being used (new system doesn't work in HTML5)
-if (audio_system() == audio_new_system)
+jumpPerformed += 1;
+if(jumpPerformed == 2)
 {
-    if (audio_music_is_playing())
-        audio_stop_music();
+    playSound(sfxDoubleJump);
+    t = instance_create(x,y,objEffectDust);
+    t.type = 1;
 } else
-    if (sound_isplaying(argument0))
-        sound_stop(argument0);
+    playSound(sfxJump);
+
+jumpVel = 1.2;
+
+yVel = -jumpVel*jumpVelMax;
+state = JUMP;

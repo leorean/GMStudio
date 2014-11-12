@@ -85,7 +85,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             if (global.level mod 5 == 0)
             {
                 while (global.theme == global.themePrev)
-                    global.theme = choose(0,1,2);
+                    global.theme = floor(irandom(global.maxTheme));
                     
             }
 
@@ -124,7 +124,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             {
                 //a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
                 while (global.curSeg == global.prevSeg)                
-                    global.curSeg = 1 + global.theme * global.segmentsPerTheme + irandom(global.segmentsPerTheme - 1);
+                    global.curSeg = 1 + global.theme * global.segmentsPerTheme + floor(irandom(global.segmentsPerTheme - 1));
                 
                 constructSegment(global.segment[
                     min(max(
@@ -160,29 +160,31 @@ if (room == INIT || global.gameOver)
 else
     playMusic(sfxBgm,!global.mute);
 
+if keyboard_check_pressed(vk_escape)
+    game_end();
 
-    if keyboard_check_pressed(vk_escape)
-        game_end();
+if (global.input == INPUT_TOUCH)
+    global.mouseVisible = false;
 
-    //debug keys:   
-    if keyboard_check_pressed(ord('R'))
-        room_restart();
+//debug keys:   
+if keyboard_check_pressed(ord('R'))
+    room_restart();
 
-    if keyboard_check_pressed(ord('Q'))
-        room_goto(INIT);
+if keyboard_check_pressed(ord('Q'))
+    room_goto(INIT);
 
-    //TODO: REMOVE THIS
-    if keyboard_check_pressed(ord('E'))
-    {
-        global.coins = global.maxCoins-1;
-        instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
-    }
-    
-    if keyboard_check(ord('C'))
-    {
-        global.player.combo += 1;
-        global.player.yVel = 0;
-    }
+//TODO: REMOVE THIS
+if keyboard_check_pressed(ord('E'))
+{
+    global.coins = global.maxCoins-1;
+    instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
+}
+
+if keyboard_check(ord('C'))
+{
+    global.player.combo += 1;
+    global.player.yVel = 0;
+}
 
 //GAME OVER
 if (global.gameOver)
@@ -322,6 +324,9 @@ randomize();
 //SOUNDS
 global.mute = true;
 
+//INPUT TYPE
+global.input = INPUT_TOUCH; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
+
 //FONTS
 global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);
 global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
@@ -329,7 +334,7 @@ global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
 
 //SEGMENTS
 
-global.maxSegments = 40;
+global.maxSegments = 60;
 global.segment[global.maxSegments] = 0;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
     global.segment[i] = importSegment(string(i)+".tmx");
@@ -384,7 +389,7 @@ global.prevSeg = 0;
 global.segmentsPerTheme = 20; //n segments for each theme
 global.theme = 0;//background theme
 global.themePrev = global.theme;
-global.maxTheme = 1; //maximum number of available themes - 1
+global.maxTheme = 2; //maximum number of available themes - 1
 
 global.saveFile = 'sv.ini';
 

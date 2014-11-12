@@ -234,7 +234,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="65"/>
    <tile gid="7"/>
    <tile gid="24"/>
    <tile gid="26"/>
@@ -258,7 +258,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="65"/>
    <tile gid="7"/>
    <tile gid="7"/>
    <tile gid="56"/>

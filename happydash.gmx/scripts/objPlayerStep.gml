@@ -1,52 +1,84 @@
 //PLAYER ROUTINE
 
 //INPUT HANDLING ...
-if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
+
+if (global.input != INPUT_TOUCH)
 {
-        jumpPerformed += 1;
-
-        if(jumpPerformed == 2)
-        {
-            playSound(sfxDoubleJump);
-            t = instance_create(x,y,objEffectDust);
-            t.type = 1;
-        } else
-            playSound(sfxJump);
-
-        jumpVel = 1.2;
-
-        yVel = -jumpVel*jumpVelMax;
-        state = JUMP;
-}
-
-/*if (mouseRightPressed)
-{
+    if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
+    {
+        performJump();
+    }
+    
+    if (keyRightPressed)
+        state = ATTACK;
+    
+    if (keyDown)
+        state = IDLE;
+    else if (state == IDLE)
+        state = RUN;
+    
     if (state == ATTACK)
-        state = JUMP;
-    else
-        state = ATTACK;
-}*/
-
-if (keyRightPressed)
-    state = ATTACK;
-
-if (keyDown)
-    state = IDLE;
-else if (state == IDLE)
-    state = RUN;
-
-if (state == ATTACK)
+    {
+        if (mouseRightPressed || (mouseLeftPressed && jumpPerformed >=2))
+            state = JUMP;
+    } else
+    {
+        if (mouseRightPressed)
+            state = ATTACK;
+    }
+    
+    if (mouseBoth)
+        state = IDLE;
+} else //TOUCH INPUT
 {
-    if (mouseRightPressed || (mouseLeftPressed && jumpPerformed >=2))
-        state = JUMP;
-} else
-{
-    if (mouseRightPressed)
-        state = ATTACK;
+    //swipe gesture registration
+    if (touchPressed && !on)
+    {
+        onX = min(max(mouse_x,0),WIDTH);
+        onY = min(max(mouse_y,0),HEIGHT);
+        on = true;
+    }
+    if (touchReleased && on && !off)
+    {
+        offX = min(max(mouse_x,0),WIDTH);
+        offY = min(max(mouse_y,0),HEIGHT);
+        off = true;
+    }
+    
+    //if (touch) off = true;
+    //recognize gestures here:
+    if (on && off)
+    {
+        offAngle = point_direction(onX,onY,offX,offY);
+    
+        //condition for vertical upward gesture: JUMPING
+        if ((in(offAngle,45,45+90)) && jumpPerformed < 2)
+        {
+            performJump();
+        }
+    
+        //condition for horizontal gesture: DASHING
+        if ((in(offAngle,360-30,360) || in(offAngle,0,30)))
+        {
+            objPlayer.state = ATTACK;
+        }
+        
+        on = false;
+        off = false;
+        onX = -1;
+        onY = -1;
+        offX = -1;
+        offY = -1;
+    }
+    
+    //SLOW DOWN AND STOP MOVING
+    if (touch)
+        state = IDLE;
+    else if (state == IDLE)
+        state = RUN;
+        
 }
-
-if (mouseBoth)
-    state = IDLE;
+    
 /*
 //swipe gesture registration
 if (touchPressed && !on)
@@ -120,12 +152,6 @@ if (yVel >= 0)
     onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objAny);//position_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);//place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
 else
     onGround = false;
-
-//onPlatform = state != DEAD && (collision_line(bbox_left-global.xSpeed,bbox_bottom+max(yVel,1),bbox_right-global.xSpeed,bbox_bottom+max(yVel,1),objPlatform,true,true)
-//    && yVel > 0);
-
-//if (onPlatform)
-//    onGround = true;
 
 //ENEMY INTERACTION
 enemy = instance_place(x+xVel,y+yVel,objEnemy);
@@ -303,7 +329,14 @@ else //IF NOT DEAD
 yVel += yGrav;
 
 if (state == DEAD)
+{
     yGrav = yGravDefault;
+    if (y > HEIGHT+TILE)
+    {
+        yVel = 0;
+        y = HEIGHT+TILE;
+    }
+}
 
 yCollision();
 

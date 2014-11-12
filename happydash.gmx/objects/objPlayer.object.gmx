@@ -173,8 +173,9 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
     if (keyUpPressed || keyRightPressed || keyDown)
         global.mouseVisible = false;
 
-    if (mouseAny || mouse_x != mouse_prevx || mouse_y != mouse_prevy)
-        global.mouseVisible = true;
+    if (global.input != INPUT_TOUCH)
+        if (mouseAny || mouse_x != mouse_prevx || mouse_y != mouse_prevy)
+            global.mouseVisible = true;
 
 } else
 {
