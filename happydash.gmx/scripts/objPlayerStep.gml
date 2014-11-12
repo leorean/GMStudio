@@ -190,7 +190,7 @@ if (!alive)
         fCur = choose(0,1,2);
         playSound(sfxDie);
         repeat(50)
-            spawnParticle(x+random(TILE),y+random(TILE),c_white);//make_color_hsv(246,248,103));
+            spawnParticle(x+random(TILE),y+random(TILE),make_color_hsv(random(145),255,255));
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
@@ -224,9 +224,9 @@ else //IF NOT DEAD
         if (global.timer mod 5 == 0)
         {
             playSound(sfxDash);
-            t = instance_create(x-TILE*.5,y,objEffectDust);
+            t = instance_create(x/*-TILE*.5*/,y,objEffectDust);
+            t.depth = depth+1;
             t.type = 3;
-            //t.color = make_color_hsv(random(255),255,255);
         }
         //.005 = 1/WIDTH*2
         xVel = 2*(1-(x*.005));

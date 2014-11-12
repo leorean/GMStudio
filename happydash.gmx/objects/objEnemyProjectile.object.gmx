@@ -69,7 +69,7 @@ fSpeed = .2;
     
     cycle();
     
-    if (collision_point(x,y,objAny,false,true)
+    if (global.player.state == DEAD || collision_point(x,y,objAny,false,true)
         || x &lt; -TILE || y &gt; HEIGHT+TILE || x &gt; WIDTH+TILE || y &lt; -TILE)
         {
             t = instance_create(x-TILE*.5,y-TILE*.5,objEffectDust);

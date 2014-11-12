@@ -95,10 +95,11 @@ if (room != INIT &amp;&amp; !global.gameOver)
         {
             if (!global.startSignal)
             {
-                t = instance_create(WIDTH*.5,HEIGHT*.5,objText);
-                t.fnt = global.fntBig;
-                t.text = "go!";
-                t.yVel = 0;
+                //t = instance_create(WIDTH*.5,HEIGHT*.5,objText);
+                //t.fnt = global.fntBig;
+                //t.text = "go!";
+                //t.yVel = 0;
+                instance_create(0,0,objStartLevel);
                 playSound(sfxStart);
                 global.hasControl = true;
                 global.startSignal = true;
