@@ -54,8 +54,8 @@ mask_index = sprBlockMask;
             <kind>1</kind>
             <string>cycle();
     
-if (global.player.state == JUMP &amp;&amp; global.player.yVel &lt; 0 &amp;&amp; global.player.y &gt; y)
-    if (place_meeting(x,y+1-global.player.yVel,global.player))
+if (global.player.state == JUMP &amp;&amp; global.player.yVel &lt;= 0 &amp;&amp; global.player.y &gt; y)
+    if (place_meeting(x,y+2,global.player))
     {
         state = DEAD;
         with(global.player) doCombo();

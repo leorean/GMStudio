@@ -261,7 +261,6 @@ else //IF NOT DEAD
         yGrav = 0;
 
         //dash through destroyblock
-        //if (x - TILE > objDestroyBlock.x < x + 2*TILE) && (y - TILE > objDestroyBlock.y < y + 2*TILE)
         db = instance_place(x + max(xVel+ceil(global.xSpeed),global.xSpeedMax),y,objDestroyBlock);
         if (db != noone)
         {

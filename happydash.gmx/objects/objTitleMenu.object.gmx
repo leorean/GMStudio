@@ -59,7 +59,7 @@ btn[3].index = 3;
 btn[3].parent = id;
 
 draw_set_font(fntMenu); //to set the correct width
-textCredits = "=== A game by Peter Sperl © 2014 === Music by Vincent Wagner";
+textCredits = "=== A game by Peter Sperl © 2014 === Audio by Vincent Wagner";
 textCreditsX = WIDTH+string_width(textCredits);
 
 page = 0;

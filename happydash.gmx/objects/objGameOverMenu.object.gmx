@@ -72,8 +72,9 @@ var b;
 b = 3*TILE;
 
 //ENABLE MOUSE IF MOVED/TOUCHED
-if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
-    global.mouseVisible = true;
+if (global.input != INPUT_TOUCH)
+    if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
+        global.mouseVisible = true;
 //DISABLE MOUSE IF KEYBOARD IS USED
 if (keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
     global.mouseVisible = false;

@@ -1072,6 +1072,7 @@
     <sound>sound\sfxDestroyBlock</sound>
     <sound>sound\sfxOnGround</sound>
     <sound>sound\sfxBgm</sound>
+    <sound>sound\sfxThemeChange</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">

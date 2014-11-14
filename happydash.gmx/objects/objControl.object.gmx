@@ -86,7 +86,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             {
                 while (global.theme == global.themePrev)
                     global.theme = floor(irandom(global.maxTheme));
-                    
+                playSound(sfxThemeChange);
             }
 
         }
@@ -323,9 +323,8 @@ randomize();
 
 //SOUNDS
 global.mute = true;
-
 //INPUT TYPE
-global.input = INPUT_TOUCH; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
+global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
 
 //FONTS
 global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);
