@@ -23,9 +23,12 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 66) //platforms
         {
-            t = instance_create(a+i*TILE,b+j*TILE,objPlatform);
-            t.px = floor((s-1) mod TILE);
-            t.py = floor((s-1) div TILE);
+            if (choose(true,false))
+            {
+                t = instance_create(a+i*TILE,b+j*TILE,objPlatform);
+                t.px = floor((s-1) mod TILE);
+                t.py = floor((s-1) div TILE);
+            }
         }
         else if (s == 67) //destroyable blocks
         {

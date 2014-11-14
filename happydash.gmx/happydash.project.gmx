@@ -1091,8 +1091,9 @@
       <sprite>sprites\sprDestroyBlockMask</sprite>
       <sprite>sprites\sprPlatformMask</sprite>
       <sprite>sprites\sprKeyMask</sprite>
-      <sprite>sprites\sprEnemyMaskUp</sprite>
       <sprite>sprites\sprSpawnBallMask</sprite>
+      <sprite>sprites\sprEnemyMaskUp</sprite>
+      <sprite>sprites\sprEnemyMaskRight</sprite>
       <sprite>sprites\sprEnemyMaskDown</sprite>
       <sprite>sprites\sprEnemyMaskLeft</sprite>
       <sprite>sprites\sprDoorMask</sprite>
@@ -1104,7 +1105,6 @@
       <sprite>sprites\sprSpawnPlatformMask</sprite>
       <sprite>sprites\sprCoinMask</sprite>
       <sprite>sprites\sprTouchMask</sprite>
-      <sprite>sprites\sprEnemyMaskRight</sprite>
     </sprites>
     <sprite>sprites\spriteTitleMenu</sprite>
     <sprite>sprites\spriteBg</sprite>

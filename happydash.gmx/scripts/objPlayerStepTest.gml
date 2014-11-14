@@ -268,4 +268,3 @@ if (state != statePrev && state != DEAD)
 
 if (!global.pause)
     statePrev = state;
-

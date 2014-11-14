@@ -87,23 +87,24 @@ fSpeed = 0;
             dir = -dir;
         }
 
-        if (collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objAny,false,true) &amp;&amp; yVel &gt; 0)
-        {
-            if (!canJump)
-            {   
-                yVel = 0;
-                xVel = 0;
-                fCur = 0;
-                canJump = true;
-            }
-            
-            if (fCur &gt;= fMax - fSpeed)
+        if (yVel &gt;= 0)
+            if (collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objAny,false,true))
             {
-                yVel = -3;
-                canJump = false;
+                if (!canJump)
+                {   
+                    yVel = 0;
+                    xVel = 0;
+                    fCur = 0;
+                    canJump = true;
+                }
+                
+                if (fCur &gt;= fMax - fSpeed)
+                {
+                    yVel = -3;
+                    canJump = false;
+                }
+                
             }
-            
-        }
     
     } else
     {
@@ -118,12 +119,14 @@ fSpeed = 0;
         y += yVel;
     }
     
-    yVel += yGrav;
+    //yVel += yGrav;
     
     if (!alive) state = DEAD;
     
     if (x &lt; WIDTH)
         yCollision();
+    
+    yVel += yGrav;
         
     if (state == DEAD)
         fCur = (fCur + fSpeed) mod fMax;

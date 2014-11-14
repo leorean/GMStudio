@@ -155,7 +155,7 @@ if (global.gameOver)
 
 //if in title menu:
 
-if (room == INIT || global.gameOver)
+if (room == INIT || global.gameOver || global.player.state == DEAD)
     playMusic(sfxBgm,false);
 else
     playMusic(sfxBgm,!global.mute);

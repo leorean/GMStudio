@@ -239,6 +239,31 @@ if (state == DEAD && !global.gameOver)
 else //IF NOT DEAD
 {
 
+    //COLLECT COINS
+    coin = instance_place(x+xVel,y+yVel,objCoin);
+    if (instance_exists(coin))
+    {
+        if (!coin.alarm[0] && coin.magnet && coin.alive)
+        {
+                global.coins += 1;
+                global.coinsCollected += 1;
+                //each 5 segments, the coin is worth more!!
+                global.addScore += (global.difficulty div 5);
+                coin.alive = false;
+                playSound(sfxCoin);
+        }
+    }
+    //DESTROY BLOCKS BY JUMPING
+    destroyBlock = instance_place(x+xVel,y-max(3,abs(yVel)),objDestroyBlock);
+    if (instance_exists(destroyBlock))
+    {
+        if (state == JUMP && yVel <= 0 && y > destroyBlock.y)
+        {
+            destroyBlock.state = DEAD;
+            doCombo();
+        }
+    }
+
     //SCORE COUNTING
     //*0.0625 = 1 / TILE
     global.curScore = 10*floor(global.distance*0.0625) + global.addScore;
