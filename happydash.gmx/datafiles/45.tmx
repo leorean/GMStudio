@@ -268,9 +268,9 @@
    <tile gid="60"/>
    <tile gid="61"/>
    <tile gid="61"/>
+   <tile gid="61"/>
    <tile gid="28"/>
    <tile gid="30"/>
-   <tile gid="61"/>
    <tile gid="62"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -293,9 +293,9 @@
    <tile gid="67"/>
    <tile gid="67"/>
    <tile gid="67"/>
+   <tile gid="0"/>
    <tile gid="60"/>
    <tile gid="62"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>

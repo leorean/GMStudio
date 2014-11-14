@@ -88,7 +88,7 @@ fSpeed = 0;
         }
 
         if (yVel &gt;= 0)
-            if (collision_line(bbox_left,bbox_bottom+sign(yVel),bbox_right,bbox_bottom+sign(yVel),objAny,false,true))
+            if (place_meeting(x,y+1,objAny))
             {
                 if (!canJump)
                 {   
@@ -171,9 +171,9 @@ switch(state)
 }
 
 if (dir == RIGHT)
-    draw_sprite_part(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),y);
+    draw_sprite_part(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),ceil(y));
 else
-    draw_sprite_part_ext(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,y,-1,1,c_white,1);
+    draw_sprite_part_ext(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,ceil(y),-1,1,c_white,1);
 
 </string>
           </argument>
