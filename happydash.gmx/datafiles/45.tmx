@@ -342,10 +342,10 @@
    <tile gid="29"/>
    <tile gid="29"/>
    <tile gid="29"/>
-   <tile gid="29"/>
-   <tile gid="29"/>
-   <tile gid="29"/>
-   <tile gid="29"/>
+   <tile gid="30"/>
+   <tile gid="65"/>
+   <tile gid="65"/>
+   <tile gid="28"/>
    <tile gid="29"/>
    <tile gid="30"/>
    <tile gid="0"/>
@@ -368,8 +368,8 @@
    <tile gid="45"/>
    <tile gid="45"/>
    <tile gid="45"/>
-   <tile gid="45"/>
-   <tile gid="45"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
    <tile gid="45"/>
    <tile gid="45"/>
    <tile gid="46"/>

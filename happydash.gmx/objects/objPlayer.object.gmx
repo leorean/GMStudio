@@ -239,9 +239,6 @@ var xDraw,yDraw,angle,xA,yA,off, frame, row;
 
 frame = floor(fCur);
 
-xDraw = floor(x);//floor(x-xVel);
-yDraw = floor(y);//floor(y-yVel);
-
 switch(state)
 {
     case RUN:
@@ -274,7 +271,7 @@ switch(state)
     break;
 }
 
-draw_sprite_part(spritePlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,xDraw-TILE*.5,yDraw-TILE*.5);
+draw_sprite_part(spritePlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5));
 
 //draw_set_color(c_white);
 

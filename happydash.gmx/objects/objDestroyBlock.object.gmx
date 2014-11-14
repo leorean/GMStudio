@@ -53,7 +53,8 @@ mask_index = sprBlockMask;
           <argument>
             <kind>1</kind>
             <string>cycle();
-    
+
+//TODO: could be optimized by putting this code into the player step event..
 if (global.player.state == JUMP &amp;&amp; global.player.yVel &lt;= 0 &amp;&amp; global.player.y &gt; y)
     if (place_meeting(x,y+2,global.player))
     {

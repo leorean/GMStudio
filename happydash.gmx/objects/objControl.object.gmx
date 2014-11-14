@@ -322,7 +322,11 @@ randomize();
 //surface_reset_target();
 
 //SOUNDS
-global.mute = true;
+global.mute = false;
+sound_global_volume(.3);
+audio_master_gain(.3);
+audio_sound_gain(sfxBgm,.5,0);
+
 //INPUT TYPE
 global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
 
@@ -552,5 +556,8 @@ if (global.mouseVisible)
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>0,0</point>
+    <point>8,8</point>
+  </PhysicsShapePoints>
 </object>

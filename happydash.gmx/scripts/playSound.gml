@@ -3,7 +3,9 @@ if (!global.mute)
     //check which audio system is being used (new system doesn't work in HTML5)
     if (audio_system() == audio_new_system)
     {
-            audio_play_sound(argument0,0,false);
+//if (argument1)
+//audio_sound_pitch(argument0,argument1);
+        audio_play_sound(argument0,0,false);
     } 
     else if (audio_system() == audio_old_system)
     {
