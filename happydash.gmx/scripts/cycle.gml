@@ -6,4 +6,3 @@ if (x < WIDTH && !visible)
 
 if (x < -TILE || y > HEIGHT+TILE)
     instance_destroy();
-

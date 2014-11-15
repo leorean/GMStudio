@@ -8,6 +8,28 @@
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>POWER UP COOLDOWN</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -252,6 +274,9 @@ else
     
     global.difficulty = 0;
     
+    global.powerUp = -1;
+    alarm[1] = 0;
+    
     global.curSeg = 0;
     global.prevSeg = 0;
     global.segX = 0;
@@ -397,40 +422,9 @@ global.maxTheme = 2; //maximum number of available themes - 1
 
 global.saveFile = 'sv.ini';
 
-// SAVE FILE MANAGEMENT &amp; ENCRYPTION
-/*
-dll="Crypt.dll";
-global.encD_md5_fil=external_define(dll,"md5_hash_file",dll_stdcall,ty_string,1,ty_string);
-global.encD_md5_str=external_define(dll,"md5_hash_string",dll_stdcall,ty_string,1,ty_string);
-
-global.saveFile = "misc/sv";
-global.checkFile = "misc/chk";
-global.mdpw = md5("1337haxorpenis");
-
-var file, checksum;
-
-//create checkfile
-if (!file_exists(global.checkFile))
-{
-    file = file_text_open_write(global.checkFile);
-    checksum = string(md5File(global.saveFile))+string(md5(global.mdpw));
-    file_text_write_string(file,checksum);
-    file_text_close(file);
-} else //read checksum from checkFile
-{
-    file = file_text_open_read(global.checkFile);
-    checksum = file_text_read_string(file);//string(md5File(global.saveFile))+string(md5(global.mdpw));
-    file_text_close(file);
-}
-
-//overwrite savefile with zero score
-if (!file_exists(global.saveFile))
-    saveProgress();
-else if (string(md5File(global.saveFile))+string(md5(global.mdpw)) != checksum)
-    saveProgress();
-
-loadProgress();
-*/
+global.powerUp = -1;
+alarm[1] = 0;
+alarm1 = 10*FPS;
 </string>
           </argument>
         </arguments>
@@ -457,6 +451,7 @@ loadProgress();
 draw_set_font(global.fntDefault);
 draw_set_color(c_white);
 draw_set_valign(fa_top);
+draw_set_alpha(1);
 
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
@@ -464,6 +459,13 @@ draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WID
 if (room != INIT &amp;&amp; !global.gameOver)
 {
 
+    if (alarm[1])
+    {
+        draw_sprite_part(spriteHud,-1,0,8*TILE,TILE,TILE*.25,global.player.x,global.player.y-TILE*.5);
+        draw_sprite_part(spriteHud,-1,0,8*TILE+.25*TILE,ceil(TILE*alarm[1]/alarm1),TILE*.25,global.player.x,global.player.y-TILE*.5);
+    } else
+        global.powerUp = -1;
+    
     if (global.pause)
     {
     
