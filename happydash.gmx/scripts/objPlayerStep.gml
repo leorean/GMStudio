@@ -255,14 +255,11 @@ else //IF NOT DEAD
         }
     }
     //DESTROY BLOCKS BY JUMPING
-    destroyBlock = instance_place(x+xVel,y-max(3,abs(yVel)),objDestroyBlock);
+    destroyBlock = instance_place(x+xVel,y+yVel-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
     if (instance_exists(destroyBlock))
     {
-        if (state == JUMP && yVel <= 0 && y > destroyBlock.y)
-        {
-            destroyBlock.state = DEAD;
-            doCombo();
-        }
+        destroyBlock.state = DEAD;
+        doCombo();
     }
 
     //SCORE COUNTING
@@ -347,7 +344,7 @@ else //IF NOT DEAD
             if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
                 state = JUMP;
         xVel = 0;//-global.xSpeed;
-        x -= ceil(global.xSpeed);
+        x -= global.xSpeed;
     }
 }
 
