@@ -73,7 +73,7 @@ if (state == DEAD)
             c.spawn = true;
         }
 
-    playSound(sfxDestroyBlock);
+    playSound(sfxDestroyBlock,1);
     instance_create(x,y,objEffectDust);
     instance_destroy();
 }

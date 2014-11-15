@@ -30,10 +30,11 @@ depth = PLAYERDEPTH-1;
 xVel = -2+random(4);
 yVel = -3+random(2);
 yGrav = .1;
-size = 1+random(2);
+//size = 1+random(2);
 alarm[0] = 2*FPS;
 
 color = c_white;
+frame = choose(0,1,2);
 </string>
           </argument>
         </arguments>
@@ -84,7 +85,7 @@ if (active)
 {   
 
     yVel += yGrav;
-        
+/*        
     if (collision_point(x+xVel,y,objAny,false,true))
         active = false;
     else
@@ -96,7 +97,10 @@ if (active)
     }
     else
         y += yVel;
-
+*/
+    x += xVel;
+    y += yVel;
+    if (y &gt; HEIGHT || x &lt; 0) alive = false;
 } else
     instance_destroy();
 </string>
@@ -122,7 +126,7 @@ if (active)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_ext(sprParticleMask,-1,floor(x),floor(y),size,size,1,color,1);
+draw_sprite_part_ext(spriteGfx,-1,4*TILE+frame*TILE,1*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2),1,1,color,1);
 
 </string>
           </argument>
@@ -141,5 +145,8 @@ draw_sprite_ext(sprParticleMask,-1,floor(x),floor(y),size,size,1,color,1);
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>0,0</point>
+    <point>0,0</point>
+  </PhysicsShapePoints>
 </object>

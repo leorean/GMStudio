@@ -81,12 +81,12 @@ if (room != INIT &amp;&amp; !global.gameOver)
             global.coins = 0;
             t = instance_create(global.player.cx,global.player.cy,objText);
             t.text = "LEVEL UP!"
-            playSound(sfxLevelUp);
+            playSound(sfxLevelUp,1);
             if (global.level mod 5 == 0)
             {
                 while (global.theme == global.themePrev)
                     global.theme = floor(irandom(global.maxTheme));
-                playSound(sfxThemeChange);
+                playSound(sfxThemeChange,1);
             }
 
         }
@@ -100,7 +100,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 //t.text = "go!";
                 //t.yVel = 0;
                 instance_create(0,0,objStartLevel);
-                playSound(sfxStart);
+                //playSound(sfxStart);
                 global.hasControl = true;
                 global.startSignal = true;
             }
@@ -155,7 +155,7 @@ if (global.gameOver)
 
 //if in title menu:
 
-if (room == INIT || global.gameOver || global.player.state == DEAD)
+if (room == INIT || global.gameOver || global.player.state == DEAD || !global.startSignal)
     playMusic(sfxBgm,false);
 else
     playMusic(sfxBgm,!global.mute);
@@ -323,12 +323,13 @@ randomize();
 
 //SOUNDS
 global.mute = false;
-sound_global_volume(.3);
-audio_master_gain(.3);
-audio_sound_gain(sfxBgm,.5,0);
+//sound_global_volume(.3);
+//audio_master_gain(.3);
+//audio_sound_gain(sfxBgm,.5,0);
 
 //INPUT TYPE
 global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
+//global.input = INPUT_TOUCH;
 
 //FONTS
 global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);

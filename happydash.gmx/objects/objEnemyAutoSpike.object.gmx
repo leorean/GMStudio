@@ -135,7 +135,7 @@ if (!global.pause)
         {   
             fCur = 0;
             global.enemiesKilled += 1;
-            playSound(sfxEnemyDie);
+            playSound(sfxEnemyDie,1);
             yVel = -3;
             knockedUp = true;
         }

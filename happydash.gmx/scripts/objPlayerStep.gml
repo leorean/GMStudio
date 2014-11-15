@@ -214,13 +214,14 @@ if (!alive)
         yVel = -3;
         alarm[0] = alarm0;
         fCur = choose(0,1,2);
-        playSound(sfxDie);
+        playSound(sfxDie,1);
         repeat(50)
-            spawnParticle(x+random(TILE),y+random(TILE),make_color_hsv(random(145),255,255));
+            spawnParticle(x+random(TILE),y+random(TILE),COLOR_FLESH);
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
         saveProgress();
+        loadProgress();
     }
     global.hasControl = false;
     state = DEAD;
@@ -250,7 +251,7 @@ else //IF NOT DEAD
                 //each 5 segments, the coin is worth more!!
                 global.addScore += (global.difficulty div 5);
                 coin.alive = false;
-                playSound(sfxCoin);
+                playSound(sfxCoin,choose(1,1.025,1.05));
         }
     }
     //DESTROY BLOCKS BY JUMPING
@@ -274,7 +275,7 @@ else //IF NOT DEAD
 
         if (global.timer mod 5 == 0)
         {
-            playSound(sfxDash);
+            playSound(sfxDash,1);
             t = instance_create(x/*-TILE*.5*/,y,objEffectDust);
             t.depth = depth+1;
             t.type = 3;
@@ -346,7 +347,7 @@ else //IF NOT DEAD
             if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
                 state = JUMP;
         xVel = 0;//-global.xSpeed;
-        x -= global.xSpeed;
+        x -= ceil(global.xSpeed);
     }
 }
 
@@ -363,10 +364,6 @@ if (state == DEAD)
 }
 
 yCollision();
-
-if (statePrev == JUMP && (state == IDLE || state == RUN))
-    playSound(sfxOnGround);
-
 
 //prev/end variables
 fCur = (fCur+fSpeed) mod fMax;

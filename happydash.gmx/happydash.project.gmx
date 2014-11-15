@@ -1062,7 +1062,6 @@
   <NewExtensions/>
   <sounds name="sound">
     <sound>sound\sfxJump</sound>
-    <sound>sound\sfxDoubleJump</sound>
     <sound>sound\sfxDash</sound>
     <sound>sound\sfxEnemyDie</sound>
     <sound>sound\sfxLevelUp</sound>
@@ -1070,9 +1069,9 @@
     <sound>sound\sfxDie</sound>
     <sound>sound\sfxStart</sound>
     <sound>sound\sfxDestroyBlock</sound>
-    <sound>sound\sfxOnGround</sound>
     <sound>sound\sfxBgm</sound>
     <sound>sound\sfxThemeChange</sound>
+    <sound>sound\sfxCombo</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -1122,7 +1121,6 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\objPlayerStep.gml</script>
-    <script>scripts\objPlayerStepTest.gml</script>
     <script>scripts\in.gml</script>
     <script>scripts\doCombo.gml</script>
     <script>scripts\spawnParticle.gml</script>
@@ -1192,7 +1190,9 @@
     <room>rooms\INIT</room>
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="25">
+  <constants number="27">
+    <constant name="COLOR_FLESH">make_color_hsv(19+random(2),100+random(30),200+random(35))</constant>
+    <constant name="COLOR_POO">make_color_hsv(15+random(5),115+random(35),150+random(30))</constant>
     <constant name="INPUT_KEYBOARD">0</constant>
     <constant name="INPUT_MOUSE">1</constant>
     <constant name="INPUT_TOUCH">2</constant>

@@ -329,6 +329,7 @@
    <tile gid="36"/>
    <tile gid="0"/>
    <tile gid="145"/>
+   <tile gid="18"/>
    <tile gid="19"/>
    <tile gid="19"/>
    <tile gid="19"/>
@@ -352,8 +353,8 @@
    <tile gid="19"/>
    <tile gid="19"/>
    <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
+   <tile gid="20"/>
+   <tile gid="34"/>
    <tile gid="35"/>
    <tile gid="35"/>
    <tile gid="35"/>
@@ -377,8 +378,7 @@
    <tile gid="35"/>
    <tile gid="35"/>
    <tile gid="35"/>
-   <tile gid="35"/>
-   <tile gid="35"/>
+   <tile gid="36"/>
   </data>
  </layer>
 </map>

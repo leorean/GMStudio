@@ -1,6 +1,9 @@
 repeat(5)
-    spawnParticle(x+TILE*.5,y+TILE*.5,make_color_hsv(random(255),255,255));//make_color_rgb(49,33,27));
+    spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
 
+var pitch;
+pitch = max(min(1 + combo/30,1.5),1);
+//playSound(sfxCombo,pitch);
 combo += 1;
 
 global.maxCombo = max(global.maxCombo, combo);
