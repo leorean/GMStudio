@@ -347,7 +347,7 @@ randomize();
 //surface_reset_target();
 
 //SOUNDS
-global.mute = false;
+global.mute = true;
 //sound_global_volume(.3);
 //audio_master_gain(.3);
 //audio_sound_gain(sfxBgm,.5,0);
@@ -363,7 +363,7 @@ global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
 
 //SEGMENTS
 
-global.maxSegments = 60;
+global.maxSegments = 61;
 global.segment[global.maxSegments] = 0;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
     global.segment[i] = importSegment(string(i)+".tmx");
@@ -418,7 +418,7 @@ global.prevSeg = 0;
 global.segmentsPerTheme = 20; //n segments for each theme
 global.theme = 0;//background theme
 global.themePrev = global.theme;
-global.maxTheme = 2; //maximum number of available themes - 1
+global.maxTheme = 3; //maximum number of available themes - 1
 
 global.saveFile = 'sv.ini';
 

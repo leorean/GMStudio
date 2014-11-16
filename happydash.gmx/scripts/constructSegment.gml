@@ -7,10 +7,11 @@ w = WIDTH/TILE;
 h = HEIGHT/TILE;
 
 for (i = 0; i<w; i += 1)
+{
     for (j = 0; j<h; j+=1)
     {
         s = floor(ds_grid_get(segment,i,j));
-        if (in(s,0,4*TILE)) //the first 4 rows in the tileset are reserved for normal blocks
+        if (in(s,0,4*TILE) || s >= 176) //the first 4 rows in the tileset are reserved for normal blocks
         {
             t = instance_create(a+i*TILE,b+j*TILE,objBlock);
             t.px = floor((s-1) mod TILE);
@@ -80,12 +81,12 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 72) //flying enemy
         {
-            if (min(global.difficulty,20) > random(30))
+            if (choose(true,false,false))//(min(global.difficulty,20) > random(30))
                 instance_create(a+i*TILE,b+j*TILE,objEnemy3);
         }
 
         //insert here
-        else if (s >= 96) //background objects
+        else if (s >= 96 && s < 176) //background objects
         {
             t = instance_create(a+i*TILE,b+j*TILE,objTile);
             t.px = floor((s-1) mod TILE);
@@ -93,7 +94,7 @@ for (i = 0; i<w; i += 1)
 
         }        
     }
-
+}
 //ADD SEGMENT-INDEPENDANT THINGS:
 //RANDOM ENEMY SPAWNING
 /*
