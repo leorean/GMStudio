@@ -1124,7 +1124,6 @@
     <script>scripts\in.gml</script>
     <script>scripts\doCombo.gml</script>
     <script>scripts\spawnParticle.gml</script>
-    <script>scripts\initParticle.gml</script>
     <scripts name="manage">
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>

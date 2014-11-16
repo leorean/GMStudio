@@ -459,10 +459,17 @@ draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WID
 if (room != INIT &amp;&amp; !global.gameOver)
 {
 
-    if (alarm[1])
+    //power up hud border
+    draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);
+
+    //power up stuff
+    if (alarm[1] &amp;&amp; global.player.state != DEAD)
     {
-        draw_sprite_part(spriteHud,-1,0,8*TILE,TILE,TILE*.25,global.player.x,global.player.y-TILE*.5);
-        draw_sprite_part(spriteHud,-1,0,8*TILE+.25*TILE,ceil(TILE*alarm[1]/alarm1),TILE*.25,global.player.x,global.player.y-TILE*.5);
+        //power up bar
+        draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,TILE*.25,global.player.x-TILE*.5,global.player.y-TILE*.5);
+        draw_sprite_part(spriteHud,-1,0,8*TILE+.25*TILE,ceil(2*TILE*alarm[1]/alarm1),TILE*.25,global.player.x-TILE*.5,global.player.y-TILE*.5);
+        //current power up
+        draw_sprite_part(spriteGfx,-1,5*TILE+global.powerUp*TILE,0,TILE,TILE,WIDTH*.5-TILE*.5,.5*TILE);
     } else
         global.powerUp = -1;
     
