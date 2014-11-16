@@ -475,6 +475,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
     
     if (global.pause)
     {
+        alarm[1] += 1;
     
         draw_set_alpha(.5);
         draw_set_color(c_black);

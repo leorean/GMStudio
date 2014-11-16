@@ -22,7 +22,7 @@ for (i = 0; i<w; i += 1)
             if (min(global.difficulty,15) > random(20))
                 instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
         }
-        else if (s == 66) //platforms
+        else if (s == 66 || s == 71) //platforms
         {
             if (choose(true,false))
             {
