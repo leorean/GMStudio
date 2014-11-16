@@ -10,14 +10,8 @@ global.maxCombo = max(global.maxCombo, combo);
 
 if (true)
 {
-/*
-    t = instance_create(cx,cy,objText);
-    t.text = ":"+string(combo);
-    t.fnt = global.fntCombo;
-    t.color = make_color_hsv(max(50 - (combo*5),0),255,255);
-*/
     global.addScore += combo*10;
-    repeat(min(combo-1,30)) // not more than 30 coins!!
+    repeat(min(combo-1 div 2, 10)) // not so many coins!
     {
         c = instance_create(x+TILE+2*xVel,y,objCoin);
         c.spawn = true;

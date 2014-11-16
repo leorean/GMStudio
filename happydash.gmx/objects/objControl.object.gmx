@@ -154,9 +154,15 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.prevSeg = global.curSeg;
             }
             global.difficulty += 1;
-        }  
+        }
+        
+        if (global.powerUp == 0 &amp;&amp; global.timer mod 5 == 0)
+        {
+            var c;
+            c = instance_create(random(WIDTH),0,objCoin);
+            c.spawn = true;
+        }
     }
-    
     else //THIS IS PAUSE MODE!
     {
         //unpause
@@ -344,7 +350,7 @@ randomize();
 //surface_reset_target();
 
 //SOUNDS
-global.mute = true;
+global.mute = false;
 //sound_global_volume(.3);
 //audio_master_gain(.3);
 //audio_sound_gain(sfxBgm,.5,0);
@@ -360,7 +366,7 @@ global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
 
 //SEGMENTS
 
-global.maxSegments = 61;
+global.maxSegments = 65;
 global.segment[global.maxSegments] = 0;
 for (i = 0; i &lt;= global.maxSegments;i+=1)
     global.segment[i] = importSegment(string(i)+".tmx");
@@ -421,7 +427,7 @@ global.saveFile = 'sv.ini';
 
 global.powerUp = -1;
 alarm[1] = 0;
-alarm1 = 10*FPS;
+alarm1 = 15*FPS;
 </string>
           </argument>
         </arguments>

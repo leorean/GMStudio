@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = PLAYERDEPTH+2;
+            <string>depth = PLAYERDEPTH+3;
 
 mask_index = sprCoinMask;
 
@@ -111,20 +111,18 @@ magnet = false;
             yGrav = .15;
             spawn = false;
         }
-        /*
-        if (in(x,global.player.x-TILE,global.player.x+TILE) &amp;&amp; in(y,global.player.y-TILE,global.player.y+TILE)) //optimized
+        
+        if (abs(global.player.x-x)&lt;TILE*.5 &amp;&amp; abs(global.player.y-y)&lt;TILE*.5) //optimized
             if (!alarm[0] &amp;&amp; magnet &amp;&amp; global.player.state != DEAD)
-                if (collision_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,global.player,false,true))    
                 {
                     global.coins += 1;
                     global.coinsCollected += 1;
                     //each 5 segments, the coin is worth more!!
                     global.addScore += (global.difficulty div 5);
                     alive = false;
-                    playSound(sfxCoin);
+                    playSound(sfxCoin,1);
                 }
-        */
-    
+        
         if (!magnet)
         {   
             if (x &gt; WIDTH) xVel = 0;

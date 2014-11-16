@@ -13,9 +13,16 @@ for (i = 0; i<w; i += 1)
         s = floor(ds_grid_get(segment,i,j));
         if (in(s,0,4*TILE) || s >= 176) //the first 4 rows in the tileset are reserved for normal blocks
         {
-            t = instance_create(a+i*TILE,b+j*TILE,objBlock);
-            t.px = floor((s-1) mod TILE);
-            t.py = floor((s-1) div TILE);
+            //if (global.powerUp != 0)
+            //{
+                t = instance_create(a+i*TILE,b+j*TILE,objBlock);
+                t.px = floor((s-1) mod TILE);
+                t.py = floor((s-1) div TILE);
+            /*} else
+            {
+                t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
+                t.type = 0;
+            }*/
         }
         else if (s == 65) //spikes
         {

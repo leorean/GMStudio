@@ -159,8 +159,8 @@ if (instance_exists(enemy) && state != DEAD)
 {
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
-        if (enemy.state != DEAD)
-            global.player.alive = false;
+        if (enemy.state != DEAD && global.powerUp == -1)
+            alive = false;
 
     //enemies who are killable
     if (real(object_get_parent(enemy.object_index)) == real(objLivingEnemy))
@@ -178,26 +178,15 @@ if (instance_exists(enemy) && state != DEAD)
 
             jumpPerformed = 0;
 
-            if (real(enemy.object_index) == real(objEnemyAutoSpike))
-            {
-                if (enemy.alive)
-                {
-                    t = instance_create(enemy.x,enemy.y,objEffectDust);
-                    t.type = 2;
-                    doCombo();
-                }
-                enemy.alive = false;
-            } else
-            if (enemy.state != DEAD)
-            {
-                t = instance_create(enemy.x,enemy.y,objEffectDust);
-                t.type = 2;
-                doCombo();
-                enemy.state = DEAD;
-            }
+            killEnemy();
         }
         if (enemy.state != DEAD)
-            global.player.alive = false;
+        {
+            if (global.powerUp == -1)
+                alive = false;
+            else
+                killEnemy();
+        }
     }
 
 }
@@ -241,7 +230,7 @@ else //IF NOT DEAD
 {
 
     //COLLECT COINS
-    coin = instance_place(x+xVel,y+yVel,objCoin);
+    /*coin = instance_place(x+xVel,y+yVel,objCoin);
     if (instance_exists(coin))
     {
         if (!coin.alarm[0] && coin.magnet && coin.alive)
@@ -251,9 +240,9 @@ else //IF NOT DEAD
                 //each 5 segments, the coin is worth more!!
                 global.addScore += (global.difficulty div 5);
                 coin.alive = false;
-                playSound(sfxCoin,choose(1,1.025,1.05));
+                playSound(sfxCoin,1);//choose(1,1.025,1.05));
         }
-    }
+    }*/
     //DESTROY BLOCKS BY JUMPING
     destroyBlock = instance_place(x+xVel,y+yVel-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
     if (instance_exists(destroyBlock))
