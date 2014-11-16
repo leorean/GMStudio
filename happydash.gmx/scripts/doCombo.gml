@@ -17,7 +17,7 @@ if (true)
     t.color = make_color_hsv(max(50 - (combo*5),0),255,255);
 */
     global.addScore += combo*10;
-    repeat(combo-1)
+    repeat(min(combo-1,30)) // not more than 30 coins!!
     {
         c = instance_create(x+TILE+2*xVel,y,objCoin);
         c.spawn = true;

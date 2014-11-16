@@ -69,6 +69,9 @@ fSpeed = .2;
     
     cycle();
     
+    fCur = (fCur + fSpeed) mod fMax;
+    frame = floor(fCur);
+
     if (global.player.state == DEAD || collision_point(x,y,objAny,false,true)
         || x &lt; -TILE || y &gt; HEIGHT+TILE || x &gt; WIDTH+TILE || y &lt; -TILE)
         {
@@ -99,11 +102,7 @@ fSpeed = .2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur + fSpeed) mod fMax;
-
-frame = floor(fCur);
-
-draw_sprite_part(spriteGfx,-1,frame*TILE,4*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+            <string>draw_sprite_part(spriteGfx,-1,frame*TILE,4*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

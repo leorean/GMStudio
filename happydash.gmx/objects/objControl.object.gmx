@@ -117,17 +117,14 @@ if (room != INIT &amp;&amp; !global.gameOver)
         {
             if (!global.startSignal)
             {
-                //t = instance_create(WIDTH*.5,HEIGHT*.5,objText);
-                //t.fnt = global.fntBig;
-                //t.text = "go!";
-                //t.yVel = 0;
                 instance_create(0,0,objStartLevel);
                 //playSound(sfxStart);
                 global.hasControl = true;
                 global.startSignal = true;
             }
             //if player dashes, speed is higher.
-            global.xSpeed = global.xSpeedDefault*((3-1.5*(global.player.pow/global.player.maxPow)));
+            //global.xSpeed = global.xSpeedDefault*((3-1.5*(global.player.pow/global.player.maxPow)));
+            global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;
@@ -461,7 +458,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
 
     //power up hud border
     draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);
-
+    
+    //draw_text(WIDTH/2,HEIGHT/2,global.xSpeed);
     //power up stuff
     if (alarm[1] &amp;&amp; global.player.state != DEAD)
     {
