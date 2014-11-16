@@ -271,9 +271,14 @@ switch(state)
     break;
 }
 
-draw_sprite_part(spritePlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5));
+if (global.powerUp != -1)
+    color = make_color_hsv((3*global.timer) mod 255,255,255);
+else
+    color = c_white;
 
-//draw_set_color(c_white);
+draw_set_color(color);
+draw_sprite_part_ext(spritePlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
+draw_set_color(c_white);
 
 </string>
           </argument>

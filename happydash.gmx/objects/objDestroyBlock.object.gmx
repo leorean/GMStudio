@@ -74,7 +74,11 @@ if (state == DEAD)
         }
 
     if (type == 2)
-        instance_create(WIDTH,4*TILE+random(HEIGHT-8*TILE),objPowerUp);
+    {
+        var b;
+        b = 4*TILE;
+        instance_create(-TILE/*b+random(WIDTH-2*b)*/,b+random(HEIGHT-2*b),objPowerUp);
+    }
         
     playSound(sfxDestroyBlock,1);
     instance_create(x,y,objEffectDust);

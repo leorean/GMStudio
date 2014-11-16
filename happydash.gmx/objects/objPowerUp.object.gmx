@@ -2,7 +2,7 @@
 <object>
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>objLiving</parentName>
@@ -29,12 +29,17 @@
 mask_index = sprBlockMask;
 
 alive = true;
-type = choose(0,1,2,3);
+type = 0;//choose(0,1,2,3);
 
 t = pi/2;
 
 xVel = 0;
 yVel = 0;
+
+fCur = 0;
+fSpeed = .1;
+fMax = 4;
+frame = 0;
 </string>
           </argument>
         </arguments>
@@ -59,14 +64,16 @@ yVel = 0;
             <kind>1</kind>
             <string>if (!global.pause)
 {
-    cycle();
-
+    //cycle();
+    if (x &gt; WIDTH)
+        instance_destroy();
+    
     t += .1;
     if (t &gt;= 2*pi)
         t = 0;
         
-    yVel += sin(t)/5;
-    xVel += cos(t)/10;
+    yVel += sin(t)/4;
+    xVel = abs(cos(t)*.75);
     
     x += xVel;    
     y += yVel;
@@ -77,6 +84,9 @@ yVel = 0;
         objControl.alarm[1] = objControl.alarm1;
         instance_destroy();
     }
+    
+    fCur = (fCur + fSpeed) mod fMax;
+    frame = floor(fCur);
 }
 </string>
           </argument>
@@ -101,6 +111,7 @@ yVel = 0;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
+draw_sprite_part(spriteGfx,-1,2*frame*TILE,15*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
 draw_sprite_part(spriteGfx,-1,5*TILE+type*TILE,0,TILE,TILE,floor(x),floor(y));
 </string>
           </argument>
