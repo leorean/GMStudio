@@ -156,7 +156,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             global.difficulty += 1;
         }
         
-        if (global.powerUp == 0 &amp;&amp; global.timer mod 5 == 0)
+        if (global.powerUp == POW_1 &amp;&amp; global.timer mod 5 == 0)
         {
             var c;
             c = instance_create(random(WIDTH),TILE,objCoin);
@@ -193,9 +193,17 @@ if (global.gameOver)
 //if in title menu:
 
 if (room == INIT || global.gameOver || global.player.state == DEAD || !global.startSignal)
+{
     playMusic(sfxBgm,false);
+    playMusic(sfxBgmPow,false);
+}
 else
+{
+    audio_sound_gain(sfxBgm,(global.powerUp == POW_NONE),0);
+    audio_sound_gain(sfxBgmPow,(global.powerUp != POW_NONE),0);
     playMusic(sfxBgm,!global.mute);
+    playMusic(sfxBgmPow,!global.mute);
+}
 
 if keyboard_check_pressed(vk_escape)
     game_end();
@@ -296,6 +304,7 @@ else
     
     global.powerUp = POW_NONE;
     alarm[1] = 0;
+    global.powDuration = 0;
     
     global.curSeg = 0;
     global.prevSeg = 0;
@@ -444,7 +453,7 @@ global.saveFile = 'sv.ini';
 
 global.powerUp = POW_NONE;
 alarm[1] = 0;
-alarm1 = 7*FPS;
+global.powDuration = 0;
 
 global.screenShake = false;
 shakeTime = 0;
@@ -490,7 +499,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
     {
         //power up bar
         draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,TILE*.25,global.player.x-TILE*.5,global.player.y-TILE*.5);
-        draw_sprite_part(spriteHud,-1,0,8*TILE+.25*TILE,ceil(2*TILE*alarm[1]/alarm1),TILE*.25,global.player.x-TILE*.5,global.player.y-TILE*.5);
+        draw_sprite_part(spriteHud,-1,0,8*TILE+.25*TILE,ceil(2*TILE*alarm[1]/global.powDuration),TILE*.25,global.player.x-TILE*.5,global.player.y-TILE*.5);
         //current power up
         draw_sprite_part(spriteGfx,-1,5*TILE+global.powerUp*TILE,0,TILE,TILE,WIDTH*.5-TILE*.5,.5*TILE);
     } else
