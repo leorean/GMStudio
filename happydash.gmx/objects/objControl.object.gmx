@@ -206,7 +206,7 @@ if keyboard_check_pressed(ord('E'))
     //instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
     with(objPowerUp)
         instance_destroy();
-    p = instance_create(-TILE,global.player.y,objPowerUp);
+    p = instance_create(global.player.x,global.player.y-TILE,objPowerUp);
     p.type = choose(POW_1,POW_2,POW_3,POW_4);
 }
 

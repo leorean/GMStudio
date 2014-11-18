@@ -159,7 +159,7 @@ if (instance_exists(enemy) && state != DEAD)
 {
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
-        if (enemy.state != DEAD && global.powerUp == POW_NONE)
+        if (enemy.state != DEAD && global.powerUp != POW_3)
             alive = false;
 
     //enemies who are killable
@@ -182,7 +182,7 @@ if (instance_exists(enemy) && state != DEAD)
         }
         if (enemy.state != DEAD)
         {
-            if (global.powerUp == POW_NONE)
+            if (global.powerUp != POW_3)
                 alive = false;
             else
                 killEnemy();
@@ -261,7 +261,7 @@ else //IF NOT DEAD
 
         if (global.timer mod 5 == 0)
         {
-            playSound(sfxDash,1);
+            playSound(sfxDash,1+random(.2));
             t = instance_create(x/*-TILE*.5*/,y,objEffectDust);
             t.depth = depth+1;
             t.type = 3;

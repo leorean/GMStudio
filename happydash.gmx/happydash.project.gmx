@@ -1157,6 +1157,7 @@
     <sound>sound\sfxBgm</sound>
     <sound>sound\sfxThemeChange</sound>
     <sound>sound\sfxCombo</sound>
+    <sound>sound\sfxPowerUp</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">

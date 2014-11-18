@@ -74,13 +74,15 @@ frame = 0;
         t = 0;
         
     yVel = 2*sin(t*2);
-    xVel = (.5+sin(t)*2.5);
+    //xVel = (.5+sin(t)*2.5);
+    xVel = (sin(t));
     
     x += xVel;    
     y += yVel;
     
     if (place_meeting(x,y,global.player))
     {
+        playSound(sfxPowerUp,1);
         global.powerUp = type;
         objControl.alarm[1] = objControl.alarm1;
         instance_destroy();
