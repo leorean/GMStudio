@@ -29,7 +29,7 @@
 mask_index = sprBlockMask;
 
 alive = true;
-type = 0;//choose(0,1,2,3);
+type = choose(POW_1,POW_2,POW_3,POW_4);
 
 t = pi/2;
 
@@ -69,12 +69,12 @@ frame = 0;
     if (x &gt; WIDTH || x &lt; -WIDTH)
         instance_destroy();
     
-    t += .1;
+    t += .05;
     if (t &gt;= 2*pi)
         t = 0;
         
-    yVel += sin(t)*.3;
-    xVel = (1+sin(t)*2.5);
+    yVel = 2*sin(t*2);
+    xVel = (.5+sin(t)*2.5);
     
     x += xVel;    
     y += yVel;

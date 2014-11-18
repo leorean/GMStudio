@@ -271,7 +271,22 @@ switch(state)
     break;
 }
 
-if (global.powerUp != -1)
+if (global.powerUp == POW_2) //fly
+{
+    draw_sprite_part(spriteGfx,-1,2*frame*TILE,15*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
+    /*
+    draw_set_color(make_color_hsv(130+random(10),255,255));
+    draw_set_alpha(1);
+    if (global.timer mod 10 &lt; 5)
+        with (objLivingEnemy)
+        {
+            if (abs(x-global.player.x)&lt;8*TILE &amp;&amp; abs(y-global.player.y)&lt;8*TILE &amp;&amp; x &lt; WIDTH)
+            draw_line_width(x+TILE*.5,y+TILE*.5,global.player.x,global.player.y,2);
+        }
+    */
+}
+
+if (global.powerUp != POW_NONE)
     color = make_color_hsv((3*global.timer) mod 130,255,255);
 else
     color = c_white;

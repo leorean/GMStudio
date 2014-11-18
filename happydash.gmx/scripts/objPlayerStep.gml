@@ -4,7 +4,7 @@
 
 if (global.input != INPUT_TOUCH)
 {
-    if ((keyUpPressed || mouseLeftPressed) && jumpPerformed < 2)
+    if ((keyUpPressed || mouseLeftPressed))
     {
         performJump();
     }
@@ -19,7 +19,7 @@ if (global.input != INPUT_TOUCH)
     
     if (state == ATTACK)
     {
-        if (mouseRightPressed || (mouseLeftPressed && jumpPerformed >=2))
+        if (mouseRightPressed || mouseLeftPressed)
             state = JUMP;
     } else
     {
@@ -159,7 +159,7 @@ if (instance_exists(enemy) && state != DEAD)
 {
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
-        if (enemy.state != DEAD && global.powerUp == -1)
+        if (enemy.state != DEAD && global.powerUp == POW_NONE)
             alive = false;
 
     //enemies who are killable
@@ -182,7 +182,7 @@ if (instance_exists(enemy) && state != DEAD)
         }
         if (enemy.state != DEAD)
         {
-            if (global.powerUp == -1)
+            if (global.powerUp == POW_NONE)
                 alive = false;
             else
                 killEnemy();
@@ -280,7 +280,7 @@ else //IF NOT DEAD
             db.state = DEAD;
             db = noone;
         }
-        pow = max(pow - 1, 0);
+        pow = max(pow - 1, 0+(global.powerUp == 1));
         if (pow == 0 && enemy == noone)
             state = JUMP;
     } else

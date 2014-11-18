@@ -1276,7 +1276,12 @@
     <room>rooms\INIT</room>
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="27">
+  <constants number="32">
+    <constant name="POW_NONE">-1</constant>
+    <constant name="POW_1">0</constant>
+    <constant name="POW_2">1</constant>
+    <constant name="POW_3">2</constant>
+    <constant name="POW_4">3</constant>
     <constant name="COLOR_FLESH">make_color_hsv(19+random(2),100+random(30),200+random(35))</constant>
     <constant name="COLOR_POO">make_color_hsv(15+random(5),115+random(35),150+random(30))</constant>
     <constant name="INPUT_KEYBOARD">0</constant>
