@@ -82,7 +82,9 @@ frame = 0;
     
     if (place_meeting(x,y,global.player))
     {
-        playSound(sfxPowerUp,1);
+        if (global.powerUp == POW_NONE)
+            playSound(sfxPowerUp,1);
+            
         global.powerUp = type;
         objControl.alarm[1] = objControl.alarm1;
         instance_destroy();

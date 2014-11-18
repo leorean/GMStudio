@@ -75,10 +75,16 @@ if (state == DEAD)
 
     if (type == 2)
     {
-        var b;
-        b = max(min(global.player.y-TILE+random(2*TILE),HEIGHT-2*TILE),4*TILE);
-        //instance_create(-TILE,b,objPowerUp);
         instance_create(x,y-TILE,objPowerUp);
+    }
+    if (type == 3)
+    {
+        with (objLivingEnemy)
+        {
+            if (alive &amp;&amp; x &lt; 1.5*WIDTH)
+                killEnemy(self);
+        }
+        global.screenShake = true;
     }
         
     playSound(sfxDestroyBlock,1);

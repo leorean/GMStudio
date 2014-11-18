@@ -1,17 +1,20 @@
-if (real(enemy.object_index) == real(objEnemyAutoSpike))
+var e;
+e = argument0;
+
+if (real(e.object_index) == real(objEnemyAutoSpike))
 {
-    if (enemy.alive)
+    if (e.alive)
     {
-        t = instance_create(enemy.x,enemy.y,objEffectDust);
+        t = instance_create(e.x,e.y,objEffectDust);
         t.type = 2;
         doCombo();
     }
-    enemy.alive = false;
+    e.alive = false;
 } else
-if (enemy.state != DEAD)
+if (e.state != DEAD)
 {
-    t = instance_create(enemy.x,enemy.y,objEffectDust);
+    t = instance_create(e.x,e.y,objEffectDust);
     t.type = 2;
     doCombo();
-    enemy.state = DEAD;
+    e.state = DEAD;
 }

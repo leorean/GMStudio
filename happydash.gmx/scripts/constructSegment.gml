@@ -44,13 +44,15 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 500)// && global.powerUp < 0)
+            if (c < 50)// && global.powerUp < 0)
                 ct = 2; //POWER UP BLOCK
             else if (c < 100)
                 ct = 1; //coin block
+            else if (c < 200)
+                ct = 3;//BAM block
             else if (c < 300)
                 continue;//no block
-            else if (c <= 1000)
+            else
                 ct = 0;//normal block
             
             t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);

@@ -162,6 +162,18 @@ if (room != INIT &amp;&amp; !global.gameOver)
             c = instance_create(random(WIDTH),TILE,objCoin);
             c.spawn = true;
         }
+        
+        if (!global.screenShake)
+        {
+            shakeTime = 10;
+            view_angle[0]=0;
+        } else
+        {
+            view_angle[0] = -2+(random(4));
+            shakeTime = max(shakeTime-1,0);
+            if (!shakeTime)
+                global.screenShake = false;
+        }
     }
     else //THIS IS PAUSE MODE!
     {
@@ -433,6 +445,9 @@ global.saveFile = 'sv.ini';
 global.powerUp = POW_NONE;
 alarm[1] = 0;
 alarm1 = 7*FPS;
+
+global.screenShake = false;
+shakeTime = 0;
 </string>
           </argument>
         </arguments>
@@ -466,7 +481,6 @@ draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WID
 
 if (room != INIT &amp;&amp; !global.gameOver)
 {
-
     //power up hud border
     draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);
     

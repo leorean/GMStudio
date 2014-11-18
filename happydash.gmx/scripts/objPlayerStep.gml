@@ -178,14 +178,14 @@ if (instance_exists(enemy) && state != DEAD)
 
             jumpPerformed = 0;
 
-            killEnemy();
+            killEnemy(enemy);
         }
         if (enemy.state != DEAD)
         {
             if (global.powerUp != POW_3)
                 alive = false;
             else
-                killEnemy();
+                killEnemy(enemy);
         }
     }
 

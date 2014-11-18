@@ -114,7 +114,7 @@ if (!global.pause)
         {
             fCur = max(min(fCur + fSpeed*sign(look), fMax),0);
         
-            if (fCur &gt;= fMax - fSpeed &amp;&amp; !hasShot &amp;&amp; look == UP &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
+            if (fCur &gt;= fMax - fSpeed &amp;&amp; !hasShot &amp;&amp; look == DOWN &amp;&amp; x &lt; WIDTH &amp;&amp; global.player.state != DEAD)
             {
                 instance_create(x+TILE*.5,y+TILE*.5,objEnemyProjectile);
                 hasShot = true;
