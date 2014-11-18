@@ -272,7 +272,7 @@ switch(state)
 }
 
 if (global.powerUp != -1)
-    color = make_color_hsv((3*global.timer) mod 255,255,255);
+    color = make_color_hsv((3*global.timer) mod 130,255,255);
 else
     color = c_white;
 

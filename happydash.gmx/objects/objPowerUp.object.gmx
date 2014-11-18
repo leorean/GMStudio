@@ -65,15 +65,16 @@ frame = 0;
             <string>if (!global.pause)
 {
     //cycle();
-    if (x &gt; WIDTH)
+    //x -= global.xSpeed;
+    if (x &gt; WIDTH || x &lt; -WIDTH)
         instance_destroy();
     
     t += .1;
     if (t &gt;= 2*pi)
         t = 0;
         
-    yVel += sin(t)/4;
-    xVel = abs(cos(t)*.75);
+    yVel += sin(t)*.3;
+    xVel = (1+sin(t)*2.5);
     
     x += xVel;    
     y += yVel;

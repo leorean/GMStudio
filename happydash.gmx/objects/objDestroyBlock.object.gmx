@@ -76,8 +76,8 @@ if (state == DEAD)
     if (type == 2)
     {
         var b;
-        b = 2*TILE;
-        instance_create(-TILE,x-b+random(2*b),objPowerUp);
+        b = max(min(global.player.y-TILE+random(2*TILE),HEIGHT-2*TILE),4*TILE);
+        instance_create(-TILE,b,objPowerUp);
     }
         
     playSound(sfxDestroyBlock,1);

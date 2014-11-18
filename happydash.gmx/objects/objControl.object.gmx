@@ -159,7 +159,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
         if (global.powerUp == 0 &amp;&amp; global.timer mod 5 == 0)
         {
             var c;
-            c = instance_create(random(WIDTH),0,objCoin);
+            c = instance_create(random(WIDTH),TILE,objCoin);
             c.spawn = true;
         }
     }
@@ -201,8 +201,11 @@ if keyboard_check_pressed(ord('Q'))
 //TODO: REMOVE THIS
 if keyboard_check_pressed(ord('E'))
 {
-    global.coins = global.maxCoins-1;
-    instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
+    //
+    //global.coins = global.maxCoins-1;
+    //instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
+    p = instance_create(-TILE,global.player.y,objPowerUp);
+    p.type = choose(0,1,2,3);
 }
 
 if keyboard_check(ord('C'))
@@ -427,7 +430,7 @@ global.saveFile = 'sv.ini';
 
 global.powerUp = -1;
 alarm[1] = 0;
-alarm1 = 15*FPS;
+alarm1 = 7*FPS;
 </string>
           </argument>
         </arguments>

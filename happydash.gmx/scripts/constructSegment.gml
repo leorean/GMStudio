@@ -44,7 +44,7 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 500 && global.powerUp < 0)
+            if (c < 10)// && global.powerUp < 0)
                 ct = 2; //POWER UP BLOCK
             else if (c < 100)
                 ct = 1; //coin block
