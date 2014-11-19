@@ -79,20 +79,28 @@ fSpeed = 0;
         if (canJump)
             xVel = 0;
             
-        if (place_free(x-ceil(global.xSpeed)+2*xVel,y))
+        if (place_free(x/*+ceil(global.xSpeed)+xVel*/,y))
             x += xVel;
         else
         {
-            xVel = global.xSpeed;
-            dir = -dir;
+            if (collision_line(bbox_left-3,bbox_top,bbox_left-3,bbox_bottom,objSolid,false,true))
+            {
+                dir = RIGHT;
+                x += 1;
+            }
+            if (collision_line(bbox_right+3,bbox_top,bbox_right+3,bbox_bottom,objSolid,false,true))
+            {
+                dir = LEFT;
+                x -= 1;
+            }
         }
 
         if (yVel &gt;= 0)
-            if (place_meeting(x,y+1,objAny))
+            if (place_meeting(x-xVel,y+1,objAny))
             {
                 if (!canJump)
                 {   
-                    yVel = 0;
+                    //yVel = 0;
                     xVel = 0;
                     fCur = 0;
                     canJump = true;
@@ -112,7 +120,6 @@ fSpeed = 0;
         {
             global.enemiesKilled += 1;
             yVel = -3;
-            //playSound(sfxEnemyDie,.9+random(.2));
         }
         alive = false;
         xVel = 0;

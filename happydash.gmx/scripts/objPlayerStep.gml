@@ -159,11 +159,10 @@ if (instance_exists(enemy) && state != DEAD)
 {
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
+    {
         if (enemy.state != DEAD && global.powerUp != POW_3)
             alive = false;
-
-    //enemies who are killable
-    if (real(object_get_parent(enemy.object_index)) == real(objLivingEnemy))
+    } else //enemies who are killable
     {
         if (state == ATTACK || (yVel < 0 && y > enemy.y) || (y < enemy.y))
         {
@@ -278,11 +277,11 @@ else //IF NOT DEAD
         pow = min(pow+2*(1-(x*.0025)),maxPow);
         yGrav = yGravDefault;
     }
-        
     
     if (onGround && yVel > 0 && state != ATTACK)
     {
-        combo = 0;
+        if (global.powerUp != POW_3)
+            combo = 0;
         y = floor(y);
         jumpPerformed = 0;
         if (state != IDLE)

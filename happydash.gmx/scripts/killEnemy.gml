@@ -1,7 +1,22 @@
 var e;
 e = argument0;
 
-if (real(e.object_index) == real(objEnemyAutoSpike))
+if (e.alive)
+{
+    t = instance_create(e.x,e.y,objEffectDust);
+    t.type = 2;
+    doCombo();
+    if (real(e.object_index) == real(objEnemyAutoSpike))
+    {
+        e.alive = false;
+        e.state = DEAD;
+    }
+    if (real(e.object_index) != real(objEnemyAutoSpike))
+        e.state = DEAD;
+    playSound(sfxEnemyDie,.9+random(.2));
+        
+}
+/*if (real(e.object_index) == real(objEnemyAutoSpike))
 {
     if (e.alive)
     {
@@ -19,4 +34,4 @@ if (e.state != DEAD)
     doCombo();
     e.state = DEAD;
     playSound(sfxEnemyDie,.95+random(.1));
-}
+}*/
