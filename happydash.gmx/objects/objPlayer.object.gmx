@@ -120,7 +120,7 @@ fSpeed = .1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>attack cooldown</string>
+            <string>die cooldown</string>
           </argument>
         </arguments>
       </action>

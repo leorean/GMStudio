@@ -10,6 +10,7 @@ if (real(e.object_index) == real(objEnemyAutoSpike))
         doCombo();
     }
     e.alive = false;
+    playSound(sfxEnemyDie,.9+random(.2));
 } else
 if (e.state != DEAD)
 {
@@ -17,4 +18,5 @@ if (e.state != DEAD)
     t.type = 2;
     doCombo();
     e.state = DEAD;
+    playSound(sfxEnemyDie,.95+random(.1));
 }

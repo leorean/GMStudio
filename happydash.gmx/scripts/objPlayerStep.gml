@@ -230,22 +230,11 @@ else //IF NOT DEAD
 {
 
     //COLLECT COINS
-    /*coin = instance_place(x+xVel,y+yVel,objCoin);
-    if (instance_exists(coin))
-    {
-        if (!coin.alarm[0] && coin.magnet && coin.alive)
-        {
-                global.coins += 1;
-                global.coinsCollected += 1;
-                //each 5 segments, the coin is worth more!!
-                global.addScore += (global.difficulty div 5);
-                coin.alive = false;
-                playSound(sfxCoin,1);//choose(1,1.025,1.05));
-        }
-    }*/
+        //collectCoin();
+    
     //DESTROY BLOCKS BY JUMPING
     destroyBlock = instance_place(x+xVel,y+yVel-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
-    if (instance_exists(destroyBlock))
+    if (instance_exists(destroyBlock) && state != IDLE && state != RUN)
     {
         destroyBlock.state = DEAD;
         doCombo();
@@ -333,7 +322,8 @@ else //IF NOT DEAD
             if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
                 state = JUMP;
         xVel = 0;//-global.xSpeed;
-        x -= global.xSpeed;
+        //x -= global.xSpeed;
+        move_outside_solid(180,TILE);
     }
 }
 

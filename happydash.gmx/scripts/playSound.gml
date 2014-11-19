@@ -4,12 +4,14 @@ if (!global.mute)
     if (audio_system() == audio_new_system)
     {
         audio_sound_pitch(argument0,argument1);
-        //if (!audio_is_playing(argument0))
+        if (audio_is_playing(argument0))
+            audio_stop_sound(argument0);
         audio_play_sound(argument0,0,false);
 
     } 
     else if (audio_system() == audio_old_system)
     {
+    /*
         if (!sound_isplaying(argument0))
             sound_play(argument0);
         else
@@ -17,6 +19,7 @@ if (!global.mute)
             sound_stop(argument0);
             sound_play(argument0);
         }
+        */
     }
 } else
 {
@@ -26,7 +29,7 @@ if (!global.mute)
     }
     else if (audio_system() == audio_old_system)
     {
-        if (sound_isplaying(argument0))
-            sound_stop(argument0);
+        //if (sound_isplaying(argument0))
+        //    sound_stop(argument0);
     }
 }

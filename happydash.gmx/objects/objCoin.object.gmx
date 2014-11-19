@@ -34,7 +34,7 @@ fMax = 4;
 fCur = random(fMax);
 alpha = 10;
 
-alarm0 = FPS*.25;
+alarm0 = FPS/4;
 alarm[0] = alarm0;
 
 alive = true;

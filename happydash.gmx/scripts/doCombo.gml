@@ -11,7 +11,9 @@ global.maxCombo = max(global.maxCombo, global.player.combo);
 if (true)
 {
     global.addScore += global.player.combo*10;
-    repeat(min(global.player.combo-1 div 2, 10)) // not so many coins!
+    var i;
+    i = 0;
+    repeat(global.player.combo-1 div 2) // not so many coins!
     {
         c = instance_create(x+TILE/*+2*xVel*/,y,objCoin);
         c.spawn = true;

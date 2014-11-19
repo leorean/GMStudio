@@ -1227,6 +1227,7 @@
     <script>scripts\playMusic.gml</script>
     <script>scripts\performJump.gml</script>
     <script>scripts\killEnemy.gml</script>
+    <script>scripts\collectCoin.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>

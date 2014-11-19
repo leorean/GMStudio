@@ -367,7 +367,17 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//THIS EVENT SHALL BE CALLED ONCE PER GAME ONLY!!!
+            <string>/* HTML5 "SITELOCK"
+var dom;
+dom = YoYo_GetDomain();
+if (dom != "162.218.235.161" &amp;&amp; dom != "127.0.0.1")
+{
+    show_message("Illegal Domain!!");
+    instance_destroy();
+}
+*/   
+
+//THIS EVENT SHALL BE CALLED ONCE PER GAME ONLY!!!
 
 depth = HUDDEPTH;
 randomize();
