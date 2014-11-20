@@ -96,13 +96,14 @@ if (room != INIT &amp;&amp; !global.gameOver)
 
         //EXP SYSTEM FORMULA AND LEVEL UP
         global.maxCoins = 6 * floor(3 + global.level * power(3, global.level * .022 ) );
-        if (global.coins&gt;=global.maxCoins)
+        if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
-            global.xSpeedDefault = min(global.xSpeedDefault + .025, global.xSpeedMax);
+            global.xSpeedDefault = min(global.xSpeedDefault + .035, global.xSpeedMax);
             global.level += 1;
             global.coins = 0;
-            t = instance_create(global.player.cx,global.player.cy,objText);
-            t.text = "LEVEL UP!"
+            t = instance_create(WIDTH/2,HEIGHT/2,objText);
+            t.text = "LEVEL "+string(global.level)+"!";
+            t.fnt = global.fntBig;
             playSound(sfxLevelUp,1);
             if (global.level mod 5 == 0)
             {

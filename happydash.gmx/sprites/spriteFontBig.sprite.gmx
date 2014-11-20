@@ -17,8 +17,8 @@
     <TextureGroup0>2</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>64</width>
-  <height>64</height>
+  <width>32</width>
+  <height>32</height>
   <frames>
     <frame index="0">images\spriteFontBig_0.png</frame>
     <frame index="1">images\spriteFontBig_1.png</frame>
@@ -115,5 +115,6 @@
     <frame index="92">images\spriteFontBig_92.png</frame>
     <frame index="93">images\spriteFontBig_93.png</frame>
     <frame index="94">images\spriteFontBig_94.png</frame>
+    <frame index="95">images\spriteFontBig_95.png</frame>
   </frames>
 </sprite>

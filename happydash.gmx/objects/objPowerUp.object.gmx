@@ -82,8 +82,7 @@ frame = 0;
     
     if (place_meeting(x,y,global.player))
     {
-        if (global.powerUp == POW_NONE)
-            playSound(sfxPowerUp,1);
+        playSound(sfxPowerUp,1);
             
         global.powerUp = type;
         switch(global.powerUp)

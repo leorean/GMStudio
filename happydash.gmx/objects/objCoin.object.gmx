@@ -50,6 +50,8 @@ inWall = true;
 spawn = false;
 
 magnet = false;
+
+type = choose(0,0,0,0,0,0,0,0,0,0,1);
 </string>
           </argument>
         </arguments>
@@ -115,8 +117,16 @@ magnet = false;
         if (abs(global.player.x-x)&lt;TILE*.5 &amp;&amp; abs(global.player.y-y)&lt;TILE*.5) //optimized
             if (!alarm[0] &amp;&amp; magnet &amp;&amp; global.player.state != DEAD)
                 {
-                    global.coins += 1;
-                    global.coinsCollected += 1;
+                    if (type == 0)
+                    {
+                        global.coins += 1;
+                        global.coinsCollected += 1;
+                    }
+                    else if (type == 1)
+                    {
+                        global.coins += 10;
+                        global.coinsCollected += 10;
+                    }
                     //each 5 segments, the coin is worth more!!
                     global.addScore += (global.difficulty div 5);
                     alive = false;
@@ -202,7 +212,7 @@ magnet = false;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,frame*TILE,TILE,TILE,TILE,floor(x),y);
+draw_sprite_part(spriteGfx,-1,frame*TILE,TILE+type*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>
