@@ -1274,6 +1274,7 @@
     </objects>
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>
+      <object>objects\objProjectilePlayer1</object>
     </objects>
   </objects>
   <rooms name="rooms">

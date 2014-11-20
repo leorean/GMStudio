@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>objLiving</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,21 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = PLAYERDEPTH+2;
-mask_index = sprBlockMask;
+            <string>depth = PLAYERDEPTH+1;
+mask_index = sprProjectileMask;
+xVel = 3;
+yVel = -2-(global.timer mod 3)*.5;
+yGrav = .13;
 
 alive = true;
-type = choose(POW_1,POW_2,POW_3,POW_4);
-
-t = pi/2;
-
-xVel = 0;
-yVel = 0;
-
-fCur = 0;
-fSpeed = .1;
 fMax = 4;
-frame = 0;
+fCur = 0;
+fSpeed = .2;
 </string>
           </argument>
         </arguments>
@@ -64,59 +59,50 @@ frame = 0;
             <kind>1</kind>
             <string>if (!global.pause)
 {
-    //cycle();
-    //x -= global.xSpeed;
-    if (x &gt; WIDTH || x &lt; -WIDTH)
-        instance_destroy();
-    
-    t += .05;
-    if (t &gt;= 2*pi)
-        t = 0;
+    if (alive)
+    {
+        x += xVel;
+        y += yVel;
+        yVel += yGrav;
         
-    yVel = 2*sin(t*2);
-    xVel = (sin(t));
-
-    if (x &gt; WIDTH*.3)
-    {
-        xVel -= global.xSpeed;
-    } else
-        xVel = (sin(t));
-    
-    
-    x += xVel;    
-    y += yVel;
-    
-    if (place_meeting(x,y,global.player))
-    {
-        playSound(sfxPowerUp,1);
-        t = instance_create(x+TILE*.5,y+TILE*.5,objText);
-        global.powerUp = type;
-        switch(global.powerUp)
+        fCur = (fCur + fSpeed) mod fMax;
+        
+        destroyBlock = instance_place(x+xVel,y+yVel,objDestroyBlock);
+        if (instance_exists(destroyBlock))
         {
-            case POW_1: //moneeeey
-                global.powDuration = 5*FPS;
-                t.text = "Golden Shower!";
-            break;
-            case POW_2: //flying
-                global.powDuration = 12*FPS;
-                t.text = "Flying F!";
-            break;
-            case POW_3: //invincible
-                global.powDuration = 7*FPS;
-                t.text = "Pill of Joy!";
-            break;
-            case POW_4:
-                global.powDuration = 10*FPS;
-                t.text = "Bananarama!";
-            break;
+            destroyBlock.state = DEAD;
+            doCombo();
+            fCur = 0;
+            alive = false;
         }
-        objControl.alarm[1] = global.powDuration;
-        instance_destroy();
+        enemy = instance_place(x+xVel,y+yVel,objLivingEnemy);
+        if (instance_exists(enemy))
+        {
+            killEnemy(enemy);
+            fCur = 0;
+            alive = false;
+        }
+        
+        if (!place_free(x+xVel,y+yVel))
+        {
+            fCur = 0;
+            alive = false;
+        }
+        if (x &gt; WIDTH || y &gt; HEIGHT)
+            instance_destroy();
+        
     }
-    
-    fCur = (fCur + fSpeed) mod fMax;
-    frame = floor(fCur);
+    else
+    {
+        xVel = 0;
+        yVel = 0;
+        fCur = min(fCur + 2*fSpeed, fMax);
+        if (fCur &gt;= fMax)
+            instance_destroy();
+    }
 }
+
+
 </string>
           </argument>
         </arguments>
@@ -140,8 +126,8 @@ frame = 0;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,2*frame*TILE,15*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
-draw_sprite_part(spriteGfx,-1,5*TILE+type*TILE,0,TILE,TILE,floor(x),floor(y));
+frame = floor(fCur);
+draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,16*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

@@ -160,8 +160,19 @@ if (instance_exists(enemy) && state != DEAD)
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
     {
-        if (enemy.state != DEAD && global.powerUp != POW_3)
-            alive = false;
+        if (enemy.state != DEAD)
+        {
+            if (global.powerUp != POW_3)
+                alive = false;
+            else
+            {
+                with (enemy)
+                {
+                    instance_create(x,y,objEffectDust);
+                    instance_destroy();
+                }
+            }
+        }
     } else //enemies who are killable
     {
         if (state == ATTACK || (yVel < 0 && y > enemy.y) || (y < enemy.y))
@@ -243,6 +254,13 @@ else //IF NOT DEAD
     //*0.0625 = 1 / TILE
     global.curScore = 10*floor(global.distance*0.0625) + global.addScore;
 
+    //POWER UP no. 4 (shooting)
+    if (global.powerUp == POW_4)
+    {
+        if (global.timer mod 10 == 0)
+            instance_create(cx,cy,objProjectilePlayer1);
+    }
+    
     //ATTACKING
     if (state == ATTACK)
     {

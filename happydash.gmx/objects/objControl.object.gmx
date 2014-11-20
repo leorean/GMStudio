@@ -542,15 +542,20 @@ if (room != INIT &amp;&amp; !global.gameOver)
 
     //COINS    
     draw_set_halign(fa_left);
-    draw_text(0,0, " $ " + string(global.coins)+ " / "+string(global.maxCoins));
-
+    //draw_text(0,0, " $ " + string(global.coins)+ " / "+string(global.maxCoins));
+    draw_text(0,0, " $ " + string(global.coinsCollected));
+    
     //SCORE       
     draw_set_halign(fa_left);
     draw_text(a,HEIGHT-TILE," &amp; " + string(global.curScore));
 
     //LEVEL    
     //draw_set_halign(fa_right);
-    draw_text(0,TILE," LVL " + string(global.level) + " ");
+    //draw_text(0,TILE," LVL " + string(global.level));
+    draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,TILE*.5,0,1.5*TILE);
+    draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,4*TILE*min(global.coins/global.maxCoins,1),TILE*.5,0,1.5*TILE);
+    draw_set_halign(fa_center);
+    draw_text(2*TILE,TILE,"Lv. " + string(global.level));
 
     //CHARGE BAR
     draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
