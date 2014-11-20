@@ -65,29 +65,44 @@ if (global.player.state == JUMP &amp;&amp; global.player.yVel &lt;= 0 &amp;&amp;
 */
 if (state == DEAD)
 {
+    if (type == 0)
+        repeat(5)
+            spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
 
     if (type == 1)
         repeat(5)
         {
+            spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_GOLD);
             c = instance_create(x+TILE*.5,y,objCoin);
             c.spawn = true;
         }
 
     if (type == 2)
     {
+        repeat(5)
+            spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_RANDOM);
         instance_create(x,y-TILE,objPowerUp);
     }
     if (type == 3)
     {
+        repeat(5)
+            spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_RED);
         with (objLivingEnemy)
         {
             if (alive &amp;&amp; x &lt; 1.5*WIDTH)
                 killEnemy(self);
         }
+        with (objEnemy)
+        {
+            instance_create(x,y,objEffectDust);
+            instance_destroy();
+        }
+            
         global.screenShake = true;
-    }
+        playSound(sfxPowBlock,1);
+    } else
+        playSound(sfxDestroyBlock,1);
         
-    playSound(sfxDestroyBlock,1);
     instance_create(x,y,objEffectDust);
     instance_destroy();
 }
@@ -114,7 +129,10 @@ if (state == DEAD)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y);
+if (type != 2)
+    draw_sprite_part(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y);
+else
+    draw_sprite_part_ext(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y,1,1,make_color_hsv((5*global.timer mod 255),255,255),1);
 
 </string>
           </argument>

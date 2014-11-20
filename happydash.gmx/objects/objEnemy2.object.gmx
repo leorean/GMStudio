@@ -119,6 +119,8 @@ fSpeed = 0;
         if (alive)
         {
             global.enemiesKilled += 1;
+            repeat(5)
+                spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
             yVel = -3;
         }
         alive = false;

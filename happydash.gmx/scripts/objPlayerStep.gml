@@ -232,7 +232,7 @@ else //IF NOT DEAD
         //collectCoin();
     
     //DESTROY BLOCKS BY JUMPING
-    destroyBlock = instance_place(x+xVel,y+yVel-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
+    destroyBlock = instance_place(x,y-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
     if (instance_exists(destroyBlock) && state != IDLE && state != RUN)
     {
         destroyBlock.state = DEAD;

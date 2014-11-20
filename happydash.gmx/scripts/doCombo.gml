@@ -1,6 +1,3 @@
-repeat(5)
-    spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
-
 var pitch;
 pitch = max(min(1 + global.player.combo/30,1.5),1);
 //playSound(sfxCombo,pitch);

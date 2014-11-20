@@ -6,6 +6,9 @@ var t,s,w,h;
 w = WIDTH/TILE;
 h = HEIGHT/TILE;
 
+var powSpawned,itemSpawned;
+powSpawned = false; itemSpawned = false;
+
 for (i = 0; i<w; i += 1)
 {
     for (j = 0; j<h; j+=1)
@@ -44,17 +47,21 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 50)// && global.powerUp < 0)
-                ct = 2; //POWER UP BLOCK
+            if (c < 10)// && global.powerUp < 0)
+                ct = 2; //ITEM block
+            else if (c < 50)
+                ct = 3; //POW block
             else if (c < 100)
-                ct = 1; //coin block
+                ct = 1;//coin block
             else if (c < 200)
-                ct = 3;//BAM block
-            else if (c < 300)
                 continue;//no block
             else
                 ct = 0;//normal block
             
+            if (powSpawned && ct == 3)
+                ct = 0;
+            if (itemSpawned && ct == 2)
+                ct = 0;
             t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
             t.type = ct;
             

@@ -93,7 +93,8 @@ fSpeed = 0;
         {
             global.enemiesKilled += 1;
             yVel = -3;
-            //playSound(sfxEnemyDie,.9+random(.2));
+            repeat(5)
+                spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
         }
         alive = false;
         xVel = 0;

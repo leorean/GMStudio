@@ -135,7 +135,8 @@ if (!global.pause)
         {   
             fCur = 0;
             global.enemiesKilled += 1;
-            //playSound(sfxEnemyDie,1);
+            repeat(5)
+                spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_FLESH);
             yVel = -3;
             knockedUp = true;
         }
