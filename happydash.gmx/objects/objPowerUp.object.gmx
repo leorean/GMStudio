@@ -76,7 +76,7 @@ frame = 0;
     yVel = 2*sin(t*2);
     xVel = (sin(t));
 
-    if (x &gt; WIDTH*.3)
+    if (x &gt; WIDTH*.5+2*TILE)
     {
         xVel -= global.xSpeed;
     } else
@@ -99,11 +99,11 @@ frame = 0;
             break;
             case POW_2: //flying
                 global.powDuration = 12*FPS;
-                t.text = "Flying F!";
+                t.text = "Up and away!";
             break;
             case POW_3: //invincible
                 global.powDuration = 7*FPS;
-                t.text = "Pill of Joy!";
+                t.text = "Joy!";
             break;
             case POW_4:
                 global.powDuration = 10*FPS;

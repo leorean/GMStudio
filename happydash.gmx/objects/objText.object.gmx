@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = PLAYERDEPTH-2;
+            <string>depth = HUDDEPTH-1;
 //if (!variable_local_exists("xVel"))
     xVel = 0;
 //if (!variable_local_exists("yVel"))
