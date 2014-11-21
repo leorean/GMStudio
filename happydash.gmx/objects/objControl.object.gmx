@@ -94,12 +94,15 @@ if (room != INIT &amp;&amp; !global.gameOver)
             || keyboard_check_pressed(ord('P'))
                 global.pause = true;
 
-        //EXP SYSTEM FORMULA AND LEVEL UP
-        global.maxCoins = 6 * floor(3 + global.level * power(3, global.level * .022 ) );
+        //EXP SYSTEM AND LEVEL UP FORMULA
+        global.maxCoins = 18 * floor(2 + global.level * power(1.5, global.level * .0027 ));
+        
         if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
-            global.xSpeedDefault = min(global.xSpeedDefault + .035, global.xSpeedMax);
+            //global.xSpeedDefault = min(global.xSpeedDefault + .0265, global.xSpeedMax);
             global.level += 1;
+            if (global.level mod (5*(global.maxTheme+1)) == 0)
+                global.xSpeedDefault = min(global.xSpeedDefault + 1, global.xSpeedMax);
             global.coins = 0;
             t = instance_create(WIDTH/2,HEIGHT/2,objText);
             t.text = "LEVEL "+string(global.level)+"!";
@@ -107,8 +110,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
             playSound(sfxLevelUp,1);
             if (global.level mod 5 == 0)
             {
-                while (global.theme == global.themePrev)
-                    global.theme = floor(irandom(global.maxTheme));
+                //while (global.theme == global.themePrev)
+                //    global.theme = floor(irandom(global.maxTheme));
+                global.theme = (global.theme + 1) mod (global.maxTheme+1);
                 playSound(sfxThemeChange,1);
             }
 
@@ -155,6 +159,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.prevSeg = global.curSeg;
             }
             global.difficulty += 1;
+            show_debug_message("difficulty: " + string(global.difficulty));
         }
         
         if (!global.screenShake)
@@ -286,7 +291,7 @@ else
     global.curScore = 0;
     global.addScore = 0;
     global.level = 1;
-    global.theme = floor(irandom(global.maxTheme));
+    global.theme = 0;//floor(irandom(global.maxTheme));
     global.themePrev = global.theme;
     objCamera.theme = global.theme * WIDTH;
     
@@ -361,7 +366,12 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/* HTML5 "SITELOCK"
+            <string>/*for (i = 0; i &lt; 50; i+= 1)
+{
+    u = 18 * floor(2 + i * power(1.5, i * .0027 ) );
+    show_debug_message(string(i)+":"+string(u));
+}*/
+/* HTML5 "SITELOCK"
 var dom;
 dom = YoYo_GetDomain();
 if (dom != "162.218.235.161")// || dom != "127.0.0.1")

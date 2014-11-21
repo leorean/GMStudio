@@ -29,12 +29,12 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 65) //spikes
         {
-            if (min(global.difficulty,15) > random(20))
+            if (max(min(global.difficulty,30),10) > random(40))
                 instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
         }
         else if (s == 66 || s == 71) //platforms
         {
-            if (choose(true,false))
+            if (choose(true,true,false))
             {
                 t = instance_create(a+i*TILE,b+j*TILE,objPlatform);
                 t.px = floor((s-1) mod TILE);
@@ -47,24 +47,21 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 10)// && global.powerUp < 0)
-                ct = 2; //ITEM block
-            else if (c < 50)
-                ct = 3; //POW block
+            if (c < 40)// && global.powerUp < 0)
+                {ct = 2; itemSpawned = true} //ITEM block
             else if (c < 100)
-                ct = 1;//coin block
+                {ct = 3; powSpawned = true}//POW block
             else if (c < 200)
+                ct = 1;//coin block
+            else if (c < 300)
                 continue;//no block
             else
                 ct = 0;//normal block
             
-            if (powSpawned && ct == 3)
-                ct = 0;
-            if (itemSpawned && ct == 2)
-                ct = 0;
-            t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-            t.type = ct;
+            if (powSpawned && ct == 3)||(itemSpawned && ct == 2) ct = 0;
             
+            t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
+            t.type = ct;            
         }
         else if (s == 68) //coins
         {
@@ -83,7 +80,7 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 70) //spikes and auto spikes
         {
-            if (min(global.difficulty,15) > random(20))
+            if (max(min(global.difficulty,30),10) > random(40))
             {
                 var c;
                 c = choose(true,false);

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>var c;
-c = irandom(1000);
+c = irandom(700);
 type = (c == 1);
 
 if (type == 0)

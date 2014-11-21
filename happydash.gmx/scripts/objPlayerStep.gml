@@ -244,7 +244,7 @@ else //IF NOT DEAD
     
     //DESTROY BLOCKS BY JUMPING
     destroyBlock = instance_place(x,y-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
-    if (instance_exists(destroyBlock) && state != IDLE && state != RUN)
+    if (instance_exists(destroyBlock) && state != RUN)
     {
         destroyBlock.state = DEAD;
         doCombo();
@@ -316,30 +316,32 @@ else //IF NOT DEAD
         if (state == JUMP)
             xVel = max(xVel,0);
 
-        if (state != IDLE)
+        if (state != ATTACK)
         {
-            if (x < xO)
+            if (state != IDLE)
             {
-                if (xVel < global.xSpeed)
-                    xVel = min(xVel + 2*xAcc, global.xSpeed*.3); //% faster than scroll speed
-            }
-            else
-            {
-                if (xVel > 0)
-                    xVel *= xFric;
-        
-                if (x > xO + global.xSpeed*1.5)
-                    xVel = max(xVel - xAcc, -global.xSpeed*.5);//% slower than scroll speed
-            }
-        } else //IDLE SPEED HERE
-            xVel = max(xVel - 4*xAcc, -global.xSpeed);
+                if (x < xO)
+                {
+                    if (xVel < global.xSpeed)
+                        xVel = min(xVel + 2*xAcc, global.xSpeed*.3); //% faster than scroll speed
+                }
+                else
+                {
+                    if (xVel > 0)
+                        xVel *= xFric;
+            
+                    if (x > xO + global.xSpeed*1.5)
+                        xVel = max(xVel - xAcc, -global.xSpeed*.5);//% slower than scroll speed
+                }
+            } else //IDLE SPEED HERE
+                xVel = max(xVel - 4*xAcc, -global.xSpeed);
+        }
     } else
     {
         if (state == ATTACK)
             if (!place_meeting(x+ceil(global.xSpeed) + xVel,y, objDestroyBlock))
                 state = JUMP;
-        xVel = 0;//-global.xSpeed;
-        //x -= global.xSpeed;
+        xVel = 0;
         move_outside_solid(180,TILE);
     }
 }
