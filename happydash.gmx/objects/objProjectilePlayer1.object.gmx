@@ -28,7 +28,7 @@
             <string>depth = PLAYERDEPTH+1;
 mask_index = sprProjectileMask;
 xVel = 3;
-yVel = -2-(global.timer mod 3)*.5;
+yVel = -1-(global.timer mod 3);
 yGrav = .13;
 
 alive = true;

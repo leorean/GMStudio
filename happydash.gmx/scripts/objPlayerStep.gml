@@ -286,7 +286,7 @@ else //IF NOT DEAD
             db.state = DEAD;
             db = noone;
         }
-        pow = max(pow - 1, 0+(global.powerUp == 1));
+        pow = max(pow - 1, 0+(global.powerUp == POW_2));
         if (pow == 0 && enemy == noone)
             state = JUMP;
     } else
