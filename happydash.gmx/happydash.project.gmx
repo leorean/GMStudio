@@ -1446,6 +1446,7 @@
     <sprite>sprites\spriteFontDefault</sprite>
     <sprite>sprites\spriteGfx</sprite>
     <sprite>sprites\spriteStartLevel</sprite>
+    <sprite>sprites\spriteCombo</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -1494,8 +1495,6 @@
       <object>objects\objButton</object>
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
-      <object>objects\objText</object>
-      <object>objects\objParticle</object>
       <object>objects\objStartLevel</object>
       <objects name="content">
         <object>objects\objBlock</object>
@@ -1503,7 +1502,6 @@
         <object>objects\objPlatform</object>
         <object>objects\objDestroyBlock</object>
         <object>objects\objCoin</object>
-        <object>objects\objEffectDust</object>
         <object>objects\objPowerUp</object>
         <objects name="enemies">
           <object>objects\objEnemyAutoSpike</object>
@@ -1517,6 +1515,12 @@
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>
       <object>objects\objProjectilePlayer1</object>
+    </objects>
+    <objects name="effects">
+      <object>objects\objParticle</object>
+      <object>objects\objText</object>
+      <object>objects\objEffectDust</object>
+      <object>objects\objEffectCombo</object>
     </objects>
   </objects>
   <rooms name="rooms">

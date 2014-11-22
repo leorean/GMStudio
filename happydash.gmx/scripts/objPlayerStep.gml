@@ -299,10 +299,11 @@ else //IF NOT DEAD
     
     if (onGround && yVel > 0 && state != ATTACK)
     {
-        if (combo >= 10 && global.powerUp == POW_NONE)// && global.powerUp != POW_4)
+        if (global.powerUp == POW_NONE)// && global.powerUp != POW_4)
         {
+            if (combo >= 10)
+                playSound(sfxComboBreak,1);
             combo = 0;
-            playSound(sfxComboBreak,1);
         }
         y = floor(y);
         jumpPerformed = 0;
