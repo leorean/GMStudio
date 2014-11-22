@@ -95,19 +95,19 @@ frame = 0;
         {
             case POW_1: //moneeeey
                 global.powDuration = 5*FPS;
-                t.text = "Golden Shower!";
+                t.text = "@Golden Shower@";
             break;
             case POW_2: //flying
                 global.powDuration = 12*FPS;
-                t.text = "Up and away!";
+                t.text = "@It's a Blessing@";
             break;
             case POW_3: //invincible
                 global.powDuration = 7*FPS;
-                t.text = "Joy!";
+                t.text = "@A Good Trip@";
             break;
             case POW_4:
                 global.powDuration = 10*FPS;
-                t.text = "Bananarama!";
+                t.text = "@Bananarama@";
             break;
         }
         objControl.alarm[1] = global.powDuration;

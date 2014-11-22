@@ -1398,6 +1398,10 @@
     <sound>sound\sfxPowerUp</sound>
     <sound>sound\sfxBgmPow</sound>
     <sound>sound\sfxPowBlock</sound>
+    <sound>sound\sfxCaching</sound>
+    <sound>sound\sfxApplause</sound>
+    <sound>sound\sfxApplauseBig</sound>
+    <sound>sound\sfxComboBreak</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>var c;
-c = irandom(700);
+c = irandom(750);
 type = (c == 1);
 
 if (type == 0)
@@ -126,11 +126,13 @@ magnet = false;
                 {
                     global.coins += 1;
                     global.coinsCollected += 1;
+                    playSound(sfxCoin,1);
                 }
                 else if (type == 1)
                 {
                     global.coins += 100;
                     global.coinsCollected += 100;
+                    playSound(sfxApplauseBig,1);
                     t = instance_create(x+TILE*.5,y+TILE*.5,objText);
                     t.text = "$ + 100";
 
@@ -138,7 +140,6 @@ magnet = false;
                 //each 5 segments, the coin is worth more!!
                 global.addScore += (global.difficulty div 5);
                 alive = false;
-                playSound(sfxCoin,1);
             }
         
         if (!magnet)

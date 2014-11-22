@@ -169,6 +169,7 @@ if (instance_exists(enemy) && state != DEAD)
                 with (enemy)
                 {
                     instance_create(x,y,objEffectDust);
+                    playSound(sfxDestroyBlock,1);
                     instance_destroy();
                 }
             }
@@ -298,8 +299,11 @@ else //IF NOT DEAD
     
     if (onGround && yVel > 0 && state != ATTACK)
     {
-        if (global.powerUp != POW_3)
+        if (combo >= 10 && global.powerUp == POW_NONE)// && global.powerUp != POW_4)
+        {
             combo = 0;
+            playSound(sfxComboBreak,1);
+        }
         y = floor(y);
         jumpPerformed = 0;
         if (state != IDLE)
