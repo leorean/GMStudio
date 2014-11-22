@@ -95,7 +95,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.pause = true;
 
         //EXP SYSTEM AND LEVEL UP FORMULA
-        global.maxCoins = 18 * floor(2 + global.level * power(1.5, global.level * .0027 ));
+        global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0027 ));
         
         if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
@@ -368,7 +368,7 @@ if (surface_exists(global.drawBuffer))
             <kind>1</kind>
             <string>/*for (i = 0; i &lt; 50; i+= 1)
 {
-    u = 18 * floor(2 + i * power(1.5, i * .0027 ) );
+    u = 18 * floor(2 + i * power(0.5, i * .0027 ) );
     show_debug_message(string(i)+":"+string(u));
 }*/
 /* HTML5 "SITELOCK"
@@ -504,10 +504,10 @@ draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WID
 if (room != INIT &amp;&amp; !global.gameOver)
 {
 
-    if (global.powerUp == POW_1)
+    if (global.powerUp == POW_1) //MONEY POWER UP
     {
         draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
-        if (global.timer mod 4 == 0)
+        if (global.timer mod 2 == 0)
         {
             var c;
             c = instance_create((1-alarm[1]/global.powDuration)*WIDTH,TILE,objCoin);

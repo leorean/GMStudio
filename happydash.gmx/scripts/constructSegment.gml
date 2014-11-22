@@ -47,18 +47,30 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 40)// && global.powerUp < 0)
-                {ct = 2; itemSpawned = true} //ITEM block
-            else if (c < 100)
-                {ct = 3; powSpawned = true}//POW block
-            else if (c < 200)
-                ct = 1;//coin block
-            else if (c < 300)
-                continue;//no block
+            if (c < 15)//ITEM block
+                ct = 2; 
+            else if (c < 30)//POW block
+                ct = 3;
+            else if (c < 100)//coin block
+                ct = 1;
+            else if (c < 500)//no block
+                continue;
             else
                 ct = 0;//normal block
             
-            if (powSpawned && ct == 3)||(itemSpawned && ct == 2) ct = 0;
+            //if (powSpawned && ct == 3)||(itemSpawned && ct == 2) ct = 0;
+            if (ct == 2)
+                if (!itemSpawned)
+                    itemSpawned = true;
+                else
+                    ct = 0;
+
+            if (ct == 3)
+                if (!powSpawned)
+                    powSpawned = true;
+                else
+                    ct = 0;
+
             
             t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
             t.type = ct;            

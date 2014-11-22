@@ -28,22 +28,30 @@
             <string>index = 0;
 maxIndex = 1;
 
-
 with(objButton)
     instance_destroy();
-   
-btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
-btn[0].text = "Retry";
-btn[0].index = 0;
-btn[0].parent = id;
-
-btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
-btn[1].text = "Quit";
-btn[1].index = 1;
-btn[1].parent = id;
 
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
+
+//SCORE CHARADE
+
+scoreString = "";
+timer = 0;
+delay = .25*FPS;
+enabled = false;
+mode = 0;
+
+
+finalScore = global.curScore;//8125029;
+len = string_length(string(finalScore));
+
+for (i = 1;i &lt;= string_length(string(finalScore));i+=1)
+{
+    d[i-1] = real(string_char_at(string(finalScore),i));
+    s[i-1] = 0;
+}
+c = len;//1;
 </string>
           </argument>
         </arguments>
@@ -66,12 +74,7 @@ mouse_yprev = mouse_y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//room_goto_next();
-
-var b;
-b = 3*TILE;
-
-//ENABLE MOUSE IF MOVED/TOUCHED
+            <string>//ENABLE MOUSE IF MOVED/TOUCHED
 if (global.input != INPUT_TOUCH)
     if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
         global.mouseVisible = true;
@@ -79,51 +82,91 @@ if (global.input != INPUT_TOUCH)
 if (keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
     global.mouseVisible = false;
 
-//touch/mouse
-if (in(mouse_x,WIDTH/2-b,WIDTH/2+b) &amp;&amp; global.mouseVisible)
-{
 
-    for (i = 0; i &lt;= maxIndex; i+=1)
+if (!enabled) //SCORE CALCULATION STUFF
+{
+    /*if (global.timer mod 5 == 0)
+    if (c &lt;= len)
     {
-        if (in(mouse_y,btn[i].y,btn[i].y+TILE))
-            index = i;
+        if (s[c-1] &lt; d[c-1])
+            s[c-1]+= 1;
+        else
+            c += 1;
+    }*/
+
+    if (global.timer mod 2 == 0)
+    if (c &gt;= 1)
+    {
+        if (s[c-1] &lt; d[c-1])
+            s[c-1]+= 1;
+        else
+            c -= 1;
+    }
+    
+    scoreString = string_digits(string(s));
+    if (real(scoreString) == finalScore)
+    {
+        timer += 1;
+
+        if (timer &gt; delay)
+        {
+            mode += 1;
+            timer = 0;
+        }
     }
 }
-
-//keyboard
-if(keyboard_check_pressed(vk_down))
+else //LOGIC
 {
-    global.mouseVisible = false;
-    index = min(index+1,maxIndex);
-}
-
-if(keyboard_check_pressed(vk_up))
-{
-    global.mouseVisible = false;
-    index = max(index-1,0);
-}
-
-//BUTTON ACTION
-if (keyboard_check_pressed(vk_space) 
-    || keyboard_check_pressed(vk_enter) 
-    || mouse_check_button_pressed(mb_any))
-{
-
-    switch(index)
+    
+    var b;
+    b = 3*TILE;
+    
+    //touch/mouse
+    if (in(mouse_x,WIDTH/2-b,WIDTH/2+b) &amp;&amp; global.mouseVisible)
     {
-        case 0: //restart
-            if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
-            room_restart();
-        break;
-        case 1: //quit
-            if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
-            room_goto(INIT);
-        break;
+    
+        for (i = 0; i &lt;= maxIndex; i+=1)
+        {
+            if (in(mouse_y,btn[i].y,btn[i].y+TILE))
+                index = i;
+        }
     }
+    
+    //keyboard
+    if(keyboard_check_pressed(vk_down))
+    {
+        global.mouseVisible = false;
+        index = min(index+1,maxIndex);
+    }
+    
+    if(keyboard_check_pressed(vk_up))
+    {
+        global.mouseVisible = false;
+        index = max(index-1,0);
+    }
+    
+    //BUTTON ACTION
+    if (keyboard_check_pressed(vk_space) 
+        || keyboard_check_pressed(vk_enter) 
+        || mouse_check_button_pressed(mb_any))
+    {
+    
+        switch(index)
+        {
+            case 0: //restart
+                if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
+                room_restart();
+            break;
+            case 1: //quit
+                if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
+                room_goto(INIT);
+            break;
+        }
+    }
+    
+    mouse_xprev = mouse_x;
+    mouse_yprev = mouse_y;
 }
-
-mouse_xprev = mouse_x;
-mouse_yprev = mouse_y;
 </string>
           </argument>
         </arguments>
@@ -185,49 +228,45 @@ row = 3;
 d = 7*TILE;
 
 draw_set_halign(fa_center);
-draw_text(WIDTH*.5, 1.5*TILE,"&amp;&amp;&amp; " + "Final Score: " + string(global.curScore) + " &amp;&amp;&amp;");
+draw_text(WIDTH*.5, 1.5*TILE,"&amp;&amp;&amp; " + "Final Score: " + scoreString + " &amp;&amp;&amp;");
 
 draw_set_halign(fa_left);
-draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
-draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
-draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
-draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
-draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
+if (mode &gt; 1) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
+if (mode &gt; 2) draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
+if (mode &gt; 3) draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
+if (mode &gt; 4) draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
+if (mode &gt; 5) draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
 
 draw_set_halign(fa_right);
-draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
-draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
-draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
-draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
-draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
+if (mode &gt; 1) draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
+if (mode &gt; 2) draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
+if (mode &gt; 3) draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
+if (mode &gt; 4) draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
+if (mode &gt; 5) draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
 
 //draw_rectangle(WIDTH*.5-4*TILE,6.7*TILE,WIDTH*.5+4*TILE,7.2*TILE,2);
-
-drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
-
-/* OLD GAME OVER MENU
-var highScore;
-highScore = 0;//global.curScore;
-
-for (i = 0; i &lt; global.scoreCount; i+=1)
-    highScore = max(highScore,global.scores[i]);
-
-
-//background
-//draw_sprite_part(global.sprTitleMenu,-1,0,0,WIDTH,HEIGHT,0,0);
-
-draw_text(WIDTH/2,2*TILE,"% Game Over %");
-
-if (global.curScore &gt; highScore)
+if (!enabled)
 {
-    draw_text(WIDTH/2,3.5*TILE,"&amp;&amp;&amp; Score: " + string(global.curScore)+ " &amp;&amp;&amp;");
-    draw_text(WIDTH/2,4.5*TILE,"A New Record!");
+    if (mode &gt; 6)
+    {
+        btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
+        btn[0].text = "Retry";
+        btn[0].index = 0;
+        btn[0].parent = id;
+        
+        btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
+        btn[1].text = "Quit";
+        btn[1].index = 1;
+        btn[1].parent = id;
+        
+        enabled = true;
+    }
 }
 else
 {
-    draw_text(WIDTH/2,3.5*TILE,"Score: " + string(global.curScore));
-    draw_text(WIDTH/2,4.5*TILE,"&amp;&amp;&amp; " + string(highScore) + " &amp;&amp;&amp;");
+    drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
 }
+
 </string>
           </argument>
         </arguments>

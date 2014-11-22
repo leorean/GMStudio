@@ -17,4 +17,3 @@ if (true)
     }
 }
 global.player.pow = min(global.player.pow + TILE, global.player.maxPow);
-
