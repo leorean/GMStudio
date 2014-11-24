@@ -38,7 +38,7 @@ mouse_yprev = mouse_y;
 
 scoreString = "";
 timer = 0;
-delay = .25*FPS;
+delay = .1*FPS;
 enabled = false;
 mode = 0;
 
@@ -134,7 +134,7 @@ else //LOGIC
     b = 3*TILE;
     
     //touch/mouse
-    if (in(mouse_x,WIDTH/2-b,WIDTH/2+b) &amp;&amp; global.mouseVisible)
+    if (in(mouse_x,WIDTH/2-b,WIDTH/2+b))// &amp;&amp; global.mouseVisible)
     {
     
         for (i = 0; i &lt;= maxIndex; i+=1)
@@ -166,18 +166,21 @@ else //LOGIC
         switch(index)
         {
             case 0: //restart
-                if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
+                if ((global.input == INPUT_TOUCH || !global.mouseVisible) || in(mouse_y,btn[0].y,btn[0].y+TILE))
                 room_restart();
             break;
             case 1: //quit
-                if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
+                if ((global.input == INPUT_TOUCH || !global.mouseVisible) || in(mouse_y,btn[1].y,btn[1].y+TILE))
                 room_goto(INIT);
             break;
         }
     }
     
-    mouse_xprev = mouse_x;
-    mouse_yprev = mouse_y;
+    if (global.input != INPUT_TOUCH)
+    {
+        mouse_xprev = mouse_x;
+        mouse_yprev = mouse_y;
+    }
 }
 </string>
           </argument>

@@ -100,16 +100,17 @@ var b;
 b = 3*TILE;
 
 //ENABLE MOUSE IF MOVED/TOUCHED
-if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
-    global.mouseVisible = true;
+if (global.input != INPUT_TOUCH)
+    if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
+        global.mouseVisible = true;
 //DISABLE MOUSE IF KEYBOARD IS USED
-if (keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
+if (global.input == INPUT_TOUCH || keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
     global.mouseVisible = false;
 
 if (!showHelp &amp;&amp; !showHighscore)
 {
     //touch/mouse
-    if (in(mouse_x,WIDTH/2-b,WIDTH/2+b) &amp;&amp; global.mouseVisible)
+    if (in(mouse_x,WIDTH/2-b,WIDTH/2+b) &amp;&amp; (global.input == INPUT_TOUCH || global.mouseVisible))
     {
     
         for (i = 0; i &lt;= maxIndex; i+=1)
@@ -139,6 +140,8 @@ if (!showHelp &amp;&amp; !showHighscore)
     objButton.visible = false;
 }
 
+buttonPressed = (global.input == INPUT_TOUCH || global.mouseVisible) &amp;&amp; in(mouse_y,btn[index].y,btn[index].y+TILE);
+
 //BUTTON ACTION
 if (keyboard_check_pressed(vk_space) 
     || keyboard_check_pressed(vk_enter) 
@@ -148,11 +151,11 @@ if (keyboard_check_pressed(vk_space)
     switch(index)
     {
         case 0: //new game
-            if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
+            if (buttonPressed)
             room_goto_next();
         break;
         case 1: //toggle help
-            if (showHelp || !global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
+            if (showHelp || buttonPressed)
             {
                 if (page == 0 &amp;&amp; !showHelp)
                     showHelp = true;
@@ -169,8 +172,8 @@ if (keyboard_check_pressed(vk_space)
             showHighscore = !showHighscore;
         break;
         case 3: //quit
-            if (!global.mouseVisible || in(mouse_y,btn[index].y,btn[index].y+TILE))
-            game_end();
+            if (buttonPressed)
+                game_end();
         break;
     }
 }

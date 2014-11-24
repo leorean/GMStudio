@@ -90,9 +90,13 @@ if (room != INIT &amp;&amp; !global.gameOver)
     {
     
         //PAUSE GAME
-        if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
-            || keyboard_check_pressed(ord('P'))
-                global.pause = true;
+        if (global.player.state != DEAD)
+            if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
+                || keyboard_check_pressed(ord('P'))
+                {
+                    global.pause = true;
+                    instance_create(0,0,objPauseMenu);
+                }
 
         //EXP SYSTEM AND LEVEL UP FORMULA
         global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0027 ));
@@ -176,11 +180,6 @@ if (room != INIT &amp;&amp; !global.gameOver)
     }
     else //THIS IS PAUSE MODE!
     {
-        //unpause
-        if (keyboard_check_pressed(ord('P'))
-            || (mouse_check_button_pressed(mb_any) &amp;&amp; (!in(mouse_x,WIDTH-2*TILE,WIDTH) || !in(mouse_y,0,2*TILE))))
-            global.pause = false;
-
         global.xSpeed = 0;
     }
 
@@ -190,7 +189,6 @@ if (global.gameOver)
     global.pause = false;
 
 //if in title menu:
-
 if (room == INIT || global.gameOver || global.player.state == DEAD || !global.startSignal)
 {
     playMusic(sfxBgm,false);
@@ -216,6 +214,14 @@ if keyboard_check_pressed(ord('R'))
 
 if keyboard_check_pressed(ord('Q'))
     room_goto(INIT);
+
+if keyboard_check_pressed(ord('T'))
+{
+    if (global.input == INPUT_TOUCH)
+        global.input = INPUT_KEYBOARD;
+    else
+        global.input = INPUT_TOUCH;
+}
 
 //TODO: REMOVE THIS
 if keyboard_check_pressed(ord('E'))
@@ -298,6 +304,7 @@ else
     alarm[0]= alarm0;
 
     global.startSignal = false;
+    global.pause = false;
     
     global.difficulty = 0;
     
@@ -379,7 +386,7 @@ if (dom != "162.218.235.161")// || dom != "127.0.0.1")
     show_message("Illegal Upload! :(");
     //instance_destroy();
 }*/   
-
+//show_message("TEST VERSION - DO NOT DISTRIBUTE!");
 //THIS EVENT SHALL BE CALLED ONCE PER GAME ONLY!!!
 
 depth = HUDDEPTH;
@@ -498,9 +505,6 @@ draw_set_color(c_white);
 draw_set_valign(fa_top);
 draw_set_alpha(1);
 
-//MUTE BUTTON
-draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
-
 if (room != INIT &amp;&amp; !global.gameOver)
 {
 
@@ -534,16 +538,17 @@ if (room != INIT &amp;&amp; !global.gameOver)
     {
         alarm[1] += 1;
     
+        /*
         draw_set_alpha(.5);
         draw_set_color(c_black);
         draw_rectangle(0,0,WIDTH,HEIGHT,0);
         draw_set_color(c_white);
         draw_set_alpha(1);
-        
-        draw_set_halign(fa_center);
-        draw_set_valign(fa_center);
-        draw_text(WIDTH*.5,HEIGHT*.5,"PAUSE");
-        draw_set_valign(fa_top);
+        */
+        //draw_set_halign(fa_center);
+        //draw_set_valign(fa_center);
+        //draw_text(WIDTH*.5,HEIGHT*.5,"PAUSE");
+        //draw_set_valign(fa_top);
     
     }
     
@@ -595,6 +600,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
         draw_set_color(c_white);
     }
 }
+//MUTE BUTTON
+draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
 //MOUSE CURSOR
 if (global.mouseVisible)
