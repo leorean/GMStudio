@@ -69,7 +69,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//step
+            <string>//ENABLE MOUSE IF MOVED/TOUCHED
+if (global.input != INPUT_TOUCH)
+    if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
+        global.mouseVisible = true;
+//DISABLE MOUSE IF KEYBOARD IS USED
+if (global.input == INPUT_TOUCH || keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
+    global.mouseVisible = false;
 
 //ticker for timed obstacles etc.
 global.timer = (global.timer + 1) mod INFINITE;
@@ -188,7 +194,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
 if (global.gameOver)
     global.pause = false;
 
-//if in title menu:
+//MUSIC HANDLING
 if (room == INIT || global.gameOver || global.player.state == DEAD || !global.startSignal)
 {
     playMusic(sfxBgm,false);
@@ -244,6 +250,13 @@ if keyboard_check(ord('C'))
 //GAME OVER
 if (global.gameOver)
     global.xSpeed = 0;
+
+//MOUSE PREV COORDS
+if (global.input != INPUT_TOUCH)
+{
+    mouse_xprev = mouse_x;
+    mouse_yprev = mouse_y;
+}
 
 </string>
           </argument>
@@ -428,6 +441,8 @@ global.player = noone;
 //local stuff
 alarm0 = FPS;
 alarm[0] = alarm0;
+mouse_xprev = mouse_x;
+mouse_yprev = mouse_y;
 
 //score stuff
 global.maxCombo = 0; //highest combo

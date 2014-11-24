@@ -124,13 +124,6 @@ if (keyboard_check_pressed(vk_space)
     }
 }
 
-if (global.input != INPUT_TOUCH)
-{
-    mouse_xprev = mouse_x;
-    mouse_yprev = mouse_y;
-}
-
-
 if (!global.pause || global.player.state == DEAD)
 {
     with (objButton)

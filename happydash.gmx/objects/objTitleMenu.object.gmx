@@ -69,8 +69,6 @@ z = 0;
 xx = 0;
 yy = 0;
 
-mouse_xprev = mouse_x;
-mouse_yprev = mouse_y;
 
 </string>
           </argument>
@@ -94,18 +92,8 @@ mouse_yprev = mouse_y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//room_goto_next();
-
-var b;
+            <string>var b;
 b = 3*TILE;
-
-//ENABLE MOUSE IF MOVED/TOUCHED
-if (global.input != INPUT_TOUCH)
-    if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
-        global.mouseVisible = true;
-//DISABLE MOUSE IF KEYBOARD IS USED
-if (global.input == INPUT_TOUCH || keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
-    global.mouseVisible = false;
 
 if (!showHelp &amp;&amp; !showHighscore)
 {
@@ -177,9 +165,6 @@ if (keyboard_check_pressed(vk_space)
         break;
     }
 }
-
-mouse_xprev = mouse_x;
-mouse_yprev = mouse_y;
 </string>
           </argument>
         </arguments>
