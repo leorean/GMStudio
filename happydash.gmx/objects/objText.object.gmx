@@ -30,6 +30,7 @@
     xVel = 0;
 //if (!variable_local_exists("yVel"))
     yVel = -.75;
+    yGrav = 0;
 //if (!variable_local_exists("t"))
     t = 40;
 //if (!variable_local_exists("color"))
@@ -65,7 +66,7 @@
             <kind>1</kind>
             <string>x += xVel;
 y += yVel;
-
+yVel += yGrav;
 if (t &gt; 0)
     t -= 1;
 else

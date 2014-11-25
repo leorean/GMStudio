@@ -302,7 +302,14 @@ else //IF NOT DEAD
         if (global.powerUp == POW_NONE)// && global.powerUp != POW_4)
         {
             if (combo >= 10)
+            {
                 playSound(sfxComboBreak,1);
+                t = instance_create(cx,y,objText);
+                t.text = "Combo Break";
+                t.xVel = -2*global.xSpeed;
+                t.yVel = -2.5;
+                t.yGrav = .15;
+            }
             combo = 0;
         }
         y = floor(y);
