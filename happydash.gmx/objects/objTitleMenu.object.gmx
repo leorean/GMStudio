@@ -156,7 +156,7 @@ if (keyboard_check_pressed(vk_anykey)
             }
         break;
         case 2: //TODO: highscore
-            if (buttonPressed || keyPressed)
+            if (buttonPressed || keyPressed) || showHighscore
                 showHighscore = !showHighscore;
         break;
         case 3: //quit

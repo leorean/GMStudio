@@ -94,7 +94,7 @@ c = len;//1;
             s[c-1]= (s[c-1] + 1) mod 10;
         else
             c -= 1;
-        pitch = min(pitch + .005, 2);
+        pitch = min(pitch + .002, 2);
         playSound(sfxCaching,pitch);
     }
     scoreString = "";

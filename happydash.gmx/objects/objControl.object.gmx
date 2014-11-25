@@ -642,7 +642,14 @@ draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WID
 
 //MOUSE CURSOR
 if (global.mouseVisible)
+{
+    draw_set_alpha(.3);
+    draw_set_color(c_black);
+    draw_sprite_part_ext(spriteHud,-1,0+2*TILE*mouse_check_button(mb_left),0,2*TILE,2*TILE,mouse_x-TILE+3,mouse_y-TILE+2,1,1,c_black,.3);
+    draw_set_alpha(1);
+    draw_set_color(c_white);
     draw_sprite_part(spriteHud,-1,0+2*TILE*mouse_check_button(mb_left),0,2*TILE,2*TILE,mouse_x-TILE,mouse_y-TILE);
+}
 
 </string>
           </argument>
