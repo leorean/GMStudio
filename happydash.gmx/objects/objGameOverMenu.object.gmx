@@ -101,7 +101,7 @@ c = len;//1;
     for (i = 0;i &lt; string_length(string(finalScore));i+=1)
     {
         if (s[i] == a[i])
-            sc[i] = "-";
+            sc[i] = "?";
         else
             sc[i] = s[i];
         scoreString = scoreString + string(sc[i]);

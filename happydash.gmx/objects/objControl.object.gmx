@@ -321,6 +321,8 @@ if (room == INIT)
 }
 else
 {
+    time = 0;
+    
     global.coinsCollected = 0;
     global.enemiesKilled = 0;
     global.maxCombo = 0;
@@ -418,19 +420,12 @@ if (dom != "162.218.235.161")// || dom != "127.0.0.1")
     //instance_destroy();
 }*/   
 //show_message("TEST VERSION - DO NOT DISTRIBUTE!");
-//THIS EVENT SHALL BE CALLED ONCE PER GAME ONLY!!!
 
 depth = HUDDEPTH;
 randomize();
 
-//surface_set_target(global.drawBuffer);
-//surface_reset_target();
-
-//SOUNDS
+//SOUND
 global.mute = false;
-//sound_global_volume(.3);
-//audio_master_gain(.3);
-//audio_sound_gain(sfxBgm,.5,0);
 
 //INPUT TYPE
 global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
@@ -510,6 +505,8 @@ global.powDuration = 0;
 
 global.screenShake = false;
 shakeTime = 0;
+
+time = 0;
 </string>
           </argument>
         </arguments>
