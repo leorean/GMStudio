@@ -149,7 +149,7 @@ if (!touch)
 cx = x+TILE*.5;
 cy = y+TILE*.5;
 if (yVel >= 0)
-    onGround = place_meeting(x-global.xSpeed,y+max(1,yVel),objAny);//position_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);//place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
+    onGround = place_meeting(x-2-global.xSpeed,y+max(1,yVel),objAny);//position_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);//place_meeting(x-global.xSpeed,y+max(1,yVel),objSolid);
 else
     onGround = false;
 
@@ -306,7 +306,7 @@ else //IF NOT DEAD
                 playSound(sfxComboBreak,1);
                 t = instance_create(cx,y,objText);
                 t.text = "Combo Break";
-                t.xVel = -2*global.xSpeed;
+                t.xVel = -2;
                 t.yVel = -2.5;
                 t.yGrav = .15;
             }

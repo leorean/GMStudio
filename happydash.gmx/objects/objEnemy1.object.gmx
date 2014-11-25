@@ -78,7 +78,7 @@ fSpeed = 0;
             x += xVel;
         else
         {
-            xVel = global.xSpeed;
+            xVel = 0;
             dir = -dir;
         }
     
