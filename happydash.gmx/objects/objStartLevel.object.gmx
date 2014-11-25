@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>alpha = 2.5;
 depth = HUDDEPTH+2;
+playSound(sfxStart,1);
 </string>
           </argument>
         </arguments>

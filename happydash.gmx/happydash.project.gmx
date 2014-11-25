@@ -1402,6 +1402,7 @@
     <sound>sound\sfxApplause</sound>
     <sound>sound\sfxApplauseBig</sound>
     <sound>sound\sfxComboBreak</sound>
+    <sound>sound\sfxPowerDown</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -1479,6 +1480,21 @@
     <font>fonts\fntMenu</font>
   </fonts>
   <objects name="objects">
+    <objects name="content">
+      <object>objects\objBlock</object>
+      <object>objects\objTile</object>
+      <object>objects\objPlatform</object>
+      <object>objects\objDestroyBlock</object>
+      <object>objects\objCoin</object>
+      <object>objects\objPowerUp</object>
+      <objects name="enemies">
+        <object>objects\objEnemyAutoSpike</object>
+        <object>objects\objEnemySpike</object>
+        <object>objects\objEnemy1</object>
+        <object>objects\objEnemy2</object>
+        <object>objects\objEnemy3</object>
+      </objects>
+    </objects>
     <objects name="MISC">
       <objects name="hierarchy">
         <object>objects\objEnemy</object>
@@ -1495,21 +1511,6 @@
       <object>objects\objButton</object>
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
-      <objects name="content">
-        <object>objects\objBlock</object>
-        <object>objects\objTile</object>
-        <object>objects\objPlatform</object>
-        <object>objects\objDestroyBlock</object>
-        <object>objects\objCoin</object>
-        <object>objects\objPowerUp</object>
-        <objects name="enemies">
-          <object>objects\objEnemyAutoSpike</object>
-          <object>objects\objEnemySpike</object>
-          <object>objects\objEnemy1</object>
-          <object>objects\objEnemy2</object>
-          <object>objects\objEnemy3</object>
-        </objects>
-      </objects>
     </objects>
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>

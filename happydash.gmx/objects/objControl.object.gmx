@@ -204,6 +204,15 @@ else
 {
     audio_sound_gain(sfxBgm,(global.powerUp == POW_NONE),0);
     audio_sound_gain(sfxBgmPow,(global.powerUp != POW_NONE),0);
+    /*
+    var e;
+    if (global.powDuration &gt; 0 &amp;&amp; global.powerUp != POW_NONE)
+        e = min(max((alarm[1]+global.powDuration/4)/global.powDuration,0),1);
+    else
+        e = (global.powerUp != POW_NONE);
+    audio_sound_gain(sfxBgm,1-e,0);
+    audio_sound_gain(sfxBgmPow,e,0);
+    */
     playMusic(sfxBgm,!global.mute);
     playMusic(sfxBgmPow,!global.mute);
 }
@@ -544,7 +553,11 @@ if (room != INIT &amp;&amp; !global.gameOver)
         draw_sprite_part(spriteGfx,-1,5*TILE+global.powerUp*TILE,0,TILE,TILE,WIDTH*.5-TILE*.5,.5*TILE);
 
     } else
+    {
+        if (global.powerUp != POW_NONE)
+            playSound(sfxPowerDown,1);
         global.powerUp = POW_NONE;
+    }
 
     //power up hud border
     draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);

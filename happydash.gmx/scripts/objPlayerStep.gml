@@ -268,7 +268,7 @@ else //IF NOT DEAD
 
         if (global.timer mod 5 == 0)
         {
-            playSound(sfxDash,1+random(.2));
+            playSound(sfxDash,1);//1+random(.2));
             t = instance_create(x/*-TILE*.5*/,y,objEffectDust);
             t.depth = depth+1;
             t.type = 3;
