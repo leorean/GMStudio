@@ -32,8 +32,8 @@ dir = UP;
 xDraw = 0;
 yDraw = HEIGHT/2;
 
-depth = HUDDEPTH+1;
-alpha = 0;
+depth = TILEDEPTH+1;
+alpha = 1;
 </string>
           </argument>
         </arguments>
@@ -59,16 +59,16 @@ alpha = 0;
             <string>image_speed = 0;
 if (dir == UP)
 {
-    yDraw -= 3;
+    yDraw -= 1;
     if (yDraw &lt;= 0)
         dir = DOWN;
-    alpha = min(alpha + .1,1);
+    //alpha = min(alpha + .01,1);    
 }
 if (dir == DOWN)
 {
     //yDraw += 1;
     //if (yDraw &gt;= HEIGHT)
-    alpha = max(alpha - .075,0);
+    alpha = max(alpha - .02,0);
     if (alpha == 0)
         instance_destroy();
 }

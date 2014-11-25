@@ -25,10 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//with(objButton)
-//    instance_destroy();
+            <string>depth = HUDDEPTH+1;
 
-depth = HUDDEPTH+1;
+alarm[0] = FPS*.25;
 
 index = 0;
 maxIndex = 2;
@@ -49,6 +48,28 @@ btn[2].text = "Quit";
 btn[2].index = 2;
 btn[2].parent = id;
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>delay</string>
           </argument>
         </arguments>
       </action>
@@ -98,7 +119,7 @@ if(keyboard_check_pressed(vk_up))
 }
 
 //unpause
-if (keyboard_check_pressed(ord('P')))
+if (keyboard_check_pressed(ord('P')) &amp;&amp; !alarm[0])
     global.pause = false;
 
 //BUTTON ACTION

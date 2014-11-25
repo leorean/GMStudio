@@ -97,12 +97,14 @@ if (room != INIT &amp;&amp; !global.gameOver)
     
         //PAUSE GAME
         if (global.player.state != DEAD)
+        {
             if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
                 || keyboard_check_pressed(ord('P'))
                 {
-                    global.pause = true;
                     instance_create(0,0,objPauseMenu);
+                    global.pause = true;
                 }
+        }
 
         //EXP SYSTEM AND LEVEL UP FORMULA
         global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0027 ));
@@ -202,8 +204,15 @@ if (room == INIT || global.gameOver || global.player.state == DEAD || !global.st
 }
 else
 {
-    audio_sound_gain(sfxBgm,(global.powerUp == POW_NONE),0);
-    audio_sound_gain(sfxBgmPow,(global.powerUp != POW_NONE),0);
+/*
+    if (global.pause)
+        audio_pause_all();
+    else
+        audio_resume_all();    
+*/
+        
+    audio_sound_gain(sfxBgm,(global.powerUp == POW_NONE &amp;&amp; !global.pause),0);
+    audio_sound_gain(sfxBgmPow,(global.powerUp != POW_NONE &amp;&amp; !global.pause),0);
     /*
     var e;
     if (global.powDuration &gt; 0 &amp;&amp; global.powerUp != POW_NONE)

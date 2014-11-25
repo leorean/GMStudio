@@ -203,7 +203,7 @@ if (instance_exists(enemy) && state != DEAD)
 }
 
 //DEATH
-if (y+TILE > room_height || x < 0)
+if (y+TILE > HEIGHT+TILE || x < 0)
     alive = false;
 
 if (!alive)

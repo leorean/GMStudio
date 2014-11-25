@@ -42,6 +42,7 @@ delay = .1*FPS;
 enabled = false;
 mode = 0;
 
+pitch = 1;
 
 finalScore = global.curScore;//8125029;
 len = string_length(string(finalScore));
@@ -93,7 +94,8 @@ c = len;//1;
             s[c-1]= (s[c-1] + 1) mod 10;
         else
             c -= 1;
-        playSound(sfxCaching,1);
+        pitch = min(pitch + .005, 2);
+        playSound(sfxCaching,pitch);
     }
     scoreString = "";
     for (i = 0;i &lt; string_length(string(finalScore));i+=1)
@@ -112,7 +114,7 @@ c = len;//1;
 
         if (timer &gt; delay)
         {
-            playSound(sfxCaching,1);
+            playSound(sfxCaching,pitch);
             mode += 1;
             timer = 0;
         }
