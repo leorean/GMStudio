@@ -19,12 +19,12 @@ if (true)
     if (global.player.combo == 10)
     {
         playSound(sfxApplause,1);
-        instance_create(0,0,objEffectCombo);
+        //instance_create(0,0,objEffectCombo);
     }
     else if (global.player.combo mod 10 == 0)
     {
         playSound(sfxApplauseBig,1);
-        instance_create(0,0,objEffectCombo);
+        //instance_create(0,0,objEffectCombo);
     }
     else
         playSound(sfxCombo,1+min(global.player.combo*.07,.7));

@@ -107,7 +107,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
         }
 
         //EXP SYSTEM AND LEVEL UP FORMULA
-        global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0027 ));
+        global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
         
         if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
@@ -419,7 +419,14 @@ if (dom != "162.218.235.161")// || dom != "127.0.0.1")
     show_message("Illegal Upload! :(");
     //instance_destroy();
 }*/   
-//show_message("TEST VERSION - DO NOT DISTRIBUTE!");
+show_message("TEST VERSION - DO NOT DISTRIBUTE!");
+
+/*for (i = 0; i &lt; 50; i+=1)
+{
+    //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
+    j = 18 * floor(2 + i * power(0.5, i * .0017 ));
+    show_debug_message(string(i)+":"+string(j));
+}*/
 
 depth = HUDDEPTH;
 randomize();
