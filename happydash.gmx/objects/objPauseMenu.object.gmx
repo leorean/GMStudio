@@ -32,6 +32,9 @@ alarm[0] = FPS*.25;
 index = 0;
 maxIndex = 2;
 
+//with(objLiving) x += global.xSpeed;
+//with(objEnemy) x += global.xSpeed;
+
 row = 6;
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Continue";

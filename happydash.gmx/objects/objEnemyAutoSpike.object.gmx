@@ -110,10 +110,10 @@ if (!global.pause)
             hasShot = false;
         }
         
-        if (dir == UP &amp;&amp; place_free(x,y+TILE*.5))
-            || (dir == DOWN &amp;&amp; place_free(x,y-TILE*.5))
-            || (dir == LEFT &amp;&amp; place_free(x+TILE*.5,y))
-            || (dir == RIGHT &amp;&amp; place_free(x-TILE*.5,y))
+        if (dir == UP &amp;&amp; place_free(x,y+2))
+            || (dir == DOWN &amp;&amp; place_free(x,y-2))
+            || (dir == LEFT &amp;&amp; place_free(x+2,y))
+            || (dir == RIGHT &amp;&amp; place_free(x-2,y))
                 alive = false;
         
         if (active)

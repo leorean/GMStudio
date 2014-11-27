@@ -101,7 +101,7 @@ c = len;//1;
     for (i = 0;i &lt; string_length(string(finalScore));i+=1)
     {
         if (s[i] == a[i])
-            sc[i] = "?";
+            sc[i] = ";";
         else
             sc[i] = s[i];
         scoreString = scoreString + string(sc[i]);
@@ -236,7 +236,14 @@ row = 3;
 d = 7*TILE;
 
 draw_set_halign(fa_center);
-draw_text(WIDTH*.5, 1.5*TILE,"&amp;&amp;&amp; " + "Final Score: " + scoreString + " &amp;&amp;&amp;");
+draw_text(WIDTH*.5, 0,"Score");
+
+draw_set_font(global.fntScore);
+
+draw_text(WIDTH*.5, TILE,":"+scoreString+":");
+
+
+draw_set_font(global.fntDefault);
 
 draw_set_halign(fa_left);
 if (mode &gt; 0) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
