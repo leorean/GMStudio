@@ -94,19 +94,19 @@ frame = 0;
         switch(global.powerUp)
         {
             case POW_1: //moneeeey
-                global.powDuration = 5*FPS;
+                global.powDuration = 8*FPS;
                 t.text = "@Golden Shower@";
             break;
             case POW_2: //flying
-                global.powDuration = 12*FPS;
+                global.powDuration = 10*FPS;
                 t.text = "@Angel Beads@";
             break;
             case POW_3: //invincible
-                global.powDuration = 7*FPS;
+                global.powDuration = 12*FPS;
                 t.text = "@Nice Trip@";
             break;
             case POW_4:
-                global.powDuration = 10*FPS;
+                global.powDuration = 12*FPS;
                 t.text = "@Bananarama@";
             break;
         }

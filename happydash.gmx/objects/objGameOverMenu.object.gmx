@@ -38,7 +38,7 @@ mouse_yprev = mouse_y;
 
 scoreString = "";
 timer = 0;
-delay = .1*FPS;
+z = 2;
 enabled = false;
 mode = 0;
 
@@ -87,7 +87,7 @@ c = len;//1;
             c += 1;
     }*/
 
-    if (global.timer mod 3 == 0)
+    if (global.timer mod z == 0)
     if (c &gt;= 1)
     {
         if (s[c-1] != d[c-1])
@@ -112,7 +112,7 @@ c = len;//1;
     {
         timer += 1;
 
-        if (timer &gt; delay)
+        if (timer &gt; z)
         {
             playSound(sfxCaching,pitch);
             mode += 1;

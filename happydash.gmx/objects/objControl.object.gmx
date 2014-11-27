@@ -584,7 +584,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
     if (global.powerUp == POW_1) //MONEY POWER UP
     {
         draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
-        if (global.timer mod 2 == 0)
+        if (!global.pause &amp;&amp; global.timer mod 2 == 0)
         {
             var c;
             c = instance_create((1-alarm[1]/global.powDuration)*WIDTH,TILE,objCoin);

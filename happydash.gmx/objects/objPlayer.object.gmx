@@ -285,17 +285,6 @@ if (global.powerUp == POW_2) //fly
         draw_sprite_part(spriteGfx,-1,2*(floor(global.timer*.2) mod 4)*TILE,15*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
     else
         draw_sprite_part(spriteGfx,-1,8*TILE+(floor(global.timer*.2) mod 2)*TILE,14*TILE,TILE,2*TILE,floor(x),floor(y-TILE*.5));
-    
-    /*
-    draw_set_color(make_color_hsv(130+random(10),255,255));
-    draw_set_alpha(1);
-    if (global.timer mod 10 &lt; 5)
-        with (objLivingEnemy)
-        {
-            if (abs(x-global.player.x)&lt;8*TILE &amp;&amp; abs(y-global.player.y)&lt;8*TILE &amp;&amp; x &lt; WIDTH)
-            draw_line_width(x+TILE*.5,y+TILE*.5,global.player.x,global.player.y,2);
-        }
-    */
 }
 
 if (global.powerUp == POW_3) //invincible
@@ -304,8 +293,11 @@ else
     color = c_white;
 
 draw_set_color(color);
-draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE+(global.powerUp != POW_NONE)*8*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
-    
+if (global.powerUp == POW_NONE)
+    draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
+else
+    draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
+
 draw_set_color(c_white);
 
 </string>

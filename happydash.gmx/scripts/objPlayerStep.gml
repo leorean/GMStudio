@@ -373,7 +373,7 @@ if (state == DEAD)
 yCollision();
 
 //prev/end variables
-fCur = (fCur+fSpeed) mod fMax;
+fCur = min((fCur+fSpeed) mod fMax, fMax);
 
 if (state != statePrev && state != DEAD)
     fCur = 0;
