@@ -503,6 +503,8 @@ alarm0 = FPS;
 alarm[0] = alarm0;
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
+lA = 0;
+lB = 0;
 
 //score stuff
 global.maxCombo = 0; //highest combo
@@ -526,7 +528,7 @@ global.level = 1; //difficulty display
 
 global.distMagnet = 0; //distance to catch coins and items
 global.distMagnetDefault = 1.5*TILE; //distance to catch coins and items
-global.distMagnetLarge = 6*TILE; //distance to catch coins and items
+global.distMagnetLarge = 10*TILE; //distance to catch coins and items
 
 global.hasControl = true;
 global.timer = 0;
@@ -603,9 +605,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
         }
         
         if (global.powerUp == POW_5) //MAGNET POWERUP
-        {
             global.distMagnet = global.distMagnetLarge;
-        } else
+        else
             global.distMagnet = global.distMagnetDefault;
     
     }

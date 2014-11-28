@@ -7,12 +7,9 @@ if (e.alive)
     t.type = 2;
     doCombo();
     if (real(e.object_index) == real(objEnemyAutoSpike))
-    {
         e.alive = false;
-        e.state = DEAD;
-    }
-    if (real(e.object_index) != real(objEnemyAutoSpike))
-        e.state = DEAD;
+    
+    e.state = DEAD;
     playSound(sfxEnemyDie,.9+random(.2));
         
 }
