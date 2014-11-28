@@ -176,8 +176,8 @@ magnet = false;
         } else
         {
             x += global.xSpeed;
-            x += xVel;
-            y += yVel;
+            x += sign(xVel)*min(abs(xVel),7);
+            y += sign(yVel)*min(abs(yVel),7);
             xVel = ((global.player.x - x) * .33);
             yVel = ((global.player.y - y) * .33);
         }

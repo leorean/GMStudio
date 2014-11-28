@@ -29,7 +29,7 @@
 mask_index = sprBlockMask;
 
 alive = true;
-type = choose(POW_1,POW_2,POW_3,POW_4);
+type = POW_5;//choose(POW_1,POW_2,POW_3,POW_4, POW_6,POW_6);
 
 t = pi/2;
 
@@ -95,20 +95,40 @@ frame = 0;
         {
             case POW_1: //moneeeey
                 global.powDuration = 8*FPS;
-                t.text = "@Golden Shower@";
+                t.text = "@Tax Money@";
             break;
             case POW_2: //flying
                 global.powDuration = 10*FPS;
-                t.text = "@Angel Beads@";
+                t.text = "@Dead Bird@";
             break;
             case POW_3: //invincible
                 global.powDuration = 12*FPS;
-                t.text = "@Nice Trip@";
+                t.text = "@Rainbow Pill@";
             break;
             case POW_4:
                 global.powDuration = 12*FPS;
                 t.text = "@Bananarama@";
             break;
+            case POW_5:
+                global.powDuration = 12*FPS;
+                t.text = "@Supermagnet@";
+                for (i = 0; i &lt; 3; i+= 1)
+                {
+                    proj = instance_create(objPlayer.cx,objPlayer.y-TILE,objProjectilePlayer2);
+                    proj.angle = 360 / 3 * i;
+                    proj.radius = 1.5*TILE;
+                    proj.spd = 4;
+                }
+                for (i = 0; i &lt; 6; i+= 1)
+                {
+                    proj = instance_create(objPlayer.cx,objPlayer.y-TILE,objProjectilePlayer2);
+                    proj.angle = 45 + (360 / 6 * i);
+                    proj.radius = 3*TILE;
+                    proj.spd = -4;
+                }
+
+            break;
+
         }
         objControl.alarm[1] = global.powDuration;
         instance_destroy();

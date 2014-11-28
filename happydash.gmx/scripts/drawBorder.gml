@@ -28,11 +28,11 @@ for (j = 0; j <= h;j+=TILE)
     {row = 1; col = 2}
 
     //shadow
-    if (col >= 1 || row >= 1 && !(col == 1 && row == 1))
+    /*if (col >= 1 || row >= 1 && !(col == 1 && row == 1))
     {
         draw_set_color(c_black);
         draw_sprite_part_ext(spriteHud,-1,row*TILE,5*TILE+col*TILE,TILE,TILE,a+i+3,b+j+3,1,1,c_black,.5);
-    }
+    }*/
     draw_set_color(c_white);
     draw_sprite_part(spriteHud,-1,row*TILE,5*TILE+col*TILE,TILE,TILE,a+i,b+j);
 }

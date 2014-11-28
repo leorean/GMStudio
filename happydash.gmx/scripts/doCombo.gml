@@ -1,7 +1,5 @@
 var pitch, c;
 
-pitch = max(min(1 + global.player.combo/30,1.5),1);
-//playSound(sfxCombo,pitch);
 global.player.combo += 1;
 
 global.maxCombo = max(global.maxCombo, global.player.combo);

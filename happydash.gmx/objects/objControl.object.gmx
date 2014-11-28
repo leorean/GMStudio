@@ -142,8 +142,10 @@ if (room != INIT &amp;&amp; !global.gameOver)
         }*/
 
         //EXP SYSTEM AND LEVEL UP FORMULA
-        global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
-        
+        global.maxCoins = (32 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
+        //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
+            //j = (32 * ceil(3 + i*.2) + ceil(.2 * power(i * .5, 2)));
+
         if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
             //global.xSpeedDefault = min(global.xSpeedDefault + .0265, global.xSpeedMax);
@@ -291,7 +293,7 @@ if keyboard_check_pressed(ord('E'))
     with(objPowerUp)
         instance_destroy();
     p = instance_create(global.player.x,global.player.y-TILE,objPowerUp);
-    p.type = choose(POW_1,POW_2,POW_3,POW_4);
+    p.type = POW_5;//choose(POW_1,POW_2,POW_3,POW_4,POW_5);
 }
 
 if keyboard_check(ord('C'))
@@ -455,13 +457,15 @@ if (dom != "162.218.235.161")// || dom != "127.0.0.1")
     //instance_destroy();
 }*/   
 //show_message("TEST VERSION - DO NOT DISTRIBUTE!");
-
-/*for (i = 0; i &lt; 50; i+=1)
+/*
+//TESTING EXP FORMULA
+for (i = 0; i &lt; 50; i+=1)
 {
     //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
-    j = 18 * floor(2 + i * power(0.5, i * .0017 ));
+    j = (32 * ceil(3 + i*.2) + ceil(.2 * power(i * .5, 2)));
     show_debug_message(string(i)+":"+string(j));
-}*/
+}
+game_end();*/
 
 depth = HUDDEPTH;
 randomize();
@@ -519,7 +523,10 @@ global.enemiesKilled = 0;
 global.coins = 0;
 global.maxCoins = 0;
 global.level = 1; //difficulty display
-global.distMagnet = 1.5*TILE; //distance to catch coins and items
+
+global.distMagnet = 0; //distance to catch coins and items
+global.distMagnetDefault = 1.5*TILE; //distance to catch coins and items
+global.distMagnetLarge = 6*TILE; //distance to catch coins and items
 
 global.hasControl = true;
 global.timer = 0;
@@ -581,17 +588,28 @@ draw_set_alpha(1);
 if (room != INIT &amp;&amp; !global.gameOver)
 {
 
-    if (global.powerUp == POW_1) //MONEY POWER UP
+    if (!global.pause)
     {
-        draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
-        if (!global.pause &amp;&amp; global.timer mod 2 == 0)
+        
+        if (global.powerUp == POW_1) //MONEY POWER UP
         {
-            var c;
-            c = instance_create((1-alarm[1]/global.powDuration)*WIDTH,TILE,objCoin);
-            c.spawn = true;
+            draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
+            if (global.timer mod 2 == 0)
+            {
+                var c;
+                c = instance_create((1-alarm[1]/global.powDuration)*WIDTH,TILE,objCoin);
+                c.spawn = true;
+            }
         }
+        
+        if (global.powerUp == POW_5) //MAGNET POWERUP
+        {
+            global.distMagnet = global.distMagnetLarge;
+        } else
+            global.distMagnet = global.distMagnetDefault;
+    
     }
-
+    
     //power up stuff
     if (alarm[1] &amp;&amp; global.player.state != DEAD)
     {

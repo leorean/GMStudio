@@ -27,14 +27,21 @@
             <kind>1</kind>
             <string>depth = PLAYERDEPTH+1;
 mask_index = sprProjectileMask;
-xVel = 3;
-yVel = -1-(global.timer mod 3);
-yGrav = .13;
+xVel = 0;
+yVel = 0;
 
 alive = true;
 fMax = 4;
 fCur = 0;
 fSpeed = .2;
+
+
+angle = 0;
+spd = 3;
+rad_angle = 0;
+tx = 0;
+ty = 0;
+radius = 2*TILE;
 </string>
           </argument>
         </arguments>
@@ -61,35 +68,25 @@ fSpeed = .2;
 {
     if (alive)
     {
-        x += xVel;
-        y += yVel;
-        yVel += yGrav;
+        angle = (angle + spd) mod 360;
+        rad_angle = ((angle / 180) * pi);
+        tx = (cos(rad_angle)) * radius;
+        ty = -(sin(rad_angle)) * radius;
         
+        x = global.player.cx - tx;
+        y = global.player.cy - ty;
         fCur = (fCur + fSpeed) mod fMax;
         
-        destroyBlock = instance_place(x+xVel,y+yVel,objDestroyBlock);
-        if (instance_exists(destroyBlock))
-        {
-            destroyBlock.state = DEAD;
-            doCombo();
-            fCur = 0;
-            alive = false;
-        }
         enemy = instance_place(x+xVel,y+yVel,objLivingEnemy);
         if (instance_exists(enemy))
         {
             killEnemy(enemy);
-            fCur = 0;
-            alive = false;
+            //fCur = 0;
+            //alive = false;
         }
         
-        if (!place_free(x+xVel,y+yVel))
-        {
-            fCur = 0;
+        if (global.powerUp != POW_5)
             alive = false;
-        }
-        if (x &gt; WIDTH || y &gt; HEIGHT)
-            instance_destroy();
         
     }
     else
@@ -127,7 +124,7 @@ fSpeed = .2;
             <kind>1</kind>
             <string>image_speed = 0;
 frame = floor(fCur);
-draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,16*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,17*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

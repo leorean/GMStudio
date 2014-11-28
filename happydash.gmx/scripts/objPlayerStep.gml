@@ -154,15 +154,19 @@ else
     onGround = false;
 
 //ENEMY INTERACTION
-enemy = instance_place(x+xVel,y+yVel,objEnemy);
-if (instance_exists(enemy) && state != DEAD)
+if(state != DEAD)
+    enemy = instance_place(x+xVel,y+yVel,objEnemy);
+else
+    enemy = noone;
+if (instance_exists(enemy))
+if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
 {
     //enemies who are not killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
     {
         if (enemy.state != DEAD)
         {
-            if (global.powerUp != POW_3)
+            if (global.powerUp != POW_3)//player ain't invincible
                 alive = false;
             else
             {
@@ -176,27 +180,30 @@ if (instance_exists(enemy) && state != DEAD)
         }
     } else //enemies who are killable
     {
-        if (state == ATTACK || (yVel < 0 && y > enemy.y) || (y < enemy.y))
+        if (enemy.alive)
         {
-            //jump on enemies
-            if (state != ATTACK)
+            if (state == ATTACK || (yVel <= 0 && y > enemy.y) || (y < enemy.y))
             {
-                if (yVel >= 0 || y < enemy.y)
-                    yVel = -3;
-                xVel = 0;
-                state = JUMP;
-            }
-
-            jumpPerformed = 0;
-
-            killEnemy(enemy);
-        }
-        if (enemy.state != DEAD)
-        {
-            if (global.powerUp != POW_3)
-                alive = false;
-            else
+                //jump on enemies
+                if (state != ATTACK)
+                {
+                    //if (yVel >= 0 || y < enemy.y)
+                    yVel = min(yVel,-3);
+                    //xVel = 0;
+                    state = JUMP;
+                }
+    
+                jumpPerformed = 0;
+    
                 killEnemy(enemy);
+            }
+            if (enemy.state != DEAD)
+            {
+                if (global.powerUp != POW_3)
+                    alive = false;
+                else
+                    killEnemy(enemy);
+            }
         }
     }
 

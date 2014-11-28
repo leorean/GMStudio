@@ -1516,6 +1516,7 @@
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>
       <object>objects\objProjectilePlayer1</object>
+      <object>objects\objProjectilePlayer2</object>
     </objects>
     <objects name="effects">
       <object>objects\objParticle</object>
