@@ -306,7 +306,7 @@ else //IF NOT DEAD
     
     if (onGround && yVel > 0 && state != ATTACK)
     {
-        if (global.powerUp == POW_NONE)// && global.powerUp != POW_4)
+        if (global.powerUp == POW_NONE)
         {
             if (combo >= 10)
             {

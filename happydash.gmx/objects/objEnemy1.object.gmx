@@ -41,6 +41,7 @@ fCur = 0;
 fMax = 4;
 fSpeed = 0;
 
+isFlying = false;
 </string>
           </argument>
         </arguments>

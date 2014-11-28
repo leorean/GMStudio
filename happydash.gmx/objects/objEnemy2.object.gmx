@@ -43,6 +43,7 @@ fCur = 0;
 fMax = 4;
 fSpeed = 0;
 
+isFlying = false;
 </string>
           </argument>
         </arguments>
@@ -96,6 +97,7 @@ fSpeed = 0;
         }
 
         if (yVel &gt;= 0)
+        {
             if (place_meeting(x-xVel,y+1,objAny))
             {
                 if (!canJump)
@@ -111,8 +113,11 @@ fSpeed = 0;
                     yVel = -3;
                     canJump = false;
                 }
-                
-            }
+                isFlying = false;
+            } else
+                isFlying = true;
+        } else
+            isFlying = true;
     
     } else
     {

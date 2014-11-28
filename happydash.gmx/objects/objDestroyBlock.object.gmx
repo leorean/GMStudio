@@ -89,16 +89,21 @@ if (state == DEAD)
             spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_RED);
         with (objLivingEnemy)
         {
-            if (alive &amp;&amp; x &lt; 1.5*WIDTH)
-                killEnemy(self);
+            if (!isFlying)
+                if (alive &amp;&amp; x &lt; 1.5*WIDTH)
+                    killEnemy(self);
         }
         with (objEnemy)
         {
-            instance_create(x,y,objEffectDust);
-            instance_destroy();
+            if (!isFlying)
+            {
+                instance_create(x,y,objEffectDust);
+                instance_destroy();
+            }
         }
             
         global.screenShake = true;
+            
         playSound(sfxPowBlock,1);
     } else
         playSound(sfxDestroyBlock,1);

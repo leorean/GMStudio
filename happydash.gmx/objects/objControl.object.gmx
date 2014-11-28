@@ -292,8 +292,7 @@ if keyboard_check_pressed(ord('E'))
     //instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
     with(objPowerUp)
         instance_destroy();
-    p = instance_create(global.player.x,global.player.y-TILE,objPowerUp);
-    p.type = POW_5;//choose(POW_1,POW_2,POW_3,POW_4,POW_5);
+    instance_create(global.player.x,global.player.y-TILE,objPowerUp);
 }
 
 if keyboard_check(ord('C'))

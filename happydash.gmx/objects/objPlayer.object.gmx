@@ -51,7 +51,6 @@ alive = true;
 db = noone;
 maxPow = 50;
 pow = maxPow;
-
 combo = 0;
 
 //mouse/screen input
@@ -277,6 +276,12 @@ if (objControl.alarm[1] &amp;&amp; state != DEAD)
     //power up bar
     draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,6,x-TILE*.5,y-TILE*.5);
     draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*objControl.alarm[1]/global.powDuration),6,x-TILE*.5,y-TILE*.5);
+}
+
+if (global.powerUp == POW_6) //fly
+{
+    if (global.timer mod 30 == 0)
+        instance_create(cx,cy,objProjectilePlayer3)
 }
 
 if (global.powerUp == POW_2) //fly

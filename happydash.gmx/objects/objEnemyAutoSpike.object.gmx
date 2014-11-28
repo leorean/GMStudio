@@ -47,6 +47,8 @@ knockedUp = false;
 alive = true;
 yGrav = .15;
 yVel = 0;
+
+isFlying = false;
 </string>
           </argument>
         </arguments>
