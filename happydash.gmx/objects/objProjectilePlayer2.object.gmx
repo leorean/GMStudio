@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>depth = PLAYERDEPTH+1;
-mask_index = sprProjectileMask;
+mask_index = sprProjectileBigMask;
 
 fMax = 4;
 fCur = 0;
@@ -79,7 +79,13 @@ enemy = noone;
     ty = -(sin(rad_angle)) * radius;
     
     if (global.powerUp != POW_5)
+    {
+        if (bound)
+        {
+            xVel = 0;
+        }
         bound = false;
+    }
     
     if (bound)
     {
@@ -87,7 +93,7 @@ enemy = noone;
         yO = global.player.cy;
     } else
     {
-        xVel += .05;
+        xVel += .1;
         xO += xVel;
     }
     
@@ -97,9 +103,8 @@ enemy = noone;
     if (!bound &amp;&amp; xO &gt; 1.5*WIDTH) || global.player.state == DEAD
         instance_destroy();
     
-    //fCur = (fCur + fSpeed) mod fMax;
-    //fCur = floor((1-(hp/maxHp)) * (fMax-1));
-
+    destroyStuff();
+    /*
     destroyBlock = instance_place(x,y,objDestroyBlock);
     if (instance_exists(destroyBlock))
     {
@@ -120,7 +125,7 @@ enemy = noone;
             playSound(sfxDestroyBlock,1);
             instance_destroy();
         }
-    }      
+    }*/     
     
 }
 

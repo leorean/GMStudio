@@ -30,6 +30,8 @@ state = IDLE;
 
 mask_index = sprBlockMask;
 //    type = 0; //0 = normal, 1 = coinblock
+
+type = 0;
 </string>
           </argument>
         </arguments>

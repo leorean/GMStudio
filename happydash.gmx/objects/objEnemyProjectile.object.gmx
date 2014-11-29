@@ -40,6 +40,8 @@ yVel = 1.5*yF;
 fCur = 0;
 fMax = 4;
 fSpeed = .2;
+
+isFlying = true;
 </string>
           </argument>
         </arguments>

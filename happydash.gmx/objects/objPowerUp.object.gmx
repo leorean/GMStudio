@@ -119,15 +119,15 @@ frame = 0;
                     proj = instance_create(objPlayer.cx,objPlayer.y-TILE,objProjectilePlayer2);
                     proj.angle = 90+360 / 3 * i;
                     proj.radius = 1.5*TILE;
-                    proj.spd = 4;
+                    proj.spd = 6;
                     proj.fCur = 0;
                 }
-                for (i = 0; i &lt; 2; i+= 1)
+                for (i = 0; i &lt; 3; i+= 1)
                 {
                     proj = instance_create(objPlayer.cx,objPlayer.y-TILE,objProjectilePlayer2);
-                    proj.angle = 90 + (360 / 2 * i);
+                    proj.angle = 90 + (360 / 3 * i);
                     proj.radius = 2.5*TILE;
-                    proj.spd = -8;
+                    proj.spd = -3;
                     proj.fCur = 1;
                 }
             break;

@@ -26,11 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>depth = PLAYERDEPTH+1;
-mask_index = sprProjectileMask;
+mask_index = sprProjectileBigMask;
 xVel = 0;
 yVel = 0;
 
 state = IDLE;
+block = noone;
+canKill = false;
 
 alive = true;
 fMax = 4;
@@ -60,47 +62,37 @@ fSpeed = .2;
             <kind>1</kind>
             <string>if (!global.pause)
 {
-    if (alive)
+    destroyStuff();
+    
+    //x -= global.xSpeed;
+    
+    if (state == ATTACK &amp;&amp; instance_place(x-xVel,y-yVel,objAny))
     {
-        fCur = (fCur + fSpeed) mod fMax;
-        target = instance_place(x+xVel,y+yVel,objLivingEnemy)
-        if (instance_exists(target))
-        if (target.alive)
-            {
-            killEnemy(target);
-            fCur = 0;
-            alive = false;
-        }
-        if (state == IDLE)
-        {
-            if (x &lt; 0)
-            x += .5;
-            else
-                state = JUMP;
-            xVel = 0;
-            yVel = 0;
-            
-        } else
-        {
-            if (state == JUMP &amp;&amp; global.player.state == ATTACK)
-                state = ATTACK;
-            if (state == ATTACK)
-                xVel += .3;
-        }
-        
-        x += xVel;
-        y += yVel;
+        d = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
+        d.type = 2;
+        instance_destroy();
     }
-    else //!alive
+
+    if (state == IDLE)
+    {
+        if (y &lt; 0)
+        {
+            x += 10*TILE+random(2*TILE);
+            state = ATTACK;
+        }
+        xVel = 0;
+        yVel = -2;
+    } else
     {
         xVel = 0;
-        yVel = 0;
-        fCur = min(fCur + 2*fSpeed, fMax);
-        if (fCur &gt;= fMax)
-        {
-            instance_destroy();
-        }
+        yVel = 6;
     }
+    if (y &gt; HEIGHT)
+        instance_destroy();
+    
+    x += xVel;
+    y += yVel;
+
 }
 
 
@@ -130,10 +122,10 @@ fSpeed = .2;
 frame = floor(fCur);
 //draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,18*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 
-if (alive)
-    draw_sprite_part(spriteGfx,-1,frame*TILE,18*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+if (state == IDLE)
+    draw_sprite_part(spriteGfx,-1,(global.timer mod 40 &gt; 20)*TILE,18*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 else
-    draw_sprite_part(spriteGfx,-1,4*TILE+frame*TILE,18*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+    draw_sprite_part(spriteGfx,-1,2*TILE+(global.timer mod 40 &gt; 20)*TILE,18*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

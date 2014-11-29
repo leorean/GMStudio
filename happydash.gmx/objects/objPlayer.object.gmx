@@ -278,9 +278,9 @@ if (objControl.alarm[1] &amp;&amp; state != DEAD)
     draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*objControl.alarm[1]/global.powDuration),6,x-TILE*.5,y-TILE*.5);
 }
 
-if (global.powerUp == POW_6) //fly
+if (global.powerUp == POW_6)
 {
-    if (global.timer mod 30 == 0)
+    if (global.timer mod 20 == 0 &amp;&amp; !global.pause)
         instance_create(cx,cy,objProjectilePlayer3)
 }
 
