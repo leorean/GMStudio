@@ -87,7 +87,7 @@ if (fCur &gt;= fMax+1)
     instance_destroy();
 
 draw_set_color(color);
-draw_sprite_part_ext(spriteGfx,-1,min(frame,fMax) * TILE,9*TILE+type*TILE,TILE,TILE,floor(x),y,1,1,color,1);
+draw_sprite_part_ext(spriteGfx,-1,9*TILE+min(frame,fMax) * TILE,1*TILE+type*TILE,TILE,TILE,floor(x),y,1,1,color,1);
 draw_set_color(c_white);
 </string>
           </argument>

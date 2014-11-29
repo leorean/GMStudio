@@ -127,7 +127,7 @@ fSpeed = .2;
             <kind>1</kind>
             <string>image_speed = 0;
 frame = floor(fCur);
-draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,16*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,10*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

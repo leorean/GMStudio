@@ -133,7 +133,7 @@ frame = 0;
             break;
             case POW_6:
                 global.powDuration = 12*FPS;
-                t.text = "@Rocket Madness@";
+                t.text = "@Red Rocket Riot@";
             break;
 
         }
@@ -167,7 +167,7 @@ frame = 0;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,2*frame*TILE,15*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
+draw_sprite_part(spriteGfx,-1,2*frame*TILE,9*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
 draw_sprite_part(spriteGfx,-1,5*TILE+type*TILE,0,TILE,TILE,floor(x),floor(y));
 </string>
           </argument>

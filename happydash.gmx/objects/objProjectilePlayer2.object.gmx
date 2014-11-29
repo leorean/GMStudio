@@ -168,7 +168,7 @@ if (bound)
     drawLightning(x,y,xO,yO,make_color_hsv(h,255,255));
 }
 
-draw_sprite_part(spriteGfx,-1,frame*TILE,17*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+draw_sprite_part(spriteGfx,-1,frame*TILE,11*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 
 </string>
           </argument>

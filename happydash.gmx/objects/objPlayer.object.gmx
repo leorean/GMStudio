@@ -278,18 +278,18 @@ if (objControl.alarm[1] &amp;&amp; state != DEAD)
     draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*objControl.alarm[1]/global.powDuration),6,x-TILE*.5,y-TILE*.5);
 }
 
-if (global.powerUp == POW_6)
+if (global.powerUp == POW_6) // red rockets
 {
-    if (global.timer mod 20 == 0 &amp;&amp; !global.pause)
+    if (global.timer mod 15 == 0 &amp;&amp; !global.pause)
         instance_create(cx,cy,objProjectilePlayer3)
 }
 
 if (global.powerUp == POW_2) //fly
 {
     if (state != ATTACK)
-        draw_sprite_part(spriteGfx,-1,2*(floor(global.timer*.2) mod 4)*TILE,15*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
+        draw_sprite_part(spriteGfx,-1,2*(floor(global.timer*.2) mod 4)*TILE,9*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
     else
-        draw_sprite_part(spriteGfx,-1,8*TILE+(floor(global.timer*.2) mod 2)*TILE,14*TILE,TILE,2*TILE,floor(x),floor(y-TILE*.5));
+        draw_sprite_part(spriteGfx,-1,4*TILE+(floor(global.timer*.2) mod 2)*TILE,11*TILE,TILE,2*TILE,floor(x),floor(y-TILE*.5));
 }
 
 if (global.powerUp == POW_3) //invincible
