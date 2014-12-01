@@ -1535,11 +1535,12 @@
       <object>objects\objEffectCombo</object>
       <object>objects\objStartLevel</object>
     </objects>
-    <objects name="menu">
+    <objects name="HUD">
       <object>objects\objButton</object>
       <object>objects\objPauseMenu</object>
       <object>objects\objGameOverMenu</object>
       <object>objects\objTitleMenu</object>
+      <object>objects\objTouchButton</object>
     </objects>
   </objects>
   <rooms name="rooms">

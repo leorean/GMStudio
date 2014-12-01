@@ -247,10 +247,10 @@ if (showHelp || showHighscore)
 //HELP
 if (showHelp)
 {
-    draw_set_alpha(.7);
-    draw_set_color(c_black);
-    draw_rectangle(0,0,WIDTH,HEIGHT,0);
-    draw_set_alpha(1);
+    //draw_set_alpha(.7);
+    //draw_set_color(c_black);
+    //draw_rectangle(0,0,WIDTH,HEIGHT,0);
+    //draw_set_alpha(1);
     draw_sprite_part(spriteTitleMenu,-1,WIDTH,page*HEIGHT,WIDTH,HEIGHT,0,0);
 
 }
@@ -262,7 +262,7 @@ if (showHighscore)
     row = 5*TILE;
     draw_set_halign(fa_center);
     //draw_text(WIDTH/2,row-z,"Highscores");
-    drawText (WIDTH/2,row-z,"Highscores",c_white);
+    drawText (WIDTH/2,row-z,"Highscores",c_white,c_black);
     draw_set_font(global.fntDefault);
     for (i = 0; i &lt; global.scoreCount; i+=1)
     {

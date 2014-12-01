@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,20 +25,40 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = 0;
+            <string>pressed = false;
+pressing = false;
 
-prevIndex = -1;
+type = 0; //0 = jump, 1 = dash, 2 = stop
+depth = HUDDEPTH+1;
+mask_index = sprTouchMask;
 
-a=0;b=0;c=0;d=0;
-w=0;
-h=0;
+alpha = .5;
 
-pressed = false;
-active = false;
-
-mPrevX = mouse_x;
-mPrevY = mouse_y;
+alarm0 = 10;
+alarm[0] = 0;
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>visual delay</string>
           </argument>
         </arguments>
       </action>
@@ -60,40 +80,11 @@ mPrevY = mouse_y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = parent.depth -1;
-
-w = string_width(text);
-h = string_height(text);
-
-a = x-w;
-b = y;
-c = x+w;
-d = y+h;
-
-if (global.mouseVisible || global.input == INPUT_TOUCH)
-{
-    if (in(mouse_x,a,c) &amp;&amp; in(mouse_y,b,d))
-        active = true;
-    else
-        active = false;
-}
+            <string>if (!global.pause &amp;&amp; room != INIT &amp;&amp; !global.gameOver)
+    visible = true;
 else
-{
-    if (parent.index == index)
-        active = true;
-    else
-        active = false;
-}
+    visible = false;
 
-if (mouse_check_button_released(mb_left)
-    &amp;&amp; in(mouse_x,a,c)
-    &amp;&amp; in(mouse_y,b,d))
-||
-    ((keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
-    &amp;&amp; index == parent.index)
-    pressed = true;
-else
-    pressed = false;
 </string>
           </argument>
         </arguments>
@@ -117,21 +108,36 @@ else
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-//draw_set_font(fntButton);
-draw_set_color(c_white);
-draw_set_halign(fa_center);
-draw_set_valign(fa_top);
+draw_set_alpha(alpha);
+
+if (in(mouse_x,x,x+3*TILE) &amp;&amp; in(mouse_y,y,y+3*TILE))
+{
+    if (mouse_check_button_pressed(mb_left))
+    {
+        pressed = true;
+        alarm[0] = alarm0;
+    }
+    else
+        pressed = false;
+    if (mouse_check_button(mb_left))
+    {
+        pressing = true;
+        alarm[0] = alarm0;        
+    }
+    else
+        pressing = false;
+
+}
+
+if (alarm[0])
+    draw_sprite_part_ext(spriteHud,-1,type*3*TILE,11*TILE,3*TILE,3*TILE,x,y,1,1,c_white,alpha);
+else
+    draw_sprite_part_ext(spriteHud,-1,type*3*TILE,14*TILE,3*TILE,3*TILE,x,y,1,1,c_white,alpha);
+
 draw_set_alpha(1);
 
-if (prevIndex != parent.index &amp;&amp; prevIndex != -1)
-    playSound(sfxCaching, 1);
 
-if (active)
-    drawText(x,y,text,c_white,c_gray);
-else
-    drawText(x,y,text,c_white,c_black);
 
-prevIndex = parent.index;
 </string>
           </argument>
         </arguments>

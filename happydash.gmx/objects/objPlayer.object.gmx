@@ -151,23 +151,28 @@ pressedMute = (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2
 if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
 {
     //mouse/touch gestures
+    /*
     touch = mouse_check_button(mb_left);
     touchPressed = mouse_check_button_pressed(mb_left);        
     touchReleased = mouse_check_button_released(mb_left)
         || mouse_x &lt; 0 || mouse_x &gt; WIDTH
         || mouse_y &lt; 0 || mouse_y &gt; HEIGHT;
+    */
 
     //keyboard
-    keyUpPressed = keyboard_check_pressed(vk_up);
-    keyRightPressed = keyboard_check_pressed(vk_right);
-    keyDown = keyboard_check(vk_left);
+    keyUpPressed = keyboard_check_pressed(vk_up) || global.tbJump.pressed;
+    keyRightPressed = keyboard_check_pressed(vk_right) || global.tbDash.pressed;
+    keyDown = keyboard_check(vk_left) || global.tbStop.pressing;
 
     //mouse
-    mouseLeftPressed = mouse_check_button_pressed(mb_left) &amp;&amp; !mouse_check_button_pressed(mb_right);
-    mouseRightPressed = mouse_check_button_pressed(mb_right) &amp;&amp; !mouse_check_button_pressed(mb_left);
-    mouseBoth = mouse_check_button(mb_left) &amp;&amp; mouse_check_button(mb_right);
-    mouseAny = mouse_check_button(mb_any);
-
+    if(global.input != INPUT_TOUCH)
+    {
+        mouseLeftPressed = mouse_check_button_pressed(mb_left) &amp;&amp; !mouse_check_button_pressed(mb_right);
+        mouseRightPressed = mouse_check_button_pressed(mb_right) &amp;&amp; !mouse_check_button_pressed(mb_left);
+        mouseBoth = mouse_check_button(mb_left) &amp;&amp; mouse_check_button(mb_right);
+        mouseAny = mouse_check_button(mb_any);
+    }
+    
     //MOUSE VISIBILITY
     if (keyUpPressed || keyRightPressed || keyDown)
         global.mouseVisible = false;
@@ -179,13 +184,14 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
 } else
 {
     //mouse/touch gestures
+    /*
     touch = false;
     touchPressed = false;
     touchReleased = false;
     onX = -1;
     onY = -1;
     offX = -1;
-    offY = -1;
+    offY = -1;*/
 
     //mouse
     mouseLeftPressed = false;

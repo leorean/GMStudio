@@ -34,7 +34,7 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 66 || s == 71) //platforms
         {
-            if (choose(true,true,false))
+            if (choose(true,true,true,false))
             {
                 t = instance_create(a+i*TILE,b+j*TILE,objPlatform);
                 t.px = floor((s-1) mod TILE);

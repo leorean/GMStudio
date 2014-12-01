@@ -1,7 +1,37 @@
 //PLAYER ROUTINE
 
 //INPUT HANDLING ...
-if (global.input != INPUT_TOUCH)
+
+if (true)
+{
+    if ((keyUpPressed || mouseLeftPressed))
+    {
+        performJump();
+    }
+    
+    if (keyRightPressed)
+        state = ATTACK;
+    
+    if (keyDown)
+        state = IDLE;
+    else if (state == IDLE)
+        state = RUN;
+    
+    if (state == ATTACK)
+    {
+        if (mouseRightPressed || mouseLeftPressed)
+            state = JUMP;
+    } else
+    {
+        if (mouseRightPressed)
+            state = ATTACK;
+    }
+    
+    if (mouseBoth)
+        state = IDLE;
+}
+
+/*if (global.input != INPUT_TOUCH)
 {
     if ((keyUpPressed || mouseLeftPressed))
     {
@@ -76,7 +106,7 @@ if (global.input != INPUT_TOUCH)
     else if (state == IDLE)
         state = RUN;
         
-}
+}*/
     
 
 //local variables && flags
