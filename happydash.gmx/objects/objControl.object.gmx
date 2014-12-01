@@ -74,8 +74,8 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause)
     if (global.player.state != DEAD)
     {
         if ((mouse_check_button_pressed(mb_left) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
-            || keyboard_check_pressed(ord('P'))
-            || os_is_paused())
+            || keyboard_check_pressed(ord('P')))
+            //|| os_is_paused())
             {
                 with(objPauseMenu)
                     instance_destroy();
@@ -317,7 +317,6 @@ if (global.input != INPUT_TOUCH)
           <argument>
             <kind>1</kind>
             <string>//room start
-
 view_visible[0] = true;
 view_wview[0] = WIDTH;
 view_hview[0] = HEIGHT;
@@ -329,13 +328,19 @@ with (objGameOverMenu)
 
 with (objTitleMenu)
     instance_destroy();
+
+with (objPauseMenu)
+    instance_destroy();
+
+with (objButton)
+    instance_destroy();
     
 global.gameOver = false;
 
 if (room == INIT)
 {
     instance_create(0,0,objTitleMenu);
-    loadProgress();
+    //loadProgress();
 }
 else
 {
@@ -424,7 +429,9 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*for (i = 0; i &lt; 50; i+= 1)
+            <string>instance_create(0,0,objDrawBuffer);
+
+/*for (i = 0; i &lt; 50; i+= 1)
 {
     u = 18 * floor(2 + i * power(0.5, i * .0027 ) );
     show_debug_message(string(i)+":"+string(u));
@@ -454,12 +461,14 @@ randomize();
 //SOUND
 global.mute = false;
 
-global.tbJump = instance_create(WIDTH-3*TILE,floor(HEIGHT/2),objTouchButton);
+global.tbJump = instance_create(WIDTH-3*TILE,floor(HEIGHT/2)+TILE,objTouchButton);
 global.tbJump.type = 0;
-global.tbDash = instance_create(WIDTH-6*TILE,floor(HEIGHT/2)+2*TILE,objTouchButton);
+global.tbDash = instance_create(WIDTH-6*TILE,floor(HEIGHT/2)+3*TILE,objTouchButton);
 global.tbDash.type = 1;
-global.tbStop = instance_create(0,floor(HEIGHT/2),objTouchButton);
+global.tbStop = instance_create(0,floor(HEIGHT/2)+TILE,objTouchButton);
 global.tbStop.type = 2;
+
+global.input = INPUT_KEYBOARD; 
 
 //DEVICE TYPE/INPUT TYPE
 switch(os_type)
@@ -477,10 +486,11 @@ switch(os_type)
     break;
     default:
         show_message("DEVICE NOT SUPPORTED :(");
-        game_end();
+        //game_end();
     break;
 }
-//global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
+
+//INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
 //global.input = INPUT_TOUCH;
 
 //FONTS
@@ -500,7 +510,6 @@ global.segmentsPerTheme = 20; //n segments for each theme
 global.theme = 0;//background theme
 global.themePrev = global.theme;
 global.maxTheme = 3; //maximum number of available themes - 1
-    
 //PLAYER VARIABLE
 global.player = noone;
     

@@ -9,9 +9,6 @@ if (true)
         performJump();
     }
     
-    if (keyRightPressed)
-        state = ATTACK;
-    
     if (keyDown)
         state = IDLE;
     else if (state == IDLE)
@@ -19,11 +16,11 @@ if (true)
     
     if (state == ATTACK)
     {
-        if (mouseRightPressed || mouseLeftPressed)
+        if (mouseRightPressed || mouseLeftPressed || keyRightPressed)
             state = JUMP;
     } else
     {
-        if (mouseRightPressed)
+        if (mouseRightPressed || keyRightPressed)
             state = ATTACK;
     }
     

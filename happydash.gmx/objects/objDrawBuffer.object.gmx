@@ -28,7 +28,6 @@
             <string>global.drawBuffer = -1;
 
 window_set_size(WIDTH*3,HEIGHT*3);
-
 </string>
           </argument>
         </arguments>

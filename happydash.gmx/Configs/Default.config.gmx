@@ -78,14 +78,14 @@
     <option_frequency>0</option_frequency>
     <option_frontimage>nil</option_frontimage>
     <option_fullscreen>False</option_fullscreen>
-    <option_gameguid>{30C78A44-4E07-42D5-8276-BE6E479806F0}</option_gameguid>
-    <option_gameid>688687903</option_gameid>
+    <option_gameguid>{6398AC7A-7BF8-4609-B021-13E15F517CEC}</option_gameguid>
+    <option_gameid>979924831</option_gameid>
     <option_haptic_effects>-1</option_haptic_effects>
     <option_hasloadimage>false</option_hasloadimage>
     <option_helpkey>true</option_helpkey>
     <option_html5_CreationEventOrder>true</option_html5_CreationEventOrder>
     <option_html5_WebGL>1</option_html5_WebGL>
-    <option_html5_advertising_enable>-1</option_html5_advertising_enable>
+    <option_html5_advertising_enable>0</option_html5_advertising_enable>
     <option_html5_advertising_key></option_html5_advertising_key>
     <option_html5_advertising_type>Supersonic Ads</option_html5_advertising_type>
     <option_html5_allow_fullscreen>True</option_html5_allow_fullscreen>
@@ -109,7 +109,7 @@
     <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
     <option_html5_texture_page>2048</option_html5_texture_page>
     <option_html5_use_test_ads>-1</option_html5_use_test_ads>
-    <option_html5_usesplash>True</option_html5_usesplash>
+    <option_html5_usesplash>False</option_html5_usesplash>
     <option_icon>nil</option_icon>
     <option_in_app_purchase_enable>0</option_in_app_purchase_enable>
     <option_in_app_purchase_sandbox_mode>0</option_in_app_purchase_sandbox_mode>
@@ -268,10 +268,16 @@
     <option_textureGroup2_parent>&lt;none&gt;</option_textureGroup2_parent>
     <option_textureGroup2_scaled>0</option_textureGroup2_scaled>
     <option_textureGroup2_targets>9223372036854775807</option_textureGroup2_targets>
-    <option_textureGroup_count>3</option_textureGroup_count>
+    <option_textureGroup3_border>2</option_textureGroup3_border>
+    <option_textureGroup3_nocropping>0</option_textureGroup3_nocropping>
+    <option_textureGroup3_parent>&lt;none&gt;</option_textureGroup3_parent>
+    <option_textureGroup3_scaled>0</option_textureGroup3_scaled>
+    <option_textureGroup3_targets>9223372036854775807</option_textureGroup3_targets>
+    <option_textureGroup_count>4</option_textureGroup_count>
     <option_textureGroups0>Default</option_textureGroups0>
     <option_textureGroups1>Background</option_textureGroups1>
     <option_textureGroups2>Text</option_textureGroups2>
+    <option_textureGroups3>HUD</option_textureGroups3>
     <option_tizen_app_id>http://yourdomain/happydash</option_tizen_app_id>
     <option_tizen_build_version>0</option_tizen_build_version>
     <option_tizen_display_name>happydash</option_tizen_display_name>

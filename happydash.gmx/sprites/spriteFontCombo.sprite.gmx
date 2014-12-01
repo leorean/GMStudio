@@ -7,10 +7,10 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>5</bbox_left>
+  <bbox_left>6</bbox_left>
   <bbox_right>14</bbox_right>
   <bbox_top>3</bbox_top>
-  <bbox_bottom>13</bbox_bottom>
+  <bbox_bottom>12</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -31,10 +31,5 @@
     <frame index="8">images\spriteFontCombo_8.png</frame>
     <frame index="9">images\spriteFontCombo_9.png</frame>
     <frame index="10">images\spriteFontCombo_10.png</frame>
-    <frame index="11">images\spriteFontCombo_11.png</frame>
-    <frame index="12">images\spriteFontCombo_12.png</frame>
-    <frame index="13">images\spriteFontCombo_13.png</frame>
-    <frame index="14">images\spriteFontCombo_14.png</frame>
-    <frame index="15">images\spriteFontCombo_15.png</frame>
   </frames>
 </sprite>

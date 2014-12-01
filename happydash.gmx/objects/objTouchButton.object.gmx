@@ -29,7 +29,7 @@
 pressing = false;
 
 type = 0; //0 = jump, 1 = dash, 2 = stop
-depth = HUDDEPTH+1;
+depth = HUDDEPTH-1;
 mask_index = sprTouchMask;
 
 alpha = .5;
@@ -80,7 +80,7 @@ alarm[0] = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.pause &amp;&amp; room != INIT &amp;&amp; !global.gameOver)
+            <string>if (global.input == INPUT_TOUCH &amp;&amp; !global.pause &amp;&amp; room != INIT &amp;&amp; !global.gameOver)
     visible = true;
 else
     visible = false;
@@ -129,7 +129,7 @@ if (in(mouse_x,x,x+3*TILE) &amp;&amp; in(mouse_y,y,y+3*TILE))
 
 }
 
-if (alarm[0])
+if (!alarm[0])
     draw_sprite_part_ext(spriteHud,-1,type*3*TILE,11*TILE,3*TILE,3*TILE,x,y,1,1,c_white,alpha);
 else
     draw_sprite_part_ext(spriteHud,-1,type*3*TILE,14*TILE,3*TILE,3*TILE,x,y,1,1,c_white,alpha);

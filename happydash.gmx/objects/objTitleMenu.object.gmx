@@ -102,7 +102,7 @@ yy = 0;
 
 screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
 
-if (btn[0].pressed)
+if (btn[0].pressed &amp;&amp; !showHighscore &amp;&amp; !showHelp)
     room_goto_next();
 if (!showHighscore)
 {
@@ -123,11 +123,11 @@ if (!showHighscore)
         page = 0;
         showHelp = true;
     }
-    if (btn[2].pressed)
+    if (btn[2].pressed &amp;&amp; !showHelp)
         showHighscore = true;
 } else if (screenPressed)
     showHighscore = false;
-if (btn[3].pressed)
+if (btn[3].pressed &amp;&amp; !showHighscore &amp;&amp; !showHelp)
     game_end();
 </string>
           </argument>
