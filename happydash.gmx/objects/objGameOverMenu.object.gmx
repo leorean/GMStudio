@@ -28,9 +28,6 @@
             <string>index = 0;
 maxIndex = 1;
 
-with(objButton)
-    instance_destroy();
-
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
 
@@ -54,6 +51,30 @@ for (i = 1;i &lt;= string_length(string(finalScore));i+=1)
     a[i-1] = s[i-1];
 }
 c = len;//1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with (objButton)
+    instance_destroy();
 </string>
           </argument>
         </arguments>

@@ -1,10 +1,9 @@
 //PLAYER ROUTINE
 
-//INPUT HANDLING ...
-
+//INPUT HANDLING
 if (true)
 {
-    if ((keyUpPressed || mouseLeftPressed))
+    if (keyUpPressed)
     {
         performJump();
     }
@@ -13,98 +12,15 @@ if (true)
         state = IDLE;
     else if (state == IDLE)
         state = RUN;
-    
-    if (state == ATTACK)
-    {
-        if (mouseRightPressed || mouseLeftPressed || keyRightPressed)
-            state = JUMP;
-    } else
-    {
-        if (mouseRightPressed || keyRightPressed)
-            state = ATTACK;
-    }
-    
-    if (mouseBoth)
-        state = IDLE;
-}
-
-/*if (global.input != INPUT_TOUCH)
-{
-    if ((keyUpPressed || mouseLeftPressed))
-    {
-        performJump();
-    }
     
     if (keyRightPressed)
-        state = ATTACK;
-    
-    if (keyDown)
-        state = IDLE;
-    else if (state == IDLE)
-        state = RUN;
-    
-    if (state == ATTACK)
     {
-        if (mouseRightPressed || mouseLeftPressed)
+        if (state == ATTACK)
             state = JUMP;
-    } else
-    {
-        if (mouseRightPressed)
+        else
             state = ATTACK;
     }
-    
-    if (mouseBoth)
-        state = IDLE;
-} else //TOUCH INPUT
-{
-    //swipe gesture registration
-    if (touchPressed && !on)
-    {
-        onX = min(max(mouse_x,0),WIDTH);
-        onY = min(max(mouse_y,0),HEIGHT);
-        on = true;
-    }
-    if (touchReleased && on && !off)
-    {
-        offX = min(max(mouse_x,0),WIDTH);
-        offY = min(max(mouse_y,0),HEIGHT);
-        off = true;
-    }
-    
-    //if (touch) off = true;
-    //recognize gestures here:
-    if (on && off)
-    {
-        offAngle = point_direction(onX,onY,offX,offY);
-    
-        //condition for vertical upward gesture: JUMPING
-        if ((in(offAngle,45,45+90)) && jumpPerformed < 2)
-        {
-            performJump();
-        }
-    
-        //condition for horizontal gesture: DASHING
-        if ((in(offAngle,360-30,360) || in(offAngle,0,30)))
-        {
-            objPlayer.state = ATTACK;
-        }
-        
-        on = false;
-        off = false;
-        onX = -1;
-        onY = -1;
-        offX = -1;
-        offY = -1;
-    }
-    
-    //SLOW DOWN AND STOP MOVING
-    if (touch)
-        state = IDLE;
-    else if (state == IDLE)
-        state = RUN;
-        
-}*/
-    
+}
 
 //local variables && flags
 cx = x+TILE*.5;

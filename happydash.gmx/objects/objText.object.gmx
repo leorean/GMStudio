@@ -100,7 +100,7 @@ draw_set_halign(halign);
 draw_set_valign(fa_center);
 draw_set_alpha(1);
 
-draw_text(x,y,text);
+draw_text(floor(x),floor(y),text);
 </string>
           </argument>
         </arguments>

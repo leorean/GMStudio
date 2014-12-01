@@ -60,7 +60,7 @@ mPrevY = mouse_y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = parent.depth -1;
+            <string>depth = parent.depth-1;
 
 w = string_width(text);
 h = string_height(text);

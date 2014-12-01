@@ -136,7 +136,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
     if (!global.pause)
     {
         //EXP SYSTEM AND LEVEL UP FORMULA
-        global.maxCoins = (32 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
+        global.maxCoins = (16 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
         //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
             //j = (32 * ceil(3 + i*.2) + ceil(.2 * power(i * .5, 2)));
 
@@ -175,7 +175,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             if (global.player.state != IDLE)
                 global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
             else
-                global.xSpeed = max(global.xSpeed * .98, global.xSpeedDefault * .5);
+                global.xSpeed = max(global.xSpeed * .98, global.xSpeedDefault * .75);
 
         }
         if (objPlayer.state != DEAD)
@@ -323,24 +323,13 @@ view_hview[0] = HEIGHT;
 view_wport[0] = WIDTH;
 view_hport[0] = HEIGHT;
 
-with (objGameOverMenu)
-    instance_destroy();
-
-with (objTitleMenu)
-    instance_destroy();
-
-with (objPauseMenu)
-    instance_destroy();
-
-with (objButton)
-    instance_destroy();
-    
+global.pause = false;    
 global.gameOver = false;
 
 if (room == INIT)
 {
     instance_create(0,0,objTitleMenu);
-    //loadProgress();
+    loadProgress();
 }
 else
 {
@@ -360,7 +349,6 @@ else
     alarm[0]= alarm0;
 
     global.startSignal = false;
-    global.pause = false;
     
     global.difficulty = 0;
     
@@ -377,8 +365,7 @@ else
     
     //load start segment
     //constructSegment(global.segment[0], global.segX-global.xSpeed, 0);
-    constructSegment(global.segment[0], 0, 0);
-    
+    constructSegment(global.segment[0], 0, 0);    
 }
 </string>
           </argument>
@@ -429,9 +416,7 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(0,0,objDrawBuffer);
-
-/*for (i = 0; i &lt; 50; i+= 1)
+            <string>/*for (i = 0; i &lt; 50; i+= 1)
 {
     u = 18 * floor(2 + i * power(0.5, i * .0027 ) );
     show_debug_message(string(i)+":"+string(u));
@@ -518,8 +503,8 @@ alarm0 = FPS;
 alarm[0] = alarm0;
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
-lA = 0;
-lB = 0;
+//lA = 0;
+//lB = 0;
 
 //score stuff
 global.maxCombo = 0; //highest combo
@@ -574,6 +559,7 @@ global.screenShake = false;
 shakeTime = 0;
 
 time = 0;
+
 </string>
           </argument>
         </arguments>
@@ -602,8 +588,8 @@ draw_set_color(c_white);
 draw_set_valign(fa_top);
 draw_set_alpha(1);
 
-if(global.input == INPUT_TOUCH)
-    draw_point(mouse_x,mouse_y);
+//if(global.input == INPUT_TOUCH)
+//    draw_point(mouse_x,mouse_y);
     
     
 if (room != INIT &amp;&amp; !global.gameOver)

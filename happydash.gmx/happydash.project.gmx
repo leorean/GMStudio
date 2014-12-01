@@ -1413,29 +1413,20 @@
       <sprite>sprites\sprCameraMask</sprite>
       <sprite>sprites\sprControlMask</sprite>
       <sprite>sprites\sprPlayerMask</sprite>
-      <sprite>sprites\sprEnemyBallMask</sprite>
       <sprite>sprites\sprCheckPointMask</sprite>
       <sprite>sprites\sprProjectileMask</sprite>
       <sprite>sprites\sprProjectileBigMask</sprite>
       <sprite>sprites\sprEnemySpikeMask</sprite>
-      <sprite>sprites\sprSwordMask</sprite>
-      <sprite>sprites\sprTrapShotMask</sprite>
       <sprite>sprites\sprBlockMask</sprite>
       <sprite>sprites\sprDestroyBlockMask</sprite>
       <sprite>sprites\sprPlatformMask</sprite>
-      <sprite>sprites\sprKeyMask</sprite>
-      <sprite>sprites\sprSpawnBallMask</sprite>
       <sprite>sprites\sprEnemyMaskUp</sprite>
       <sprite>sprites\sprEnemyMaskRight</sprite>
       <sprite>sprites\sprEnemyMaskDown</sprite>
       <sprite>sprites\sprEnemyMaskLeft</sprite>
-      <sprite>sprites\sprDoorMask</sprite>
       <sprite>sprites\sprNone</sprite>
-      <sprite>sprites\sprLockMask</sprite>
       <sprite>sprites\sprEnemyMask</sprite>
-      <sprite>sprites\sprMovingPlatform</sprite>
       <sprite>sprites\sprEnemyAutoSpikeMask</sprite>
-      <sprite>sprites\sprSpawnPlatformMask</sprite>
       <sprite>sprites\sprCoinMask</sprite>
       <sprite>sprites\sprTouchMask</sprite>
     </sprites>
@@ -1463,14 +1454,11 @@
     <scripts name="manage">
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>
-      <script>scripts\save_old.gml</script>
-      <script>scripts\load_old.gml</script>
       <script>scripts\importSegment.gml</script>
       <script>scripts\constructSegment.gml</script>
       <script>scripts\playSound.gml</script>
       <script>scripts\playMusic.gml</script>
     </scripts>
-    <script>scripts\drawBorder.gml</script>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
     <script>scripts\yCollision.gml</script>
@@ -1481,6 +1469,7 @@
       <script>scripts\in.gml</script>
       <script>scripts\drawLightning.gml</script>
       <script>scripts\handleButtons.gml</script>
+      <script>scripts\drawBorder.gml</script>
     </scripts>
     <script>scripts\destroyStuff.gml</script>
     <script>scripts\drawText.gml</script>

@@ -35,9 +35,6 @@ showHighscore = false;
 
 row = 7;
 
-with(objButton)
-    instance_destroy();
-
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Start!";
 btn[0].index = 0;
@@ -68,7 +65,30 @@ t = pi/2;
 z = 0;
 xx = 0;
 yy = 0;
-
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>with (objButton)
+    instance_destroy();
 
 </string>
           </argument>
@@ -95,7 +115,6 @@ yy = 0;
             <string>if (!showHelp &amp;&amp; !showHighscore)
 {
     handleButtons();
-
     objButton.visible = true;
 } else
     objButton.visible = false;
@@ -195,16 +214,10 @@ draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx-WIDTH,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
-/*
-if (!showHelp &amp;&amp; !showHighscore)
-    draw_text(WIDTH/2,TILE+z,global.gameTitle);
-*/
 if (!showHelp &amp;&amp; !showHighscore)
     drawBorder(7.5*TILE,6*TILE,10*TILE,8*TILE);
 if (showHighscore)
     drawBorder(2*TILE,4*TILE,21*TILE,9*TILE);
-//if (showHelp)
-//    drawBorder(1*TILE,1*TILE,23*TILE,13*TILE);
 
 //title
 if (!showHelp &amp;&amp; !showHighscore)
@@ -246,14 +259,7 @@ if (showHelp || showHighscore)
 
 //HELP
 if (showHelp)
-{
-    //draw_set_alpha(.7);
-    //draw_set_color(c_black);
-    //draw_rectangle(0,0,WIDTH,HEIGHT,0);
-    //draw_set_alpha(1);
     draw_sprite_part(spriteTitleMenu,-1,WIDTH,page*HEIGHT,WIDTH,HEIGHT,0,0);
-
-}
 
 //highscore
 if (showHighscore)

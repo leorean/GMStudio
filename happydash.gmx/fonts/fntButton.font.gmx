@@ -7,9 +7,9 @@
   <charset>1</charset>
   <aa>0</aa>
   <includeTTF>0</includeTTF>
-  <TTFName></TTFName>
+  <TTFName>D:\GMStudio\happydash.gmx\datafiles\test.txt</TTFName>
   <texgroups>
-    <texgroup0>2</texgroup0>
+    <texgroup0>1</texgroup0>
   </texgroups>
   <ranges>
     <range0>32,127</range0>
