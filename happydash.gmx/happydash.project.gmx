@@ -1403,6 +1403,8 @@
     <sound>sound\sfxApplauseBig</sound>
     <sound>sound\sfxComboBreak</sound>
     <sound>sound\sfxPowerDown</sound>
+    <sound>sound\sfxRocketFall</sound>
+    <sound>sound\sfxExplode</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -1450,6 +1452,7 @@
     <sprite>sprites\spriteStartLevel</sprite>
     <sprite>sprites\spriteCombo</sprite>
     <sprite>sprites\spriteFontScore</sprite>
+    <sprite>sprites\sprExplosionMask</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -1476,12 +1479,15 @@
     <script>scripts\collectCoin.gml</script>
     <scripts name="util">
       <script>scripts\in.gml</script>
+      <script>scripts\drawLightning.gml</script>
+      <script>scripts\handleButtons.gml</script>
     </scripts>
-    <script>scripts\drawLightning.gml</script>
     <script>scripts\destroyStuff.gml</script>
+    <script>scripts\drawText.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>
+    <font>fonts\fntButton</font>
   </fonts>
   <objects name="objects">
     <objects name="content">
@@ -1512,7 +1518,6 @@
       </objects>
       <object>objects\objControl</object>
       <object>objects\objDrawBuffer</object>
-      <object>objects\objButton</object>
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
     </objects>
@@ -1521,6 +1526,7 @@
       <object>objects\objProjectilePlayer1</object>
       <object>objects\objProjectilePlayer2</object>
       <object>objects\objProjectilePlayer3</object>
+      <object>objects\objExplosion</object>
     </objects>
     <objects name="effects">
       <object>objects\objParticle</object>
@@ -1530,6 +1536,7 @@
       <object>objects\objStartLevel</object>
     </objects>
     <objects name="menu">
+      <object>objects\objButton</object>
       <object>objects\objPauseMenu</object>
       <object>objects\objGameOverMenu</object>
       <object>objects\objTitleMenu</object>
@@ -1539,7 +1546,7 @@
     <room>rooms\INIT</room>
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="37">
+  <constants number="36">
     <constant name="POW_NONE">-1</constant>
     <constant name="POW_1">0</constant>
     <constant name="POW_2">1</constant>
@@ -1553,8 +1560,7 @@
     <constant name="COLOR_RED">make_color_hsv(0,255,170+random(40))</constant>
     <constant name="COLOR_GOLD">make_color_hsv(30,255,200+random(30))</constant>
     <constant name="INPUT_KEYBOARD">0</constant>
-    <constant name="INPUT_MOUSE">1</constant>
-    <constant name="INPUT_TOUCH">2</constant>
+    <constant name="INPUT_TOUCH">1</constant>
     <constant name="INFINITE">90000000</constant>
     <constant name="FPS">60</constant>
     <constant name="TILE">16</constant>

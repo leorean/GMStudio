@@ -280,7 +280,7 @@ if (objControl.alarm[1] &amp;&amp; state != DEAD)
 
 if (global.powerUp == POW_6) // red rockets
 {
-    if (global.timer mod 15 == 0 &amp;&amp; !global.pause)
+    if (global.timer mod FPS == 0 &amp;&amp; !global.pause &amp;&amp; state != DEAD)
         instance_create(cx,cy,objProjectilePlayer3)
 }
 

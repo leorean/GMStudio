@@ -1,7 +1,6 @@
 //PLAYER ROUTINE
 
 //INPUT HANDLING ...
-
 if (global.input != INPUT_TOUCH)
 {
     if ((keyUpPressed || mouseLeftPressed))
@@ -79,71 +78,6 @@ if (global.input != INPUT_TOUCH)
         
 }
     
-/*
-//swipe gesture registration
-if (touchPressed && !on)
-{
-    onX = min(max(mouse_x,0),WIDTH);
-    onY = min(max(mouse_y,0),HEIGHT);
-    on = true;
-}
-if (touchReleased && on && !off)
-{
-    offX = min(max(mouse_x,0),WIDTH);
-    offY = min(max(mouse_y,0),HEIGHT);
-    off = true;
-}
-
-//key input
-if (keyUpPressed || keyRightPressed)
-{on = true; off = true}
-
-if (touch) off = true;
-//recognize gestures here:
-if (on && off)
-{
-    offAngle = point_direction(onX,onY,offX,offY);
-
-    //condition for vertical upward gesture: JUMPING
-    if ((keyUpPressed || in(offAngle,45,45+90)) && jumpPerformed < 2)
-    {
-        jumpPerformed += 1;
-
-        if(jumpPerformed == 2)
-        {
-            t = instance_create(x,y,objEffectDust);
-            t.type = 1;
-        }
-
-        jumpVel = 1.2;
-
-        yVel = -jumpVel*jumpVelMax;
-        state = JUMP;
-    }
-
-    //condition for horizontal gesture: DASHING
-    if (keyRightPressed || (in(offAngle,360-30,360) || in(offAngle,0,30)))
-    {
-        objPlayer.state = ATTACK;
-    }
-    
-    //SLOW DOWN AND STOP MOVING
-    //if ((touch && state != JUMP && mouse_x < WIDTH-2*TILE && mouse_y < HEIGHT-2*TILE)
-    //    || (keyDown && state != JUMP))
-    //    state = IDLE;
-
-    on = false;
-    off = false;
-}
-
-if (!touch)
-{
-    onX = -1;
-    onY = -1;
-    offX = -1;
-    offY = -1;
-}*/
-
 
 //local variables && flags
 cx = x+TILE*.5;
@@ -210,7 +144,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
 }
 
 //DEATH
-if (y+TILE > HEIGHT+TILE || x < 0)
+if (y+TILE > HEIGHT+1.5*TILE || x < 0)
     alive = false;
 
 if (!alive)
@@ -348,12 +282,13 @@ else //IF NOT DEAD
                 {
                     if (xVel > 0)
                         xVel *= xFric;
-            
                     if (x > xO + global.xSpeed*1.5)
                         xVel = max(xVel - xAcc, -global.xSpeed*.5);//% slower than scroll speed
                 }
             } else //IDLE SPEED HERE
-                xVel = max(xVel - 4*xAcc, -global.xSpeed);
+            {
+                xVel = min(max(xVel - 8*xAcc, -global.xSpeed),0);
+            }
         }
     } else
     {

@@ -73,8 +73,9 @@
 if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause)
     if (global.player.state != DEAD)
     {
-        if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
+        if ((mouse_check_button_pressed(mb_left) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
             || keyboard_check_pressed(ord('P'))
+            || os_is_paused())
             {
                 instance_create(0,0,objPauseMenu);
                 global.pause = true;
@@ -129,18 +130,6 @@ if (room != INIT &amp;&amp; !global.gameOver)
     //global routines here
     if (!global.pause)
     {
-        /*
-        //PAUSE GAME
-        if (global.player.state != DEAD)
-        {
-            if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
-                || keyboard_check_pressed(ord('P'))
-                {
-                    instance_create(0,0,objPauseMenu);
-                    global.pause = true;
-                }
-        }*/
-
         //EXP SYSTEM AND LEVEL UP FORMULA
         global.maxCoins = (32 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
         //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
@@ -178,7 +167,11 @@ if (room != INIT &amp;&amp; !global.gameOver)
             }
             //if player dashes, speed is higher.
             //global.xSpeed = global.xSpeedDefault*((3-1.5*(global.player.pow/global.player.maxPow)));
-            global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
+            if (global.player.state != IDLE)
+                global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
+            else
+                global.xSpeed = max(global.xSpeed * .98, global.xSpeedDefault * .5);
+
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;
@@ -241,24 +234,8 @@ if (room == INIT || global.gameOver || global.player.state == DEAD || !global.st
 }
 else
 {
-/*
-    if (global.pause)
-        audio_pause_all();
-    else
-        audio_resume_all();    
-*/
-        
     audio_sound_gain(sfxBgm,(global.powerUp == POW_NONE &amp;&amp; !global.pause),0);
     audio_sound_gain(sfxBgmPow,(global.powerUp != POW_NONE &amp;&amp; !global.pause),0);
-    /*
-    var e;
-    if (global.powDuration &gt; 0 &amp;&amp; global.powerUp != POW_NONE)
-        e = min(max((alarm[1]+global.powDuration/4)/global.powDuration,0),1);
-    else
-        e = (global.powerUp != POW_NONE);
-    audio_sound_gain(sfxBgm,1-e,0);
-    audio_sound_gain(sfxBgmPow,e,0);
-    */
     playMusic(sfxBgm,!global.mute);
     playMusic(sfxBgmPow,!global.mute);
 }
@@ -472,8 +449,26 @@ randomize();
 //SOUND
 global.mute = false;
 
-//INPUT TYPE
-global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
+//DEVICE TYPE/INPUT TYPE
+switch(os_type)
+{
+    case os_browser:
+        show_message("TEST VERSION - DO NOT DISTRIBUTE!");
+    case os_windows:
+    case os_linux:
+        global.input = INPUT_KEYBOARD;
+    break;
+    case os_android:
+    case os_winphone:
+    case os_ios:
+        global.input = INPUT_TOUCH;
+    break;
+    default:
+        show_message("DEVICE NOT SUPPORTED :(");
+        game_end();
+    break;
+}
+//global.input = INPUT_KEYBOARD; //INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
 //global.input = INPUT_TOUCH;
 
 //FONTS

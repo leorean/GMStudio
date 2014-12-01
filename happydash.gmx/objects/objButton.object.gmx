@@ -36,6 +36,16 @@ colorInactive = c_gray;//make_color_rgb(209,152,105)
 depth = 0;
 
 prevIndex = -1;
+
+a=0;b=0;c=0;d=0;
+w=0;
+h=0;
+
+pressed = false;
+active = false;
+
+mPrevX = mouse_x;
+mPrevY = mouse_y;
 </string>
           </argument>
         </arguments>
@@ -59,6 +69,43 @@ prevIndex = -1;
           <argument>
             <kind>1</kind>
             <string>depth = parent.depth -1;
+
+w = string_width(text);
+h = string_height(text);
+
+a = x-w;
+b = y;
+c = x+w;
+d = y+h;
+
+if (global.mouseVisible || global.input == INPUT_TOUCH)
+{
+    if (in(mouse_x,a,c) &amp;&amp; in(mouse_y,b,d))
+        active = true;
+    else
+        active = false;
+}
+else
+{
+    if (parent.index == index)
+        active = true;
+    else
+        active = false;
+}
+
+if (mouse_check_button_released(mb_left)
+    &amp;&amp; in(mouse_x,a,c)
+    &amp;&amp; in(mouse_y,b,d))
+||
+    ((keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
+    &amp;&amp; index == parent.index)
+    pressed = true;
+else
+    pressed = false;
+    
+    
+mPrevX = mouse_x;
+mPrevY = mouse_y;
 </string>
           </argument>
         </arguments>
@@ -82,7 +129,7 @@ prevIndex = -1;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_set_font(global.fntDefault);
+//draw_set_font(fntButton);
 draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
@@ -91,18 +138,21 @@ draw_set_alpha(1);
 if (prevIndex != parent.index &amp;&amp; prevIndex != -1)
     playSound(sfxCaching, 1);
 
-if (parent.index == index) // ACTIVE
+if (active) // ACTIVE
 {
-    draw_set_color(colorActive);
-    drawText = ("@ "+string(text)+" @");
+//    draw_set_color(colorActive);
+//    drawText = text;//("@ "+string(text)+" @");
+    drawText(x,y,text,colorActive);
+
 }
 else //INACTIVE
 {
-    draw_set_color(colorInactive);
-    drawText = text;
+//    draw_set_color(colorInactive);
+//    drawText = text;
+    drawText(x,y,text,colorInactive);
 }
 
-draw_text(x,y,drawText);
+//drawText(x,y,drawText,colorActive);
 
 prevIndex = parent.index;
 </string>

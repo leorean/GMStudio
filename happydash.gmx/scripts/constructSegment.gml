@@ -29,7 +29,7 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 65) //spikes
         {
-            if (max(min(global.difficulty,30),10) > random(40))
+            if (max(min(global.difficulty,50),2) > random(60))
                 instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
         }
         else if (s == 66 || s == 71) //platforms
@@ -47,9 +47,9 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 15)//ITEM block
+            if (c < 30)//ITEM block
                 ct = 2; 
-            else if (c < 30)//POW block
+            else if (c < 45)//POW block
                 ct = 3;
             else if (c < 100)//coin block
                 ct = 1;
@@ -58,7 +58,6 @@ for (i = 0; i<w; i += 1)
             else
                 ct = 0;//normal block
             
-            //if (powSpawned && ct == 3)||(itemSpawned && ct == 2) ct = 0;
             if (ct == 2)
                 if (!itemSpawned)
                     itemSpawned = true;
@@ -92,7 +91,7 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 70) //spikes and auto spikes
         {
-            if (max(min(global.difficulty,30),10) > random(40))
+            if (max(min(global.difficulty,50),2) > random(60))
             {
                 var c;
                 c = choose(true,false);
