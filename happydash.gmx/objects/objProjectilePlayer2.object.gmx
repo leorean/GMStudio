@@ -100,7 +100,7 @@ enemy = noone;
     x = xO - tx;
     y = yO - ty;
 
-    if (!bound &amp;&amp; xO &gt; 1.5*WIDTH) || global.player.state == DEAD
+    if (!bound &amp;&amp; xO &gt; 1.5*WIDTH)// || global.player.state == DEAD
         instance_destroy();
     
     destroyStuff();

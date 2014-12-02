@@ -115,7 +115,7 @@ cycle ();
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,mask*TILE,0,TILE,TILE,floor(x),y);
+draw_sprite_part(spriteGfx,-1,mask*TILE,0+(global.timer mod 60 &gt; 55)*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

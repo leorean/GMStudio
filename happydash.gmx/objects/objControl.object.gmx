@@ -74,8 +74,8 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause)
     if (global.player.state != DEAD)
     {
         if ((mouse_check_button_pressed(mb_left) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
-            || keyboard_check_pressed(ord('P'))
-            || os_is_paused())
+            || keyboard_check_pressed(ord('P')))
+            //|| os_is_paused())
             {
                 with(objPauseMenu)
                     instance_destroy();
@@ -447,8 +447,6 @@ global.tbDash.type = 1;
 global.tbStop = instance_create(0,floor(HEIGHT/2)+TILE,objTouchButton);
 global.tbStop.type = 2;
 
-global.input = INPUT_KEYBOARD; 
-
 //DEVICE TYPE/INPUT TYPE
 switch(os_type)
 {
@@ -464,7 +462,8 @@ switch(os_type)
         global.input = INPUT_TOUCH;
     break;
     default:
-        show_message("DEVICE NOT SUPPORTED :(");
+        global.input = INPUT_KEYBOARD; 
+        show_message("DEVICE UNKNOWN :(");
         //game_end();
     break;
 }

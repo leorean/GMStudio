@@ -67,12 +67,8 @@ canDie = false;
 {
     destroyStuff();
     
-    //x -= global.xSpeed;
-    
-    if (canDie &amp;&amp; instance_place(x,y,objAny))
+    if (canDie &amp;&amp; place_meeting(x+xVel,y+yVel,objAny))
     {
-        //d = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
-        //d.type = 6;
         instance_create(x-TILE/2,y-TILE/2,objExplosion);
         instance_destroy();
     }
@@ -81,12 +77,12 @@ canDie = false;
     {
         if (y &lt; yO - 15*TILE)
         {
-            x += 10*TILE+random(2*TILE);
+            x += 8*TILE+random(2*TILE);
             state = ATTACK;
             playSound(sfxRocketFall,1+random(.2));
         }
         xVel = 0;
-        yVel = -3;
+        yVel = -6;
     } else
     {
         if (!canDie)

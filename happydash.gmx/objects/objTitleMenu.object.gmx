@@ -208,10 +208,10 @@ if (t&gt;2*pi)
 z = 2*sin(t);
 
 //background
-xx = (xx + 1) mod WIDTH;
+xx = (xx - 1) mod WIDTH;
 
 draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
-draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx-WIDTH,yy);
+draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx+WIDTH,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
 if (!showHelp &amp;&amp; !showHighscore)
@@ -222,10 +222,12 @@ if (showHighscore)
 //title
 if (!showHelp &amp;&amp; !showHighscore)
 {
-    draw_set_alpha(.5);
-    draw_sprite_part_ext(spriteTitleMenu,-1,0,2.5*HEIGHT,WIDTH,HEIGHT*.5,0,-z,1,1,c_white,.5);
+    draw_set_color(c_black);
+    draw_set_alpha(.3);
+    draw_sprite_part_ext(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0+4,-z+4,1,1,c_black,.5);
     draw_set_alpha(1);
-    draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT*.5,0,-z);
+    draw_set_color(c_white);
+    draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
 }
 
 draw_set_font(global.fntDefault);
@@ -246,12 +248,15 @@ if (showHelp || showHighscore)
     textCreditsY = max(textCreditsY-.3,HEIGHT-TILE);
     draw_set_halign(fa_center);
     draw_set_valign(fa_top);
+    draw_set_color(c_white);
+    //draw_text(floor(WIDTH/2),floor(textCreditsY),textCredits);
+    drawText(floor(WIDTH/2),floor(textCreditsY),textCredits,c_white,c_black,fntMenu);
     //drawText(WIDTH/2,textCreditsY,textCredits,c_white);
-    draw_set_font(fntMenu);
+    /*draw_set_font(fntMenu);
     draw_set_color(c_black);
     draw_text(floor(WIDTH/2),floor(textCreditsY)+1,textCredits);
     draw_set_color(c_white);
-    draw_text(floor(WIDTH/2),floor(textCreditsY),textCredits);
+    draw_text(floor(WIDTH/2),floor(textCreditsY),textCredits);*/
     draw_set_valign(fa_top);
     draw_set_font(global.fntDefault);
 }
@@ -259,7 +264,11 @@ if (showHelp || showHighscore)
 
 //HELP
 if (showHelp)
+{
+    draw_set_halign(fa_center);
     draw_sprite_part(spriteTitleMenu,-1,WIDTH,page*HEIGHT,WIDTH,HEIGHT,0,0);
+    drawText(floor(WIDTH/2),floor(TILE/2),"Help/Controls",c_white,c_black,fntButton);
+}
 
 //highscore
 if (showHighscore)
@@ -268,7 +277,7 @@ if (showHighscore)
     row = 5*TILE;
     draw_set_halign(fa_center);
     //draw_text(WIDTH/2,row-z,"Highscores");
-    drawText (WIDTH/2,row-z,"Highscores",c_white,c_black);
+    drawText (WIDTH/2,row-z,"Highscores",c_white,c_black,fntButton);
     draw_set_font(global.fntDefault);
     for (i = 0; i &lt; global.scoreCount; i+=1)
     {

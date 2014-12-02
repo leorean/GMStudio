@@ -153,7 +153,7 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
     //KEY INPUT (touch AND keys)
     keyUpPressed = keyboard_check_pressed(vk_up) || global.tbJump.pressed;
     keyRightPressed = keyboard_check_pressed(vk_right) || global.tbDash.pressed;
-    keyDown = keyboard_check(vk_left) || global.tbStop.pressing;
+    keyDown = keyboard_check(vk_down) || global.tbStop.pressing;
     
     //MOUSE VISIBILITY
     if (keyUpPressed || keyRightPressed || keyDown)
@@ -250,7 +250,7 @@ if (objControl.alarm[1] &amp;&amp; state != DEAD)
 
 if (global.powerUp == POW_6) // red rockets
 {
-    if (global.timer mod FPS == 0 &amp;&amp; !global.pause &amp;&amp; state != DEAD)
+    if (global.timer mod 30 == 0 &amp;&amp; !global.pause &amp;&amp; state != DEAD)
         instance_create(cx,cy,objProjectilePlayer3)
 }
 

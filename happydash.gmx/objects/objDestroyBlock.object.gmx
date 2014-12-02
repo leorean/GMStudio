@@ -137,9 +137,9 @@ if (state == DEAD)
             <kind>1</kind>
             <string>image_speed = 0;
 if (type != 2)
-    draw_sprite_part(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y);
+    draw_sprite_part(spriteGfx,-1,type*TILE,4*TILE,TILE,TILE,floor(x),y);
 else
-    draw_sprite_part_ext(spriteGfx,-1,type*TILE,3*TILE,TILE,TILE,floor(x),y,1,1,make_color_hsv((5*global.timer mod 255),255,255),1);
+    draw_sprite_part_ext(spriteGfx,-1,type*TILE,4*TILE,TILE,TILE,floor(x),y,1,1,make_color_hsv((5*global.timer mod 255),255,255),1);
 
 </string>
           </argument>

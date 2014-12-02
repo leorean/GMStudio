@@ -126,7 +126,7 @@ if (active)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part_ext(spriteGfx,-1,4*TILE+frame*TILE,1*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2),1,1,color,1);
+draw_sprite_part_ext(spriteGfx,-1,5*TILE+frame*TILE,1*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2),1,1,color,1);
 
 </string>
           </argument>

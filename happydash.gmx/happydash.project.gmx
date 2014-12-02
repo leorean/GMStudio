@@ -1429,6 +1429,7 @@
       <sprite>sprites\sprEnemyAutoSpikeMask</sprite>
       <sprite>sprites\sprCoinMask</sprite>
       <sprite>sprites\sprTouchMask</sprite>
+      <sprite>sprites\sprExplosionMask</sprite>
     </sprites>
     <sprite>sprites\spriteTitleMenu</sprite>
     <sprite>sprites\spriteBg</sprite>
@@ -1442,7 +1443,6 @@
     <sprite>sprites\spriteGfx</sprite>
     <sprite>sprites\spriteStartLevel</sprite>
     <sprite>sprites\spriteFontScore</sprite>
-    <sprite>sprites\sprExplosionMask</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

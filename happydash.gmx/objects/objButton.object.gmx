@@ -38,6 +38,8 @@ active = false;
 
 mPrevX = mouse_x;
 mPrevY = mouse_y;
+
+text = "xxxxx";
 </string>
           </argument>
         </arguments>
@@ -128,9 +130,9 @@ if (prevIndex != parent.index &amp;&amp; prevIndex != -1)
     playSound(sfxCaching, 1);
 
 if (active)
-    drawText(x,y,text,c_white,c_gray);
+    drawText(x,y,text,c_white,make_color_hsv(0,0,15),fntButton);
 else
-    drawText(x,y,text,c_white,c_black);
+    drawText(x,y,text,make_color_hsv(0,0,165),c_black,fntButton);
 
 prevIndex = parent.index;
 </string>

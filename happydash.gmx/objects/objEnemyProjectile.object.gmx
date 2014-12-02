@@ -104,7 +104,7 @@ isFlying = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(spriteGfx,-1,frame*TILE,4*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
+            <string>draw_sprite_part(spriteGfx,-1,4*TILE+frame*TILE,2*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>
