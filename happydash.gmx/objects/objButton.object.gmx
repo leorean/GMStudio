@@ -62,8 +62,9 @@ mPrevY = mouse_y;
             <kind>1</kind>
             <string>depth = parent.depth-1;
 
-w = string_width(text);
-h = string_height(text);
+//string_width doesnt work with html5 ...
+w = 6*TILE;//string_width(text);
+h = 1.5*TILE;//string_height(text);
 
 a = x-w;
 b = y;
@@ -89,7 +90,7 @@ if (mouse_check_button_released(mb_left)
     &amp;&amp; in(mouse_x,a,c)
     &amp;&amp; in(mouse_y,b,d))
 ||
-    ((keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
+    ((keyboard_check_released(vk_space) || keyboard_check_released(vk_enter))
     &amp;&amp; index == parent.index)
     pressed = true;
 else

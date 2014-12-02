@@ -1441,7 +1441,6 @@
     <sprite>sprites\spriteFontDefault</sprite>
     <sprite>sprites\spriteGfx</sprite>
     <sprite>sprites\spriteStartLevel</sprite>
-    <sprite>sprites\spriteCombo</sprite>
     <sprite>sprites\spriteFontScore</sprite>
     <sprite>sprites\sprExplosionMask</sprite>
   </sprites>

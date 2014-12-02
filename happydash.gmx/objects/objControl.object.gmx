@@ -227,7 +227,6 @@ if (room != INIT &amp;&amp; !global.gameOver)
     }
 
 }
-
 if (global.gameOver)
     global.pause = false;
 
