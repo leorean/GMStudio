@@ -74,8 +74,8 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause)
     if (global.player.state != DEAD)
     {
         if ((mouse_check_button_pressed(mb_left) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
-            || keyboard_check_pressed(ord('P')))
-            //|| os_is_paused())
+            || keyboard_check_pressed(ord('P'))
+            || os_is_paused())
             {
                 with(objPauseMenu)
                     instance_destroy();
@@ -171,12 +171,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.startSignal = true;
             }
             //if player dashes, speed is higher.
-            //global.xSpeed = global.xSpeedDefault*((3-1.5*(global.player.pow/global.player.maxPow)));
-            if (global.player.state != IDLE)
-                global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
-            else
-                global.xSpeed = max(global.xSpeed * .98, global.xSpeedDefault * .75);
-
+            global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));            
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;
@@ -587,8 +582,12 @@ draw_set_color(c_white);
 draw_set_valign(fa_top);
 draw_set_alpha(1);
 
-//if(global.input == INPUT_TOUCH)
-//    draw_point(mouse_x,mouse_y);
+if(global.input == INPUT_TOUCH)
+{
+    draw_set_color(c_red);
+    draw_circle(mouse_x,mouse_y,2,0);
+    draw_set_color(c_white);
+}
     
     
 if (room != INIT &amp;&amp; !global.gameOver)
