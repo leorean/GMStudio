@@ -222,9 +222,9 @@ if (showHighscore)
 //title
 if (!showHelp &amp;&amp; !showHighscore)
 {
-    draw_set_color(c_black);
-    draw_set_alpha(.3);
-    draw_sprite_part_ext(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0+4,-z+4,1,1,c_black,.5);
+    //draw_set_color(c_black);
+    //draw_set_alpha(.3);
+    //draw_sprite_part_ext(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0+4,-z+4,1,1,c_black,.5);
     draw_set_alpha(1);
     draw_set_color(c_white);
     draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);

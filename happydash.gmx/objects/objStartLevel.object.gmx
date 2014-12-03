@@ -50,7 +50,7 @@ playSound(sfxStart,1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (alpha &gt; 0)
+            <string>if (alpha &gt; 0 &amp;&amp; !global.pause)
 {
     draw_sprite_ext(spriteStartLevel,-1,0,0,1,1,0,c_white,alpha);
     alpha = max(alpha - .03,0);
