@@ -5,6 +5,7 @@ if (jumpPerformed < 2 || (global.powerUp == POW_2 && y > -2*TILE))
         
     if(jumpPerformed == 2)
     {
+        canDraw = true;
         playSound(sfxJump,1.3);
         t = instance_create(x,y,objEffectDust);
         t.type = 1;

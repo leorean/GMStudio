@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = PLAYERDEPTH+1;
+            <string>depth = TILEDEPTH-1;
 a = 1;
 s = 1;
 alarm0 = 30;
@@ -88,10 +88,8 @@ for (j = 0; j &lt; TILE; j+=1)
 {
     draw_set_alpha(a);
     draw_set_color(make_color_hsv((j div 2)*15,255,255));
-    draw_line_width(x-4,y+j,x,y+j,1);
+    draw_line_width(x-1,y+j,x,y+j,1);
 }
-
-//draw_sprite_ext(spriteRainbow,-1,x,y,1,s,angle,c_white,a);
 </string>
           </argument>
         </arguments>

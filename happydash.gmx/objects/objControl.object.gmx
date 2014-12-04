@@ -77,8 +77,6 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp;
             || keyboard_check_pressed(ord('P')))
             //|| os_is_paused())
             {
-                //global.xSpeed = 0;
-                    
                 with(objPauseMenu)
                     instance_destroy();
                 with(objButton)
@@ -509,6 +507,7 @@ for (i = 0; i &lt; global.scoreCount; i+=1)
 
 //global variables/flags
 global.pause = false;
+
 global.mouseVisible = false;
 global.gameOver = false;
 

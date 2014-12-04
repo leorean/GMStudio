@@ -1443,7 +1443,6 @@
     <sprite>sprites\spriteGfx</sprite>
     <sprite>sprites\spriteStartLevel</sprite>
     <sprite>sprites\spriteFontScore</sprite>
-    <sprite>sprites\spriteRainbow</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

@@ -102,12 +102,37 @@ xPrev = x;
 yPrev = y;
 
 //rainbow variables
-/*
-rbx = 0;
-rby = 0;
-k = 0;
-a = 0;
-*/
+dsX = ds_list_create();//x-list
+dsY = ds_list_create();//y-list
+dsA = ds_list_create();//alpha-list
+canDraw = false;
+dsD = ds_list_create();//check if drawable
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>ds_list_destroy(dsX);
+ds_list_destroy(dsY);
+ds_list_destroy(dsA);
+ds_list_destroy(dsD);
 </string>
           </argument>
         </arguments>
@@ -251,34 +276,48 @@ switch(state)
     break;
 }
 
-/*if (state == ATTACK || state == JUMP)
+if (true)//RAINBOWWWW
 {
-    rbx[k] = ceil(cx);
-    rby[k] = ceil(y);
-    rbx[k] += 1;
-    a = min(a+.01,1);
-    for (i = 0; i &lt; k; i+=1)
+    if (global.hasControl)
     {
-        rbx[i] -= global.xSpeed;
-    
-        if (i &gt; 0)
+        if (!global.pause)
         {
-            for (j = 0; j &lt; TILE; j+=2)
+            if (ds_list_size(dsX) &lt; 32)
             {
-                draw_set_alpha(a);
-                draw_set_color(make_color_hsv(j*10,255,255));
-                draw_line_width(rbx[i-1],rby[i-1]+j,rbx[i]+2,rby[i]+j,2);
+                ds_list_add(dsX,ceil(cx));
+                ds_list_add(dsY,ceil(y));
+                ds_list_add(dsA,1);
+                ds_list_add(dsD,canDraw);
+            } else
+            {
+                ds_list_delete(dsX,0);
+                ds_list_delete(dsY,0);
+                ds_list_delete(dsA,0);
+                ds_list_delete(dsD,0);
+            }
+        }
+        
+        for (i = 0; i &lt; ds_list_size(dsX);i+=1)
+        {
+            ds_list_replace(dsX,i,ds_list_find_value(dsX,i)-global.xSpeed);
+            //if ((ds_list_find_value(dsX,i) &lt; 0))
+                ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-.03,0));
+            draw_set_alpha(ds_list_find_value(dsA,i));
+    
+            if (i &gt; 0 &amp;&amp; ds_list_find_value(dsD,i))
+            {
+    
+                for (j = 0; j &lt; TILE; j+=1)
+                {
+                    draw_set_color(make_color_hsv((j div 2)*22,255,255));
+                    if (ds_list_find_value(dsX,i) != ds_list_find_value(dsX,i-1)+global.xSpeed)
+                    if (abs(TILE/2-j) &lt; combo)
+                    draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ds_list_find_value(dsX,i),ds_list_find_value(dsY,i)+j,1);
+                }
             }
         }
     }
-    k += 1;
-} else
-{
-    a = 0;
-    rbx = 0;
-    rby = 0;    
-    k = 0;
-}*/
+}
 
 //power up stuff
 if (objControl.alarm[1] &amp;&amp; state != DEAD)

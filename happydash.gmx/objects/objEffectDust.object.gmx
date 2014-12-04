@@ -57,10 +57,12 @@ yVel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>cycle ();
-
-x += xVel;
-y += yVel;
+            <string>if (!global.pause)
+{
+    cycle ();
+    x += xVel;
+    y += yVel;
+}
 </string>
           </argument>
         </arguments>

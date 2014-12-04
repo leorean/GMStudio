@@ -20,6 +20,12 @@ if (true)
         else
             state = ATTACK;
     }
+
+    if (combo > 0 && state != IDLE)
+        canDraw = true;
+    else
+        canDraw = false;    
+
 }
 
 //local variables && flags
@@ -123,14 +129,8 @@ if (state == DEAD && !global.gameOver)
 }
 else //IF NOT DEAD
 {
-    if (true)
-    {
-        angle = point_direction(x,y,x+xVel,y+yVel);
-        show_debug_message(angle);
-        if (in(angle,120,240))
-            instance_create(cx,y,objEffectRainbow);
-    }    //COLLECT COINS
-        //collectCoin();
+    //COLLECT COINS
+    //collectCoin();
     
     //DESTROY BLOCKS BY JUMPING
     destroyBlock = instance_place(x,y-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
@@ -154,20 +154,15 @@ else //IF NOT DEAD
     //ATTACKING
     if (state == ATTACK)
     {
-        if (global.timer mod 10 == 0)
+        if (global.timer mod 5 == 0)
         {
             t = instance_create(x-TILE/2,y-TILE/2+random(TILE),objEffectDust);
             t.type = 3;
+            t.xVel = 0+random(2);
+            t.yVel = sign((t.y-y));            
         }
         if (global.timer mod 5 == 0)
             playSound(sfxDash,1);
-        
-        /*if (true)//global.timer mod 2 == 0)
-        {
-            rainbow = instance_create(x-TILE,y,objEffectDust);
-            rainbow.depth = depth+1;
-            rainbow.type = 7;
-        }*/
         
         //.005 = 1/WIDTH*2
         xVel = 2*(1-(x*.005));
@@ -273,7 +268,7 @@ yCollision();
 fCur = min((fCur+fSpeed) mod fMax, fMax);
 
 xPrev = x-global.xSpeed;
-yPrev = y;
+yPrev = y-yVel;
 
 if (state != statePrev && state != DEAD)
     fCur = 0;
