@@ -97,6 +97,17 @@ jumpPerformed = false;
 fCur = 0;
 fMax = 4;
 fSpeed = .1;
+
+xPrev = x;
+yPrev = y;
+
+//rainbow variables
+/*
+rbx = 0;
+rby = 0;
+k = 0;
+a = 0;
+*/
 </string>
           </argument>
         </arguments>
@@ -239,6 +250,35 @@ switch(state)
         fSpeed = .3;
     break;
 }
+
+/*if (state == ATTACK || state == JUMP)
+{
+    rbx[k] = ceil(cx);
+    rby[k] = ceil(y);
+    rbx[k] += 1;
+    a = min(a+.01,1);
+    for (i = 0; i &lt; k; i+=1)
+    {
+        rbx[i] -= global.xSpeed;
+    
+        if (i &gt; 0)
+        {
+            for (j = 0; j &lt; TILE; j+=2)
+            {
+                draw_set_alpha(a);
+                draw_set_color(make_color_hsv(j*10,255,255));
+                draw_line_width(rbx[i-1],rby[i-1]+j,rbx[i]+2,rby[i]+j,2);
+            }
+        }
+    }
+    k += 1;
+} else
+{
+    a = 0;
+    rbx = 0;
+    rby = 0;    
+    k = 0;
+}*/
 
 //power up stuff
 if (objControl.alarm[1] &amp;&amp; state != DEAD)

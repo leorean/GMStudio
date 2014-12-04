@@ -5,7 +5,6 @@ w = choose(1,2);
 n = max(
     max(abs(argument0-argument2),abs(argument1-argument3)) div 4
     , 3);
-
 a[0] = argument0;
 b[0] = argument1;
 a[n] = argument2;

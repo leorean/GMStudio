@@ -1443,6 +1443,7 @@
     <sprite>sprites\spriteGfx</sprite>
     <sprite>sprites\spriteStartLevel</sprite>
     <sprite>sprites\spriteFontScore</sprite>
+    <sprite>sprites\spriteRainbow</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -1522,6 +1523,7 @@
       <object>objects\objEffectDust</object>
       <object>objects\objEffectCombo</object>
       <object>objects\objStartLevel</object>
+      <object>objects\objEffectRainbow</object>
     </objects>
     <objects name="HUD">
       <object>objects\objButton</object>

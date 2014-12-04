@@ -70,13 +70,15 @@
           <argument>
             <kind>1</kind>
             <string>//PAUSE GAME
-if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause)
+if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp; !global.spawnSegment)
     if (global.player.state != DEAD)
     {
         if ((mouse_check_button_pressed(mb_left) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))
             || keyboard_check_pressed(ord('P')))
             //|| os_is_paused())
             {
+                //global.xSpeed = 0;
+                    
                 with(objPauseMenu)
                     instance_destroy();
                 with(objButton)
@@ -84,7 +86,6 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause)
 
                 instance_create(0,0,objPauseMenu);
                 global.pause = true;
-                global.xSpeed = 0;
             }
     }
 
@@ -185,7 +186,6 @@ if (room != INIT &amp;&amp; !global.gameOver)
         if(global.spawnSegment)
         {
             global.segX = global.xSpeed + global.segX + WIDTH;
-            //global.segX += WIDTH;
             if (global.player.state != DEAD)
             {
                 //a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
