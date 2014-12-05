@@ -1430,6 +1430,7 @@
       <sprite>sprites\sprCoinMask</sprite>
       <sprite>sprites\sprTouchMask</sprite>
       <sprite>sprites\sprExplosionMask</sprite>
+      <sprite>sprites\sprEnemyBigMask</sprite>
     </sprites>
     <sprite>sprites\spriteTitleMenu</sprite>
     <sprite>sprites\spriteBg</sprite>
@@ -1488,6 +1489,7 @@
       <objects name="enemies">
         <object>objects\objEnemyAutoSpike</object>
         <object>objects\objEnemySpike</object>
+        <object>objects\objEnemyRotator</object>
         <object>objects\objEnemy1</object>
         <object>objects\objEnemy2</object>
         <object>objects\objEnemy3</object>

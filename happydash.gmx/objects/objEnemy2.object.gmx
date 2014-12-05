@@ -70,7 +70,7 @@ isFlying = false;
 {
     cycle ();
 
-    if (state != DEAD)
+    if (alive)
     {
         if (x &lt; WIDTH)
             xVel = sign(dir)*spd;
@@ -121,14 +121,16 @@ isFlying = false;
     
     } else
     {
-        if (alive)
+        if (state != DEAD)
         {
+            t = instance_create(x,y,objEffectDust);
+            t.type = 2;
             global.enemiesKilled += 1;
             repeat(5)
                 spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
             yVel = -3;
         }
-        alive = false;
+        state = DEAD;
         xVel = 0;
         y += yVel;
     }

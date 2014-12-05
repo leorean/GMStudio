@@ -5,7 +5,7 @@
   <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>objLivingEnemy</parentName>
+  <parentName>objEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,26 +25,24 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = PLAYERDEPTH+2;
-mask_index = sprEnemyMask;
-
-xVel = 0;
-yVel = 0;
-dir = LEFT;
-spd = 0;
-maxSpd = 2;
-yGrav = .15;
+            <string>depth = BLOCKDEPTH-3;
 
 state = IDLE;
-alive = true;
-
-t = choose(-pi*.5,pi*.5);
-
-fCur = 0;
-fMax = 4;
-fSpeed = 0;
 
 isFlying = true;
+alive = true;
+
+mask_index = sprEnemyBigMask;
+
+xO = x;
+yO = y;
+
+angle = 0;
+spd = choose(-1,1)*choose(2,3,4);
+rad_angle = 0;
+radius = 2*TILE+choose(0,1,2)*TILE;
+
+countSeg = radius div TILE;
 </string>
           </argument>
         </arguments>
@@ -70,45 +68,36 @@ isFlying = true;
             <string>if (!global.pause)
 {
     cycle ();
-
-    if (alive)
+    xO -= global.xSpeed;
+    
+    angle = (angle + spd) mod 360;
+    rad_angle = ((angle / 180) * pi);
+    for (i = 0; i &lt;= countSeg; i+=1)
     {
-        if (x &lt; WIDTH)
-        {
+        r = radius/countSeg;
+        tx[i] = (cos(rad_angle)) * r*i;
+        ty[i] = -(sin(rad_angle)) * r*i;
+        xx[i] = (xO+TILE/2) - tx[i];
+        yy[i] = (yO+TILE/2) - ty[i];
         
-            t += .1;
-            if (t &gt;= 2*pi)
-                t = 0;
-                
-            yVel = sin(t);
-            
-            spd = min(spd+.01,maxSpd);
-            xVel = sign(dir)*spd;
-        }
-        else
-            yVel = 0;
-            
-    } else
-    {
-        if (state != DEAD)
-        {
-            global.enemiesKilled += 1;
-            yVel = -3;
-            repeat(5)
-                spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_POO);
-        }
-        state = DEAD;
-        xVel = 0;
-        yVel += yGrav;
     }
-    
-    x += xVel;
-    y += yVel;
-    
-    if (!alive) state = DEAD;
-        
-    fCur = (fCur + fSpeed) mod fMax;
+    x = (xO+TILE/2) - tx[countSeg];
+    y = (yO+TILE/2) - ty[countSeg];
+
+    if (!alive)
+    {
+        for (i = 0; i &lt; countSeg; i+=1)
+        {
+            t = instance_create(xx[i],yy[i],objEffectDust);
+            t.type = 2;
+        }
+        playSound(sfxDestroyBlock,1);
+        instance_destroy();
+    }    
 }
+
+
+
 </string>
           </argument>
         </arguments>
@@ -132,25 +121,18 @@ isFlying = true;
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-frame = floor(fCur);
 
-switch(state)
-{
-    case IDLE:
-        row = 0;
-        fSpeed = .2;
-    break;
-    case DEAD:
-        row = 1;
-        fSpeed = .3;
-    break;
-}
 
-if (dir == RIGHT)
-    draw_sprite_part(spriteEnemies,-1,2*frame*TILE,4*TILE+row*TILE,2*TILE,TILE,floor(x)-TILE*.5,y);
-else
-    draw_sprite_part_ext(spriteEnemies,-1,2*frame*TILE,4*TILE+row*TILE,2*TILE,TILE,floor(x)+TILE*1.5,y,-1,1,c_white,1);
+for (i = 0; i &lt; countSeg; i+=1)
+    draw_sprite_part(spriteGfx,-1,8*TILE,11*TILE+(i != 0)*TILE,TILE,TILE,floor(xx[i]-TILE/2),floor(yy[i]-TILE/2));
 
+draw_sprite_part(spriteGfx,-1,6*TILE,11*TILE,2*TILE,2*TILE,floor(x-TILE),floor(y-TILE));
+//drawLightning(x,y,xO,yO,make_color_hsv(266,255,255));
+
+draw_set_color(c_red);
+
+//for (i = 0; i &lt; countSeg; i+=1)
+//    draw_circle(xx[i],yy[i],2,1);
 </string>
           </argument>
         </arguments>
@@ -168,5 +150,8 @@ else
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>0,0</point>
+    <point>8,8</point>
+  </PhysicsShapePoints>
 </object>

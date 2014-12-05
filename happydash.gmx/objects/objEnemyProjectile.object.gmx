@@ -42,6 +42,7 @@ fMax = 4;
 fSpeed = .2;
 
 isFlying = true;
+alive = true;
 </string>
           </argument>
         </arguments>
@@ -74,7 +75,7 @@ isFlying = true;
     fCur = (fCur + fSpeed) mod fMax;
     frame = floor(fCur);
 
-    if (global.player.state == DEAD || collision_point(x,y,objAny,false,true)
+    if (!alive || global.player.state == DEAD || collision_point(x,y,objAny,false,true)
         || x &lt; -TILE || y &gt; HEIGHT+TILE || x &gt; WIDTH+TILE || y &lt; -TILE)
         {
             t = instance_create(x-TILE*.5,y-TILE*.5,objEffectDust);

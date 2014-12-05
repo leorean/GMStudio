@@ -47,9 +47,9 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             var c,ct;
             c = irandom(1000);
-            if (c < 30)//ITEM block
+            if (c < 15)//ITEM block
                 ct = 2; 
-            else if (c < 45)//POW block
+            else if (c < 30)//POW block
                 ct = 3;
             else if (c < 100)//coin block
                 ct = 1;
@@ -107,6 +107,10 @@ for (i = 0; i<w; i += 1)
         {
             if (choose(true,false,false))//(min(global.difficulty,20) > random(30))
                 instance_create(a+i*TILE,b+j*TILE,objEnemy3);
+        }
+        else if (s == 73) //rotating spike
+        {
+            instance_create(a+i*TILE,b+j*TILE,objEnemyRotator);
         }
 
         //insert here

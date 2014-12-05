@@ -3,6 +3,15 @@ e = argument0;
 
 if (e.alive)
 {
+    doCombo();
+    e.alive = false;
+    
+    playSound(sfxEnemyDie,.9+random(.2));       
+}
+
+/*
+if (e.alive)
+{
     t = instance_create(e.x,e.y,objEffectDust);
     t.type = 2;
     doCombo();
@@ -10,9 +19,9 @@ if (e.alive)
         e.alive = false;
     
     e.state = DEAD;
-    playSound(sfxEnemyDie,.9+random(.2));
-        
-}
+    playSound(sfxEnemyDie,.9+random(.2));       
+}*/
+
 /*if (real(e.object_index) == real(objEnemyAutoSpike))
 {
     if (e.alive)

@@ -44,24 +44,17 @@ else
 if (instance_exists(enemy))
 if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
 {
-    //enemies who are not killable
+    //enemies who are NOT killable
     if (real(object_get_parent(enemy.object_index)) != real(objLivingEnemy))
     {
-        if (enemy.state != DEAD)
+        if (enemy.alive)
         {
             if (global.powerUp != POW_3)//player ain't invincible
                 alive = false;
             else
-            {
-                with (enemy)
-                {
-                    instance_create(x,y,objEffectDust);
-                    playSound(sfxDestroyBlock,1);
-                    instance_destroy();
-                }
-            }
+                enemy.alive = false;
         }
-    } else //enemies who are killable
+    } else //enemies who ARE killable
     {
         if (enemy.alive)
         {
@@ -70,9 +63,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
                 //jump on enemies
                 if (state != ATTACK)
                 {
-                    //if (yVel >= 0 || y < enemy.y)
                     yVel = min(yVel,-3);
-                    //xVel = 0;
                     state = JUMP;
                 }
     
@@ -80,7 +71,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
     
                 killEnemy(enemy);
             }
-            if (enemy.state != DEAD)
+            if (enemy.alive)
             {
                 if (global.powerUp != POW_3)
                     alive = false;
@@ -157,15 +148,10 @@ else //IF NOT DEAD
         if (global.timer mod 5 == 0)
         {
             playSound(sfxDash,1);
-
             t = instance_create(x-TILE/2,y-TILE/2+random(TILE),objEffectDust);
             t.type = 3;
             t.xVel = 0+random(2);
             t.yVel = sign((t.y-y));
-            
-            //t = instance_create(x,y,objEffectDust);
-            //t.type = 3;
-
         }
         
         //.005 = 1/WIDTH*2

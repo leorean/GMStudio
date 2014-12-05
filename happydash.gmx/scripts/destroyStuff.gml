@@ -10,6 +10,13 @@ if (instance_exists(destroyBlock))
     doCombo();
     return true;
 }
+enemy = instance_place(x,y,objEnemy);
+if (instance_exists(enemy))
+{
+    killEnemy(enemy);
+    return true;
+}
+/*
 livingEnemy = instance_place(x,y,objLivingEnemy);
 if (instance_exists(livingEnemy))
 {
@@ -26,6 +33,5 @@ if (instance_exists(enemy))
         instance_destroy();
     }
     return true;
-}
-
+}*/
     return false;

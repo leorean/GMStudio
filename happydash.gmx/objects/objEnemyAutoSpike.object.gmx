@@ -114,8 +114,8 @@ if (!global.pause)
         
         if (dir == UP &amp;&amp; place_free(x,y+2))
             || (dir == DOWN &amp;&amp; place_free(x,y-2))
-            || (dir == LEFT &amp;&amp; place_free(x+2,y))
-            || (dir == RIGHT &amp;&amp; place_free(x-2,y))
+            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed+2,y))
+            || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed-2,y))
                 alive = false;
         
         if (active)
@@ -141,6 +141,9 @@ if (!global.pause)
         state = DEAD;
         if (!knockedUp)
         {   
+            t = instance_create(x,y,objEffectDust);
+            t.type = 2;
+            playSound(sfxEnemyDie,1);
             fCur = 0;
             global.enemiesKilled += 1;
             repeat(5)
