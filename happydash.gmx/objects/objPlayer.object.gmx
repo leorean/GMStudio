@@ -43,9 +43,17 @@ onGroundSoundPlayed = false;
 
 //death variables
 alarm[0] = 0;
-alarm0 = 90;
+alarm0 = 1.5*FPS;
 enemy = noone;
 alive = true;
+
+//combo timebuffer
+alarm[1] = 0;
+alarm1 = 80;
+
+//combo duration
+alarm[2] = 0;
+alarm2 = 3*FPS;
 
 //attack variables
 db = noone;
@@ -108,7 +116,7 @@ tornadoAlpha = 0;
 dsX = ds_list_create();//x-list
 dsY = ds_list_create();//y-list
 dsA = ds_list_create();//alpha-list
-canDraw = false;
+canDrawRainbow = false;
 dsD = ds_list_create();//check if drawable
 </string>
           </argument>
@@ -137,6 +145,50 @@ ds_list_destroy(dsY);
 ds_list_destroy(dsA);
 ds_list_destroy(dsD);
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>combo duration</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>combo timebuffer</string>
           </argument>
         </arguments>
       </action>
@@ -285,12 +337,15 @@ if (true)//RAINBOWWWW EFFECT
     {
         if (!global.pause)
         {
-            if (ds_list_size(dsX) &lt; 32)
+            if (ds_list_size(dsX) &lt; 48)
             {
                 ds_list_add(dsX,ceil(cx));
                 ds_list_add(dsY,ceil(y));
                 ds_list_add(dsA,1);
-                ds_list_add(dsD,canDraw);
+                if (canDrawRainbow)
+                    ds_list_add(dsD,combo);
+                else
+                    ds_list_add(dsD,0);
             } else
             {
                 ds_list_delete(dsX,0);
@@ -303,17 +358,17 @@ if (true)//RAINBOWWWW EFFECT
         for (i = 0; i &lt; ds_list_size(dsX);i+=1)
         {
             ds_list_replace(dsX,i,ds_list_find_value(dsX,i)-global.xSpeed);
-            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-.03,0));
+            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-.01,0));
             draw_set_alpha(ds_list_find_value(dsA,i));
     
-            if (i &gt; 0 &amp;&amp; ds_list_find_value(dsD,i))
+            if (i &gt; 0 &amp;&amp; ds_list_find_value(dsD,i)&gt;0)
             {
     
                 for (j = 0; j &lt; TILE; j+=1)
                 {
                     draw_set_color(make_color_hsv((j div 2)*22,255,255));
                     if (ds_list_find_value(dsX,i) != ds_list_find_value(dsX,i-1)+global.xSpeed)
-                    if (abs(TILE/2-j) &lt; combo)
+                    if (abs(TILE/2-j) &lt; ds_list_find_value(dsD,i))
                     draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ds_list_find_value(dsX,i),ds_list_find_value(dsY,i)+j,1);
                 }
             }

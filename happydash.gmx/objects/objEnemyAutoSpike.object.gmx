@@ -30,7 +30,7 @@
 state = DEAD;
 
 active = true;
-depth = BLOCKDEPTH-2;
+depth = BLOCKDEPTH-3;
 look = UP;
 t = 2*FPS;
 dir = NONE;

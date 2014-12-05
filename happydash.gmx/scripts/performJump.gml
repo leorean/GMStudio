@@ -16,4 +16,6 @@ if (jumpPerformed < 2 || (global.powerUp == POW_2 && y > -2*TILE))
     
     yVel = -jumpVel*jumpVelMax;
     state = JUMP;
-}
+} else
+    if (state == ATTACK)
+        state = JUMP;

@@ -21,10 +21,10 @@ if (true)
             state = ATTACK;
     }
 
-    if (combo > 0 && state != IDLE)
-        canDraw = true;
+    if (combo > 0)
+        canDrawRainbow = true;
     else
-        canDraw = false;    
+        canDrawRainbow = false;    
 
 }
 
@@ -192,11 +192,11 @@ else //IF NOT DEAD
         yGrav = yGravDefault;
     }
     
-    if (onGround && yVel > 0 && state != ATTACK)
+    if (!alarm[2] || (onGround && yVel > 0 && state != ATTACK))
     {
-        if (global.powerUp == POW_NONE)
+        if (global.powerUp != POW_3)
         {
-            if (combo >= 10)
+            /*if (combo >= 10)
             {
                 playSound(sfxComboBreak,1);
                 t = instance_create(cx,y,objText);
@@ -204,14 +204,21 @@ else //IF NOT DEAD
                 t.xVel = -2;
                 t.yVel = -2.5;
                 t.yGrav = .15;
+            }*/
+            if (!alarm[1])
+            {
+                combo = max(combo - 1,0);
+                alarm[1] = ceil(alarm1/(combo+1));
             }
-            combo = 0;
         }
+    }
+    if (onGround && yVel > 0 && state != ATTACK)
+    {
         y = floor(y);
         jumpPerformed = 0;
         if (state != IDLE)
             state = RUN;
-    }    
+    }
 
     if (x > WIDTH-TILE) x = WIDTH-TILE;
 
