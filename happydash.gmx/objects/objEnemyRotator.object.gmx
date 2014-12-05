@@ -38,11 +38,11 @@ xO = x;
 yO = y;
 
 angle = 0;
-spd = choose(-1,1)*choose(2,3,4);
+spd = choose(-1,1)*choose(1,2,3);
 rad_angle = 0;
-radius = 2*TILE+choose(0,1,2)*TILE;
+radius = 1*TILE+choose(0,1,2,3)*TILE;
 
-countSeg = radius div TILE;
+countSeg = (1.5*radius) div TILE;
 </string>
           </argument>
         </arguments>
@@ -91,6 +91,9 @@ countSeg = radius div TILE;
             t = instance_create(xx[i],yy[i],objEffectDust);
             t.type = 2;
         }
+        t = instance_create(x,y,objEnemy1);
+        t.alive = false;
+        
         playSound(sfxDestroyBlock,1);
         instance_destroy();
     }    
@@ -124,12 +127,11 @@ countSeg = radius div TILE;
 
 
 for (i = 0; i &lt; countSeg; i+=1)
-    draw_sprite_part(spriteGfx,-1,8*TILE,11*TILE+(i != 0)*TILE,TILE,TILE,floor(xx[i]-TILE/2),floor(yy[i]-TILE/2));
+    draw_sprite_part_ext(spriteGfx,-1,10*TILE,11*TILE+(i != 0)*TILE,TILE,TILE,floor(xx[i]-TILE/2),floor(yy[i]-TILE/2),1,1,c_white,.5);
 
 draw_sprite_part(spriteGfx,-1,6*TILE,11*TILE,2*TILE,2*TILE,floor(x-TILE),floor(y-TILE));
+draw_sprite_part_ext(spriteGfx,-1,8*TILE,11*TILE,2*TILE,2*TILE,floor(x-TILE),floor(y-TILE),1,1,c_white,.5);
 //drawLightning(x,y,xO,yO,make_color_hsv(266,255,255));
-
-draw_set_color(c_red);
 
 //for (i = 0; i &lt; countSeg; i+=1)
 //    draw_circle(xx[i],yy[i],2,1);
