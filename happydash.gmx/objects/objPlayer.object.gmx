@@ -93,13 +93,16 @@ jumpVel = jumpVelMin;
 isJumped = 0;
 jumpPerformed = false;
 
-////draw routines
+////draw stuff
 fCur = 0;
 fMax = 4;
 fSpeed = .1;
 
 xPrev = x;
 yPrev = y;
+
+//tornado effect
+tornadoAlpha = 0;
 
 //rainbow variables
 dsX = ds_list_create();//x-list
@@ -276,7 +279,7 @@ switch(state)
     break;
 }
 
-if (true)//RAINBOWWWW
+if (true)//RAINBOWWWW EFFECT
 {
     if (global.hasControl)
     {
@@ -300,8 +303,7 @@ if (true)//RAINBOWWWW
         for (i = 0; i &lt; ds_list_size(dsX);i+=1)
         {
             ds_list_replace(dsX,i,ds_list_find_value(dsX,i)-global.xSpeed);
-            //if ((ds_list_find_value(dsX,i) &lt; 0))
-                ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-.03,0));
+            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-.03,0));
             draw_set_alpha(ds_list_find_value(dsA,i));
     
             if (i &gt; 0 &amp;&amp; ds_list_find_value(dsD,i))
@@ -351,6 +353,16 @@ if (global.powerUp == POW_NONE)
     draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
 else
     draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
+
+//TORNADO EFFECT
+if (state == ATTACK)
+    tornadoAlpha = min(tornadoAlpha +.03,.8);
+else
+    tornadoAlpha = max(tornadoAlpha -.1,0);
+
+if (tornadoAlpha &gt; 0)
+    draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,tornadoAlpha);
+    
 
 draw_set_color(c_white);
 

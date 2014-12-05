@@ -156,13 +156,17 @@ else //IF NOT DEAD
     {
         if (global.timer mod 5 == 0)
         {
+            playSound(sfxDash,1);
+
             t = instance_create(x-TILE/2,y-TILE/2+random(TILE),objEffectDust);
             t.type = 3;
             t.xVel = 0+random(2);
-            t.yVel = sign((t.y-y));            
+            t.yVel = sign((t.y-y));
+            
+            //t = instance_create(x,y,objEffectDust);
+            //t.type = 3;
+
         }
-        if (global.timer mod 5 == 0)
-            playSound(sfxDash,1);
         
         //.005 = 1/WIDTH*2
         xVel = 2*(1-(x*.005));
