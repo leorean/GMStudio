@@ -84,6 +84,10 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp;
 
                 instance_create(0,0,objPauseMenu);
                 global.pause = true;
+                
+                //correct the x error??
+                //with (objEnemy)
+                //    x -= global.xSpeed;
             }
     }
 

@@ -65,9 +65,10 @@ countSeg = (1.5*radius) div TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.pause)
+            <string>cycle ();
+
+if (!global.pause)
 {
-    cycle ();
     xO -= global.xSpeed;
     
     angle = (angle + spd) mod 360;

@@ -35,7 +35,7 @@ mouse_yprev = mouse_y;
 
 scoreString = "";
 timer = 0;
-z = 2;
+z = 1;
 enabled = false;
 mode = 0;
 
@@ -124,7 +124,7 @@ c = len;//1;
     {
         timer += 1;
 
-        if (timer &gt; z)
+        if (timer &gt; 5)
         {
             playSound(sfxCaching,pitch);
             mode += 1;
@@ -205,29 +205,32 @@ draw_text(WIDTH*.5, 0,"Score");
 
 draw_set_font(global.fntScore);
 
-draw_text(WIDTH*.5, TILE,":"+scoreString+":");
+if (mode &lt;= 1)
+    draw_text(WIDTH*.5, TILE,scoreString);
+else
+    draw_text(WIDTH*.5, TILE,":"+scoreString+":");
 
 
 draw_set_font(global.fntDefault);
 
 draw_set_halign(fa_left);
-if (mode &gt; 0) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
-if (mode &gt; 1) draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
-if (mode &gt; 2) draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
-if (mode &gt; 3) draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
-if (mode &gt; 4) draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
+if (mode &gt; 1) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
+if (mode &gt; 2) draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
+if (mode &gt; 3) draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
+if (mode &gt; 4) draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
+if (mode &gt; 5) draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
 
 draw_set_halign(fa_right);
-if (mode &gt; 0) draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
-if (mode &gt; 1) draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
-if (mode &gt; 2) draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
-if (mode &gt; 3) draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
-if (mode &gt; 4) draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
+if (mode &gt; 1) draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
+if (mode &gt; 2) draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
+if (mode &gt; 3) draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
+if (mode &gt; 4) draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
+if (mode &gt; 5) draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
 
 //draw_rectangle(WIDTH*.5-4*TILE,6.7*TILE,WIDTH*.5+4*TILE,7.2*TILE,2);
 if (!enabled)
 {
-    if (mode &gt; 5)
+    if (mode &gt; 6)
     {
         btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
         btn[0].text = "Retry";

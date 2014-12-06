@@ -36,6 +36,9 @@ isFlying = false;
 dir = NONE;
 
 alive = true;
+
+//blinking offset
+o = x mod 3;
 </string>
           </argument>
         </arguments>
@@ -58,70 +61,73 @@ alive = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (checking &gt; 0)
+            <string>cycle ();
+
+if (x &gt; 0)
 {
-    cx = x+TILE*.5-ceil(global.xSpeed);
-    cy = y+TILE*.5;
+    if (checking &gt; 0)
+    {
+        cx = x+TILE*.5-ceil(global.xSpeed);
+        cy = y+TILE*.5;
+        
+        l = collision_point(cx-TILE,cy,objSolid,false,true);
+        r = collision_point(cx+TILE,cy,objSolid,false,true);
+        u = collision_point(cx,cy-TILE,objSolid,false,true);
+        d = collision_point(cx,cy+TILE,objSolid,false,true);
     
-    l = collision_point(cx-TILE,cy,objSolid,false,true);
-    r = collision_point(cx+TILE,cy,objSolid,false,true);
-    u = collision_point(cx,cy-TILE,objSolid,false,true);
-    d = collision_point(cx,cy+TILE,objSolid,false,true);
-
-    if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d)
-        mask = 4;
-
-    if (l) mask = 2;
-    if (r) mask = 3;    
-
-    if (u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) mask = 1;
-    if (d &amp;&amp; !u &amp;&amp; !l &amp;&amp; !r) mask = 0;
-
-    //if (l &amp;&amp; r &amp;&amp; !d) mask = 4;
-
-    if (mask == 0)
-    {
-        mask_index = sprEnemyMaskUp;
-        dir = UP;
-    }
-    if (mask == 1)
-    {
-        mask_index = sprEnemyMaskDown;
-        dir = DOWN;
-    }
-    if (mask == 2)
-    {
-        mask_index = sprEnemyMaskRight;
-        dir = RIGHT;
-    }
-    if (mask == 3)
-    {
-        mask_index = sprEnemyMaskLeft;
-        dir = LEFT;
-    }
-    if (mask == 4)
-    {
-        mask_index = sprEnemySpikeMask;
-        dir = NONE;
-    }
-
-    checking = max(checking - 1, 0);
-} else
-{
-    if (dir == UP &amp;&amp; place_free(x,y+2))
-    || (dir == DOWN &amp;&amp; place_free(x,y-2))
-    || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed+2,y))
-    || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed-2,y)
-    || !alive)
+        if (!l &amp;&amp; !r &amp;&amp; !u &amp;&amp; !d)
+            mask = 4;
+    
+        if (l) mask = 2;
+        if (r) mask = 3;    
+    
+        if (u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) mask = 1;
+        if (d &amp;&amp; !u &amp;&amp; !l &amp;&amp; !r) mask = 0;
+    
+        //if (l &amp;&amp; r &amp;&amp; !d) mask = 4;
+    
+        if (mask == 0)
         {
-            instance_create(x,y,objEffectDust);
-            instance_destroy();
-            playSound(sfxDestroyBlock,1);
+            mask_index = sprEnemyMaskUp;
+            dir = UP;
         }
-
+        if (mask == 1)
+        {
+            mask_index = sprEnemyMaskDown;
+            dir = DOWN;
+        }
+        if (mask == 2)
+        {
+            mask_index = sprEnemyMaskRight;
+            dir = RIGHT;
+        }
+        if (mask == 3)
+        {
+            mask_index = sprEnemyMaskLeft;
+            dir = LEFT;
+        }
+        if (mask == 4)
+        {
+            mask_index = sprEnemySpikeMask;
+            dir = NONE;
+        }
+    
+        checking = max(checking - 1, 0);
+    } else
+    {
+        if (dir == UP &amp;&amp; place_free(x,y+2))
+        || (dir == DOWN &amp;&amp; place_free(x,y-2))
+        || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed+4,y))
+        || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed-4,y)
+        || !alive)
+            {
+                instance_create(x,y,objEffectDust);
+                instance_destroy();
+                playSound(sfxDestroyBlock,1);
+            }
+    
+    }
 }
-
-cycle ();
 
 </string>
           </argument>
@@ -146,7 +152,7 @@ cycle ();
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,mask*TILE,0+(global.timer mod 30 &gt; 25)*TILE,TILE,TILE,floor(x),y);
+draw_sprite_part(spriteGfx,-1,mask*TILE,0+((global.timer+o) mod 60 &gt; 55)*TILE,TILE,TILE,floor(x),y);
 
 </string>
           </argument>

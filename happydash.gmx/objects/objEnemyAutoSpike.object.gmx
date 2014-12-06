@@ -71,12 +71,10 @@ isFlying = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//x -= global.xSpeed;
+            <string>cycle ();
 
 if (!global.pause)
 {
-
-    cycle ();
     if (alive)
     {
         if (checking &gt; 0)
@@ -114,8 +112,8 @@ if (!global.pause)
         
         if (dir == UP &amp;&amp; place_free(x,y+2))
             || (dir == DOWN &amp;&amp; place_free(x,y-2))
-            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed+2,y))
-            || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed-2,y))
+            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed+4,y))
+            || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed-4,y))
                 alive = false;
         
         if (active)

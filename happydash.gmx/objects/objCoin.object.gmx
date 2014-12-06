@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>var c;
-c = irandom(750);
+c = irandom(600);
 type = (c == 1);
 
 if (type == 0)
@@ -101,10 +101,10 @@ magnet = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.pause)
+            <string>cycle();
+
+if (!global.pause)
 {
-    cycle();
-    
     fCur = (fCur + fSpeed+2*fSpeed*!alive) mod fMax;
     frame = floor(fCur);
 
@@ -130,11 +130,11 @@ magnet = false;
                 }
                 else if (type == 1)
                 {
-                    global.coins += 100;
-                    global.coinsCollected += 100;
+                    global.coins += 50;
+                    global.coinsCollected += 50;
                     playSound(sfxApplauseBig,1);
                     t = instance_create(x+TILE*.5,y+TILE*.5,objText);
-                    t.text = "$ + 100";
+                    t.text = "$ + 50";
 
                 }
                 //each 5 segments, the coin is worth more!!
