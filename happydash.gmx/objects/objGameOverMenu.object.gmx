@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>1</depth>
+  <depth>2</depth>
   <persistent>0</persistent>
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -31,26 +31,18 @@ maxIndex = 1;
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
 
-//SCORE CHARADE
+finalScore = global.curScore;
 
-scoreString = "";
-timer = 0;
-z = 1;
-enabled = false;
-mode = 0;
+btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
+btn[0].text = "Retry";
+btn[0].index = 0;
+btn[0].parent = id;
 
-pitch = 1;
+btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
+btn[1].text = "Quit";
+btn[1].index = 1;
+btn[1].parent = id;
 
-finalScore = global.curScore;//8125029;
-len = string_length(string(finalScore));
-
-for (i = 1;i &lt;= string_length(string(finalScore));i+=1)
-{
-    d[i-1] = real(string_char_at(string(finalScore),i));
-    s[i-1] = (d[i-1] + 1) mod 10;
-    a[i-1] = s[i-1];
-}
-c = len;//1;
 </string>
           </argument>
         </arguments>
@@ -97,49 +89,17 @@ c = len;//1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!enabled)//SCORE CALCULATION STUFF
-{
-    if (global.timer mod z == 0)
-    if (c &gt;= 1)
-    {
-        if (s[c-1] != d[c-1])
-            s[c-1]= (s[c-1] + 1) mod 10;
-        else
-            c -= 1;
-        pitch = min(pitch + .002, 2);
-        playSound(sfxCaching,pitch);
-    }
-    scoreString = "";
-    for (i = 0;i &lt; string_length(string(finalScore));i+=1)
-    {
-        if (s[i] == a[i])
-            sc[i] = ";";
-        else
-            sc[i] = s[i];
-        scoreString = scoreString + string(sc[i]);
-    }
-    
-    //scoreString = string_digits(string(s));
-    if (real(scoreString) == finalScore)
-    {
-        timer += 1;
+            <string>handleButtons();
+if (btn[0].pressed)
+    room_restart();
+if (btn[1].pressed)
+    room_goto(INIT);
 
-        if (timer &gt; 5)
-        {
-            playSound(sfxCaching,pitch);
-            mode += 1;
-            timer = 0;
-        }
-    }
-}
-else //LOGIC
+    
+if (global.timer mod 2 == 0)
 {
-    handleButtons();
-    if (btn[0].pressed)
-        room_restart();
-    if (btn[1].pressed)
-        room_goto(INIT);
-}
+    t = instance_create(random(WIDTH),-TILE,objEffectConfetti);
+
 </string>
           </argument>
         </arguments>
@@ -205,50 +165,25 @@ draw_text(WIDTH*.5, 0,"Score");
 
 draw_set_font(global.fntScore);
 
-if (mode &lt;= 1)
-    draw_text(WIDTH*.5, TILE,scoreString);
-else
-    draw_text(WIDTH*.5, TILE,":"+scoreString+":");
-
+draw_text(WIDTH*.5, TILE,":"+string(finalScore)+":");
 
 draw_set_font(global.fntDefault);
 
 draw_set_halign(fa_left);
-if (mode &gt; 1) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
-if (mode &gt; 2) draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
-if (mode &gt; 3) draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
-if (mode &gt; 4) draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
-if (mode &gt; 5) draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
+draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
+draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
+draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
+draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
+draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
 
 draw_set_halign(fa_right);
-if (mode &gt; 1) draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
-if (mode &gt; 2) draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
-if (mode &gt; 3) draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
-if (mode &gt; 4) draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
-if (mode &gt; 5) draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
+draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
+draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
+draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
+draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
+draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
 
-//draw_rectangle(WIDTH*.5-4*TILE,6.7*TILE,WIDTH*.5+4*TILE,7.2*TILE,2);
-if (!enabled)
-{
-    if (mode &gt; 6)
-    {
-        btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
-        btn[0].text = "Retry";
-        btn[0].index = 0;
-        btn[0].parent = id;
-        
-        btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
-        btn[1].text = "Quit";
-        btn[1].index = 1;
-        btn[1].parent = id;
-        
-        enabled = true;
-    }
-}
-else
-{
-    drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
-}
+drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
 
 </string>
           </argument>
