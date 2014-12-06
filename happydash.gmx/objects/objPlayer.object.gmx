@@ -331,11 +331,13 @@ switch(state)
     break;
 }
 
-if (false)//RAINBOWWWW EFFECT
+//RAINBOWWWW EFFECT
+p = 1;//performance coefficient, as in "how smooth is the rainbow?"
+if (true)
 {
-        if (!global.pause)
+        if (!global.pause &amp;&amp; global.timer mod p == 0)
         {
-            if (ds_list_size(dsX) &lt; 48 &amp;&amp; state != DEAD)
+            if (ds_list_size(dsX) &lt; floor(48/p) &amp;&amp; state != DEAD)
             {
                 ds_list_add(dsX,ceil(cx));
                 ds_list_add(dsY,ceil(cy));
@@ -356,20 +358,26 @@ if (false)//RAINBOWWWW EFFECT
         for (i = 0; i &lt; ds_list_size(dsX);i+=1)
         {
             ds_list_replace(dsX,i,ds_list_find_value(dsX,i)-global.xSpeed);
-            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-.01,0));
+            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-(.01 * p),0));
             
             draw_set_alpha(ds_list_find_value(dsA,i));
     
             if (i &gt; 0 &amp;&amp; ds_list_find_value(dsD,i)&gt;0)
             {
-                //k = 4*(ds_list_find_value(dsX,i-1)/max(ds_list_find_value(dsX,i),1));
+                for (j = -8; j &lt; 8; j+=2)
+                {
+                    draw_set_color(make_color_hsv((j+8)*11,255,255));
+                    if (abs(j) &lt; ds_list_find_value(dsD,i))
+                    draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ds_list_find_value(dsX,i),ds_list_find_value(dsY,i)+j,2);
+                }
+
+                /*
                 for (j = -8; j &lt; 8; j+=1)
                 {
                     draw_set_color(make_color_hsv(((j+8) div 2)*22,255,255));
-                    //if (ds_list_find_value(dsX,i) != ds_list_find_value(dsX,i-1)+global.xSpeed)
                     if (abs(j) &lt; ds_list_find_value(dsD,i))
                     draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ds_list_find_value(dsX,i),ds_list_find_value(dsY,i)+j,1);
-                }
+                }*/
             }
         }
 }

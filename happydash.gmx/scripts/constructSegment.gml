@@ -132,7 +132,7 @@ if (global.difficulty > 20)
     
     ri = 0;
     for (i = 0; i < 10; i+= 1)
-        if (global.difficulty > 20 + i*5); //each 5 dif, more chance.
+        if (global.difficulty > 20 + i*5) //each 5 dif, more chance.
             ri += 1;
     
     repeat(ri)
