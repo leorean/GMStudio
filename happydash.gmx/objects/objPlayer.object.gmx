@@ -331,7 +331,7 @@ switch(state)
     break;
 }
 
-if (true)//RAINBOWWWW EFFECT
+if (false)//RAINBOWWWW EFFECT
 {
         if (!global.pause)
         {

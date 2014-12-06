@@ -34,8 +34,11 @@ mask_index = sprTouchMask;
 
 alpha = .5;
 
-alarm0 = 10;
+alarm0 = 1;
 alarm[0] = 0;
+
+
+
 </string>
           </argument>
         </arguments>
@@ -110,16 +113,31 @@ else
             <string>image_speed = 0;
 draw_set_alpha(alpha);
 
-if (in(mouse_x,x,x+3*TILE) &amp;&amp; in(mouse_y,y,y+3*TILE))
+dPressed = false;
+dPressing = false;
+
+for (i = 0;i &lt; 5; i+= 1)
 {
-    if (mouse_check_button_pressed(mb_left))
+    if (device_mouse_check_button_pressed(i,mb_left))
+        &amp;&amp; (in(device_mouse_x(i),x,x+3*TILE) &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+            dPressed = true;
+
+    if (device_mouse_check_button(i,mb_left))
+        &amp;&amp; (in(device_mouse_x(i),x,x+3*TILE) &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+            dPressing = true;
+
+}
+        
+if (true)
+{
+    if (dPressed)
     {
         pressed = true;
         alarm[0] = alarm0;
     }
     else
         pressed = false;
-    if (mouse_check_button(mb_left))
+    if (dPressing)
     {
         pressing = true;
         alarm[0] = alarm0;        
