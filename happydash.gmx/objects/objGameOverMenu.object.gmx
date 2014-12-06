@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>index = 0;
+            <string>depth = HUDDEPTH+2;
+index = 0;
 maxIndex = 1;
 
 mouse_xprev = mouse_x;
@@ -43,6 +44,14 @@ btn[1].text = "Quit";
 btn[1].index = 1;
 btn[1].parent = id;
 
+//effect
+dx = -2*TILE;
+dxx = -WIDTH*.5;
+dy = 1*TILE;
+t = 0;
+m = 0;
+
+playSound(sfxRocketFall,1);
 </string>
           </argument>
         </arguments>
@@ -95,10 +104,6 @@ if (btn[0].pressed)
 if (btn[1].pressed)
     room_goto(INIT);
 
-    
-if (global.timer mod 2 == 0)
-{
-    t = instance_create(random(WIDTH),-TILE,objEffectConfetti);
 
 </string>
           </argument>
@@ -146,7 +151,8 @@ if (global.timer mod 2 == 0)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_set_alpha(.5);
+
+draw_set_alpha(.3);
 draw_set_color(c_black);
 draw_rectangle(0,0,WIDTH,HEIGHT,0);
 
@@ -156,33 +162,112 @@ draw_set_alpha(1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
+//rainbow effect
+draw_set_alpha(.7);
+for (i = 0; i &lt; TILE; i+=1)
+{
+    draw_set_color(make_color_hsv((i div 2)*22,255,255));
+    draw_line_width(-2*TILE,dy+i,dx+TILE-abs(TILE/2-i),dy+i,1);
+}
+draw_set_alpha(1);
+draw_set_color(c_white);
+
+//player effect
+if (dx &lt; WIDTH+2*TILE)
+{
+    dx = min(dx+8,WIDTH+2*TILE);
+    draw_sprite_part(spritePlayer,-1,(floor(global.timer/3) mod 4)*2*TILE,6*TILE,2*TILE,2*TILE,dx-TILE/2,dy-TILE/2);
+    if (global.timer mod 3 == 0)
+    {
+        e = instance_create(dx-TILE+random(2*TILE),dy-TILE+random(2*TILE),objEffectDust);
+        e.type = 3;
+        e.depth = depth-1;
+        e.xVel = -1+random(2);
+        e.yVel = -1+random(2);
+    }
+    
+} else
+{
+    if (global.timer mod 2 == 0)
+    {
+        c = instance_create(random(WIDTH),-TILE,objEffectConfetti);
+        c.depth = depth-2;
+    }
+}
+
+//score effect
+if (dxx &lt; WIDTH*.5)
+    dxx = min(dxx+4,WIDTH*.5);
+else
+{
+    if (m &lt;5)
+    {
+        t +=1;
+        if (t &gt; 5)
+        {
+            playSound(sfxCaching,1);
+            m+=1;
+            t = 0;
+        }
+    } else
+    if (global.timer mod 5 = 0)
+    {
+        t = instance_create(WIDTH*.5-4*TILE+random(8*TILE)-TILE/2,dy-TILE+random(2*TILE)-TILE/2,objEffectDust);
+        t.type = 7;
+        t.depth = depth-1;
+    }
+}
+//
+
+
 var row,d;
 row = 3;
-d = 7*TILE;
-
-draw_set_halign(fa_center);
-draw_text(WIDTH*.5, 0,"Score");
+d = 11*TILE;
 
 draw_set_font(global.fntScore);
-
-draw_text(WIDTH*.5, TILE,":"+string(finalScore)+":");
+draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 
 draw_set_font(global.fntDefault);
 
+var c1,c2;
+c1 = c_white;
+c2 = c_none;
+
 draw_set_halign(fa_left);
-draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
-draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
-draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
-draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
-draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
+switch(m)
+{
+    case 5: drawText(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:",c1,c2,fntScoreSmall);
+    case 4: drawText(WIDTH*.5-d, (row+3)*TILE,"Coins collected:",c1,c2,fntScoreSmall);
+    case 3: drawText(WIDTH*.5-d, (row+2)*TILE,"Level:",c1,c2,fntScoreSmall);
+    case 2: drawText(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:",c1,c2,fntScoreSmall);
+    case 1: drawText(WIDTH*.5-d, (row+0)*TILE,"Distance:",c1,c2,fntScoreSmall);
+    break;
+}
+draw_set_halign(fa_right);
+switch(m)
+{
+    case 5: drawText(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled),c1,c2,fntScoreSmall);
+    case 4: drawText(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected),c1,c2,fntScoreSmall);
+    case 3: drawText(WIDTH*.5+d, (row+2)*TILE,string(global.level),c1,c2,fntScoreSmall);
+    case 2: drawText(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo),c1,c2,fntScoreSmall);
+    case 1: drawText(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)),c1,c2,fntScoreSmall);
+    break;
+}
+
+/*
+if (m &gt; 0) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
+if (m &gt; 1) draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
+if (m &gt; 2) draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
+if (m &gt; 3) draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
+if (m &gt; 4) draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
 
 draw_set_halign(fa_right);
-draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
-draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
-draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
-draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
-draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
-
+if (m &gt; 0) draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
+if (m &gt; 1) draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
+if (m &gt; 2) draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
+if (m &gt; 3) draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
+if (m &gt; 4) draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
+*/
 drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
 
 </string>

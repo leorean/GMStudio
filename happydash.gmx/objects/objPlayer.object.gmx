@@ -333,11 +333,9 @@ switch(state)
 
 if (true)//RAINBOWWWW EFFECT
 {
-    if (global.hasControl)
-    {
         if (!global.pause)
         {
-            if (ds_list_size(dsX) &lt; 48)
+            if (ds_list_size(dsX) &lt; 48 &amp;&amp; state != DEAD)
             {
                 ds_list_add(dsX,ceil(cx));
                 ds_list_add(dsY,ceil(cy));
@@ -374,7 +372,6 @@ if (true)//RAINBOWWWW EFFECT
                 }
             }
         }
-    }
 }
 
 //power up stuff

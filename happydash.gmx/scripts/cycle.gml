@@ -4,5 +4,5 @@ if (!global.spawnSegment)
 if (x < WIDTH && !visible)
     visible = true;
 
-if (x < -WIDTH*.5 || y > HEIGHT+TILE)
+if (x < -.5*WIDTH || y > 1.5*HEIGHT)
     instance_destroy();

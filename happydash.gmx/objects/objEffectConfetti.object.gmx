@@ -28,16 +28,17 @@
             <string>angle = random(360);
 spd = choose(-1,1)*(random(6)); 
 color = make_color_hsv(random(255),255,255);
-alpha = .2+random(.5);
+alpha = .5;
 xVel = -1+random(2);
 yVel = 0;
 
 z = choose(-pi/2,pi/2);
 t = 0;
+sn = choose(1,2,3);
 
 yGrav = .01;
 
-yVelMax = 1.5;
+yVelMax = 1;
 
 frame = choose(0,1,2,3);
 </string>
@@ -73,7 +74,7 @@ angle = (angle + spd) mod 360;
 t += .1;
 if (t &gt; 2*pi)
     t = 0;
-z = 2*sin(t);
+z = sn*sin(t);
 
 draw_sprite_ext(spriteConfetti,frame,x+z,y,1,1,angle,color,alpha);
 

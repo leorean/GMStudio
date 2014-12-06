@@ -124,6 +124,25 @@ for (i = 0; i<w; i += 1)
     }
 }
 //ADD SEGMENT-INDEPENDANT THINGS:
+
+//ROTATOR OBSTACLES.
+if (global.difficulty > 20)
+{
+    var ri, rx, ry;
+    
+    ri = 0;
+    for (i = 0; i < 10; i+= 1)
+        if (global.difficulty > 20 + i*5); //each 5 dif, more chance.
+            ri += 1;
+    
+    repeat(ri)
+    {
+        rx = (2*TILE + random(WIDTH-2*TILE)) div TILE;
+        ry = (2*TILE + random(HEIGHT-2*TILE)) div TILE;
+        if (!place_free(a+rx*TILE,b+ry*TILE))
+            instance_create(a+rx*TILE,b+ry*TILE,objEnemyRotator);
+    }
+}
 //RANDOM ENEMY SPAWNING
 /*
 if (min(global.difficulty,2) > random(4))

@@ -1477,6 +1477,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>
+    <font>fonts\fntScoreSmall</font>
     <font>fonts\fntButton</font>
   </fonts>
   <objects name="objects">
@@ -1540,7 +1541,7 @@
     <room>rooms\INIT</room>
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="36">
+  <constants number="37">
     <constant name="POW_NONE">-1</constant>
     <constant name="POW_1">0</constant>
     <constant name="POW_2">1</constant>
@@ -1577,6 +1578,7 @@
     <constant name="DOWN">2</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
+    <constant name="c_none">-1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
