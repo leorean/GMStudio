@@ -139,20 +139,19 @@ if (room != INIT &amp;&amp; !global.gameOver)
     if (!global.pause)
     {
         //EXP SYSTEM AND LEVEL UP FORMULA
-        global.maxCoins = (16 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
-        //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
-            //j = (32 * ceil(3 + i*.2) + ceil(.2 * power(i * .5, 2)));
+        global.maxCoins = (11 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
 
         if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
+            instance_create(0,0,objEffectLevelUp);
             //global.xSpeedDefault = min(global.xSpeedDefault + .0265, global.xSpeedMax);
             global.level += 1;
             if (global.level mod (5*(global.maxTheme+1)) == 0)
                 global.xSpeedDefault = min(global.xSpeedDefault + 1, global.xSpeedMax);
             global.coins = 0;
-            t = instance_create(WIDTH/2,HEIGHT/2,objText);
-            t.text = "LEVEL "+string(global.level)+"!";
-            t.fnt = global.fntBig;
+            //t = instance_create(WIDTH/2,HEIGHT/2,objText);
+            //t.text = "LEVEL "+string(global.level)+"!";
+            //t.fnt = global.fntBig;
             playSound(sfxLevelUp,1);
             if (global.level mod 5 == 0)
             {
@@ -415,9 +414,12 @@ if (surface_exists(global.drawBuffer))
             <kind>1</kind>
             <string>/*for (i = 0; i &lt; 50; i+= 1)
 {
-    u = 18 * floor(2 + i * power(0.5, i * .0027 ) );
+//global.maxCoins = (16 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
+    u = 11 * ceil(3 + i*.2) + ceil(.2*power(i*.5,2));
     show_debug_message(string(i)+":"+string(u));
-}*/
+}
+game_end();*/
+
 /* HTML5 "SITELOCK"
 var dom;
 dom = YoYo_GetDomain();
@@ -510,7 +512,7 @@ global.scoreCount = 5;
 for (i = 0; i &lt; global.scoreCount; i+=1)
     global.scores[i] = 0;
 
-//global variables/flags
+//GLOBAL VARIABLES!!!
 global.pause = false;
 
 global.mouseVisible = false;
@@ -519,6 +521,7 @@ global.gameOver = false;
 global.coinsCollected = 0;
 global.enemiesKilled = 0;
 
+global.maxHp = 2;
 global.coins = 0;
 global.maxCoins = 0;
 global.level = 1; //difficulty display
@@ -605,7 +608,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
         if (global.powerUp == POW_1) //MONEY POWER UP
         {
             draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
-            if (global.timer mod 2 == 0)
+            if (global.timer mod 4 == 0)
             {
                 var c;
                 c = instance_create((1-alarm[1]/global.powDuration)*WIDTH,TILE,objCoin);

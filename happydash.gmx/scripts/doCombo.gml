@@ -11,9 +11,9 @@ if (true)
     global.addScore += global.player.combo*10;
     var i;
     i = 0;
-    repeat(min((global.player.combo) div 3,5)) // not so many coins!
+    repeat(min((global.player.combo) div 4,4)) // not so many coins!
     {
-        c = instance_create(x+TILE/*+2*xVel*/,y,objCoin);
+        c = instance_create(x+TILE,y,objCoin);
         c.spawn = true;
     }
     if (global.player.combo == 10)

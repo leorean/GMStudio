@@ -1474,6 +1474,7 @@
     </scripts>
     <script>scripts\destroyStuff.gml</script>
     <script>scripts\drawText.gml</script>
+    <script>scripts\hurtPlayer.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>
@@ -1528,6 +1529,7 @@
       <object>objects\objStartLevel</object>
       <object>objects\objEffectRainbow</object>
       <object>objects\objEffectConfetti</object>
+      <object>objects\objEffectLevelUp</object>
     </objects>
     <objects name="HUD">
       <object>objects\objButton</object>

@@ -36,7 +36,12 @@ if (yVel >= 0)
 else
     onGround = false;
 
+
 //ENEMY INTERACTION
+invincible = max(invincible-1,0);
+if (hp <= 0)
+    alive = false;
+    
 if(state != DEAD)
     enemy = instance_place(x+xVel,y+yVel,objEnemy);
 else
@@ -49,8 +54,8 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
     {
         if (enemy.alive)
         {
-            if (global.powerUp != POW_3)//player ain't invincible
-                alive = false;
+            if (global.powerUp != POW_3)//player ain't on pill
+                hurtPlayer();
             else
                 enemy.alive = false;
         }
@@ -74,7 +79,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
             if (enemy.alive)
             {
                 if (global.powerUp != POW_3)
-                    alive = false;
+                    hurtPlayer();
                 else
                     killEnemy(enemy);
             }

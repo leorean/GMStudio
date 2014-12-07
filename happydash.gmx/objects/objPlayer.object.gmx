@@ -35,6 +35,10 @@ global.hasControl = false;
 
 ////local variables
 
+hp = global.maxHp;
+invincible = 0;
+invincibleTimer = FPS;
+
 //pause, camera etc.
 onGround = false;
 onPlatform = false;
@@ -410,10 +414,11 @@ else
     color = c_white;
 
 draw_set_color(color);
+a = (invincible mod 2 == 0);
 if (global.powerUp == POW_NONE)
-    draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
+    draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 else
-    draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,1);
+    draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 
 //TORNADO EFFECT
 if (state == ATTACK)
@@ -423,7 +428,8 @@ else
 
 if (tornadoAlpha &gt; 0)
     draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,tornadoAlpha);
-    
+
+draw_text(cx,y-TILE,hp);
 
 draw_set_color(c_white);
 
