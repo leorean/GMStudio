@@ -34,17 +34,17 @@ if (global.input != INPUT_TOUCH)
 
 finalScore = global.curScore;
 
-btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
-btn[0].text = "Shop";
+btn[0] = instance_create(WIDTH/2,HEIGHT/2+1.5*TILE,objButton);
+btn[0].text = "!Shop!";
 btn[0].index = 0;
 btn[0].parent = id;
 
-btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
+btn[1] = instance_create(WIDTH/2,HEIGHT/2+3.5*TILE,objButton);
 btn[1].text = "Retry";
 btn[1].index = 1;
 btn[1].parent = id;
 
-btn[2] = instance_create(WIDTH/2,HEIGHT/2+6.5*TILE,objButton);
+btn[2] = instance_create(WIDTH/2,HEIGHT/2+5.5*TILE,objButton);
 btn[2].text = "Quit";
 btn[2].index = 2;
 btn[2].parent = id;
@@ -238,22 +238,7 @@ switch(m)
     break;
 }
 
-/*
-if (m &gt; 0) draw_text(WIDTH*.5-d, (row+0)*TILE,"Distance:");
-if (m &gt; 1) draw_text(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:");
-if (m &gt; 2) draw_text(WIDTH*.5-d, (row+2)*TILE,"Level:");
-if (m &gt; 3) draw_text(WIDTH*.5-d, (row+3)*TILE,"Coins collected:");
-if (m &gt; 4) draw_text(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:");
-
-draw_set_halign(fa_right);
-if (m &gt; 0) draw_text(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)) + "m");
-if (m &gt; 1) draw_text(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo));
-if (m &gt; 2) draw_text(WIDTH*.5+d, (row+2)*TILE,string(global.level));
-if (m &gt; 3) draw_text(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected));
-if (m &gt; 4) draw_text(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled));
-*/
-drawBorder(8.5*TILE,9*TILE,8*TILE,5*TILE);
-
+drawBorder(8.5*TILE,8*TILE,8*TILE,7*TILE);
 </string>
           </argument>
         </arguments>

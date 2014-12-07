@@ -25,8 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = 0;
-
+            <string>//depth = HUDDEPTH;
 prevIndex = -1;
 
 a=0;b=0;c=0;d=0;
@@ -130,9 +129,9 @@ if (prevIndex != parent.index &amp;&amp; prevIndex != -1)
     playSound(sfxCaching, 1);
 
 if (active)
-    drawText(x,y,text,c_white,make_color_hsv(0,0,15),fntButton);
+    drawText(x,y,text,c_white,make_color_hsv(0,0,0),fntButton);
 else
-    drawText(x,y,text,make_color_hsv(0,0,165),c_black,fntButton);
+    drawText(x,y,text,make_color_hsv(0,0,100),c_black,fntButton);
 
 prevIndex = parent.index;
 </string>

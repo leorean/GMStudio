@@ -28,7 +28,7 @@
             <string>angle = random(360);
 spd = choose(-1,1)*(random(6)); 
 color = make_color_hsv(random(255),255,255);
-alpha = .5;
+alpha = 1;
 xVel = -1+random(2);
 yVel = 0;
 
@@ -70,6 +70,7 @@ y += yVel;
 yVel = min(yVel + yGrav, yVelMax);
 
 angle = (angle + spd) mod 360;
+alpha = max(alpha - .005,0);
 
 t += .1;
 if (t &gt; 2*pi)
@@ -78,7 +79,17 @@ z = sn*sin(t);
 
 draw_sprite_ext(spriteConfetti,frame,x+z,y,1,1,angle,color,alpha);
 
-if (y &gt; HEIGHT+TILE || x &lt; -TILE || x &gt; WIDTH+TILE)
+if (in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+TILE))
+    if (global.input == INPUT_TOUCH &amp;&amp; mouse_check_button(mb_left)
+        || global.input == INPUT_KEYBOARD)
+        {
+            t = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
+            t.type = 3;
+            t.depth = HUDDEPTH;
+            instance_destroy();
+        }
+            
+if (alpha == 0 || y &gt; HEIGHT+TILE || x &lt; -TILE || x &gt; WIDTH+TILE)
     instance_destroy();
 </string>
           </argument>
