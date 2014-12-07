@@ -27,6 +27,9 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;
 
+if (global.input != INPUT_TOUCH)
+    global.mouseVisible = true;
+
 alarm[0] = FPS*.25;
 
 index = 0;

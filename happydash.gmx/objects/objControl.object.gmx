@@ -113,15 +113,7 @@ if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//ENABLE MOUSE IF MOVED/TOUCHED
-if (global.input != INPUT_TOUCH)
-    if (mouse_x != mouse_xprev || mouse_y != mouse_yprev)
-        global.mouseVisible = true;
-//DISABLE MOUSE IF KEYBOARD IS USED
-if (global.input == INPUT_TOUCH || keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter))
-    global.mouseVisible = false;
-
-//ticker for timed obstacles etc.
+            <string>//ticker for timed obstacles etc.
 global.timer = (global.timer + 1) mod INFINITE;
 
 //MUTE/UNMUTE
@@ -149,9 +141,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
             if (global.level mod (5*(global.maxTheme+1)) == 0)
                 global.xSpeedDefault = min(global.xSpeedDefault + 1, global.xSpeedMax);
             global.coins = 0;
-            //t = instance_create(WIDTH/2,HEIGHT/2,objText);
-            //t.text = "LEVEL "+string(global.level)+"!";
-            //t.fnt = global.fntBig;
+            t = instance_create(WIDTH/2,HEIGHT/2,objText);
+            t.text = "LEVEL "+string(global.level)+"!";
+            t.fnt = global.fntBig;
             playSound(sfxLevelUp,1);
             if (global.level mod 5 == 0)
             {
@@ -243,9 +235,6 @@ else
 if keyboard_check_pressed(vk_escape)
     game_end();
 
-if (global.input == INPUT_TOUCH)
-    global.mouseVisible = false;
-
 //debug keys:   
 if keyboard_check_pressed(ord('R'))
     room_restart();
@@ -282,13 +271,6 @@ if keyboard_check(ord('C'))
 //GAME OVER
 if (global.gameOver)
     global.xSpeed = 0;
-
-//MOUSE PREV COORDS
-if (global.input != INPUT_TOUCH)
-{
-    mouse_xprev = mouse_x;
-    mouse_yprev = mouse_y;
-}
 
 </string>
           </argument>
@@ -327,10 +309,9 @@ if (room == INIT)
     instance_create(0,0,objTitleMenu);
     loadProgress();
 }
-else
+if (room == MAIN)
 {
     time = 0;
-    
     global.coinsCollected = 0;
     global.enemiesKilled = 0;
     global.maxCombo = 0;
@@ -359,8 +340,7 @@ else
     global.xSpeed = 0;
     global.xSpeedDefault = global.xSpeedMin;
     
-    //load start segment
-    //constructSegment(global.segment[0], global.segX-global.xSpeed, 0);
+    //load first segment
     constructSegment(global.segment[0], 0, 0);    
 }
 </string>
@@ -439,12 +419,22 @@ for (i = 0; i &lt; 50; i+=1)
 }
 game_end();*/
 
+//SHOP AND UPGRADE STUFF-----------------
+global.wallet = 0; //this is ALL my money.
+
+//---------------------------------------
+
+
 depth = HUDDEPTH;
 randomize();
 
 //SOUND
 global.mute = false;
 
+//MOUSE CURSOR
+instance_create(mouse_x,mouse_y,objMouse);
+
+//TOUCH BUTTONS
 global.tbJump = instance_create(0,floor(HEIGHT/2)+TILE,objTouchButton);
 global.tbJump.type = 0;
 global.tbDash = instance_create(WIDTH-3*TILE,floor(HEIGHT/2)+TILE,objTouchButton);
@@ -472,9 +462,6 @@ switch(os_type)
         //game_end();
     break;
 }
-
-//INPUT_TOUCH, INPUT_KEYBOARD, INPUT_MOUSE
-//global.input = INPUT_TOUCH;
 
 //FONTS
 global.fntBig = font_add_sprite(spriteFontBig,ord(' '),true,1);
@@ -694,16 +681,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
-//MOUSE CURSOR
-if (global.mouseVisible)
-{
-    draw_set_alpha(.3);
-    draw_set_color(c_black);
-    draw_sprite_part_ext(spriteHud,-1,0+2*TILE*mouse_check_button(mb_left),0,2*TILE,2*TILE,mouse_x-TILE+3,mouse_y-TILE+2,1,1,c_black,.3);
-    draw_set_alpha(1);
-    draw_set_color(c_white);
-    draw_sprite_part(spriteHud,-1,0+2*TILE*mouse_check_button(mb_left),0,2*TILE,2*TILE,mouse_x-TILE,mouse_y-TILE);
-}
+
 
 </string>
           </argument>

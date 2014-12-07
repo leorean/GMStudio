@@ -51,9 +51,7 @@ window_set_size(WIDTH*3,HEIGHT*3);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with(objAll)
-    image_speed = 0;
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -123,7 +121,6 @@ if (surface_exists(global.drawBuffer))
 if (surface_exists(global.drawBuffer))
     with(objAll)
         surface_set_target(global.drawBuffer);
-    
 
 </string>
           </argument>

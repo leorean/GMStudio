@@ -200,9 +200,9 @@ switch(dir)
 }
 
 if (alive)
-    draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),y);
+    draw_sprite_part(spriteGfx,-1,frame*TILE,row*TILE,TILE,TILE,x,y);
 else
-    draw_sprite_part(spriteGfx,-1,5*TILE+frame*TILE,5*TILE,TILE,TILE,floor(x),y);
+    draw_sprite_part(spriteGfx,-1,5*TILE+frame*TILE,5*TILE,TILE,TILE,x,y);
 
 
 

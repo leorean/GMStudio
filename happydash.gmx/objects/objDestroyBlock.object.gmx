@@ -131,18 +131,10 @@ if (state == DEAD)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-/*
-if (type != 2)
-    draw_sprite_part(spriteGfx,-1,type*TILE,4*TILE,TILE,TILE,floor(x),y);
-else
-{
-    draw_sprite_part_ext(spriteGfx,-1,type*TILE,4*TILE,TILE,TILE,floor(x),y,1,1,make_color_hsv((5*global.timer mod 255),255,255),1);
-}
-*/
 
-draw_sprite_part(spriteGfx,-1,type*TILE,4*TILE,TILE,TILE,floor(x),y);
+draw_sprite_part(spriteGfx,-1,type*TILE,4*TILE,TILE,TILE,x,y);
 if (type == 2)// &amp;&amp; global.timer mod 50 &gt; 45)
-    draw_sprite_part_ext(spriteGfx,-1,8*TILE,TILE,TILE,TILE,floor(x),y,1,1,make_color_hsv((5*global.timer mod 255),255,255),1);
+    draw_sprite_part_ext(spriteGfx,-1,8*TILE,TILE,TILE,TILE,x,y,1,1,make_color_hsv((5*global.timer mod 255),255,255),1);
 
 </string>
           </argument>

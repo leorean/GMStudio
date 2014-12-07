@@ -14,7 +14,7 @@ if (file_exists(working_directory + global.saveFile))
         global.scores[i] = ds_list_find_value(loadlist,i);
     
     global.mute = real(ini_read_string('Options','sfx','0'));
-    
+    global.wallet = real(ini_read_string('Shop','wallet','0'));
     ds_list_destroy(loadlist);
     ini_close();
 }

@@ -39,9 +39,6 @@ else
 
 //ENEMY INTERACTION
 invincible = max(invincible-1,0);
-if (hp <= 0)
-    alive = false;
-    
 if(state != DEAD)
     enemy = instance_place(x+xVel,y+yVel,objEnemy);
 else
@@ -89,7 +86,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
 }
 
 //DEATH
-if (y+TILE > HEIGHT+1.5*TILE || x < 0)
+if (y+TILE > HEIGHT+1.5*TILE || x < 0 || hp <= 0)
     alive = false;
 
 if (!alive)
@@ -106,6 +103,7 @@ if (!alive)
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
+        global.wallet += global.coinsCollected;
         saveProgress();
         loadProgress();
     }

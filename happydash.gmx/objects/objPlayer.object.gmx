@@ -120,8 +120,9 @@ tornadoAlpha = 0;
 dsX = ds_list_create();//x-list
 dsY = ds_list_create();//y-list
 dsA = ds_list_create();//alpha-list
-canDrawRainbow = false;
 dsD = ds_list_create();//check if drawable
+//canDrawRainbow = false;
+
 </string>
           </argument>
         </arguments>
@@ -336,7 +337,7 @@ switch(state)
 }
 
 //RAINBOWWWW EFFECT
-p = 1;//performance coefficient, as in "how smooth is the rainbow?"
+p = 2;//performance coefficient, as in "how smooth is the rainbow?"
 if (true)
 {
         if (!global.pause &amp;&amp; global.timer mod p == 0)
@@ -372,7 +373,7 @@ if (true)
                 {
                     draw_set_color(make_color_hsv((j+8)*11,255,255));
                     if (abs(j) &lt; ds_list_find_value(dsD,i))
-                    draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ds_list_find_value(dsX,i),ds_list_find_value(dsY,i)+j,2);
+                    draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ceil(ds_list_find_value(dsX,i)),ds_list_find_value(dsY,i)+j,2);
                 }
 
                 /*

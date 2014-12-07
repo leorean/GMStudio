@@ -152,7 +152,7 @@ if (x &gt; 0)
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_sprite_part(spriteGfx,-1,mask*TILE,0+((global.timer+o) mod 60 &gt; 55)*TILE,TILE,TILE,floor(x),y);
+draw_sprite_part(spriteGfx,-1,mask*TILE,0+((global.timer+o) mod 60 &gt; 55)*TILE,TILE,TILE,x,y);
 
 </string>
           </argument>

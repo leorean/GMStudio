@@ -1513,6 +1513,7 @@
       <object>objects\objDrawBuffer</object>
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
+      <object>objects\objMouse</object>
     </objects>
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>
@@ -1537,13 +1538,15 @@
       <object>objects\objGameOverMenu</object>
       <object>objects\objTitleMenu</object>
       <object>objects\objTouchButton</object>
+      <object>objects\objShopMenu</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\INIT</room>
     <room>rooms\MAIN</room>
+    <room>rooms\SHOP</room>
   </rooms>
-  <constants number="37">
+  <constants number="38">
     <constant name="POW_NONE">-1</constant>
     <constant name="POW_1">0</constant>
     <constant name="POW_2">1</constant>
@@ -1563,6 +1566,7 @@
     <constant name="TILE">16</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
+    <constant name="MOUSEDEPTH">-15</constant>
     <constant name="HUDDEPTH">-10</constant>
     <constant name="PLAYERDEPTH">0</constant>
     <constant name="BLOCKDEPTH">6</constant>

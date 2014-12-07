@@ -86,7 +86,7 @@ frame = 0;
     x += xVel;    
     y += yVel;
     
-    if (place_meeting(x,y,global.player))
+    if (place_meeting(x,y,global.player) &amp;&amp; global.player.state != DEAD)
     {
         playSound(sfxPowerUp,1);
         t = instance_create(x+TILE*.5,y+TILE*.5,objText);
