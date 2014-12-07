@@ -133,13 +133,16 @@ if (room != INIT &amp;&amp; !global.gameOver)
         //EXP SYSTEM AND LEVEL UP FORMULA
         global.maxCoins = (11 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
 
+        //LEVEL UP!!!
         if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
         {
             instance_create(0,0,objEffectLevelUp);
             //global.xSpeedDefault = min(global.xSpeedDefault + .0265, global.xSpeedMax);
+            //global.xSpeedDefault = min(global.xSpeedDefault + .05, global.xSpeedMax);
+
             global.level += 1;
-            if (global.level mod (5*(global.maxTheme+1)) == 0)
-                global.xSpeedDefault = min(global.xSpeedDefault + 1, global.xSpeedMax);
+            //if (global.level mod (5*(global.maxTheme+1)) == 0)
+                //global.xSpeedDefault = min(global.xSpeedDefault + 1, global.xSpeedMax);
             global.coins = 0;
             t = instance_create(WIDTH/2,HEIGHT/2,objText);
             t.text = "LEVEL "+string(global.level)+"!";
@@ -165,7 +168,9 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.startSignal = true;
             }
             //if player dashes, speed is higher.
-            global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));            
+            //global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
+            global.xSpeed = global.xSpeedDefault*.5+((2-1*(global.player.pow/global.player.maxPow)));
+                     
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;
@@ -194,7 +199,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.prevSeg = global.curSeg;
             }
             global.difficulty += 1;
-            show_debug_message("difficulty: " + string(global.difficulty));
+            global.xSpeedDefault = min(global.xSpeedDefault + .025, global.xSpeedMax);
+            show_debug_message("difficulty: " + string(global.difficulty) + ", speed:" + string(global.xSpeedDefault));
         }
         
         if (!global.screenShake)
@@ -523,7 +529,7 @@ global.timer = 0;
 global.startSignal = false;
 
 global.xSpeed = 0; // every object is moved by this speed
-global.xSpeedMin = 1; // speed at each start
+global.xSpeedMin = .75; // speed at each start
 global.xSpeedMax = 4; // maximum speed
 global.xSpeedDefault = global.xSpeedMin; // storage for the speed. this shall be increased over time/achievement/distance
 
