@@ -39,6 +39,11 @@ btn[1].text = "Play Again";
 btn[1].index = 1;
 btn[1].parent = id;
 
+btn[2] = instance_create(WIDTH/2,HEIGHT/2+6.5*TILE,objButton);
+btn[2].text = "Quit";
+btn[2].index = 2;
+btn[2].parent = id;
+
 loadProgress();
 instance_deactivate_object(objControl);
 

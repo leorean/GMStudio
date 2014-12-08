@@ -131,19 +131,17 @@ if (room != INIT &amp;&amp; !global.gameOver)
     if (!global.pause)
     {
         //EXP SYSTEM AND LEVEL UP FORMULA
-        global.maxCoins = (11 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
+        //global.xpMax = (110 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
 
         //LEVEL UP!!!
-        if (global.coins&gt;=global.maxCoins || keyboard_check_pressed(ord('G')))
+        if (global.xp&gt;=global.xpMax || keyboard_check_pressed(ord('G')))
         {
             instance_create(0,0,objEffectLevelUp);
-            //global.xSpeedDefault = min(global.xSpeedDefault + .0265, global.xSpeedMax);
-            //global.xSpeedDefault = min(global.xSpeedDefault + .05, global.xSpeedMax);
-
             global.level += 1;
-            //if (global.level mod (5*(global.maxTheme+1)) == 0)
-                //global.xSpeedDefault = min(global.xSpeedDefault + 1, global.xSpeedMax);
-            global.coins = 0;
+            //EXP SYSTEM AND LEVEL UP FORMULA
+            global.xp = 0;
+            global.xpMax = maxEXP(global.level);
+            
             t = instance_create(WIDTH/2,HEIGHT/2,objText);
             t.text = "LEVEL "+string(global.level)+"!";
             t.fnt = global.fntBig;
@@ -321,10 +319,11 @@ if (room == MAIN)
     global.coinsCollected = 0;
     global.enemiesKilled = 0;
     global.maxCombo = 0;
-    global.coins = 0;
+    global.level = 1;
+    global.xp = 0;
+    global.xpMax = maxEXP(global.level);
     global.curScore = 0;
     global.addScore = 0;
-    global.level = 1;
     global.theme = 0;//floor(irandom(global.maxTheme));
     global.themePrev = global.theme;
     objCamera.theme = global.theme * WIDTH;
@@ -515,13 +514,14 @@ global.coinsCollected = 0;
 global.enemiesKilled = 0;
 
 global.maxHp = 2;
-global.coins = 0;
-global.maxCoins = 0;
-global.level = 1; //difficulty display
 
-global.distMagnet = 0; //distance to catch coins and items
+global.xp = 0;
+global.level = 1; //difficulty display
+global.xpMax = maxEXP(global.level);
+
+global.distMagnet = 0; //temp distance to catch coins and items
 global.distMagnetDefault = 1.5*TILE; //distance to catch coins and items
-global.distMagnetLarge = 10*TILE; //distance to catch coins and items
+global.distMagnetLarge = 10*TILE; //distance to catch coins and items with chick magnet
 
 global.hasControl = true;
 global.timer = 0;
@@ -652,7 +652,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
 
     //LEVEL    
     draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,TILE*.5,0,2*TILE);
-    draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,4*TILE*min(global.coins/global.maxCoins,1),TILE*.5,0,2*TILE);
+    draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,4*TILE*min(global.xp/global.xpMax,1),TILE*.5,0,2*TILE);
     draw_set_halign(fa_center);
     draw_text(2*TILE,1.5*TILE,"Lv. " + string(global.level));
 

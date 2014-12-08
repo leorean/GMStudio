@@ -1450,8 +1450,6 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\objPlayerStep.gml</script>
-    <script>scripts\doCombo.gml</script>
-    <script>scripts\spawnParticle.gml</script>
     <scripts name="manage">
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>
@@ -1462,19 +1460,22 @@
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
-    <script>scripts\yCollision.gml</script>
-    <script>scripts\performJump.gml</script>
-    <script>scripts\killEnemy.gml</script>
-    <script>scripts\collectCoin.gml</script>
     <scripts name="util">
       <script>scripts\in.gml</script>
       <script>scripts\drawLightning.gml</script>
       <script>scripts\handleButtons.gml</script>
       <script>scripts\drawBorder.gml</script>
+      <script>scripts\maxEXP.gml</script>
+      <script>scripts\doCombo.gml</script>
+      <script>scripts\collectCoin.gml</script>
+      <script>scripts\killEnemy.gml</script>
+      <script>scripts\performJump.gml</script>
+      <script>scripts\yCollision.gml</script>
+      <script>scripts\destroyStuff.gml</script>
+      <script>scripts\drawText.gml</script>
+      <script>scripts\hurtPlayer.gml</script>
+      <script>scripts\spawnParticle.gml</script>
     </scripts>
-    <script>scripts\destroyStuff.gml</script>
-    <script>scripts\drawText.gml</script>
-    <script>scripts\hurtPlayer.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>

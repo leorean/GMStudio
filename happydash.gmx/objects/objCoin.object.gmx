@@ -124,13 +124,13 @@ if (!global.pause)
             {
                 if (type == 0)
                 {
-                    global.coins += 1;
+                    global.xp += 1;
                     global.coinsCollected += 1;
                     playSound(sfxCoin,1);
                 }
                 else if (type == 1)
                 {
-                    global.coins += 50;
+                    global.xp += 50;
                     global.coinsCollected += 50;
                     playSound(sfxApplauseBig,1);
                     t = instance_create(x+TILE*.5,y+TILE*.5,objText);
