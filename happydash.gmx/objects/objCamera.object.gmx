@@ -36,6 +36,8 @@ alpha = 1;
 fade = 2;
 
 depth = CAMERADEPTH;
+
+g = objControl;
 </string>
           </argument>
         </arguments>
@@ -118,10 +120,10 @@ draw_set_alpha(1);
 //change the background theme if necessary
 //global.theme = min(max(floor(global.level / global.levelsPerTheme),0),global.maxTheme);
 
-if (global.theme != global.themePrev &amp;&amp; fade == 0)
+if (g.theme != g.themePrev &amp;&amp; fade == 0)
 {
     fade = 1;
-    global.themePrev = global.theme;
+    g.themePrev = g.theme;
 }
 
 draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,(a),0,1,1,c_white,1);
@@ -144,13 +146,13 @@ if (fade == 1)
     if (alpha == 1)
     {
         fade = 2;
-        theme = global.theme * WIDTH;
+        theme = g.theme * WIDTH;
     }
 }
 if (fade == 2)
 {
     draw_rectangle(0,0,WIDTH,HEIGHT,0);
-    if (global.prevSeg != 0)
+    if (g.prevSeg != 0)
     alpha = max(alpha - .01,0);
     if (alpha == 0)
         fade = 0;

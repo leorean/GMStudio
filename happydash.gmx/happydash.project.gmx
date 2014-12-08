@@ -1483,22 +1483,6 @@
     <font>fonts\fntButton</font>
   </fonts>
   <objects name="objects">
-    <objects name="content">
-      <object>objects\objBlock</object>
-      <object>objects\objTile</object>
-      <object>objects\objPlatform</object>
-      <object>objects\objDestroyBlock</object>
-      <object>objects\objCoin</object>
-      <object>objects\objPowerUp</object>
-      <objects name="enemies">
-        <object>objects\objEnemyAutoSpike</object>
-        <object>objects\objEnemySpike</object>
-        <object>objects\objEnemyRotator</object>
-        <object>objects\objEnemy1</object>
-        <object>objects\objEnemy2</object>
-        <object>objects\objEnemy3</object>
-      </objects>
-    </objects>
     <objects name="MISC">
       <objects name="hierarchy">
         <object>objects\objEnemy</object>
@@ -1515,6 +1499,22 @@
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
       <object>objects\objMouse</object>
+    </objects>
+    <objects name="content">
+      <object>objects\objBlock</object>
+      <object>objects\objTile</object>
+      <object>objects\objPlatform</object>
+      <object>objects\objDestroyBlock</object>
+      <object>objects\objCoin</object>
+      <object>objects\objPowerUp</object>
+      <objects name="enemies">
+        <object>objects\objEnemyAutoSpike</object>
+        <object>objects\objEnemySpike</object>
+        <object>objects\objEnemyRotator</object>
+        <object>objects\objEnemy1</object>
+        <object>objects\objEnemy2</object>
+        <object>objects\objEnemy3</object>
+      </objects>
     </objects>
     <objects name="projectiles">
       <object>objects\objEnemyProjectile</object>

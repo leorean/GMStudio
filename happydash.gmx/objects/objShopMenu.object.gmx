@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+2;
 index = 0;
-maxIndex = 1;
+maxIndex = 2;
 
 btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
 btn[0].text = "Buy";
@@ -35,7 +35,7 @@ btn[0].index = 0;
 btn[0].parent = id;
 
 btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
-btn[1].text = "Play Again";
+btn[1].text = "Play";
 btn[1].index = 1;
 btn[1].parent = id;
 
@@ -105,6 +105,11 @@ if (btn[1].pressed)
 {
     instance_activate_object(objControl);
     room_goto(MAIN);
+}
+if (btn[2].pressed)
+{
+    instance_activate_object(objControl);
+    room_goto(INIT);
 }
 
 </string>

@@ -1,4 +1,4 @@
-segment = argument0;
+sg = argument0; //segment
 a = argument1;
 b = argument2;
 
@@ -13,7 +13,7 @@ for (i = 0; i<w; i += 1)
 {
     for (j = 0; j<h; j+=1)
     {
-        s = floor(ds_grid_get(segment,i,j));
+        s = floor(ds_grid_get(sg,i,j));
         if (in(s,0,4*TILE) || s >= 176) //the first 4 rows in the tileset are reserved for normal blocks
         {
             //if (global.powerUp != 0)

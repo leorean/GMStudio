@@ -148,9 +148,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
             playSound(sfxLevelUp,1);
             if (global.level mod 5 == 0)
             {
-                //while (global.theme == global.themePrev)
-                //    global.theme = floor(irandom(global.maxTheme));
-                global.theme = (global.theme + 1) mod (global.maxTheme+1);
+                theme = (theme + 1) mod (maxTheme+1);//+1??
                 playSound(sfxThemeChange,1);
             }
 
@@ -168,35 +166,34 @@ if (room != INIT &amp;&amp; !global.gameOver)
             //if player dashes, speed is higher.
             //global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
             global.xSpeed = global.xSpeedDefault*.5+((2-1*(global.player.pow/global.player.maxPow)));
-                     
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;
         else
             global.xSpeed = 0;
             
-        global.segX -= global.xSpeed;
+        segX -= global.xSpeed;
         
-        global.spawnSegment = (floor(global.segX) &lt; global.xSpeed);
+        global.spawnSegment = (floor(segX) &lt; global.xSpeed);
         //SPAWN NEW SEGMENT
         if(global.spawnSegment)
         {
-            global.segX = global.xSpeed + global.segX + WIDTH;
+            segX = global.xSpeed + segX + WIDTH;
             if (global.player.state != DEAD)
             {
-                //a = 1 + global.segmentsPerTheme*(floor(global.level / global.levelsPerTheme)) + irandom(global.segmentsPerTheme - 1);
-                while (global.curSeg == global.prevSeg)                
-                    global.curSeg = 1 + global.theme * global.segmentsPerTheme + floor(irandom(global.segmentsPerTheme - 1));
-                
-                constructSegment(global.segment[
+                while (curSeg == prevSeg)                
+                    curSeg = 1 + theme * segmentsPerTheme + floor(irandom(segmentsPerTheme - 1));
+                //show_debug_message(global.segment[10]);
+                constructSegment(segment[
                     min(max(
-                        global.curSeg,
+                        curSeg,
                         1),
-                        global.maxSegments)
-                ],global.segX,0);
-                global.prevSeg = global.curSeg;
+                        maxSegments)
+                ],segX,0);
+                prevSeg = curSeg;
             }
             global.difficulty += 1;
+            //global.xSpeedDefault = floor(10 * min(global.difficulty * .025,global.xSpeedMax)) *.1;
             global.xSpeedDefault = min(global.xSpeedDefault + .025, global.xSpeedMax);
             show_debug_message("difficulty: " + string(global.difficulty) + ", speed:" + string(global.xSpeedDefault));
         }
@@ -236,10 +233,14 @@ else
     playMusic(sfxBgmPow,!global.mute);
 }
 
+//GAME OVER
+if (global.gameOver)
+    global.xSpeed = 0;
+
 if keyboard_check_pressed(vk_escape)
     game_end();
 
-//debug keys:   
+////////////////////////////////////////////////////debug keys:   
 if keyboard_check_pressed(ord('R'))
     room_restart();
 
@@ -257,9 +258,6 @@ if keyboard_check_pressed(ord('T'))
 //TODO: REMOVE THIS
 if keyboard_check_pressed(ord('E'))
 {
-    //
-    //global.coins = global.maxCoins-1;
-    //instance_create(global.player.x+TILE*.5,global.player.y,objCoin);
     with(objPowerUp)
         instance_destroy();
     instance_create(global.player.x,global.player.y-TILE,objPowerUp);
@@ -272,9 +270,6 @@ if keyboard_check(ord('C'))
         doCombo();
 }
 
-//GAME OVER
-if (global.gameOver)
-    global.xSpeed = 0;
 
 </string>
           </argument>
@@ -324,29 +319,29 @@ if (room == MAIN)
     global.xpMax = maxEXP(global.level);
     global.curScore = 0;
     global.addScore = 0;
-    global.theme = 0;//floor(irandom(global.maxTheme));
-    global.themePrev = global.theme;
-    objCamera.theme = global.theme * WIDTH;
+    theme = 0;//floor(irandom(global.maxTheme));
+    themePrev = theme;
+    objCamera.theme = theme * WIDTH;
     
     alarm[0]= alarm0;
 
     global.startSignal = false;
     
-    global.difficulty = 0;
+    difficulty = 0;
     
     global.powerUp = POW_NONE;
     alarm[1] = 0;
     global.powDuration = 0;
     
-    global.curSeg = 0;
-    global.prevSeg = 0;
-    global.segX = 0;
-    global.distance = 0;
+    curSeg = 0;
+    prevSeg = 0;
+    segX = 0;
+    distance = 0;
     global.xSpeed = 0;
     global.xSpeedDefault = global.xSpeedMin;
     
     //load first segment
-    constructSegment(global.segment[0], 0, 0);    
+    constructSegment(segment[0], 0, 0);    
 }
 </string>
           </argument>
@@ -397,38 +392,26 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*for (i = 0; i &lt; 50; i+= 1)
-{
-//global.maxCoins = (16 * ceil(3 + global.level*.2) + ceil(.2 * power(global.level * .5, 2)));
-    u = 11 * ceil(3 + i*.2) + ceil(.2*power(i*.5,2));
-    show_debug_message(string(i)+":"+string(u));
-}
-game_end();*/
-
-/* HTML5 "SITELOCK"
-var dom;
-dom = YoYo_GetDomain();
-if (dom != "162.218.235.161")// || dom != "127.0.0.1")
-{
-    show_message("Illegal Upload! :(");
-    //instance_destroy();
-}*/   
-//show_message("TEST VERSION - DO NOT DISTRIBUTE!");
-/*
-//TESTING EXP FORMULA
-for (i = 0; i &lt; 50; i+=1)
-{
-    //global.maxCoins = 18 * floor(2 + global.level * power(0.5, global.level * .0017 ));
-    j = (32 * ceil(3 + i*.2) + ceil(.2 * power(i * .5, 2)));
-    show_debug_message(string(i)+":"+string(j));
-}
-game_end();*/
-
-//SHOP AND UPGRADE STUFF-----------------
+            <string>//SHOP AND UPGRADE STUFF-----------------
 global.wallet = 0; //this is ALL my money.
 
-//---------------------------------------
+//number of items in the shop
+global.siAmountOfItems = 3;
 
+//what an item holds
+global.siName[0] = "Dashing Stamina";
+global.siDesc[0] = "Lets you dash further and longer.";
+global.siMaxTier[0] = 3; //# of upgrades
+global.siPrice[0,0] = 100;
+global.siPrice[0,1] = 400;
+global.siPrice[0,2] = 800;
+global.siLocked[0] = false;
+
+//what is saved for the game / what needs to 
+global.siCurTier[0] = 0; //at which tier is the upgrade at (limited by maxtier of course)
+global.siUnlocked[0] = false; //is the item unlocked?
+
+//---------------------------------------
 
 depth = HUDDEPTH;
 randomize();
@@ -476,25 +459,28 @@ global.fntScore = font_add_sprite(spriteFontScore,ord('0'),true,1);
 
 //SEGMENTS
 
-global.maxSegments = 80;
-global.segment[global.maxSegments] = 0;
-for (i = 0; i &lt;= global.maxSegments;i+=1)
-    global.segment[i] = importSegment(string(i)+".tmx");
+maxSegments = 80;
+//segment[maxSegments] = 0;
+for (i = 0; i &lt;= maxSegments;i+=1)
+    segment[i] = importSegment(string(i)+".tmx");
+
+curSeg = 0;
+prevSeg = 0;
     
-global.segmentsPerTheme = 20; //n segments for each theme
-global.theme = 0;//background theme
-global.themePrev = global.theme;
-global.maxTheme = 3; //maximum number of available themes - 1
+segmentsPerTheme = 20; //n segments for each theme
+theme = 0;//background theme
+themePrev = theme;
+maxTheme = 3; //maximum number of available themes - 1
+
 //PLAYER VARIABLE
 global.player = noone;
     
-//local stuff
+//other stuff / local variables
+
 alarm0 = FPS;
 alarm[0] = alarm0;
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
-//lA = 0;
-//lB = 0;
 
 //score stuff
 global.maxCombo = 0; //highest combo
@@ -529,7 +515,7 @@ global.timer = 0;
 global.startSignal = false;
 
 global.xSpeed = 0; // every object is moved by this speed
-global.xSpeedMin = .75; // speed at each start
+global.xSpeedMin = .5; // speed at each start
 global.xSpeedMax = 4; // maximum speed
 global.xSpeedDefault = global.xSpeedMin; // storage for the speed. this shall be increased over time/achievement/distance
 
@@ -539,9 +525,6 @@ global.distance = 0;
 global.xSeg = 0;
 global.spawnSegment = false;
 
-global.curSeg = 0;
-global.prevSeg = 0;
-
 global.saveFile = 'sv.ini';
 
 global.powerUp = POW_NONE;
@@ -550,7 +533,6 @@ global.powDuration = 0;
 
 global.screenShake = false;
 shakeTime = 0;
-
 time = 0;
 
 </string>

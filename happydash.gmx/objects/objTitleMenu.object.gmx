@@ -39,12 +39,12 @@ showHighscore = false;
 row = 7;
 
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
-btn[0].text = "Start!";
+btn[0].text = "Start";
 btn[0].index = 0;
 btn[0].parent = id;
 
 btn[1] = instance_create(WIDTH/2,row*TILE+1.5*TILE,objButton);
-btn[1].text = "Help";
+btn[1].text = "Shop";
 btn[1].index = 1;
 btn[1].parent = id;
 
@@ -124,33 +124,19 @@ yy = 0;
 
 screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
 
-if (btn[0].pressed &amp;&amp; !showHighscore &amp;&amp; !showHelp)
-    room_goto_next();
 if (!showHighscore)
 {
-    if (showHelp)
-    {
-        if (screenPressed)
-        {
-            if(page &lt; 1)
-                page +=1;
-            else
-            {
-                page = 0;
-                showHelp = false;
-            }
-        }
-    } else if (btn[1].pressed)
-    {
-        page = 0;
-        showHelp = true;
-    }
-    if (btn[2].pressed &amp;&amp; !showHelp)
+    if (btn[0].pressed)
+        room_goto_next();
+    if (btn[1].pressed)
+        room_goto(SHOP);
+    if (btn[2].pressed)
         showHighscore = true;
+    if (btn[3].pressed)
+        game_end();
 } else if (screenPressed)
     showHighscore = false;
-if (btn[3].pressed &amp;&amp; !showHighscore &amp;&amp; !showHelp)
-    game_end();
+
 </string>
           </argument>
         </arguments>

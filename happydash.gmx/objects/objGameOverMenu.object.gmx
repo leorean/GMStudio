@@ -35,7 +35,7 @@ if (global.input != INPUT_TOUCH)
 finalScore = global.curScore;
 
 btn[0] = instance_create(WIDTH/2,HEIGHT/2+1.5*TILE,objButton);
-btn[0].text = "!Shop!";
+btn[0].text = "Shop";
 btn[0].index = 0;
 btn[0].parent = id;
 
