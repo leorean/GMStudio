@@ -31,14 +31,40 @@ mask_index = sprParticleMask;
 loadProgress();
 instance_deactivate_object(objControl);
 
-global.wallet = 400; //NO.
+global.wallet = 4000; //NO.
 
 itemFocus = -1;
 itemPrice = 0;
-description = "Welcome.";
+itemLocked = false;
 
+description = "";
+descriptionTimer = 0;
+
+////////////////////////////SHOP ITEMS///////////////////////////////
+
+//createItem(x,y,index, name, description, pricearray, locked, tier);
+
+p = ds_list_create();
+ds_list_add(p,100);
+ds_list_add(p,400);
+ds_list_add(p,800);
+item[0] = createItem(TILE*.5,2.5*TILE,0, "Dashing Distance", "Faster, further, longer.", arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,300);
+ds_list_add(p,500);
+item[1] = createItem(TILE*.5,4.5*TILE,1, "Coin Magnet", "Coins will be attracted to you.", arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,1000);
+ds_list_add(p,2000);
+item[2] = createItem(TILE*.5,6.5*TILE,2, "Health", "Stop dying so fast!", arrayFromList(p), false, 0);
+
+
+////////////////////////////////////////////////////////////////////
+
+/*
 item[0] = instance_create(TILE*.5,2*TILE,objShopItem);
-item[0].S = id;
 item[0].name = "Dashing Stamina";
 item[0].description = "Lets you dash further and longer.";
 item[0].index = 0;
@@ -48,17 +74,18 @@ item[0].price[1] = 400;
 item[0].price[2] = 800;
 item[0].locked = false;
 item[0].tier = 2; //TODO: load this from save file.
-
+*/
+/*
 item[1] = instance_create(TILE*.5,4*TILE,objShopItem);
-item[1].S = id;
 item[1].name = "Test Item";
 item[1].description = "Test Item Description.";
 item[1].index = 1;
-item[1].maxTier = 2;
 item[1].price[0] = 300;
 item[1].price[1] = 500;
 item[1].locked = false;
 item[1].tier = 0; //TODO: load this from save file.
+item[1].maxTier = 2;
+*/
 
 ////BUTTONS
 index = 0;
@@ -141,27 +168,56 @@ if (global.input != INPUT_TOUCH)
 
 if (mouse_check_button_released(mb_left))
 {
-    item = instance_place(mouse_x,mouse_y,objShopItem);
-    if (instance_exists(item))
+    i = instance_place(mouse_x,mouse_y,objShopItem);
+    if (instance_exists(i))
     {
-        itemFocus = item.index;
-        itemPrice = item.price[item.tier];
+        itemFocus = i.index;
+        itemLocked = i.locked;
+        description = i.description;
     } else
-        itemFocus = -1;    
+        if (!btn[0].pressed) //only release focus when clicking elsewhere.
+            itemFocus = -1;
+    i = noone;  
+}
+
+if (itemFocus != -1)
+    itemPrice = item[itemFocus].price[item[itemFocus].tier];
+else
+    itemPrice = "---";
+
+descriptionTimer = max(descriptionTimer -1,0);
+if (!descriptionTimer)
+{
+    if (itemFocus == -1)
+        description = "";
+    else
+        description = item[itemFocus].description;
 }
 
 if (btn[0].pressed)
 {
-    if (itemFocus != -1)
+    if (itemFocus != -1 &amp;&amp; item[itemFocus].tier &lt; item[itemFocus].maxTier)
     {
-        if (itemPrice &lt;= global.wallet)
+        if (itemLocked)
+            description = "This item is locked.";
+        else if (real(itemPrice) &lt;= global.wallet) //THIS IS WHERE THE MAGIC HAPPENS
         {
             
-        }
+            t = instance_create(WIDTH/2,TILE,objText);
+            t.text = "-"+string(itemPrice);
+            t.yVel = -1;
+            t.yGrav = .1;
+        
+            global.wallet -= real(itemPrice);
+            //itemPrice = item[itemFocus].price[item[itemFocus].tier];
+            item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
+            description = "Thank you for your purchase!";
+        } else
+            description = "You can't afford that.";
+        descriptionTimer = 3*FPS;
     }
-    //purchase stuff
-    show_debug_message("purchased");
 }
+
 if (btn[1].pressed)
 {
     instance_activate_object(objControl);
@@ -215,11 +271,11 @@ draw_set_font(fntMenu);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
-drawText(WIDTH/2,0,"$"+string(global.wallet),c_white,c_black,fntScoreSmall);
+drawText(WIDTH/2,1,"$"+string(global.wallet),c_white,c_black,fntScoreSmall);
 
 //CURRENT DESCRIPTION
 draw_set_halign(fa_left);
-drawText(TILE,HEIGHT-2.5*TILE,description,c_white,c_black,fntScoreSmall);
+drawText(TILE,HEIGHT-2.5*TILE,description,c_white,c_none,fntShopSmall);
 
 //CURRENT PRICE
 draw_set_halign(fa_right);
@@ -227,12 +283,14 @@ if (itemFocus != -1)
 {
     var c1,c2;
     
-    if (itemPrice &lt;= global.wallet)
+    if (itemLocked)
+        {c1 = c_gray; c2 = c_none}
+    else if (real(itemPrice) &lt;= global.wallet)
         {c1 = c_white;c2 = c_black}
     else
         {c1 = c_red;c2 = c_none}
         
-        drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
+    drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
 }
 </string>
           </argument>
