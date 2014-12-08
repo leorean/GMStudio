@@ -215,6 +215,8 @@ if (btn[0].pressed)
         } else
             description = "You can't afford that.";
         descriptionTimer = 3*FPS;
+        
+        //TODO: SAVE THE PURCHASE
     }
 }
 

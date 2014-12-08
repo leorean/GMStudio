@@ -34,7 +34,6 @@ name = "&lt;name&gt;";
 description = "&lt;description&gt;";
 index = 0;
 maxTier = 1; //default 1
-price = 1;
 locked = true;
 </string>
           </argument>
@@ -106,7 +105,20 @@ if (S.itemFocus == index)
 //draw upgrade tier stuff.
 for (i = 0; i &lt; maxTier; i+=1)
 {
-    draw_sprite_part(spriteShop,-1,WIDTH+(i &lt; tier)*.5*TILE,4*TILE,.5*TILE,TILE,x+2*TILE+i*.5*TILE,y);
+    var r, pp;
+    r[i] = 0;
+    pp = 0;
+    if (i &lt; tier)
+        r = 1;
+    //TODO: FIX THIS
+    for (j = tier; j &lt; (maxTier); j += 1)
+    {
+        pp += price[j];
+        if (pp &gt; global.wallet)
+            r = 2;
+    }
+        
+    draw_sprite_part(spriteShop,-1,WIDTH+r*.5*TILE,4*TILE,.5*TILE,TILE,x+2*TILE+i*.5*TILE,y);
 }
 </string>
           </argument>
