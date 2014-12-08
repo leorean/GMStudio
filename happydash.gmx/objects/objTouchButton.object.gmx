@@ -83,7 +83,7 @@ alarm[0] = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.input == INPUT_TOUCH &amp;&amp; !global.pause &amp;&amp; room != INIT &amp;&amp; !global.gameOver)
+            <string>if (global.input == INPUT_TOUCH &amp;&amp; !global.pause &amp;&amp; room == MAIN &amp;&amp; !global.gameOver)
     visible = true;
 else
     visible = false;

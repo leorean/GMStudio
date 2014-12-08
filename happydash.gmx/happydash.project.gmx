@@ -1431,6 +1431,7 @@
       <sprite>sprites\sprTouchMask</sprite>
       <sprite>sprites\sprExplosionMask</sprite>
       <sprite>sprites\sprEnemyBigMask</sprite>
+      <sprite>sprites\sprShopItemMask</sprite>
     </sprites>
     <sprite>sprites\spriteTitleMenu</sprite>
     <sprite>sprites\spriteBg</sprite>
@@ -1445,6 +1446,7 @@
     <sprite>sprites\spriteStartLevel</sprite>
     <sprite>sprites\spriteFontScore</sprite>
     <sprite>sprites\spriteConfetti</sprite>
+    <sprite>sprites\spriteShop</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -1480,6 +1482,7 @@
   <fonts name="fonts">
     <font>fonts\fntMenu</font>
     <font>fonts\fntScoreSmall</font>
+    <font>fonts\fntShopSmall</font>
     <font>fonts\fntButton</font>
   </fonts>
   <objects name="objects">
@@ -1540,6 +1543,7 @@
       <object>objects\objTitleMenu</object>
       <object>objects\objTouchButton</object>
       <object>objects\objShopMenu</object>
+      <object>objects\objShopItem</object>
     </objects>
   </objects>
   <rooms name="rooms">

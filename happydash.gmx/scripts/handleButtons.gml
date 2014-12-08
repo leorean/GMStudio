@@ -3,14 +3,14 @@ for (i = 0; i <= maxIndex; i+=1)
         if (btn[i].active)
             index = i;
     }    
-    if(keyboard_check_pressed(vk_down))
-    {
-        global.mouseVisible = false;
-        index = min(index+1,maxIndex);
-    }
-    
-    if(keyboard_check_pressed(vk_up))
-    {
-        global.mouseVisible = false;
-        index = max(index-1,0);
-    }
+if(keyboard_check_pressed(vk_down))
+{
+    global.mouseVisible = false;
+    index = min(index+1,maxIndex);
+}
+
+if(keyboard_check_pressed(vk_up))
+{
+    global.mouseVisible = false;
+    index = max(index-1,0);
+}

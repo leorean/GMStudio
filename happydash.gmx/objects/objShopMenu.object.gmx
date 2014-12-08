@@ -26,27 +26,68 @@
           <argument>
             <kind>1</kind>
             <string>depth = HUDDEPTH+2;
-index = 0;
-maxIndex = 2;
-
-btn[0] = instance_create(WIDTH/2,HEIGHT/2+2.5*TILE,objButton);
-btn[0].text = "Buy";
-btn[0].index = 0;
-btn[0].parent = id;
-
-btn[1] = instance_create(WIDTH/2,HEIGHT/2+4.5*TILE,objButton);
-btn[1].text = "Play";
-btn[1].index = 1;
-btn[1].parent = id;
-
-btn[2] = instance_create(WIDTH/2,HEIGHT/2+6.5*TILE,objButton);
-btn[2].text = "Quit";
-btn[2].index = 2;
-btn[2].parent = id;
+mask_index = sprParticleMask;
 
 loadProgress();
 instance_deactivate_object(objControl);
 
+global.wallet = 400; //NO.
+
+itemFocus = -1;
+itemPrice = 0;
+description = "Welcome.";
+
+item[0] = instance_create(TILE*.5,2*TILE,objShopItem);
+item[0].S = id;
+item[0].name = "Dashing Stamina";
+item[0].description = "Lets you dash further and longer.";
+item[0].index = 0;
+item[0].maxTier = 3;
+item[0].price[0] = 100;
+item[0].price[1] = 400;
+item[0].price[2] = 800;
+item[0].locked = false;
+item[0].tier = 2; //TODO: load this from save file.
+
+item[1] = instance_create(TILE*.5,4*TILE,objShopItem);
+item[1].S = id;
+item[1].name = "Test Item";
+item[1].description = "Test Item Description.";
+item[1].index = 1;
+item[1].maxTier = 2;
+item[1].price[0] = 300;
+item[1].price[1] = 500;
+item[1].locked = false;
+item[1].tier = 0; //TODO: load this from save file.
+
+////BUTTONS
+index = 0;
+maxIndex = 1;
+
+//purchase
+btn[0] = instance_create(WIDTH-2.5*TILE,HEIGHT-2.5*TILE,objButton);
+btn[0].text = "";
+btn[0].index = 0;
+btn[0].parent = id;
+btn[0].fnt = fntMenu;
+btn[0].w = 2*TILE;
+btn[0].h = 2*TILE;
+
+//back to game
+btn[1] = instance_create(WIDTH-TILE,0,objButton);
+btn[1].text = "";
+btn[1].index = 1;
+btn[1].parent = id;
+btn[1].w = 1*TILE;
+btn[1].h = 2*TILE;
+
+//exit to main menu
+btn[2] = instance_create(TILE,0,objButton);
+btn[2].text = "";
+btn[2].index = 2;
+btn[2].parent = id;
+btn[2].w = 1*TILE;
+btn[2].h = 2*TILE;
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
@@ -96,10 +137,30 @@ if (global.input != INPUT_TOUCH)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>handleButtons();
+            <string>//handleButtons();
+
+if (mouse_check_button_released(mb_left))
+{
+    item = instance_place(mouse_x,mouse_y,objShopItem);
+    if (instance_exists(item))
+    {
+        itemFocus = item.index;
+        itemPrice = item.price[item.tier];
+    } else
+        itemFocus = -1;    
+}
+
 if (btn[0].pressed)
 {
+    if (itemFocus != -1)
+    {
+        if (itemPrice &lt;= global.wallet)
+        {
+            
+        }
+    }
     //purchase stuff
+    show_debug_message("purchased");
 }
 if (btn[1].pressed)
 {
@@ -135,15 +196,44 @@ if (btn[2].pressed)
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-draw_set_color(c_maroon);
-draw_rectangle(0,0,WIDTH,HEIGHT,0);
+//draw_set_color(c_maroon);
+//draw_rectangle(0,0,WIDTH,HEIGHT,0);
+
+draw_sprite_part(spriteShop,-1,0,0,WIDTH,HEIGHT,0,0);
+
+//PURCHASE BUTTON
+draw_sprite_part(spriteShop,-1,4*TILE*(btn[0].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT,4*TILE,2*TILE,WIDTH-4.5*TILE,HEIGHT-2.5*TILE);
+
+//EXIT BUTTON
+draw_sprite_part(spriteShop,-1,2*TILE*(btn[2].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+2*TILE,2*TILE,2*TILE,0,0);
+
+//PLAY BUTTON
+draw_sprite_part(spriteShop,-1,2*TILE*(btn[1].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+4*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
 draw_set_color(c_white);
 draw_set_font(fntMenu);
-draw_set_halign(fa_left);
+draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
-draw_text(TILE,TILE,global.wallet);
+drawText(WIDTH/2,0,"$"+string(global.wallet),c_white,c_black,fntScoreSmall);
+
+//CURRENT DESCRIPTION
+draw_set_halign(fa_left);
+drawText(TILE,HEIGHT-2.5*TILE,description,c_white,c_black,fntScoreSmall);
+
+//CURRENT PRICE
+draw_set_halign(fa_right);
+if (itemFocus != -1)
+{
+    var c1,c2;
+    
+    if (itemPrice &lt;= global.wallet)
+        {c1 = c_white;c2 = c_black}
+    else
+        {c1 = c_red;c2 = c_none}
+        
+        drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
+}
 </string>
           </argument>
         </arguments>

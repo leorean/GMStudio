@@ -395,6 +395,7 @@ if (surface_exists(global.drawBuffer))
             <string>//SHOP AND UPGRADE STUFF-----------------
 global.wallet = 0; //this is ALL my money.
 
+/*
 //number of items in the shop
 global.siAmountOfItems = 3;
 
@@ -410,6 +411,7 @@ global.siLocked[0] = false;
 //what is saved for the game / what needs to 
 global.siCurTier[0] = 0; //at which tier is the upgrade at (limited by maxtier of course)
 global.siUnlocked[0] = false; //is the item unlocked?
+*/
 
 //---------------------------------------
 
