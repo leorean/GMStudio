@@ -213,28 +213,29 @@ draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 
 draw_set_font(global.fntDefault);
 
-var c1,c2;
+var c1,c2,f;
 c1 = c_white;
-c2 = c_none;
+c2 = c_black;
+f = fntScoreSmall;
 
 draw_set_halign(fa_left);
 switch(m)
 {
-    case 5: drawText(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:",c1,c2,fntScoreSmall);
-    case 4: drawText(WIDTH*.5-d, (row+3)*TILE,"Coins collected:",c1,c2,fntScoreSmall);
-    case 3: drawText(WIDTH*.5-d, (row+2)*TILE,"Level:",c1,c2,fntScoreSmall);
-    case 2: drawText(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:",c1,c2,fntScoreSmall);
-    case 1: drawText(WIDTH*.5-d, (row+0)*TILE,"Distance:",c1,c2,fntScoreSmall);
+    case 5: drawText(WIDTH*.5-d, (row+4)*TILE,"Enemies killed:",c1,c2,f);
+    case 4: drawText(WIDTH*.5-d, (row+3)*TILE,"Coins collected:",c1,c2,f);
+    case 3: drawText(WIDTH*.5-d, (row+2)*TILE,"Level:",c1,c2,f);
+    case 2: drawText(WIDTH*.5-d, (row+1)*TILE,"Highest Combo:",c1,c2,f);
+    case 1: drawText(WIDTH*.5-d, (row+0)*TILE,"Distance:",c1,c2,f);
     break;
 }
 draw_set_halign(fa_right);
 switch(m)
 {
-    case 5: drawText(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled),c1,c2,fntScoreSmall);
-    case 4: drawText(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected),c1,c2,fntScoreSmall);
-    case 3: drawText(WIDTH*.5+d, (row+2)*TILE,string(global.level),c1,c2,fntScoreSmall);
-    case 2: drawText(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo),c1,c2,fntScoreSmall);
-    case 1: drawText(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)),c1,c2,fntScoreSmall);
+    case 5: drawText(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled),c1,c2,f);
+    case 4: drawText(WIDTH*.5+d, (row+3)*TILE,string(global.coinsCollected),c1,c2,f);
+    case 3: drawText(WIDTH*.5+d, (row+2)*TILE,string(global.level),c1,c2,f);
+    case 2: drawText(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo),c1,c2,f);
+    case 1: drawText(WIDTH*.5+d, (row+0)*TILE,string(floor(global.distance*.1)),c1,c2,f);
     break;
 }
 

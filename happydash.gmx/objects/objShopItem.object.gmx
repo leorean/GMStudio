@@ -29,7 +29,6 @@
 image_speed = 0;
 
 S = objShopMenu;
-color = c_white;
 
 name = "&lt;name&gt;";
 description = "&lt;description&gt;";
@@ -89,38 +88,48 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (locked) color = c_gray;
-else color = c_white;
-
-//draw item background
-draw_sprite_part_ext(spriteShop,-1,WIDTH,2*TILE,2*TILE,2*TILE,x,y,1,1,color,1);
+            <string>//draw item background
+draw_sprite_part(spriteShop,-1,WIDTH+ 2*TILE*(locked || (real(price[tier]) &gt; global.wallet)),4*TILE,2*TILE,2*TILE,x,y);
 
 //draw item image
 if (!locked)
-    c = c_white;
-else
-    c = c_gray;
-draw_sprite_part_ext(spriteShop,-1,WIDTH+index*2*TILE,0,2*TILE,2*TILE,x,y,1,1,c,1);
+{
+    //if (real(price[tier]) &lt;= global.wallet)
+        draw_sprite_part(spriteShop,-1,WIDTH+index*2*TILE,2*TILE*(real(price[tier]) &gt; global.wallet),2*TILE,2*TILE,x,y);
+//else
+//    draw_sprite_part(spriteShop,-1,WIDTH+index*2*TILE,2*TILE,2*TILE,2*TILE,x,y);
+} else
+    draw_sprite_part(spriteShop,-1,WIDTH+8*TILE,4*TILE,2*TILE,2*TILE,x,y);
 
 //DRAW BORDER
 if (S.itemFocus == index)
-    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE,2*TILE,2*TILE,2*TILE,x,y);
-if (locked)
-    draw_sprite_part(spriteShop,-1,WIDTH+4*TILE,2*TILE,2*TILE,2*TILE,x,y);
+    draw_sprite_part(spriteShop,-1,WIDTH+4*TILE+2*locked*TILE,4*TILE,2*TILE,2*TILE,x,y);
 
 //DRAW TIER CORNER
 if (!locked)
 {
-    var t,c1,c2;
+    /*var t,c1,c2;
     if (S.itemFocus == index) {c1 = c_white; c2 = c_black} else {c1 = c_gray; c2 = c_none};
-    if (tier &lt; maxTier) t = string(tier); else t = "MAX";
+    if (tier &lt; maxTier) t = string(tier)+"/"+string(maxTier); else t = "MAX";
+    //if (real(price[tier]) &gt; global.wallet) {c1 = c_gray; c2 = c_none};
     draw_set_halign(fa_right);
     draw_set_valign(fa_top);
     drawText(x+2*TILE,y,t,c1,c2,fntTiny);
+    */
+    if (tier &lt; maxTier)
+        if (price[tier] &lt;= global.wallet)
+            if (random(30) &gt; 28)
+            {
+                var d;
+                d = instance_create(x-.5*TILE+random(2*TILE),y-.5*TILE+random(2*TILE),objEffectDust);
+                d.depth = depth-1;
+                d.type = 7;
+            }
+
 }
 
 //draw upgrade tier stuff.
-if (S.itemFocus == index)
+if (S.itemFocus == index &amp;&amp; !locked)
 {
     var r, pp;
     r = 0;
@@ -140,7 +149,7 @@ if (S.itemFocus == index)
             //    if (pp &gt; global.wallet-real(S.itemPrice))
             //        r = 2;
         }
-        draw_sprite_part(spriteShop,-1,WIDTH+r*TILE,4*TILE,TILE,TILE,x+2*TILE+i*.5*TILE,y+(i mod 2 == 0) * TILE*.75);
+        draw_sprite_part(spriteShop,-1,WIDTH+r*TILE,6*TILE,TILE,TILE,x+2*TILE+i*.5*TILE,y+(i mod 2 == 0) * TILE*.75);
     }
 }
 </string>
