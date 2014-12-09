@@ -29,6 +29,7 @@
 image_speed = 0;
 
 S = objShopMenu;
+color = c_white;
 
 name = "&lt;name&gt;";
 description = "&lt;description&gt;";
@@ -112,7 +113,7 @@ if (!locked)
 {
     var t,c1,c2;
     if (S.itemFocus == index) {c1 = c_white; c2 = c_black} else {c1 = c_gray; c2 = c_none};
-    if (tier &lt; maxTier) t = string(tier+1); else t = "MAX";
+    if (tier &lt; maxTier) t = string(tier); else t = "MAX";
     draw_set_halign(fa_right);
     draw_set_valign(fa_top);
     drawText(x+2*TILE,y,t,c1,c2,fntTiny);

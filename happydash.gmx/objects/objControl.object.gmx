@@ -293,7 +293,10 @@ if keyboard_check(ord('C'))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//room start
+            <string>//DEACTIVATE SELF IF IN SHOP
+if (room == SHOP) instance_deactivate_object(objControl);
+
+//room start
 view_visible[0] = true;
 view_wview[0] = WIDTH;
 view_hview[0] = HEIGHT;

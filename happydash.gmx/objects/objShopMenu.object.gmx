@@ -29,7 +29,7 @@
 mask_index = sprParticleMask;
 
 loadProgress();
-instance_deactivate_object(objControl);
+//instance_deactivate_object(objControl);
 
 global.wallet = 3000; //NO.
 
@@ -63,34 +63,10 @@ p = ds_list_create();
 ds_list_add(p,1000);
 ds_list_add(p,1500);
 item[i] = createItem(TILE*.5, 6.5*TILE, i, "Health", "Stop dying so fast!", 
-    arrayFromList(p), false, 0);i+=1;
+    arrayFromList(p), true, 0);i+=1;
 
 
 ////////////////////////////////////////////////////////////////////
-
-/*
-item[0] = instance_create(TILE*.5,2*TILE,objShopItem);
-item[0].name = "Dashing Stamina";
-item[0].description = "Lets you dash further and longer.";
-item[0].index = 0;
-item[0].maxTier = 3;
-item[0].price[0] = 100;
-item[0].price[1] = 400;
-item[0].price[2] = 800;
-item[0].locked = false;
-item[0].tier = 2; //TODO: load this from save file.
-*/
-/*
-item[1] = instance_create(TILE*.5,4*TILE,objShopItem);
-item[1].name = "Test Item";
-item[1].description = "Test Item Description.";
-item[1].index = 1;
-item[1].price[0] = 300;
-item[1].price[1] = 500;
-item[1].locked = false;
-item[1].tier = 0; //TODO: load this from save file.
-item[1].maxTier = 2;
-*/
 
 ////BUTTONS
 index = 0;
@@ -123,7 +99,6 @@ btn[2].h = 2*TILE;
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
-
 </string>
           </argument>
         </arguments>
@@ -146,7 +121,7 @@ if (global.input != INPUT_TOUCH)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_activate_object(objControl);
+            <string>//instance_activate_object(objControl);
 </string>
           </argument>
         </arguments>
@@ -169,7 +144,9 @@ if (global.input != INPUT_TOUCH)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mouse_check_button_released(mb_left))
+            <string>if (room != SHOP) instance_destroy();
+
+if (mouse_check_button_released(mb_left))
 {
     i = instance_place(mouse_x,mouse_y,objShopItem);
     if (instance_exists(i))
@@ -186,10 +163,10 @@ if (itemFocus != -1)
 {
     itemPrice = item[itemFocus].price[item[itemFocus].tier];
     if (!item[itemFocus].locked)
-        itemName = string(item[itemFocus].name) + " Lv. " + string(item[itemFocus].tier+1);
+        suffix = " (Level " + string(item[itemFocus].tier) + " / " + string(item[itemFocus].maxTier) + ")";
     else
-        itemName = string(item[itemFocus].name) + " &lt;locked&gt;";
-    
+        suffix = " &lt;locked&gt;";
+    itemName = string(item[itemFocus].name) + suffix;
     itemLocked = item[itemFocus].locked;
     if (!descriptionTimer)
         itemDescription = item[itemFocus].description;    
@@ -202,20 +179,13 @@ else
 }
 
 descriptionTimer = max(descriptionTimer -1,0);
-/*if (!descriptionTimer)
-{
-    if (itemFocus == -1)
-        itemDescription = "";
-    else
-        itemDescription = item[itemFocus].description;
-}*/
 
 if (btn[0].pressed)
 {
     if (itemFocus != -1 &amp;&amp; item[itemFocus].tier &lt; item[itemFocus].maxTier)
     {
         if (itemLocked)
-            description = "This item is locked.";
+            itemDescription = "This item is locked. :(";
         else if (real(itemPrice) &lt;= global.wallet) //THIS IS WHERE THE MAGIC HAPPENS
         {
             
@@ -227,13 +197,12 @@ if (btn[0].pressed)
             global.wallet -= real(itemPrice);
             //itemPrice = item[itemFocus].price[item[itemFocus].tier];
             item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
-            itemDescription = "Thank you for your purchase!";
+            itemDescription = "Thank you for your purchase! :)";
         } else
-            itemDescription = "You can't afford that.";
-        descriptionTimer = 1.5*FPS;
-        
+            itemDescription = "You can't afford that. :(";
         //TODO: SAVE THE PURCHASE
     }
+    descriptionTimer = 1.5*FPS;
 }
 
 if (btn[1].pressed)
@@ -246,7 +215,6 @@ if (btn[2].pressed)
     instance_activate_object(objControl);
     room_goto(INIT);
 }
-
 </string>
           </argument>
         </arguments>
@@ -316,8 +284,7 @@ drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
 
 //ITEM NAME
 draw_set_halign(fa_left);
-drawText(.5*TILE,HEIGHT-4*TILE,string(itemName),c_white,c_black,fntShopSmall);
-
+drawText(.5*TILE,HEIGHT-4*TILE,string(itemName),make_color_hsv(33,170,255),c_none,fntShopSmall);
 </string>
           </argument>
         </arguments>
