@@ -87,7 +87,10 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
 
 //DEATH
 if (y+TILE > HEIGHT+1.5*TILE || x < 0 || hp <= 0)
+{
+    hp = 0;
     alive = false;
+}
 
 if (!alive)
 {

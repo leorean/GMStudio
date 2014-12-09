@@ -31,34 +31,39 @@ mask_index = sprParticleMask;
 loadProgress();
 instance_deactivate_object(objControl);
 
-global.wallet = 4000; //NO.
+global.wallet = 3000; //NO.
 
 itemFocus = -1;
 itemPrice = 0;
 itemLocked = false;
+itemName = "";
 
-description = "";
+itemDescription = "";
 descriptionTimer = 0;
 
 ////////////////////////////SHOP ITEMS///////////////////////////////
-
-//createItem(x,y,index, name, description, pricearray, locked, tier);
+var i;
+i = 0;
+//createItem(x, y, index, name, description, pricearray, locked, tier);
 
 p = ds_list_create();
 ds_list_add(p,100);
 ds_list_add(p,400);
 ds_list_add(p,800);
-item[0] = createItem(TILE*.5,2.5*TILE,0, "Dashing Distance", "Faster, further, longer.", arrayFromList(p), false, 0);
+item[i] = createItem(TILE*.5, 2.5*TILE, i, "Dashing Stamina", "Faster, further, longer.", 
+    arrayFromList(p), false, 0);i+=1;
 
 p = ds_list_create();
 ds_list_add(p,300);
 ds_list_add(p,500);
-item[1] = createItem(TILE*.5,4.5*TILE,1, "Coin Magnet", "Coins will be attracted to you.", arrayFromList(p), false, 0);
+item[i] = createItem(TILE*.5, 4.5*TILE, i, "Coin Magnet", "Coins will be more attracted to you.", 
+    arrayFromList(p), false, 0);i+=1;
 
 p = ds_list_create();
 ds_list_add(p,1000);
-ds_list_add(p,2000);
-item[2] = createItem(TILE*.5,6.5*TILE,2, "Health", "Stop dying so fast!", arrayFromList(p), false, 0);
+ds_list_add(p,1500);
+item[i] = createItem(TILE*.5, 6.5*TILE, i, "Health", "Stop dying so fast!", 
+    arrayFromList(p), false, 0);i+=1;
 
 
 ////////////////////////////////////////////////////////////////////
@@ -164,16 +169,13 @@ if (global.input != INPUT_TOUCH)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//handleButtons();
-
-if (mouse_check_button_released(mb_left))
+            <string>if (mouse_check_button_released(mb_left))
 {
     i = instance_place(mouse_x,mouse_y,objShopItem);
     if (instance_exists(i))
     {
         itemFocus = i.index;
-        itemLocked = i.locked;
-        description = i.description;
+        descriptionTimer = 0;
     } else
         if (!btn[0].pressed) //only release focus when clicking elsewhere.
             itemFocus = -1;
@@ -181,18 +183,32 @@ if (mouse_check_button_released(mb_left))
 }
 
 if (itemFocus != -1)
+{
     itemPrice = item[itemFocus].price[item[itemFocus].tier];
+    if (!item[itemFocus].locked)
+        itemName = string(item[itemFocus].name) + " Lv. " + string(item[itemFocus].tier+1);
+    else
+        itemName = string(item[itemFocus].name) + " &lt;locked&gt;";
+    
+    itemLocked = item[itemFocus].locked;
+    if (!descriptionTimer)
+        itemDescription = item[itemFocus].description;    
+}
 else
+{
     itemPrice = "---";
+    itemName = "";
+    itemDescription = "";
+}
 
 descriptionTimer = max(descriptionTimer -1,0);
-if (!descriptionTimer)
+/*if (!descriptionTimer)
 {
     if (itemFocus == -1)
-        description = "";
+        itemDescription = "";
     else
-        description = item[itemFocus].description;
-}
+        itemDescription = item[itemFocus].description;
+}*/
 
 if (btn[0].pressed)
 {
@@ -211,10 +227,10 @@ if (btn[0].pressed)
             global.wallet -= real(itemPrice);
             //itemPrice = item[itemFocus].price[item[itemFocus].tier];
             item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
-            description = "Thank you for your purchase!";
+            itemDescription = "Thank you for your purchase!";
         } else
-            description = "You can't afford that.";
-        descriptionTimer = 3*FPS;
+            itemDescription = "You can't afford that.";
+        descriptionTimer = 1.5*FPS;
         
         //TODO: SAVE THE PURCHASE
     }
@@ -277,10 +293,11 @@ drawText(WIDTH/2,1,"$"+string(global.wallet),c_white,c_black,fntScoreSmall);
 
 //CURRENT DESCRIPTION
 draw_set_halign(fa_left);
-drawText(TILE,HEIGHT-2.5*TILE,description,c_white,c_none,fntShopSmall);
+drawText(TILE,HEIGHT-2.5*TILE,itemDescription,c_white,c_none,fntShopSmall);
 
 //CURRENT PRICE
 draw_set_halign(fa_right);
+var c1,c2;
 if (itemFocus != -1)
 {
     var c1,c2;
@@ -291,9 +308,16 @@ if (itemFocus != -1)
         {c1 = c_white;c2 = c_black}
     else
         {c1 = c_red;c2 = c_none}
-        
-    drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
 }
+else {c1 = c_white; c2 = c_black};
+
+drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
+
+
+//ITEM NAME
+draw_set_halign(fa_left);
+drawText(.5*TILE,HEIGHT-4*TILE,string(itemName),c_white,c_black,fntShopSmall);
+
 </string>
           </argument>
         </arguments>

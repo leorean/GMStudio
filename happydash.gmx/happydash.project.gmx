@@ -1486,6 +1486,7 @@
     <font>fonts\fntScoreSmall</font>
     <font>fonts\fntShopSmall</font>
     <font>fonts\fntButton</font>
+    <font>fonts\fntTiny</font>
   </fonts>
   <objects name="objects">
     <objects name="MISC">
@@ -1537,6 +1538,7 @@
       <object>objects\objEffectRainbow</object>
       <object>objects\objEffectConfetti</object>
       <object>objects\objEffectLevelUp</object>
+      <object>objects\objEffectFollowHeart</object>
     </objects>
     <objects name="HUD">
       <object>objects\objButton</object>

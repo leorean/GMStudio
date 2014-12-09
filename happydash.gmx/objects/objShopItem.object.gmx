@@ -88,8 +88,11 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw item background
-draw_sprite_part(spriteShop,-1,WIDTH,2*TILE,2*TILE,2*TILE,x,y);
+            <string>if (locked) color = c_gray;
+else color = c_white;
+
+//draw item background
+draw_sprite_part_ext(spriteShop,-1,WIDTH,2*TILE,2*TILE,2*TILE,x,y,1,1,color,1);
 
 //draw item image
 if (!locked)
@@ -98,27 +101,46 @@ else
     c = c_gray;
 draw_sprite_part_ext(spriteShop,-1,WIDTH+index*2*TILE,0,2*TILE,2*TILE,x,y,1,1,c,1);
 
-//if focused, draw border
+//DRAW BORDER
 if (S.itemFocus == index)
-    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE+(locked*2*TILE),2*TILE,2*TILE,2*TILE,x,y);
+    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE,2*TILE,2*TILE,2*TILE,x,y);
+if (locked)
+    draw_sprite_part(spriteShop,-1,WIDTH+4*TILE,2*TILE,2*TILE,2*TILE,x,y);
+
+//DRAW TIER CORNER
+if (!locked)
+{
+    var t,c1,c2;
+    if (S.itemFocus == index) {c1 = c_white; c2 = c_black} else {c1 = c_gray; c2 = c_none};
+    if (tier &lt; maxTier) t = string(tier+1); else t = "MAX";
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_top);
+    drawText(x+2*TILE,y,t,c1,c2,fntTiny);
+}
 
 //draw upgrade tier stuff.
-var r, pp;
-r = 0;
-for (i = 0; i &lt; maxTier; i+=1)
+if (S.itemFocus == index)
 {
-    pp = 0;
-
+    var r, pp;
     r = 0;
-    if (i &lt; tier)
-        r = 1;
-    else
+    for (i = 0; i &lt; maxTier; i+=1)
     {
-        pp += price[i];
-        if (pp &gt; global.wallet)
-            r = 2;
+        pp = 0;
+    
+        r = 1;
+        if (i &lt; tier)
+            r = 0;
+        else
+        {
+            pp += price[i];
+            if (pp &gt; global.wallet)
+                r = 2;
+            //if (S.itemFocus != index)
+            //    if (pp &gt; global.wallet-real(S.itemPrice))
+            //        r = 2;
+        }
+        draw_sprite_part(spriteShop,-1,WIDTH+r*TILE,4*TILE,TILE,TILE,x+2*TILE+i*.5*TILE,y+(i mod 2 == 0) * TILE*.75);
     }
-    draw_sprite_part(spriteShop,-1,WIDTH+r*.5*TILE,4*TILE,.5*TILE,TILE,x+2*TILE+i*.5*TILE,y);
 }
 </string>
           </argument>

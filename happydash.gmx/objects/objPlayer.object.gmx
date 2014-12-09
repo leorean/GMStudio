@@ -33,11 +33,18 @@ mask_index = sprPlayerMask;
 
 global.hasControl = false;
 
-////local variables
+//////////////////local variables///////////////////
 
+//hp
 hp = global.maxHp;
 invincible = 0;
 invincibleTimer = FPS;
+
+for (i = 0; i &lt; hp; i+=1)
+{
+    h = instance_create(i*TILE,HEIGHT-2*TILE,objEffectFollowHeart);
+    h.hp = i+1;
+}
 
 //pause, camera etc.
 onGround = false;
@@ -373,7 +380,7 @@ if (true)
                 {
                     draw_set_color(make_color_hsv((j+8)*11,255,255));
                     if (abs(j) &lt; ds_list_find_value(dsD,i))
-                    draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ceil(ds_list_find_value(dsX,i)),ds_list_find_value(dsY,i)+j,2);
+                    draw_line_width(ds_list_find_value(dsX,i-1)/*-abs(xVel)*/,ds_list_find_value(dsY,i-1)+j,ceil(ds_list_find_value(dsX,i)),ds_list_find_value(dsY,i)+j,2);
                 }
 
                 /*
