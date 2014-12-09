@@ -330,7 +330,7 @@ if (room == MAIN)
 
     global.startSignal = false;
     
-    difficulty = 0;
+    global.difficulty = 0;
     
     global.powerUp = POW_NONE;
     alarm[1] = 0;

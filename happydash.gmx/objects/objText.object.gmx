@@ -26,21 +26,20 @@
           <argument>
             <kind>1</kind>
             <string>depth = HUDDEPTH-1;
-//if (!variable_local_exists("xVel"))
-    xVel = 0;
-//if (!variable_local_exists("yVel"))
-    yVel = -.75;
-    yGrav = 0;
-//if (!variable_local_exists("t"))
-    t = 40;
-//if (!variable_local_exists("color"))
-    color = c_white;
 
-//if (!variable_local_exists("fnt"))
-    fnt = global.fntDefault;
+xVel = 0;
+yVel = -.75;
+yGrav = 0;
 
-//if (!variable_local_exists("halign"))
-    halign = fa_center;
+t = 40;
+
+color = c_white;
+colorBack = c_black;
+
+//fnt = global.fntDefault;
+fnt = fntScoreSmall;
+
+halign = fa_center;
 
 </string>
           </argument>
@@ -64,13 +63,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x += xVel;
-y += yVel;
-yVel += yGrav;
-if (t &gt; 0)
-    t -= 1;
-else
-    instance_destroy();
+            <string>if (!global.pause)
+{
+    x += xVel;
+    y += yVel;
+    yVel += yGrav;
+    if (t &gt; 0)
+        t -= 1;
+    else
+        instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -94,13 +96,14 @@ else
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
-draw_set_color(color);
-draw_set_font(fnt);
+//draw_set_color(color);
+//draw_set_font(fnt);
 draw_set_halign(halign);
 draw_set_valign(fa_center);
 draw_set_alpha(1);
 
-draw_text(floor(x),floor(y),text);
+drawText(floor(x),floor(y),text,color,colorBack,fnt);
+//draw_text(floor(x),floor(y),text);
 </string>
           </argument>
         </arguments>

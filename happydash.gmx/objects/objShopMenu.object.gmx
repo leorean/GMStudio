@@ -48,8 +48,8 @@ i = 0;
 
 p = ds_list_create();
 ds_list_add(p,100);
-ds_list_add(p,400);
 ds_list_add(p,800);
+ds_list_add(p,1000);
 item[i] = createItem(TILE*.5, 2.5*TILE, i, "Dashing Stamina", "Faster, further, longer.", 
     arrayFromList(p), false, 0);i+=1;
 
@@ -57,13 +57,13 @@ p = ds_list_create();
 ds_list_add(p,300);
 ds_list_add(p,500);
 item[i] = createItem(TILE*.5, 4.5*TILE, i, "Coin Magnet", "Coins will be more attracted to you.", 
-    arrayFromList(p), false, 0);i+=1;
+    arrayFromList(p), true, 0);i+=1;
 
 p = ds_list_create();
 ds_list_add(p,1000);
 ds_list_add(p,1500);
 item[i] = createItem(TILE*.5, 6.5*TILE, i, "Health", "Stop dying so fast!", 
-    arrayFromList(p), true, 0);i+=1;
+    arrayFromList(p), false, 0);i+=1;
 
 
 ////////////////////////////////////////////////////////////////////
@@ -193,6 +193,7 @@ if (btn[0].pressed)
             t.text = "-"+string(itemPrice);
             t.yVel = -1;
             t.yGrav = .1;
+            t.fnt = fntScoreSmall;
         
             global.wallet -= real(itemPrice);
             //itemPrice = item[itemFocus].price[item[itemFocus].tier];
@@ -257,7 +258,7 @@ draw_set_font(fntMenu);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
-drawText(WIDTH/2,1,"$"+string(global.wallet),c_white,c_black,fntScoreSmall);
+drawText(WIDTH/2,1,string(global.wallet),c_white,c_black,fntScoreSmall);
 
 //CURRENT DESCRIPTION
 draw_set_halign(fa_left);
