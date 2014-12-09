@@ -103,21 +103,21 @@ if (S.itemFocus == index)
     draw_sprite_part(spriteShop,-1,WIDTH+2*TILE+(locked*2*TILE),2*TILE,2*TILE,2*TILE,x,y);
 
 //draw upgrade tier stuff.
+var r, pp;
+r = 0;
 for (i = 0; i &lt; maxTier; i+=1)
 {
-    var r, pp;
-    r[i] = 0;
     pp = 0;
+
+    r = 0;
     if (i &lt; tier)
         r = 1;
-    //TODO: FIX THIS
-    for (j = tier; j &lt; (maxTier); j += 1)
+    else
     {
-        pp += price[j];
+        pp += price[i];
         if (pp &gt; global.wallet)
             r = 2;
     }
-        
     draw_sprite_part(spriteShop,-1,WIDTH+r*.5*TILE,4*TILE,.5*TILE,TILE,x+2*TILE+i*.5*TILE,y);
 }
 </string>
