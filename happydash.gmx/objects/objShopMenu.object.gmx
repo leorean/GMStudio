@@ -50,19 +50,19 @@ p = ds_list_create();
 ds_list_add(p,100);
 ds_list_add(p,800);
 ds_list_add(p,1000);
-item[i] = createItem(TILE*.5, 2.5*TILE, i, "Dashing Stamina", "Faster, further, longer.", 
-    arrayFromList(p), false, 0);i+=1;
+item[i] = createItem(TILE*.5, 2.5*TILE, i, "Dashiing", "Dash faster, further, longer!", 
+    arrayFromList(p), true, 0);i+=1;
 
 p = ds_list_create();
 ds_list_add(p,300);
 ds_list_add(p,500);
 item[i] = createItem(TILE*.5, 4.5*TILE, i, "Coin Magnet", "Coins will be more attracted to you.", 
-    arrayFromList(p), true, 0);i+=1;
+    arrayFromList(p), false, 0);i+=1;
 
 p = ds_list_create();
 ds_list_add(p,1000);
 ds_list_add(p,1500);
-item[i] = createItem(TILE*.5, 6.5*TILE, i, "Health", "Stop dying so fast!", 
+item[i] = createItem(TILE*.5, 6.5*TILE, i, "Health", "I will survive.", 
     arrayFromList(p), false, 0);i+=1;
 
 
@@ -245,7 +245,12 @@ if (btn[2].pressed)
 draw_sprite_part(spriteShop,-1,0,0,WIDTH,HEIGHT,0,0);
 
 //PURCHASE BUTTON
-draw_sprite_part(spriteShop,-1,4*TILE*(btn[0].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT,4*TILE,2*TILE,WIDTH-4.5*TILE,HEIGHT-2.5*TILE);
+var b;
+b = 0;
+if (btn[0].active &amp;&amp; mouse_check_button(mb_left)) b = 1;
+if (itemFocus != -1)
+    if (itemLocked || real(itemPrice) &gt; global.wallet || item[itemFocus].tier &gt;= item[itemFocus].maxTier) b = 2;
+draw_sprite_part(spriteShop,-1,4*TILE*b,HEIGHT,4*TILE,2*TILE,WIDTH-4.5*TILE,HEIGHT-2.5*TILE);
 
 //EXIT BUTTON
 draw_sprite_part(spriteShop,-1,2*TILE*(btn[2].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+2*TILE,2*TILE,2*TILE,0,0);

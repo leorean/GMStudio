@@ -94,16 +94,13 @@ draw_sprite_part(spriteShop,-1,WIDTH+ 2*TILE*(locked || (real(price[tier]) &gt; 
 //draw item image
 if (!locked)
 {
-    //if (real(price[tier]) &lt;= global.wallet)
         draw_sprite_part(spriteShop,-1,WIDTH+index*2*TILE,2*TILE*(real(price[tier]) &gt; global.wallet),2*TILE,2*TILE,x,y);
-//else
-//    draw_sprite_part(spriteShop,-1,WIDTH+index*2*TILE,2*TILE,2*TILE,2*TILE,x,y);
 } else
     draw_sprite_part(spriteShop,-1,WIDTH+8*TILE,4*TILE,2*TILE,2*TILE,x,y);
 
 //DRAW BORDER
 if (S.itemFocus == index)
-    draw_sprite_part(spriteShop,-1,WIDTH+4*TILE+2*locked*TILE,4*TILE,2*TILE,2*TILE,x,y);
+    draw_sprite_part(spriteShop,-1,WIDTH+4*TILE+2*(locked || (real(price[tier]) &gt; global.wallet))*TILE,4*TILE,2*TILE,2*TILE,x,y);
 
 //DRAW TIER CORNER
 if (!locked)
@@ -117,6 +114,7 @@ if (!locked)
     drawText(x+2*TILE,y,t,c1,c2,fntTiny);
     */
     if (tier &lt; maxTier)
+    {
         if (price[tier] &lt;= global.wallet)
             if (random(30) &gt; 28)
             {
@@ -125,7 +123,14 @@ if (!locked)
                 d.depth = depth-1;
                 d.type = 7;
             }
-
+    } else
+    {
+        var t,c1,c2;
+        if (S.itemFocus == index) {c1 = c_white; c2 = c_black} else {c1 = c_white; c2 = c_black};
+        draw_set_halign(fa_right);
+        draw_set_valign(fa_top);
+        drawText(x+2*TILE,y,"MAX",c1,c2,fntTiny);
+    }
 }
 
 //draw upgrade tier stuff.
