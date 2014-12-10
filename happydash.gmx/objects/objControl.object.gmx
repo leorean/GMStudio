@@ -398,23 +398,18 @@ if (surface_exists(global.drawBuffer))
             <string>//SHOP AND UPGRADE STUFF-----------------
 global.wallet = 0; //this is ALL my money.
 
-/*
-//number of items in the shop
-global.siAmountOfItems = 3;
-
-//what an item holds
-global.siName[0] = "Dashing Stamina";
-global.siDesc[0] = "Lets you dash further and longer.";
-global.siMaxTier[0] = 3; //# of upgrades
-global.siPrice[0,0] = 100;
-global.siPrice[0,1] = 400;
-global.siPrice[0,2] = 800;
-global.siLocked[0] = false;
-
-//what is saved for the game / what needs to 
-global.siCurTier[0] = 0; //at which tier is the upgrade at (limited by maxtier of course)
-global.siUnlocked[0] = false; //is the item unlocked?
-*/
+enum UPGRADE
+{
+    upNone = -1, //do i really need this?
+    upHealth = 0,
+    upJump = 1,
+    upMagnet = 2,
+    upDash = 3,
+    upItemChance = 4,
+    upPowerUpTime = 5,
+    upComboCooldown = 6,
+    upSuperDash = 7
+};
 
 //---------------------------------------
 

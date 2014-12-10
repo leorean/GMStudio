@@ -42,28 +42,48 @@ itemDescription = "";
 descriptionTimer = 0;
 
 ////////////////////////////SHOP ITEMS///////////////////////////////
-var i;
-i = 0;
+
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 
 p = ds_list_create();
-ds_list_add(p,100);
-ds_list_add(p,800);
-ds_list_add(p,1000);
-item[i] = createItem(TILE*.5, 2.5*TILE, i, "Extra Health", "Increases your health.", 
-    arrayFromList(p), false, 0);i+=1;
+ds_list_add(p,1000); ds_list_add(p,4000); ds_list_add(p,10000);
+item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Increases your health.", 
+    arrayFromList(p), false, 0);
 
 p = ds_list_create();
-ds_list_add(p,300);
-ds_list_add(p,500);
-item[i] = createItem(TILE*.5, 4.5*TILE, i, "Coin Magnet", "Coins will be more attracted to you.", 
-    arrayFromList(p), false, 0);i+=1;
+ds_list_add(p,500); ds_list_add(p,6000);
+item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Multiple Jumps", "Jump in mid-air!", 
+    arrayFromList(p), false, 0);
 
 p = ds_list_create();
-ds_list_add(p,1000);
-ds_list_add(p,1500);
-item[i] = createItem(TILE*.5, 6.5*TILE, i, "Dashing Power", "Dash faster, further, longer!", 
-    arrayFromList(p), false, 0);i+=1;
+ds_list_add(p,300); ds_list_add(p,500);
+item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Coin Magnet", "Coins will be more attracted to you.", 
+    arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,200); ds_list_add(p,400); ds_list_add(p,800); ds_list_add(p,1500);
+item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Dashing Power", "Dash faster, further, longer!", 
+    arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,1000); ds_list_add(p,2500); ds_list_add(p,3500); ds_list_add(p,6000);
+item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance, "Item Chance", "Higher chance to find item blocks.", 
+    arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,300); ds_list_add(p,500); ds_list_add(p,750); ds_list_add(p,1200);
+item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power-Up Duration", "Increase the duration of power-up effects.", 
+    arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,250); ds_list_add(p,450); ds_list_add(p,600); ds_list_add(p,800); ds_list_add(p,1100);
+item[UPGRADE.upComboCooldown] = createItem(5*TILE, 8.5*TILE, UPGRADE.upComboCooldown, "Combo Cooldown", "Increase the combo cooldown duration.", 
+    arrayFromList(p), false, 0);
+
+p = ds_list_create();
+ds_list_add(p,20000);
+item[UPGRADE.upSuperDash] = createItem(9*TILE, 6.5*TILE, UPGRADE.upSuperDash, "SUPER DASH", "Unleash the power!", 
+    arrayFromList(p), false, 0);
 
 
 ////////////////////////////////////////////////////////////////////
