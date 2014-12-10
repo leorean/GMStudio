@@ -174,7 +174,10 @@ else //IF NOT DEAD
             db.state = DEAD;
             db = noone;
         }
-        pow = max(pow - 1, 0+(global.powerUp == POW_2));
+        var d;
+        d = 1.5 - .2*global.upgrade[UPGRADE.upDash,UPGRADE.TIER]*1;
+        
+        pow = max(pow - d, 0+(global.powerUp == POW_2));
         if (pow == 0 && enemy == noone)
             state = JUMP;
     } else

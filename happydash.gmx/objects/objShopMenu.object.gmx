@@ -86,15 +86,6 @@ item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "
 
 loadProgress();
 
-//UNLOCK CERTAIN UPGRADES
-global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED] = false;
-global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED] = false;
-global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED] = false;
-global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED] = false;
-
-saveProgress();
-loadProgress();
-
 ////////////////////////////////////////////////////////////////////
 
 ////BUTTONS
