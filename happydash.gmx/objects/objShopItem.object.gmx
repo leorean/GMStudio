@@ -34,6 +34,7 @@ name = "&lt;name&gt;";
 description = "&lt;description&gt;";
 index = 0;
 maxTier = 1; //default 1
+tier = 0;
 locked = true;
 
 t = pi/2;

@@ -1455,6 +1455,7 @@
     <scripts name="manage">
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>
+      <script>scripts\deleteProgress.gml</script>
       <script>scripts\importSegment.gml</script>
       <script>scripts\constructSegment.gml</script>
       <script>scripts\playSound.gml</script>
@@ -1479,6 +1480,7 @@
       <script>scripts\spawnParticle.gml</script>
       <script>scripts\createItem.gml</script>
       <script>scripts\arrayFromList.gml</script>
+      <script>scripts\defineUpgrades.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

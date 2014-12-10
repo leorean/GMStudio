@@ -68,7 +68,7 @@ if (alive)
     if (!alpha)
         instance_destroy();
 }
-draw_sprite_part_ext(spriteGfx,-1,8*TILE,2*TILE+(!alive)*TILE,TILE,TILE,x+(-1+random(2))*!alive,y,1,1,c_white,alpha);
+draw_sprite_part_ext(spriteGfx,-1,8*TILE,2*TILE+(!alive)*TILE,TILE,TILE,x+(-1+random(2))*!alive,y,1,1,c_white,1);
 </string>
           </argument>
         </arguments>

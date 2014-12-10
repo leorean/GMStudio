@@ -28,10 +28,9 @@
             <string>depth = HUDDEPTH+2;
 mask_index = sprParticleMask;
 
-loadProgress();
-//instance_deactivate_object(objControl);
-
-global.wallet = 3000; //NO.
+with(objPlayer)
+    instance_destroy();
+global.player = noone;
 
 itemFocus = -1;
 itemPrice = 0;
@@ -48,43 +47,53 @@ descriptionTimer = 0;
 p = ds_list_create();
 ds_list_add(p,1000); ds_list_add(p,4000); ds_list_add(p,10000);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
-    arrayFromList(p), false, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED], global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,500); ds_list_add(p,6000);
 item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Multiple Jumps", "Jump in mid-air!", 
-    arrayFromList(p), false, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED], global.upgrade[UPGRADE.upJump,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,300); ds_list_add(p,500);
 item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Coin Magnet", "Coins will be more attracted to you.", 
-    arrayFromList(p), true, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED], global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,200); ds_list_add(p,400); ds_list_add(p,800); ds_list_add(p,1500);
 item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Dashing Power", "Dash faster, further, longer!", 
-    arrayFromList(p), true, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED], global.upgrade[UPGRADE.upDash,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,1000); ds_list_add(p,2500); ds_list_add(p,3500); ds_list_add(p,6000);
 item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance, "Item Chance", "Higher chance to find item blocks.", 
-    arrayFromList(p), true, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upItemChance,UPGRADE.LOCKED], global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,300); ds_list_add(p,500); ds_list_add(p,750); ds_list_add(p,1200);
 item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power-Up Duration", "Increase the duration of power-up effects.", 
-    arrayFromList(p), true, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.LOCKED], global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,250); ds_list_add(p,450); ds_list_add(p,600); ds_list_add(p,800); ds_list_add(p,1100);
 item[UPGRADE.upComboCooldown] = createItem(9*TILE, 6.5*TILE, UPGRADE.upComboCooldown, "Combo Cooldown", "Increase the combo cooldown duration.", 
-    arrayFromList(p), true, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upComboCooldown,UPGRADE.LOCKED], global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER]);
 
 p = ds_list_create();
 ds_list_add(p,20000);
 item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "SUPER DASH", "Unleash your full potential!", 
-    arrayFromList(p), true, 0);
+    arrayFromList(p), global.upgrade[UPGRADE.upSuperDash,UPGRADE.LOCKED], global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]);
 
+loadProgress();
+
+//UNLOCK CERTAIN UPGRADES
+global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED] = false;
+global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED] = false;
+global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED] = false;
+global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED] = false;
+
+saveProgress();
+loadProgress();
 
 ////////////////////////////////////////////////////////////////////
 
@@ -229,7 +238,10 @@ if (btn[0].pressed)
                 global.wallet -= real(itemPrice);
                 item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
                 
-                global.upgrade[item[itemFocus].index]+=1; //save global upgrade.
+                global.upgrade[item[itemFocus].index,UPGRADE.TIER]+=1; //save global upgrade.
+                
+                saveProgress();
+                loadProgress();
                 
                 itemDescription = "Thank you!";
             } else
@@ -251,6 +263,14 @@ if (btn[2].pressed)
     instance_activate_object(objControl);
     room_goto(INIT);
 }
+
+if (keyboard_check_pressed(ord('R')))
+{
+    deleteProgress();
+    //room_restart();
+}
+if (keyboard_check_pressed(ord('T')))
+    global.wallet += 500;
 </string>
           </argument>
         </arguments>
