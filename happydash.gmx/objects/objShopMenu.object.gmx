@@ -50,8 +50,8 @@ p = ds_list_create();
 ds_list_add(p,100);
 ds_list_add(p,800);
 ds_list_add(p,1000);
-item[i] = createItem(TILE*.5, 2.5*TILE, i, "Dashiing", "Dash faster, further, longer!", 
-    arrayFromList(p), true, 0);i+=1;
+item[i] = createItem(TILE*.5, 2.5*TILE, i, "Extra Health", "Increases your health.", 
+    arrayFromList(p), false, 0);i+=1;
 
 p = ds_list_create();
 ds_list_add(p,300);
@@ -62,7 +62,7 @@ item[i] = createItem(TILE*.5, 4.5*TILE, i, "Coin Magnet", "Coins will be more at
 p = ds_list_create();
 ds_list_add(p,1000);
 ds_list_add(p,1500);
-item[i] = createItem(TILE*.5, 6.5*TILE, i, "Health", "I will survive.", 
+item[i] = createItem(TILE*.5, 6.5*TILE, i, "Dashing Power", "Dash faster, further, longer!", 
     arrayFromList(p), false, 0);i+=1;
 
 
@@ -182,25 +182,37 @@ descriptionTimer = max(descriptionTimer -1,0);
 
 if (btn[0].pressed)
 {
-    if (itemFocus != -1 &amp;&amp; item[itemFocus].tier &lt; item[itemFocus].maxTier)
+    if (itemFocus != -1)
     {
-        if (itemLocked)
-            itemDescription = "This item is locked. :(";
-        else if (real(itemPrice) &lt;= global.wallet) //THIS IS WHERE THE MAGIC HAPPENS
+        if (item[itemFocus].tier &lt; item[itemFocus].maxTier)
         {
+            if (itemLocked)
+                itemDescription = "This item is currently unavailable.";
+            else if (real(itemPrice) &lt;= global.wallet) //THIS IS WHERE THE MAGIC HAPPENS
+            {
+                var t;
+                if (item[itemFocus].tier == 0) //unlocking effect
+                {
+                    t = instance_create(item[itemFocus].x,item[itemFocus].y,objEffectDust);t.depth=item[itemFocus].depth-1;
+                    t = instance_create(item[itemFocus].x+TILE,item[itemFocus].y,objEffectDust);t.depth=item[itemFocus].depth-1;
+                    t = instance_create(item[itemFocus].x,item[itemFocus].y+TILE,objEffectDust);t.depth=item[itemFocus].depth-1;
+                    t = instance_create(item[itemFocus].x+TILE,item[itemFocus].y+TILE,objEffectDust);t.depth=item[itemFocus].depth-1;
+                    t = instance_create(item[itemFocus].x+.5*TILE,item[itemFocus].y+.5*TILE,objEffectDust);t.depth=item[itemFocus].depth-1;
+                }
+                t = instance_create(WIDTH/2,TILE,objText);
+                t.text = "-"+string(itemPrice);
+                t.yVel = -1;
+                t.yGrav = .1;
+                t.fnt = fntScoreSmall;
             
-            t = instance_create(WIDTH/2,TILE,objText);
-            t.text = "-"+string(itemPrice);
-            t.yVel = -1;
-            t.yGrav = .1;
-            t.fnt = fntScoreSmall;
-        
-            global.wallet -= real(itemPrice);
-            //itemPrice = item[itemFocus].price[item[itemFocus].tier];
-            item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
-            itemDescription = "Thank you for your purchase! :)";
+                global.wallet -= real(itemPrice);
+                //itemPrice = item[itemFocus].price[item[itemFocus].tier];
+                item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
+                itemDescription = "Thank you!";
+            } else
+                itemDescription = "You can't afford that. Earn more coins!";
         } else
-            itemDescription = "You can't afford that. :(";
+            itemDescription = "Already at MAX level.";
         //TODO: SAVE THE PURCHASE
     }
     descriptionTimer = 1.5*FPS;

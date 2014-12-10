@@ -1575,7 +1575,7 @@
     <constant name="TILE">16</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
-    <constant name="MOUSEDEPTH">-15</constant>
+    <constant name="MOUSEDEPTH">-1000</constant>
     <constant name="HUDDEPTH">-10</constant>
     <constant name="PLAYERDEPTH">0</constant>
     <constant name="BLOCKDEPTH">6</constant>

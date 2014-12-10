@@ -437,8 +437,6 @@ else
 if (tornadoAlpha &gt; 0)
     draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,tornadoAlpha);
 
-draw_text(cx,y-TILE,hp);
-
 draw_set_color(c_white);
 
 </string>
