@@ -263,11 +263,12 @@ if keyboard_check_pressed(ord('E'))
     instance_create(global.player.x,global.player.y-TILE,objPowerUp);
 }
 
-if keyboard_check(ord('C'))
+if keyboard_check_pressed(ord('C'))
 {
-    global.difficulty += 1;
-    with(global.player)
-        doCombo();
+    global.upgrade[UPGRADE.upHealth] += 1;
+//    global.difficulty += 1;
+//    with(global.player)
+//        doCombo();
 }
 
 
@@ -313,6 +314,16 @@ if (room == INIT)
 }
 if (room == MAIN)
 {
+    
+    global.hp = 1 + global.upgrade[UPGRADE.upHealth];
+    for (i = 1; i &lt; global.hp; i+=1)
+    {
+        h = instance_create((i-1)*TILE,HEIGHT-2*TILE,objEffectFollowHeart);
+        h.hp = i;
+    }
+    
+    
+    
     time = 0;
     global.coinsCollected = 0;
     global.enemiesKilled = 0;
@@ -395,7 +406,7 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//SHOP AND UPGRADE STUFF-----------------
+            <string>//-----------------SHOP AND UPGRADE STUFF-----------------
 global.wallet = 0; //this is ALL my money.
 
 enum UPGRADE
@@ -411,7 +422,18 @@ enum UPGRADE
     upSuperDash = 7
 };
 
-//---------------------------------------
+//UPGRADE VARIABLES.
+
+global.upgrade[UPGRADE.upHealth] = 0;
+global.upgrade[UPGRADE.upJump] = 0;
+global.upgrade[UPGRADE.upMagnet] = 0;
+global.upgrade[UPGRADE.upDash] = 0;
+global.upgrade[UPGRADE.upItemChance] = 0;
+global.upgrade[UPGRADE.upPowerUpTime] = 0;
+global.upgrade[UPGRADE.upComboCooldown] = 0;
+global.upgrade[UPGRADE.upSuperDash] = 0;
+
+//------------------------------------------------------------
 
 depth = HUDDEPTH;
 randomize();
@@ -499,7 +521,7 @@ global.gameOver = false;
 global.coinsCollected = 0;
 global.enemiesKilled = 0;
 
-global.maxHp = 2;
+global.hp = 0;
 
 global.xp = 0;
 global.level = 1; //difficulty display

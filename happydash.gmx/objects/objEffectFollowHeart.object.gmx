@@ -59,7 +59,7 @@ yO = y;
 
 if (alive)
 {
-    if (global.player.hp &lt; hp)
+    if (global.hp &lt; hp+1)
         alive = false;
 } else
 {

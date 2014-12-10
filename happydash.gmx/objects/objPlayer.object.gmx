@@ -35,16 +35,9 @@ global.hasControl = false;
 
 //////////////////local variables///////////////////
 
-//hp
-hp = global.maxHp;
+//invincibility
 invincible = 0;
 invincibleTimer = FPS;
-
-for (i = 0; i &lt; hp; i+=1)
-{
-    h = instance_create(i*TILE,HEIGHT-2*TILE,objEffectFollowHeart);
-    h.hp = i+1;
-}
 
 //pause, camera etc.
 onGround = false;
