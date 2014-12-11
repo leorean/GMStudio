@@ -6,6 +6,7 @@ if (!invincible)
             yVel = -2;
             xVel = -2;
             invincible = invincibleTimer;
+            hurt = true;
         }
     // else
     //    alive = false;

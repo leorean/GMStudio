@@ -30,4 +30,6 @@ if (true)
         playSound(sfxCombo,1+min(global.player.combo*.07,.7));
 
 }
-global.player.pow = min(global.player.pow + 1.5*TILE, global.player.maxPow);
+
+if (global.player.state == ATTACK)
+global.player.pow = global.player.maxPow;//min(global.player.pow + global.player.maxPow*.5, global.player.maxPow);//min(global.player.pow + 1.5*TILE, global.player.maxPow);

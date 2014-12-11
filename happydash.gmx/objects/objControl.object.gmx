@@ -164,8 +164,8 @@ if (room != INIT &amp;&amp; !global.gameOver)
                 global.startSignal = true;
             }
             //if player dashes, speed is higher.
-            //global.xSpeed = round(global.xSpeedDefault)*.5+((2-1*(global.player.pow/global.player.maxPow)));
-            global.xSpeed = global.xSpeedDefault*.5+((2-1*(global.player.pow/global.player.maxPow)));
+            //global.xSpeed = global.xSpeedDefault*.5+((2-1*(global.player.pow/global.player.maxPow)));
+            global.xSpeed = global.xSpeedDefault*.5+((1+global.player.dashSpeed));
         }
         if (objPlayer.state != DEAD)
             global.distance += global.xSpeed;

@@ -39,6 +39,8 @@ else
 
 //ENEMY INTERACTION
 invincible = max(invincible-1,0);
+if (!invincible) hurt = false;
+
 if(state != DEAD)
     enemy = instance_place(x+xVel,y+yVel,objEnemy);
 else
@@ -174,14 +176,19 @@ else //IF NOT DEAD
             db.state = DEAD;
             db = noone;
         }
-        var d;
-        d = 1.5 - .2*global.upgrade[UPGRADE.upDash,UPGRADE.TIER]*1;
+        var d;//dashing stamina coefficient
+        d = 2 - .32*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
         
         pow = max(pow - d, 0+(global.powerUp == POW_2));
         if (pow == 0 && enemy == noone)
+        {
+            invincible = FPS*.5; //short invincibility after attack?
             state = JUMP;
+        }
+        dashSpeed = min(dashSpeed+.03,1);
     } else
     {
+        dashSpeed = max(dashSpeed-.03,0);
         //.0025 = 1/WIDTH
         pow = min(pow+2*(1-(x*.0025)),maxPow);
         yGrav = yGravDefault;

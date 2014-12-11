@@ -30,6 +30,8 @@ mask_index = sprParticleMask;
 
 with(objPlayer)
     instance_destroy();
+    
+global.xSpeed = 0; //lol...
 global.player = noone;
 
 itemFocus = -1;

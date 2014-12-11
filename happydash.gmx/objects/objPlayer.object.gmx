@@ -36,8 +36,9 @@ global.hasControl = false;
 //////////////////local variables///////////////////
 
 //invincibility
-invincible = 0;
+invincible = 0; //cant get hit
 invincibleTimer = FPS;
+hurt = true; //flickering effect
 
 //pause, camera etc.
 onGround = false;
@@ -105,6 +106,8 @@ jumpVel = jumpVelMin;
 isJumped = 0;
 jumpPerformed = false;
 
+dashSpeed = 0;
+        
 ////draw stuff
 fCur = 0;
 fMax = 4;
@@ -415,20 +418,21 @@ else
     color = c_white;
 
 draw_set_color(color);
-a = (invincible mod 2 == 0);
+a = 1-(hurt &amp;&amp; (invincible mod 2 == 0));
 if (global.powerUp == POW_NONE)
     draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 else
     draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 
+/*
 //TORNADO EFFECT
 if (state == ATTACK)
     tornadoAlpha = min(tornadoAlpha +.03,.8);
 else
     tornadoAlpha = max(tornadoAlpha -.1,0);
-
-if (tornadoAlpha &gt; 0)
-    draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,tornadoAlpha);
+*/
+if (state == ATTACK &amp;&amp; dashSpeed &gt; 0)
+    draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,dashSpeed * .8);
 
 draw_set_color(c_white);
 
