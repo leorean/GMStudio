@@ -133,7 +133,7 @@ frame = 0;
             break;
             case POW_6:
                 global.powDuration = 8*FPS;
-                t.text = "@Red Rocket!@";
+                t.text = "Red Rocket!";
             break;
 
         }

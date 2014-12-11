@@ -315,6 +315,8 @@ if (room == MAIN)
 {
     instance_create(0,0,objCamera);
     
+    //INTEGRATE THE UPGRADE EFFECTS:
+    
     global.hp = 1 + global.upgrade[UPGRADE.upHealth, UPGRADE.TIER];
     for (i = 1; i &lt; global.hp; i+=1)
     {
@@ -322,8 +324,10 @@ if (room == MAIN)
         h.hp = i;
     }
     
-    global.maxJumps = 1 + global.upgrade[UPGRADE.upJump, UPGRADE.TIER];
+    global.maxJumps = 2 + global.upgrade[UPGRADE.upJump, UPGRADE.TIER];
     global.distMagnetDefault = .75*TILE + .5*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
+    
+    //-------------------
     
     time = 0;
     global.coinsCollected = 0;

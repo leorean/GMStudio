@@ -16,16 +16,9 @@ for (i = 0; i<w; i += 1)
         s = floor(ds_grid_get(sg,i,j));
         if (in(s,0,4*TILE) || s >= 176) //the first 4 rows in the tileset are reserved for normal blocks
         {
-            //if (global.powerUp != 0)
-            //{
-                t = instance_create(a+i*TILE,b+j*TILE,objBlock);
-                t.px = floor((s-1) mod TILE);
-                t.py = floor((s-1) div TILE);
-            /*} else
-            {
-                t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-                t.type = 0;
-            }*/
+            t = instance_create(a+i*TILE,b+j*TILE,objBlock);
+            t.px = floor((s-1) mod TILE);
+            t.py = floor((s-1) div TILE);
         }
         else if (s == 65) //spikes
         {
@@ -45,34 +38,42 @@ for (i = 0; i<w; i += 1)
         {
             
             //RANDOM BLOCK SPAWNING
-            var c,ct;
-            c = irandom(1000);
-            if (c < 15)//ITEM block
-                ct = 2; 
-            else if (c < 30)//POW block
-                ct = 3;
-            else if (c < 100)//coin block
-                ct = 1;
-            else if (c < 500)//no block
+            //1,2,3,4
+            //influenced by global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER];
+            //2000,1750,1250,1000 ?
+            var c,ct, u;
+            u = global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER];
+            c = irandom(2000-250*u);
+            if (choose(false,false,true)) //chance to spawn no block
                 continue;
+                
+            if (c < 150)
+                ct = 1; //COIN BLOCK
+            else if (c < 200)
+                {if (u > 0) ct = 2; else ct = -1} //ITEM BLOCK
+            else if (c < 250)
+                {if (u > 1) ct = 3; else ct = -1} //POW BLOCK
             else
-                ct = 0;//normal block
+                ct = 0; //NORMAL BLOCK
             
             if (ct == 2)
                 if (!itemSpawned)
                     itemSpawned = true;
                 else
-                    ct = 0;
-
+                    ct = -1;
             if (ct == 3)
                 if (!powSpawned)
                     powSpawned = true;
                 else
-                    ct = 0;
-
+                    ct = -1;
             
-            t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-            t.type = ct;            
+            if (ct == -1)
+                instance_create(a+i*TILE,b+j*TILE,objCoin);
+            else
+            {
+                t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
+                t.type = ct;
+            }
         }
         else if (s == 68) //coins
         {

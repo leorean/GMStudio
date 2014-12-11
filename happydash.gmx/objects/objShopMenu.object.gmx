@@ -48,29 +48,31 @@ descriptionTimer = 0;
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,500); ds_list_add(p,2000);
+ds_list_add(p,500); ds_list_add(p,1000);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
     arrayFromList(p), global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED], global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]);
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,350); ds_list_add(p,800);
-item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Multiple Jumps", "Jump in mid-air!", 
+ds_list_add(p,2000);
+item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Multiple Jumps", "Jump, jump, jump!", 
     arrayFromList(p), global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED], global.upgrade[UPGRADE.upJump,UPGRADE.TIER]);
 
+//implemented
 p = ds_list_create();
-ds_list_add(p,300); ds_list_add(p,500); ds_list_add(p,1000);
+ds_list_add(p,50); ds_list_add(p,150); ds_list_add(p,400);
 item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Coin Magnet", "Coins will be more attracted to you.", 
     arrayFromList(p), global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED], global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]);
 
+//implemented
 p = ds_list_create();
-ds_list_add(p,200); ds_list_add(p,400); ds_list_add(p,800); ds_list_add(p,1500);
+ds_list_add(p,50); ds_list_add(p,150); ds_list_add(p,450); ds_list_add(p,1200);
 item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Dashing Power", "Dash faster, further, longer!", 
     arrayFromList(p), global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED], global.upgrade[UPGRADE.upDash,UPGRADE.TIER]);
 
 p = ds_list_create();
-ds_list_add(p,1000); ds_list_add(p,2500); ds_list_add(p,3500); ds_list_add(p,6000);
-item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance, "Item Chance", "Higher chance to find item blocks.", 
+ds_list_add(p,300); ds_list_add(p,400); ds_list_add(p,600); ds_list_add(p,1000);
+item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance, "Item Chance", "Higher chance to find special blocks.", 
     arrayFromList(p), global.upgrade[UPGRADE.upItemChance,UPGRADE.LOCKED], global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER]);
 
 p = ds_list_create();
@@ -235,9 +237,6 @@ if (btn[0].pressed)
                 
                 global.upgrade[item[itemFocus].index,UPGRADE.TIER]+=1; //save global upgrade.
                 
-                saveProgress();
-                loadProgress();
-                
                 itemDescription = "Thank you!";
             } else
                 itemDescription = "You can't afford that. Earn more coins!";
@@ -248,8 +247,11 @@ if (btn[0].pressed)
     descriptionTimer = 1.5*FPS;
 }
 
-if (btn[1].pressed)
+if (btn[1].pressed) //PLAY
 {
+    saveProgress();
+    loadProgress();
+
     instance_activate_object(objControl);
     room_goto(MAIN);
 }
