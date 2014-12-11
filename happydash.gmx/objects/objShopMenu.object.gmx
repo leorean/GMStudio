@@ -46,18 +46,20 @@ descriptionTimer = 0;
 
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 
+//implemented
 p = ds_list_create();
-ds_list_add(p,1000); ds_list_add(p,4000); ds_list_add(p,10000);
+ds_list_add(p,500); ds_list_add(p,2000);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
     arrayFromList(p), global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED], global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]);
 
+//implemented
 p = ds_list_create();
-ds_list_add(p,500); ds_list_add(p,6000);
+ds_list_add(p,350); ds_list_add(p,800);
 item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Multiple Jumps", "Jump in mid-air!", 
     arrayFromList(p), global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED], global.upgrade[UPGRADE.upJump,UPGRADE.TIER]);
 
 p = ds_list_create();
-ds_list_add(p,300); ds_list_add(p,500);
+ds_list_add(p,300); ds_list_add(p,500); ds_list_add(p,1000);
 item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Coin Magnet", "Coins will be more attracted to you.", 
     arrayFromList(p), global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED], global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]);
 

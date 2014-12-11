@@ -315,14 +315,15 @@ if (room == MAIN)
 {
     instance_create(0,0,objCamera);
     
-    global.hp = 1 + global.upgrade[UPGRADE.upHealth, 0];
+    global.hp = 1 + global.upgrade[UPGRADE.upHealth, UPGRADE.TIER];
     for (i = 1; i &lt; global.hp; i+=1)
     {
         h = instance_create((i-1)*TILE,HEIGHT-2*TILE,objEffectFollowHeart);
         h.hp = i;
     }
     
-    
+    global.maxJumps = 1 + global.upgrade[UPGRADE.upJump, UPGRADE.TIER];
+    global.distMagnetDefault = .75*TILE + .5*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
     
     time = 0;
     global.coinsCollected = 0;
@@ -528,13 +529,14 @@ global.coinsCollected = 0;
 global.enemiesKilled = 0;
 
 global.hp = 0;
+global.maxJumps = 0;
 
 global.xp = 0;
 global.level = 1; //difficulty display
 global.xpMax = maxEXP(global.level);
 
 global.distMagnet = 0; //temp distance to catch coins and items
-global.distMagnetDefault = 1.5*TILE; //distance to catch coins and items
+global.distMagnetDefault = 0; //distance to catch coins and items
 global.distMagnetLarge = 10*TILE; //distance to catch coins and items with chick magnet
 
 global.hasControl = true;

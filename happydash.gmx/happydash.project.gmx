@@ -1405,6 +1405,7 @@
     <sound>sound\sfxPowerDown</sound>
     <sound>sound\sfxRocketFall</sound>
     <sound>sound\sfxExplode</sound>
+    <sound>sound\sfxHurt</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
