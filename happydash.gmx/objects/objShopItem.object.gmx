@@ -35,7 +35,7 @@ description = "&lt;description&gt;";
 index = 0;
 maxTier = 1; //default 1
 tier = 0;
-locked = true;
+locked = global.upgrade[index,UPGRADE.LOCKED];
 
 t = pi/2;
 z = 0;
@@ -61,7 +61,8 @@ z = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//if (S.itemFocus == index)
+            <string>//if (
+//if (S.itemFocus == index)
 //    depth = HUDDEPTH-1;
 //else
 //    depth = HUDDEPTH;

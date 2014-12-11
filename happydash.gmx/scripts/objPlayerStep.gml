@@ -193,27 +193,21 @@ else //IF NOT DEAD
         pow = min(pow+2*(1-(x*.0025)),maxPow);
         yGrav = yGravDefault;
     }
-    
-    if (!alarm[2] || (onGround && yVel > 0 && state != ATTACK))
+    if (!alarm[1] && state != DEAD)
     {
-        if (global.powerUp != POW_3)
+        if (combo > 0)
         {
-            /*if (combo >= 10)
-            {
-                playSound(sfxComboBreak,1);
-                t = instance_create(cx,y,objText);
-                t.text = "Combo Break";
-                t.xVel = -2;
-                t.yVel = -2.5;
-                t.yGrav = .15;
-            }*/
-            if (!alarm[1])
-            {
-                combo = max(combo - 1,0);
-                alarm[1] = ceil(alarm1/(combo+1));
-            }
+            playSound(sfxComboBreak,1);
+            /*t = instance_create(cx,y,objText);
+            t.text = "Combo Break";
+            t.fnt = fntTiny;
+            t.xVel = -2;
+            t.yVel = -2.5;
+            t.yGrav = .15;*/
         }
-    }
+        combo = 0;
+    }   
+    
     if (onGround && yVel > 0 && state != ATTACK)
     {
         y = floor(y);

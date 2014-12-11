@@ -91,6 +91,8 @@ frame = 0;
         playSound(sfxPowerUp,1);
         t = instance_create(x+TILE*.5,y+TILE*.5,objText);
         global.powerUp = type;
+        var pt;
+        pt = global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] *1*FPS;
         switch(global.powerUp)
         {
             case POW_1: //moneeeey

@@ -48,40 +48,43 @@ descriptionTimer = 0;
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,500); ds_list_add(p,1000);
+ds_list_add(p,150); ds_list_add(p,250);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
     arrayFromList(p), global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED], global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]);
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,2000);
-item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Multiple Jumps", "Jump, jump, jump!", 
+ds_list_add(p,1000);
+item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Jump, jump, jump!", "Increase jumps in mid-air!", 
     arrayFromList(p), global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED], global.upgrade[UPGRADE.upJump,UPGRADE.TIER]);
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,50); ds_list_add(p,150); ds_list_add(p,400);
+ds_list_add(p,30); ds_list_add(p,80); ds_list_add(p,250);
 item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Coin Magnet", "Coins will be more attracted to you.", 
     arrayFromList(p), global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED], global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]);
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,50); ds_list_add(p,150); ds_list_add(p,450); ds_list_add(p,1200);
+ds_list_add(p,50); ds_list_add(p,100); ds_list_add(p,120); ds_list_add(p,350);
 item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Dashing Power", "Dash faster, further, longer!", 
     arrayFromList(p), global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED], global.upgrade[UPGRADE.upDash,UPGRADE.TIER]);
 
+//implemented
 p = ds_list_create();
-ds_list_add(p,300); ds_list_add(p,400); ds_list_add(p,600); ds_list_add(p,1000);
-item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance, "Item Chance", "Higher chance to find special blocks.", 
+ds_list_add(p,100); ds_list_add(p,200); ds_list_add(p,350); ds_list_add(p,1000);
+item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance, "Special Blocks", "Unlock special blocks and increase item chance.", 
     arrayFromList(p), global.upgrade[UPGRADE.upItemChance,UPGRADE.LOCKED], global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER]);
 
+//implemented
 p = ds_list_create();
 ds_list_add(p,300); ds_list_add(p,500); ds_list_add(p,750); ds_list_add(p,1200);
-item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power-Up Duration", "Increase the duration of power-up effects.", 
+item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power UP!", "Find better Power-Up's and increase their duration.", 
     arrayFromList(p), global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.LOCKED], global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER]);
 
+//implemented
 p = ds_list_create();
-ds_list_add(p,250); ds_list_add(p,450); ds_list_add(p,600); ds_list_add(p,800); ds_list_add(p,1100);
+ds_list_add(p,100); ds_list_add(p,250); ds_list_add(p,400);
 item[UPGRADE.upComboCooldown] = createItem(9*TILE, 6.5*TILE, UPGRADE.upComboCooldown, "Combo Cooldown", "Increase the combo cooldown duration.", 
     arrayFromList(p), global.upgrade[UPGRADE.upComboCooldown,UPGRADE.LOCKED], global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER]);
 
@@ -91,6 +94,7 @@ item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "
     arrayFromList(p), global.upgrade[UPGRADE.upSuperDash,UPGRADE.LOCKED], global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]);
 
 loadProgress();
+unlockUpgrades();
 
 ////////////////////////////////////////////////////////////////////
 
@@ -261,13 +265,16 @@ if (btn[2].pressed)
     room_goto(INIT);
 }
 
-if (keyboard_check_pressed(ord('R')))
+if (debug_mode)
 {
-    deleteProgress();
-    //room_restart();
+    if (keyboard_check_pressed(ord('R')))
+    {
+        deleteProgress();
+        //room_restart();
+    }
+    if (keyboard_check_pressed(ord('T')))
+        global.wallet += 50;        
 }
-if (keyboard_check_pressed(ord('T')))
-    global.wallet += 500;
 </string>
           </argument>
         </arguments>

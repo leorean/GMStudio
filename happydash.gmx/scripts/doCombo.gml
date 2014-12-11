@@ -1,7 +1,7 @@
 var pitch, c;
 
 global.player.combo += 1;
-global.player.alarm[2] = global.player.alarm2;
+global.player.alarm[1] = global.player.alarm1;
 global.player.jumpPerformed = 0;
 
 global.maxCombo = max(global.maxCombo, global.player.combo);

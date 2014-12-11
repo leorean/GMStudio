@@ -241,36 +241,40 @@ if keyboard_check_pressed(vk_escape)
     game_end();
 
 ////////////////////////////////////////////////////debug keys:   
-if keyboard_check_pressed(ord('R'))
-    room_restart();
-
-if keyboard_check_pressed(ord('Q'))
-    room_goto(INIT);
-
-if keyboard_check_pressed(ord('T'))
+if (debug_mode)
 {
-    if (global.input == INPUT_TOUCH)
-        global.input = INPUT_KEYBOARD;
-    else
-        global.input = INPUT_TOUCH;
+    
+    if keyboard_check_pressed(ord('R'))
+        room_restart();
+    
+    if keyboard_check_pressed(ord('Q'))
+        room_goto(INIT);
+    
+    if keyboard_check_pressed(ord('T'))
+    {
+        if (global.input == INPUT_TOUCH)
+            global.input = INPUT_KEYBOARD;
+        else
+            global.input = INPUT_TOUCH;
+    }
+    
+    if keyboard_check_pressed(ord('E'))
+    {
+        with(objPowerUp)
+            instance_destroy();
+        instance_create(global.player.x,global.player.y-TILE,objPowerUp);
+    }
+    
+    if keyboard_check(ord('C'))
+    {
+        global.player.combo += 1;
+        global.player.alarm[1] = global.player.alarm1;
+    //    global.difficulty += 1;
+    //    with(global.player)
+    //        doCombo();
+    }
+
 }
-
-//TODO: REMOVE THIS
-if keyboard_check_pressed(ord('E'))
-{
-    with(objPowerUp)
-        instance_destroy();
-    instance_create(global.player.x,global.player.y-TILE,objPowerUp);
-}
-
-if keyboard_check_pressed(ord('C'))
-{
-//    global.difficulty += 1;
-//    with(global.player)
-//        doCombo();
-}
-
-
 </string>
           </argument>
         </arguments>
@@ -411,43 +415,12 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//-----------------SHOP AND UPGRADE STUFF-----------------
-global.wallet = 0; //this is ALL my money.
-
-enum UPGRADE
-{
-    upHealth = 0,
-    upJump = 1,
-    upMagnet = 2,
-    upDash = 3,
-    upItemChance = 4,
-    upPowerUpTime = 5,
-    upComboCooldown = 6,
-    upSuperDash = 7,
-    
-    SIZE = 8, //enum size. has to be adjusted if enum is changed.
-    TIER = 0,
-    LOCKED = 1
-    
-};
-
-//UPGRADE VARIABLES.
-defineUpgrades();
-
-/*
-global.upgrade[UPGRADE.upHealth, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upJump, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upDash, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upItemChance, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upPowerUpTime, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upComboCooldown, UPGRADE.TIER] = 0;
-global.upgrade[UPGRADE.upSuperDash, UPGRADE.TIER] = 0;
-*/
-//------------------------------------------------------------
+            <string>show_message("TEST VERSION - DO NOT DISTRIBUTE");
 
 depth = HUDDEPTH;
 randomize();
+
+global.saveFile = 'sv.ini';
 
 //SOUND
 global.mute = false;
@@ -559,8 +532,6 @@ global.distance = 0;
 global.xSeg = 0;
 global.spawnSegment = false;
 
-global.saveFile = 'sv.ini';
-
 global.powerUp = POW_NONE;
 alarm[1] = 0;
 global.powDuration = 0;
@@ -568,6 +539,45 @@ global.powDuration = 0;
 global.screenShake = false;
 shakeTime = 0;
 time = 0;
+
+
+//-----------------SHOP AND UPGRADE STUFF-----------------
+
+global.wallet = 0; //this is ALL my money.
+
+enum UPGRADE
+{
+    upHealth = 0,
+    upJump = 1,
+    upMagnet = 2,
+    upDash = 3,
+    upItemChance = 4,
+    upPowerUpTime = 5,
+    upComboCooldown = 6,
+    upSuperDash = 7,
+    
+    SIZE = 8, //enum size. has to be adjusted if enum is changed.
+    TIER = 0,
+    LOCKED = 1
+    
+};
+
+//INIT UPGRADE VARIABLES
+for (i = 0; i &lt; UPGRADE.SIZE; i+=1)
+{
+    global.upgrade[i, UPGRADE.TIER] = 0;
+    global.upgrade[i, UPGRADE.LOCKED] = true;
+}
+
+
+//LOAD PROGRESS
+loadProgress();
+
+//UNLOCK CERTAIN UPGRADES
+unlockUpgrades();
+
+
+//------------------------------------------------------------
 
 </string>
           </argument>
@@ -667,10 +677,11 @@ if (room != INIT &amp;&amp; !global.gameOver)
     draw_text(0,HEIGHT-TILE, " $ " + string(global.coinsCollected));
 
     //LEVEL    
-    draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,TILE*.5,0,2*TILE);
-    draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,4*TILE*min(global.xp/global.xpMax,1),TILE*.5,0,2*TILE);
+    draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,6*TILE,TILE*.5,0,1.75*TILE);
+    draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,6*TILE*min(global.xp/global.xpMax,1),TILE*.5,0,1.75*TILE);
     draw_set_halign(fa_center);
-    draw_text(2*TILE,1.5*TILE,"Lv. " + string(global.level));
+    //draw_text(2*TILE,1.5*TILE,"Lv. " + string(global.level));
+    drawText(3*TILE,1.5*TILE+2,"LVL " + string(global.level),c_white,c_black,fntTiny);
 
     //CHARGE BAR
     draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
@@ -681,23 +692,21 @@ if (room != INIT &amp;&amp; !global.gameOver)
     
     //meters
     draw_set_halign(fa_center);
-    draw_text(WIDTH/2,HEIGHT-1.5*TILE,string(floor(global.distance*.1))+"m");
+    drawText(WIDTH/2,HEIGHT-1.3*TILE,string(floor(global.distance*.1))+" m",c_white,c_black,fntTiny);
     
     //combo counter
     if (global.player.combo &gt; 0 &amp;&amp; global.player.state != DEAD)
     {
         draw_set_halign(fa_center);
         draw_set_valign(fa_center);
-        draw_set_font(global.fntCombo);
-        draw_sprite_part(spriteHud,-1,4*TILE,0,4*TILE,2*TILE,0,2.5*TILE);
+        draw_sprite_part(spriteHud,-1,4*TILE,0,4*TILE,TILE,0,2.5*TILE);
         var c;
         c = make_color_hsv(
-            max(min(35,35-global.player.combo*2),-150),
-            max(min(255,255-global.player.combo*.75),150),
+            (global.player.combo*3 mod 255),
+            255,
             255);
-        draw_set_color(c);
-        draw_text(2*TILE,3.5*TILE,":"+string(global.player.combo));
-        draw_set_color(c_white);
+        draw_sprite_part_ext(spriteHud,-1,4*TILE,TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),TILE,0,2.5*TILE,1,1,c,1);
+        drawText(2*TILE,3*TILE,string(global.player.combo),c_white,c_none,fntTiny);
     }
 }
 //MUTE BUTTON
