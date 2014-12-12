@@ -117,7 +117,7 @@ if (!global.pause)
         
         if (dir == UP &amp;&amp; place_free(x,y+2))
             || (dir == DOWN &amp;&amp; place_free(x,y-2))
-            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeedhx,y))
+            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed,y))
             || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed,y))
                 alive = false;
         

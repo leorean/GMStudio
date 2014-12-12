@@ -32,23 +32,27 @@ if (true)//(room == MAIN) //dont overwrite score with zeros?
 
 ini_write_string('Options','sfx',string(global.mute));
 ini_write_string('Shop','wallet',string(global.wallet));
-
-ini_write_string('Tier','Health',string(global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]));
-ini_write_string('Tier','Jump',string(global.upgrade[UPGRADE.upJump,UPGRADE.TIER]));
-ini_write_string('Tier','Magnet',string(global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]));
-ini_write_string('Tier','Dash',string(global.upgrade[UPGRADE.upDash,UPGRADE.TIER]));
-ini_write_string('Tier','ItemChance',string(global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER]));
+    
+ini_write_string('Tier','upHealth',string(global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]));
+ini_write_string('Tier','upJump',string(global.upgrade[UPGRADE.upJump,UPGRADE.TIER]));
+ini_write_string('Tier','upMagnet',string(global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]));
+ini_write_string('Tier','upDash',string(global.upgrade[UPGRADE.upDash,UPGRADE.TIER]));
+ini_write_string('Tier','upBlockChance',string(global.upgrade[UPGRADE.upBlockChance,UPGRADE.TIER]));
 ini_write_string('Tier','PowerUpTime',string(global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER]));
 ini_write_string('Tier','ComboCooldown',string(global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER]));
 ini_write_string('Tier','SuperDash',string(global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]));
+ini_write_string('Tier','upPowerUpNew',string(global.upgrade[UPGRADE.upPowerUpNew,UPGRADE.TIER]));
+ini_write_string('Tier','upBlockNew',string(global.upgrade[UPGRADE.upBlockNew,UPGRADE.TIER]));
 
-ini_write_string('Locked','Health',string(global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED]));
-ini_write_string('Locked','Jump',string(global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED]));
-ini_write_string('Locked','Magnet',string(global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED]));
-ini_write_string('Locked','Dash',string(global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED]));
-ini_write_string('Locked','ItemChance',string(global.upgrade[UPGRADE.upItemChance,UPGRADE.LOCKED]));
-ini_write_string('Locked','PowerUpTime',string(global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.LOCKED]));
-ini_write_string('Locked','ComboCooldown',string(global.upgrade[UPGRADE.upComboCooldown,UPGRADE.LOCKED]));
-ini_write_string('Locked','SuperDash',string(global.upgrade[UPGRADE.upSuperDash,UPGRADE.LOCKED]));
+ini_write_string('Locked','upHealth',string(global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED]));
+ini_write_string('Locked','upJump',string(global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED]));
+ini_write_string('Locked','upMagnet',string(global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED]));
+ini_write_string('Locked','upDash',string(global.upgrade[UPGRADE.upDash,UPGRADE.LOCKED]));
+ini_write_string('Locked','upBlockChance',string(global.upgrade[UPGRADE.upBlockChance,UPGRADE.LOCKED]));
+ini_write_string('Locked','upPowerUpTime',string(global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.LOCKED]));
+ini_write_string('Locked','upComboCooldown',string(global.upgrade[UPGRADE.upComboCooldown,UPGRADE.LOCKED]));
+ini_write_string('Locked','upSuperDash',string(global.upgrade[UPGRADE.upSuperDash,UPGRADE.LOCKED]));
+ini_write_string('Locked','upPowerUpNew',string(global.upgrade[UPGRADE.upPowerUpNew,UPGRADE.LOCKED]));
+ini_write_string('Locked','upBlockNew',string(global.upgrade[UPGRADE.upBlockNew,UPGRADE.LOCKED]));
 
 ini_close();

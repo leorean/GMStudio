@@ -32,6 +32,8 @@ alpha = 1;
 xVel = -1+random(2);
 yVel = 0;
 
+enabled = true;
+
 z = choose(-pi/2,pi/2);
 t = 0;
 sn = choose(1,2,3);
@@ -79,7 +81,7 @@ z = sn*sin(t);
 
 draw_sprite_ext(spriteConfetti,frame,x+z,y,1,1,angle,color,alpha);
 
-if (in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+TILE))
+if (enabled &amp;&amp; in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+TILE))
     if (global.input == INPUT_TOUCH &amp;&amp; mouse_check_button(mb_left)
         || global.input == INPUT_KEYBOARD)
         {

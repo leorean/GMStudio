@@ -123,6 +123,8 @@ btn[2].parent = id;
             <kind>1</kind>
             <string>handleButtons();
 
+objText.depth = depth+1;
+
 if (!alarm[0])
 {
 if (btn[0].pressed 

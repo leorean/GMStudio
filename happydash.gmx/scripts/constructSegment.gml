@@ -41,20 +41,19 @@ for (i = 0; i<w; i += 1)
             
             //RANDOM BLOCK SPAWNING
             //1,2,3,4
-            //influenced by global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER];
             //2000,1750,1250,1000 ?
             var c,ct, u;
-            u = global.upgrade[UPGRADE.upItemChance,UPGRADE.TIER];
-            c = irandom(2000-250*u);
+            u = global.upgrade[UPGRADE.upBlockChance,UPGRADE.TIER];
+            c = irandom(2000-150*u);
             if (choose(false,false,true)) //chance to spawn no block
                 continue;
-                
+            //TODO : ADJUST OTHER UPGRADE
             if (c < 150)
                 ct = 1; //COIN BLOCK
             else if (c < 200)
-                {if (u > 0) ct = 2; else ct = -1} //ITEM BLOCK
+                ct = 2; //ITEM BLOCK
             else if (c < 250)
-                {if (u > 1) ct = 3; else ct = -1} //POW BLOCK
+                ct = 3; //POW BLOCK
             else
                 ct = 0; //NORMAL BLOCK
             

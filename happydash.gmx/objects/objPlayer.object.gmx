@@ -244,6 +244,12 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
 
 }
 
+if (global.pause)
+{
+    alarm[0] += 1;
+    alarm[1] += 1;
+}
+
 pressedMute = false;
 if (!global.pause || global.gameOver || state == DEAD)
 {

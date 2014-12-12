@@ -136,7 +136,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
         //LEVEL UP!!!
         if (global.xp&gt;=global.xpMax || (debug_mode &amp;&amp; keyboard_check_pressed(ord('G'))))
         {
-            instance_create(global.player.cx,global.player.cy,objEffectLevelUp);
+            instance_create(WIDTH/2,HEIGHT/2,objEffectLevelUp);
             global.level += 1;
             
             //EXP SYSTEM AND LEVEL UP FORMULA
@@ -417,7 +417,7 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show_message("TEST VERSION - DO NOT DISTRIBUTE! The game will now load.");
+            <string>//show_message("TEST VERSION - DO NOT DISTRIBUTE! The game will now load.");
 
 depth = HUDDEPTH;
 randomize();
@@ -553,12 +553,14 @@ enum UPGRADE
     upJump = 1,
     upMagnet = 2,
     upDash = 3,
-    upItemChance = 4,
+    upBlockChance = 4,
     upPowerUpTime = 5,
     upComboCooldown = 6,
     upSuperDash = 7,
+    upPowerUpNew = 8,
+    upBlockNew = 9,
     
-    SIZE = 8, //enum size. has to be adjusted if enum is changed.
+    SIZE = 10, //enum size. has to be adjusted if enum is changed.
     TIER = 0,
     LOCKED = 1
     
