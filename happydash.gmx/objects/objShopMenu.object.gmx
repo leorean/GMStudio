@@ -78,7 +78,7 @@ item[UPGRADE.upItemChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upItemChance,
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,300); ds_list_add(p,500); ds_list_add(p,750); ds_list_add(p,1200);
+ds_list_add(p,200); ds_list_add(p,450); ds_list_add(p,650); ds_list_add(p,1000);
 item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power UP!", "Find better Power-Up's and increase their duration.", 
     arrayFromList(p), global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.LOCKED], global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER]);
 

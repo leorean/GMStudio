@@ -17,8 +17,9 @@ for (i = 0; i<w; i += 1)
         if (in(s,0,4*TILE) || s >= 176) //the first 4 rows in the tileset are reserved for normal blocks
         {
             t = instance_create(a+i*TILE,b+j*TILE,objBlock);
-            t.px = floor((s-1) mod TILE);
-            t.py = floor((s-1) div TILE);
+            t.ind = (s-1);
+            //t.px = floor((s-1) mod TILE);
+            //t.py = floor((s-1) div TILE);
         }
         else if (s == 65) //spikes
         {
@@ -30,8 +31,9 @@ for (i = 0; i<w; i += 1)
             if (choose(true,true,true,false))
             {
                 t = instance_create(a+i*TILE,b+j*TILE,objPlatform);
-                t.px = floor((s-1) mod TILE);
-                t.py = floor((s-1) div TILE);
+                t.ind = (s-1);
+                //t.px = floor((s-1) mod TILE);
+                //t.py = floor((s-1) div TILE);
             }
         }
         else if (s == 67) //destroyable blocks
@@ -118,9 +120,9 @@ for (i = 0; i<w; i += 1)
         else if (s >= 96 && s < 176) //background objects
         {
             t = instance_create(a+i*TILE,b+j*TILE,objTile);
-            t.px = floor((s-1) mod TILE);
-            t.py = floor((s-1) div TILE);
-
+            t.ind = (s-1);
+            //t.px = floor((s-1) mod TILE);
+            //t.py = floor((s-1) div TILE);
         }        
     }
 }

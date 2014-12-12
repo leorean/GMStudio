@@ -415,7 +415,7 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>show_message("TEST VERSION - DO NOT DISTRIBUTE");
+            <string>//show_message("TEST VERSION - DO NOT DISTRIBUTE");
 
 depth = HUDDEPTH;
 randomize();

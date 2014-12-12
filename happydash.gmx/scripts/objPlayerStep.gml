@@ -177,7 +177,8 @@ else //IF NOT DEAD
             db = noone;
         }
         var d;//dashing stamina coefficient
-        d = 2 - .32*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
+        //d = 2 - .32*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
+        d = 1.8 - .33*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
         
         pow = max(pow - d, 0+(global.powerUp == POW_2));
         if (pow == 0 && enemy == noone)

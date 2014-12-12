@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>depth = BLOCKDEPTH;
 mask_index = sprBlockMask;
+image_speed = 0;
+ind = 0;
 </string>
           </argument>
         </arguments>
@@ -73,8 +75,8 @@ mask_index = sprBlockMask;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0;
-draw_sprite_part(spriteTiles,-1,px*TILE,py*TILE,TILE,TILE,floor(x),y);
+            <string>//draw_sprite_part(spriteTiles,-1,px*TILE,py*TILE,TILE,TILE,floor(x),y);
+draw_sprite(spriteTiles,ind,floor(x),y);
 
 </string>
           </argument>

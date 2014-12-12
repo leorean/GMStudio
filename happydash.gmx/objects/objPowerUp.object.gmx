@@ -29,7 +29,16 @@
 mask_index = sprBlockMask;
 
 alive = true;
-type = choose(POW_1,POW_2,POW_3,POW_4, POW_5,POW_6);
+
+if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 0)
+    type = choose(POW_1, POW_3);
+if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 1)
+    type = choose(POW_1, POW_2, POW_3, POW_4);
+if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 2)
+    type = choose(POW_1, POW_3, POW_3, POW_4, POW_6);
+if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] &gt;= 3)
+    type = choose(POW_1,POW_2,POW_3,POW_4, POW_5, POW_6);
+
 
 t = pi/2;
 
