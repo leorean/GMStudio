@@ -8,6 +8,7 @@ desc = argument4;
 p = argument5;
 l = argument6;
 t = argument7;
+h = argument8;
 
 it = instance_create(a,b,objShopItem);
 it.index = i;
@@ -23,5 +24,6 @@ it.price[array_length_1d(p)] = "MAXED";
 
 it.locked = l;
 it.tier = t;
+it.unlockText = h;
 
 return it;

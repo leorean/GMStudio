@@ -1,3 +1,5 @@
+//here should be defined which upgrades are unlocked when.
+
 global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED] = false;
 global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED] = false;
 global.upgrade[UPGRADE.upMagnet,UPGRADE.LOCKED] = false;

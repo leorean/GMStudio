@@ -32,7 +32,11 @@ if (true)//(room == MAIN) //dont overwrite score with zeros?
 
 ini_write_string('Options','sfx',string(global.mute));
 ini_write_string('Shop','wallet',string(global.wallet));
+
+ini_write_string('Save','version',string(global.version));
     
+ini_write_string('Progress','maxLevelReached',string(global.maxLevelReached));
+
 ini_write_string('Tier','upHealth',string(global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]));
 ini_write_string('Tier','upJump',string(global.upgrade[UPGRADE.upJump,UPGRADE.TIER]));
 ini_write_string('Tier','upMagnet',string(global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]));

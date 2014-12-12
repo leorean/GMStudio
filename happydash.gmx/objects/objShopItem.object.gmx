@@ -35,7 +35,8 @@ description = "&lt;description&gt;";
 index = 0;
 maxTier = 1; //default 1
 tier = 0;
-locked = global.upgrade[index,UPGRADE.LOCKED];
+locked = true;//global.upgrade[index,UPGRADE.LOCKED];
+unlockText = "&lt;unlock description&gt;";
 
 t = pi/2;
 z = 0;

@@ -30,14 +30,17 @@ mask_index = sprBlockMask;
 
 alive = true;
 
-if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 0)
-    type = choose(POW_1, POW_3);
-if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 1)
+pm = global.upgrade[UPGRADE.upPowerUpNew,UPGRADE.TIER];
+powTime = global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER];
+
+if (pm == 0)
+    type = choose(POW_1, POW_2, POW_3);
+else if (pm == 1)
     type = choose(POW_1, POW_2, POW_3, POW_4);
-if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 2)
-    type = choose(POW_1, POW_2, POW_3, POW_4, POW_5, POW_6);
-if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] &gt;= 3)
-    type = choose(POW_1,POW_2,POW_3,POW_4, POW_5, POW_6);//, POW_7); not implemented
+else if (pm == 2)
+    type = choose(POW_1, POW_2, POW_3, POW_4, POW_5);
+else if (pm &gt;= 3)
+    type = choose(POW_1, POW_2, POW_3, POW_4, POW_5, POW_6);//, POW_7); not implemented
 
 
 t = pi/2;
@@ -101,27 +104,27 @@ frame = 0;
         t = instance_create(x+TILE*.5,y+TILE*.5,objText);
         global.powerUp = type;
         var pt;
-        pt = global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] *1*FPS;
+        pt = powTime * 1.5*FPS;
         switch(global.powerUp)
         {
             case POW_1: //moneeeey
-                global.powDuration = 8*FPS;
+                global.powDuration = 8*FPS + pt;
                 t.text = "Golden Shower";
             break;
             case POW_2: //flying
-                global.powDuration = 10*FPS;
+                global.powDuration = 10*FPS + pt;
                 t.text = "Dead Bird";
             break;
             case POW_3: //invincible
-                global.powDuration = 12*FPS;
+                global.powDuration = 12*FPS + pt;
                 t.text = "Rainbow Pill";
             break;
             case POW_4:
-                global.powDuration = 12*FPS;
+                global.powDuration = 12*FPS + pt;
                 t.text = "Bananarama";
             break;
             case POW_5:
-                global.powDuration = 8*FPS;
+                global.powDuration = 8*FPS + pt;
                 t.text = "Chick Magnet";
                 with(objProjectilePlayer2)
                     instance_destroy();
@@ -143,7 +146,7 @@ frame = 0;
                 }
             break;
             case POW_6:
-                global.powDuration = 8*FPS;
+                global.powDuration = 8*FPS + pt;
                 t.text = "Red Rocket!";
             break;
 

@@ -54,7 +54,7 @@ alive = true;
 
 //combo timebuffer
 alarm[1] = 0;
-alarm1 = 3*FPS + FPS*global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER];
+alarm1 = 3*FPS + .5*FPS*global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER];
 
 //attack variables
 db = noone;

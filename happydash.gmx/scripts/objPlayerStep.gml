@@ -109,6 +109,9 @@ if (!alive)
         t.type = 2;
 
         global.wallet += global.coinsCollected;
+        
+        global.maxLevelReached = max(global.maxLevelReached,global.level);
+        
         saveProgress();
         loadProgress();
     }
@@ -128,9 +131,6 @@ if (state == DEAD && !global.gameOver)
 }
 else //IF NOT DEAD
 {
-    //COLLECT COINS
-    //collectCoin();
-    
     //DESTROY BLOCKS BY JUMPING
     destroyBlock = instance_place(x,y-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
     if (instance_exists(destroyBlock) && state != RUN)
@@ -178,7 +178,8 @@ else //IF NOT DEAD
         }
         var d;//dashing stamina coefficient
         //d = 2 - .32*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
-        d = 1.8 - .33*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
+        //d = 1.8 - .33*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
+        d = 1.8 - .22*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
         
         pow = max(pow - d, 0+(global.powerUp == POW_2));
         if (pow == 0 && enemy == noone)

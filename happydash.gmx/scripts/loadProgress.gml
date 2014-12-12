@@ -18,6 +18,9 @@ if (file_exists(working_directory + global.saveFile))
     global.mute = real(ini_read_string('Options','sfx','0'));
     global.wallet = real(ini_read_string('Shop','wallet','0'));
     
+    global.maxLevelReached = real(ini_read_string('Progress','maxLevelReached','0'));
+    global.saveVersion = real(ini_read_string('Save','version','0'));
+    
     global.upgrade[UPGRADE.upHealth, UPGRADE.TIER] = real(ini_read_string('Tier','upHealth','0'));
     global.upgrade[UPGRADE.upJump, UPGRADE.TIER] = real(ini_read_string('Tier','upJump','0'));
     global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER] = real(ini_read_string('Tier','upMagnet','0'));
@@ -40,6 +43,9 @@ if (file_exists(working_directory + global.saveFile))
 
     if (room == SHOP)
     {
+        //UNLOCK CERTAIN UPGRADES
+        unlockUpgrades();
+
         for (i = 0; i < UPGRADE.SIZE; i+=1)
         {
             item[i].tier = global.upgrade[i,UPGRADE.TIER];
