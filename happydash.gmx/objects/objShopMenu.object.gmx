@@ -48,7 +48,7 @@ descriptionTimer = 0;
 
 //implemented
 p = ds_list_create();
-ds_list_add(p,150); ds_list_add(p,250);
+ds_list_add(p,1000); ds_list_add(p,2500);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
     arrayFromList(p), global.upgrade[UPGRADE.upHealth,UPGRADE.LOCKED], global.upgrade[UPGRADE.upHealth,UPGRADE.TIER]);
 
@@ -94,7 +94,6 @@ item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "
     arrayFromList(p), global.upgrade[UPGRADE.upSuperDash,UPGRADE.LOCKED], global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]);
 
 loadProgress();
-unlockUpgrades();
 
 ////////////////////////////////////////////////////////////////////
 
@@ -251,7 +250,7 @@ if (btn[0].pressed)
     descriptionTimer = 1.5*FPS;
 }
 
-if (btn[1].pressed) //PLAY
+if (btn[1].pressed || keyboard_check_pressed(vk_space) || (itemFocus == -1 &amp;&amp; keyboard_check_pressed(vk_enter))) //PLAY
 {
     saveProgress();
     loadProgress();
@@ -259,7 +258,7 @@ if (btn[1].pressed) //PLAY
     instance_activate_object(objControl);
     room_goto(MAIN);
 }
-if (btn[2].pressed)
+if (btn[2].pressed || keyboard_check_pressed(vk_escape))
 {
     instance_activate_object(objControl);
     room_goto(INIT);

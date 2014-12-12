@@ -155,7 +155,7 @@ if (!locked)
 }
 
 if (tier == maxTier)//MAX symbol
-    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE,2*TILE,2*TILE,2*TILE,x,y);
+    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE,2*TILE,2*TILE,2*TILE,x,y+.25*TILE);
 </string>
           </argument>
         </arguments>

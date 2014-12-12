@@ -1448,6 +1448,7 @@
     <sprite>sprites\spriteFontScore</sprite>
     <sprite>sprites\spriteConfetti</sprite>
     <sprite>sprites\spriteShop</sprite>
+    <sprite>sprites\spriteLevelUp</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -1457,7 +1458,6 @@
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>
       <script>scripts\deleteProgress.gml</script>
-      <script>scripts\defineUpgrades.gml</script>
       <script>scripts\importSegment.gml</script>
       <script>scripts\constructSegment.gml</script>
       <script>scripts\playSound.gml</script>
@@ -1559,7 +1559,7 @@
     <room>rooms\MAIN</room>
     <room>rooms\SHOP</room>
   </rooms>
-  <constants number="38">
+  <constants number="39">
     <constant name="POW_NONE">-1</constant>
     <constant name="POW_1">0</constant>
     <constant name="POW_2">1</constant>
@@ -1567,6 +1567,7 @@
     <constant name="POW_4">3</constant>
     <constant name="POW_5">4</constant>
     <constant name="POW_6">5</constant>
+    <constant name="POW_7">6</constant>
     <constant name="COLOR_FLESH">make_color_hsv(19+random(2),100+random(30),200+random(35))</constant>
     <constant name="COLOR_POO">make_color_hsv(15+random(5),115+random(35),130+random(30))</constant>
     <constant name="COLOR_RANDOM">make_color_hsv(random(140),255,255)</constant>

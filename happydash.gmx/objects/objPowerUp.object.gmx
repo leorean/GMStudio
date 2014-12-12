@@ -35,9 +35,9 @@ if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 0)
 if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 1)
     type = choose(POW_1, POW_2, POW_3, POW_4);
 if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] == 2)
-    type = choose(POW_1, POW_3, POW_3, POW_4, POW_6);
+    type = choose(POW_1, POW_2, POW_3, POW_4, POW_5, POW_6);
 if (global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER] &gt;= 3)
-    type = choose(POW_1,POW_2,POW_3,POW_4, POW_5, POW_6);
+    type = choose(POW_1,POW_2,POW_3,POW_4, POW_5, POW_6);//, POW_7); not implemented
 
 
 t = pi/2;

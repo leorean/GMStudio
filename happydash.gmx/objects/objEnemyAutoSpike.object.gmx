@@ -91,14 +91,19 @@ if (!global.pause)
             if (r &amp;&amp; !l) dir = RIGHT;
     
             if (d &amp;&amp; !u) dir = DOWN;
-            if (u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) || (u &amp;&amp; l &amp;&amp; r) dir = UP;
+            if (u &amp;&amp; !d) dir = UP;
 
             if (dir == UP) mask_index = sprEnemyMaskUp;;
             if (dir == DOWN) mask_index = sprEnemyMaskDown;
             if (dir == LEFT) mask_index = sprEnemyMaskLeft;
             if (dir == RIGHT) mask_index = sprEnemyMaskRight;
 
-            if (!u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r) instance_destroy();
+            if (dir == NONE || (!u &amp;&amp; !d &amp;&amp; !l &amp;&amp; !r))
+            {
+                //replace with spikes.
+                instance_destroy();
+                instance_create(x,y,objEnemySpike);
+            }
                         
             checking = max(checking - 1, 0);
         }
@@ -112,8 +117,8 @@ if (!global.pause)
         
         if (dir == UP &amp;&amp; place_free(x,y+2))
             || (dir == DOWN &amp;&amp; place_free(x,y-2))
-            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeed+4,y))
-            || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed-4,y))
+            || (dir == LEFT &amp;&amp; place_free(x-global.xSpeedhx,y))
+            || (dir == RIGHT &amp;&amp; place_free(x-global.xSpeed,y))
                 alive = false;
         
         if (active)

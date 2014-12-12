@@ -226,7 +226,7 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
     //KEY INPUT (touch AND keys)
     keyUpPressed = keyboard_check_pressed(vk_up) || global.tbJump.pressed;
     keyRightPressed = keyboard_check_pressed(vk_right) || global.tbDash.pressed;
-    keyDown = keyboard_check(vk_down) || global.tbStop.pressing;
+    keyDown = keyboard_check(vk_down) || keyboard_check(vk_left) || global.tbStop.pressing;
     
     //MOUSE VISIBILITY
     if (keyUpPressed || keyRightPressed || keyDown)
