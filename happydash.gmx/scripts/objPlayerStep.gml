@@ -276,11 +276,12 @@ yCollision();
 //prev/end variables
 fCur = min((fCur+fSpeed) mod fMax, fMax);
 
+if (state != statePrev && state != DEAD)// && !(invincible && !hurt))
+    fCur = 0;
+
 xPrev = x-global.xSpeed;
 yPrev = y-yVel;
 
-if (state != statePrev && state != DEAD)
-    fCur = 0;
 
 if (!global.pause)
     statePrev = state;

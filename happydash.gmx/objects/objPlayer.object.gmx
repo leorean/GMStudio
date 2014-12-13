@@ -313,11 +313,17 @@ switch(state)
         row = 4;
         fSpeed = .15;
     break;
-    case HURT:
+    /*case HURT:
         row = 5;
         fSpeed = .3;
-    break;
+    break;*/
 }
+
+
+/*if (invincible &amp;&amp; !hurt)
+{
+    draw_sprite_part(spritePlayer,-1,0,10*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5));
+}*/
 
 //RAINBOWWWW EFFECT
 p = 2;//performance coefficient, as in "how smooth is the rainbow?"
@@ -397,20 +403,27 @@ if (global.powerUp == POW_3) //invincible
 else
     color = c_white;
 
+if (hurt)
+{
+    if (global.timer mod 2 == 0)
+        color = c_red;
+    else
+        color = c_white;
+}
+if (invincible)
+    a = .5;
+else 
+    a = 1;
+
 draw_set_color(color);
-a = 1-(hurt &amp;&amp; (invincible mod 2 == 0));
+
 if (global.powerUp == POW_NONE)
     draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 else
     draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 
-/*
+
 //TORNADO EFFECT
-if (state == ATTACK)
-    tornadoAlpha = min(tornadoAlpha +.03,.8);
-else
-    tornadoAlpha = max(tornadoAlpha -.1,0);
-*/
 if (state == ATTACK &amp;&amp; dashSpeed &gt; 0)
     draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,dashSpeed * .8);
 

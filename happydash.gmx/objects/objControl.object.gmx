@@ -77,13 +77,13 @@ if (room == MAIN &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp;
             || keyboard_check_pressed(ord('P')))
             //|| os_is_paused())
             {
-                with(objPauseMenu)
-                    instance_destroy();
-                with(objButton)
-                    instance_destroy();
+                //with(objButton)
+                //    instance_destroy();            
+                //with(objPauseMenu)
+                //    instance_destroy();
 
-                instance_create(0,0,objPauseMenu);
                 global.pause = true;
+                instance_create(0,0,objPauseMenu);
                 
                 //correct the x error??
                 //with (objEnemy)
@@ -332,7 +332,7 @@ if (room == MAIN)
     }
     
     global.maxJumps = 2 + global.upgrade[UPGRADE.upJump, UPGRADE.TIER];
-    global.distMagnetDefault = .75*TILE + .5*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
+    global.distMagnetDefault = 1*TILE + .4*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
     
     //-------------------
     
@@ -629,7 +629,7 @@ if(global.input == INPUT_TOUCH)
 }
 */  
     
-if (room != INIT &amp;&amp; !global.gameOver)
+if (room == MAIN &amp;&amp; !global.gameOver)
 {
 
     if (!global.pause)
@@ -706,7 +706,7 @@ if (room != INIT &amp;&amp; !global.gameOver)
     drawText(floor(WIDTH/2),floor(HEIGHT-1.3*TILE),string(floor(global.distance*.1))+" m",c_white,c_black,fntTiny);
     
     //combo counter
-    if (global.player.combo &gt; 0 &amp;&amp; global.player.state != DEAD)
+    if (global.player.state != DEAD)
     {
         draw_set_halign(fa_center);
         draw_set_valign(fa_center);
@@ -717,8 +717,19 @@ if (room != INIT &amp;&amp; !global.gameOver)
             255,
             255);
         draw_sprite_part_ext(spriteHud,-1,4*TILE,TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),TILE,0,2.5*TILE,1,1,c,1);
-        drawText(2*TILE,3*TILE,string(global.player.combo),c_white,c_none,fntTiny);
+        txt = "";
+        if (global.player.combo &gt; 0)
+            txt = string(global.player.combo);
+        else
+            txt = "Combo";
+        drawText(2*TILE,3*TILE,txt,c_white,c_none,fntTiny);
     }
+    
+    //JUMPS
+    for (i = 0; i &lt; global.maxJumps; i+=1)
+        draw_sprite_part_ext(spriteHud,-1,3*TILE,8*TILE,TILE,TILE,i*TILE,3.5*TILE,1,1,c_white,.5);
+    for (i = 0; i &lt; (global.maxJumps - global.player.jumpPerformed); i+=1)
+        draw_sprite_part(spriteHud,-1,2*TILE,8*TILE,TILE,TILE,i*TILE,3.5*TILE);
 }
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);

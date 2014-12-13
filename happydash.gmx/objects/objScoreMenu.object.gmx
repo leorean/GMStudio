@@ -139,7 +139,7 @@ for (i = 0; i &lt; global.scoreCount; i+=1)
     if (i == 3) suffix = "4th: ";
     if (i == 4) suffix = "5th: ";
     
-    c1 = make_color_hsv(-150+i*20,255,255);
+    c1 = make_color_hsv((150+i*20) mod 255,255,255);
     
     drawText(WIDTH/2,row+i*TILE,suffix + string(global.scores[i]),c1,c_none,fntScoreSmall);
 }
