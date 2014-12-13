@@ -14,6 +14,7 @@ for (i = 0; i<w; i += 1)
     for (j = 0; j<h; j+=1)
     {
         s = floor(ds_grid_get(sg,i,j));
+        
         if (in(s,0,4*TILE) || s >= 176) //the first 4 rows in the tileset are reserved for normal blocks
         {
             t = instance_create(a+i*TILE,b+j*TILE,objBlock);
@@ -42,30 +43,22 @@ for (i = 0; i<w; i += 1)
             //RANDOM BLOCK SPAWNING
             //1,2,3,4
             //2000,1750,1250,1000 ?
-            var c,ct, u, b;
+            
+            var c, ct, u, bfree;
             u = global.upgrade[UPGRADE.upBlockChance,UPGRADE.TIER];//7.. chance
-            b = global.upgrade[UPGRADE.upBlockNew,UPGRADE.TIER]; //3.. new blocks
+            bfree = global.upgrade[UPGRADE.upBlockNew,UPGRADE.TIER]; //3.. new blocks
             c = irandom(2500-200*u);
             if (choose(false,false,true)) //chance to spawn no block
                 continue;
-            if (c < 50 && u > 2)
+            if (c < 50 && bfree > 2)
                 ct = 3; //POW BLOCK
-            else if (c < 100 && u > 1)
+            else if (c < 100 && bfree > 1)
                 ct = 2; //ITEM BLOCK
-            else if (c < 200 && u > 0)
+            else if (c < 200 && bfree > 0)
                 ct = 1; //COIN BLOCK
             else
                 ct = 0; //NORMAL BLOCK                
-            /*
-            if (c < 150)
-                ct = 1; //COIN BLOCK
-            else if (c < 200)
-                ct = 2; //ITEM BLOCK
-            else if (c < 250)
-                ct = 3; //POW BLOCK
-            else
-                ct = 0; //NORMAL BLOCK
-            */
+            
             if (ct == 2)
                 if (!itemSpawned)
                     itemSpawned = true;
@@ -81,8 +74,9 @@ for (i = 0; i<w; i += 1)
                 instance_create(a+i*TILE,b+j*TILE,objCoin);
             else
             {
-                t = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
-                t.type = ct;
+                var db;
+                db = instance_create(a+i*TILE,b+j*TILE,objDestroyBlock);
+                db.type = ct;
             }
         }
         else if (s == 68) //coins
@@ -91,13 +85,13 @@ for (i = 0; i<w; i += 1)
         }
         else if (s == 69) //enemies
         {
-            var c;
-            c = choose(0,1,2);
-            if (c == 0)
+            var e;
+            e = choose(0,1,2);
+            if (e == 0)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy1);
-            if (c == 1)
+            if (e == 1)
                 instance_create(a+i*TILE,b+j*TILE,objEnemy2);
-            if (c == 2){}; //do nothing
+            if (e == 2){}; //do nothing
            
         }
         else if (s == 70) //spikes and auto spikes
@@ -137,13 +131,15 @@ for (i = 0; i<w; i += 1)
 //ADD SEGMENT-INDEPENDANT THINGS:
 
 //ROTATOR OBSTACLES.
-if (global.difficulty > 20)
+var dr;
+dr = 25;
+if (global.difficulty > dr)
 {
     var ri, rx, ry;
     
     ri = 0;
     for (i = 0; i < 10; i+= 1)
-        if (global.difficulty > 20 + i*5) //each 5 dif, more chance.
+        if (global.difficulty > dr + i*10) //each 5 dif, more chance.
             ri += 1;
     
     repeat(ri)

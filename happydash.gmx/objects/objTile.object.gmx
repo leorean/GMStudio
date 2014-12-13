@@ -26,8 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>depth = TILEDEPTH;
-mask_index = sprBlockMask;
+//mask_index = sprBlockMask;
 image_speed = 0;
+image_index = 0;
 ind = 0;
 </string>
           </argument>

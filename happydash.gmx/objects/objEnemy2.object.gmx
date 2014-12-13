@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>depth = PLAYERDEPTH+2;
 mask_index = sprEnemyMask;
+image_speed = 0;
 
 xVel = 0;
 yVel = 0;
@@ -171,8 +172,7 @@ isFlying = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0;
-frame = floor(fCur);
+            <string>frame = floor(fCur);
 
 switch(state)
 {
@@ -190,7 +190,6 @@ if (dir == RIGHT)
     draw_sprite_part(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x),ceil(y));
 else
     draw_sprite_part_ext(spriteEnemies,-1,frame*TILE,2*TILE+row*TILE,TILE,TILE,floor(x)+TILE,ceil(y),-1,1,c_white,1);
-
 </string>
           </argument>
         </arguments>

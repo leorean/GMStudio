@@ -94,15 +94,12 @@ depth = HUDDEPTH-y;
             <string>//draw item background
 draw_sprite_part(spriteShop,-1,WIDTH,4*TILE,2*TILE,2*TILE,x,y);
 
-//draw_sprite_part(spriteShop,-1,WIDTH,2*TILE,2*TILE,2*TILE,x,y);
-
 //draw item image
-if (!locked)
-{
-    var c;
-    if (tier &lt;= 0) c = c_black; else c = c_white;
-    draw_sprite_part_ext(spriteShop,-1,WIDTH+index*2*TILE,0,2*TILE,2*TILE,x,y,1,1,c,.5+.5*(tier!= 0));
-} else
+var c;
+if (tier &lt;= 0 || locked) c = c_black; else c = c_white;
+draw_sprite_part_ext(spriteShop,-1,WIDTH+index*2*TILE,0,2*TILE,2*TILE,x,y,1,1,c,.5+.5*(tier!= 0 &amp;&amp; !locked));
+
+if (locked)
     draw_sprite_part(spriteShop,-1,WIDTH+4*TILE,4*TILE,2*TILE,2*TILE,x,y);
 
 //draw upgrade tier stuff.

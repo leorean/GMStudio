@@ -331,7 +331,7 @@ if (room == MAIN)
     }
     
     global.maxJumps = 2 + global.upgrade[UPGRADE.upJump, UPGRADE.TIER];
-    global.distMagnetDefault = .5*TILE + .4*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
+    global.distMagnetDefault = .75*TILE + .5*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
     
     //-------------------
     
@@ -422,7 +422,7 @@ if (surface_exists(global.drawBuffer))
 depth = HUDDEPTH;
 randomize();
 
-global.version = 99; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
+global.version = 105; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
