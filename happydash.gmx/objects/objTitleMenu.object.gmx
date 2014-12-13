@@ -36,7 +36,12 @@ maxIndex = 3;
 showHelp = false;
 showHighscore = false;
 
-row = 7;
+row = 8;
+
+by = row*TILE - TILE;
+bw = 8*TILE;
+bx = WIDTH/2-.5*bw;
+bh = 3*TILE + ceil(maxIndex*1.5)*TILE;
 
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Start";
@@ -49,7 +54,7 @@ btn[1].index = 1;
 btn[1].parent = id;
 
 btn[2] = instance_create(WIDTH/2,row*TILE+3*TILE,objButton);
-btn[2].text = "Highscores";
+btn[2].text = "Scores";
 btn[2].index = 2;
 btn[2].parent = id;
 
@@ -68,6 +73,8 @@ t = pi/2;
 z = 0;
 xx = 0;
 yy = 0;
+
+ti = 0; //highscore iterator
 </string>
           </argument>
         </arguments>
@@ -115,27 +122,18 @@ yy = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!showHelp &amp;&amp; !showHighscore)
-{
-    handleButtons();
-    objButton.visible = true;
-} else
-    objButton.visible = false;
+            <string>handleButtons();
 
-screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
+//screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
 
-if (!showHighscore)
-{
-    if (btn[0].pressed)
-        room_goto_next();
-    if (btn[1].pressed)
-        room_goto(SHOP);
-    if (btn[2].pressed)
-        showHighscore = true;
-    if (btn[3].pressed)
-        game_end();
-} else if (screenPressed)
-    showHighscore = false;
+if (btn[0].pressed)
+    room_goto_next();
+if (btn[1].pressed)
+    room_goto(SHOP);
+if (btn[2].pressed)
+    room_goto(SCORE);
+if (btn[3].pressed)
+    game_end();
 
 </string>
           </argument>
@@ -180,89 +178,22 @@ draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx+WIDTH,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
-if (!showHelp &amp;&amp; !showHighscore)
-    drawBorder(7.5*TILE,6*TILE,10*TILE,8*TILE);
-if (showHighscore)
-    drawBorder(2*TILE,4*TILE,21*TILE,9*TILE);
+//drawBorder(7.5*TILE,6*TILE,10*TILE,9*TILE);
+drawBorder(bx,by,bw,bh);
 
 //title
-if (!showHelp &amp;&amp; !showHighscore)
-{
-    //draw_set_color(c_black);
-    //draw_set_alpha(.3);
-    //draw_sprite_part_ext(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0+4,-z+4,1,1,c_black,.5);
-    draw_set_alpha(1);
-    draw_set_color(c_white);
-    draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
-}
+draw_set_alpha(1);
+draw_set_color(c_white);
+draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
 
-draw_set_font(global.fntDefault);
-
-if (showHelp || showHighscore)
-{
-    btn[0].visible = false;
-    btn[1].visible = false;
-    btn[2].visible = false;
-    btn[3].visible = false;
-} else
-{
-    btn[0].visible = true;
-    btn[1].visible = true;
-    btn[2].visible = true;
-    btn[3].visible = true;
-    
-    textCreditsY = max(textCreditsY-.3,HEIGHT-TILE);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_top);
-    draw_set_color(c_white);
-    //draw_text(floor(WIDTH/2),floor(textCreditsY),textCredits);
-    drawText(floor(WIDTH/2),floor(textCreditsY),textCredits,c_white,c_black,fntMenu);
-    //drawText(WIDTH/2,textCreditsY,textCredits,c_white);
-    /*draw_set_font(fntMenu);
-    draw_set_color(c_black);
-    draw_text(floor(WIDTH/2),floor(textCreditsY)+1,textCredits);
-    draw_set_color(c_white);
-    draw_text(floor(WIDTH/2),floor(textCreditsY),textCredits);*/
-    draw_set_valign(fa_top);
-    draw_set_font(global.fntDefault);
-}
-
-
+/*
 //HELP
 if (showHelp)
 {
     draw_set_halign(fa_center);
     draw_sprite_part(spriteTitleMenu,-1,WIDTH,page*HEIGHT,WIDTH,HEIGHT,0,0);
     drawText(floor(WIDTH/2),floor(TILE/2),"Help/Controls",c_white,c_black,fntButton);
-}
-
-//highscore
-if (showHighscore)
-{
-    var suffix, row;
-    row = 5*TILE;
-    draw_set_halign(fa_center);
-    //draw_text(WIDTH/2,row-z,"Highscores");
-    drawText (WIDTH/2,row-z,"Highscores",c_white,c_black,fntButton);
-    draw_set_font(global.fntDefault);
-    for (i = 0; i &lt; global.scoreCount; i+=1)
-    {
-        if ((i+1) == 1)
-            suffix = "&amp;&amp;&amp;&amp;&amp;";
-        else if ((i+1) == 2)
-            suffix = "&amp;&amp;&amp;&amp;";
-        else if ((i+1) == 3)
-            suffix = "&amp;&amp;&amp;";
-        else if ((i+1) == 4)
-            suffix = "&amp;&amp;";
-        else if ((i+1) == 5)
-            suffix = "&amp;";
-        draw_set_halign(fa_left);        
-        draw_text(3*TILE,row+1.5*TILE+i*TILE,string(suffix));
-        draw_set_halign(fa_right);
-        draw_text(WIDTH-3*TILE,row+1.5*TILE+i*TILE,string(global.scores[i]));
-    }
-}
+}*/
 </string>
           </argument>
         </arguments>

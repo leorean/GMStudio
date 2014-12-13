@@ -57,18 +57,15 @@ for (i = 0; i<w; i += 1)
             else if (c < 200 && bfree > 0)
                 ct = 1; //COIN BLOCK
             else
-                ct = 0; //NORMAL BLOCK                
-            
+                ct = choose(-1,0); //NORMAL BLOCK                
+
+            if (ct == 2 && itemSpawned) ct = -1;
+            if (ct == 3 && powSpawned) ct = -1;
             if (ct == 2)
-                if (!itemSpawned)
                     itemSpawned = true;
-                else
-                    ct = -1;
             if (ct == 3)
-                if (!powSpawned)
                     powSpawned = true;
-                else
-                    ct = -1;
+
             
             if (ct == -1)
                 instance_create(a+i*TILE,b+j*TILE,objCoin);

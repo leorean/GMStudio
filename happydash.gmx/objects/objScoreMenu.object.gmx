@@ -25,33 +25,32 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//depth = HUDDEPTH;
-prevIndex = -1;
+            <string>depth = HUDDEPTH+2;
+mask_index = sprParticleMask;
 
-a=0;b=0;c=0;d=0;
+with(objPlayer)
+    instance_destroy();
 
-//string_width doesnt work with html5 ...
-w = 4*TILE;//string_width(text);
-h = 1.5*TILE;//string_height(text);
+global.xSpeed = 0; //lol...
+global.player = noone;
+        
+loadProgress();
+saveProgress();
 
-cActive1 = c_white;
-cActive2 = c_black;
-cInactive1 = make_color_hsv(0,0,100);
-cInactive2 = c_black;
+////////////////////////////////////////////////////////////////////
 
-cDisabled1 = make_color_hsv(0,0,80);
-cDisabled2 = make_color_hsv(0,0,30);
+////BUTTONS
+index = 0;
+maxIndex = 0;
 
-pressed = false;
-active = false;
+//purchase
+btn[0] = instance_create(WIDTH/2,HEIGHT-1.5*TILE,objButton);
+btn[0].text = "Back";
+btn[0].index = 0;
+btn[0].parent = id;
 
-enabled = true;
-
-mPrevX = mouse_x;
-mPrevY = mouse_y;
-
-text = "xxxxx";
-fnt = fntButton;
+if (global.input != INPUT_TOUCH)
+    global.mouseVisible = true;
 </string>
           </argument>
         </arguments>
@@ -74,73 +73,16 @@ fnt = fntButton;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = parent.depth-1;
+            <string>if (room != SCORE) instance_destroy();
 
-if (enabled)
+if (btn[0].pressed || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_enter))
 {
+    keyboard_key_release(vk_escape);
+    keyboard_key_release(vk_enter);
+    mouse_clear(mb_left);
     
-    a = x-w;
-    b = y;
-    c = x+w;
-    d = y+h;
-    
-    if (global.mouseVisible || global.input == INPUT_TOUCH)
-    {
-        if (visible &amp;&amp; (in(mouse_x,a,c) &amp;&amp; in(mouse_y,b,d)))
-        {
-            if (!active) playSound(sfxCaching, 1);
-            active = true;
-        }
-        else
-            active = false;
-    }
-    else
-    {
-        if (visible &amp;&amp; (parent.index == index))
-        {depth = parent.depth-1;
-    
-    a = x-w;
-    b = y;
-    c = x+w;
-    d = y+h;
-    
-    if (global.mouseVisible || global.input == INPUT_TOUCH)
-    {
-        if (visible &amp;&amp; (in(mouse_x,a,c) &amp;&amp; in(mouse_y,b,d)))
-        {
-            if (!active) playSound(sfxCaching, 1);
-            active = true;
-        }
-        else
-            active = false;
-    }
-    else
-    {
-        if (visible &amp;&amp; (parent.index == index))
-        {
-            if (!active) playSound(sfxCaching, 1);
-            active = true;
-        }
-        else
-            active = false;
-    }
-            if (!active) playSound(sfxCaching, 1);
-            active = true;
-        }
-        else
-            active = false;
-    }
-    
-    if (mouse_check_button_released(mb_left)
-        &amp;&amp; in(mouse_x,a,c)
-        &amp;&amp; in(mouse_y,b,d))
-    ||
-        ((keyboard_check_released(vk_space) || keyboard_check_released(vk_enter))
-        &amp;&amp; index == parent.index)
-        pressed = true;
-    else
-        pressed = false;
-        
+    instance_activate_object(objControl);
+    room_goto(INIT);
 }
 </string>
           </argument>
@@ -164,29 +106,12 @@ if (enabled)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0;
-//draw_set_font(fntButton);
+            <string>draw_set_alpha(1);
 draw_set_color(c_white);
-draw_set_halign(fa_center);
-draw_set_valign(fa_top);
-draw_set_alpha(1);
+draw_rectangle(0,0,WIDTH,HEIGHT,0);
 
-//if (prevIndex != parent.index &amp;&amp; prevIndex != -1)
-//    playSound(sfxCaching, 1);
+//draw_sprite_part(spriteShop,-1,0,0,WIDTH,HEIGHT,0,0);
 
-if (text != "")
-{
-    if (enabled)
-    {
-        if (active)
-            drawText(x,y,text,cActive1,cActive2,fnt);
-        else
-            drawText(x,y,text,cInactive1,cInactive2,fnt);
-    } else
-        drawText(x,y,text,cDisabled1,cDisabled2,fnt);
-}
-
-prevIndex = parent.index;
 </string>
           </argument>
         </arguments>

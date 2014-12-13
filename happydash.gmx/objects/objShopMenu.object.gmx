@@ -67,8 +67,8 @@ item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Stamina", 
     arrayFromList(p), 0, true, "");
 
 p = ds_list_create();
-ds_list_add(p,100); ds_list_add(p,250); ds_list_add(p,500); ds_list_add(p,750); ds_list_add(p,800); ds_list_add(p,1000); ds_list_add(p,1200);
-item[UPGRADE.upBlockChance] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockChance, "Block Chance", "Increase spawning chance of special Blocks.", 
+ds_list_add(p,400); ds_list_add(p,650); ds_list_add(p,800); ds_list_add(p,1000); ds_list_add(p,1300); ds_list_add(p,1450); ds_list_add(p,1600);
+item[UPGRADE.upBlockChance] = createItem(13*TILE, 8.5*TILE, UPGRADE.upBlockChance, "Block Chance", "Increase spawning chance of #special Blocks.", 
     arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 5&gt;");
 
 p = ds_list_create();
@@ -92,8 +92,8 @@ item[UPGRADE.upPowerUpNew] = createItem(5*TILE, 8.5*TILE, UPGRADE.upPowerUpNew, 
     arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 5&gt;");
 
 p = ds_list_create();
-ds_list_add(p,200); ds_list_add(p,450); ds_list_add(p,700);
-item[UPGRADE.upBlockNew] = createItem(13*TILE, 8.5*TILE, UPGRADE.upBlockNew, "Block-Mania", "Unlock new types of blocks!", 
+ds_list_add(p,100); ds_list_add(p,350); ds_list_add(p,700);
+item[UPGRADE.upBlockNew] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockNew, "Block-Mania", "Unlock new types of blocks!", 
     arrayFromList(p), 0, true, "");
         
 loadProgress();
@@ -198,7 +198,7 @@ if (itemFocus != -1)
     itemLocked = item[itemFocus].locked;
     if (!itemLocked)
     {
-        itemName = string(item[itemFocus].name) + string(item[itemFocus].tier) + " / " + string(item[itemFocus].maxTier) + ")";
+        itemName = string(item[itemFocus].name) + " (" + string(item[itemFocus].tier) + " / " + string(item[itemFocus].maxTier) + ")";
         if (!descriptionTimer) itemDescription = item[itemFocus].description;
     } else
     {

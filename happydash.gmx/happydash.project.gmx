@@ -1550,12 +1550,14 @@
       <object>objects\objGameOverMenu</object>
       <object>objects\objTitleMenu</object>
       <object>objects\objTouchButton</object>
+      <object>objects\objScoreMenu</object>
       <object>objects\objShopMenu</object>
       <object>objects\objShopItem</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\INIT</room>
+    <room>rooms\SCORE</room>
     <room>rooms\MAIN</room>
     <room>rooms\SHOP</room>
   </rooms>

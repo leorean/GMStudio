@@ -124,7 +124,7 @@ if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH
     }
 
 
-if (room != INIT &amp;&amp; !global.gameOver)
+if (room == MAIN &amp;&amp; !global.gameOver)
 {
 
     //global routines here
@@ -301,6 +301,7 @@ if (debug_mode)
             <kind>1</kind>
             <string>//DEACTIVATE SELF IF IN SHOP
 if (room == SHOP) instance_deactivate_object(objControl);
+if (room == SCORE) instance_deactivate_object(objControl);
 
 //room start
 view_visible[0] = true;
