@@ -70,7 +70,7 @@
           <argument>
             <kind>1</kind>
             <string>//PAUSE GAME
-if (room != INIT &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp; !global.spawnSegment)
+if (room == MAIN &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp; !global.spawnSegment)
     if (global.player.state != DEAD)
     {
         if ((mouse_check_button_pressed(mb_left) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT)))

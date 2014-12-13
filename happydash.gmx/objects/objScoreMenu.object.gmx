@@ -30,6 +30,8 @@ mask_index = sprParticleMask;
 
 with(objPlayer)
     instance_destroy();
+with(objButton)
+    instance_destroy();
 
 global.xSpeed = 0; //lol...
 global.player = noone;
@@ -43,7 +45,7 @@ saveProgress();
 index = 0;
 maxIndex = 0;
 
-//purchase
+
 btn[0] = instance_create(WIDTH/2,HEIGHT-1.5*TILE,objButton);
 btn[0].text = "Back";
 btn[0].index = 0;
@@ -75,12 +77,10 @@ if (global.input != INPUT_TOUCH)
             <kind>1</kind>
             <string>if (room != SCORE) instance_destroy();
 
+handleButtons();
+
 if (btn[0].pressed || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_enter))
 {
-    keyboard_key_release(vk_escape);
-    keyboard_key_release(vk_enter);
-    mouse_clear(mb_left);
-    
     instance_activate_object(objControl);
     room_goto(INIT);
 }

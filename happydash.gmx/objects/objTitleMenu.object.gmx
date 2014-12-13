@@ -28,6 +28,9 @@
             <string>image_index = 0;
 depth = 2;
 
+with(objButton)
+    instance_destroy();
+
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
 
@@ -127,7 +130,7 @@ ti = 0; //highscore iterator
 //screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
 
 if (btn[0].pressed)
-    room_goto_next();
+    room_goto(MAIN);
 if (btn[1].pressed)
     room_goto(SHOP);
 if (btn[2].pressed)
