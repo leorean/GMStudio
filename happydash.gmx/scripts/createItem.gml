@@ -6,9 +6,7 @@ i = argument2;
 n = argument3;
 desc = argument4;
 p = argument5;
-l = argument6;
-t = argument7;
-h = argument8;
+h = argument6;
 
 it = instance_create(a,b,objShopItem);
 it.index = i;
@@ -22,8 +20,8 @@ for (k = 0; k < array_length_1d(p); k+=1)
 }
 it.price[array_length_1d(p)] = "MAXED";
 
-it.locked = l;
-it.tier = t;
+it.locked = global.upgrade[i,UPGRADE.LOCKED];
+it.tier = global.upgrade[i,UPGRADE.TIER];
 it.unlockText = h;
 
 return it;

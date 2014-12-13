@@ -42,6 +42,8 @@ itemName = "";
 itemDescription = "";
 descriptionTimer = 0;
 
+loadProgress();
+
 ////////////////////////////SHOP ITEMS///////////////////////////////
 
 //createItem(x, y, index, name, description, pricearray, locked, tier);
@@ -49,55 +51,55 @@ descriptionTimer = 0;
 p = ds_list_create();
 ds_list_add(p,1000); ds_list_add(p,3500);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 5&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching the level 5&gt;");
 
 p = ds_list_create();
 ds_list_add(p,5000);
 item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "Jump, jump, jump!", "Additional mid-air jump!", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 10&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching the level 10&gt;");
 
 p = ds_list_create();
 ds_list_add(p,30); ds_list_add(p,60); ds_list_add(p,240); ds_list_add(p,420); ds_list_add(p,1000);
 item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Coin Magnet", "Coins will be more attracted to you.", 
-    arrayFromList(p), 0, true, "");
+    arrayFromList(p), "");
 
 p = ds_list_create();
 ds_list_add(p,50); ds_list_add(p,250); ds_list_add(p,400); ds_list_add(p,650); ds_list_add(p,1200);
 item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Stamina", "Dash faster, further, longer!", 
-    arrayFromList(p), 0, true, "");
+    arrayFromList(p), "");
 
 p = ds_list_create();
 ds_list_add(p,400); ds_list_add(p,650); ds_list_add(p,800); ds_list_add(p,1000); ds_list_add(p,1300); ds_list_add(p,1450); ds_list_add(p,1600);
 item[UPGRADE.upBlockChance] = createItem(13*TILE, 8.5*TILE, UPGRADE.upBlockChance, "Block Chance", "Increase spawning chance of #special Blocks.", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 5&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching the level 5&gt;");
 
 p = ds_list_create();
 ds_list_add(p,1300); ds_list_add(p,1450); ds_list_add(p,1650); ds_list_add(p,2000);
-item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power-Up Time!", "Increases the duration of Power-Up effects.", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 10&gt;");
+item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Power-Up Time!", "Increases the duration of #Power-Up effects.", 
+    arrayFromList(p), "&lt;Unlocked by reaching the level 10&gt;");
 
 p = ds_list_create();
 ds_list_add(p,250); ds_list_add(p,400); ds_list_add(p,750); ds_list_add(p,900); ds_list_add(p,1200); ds_list_add(p,1500);
 item[UPGRADE.upComboCooldown] = createItem(9*TILE, 6.5*TILE, UPGRADE.upComboCooldown, "Combo Cooldown", "Increase the combo cooldown duration.", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 5&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching the level 5&gt;");
 
 p = ds_list_create();
 ds_list_add(p,25000);
 item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "SUPER DASH", "Unleash your full potential!", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 15&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching the level 15&gt;");
 
 p = ds_list_create();
 ds_list_add(p,300); ds_list_add(p,700); ds_list_add(p,900); ds_list_add(p,2400);
 item[UPGRADE.upPowerUpNew] = createItem(5*TILE, 8.5*TILE, UPGRADE.upPowerUpNew, "Item-Mania", "Unlock new Power-Ups!", 
-    arrayFromList(p), 0, true, "&lt;Unlocked by reaching the level 5&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching the level 5&gt;");
 
 p = ds_list_create();
 ds_list_add(p,100); ds_list_add(p,350); ds_list_add(p,700);
 item[UPGRADE.upBlockNew] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockNew, "Block-Mania", "Unlock new types of blocks!", 
-    arrayFromList(p), 0, true, "");
+    arrayFromList(p), "");
         
-loadProgress();
-saveProgress();
+//loadProgress();
+//saveProgress();
 
 ////////////////////////////////////////////////////////////////////
 
@@ -275,7 +277,8 @@ if (debug_mode)
     if (keyboard_check_pressed(ord('R')))
     {
         deleteProgress();
-        //room_restart();
+        saveProgress();
+        loadProgress();
     }
     if (keyboard_check(ord('T')))
         global.wallet += 50;        

@@ -39,6 +39,8 @@ global.player = noone;
 loadProgress();
 saveProgress();
 
+timer = 0;
+
 ////////////////////////////////////////////////////////////////////
 
 ////BUTTONS
@@ -46,7 +48,7 @@ index = 0;
 maxIndex = 0;
 
 
-btn[0] = instance_create(WIDTH/2,HEIGHT-1.5*TILE,objButton);
+btn[0] = instance_create(WIDTH/2,HEIGHT-2*TILE,objButton);
 btn[0].text = "Back";
 btn[0].index = 0;
 btn[0].parent = id;
@@ -107,11 +109,40 @@ if (btn[0].pressed || keyboard_check_pressed(vk_escape) || keyboard_check_presse
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-draw_set_color(c_white);
+draw_set_color(c_black);
 draw_rectangle(0,0,WIDTH,HEIGHT,0);
 
-//draw_sprite_part(spriteShop,-1,0,0,WIDTH,HEIGHT,0,0);
+drawBorder(0,0,WIDTH,HEIGHT);
 
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+
+
+drawText(WIDTH/2,1*TILE,"Highscores",c_white,c_none,fntButton);
+
+row = 5*TILE;
+
+//drawText(1.5*TILE,row,string(global.scores[0]),c_yellow,c_black,fntScoreSmall);
+timer = (timer + 1) mod INFINITE;
+
+for (i = 0; i &lt; global.scoreCount; i+=1)
+{
+    if (timer mod (10 + 20*i) == 0)
+    {
+        g = instance_create(-.5*TILE+WIDTH/2-3*TILE+random(6*TILE),-.5*TILE+row+i*TILE+random(TILE),objEffectDust);
+        g.type = 7;
+        g.depth = depth-1;
+    }
+    if (i == 0) suffix = "Best: ";
+    if (i == 1) suffix = "2nd: ";
+    if (i == 2) suffix = "3rd: ";
+    if (i == 3) suffix = "4th: ";
+    if (i == 4) suffix = "5th: ";
+    
+    c1 = make_color_hsv(-150+i*20,255,255);
+    
+    drawText(WIDTH/2,row+i*TILE,suffix + string(global.scores[i]),c1,c_none,fntScoreSmall);
+}
 </string>
           </argument>
         </arguments>

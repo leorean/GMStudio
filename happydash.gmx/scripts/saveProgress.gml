@@ -42,9 +42,9 @@ ini_write_string('Tier','upJump',string(global.upgrade[UPGRADE.upJump,UPGRADE.TI
 ini_write_string('Tier','upMagnet',string(global.upgrade[UPGRADE.upMagnet,UPGRADE.TIER]));
 ini_write_string('Tier','upDash',string(global.upgrade[UPGRADE.upDash,UPGRADE.TIER]));
 ini_write_string('Tier','upBlockChance',string(global.upgrade[UPGRADE.upBlockChance,UPGRADE.TIER]));
-ini_write_string('Tier','PowerUpTime',string(global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER]));
-ini_write_string('Tier','ComboCooldown',string(global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER]));
-ini_write_string('Tier','SuperDash',string(global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]));
+ini_write_string('Tier','upPowerUpTime',string(global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER]));
+ini_write_string('Tier','upComboCooldown',string(global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER]));
+ini_write_string('Tier','upSuperDash',string(global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]));
 ini_write_string('Tier','upPowerUpNew',string(global.upgrade[UPGRADE.upPowerUpNew,UPGRADE.TIER]));
 ini_write_string('Tier','upBlockNew',string(global.upgrade[UPGRADE.upBlockNew,UPGRADE.TIER]));
 

@@ -46,11 +46,11 @@ if (file_exists(working_directory + global.saveFile))
         //UNLOCK CERTAIN UPGRADES
         unlockUpgrades();
 
-        for (i = 0; i < UPGRADE.SIZE; i+=1)
+        /*for (i = 0; i < UPGRADE.SIZE; i+=1)
         {
             item[i].tier = global.upgrade[i,UPGRADE.TIER];
             item[i].locked = global.upgrade[i,UPGRADE.LOCKED];
-        }
+        }*/
     }
 
     ini_close();

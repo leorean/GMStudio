@@ -423,7 +423,7 @@ if (surface_exists(global.drawBuffer))
 depth = HUDDEPTH;
 randomize();
 
-global.version = 105; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
+global.version = 107; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
