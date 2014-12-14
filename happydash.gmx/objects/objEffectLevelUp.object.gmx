@@ -71,8 +71,8 @@ sizeY = min(sizeX+.03,1);
 if (sizeX == 1 &amp;&amp; sizeY == 1)
 {
     alpha = max(alpha - .03, 0);
-    sizeXX += .07;
-    sizeYY += .07;
+    //sizeXX += .07;
+    //sizeYY += .07;
 }
 if (alpha &lt;= 0)
     instance_destroy();

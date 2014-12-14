@@ -704,8 +704,8 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     drawText(WIDTH/2,3,"LVL " + string(global.level),c_white,c_black,fntTiny);
 
     //CHARGE BAR
-    //draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
-    //draw_sprite_part(spriteHud,-1,0,2.5*TILE,4*TILE*min(max(1-(global.player.pow/global.player.maxPow),0),1),TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
+    draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
+    draw_sprite_part(spriteHud,-1,0,2.5*TILE,4*TILE*min(max(1-(global.player.pow/global.player.maxPow),0),1),TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
     
     //PAUSE BUTTON
     draw_sprite_part(spriteHud,-1,2*TILE*global.pause,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
