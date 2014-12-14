@@ -240,7 +240,12 @@ if (global.gameOver)
     global.xSpeed = 0;
 
 if keyboard_check_pressed(vk_escape)
-    game_end();
+{
+    if (room != INIT)
+        room_goto(INIT);
+    else
+        game_end();
+}
 
 ////////////////////////////////////////////////////debug keys:   
 if (debug_mode)
@@ -327,7 +332,7 @@ if (room == MAIN)
     global.hp = 1 + global.upgrade[UPGRADE.upHealth, UPGRADE.TIER];
     for (i = 1; i &lt; global.hp; i+=1)
     {
-        h = instance_create((i-1)*TILE,HEIGHT-2*TILE,objEffectFollowHeart);
+        h = instance_create((i-1)*TILE,3.5*TILE,objEffectFollowHeart);
         h.hp = i;
     }
     
@@ -657,7 +662,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     if (alarm[1] &amp;&amp; global.player.state != DEAD)
     {
         //current power up
-        draw_sprite_part(spriteGfx,-1,5*TILE+global.powerUp*TILE,0,TILE,TILE,WIDTH*.5-TILE*.5,.5*TILE);
+        //draw_sprite_part(spriteGfx,-1,5*TILE+global.powerUp*TILE,0,TILE,TILE,WIDTH*.5-TILE*.5,.5*TILE);
 
     } else
     {
@@ -667,7 +672,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     }
 
     //power up hud border
-    draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);
+    //draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);
     
     if (global.pause)//this "stops" the alarm
         alarm[1] += 1;
@@ -687,12 +692,14 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     draw_set_halign(fa_left);
     draw_text(0,HEIGHT-TILE, " $ " + string(global.coinsCollected));
 
-    //LEVEL    
-    draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,6*TILE,TILE*.5,0,1.75*TILE);
-    draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,6*TILE*min(global.xp/global.xpMax,1),TILE*.5,0,1.75*TILE);
+    //LEVEL
+    draw_set_halign(fa_center);
+    b = 3;
+    draw_sprite_part(spriteHud,-1,4*TILE,0,6*TILE,TILE,WIDTH/2-3*TILE,0);
+    draw_sprite_part(spriteHud,-1,4*TILE+b,1*TILE,(6*TILE-2*b)*min(global.xp/global.xpMax,1),TILE,WIDTH/2-3*TILE+b,0);
     draw_set_halign(fa_center);
     //draw_text(2*TILE,1.5*TILE,"Lv. " + string(global.level));
-    drawText(3*TILE,1.5*TILE+2,"LVL " + string(global.level),c_white,c_black,fntTiny);
+    drawText(WIDTH/2,3,"LVL " + string(global.level),c_white,c_black,fntTiny);
 
     //CHARGE BAR
     draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
@@ -708,28 +715,21 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     //combo counter
     if (global.player.state != DEAD)
     {
-        draw_set_halign(fa_center);
+        draw_set_halign(fa_left);
         draw_set_valign(fa_center);
-        draw_sprite_part(spriteHud,-1,4*TILE,0,4*TILE,TILE,0,2.5*TILE);
-        var c;
-        c = make_color_hsv(
-            (global.player.combo*3 mod 255),
-            255,
-            255);
-        draw_sprite_part_ext(spriteHud,-1,4*TILE,TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),TILE,0,2.5*TILE,1,1,c,1);
-        txt = "";
-        if (global.player.combo &gt; 0)
-            txt = string(global.player.combo);
-        else
-            txt = "Combo";
-        drawText(2*TILE,3*TILE,txt,c_white,c_none,fntTiny);
+        //draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,.5*TILE,0,2.5*TILE);
+        //draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),.5*TILE,0,2.5*TILE);
+        draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,TILE,0,1.5*TILE);
+        draw_sprite_part(spriteHud,-1,8*TILE,2*TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),TILE,0,1.5*TILE);
+        if(global.player.combo &gt; 0)
+            drawText(4*TILE,2*TILE," x "+string(global.player.combo),c_white,c_black,fntTiny);
     }
     
     //JUMPS
     for (i = 0; i &lt; global.maxJumps; i+=1)
-        draw_sprite_part_ext(spriteHud,-1,3*TILE,8*TILE,TILE,TILE,i*TILE,3.5*TILE,1,1,c_white,.5);
+        draw_sprite_part(spriteHud,-1,3*TILE,8*TILE,TILE,TILE,i*TILE,HEIGHT-2*TILE);
     for (i = 0; i &lt; (global.maxJumps - global.player.jumpPerformed); i+=1)
-        draw_sprite_part(spriteHud,-1,2*TILE,8*TILE,TILE,TILE,i*TILE,3.5*TILE);
+        draw_sprite_part(spriteHud,-1,2*TILE,8*TILE,TILE,TILE,i*TILE,HEIGHT-2*TILE);
 }
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);

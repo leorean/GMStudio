@@ -50,11 +50,11 @@ for (i = 0; i<w; i += 1)
             c = irandom(2500-200*u);
             if (choose(false,false,true)) //chance to spawn no block
                 continue;
-            if (c < 50 && bfree > 2)
+            if (c < 50 && bfree >= 3)
                 ct = 3; //POW BLOCK
-            else if (c < 100 && bfree > 1)
+            else if (c < 100 && bfree >= 2)
                 ct = 2; //ITEM BLOCK
-            else if (c < 200 && bfree > 0)
+            else if (c < 200 && bfree >= 1)
                 ct = 1; //COIN BLOCK
             else
                 ct = choose(-1,0); //NORMAL BLOCK                

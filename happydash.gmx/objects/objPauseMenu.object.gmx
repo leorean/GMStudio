@@ -172,16 +172,15 @@ draw_rectangle(0,0,WIDTH,HEIGHT,0);
 draw_set_color(c_white);
 draw_set_alpha(1);
 
-draw_set_font(global.fntDefault);
 draw_set_color(c_white);
 draw_set_alpha(1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
-    drawBorder(8.5*TILE,5*TILE,8*TILE,7*TILE);
+drawBorder(8.5*TILE,5*TILE,8*TILE,7*TILE);
 
 
-draw_text(WIDTH/2,3*TILE,"-Pause-");
+drawText(WIDTH/2,3*TILE,"-paused-",c_white,c_none,fntMenu);
 </string>
           </argument>
         </arguments>

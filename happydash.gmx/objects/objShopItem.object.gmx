@@ -62,7 +62,10 @@ z = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//if (
+            <string>locked = global.upgrade[index,UPGRADE.LOCKED];
+tier = global.upgrade[index,UPGRADE.TIER];
+
+//if (
 //if (S.itemFocus == index)
 //    depth = HUDDEPTH-1;
 //else
