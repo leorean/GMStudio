@@ -241,7 +241,8 @@ if (btn[0].pressed)
                 t.text = "-"+string(itemPrice);
                 t.yVel = -1;
                 t.yGrav = .1;
-                t.fnt = fntScoreSmall;
+                t.colorBack = c_none;
+                t.fnt = fntNumbers;
                 t.depth = MOUSEDEPTH+1;
                 
                 global.wallet -= real(itemPrice);
@@ -331,7 +332,7 @@ draw_set_font(fntMenu);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
-drawText(WIDTH/2,1,string(global.wallet),c_white,c_black,fntScoreSmall);
+drawText(WIDTH/2,0,string(global.wallet),c_white,c_black,fntNumbers);
 
 //CURRENT DESCRIPTION
 draw_set_halign(fa_left);
@@ -351,13 +352,13 @@ if (itemFocus != -1)
     if (itemLocked)
         {c1 = c_gray; c2 = c_none}
     else if (real(itemPrice) &lt;= global.wallet)
-        {c1 = c_white;c2 = c_black}
+        {c1 = c_white;c2 = c_none}
     else
         {c1 = c_red;c2 = c_none}
 }
-else {c1 = c_white; c2 = c_black};
+    else {c1 = c_white; c2 = c_none};
 
-drawText(WIDTH-.5*TILE,HEIGHT-4*TILE,string(itemPrice),c1,c2,fntShopSmall);
+drawText(WIDTH-.5*TILE,HEIGHT-4*TILE-2,string(itemPrice),c1,c2,fntNumbers);
 
 
 //ITEM NAME

@@ -8,7 +8,6 @@ if (true) //unlocked right away
     global.upgrade[UPGRADE.upBlockNew,UPGRADE.LOCKED] = false;
 
     if (global.upgrade[UPGRADE.upBlockNew,UPGRADE.TIER] >= 1)
-    {
         global.upgrade[UPGRADE.upBlockChance,UPGRADE.LOCKED] = false;
     
     if (global.upgrade[UPGRADE.upBlockNew,UPGRADE.TIER] >= 2)

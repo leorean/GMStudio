@@ -134,7 +134,9 @@ if (!global.pause)
                     global.coinsCollected += 50;
                     playSound(sfxApplauseBig,1);
                     t = instance_create(x+TILE*.5,y+TILE*.5,objText);
-                    t.text = "$ + 50";
+                    t.fnt = fntNumbers;
+                    //t.colorBack = c_none;
+                    t.text = "$50";
 
                 }
                 //each 5 segments, the coin is worth more!!

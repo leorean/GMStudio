@@ -1487,7 +1487,8 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntMenu</font>
-    <font>fonts\fntScoreSmall</font>
+    <font>fonts\fntText</font>
+    <font>fonts\fntNumbers</font>
     <font>fonts\fntShopSmall</font>
     <font>fonts\fntButton</font>
     <font>fonts\fntTiny</font>

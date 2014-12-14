@@ -136,7 +136,7 @@ if (btn[2].pressed)
             <kind>1</kind>
             <string>image_speed = 0;
 
-draw_set_alpha(.3);
+draw_set_alpha(.5);
 draw_set_color(c_black);
 draw_rectangle(0,0,WIDTH,HEIGHT,0);
 
@@ -211,11 +211,11 @@ d = 11*TILE;
 draw_set_font(global.fntScore);
 draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 
-draw_set_font(global.fntDefault);
+//draw_set_font(global.fntDefault);
 
 var c1,c2,f;
 c1 = c_white;
-c2 = c_black;
+c2 = c_none;
 f = fntMenu;
 
 draw_set_halign(fa_center);

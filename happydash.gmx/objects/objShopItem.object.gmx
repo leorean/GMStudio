@@ -62,7 +62,16 @@ z = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>locked = global.upgrade[index,UPGRADE.LOCKED];
+            <string>if (locked &amp;&amp; !global.upgrade[index,UPGRADE.LOCKED])
+{
+        t = instance_create(x,y,objEffectDust);t.depth=depth-1;
+        t = instance_create(x+TILE,y,objEffectDust);t.depth = depth-1;
+        t = instance_create(x,y+TILE,objEffectDust);t.depth=depth-1;
+        t = instance_create(x+TILE,y+TILE,objEffectDust);t.depth=depth-1;
+        t = instance_create(x+.5*TILE,y+.5*TILE,objEffectDust);t.depth=depth-1;
+}
+
+locked = global.upgrade[index,UPGRADE.LOCKED];
 tier = global.upgrade[index,UPGRADE.TIER];
 
 //if (

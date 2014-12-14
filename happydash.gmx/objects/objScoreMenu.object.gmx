@@ -141,7 +141,7 @@ for (i = 0; i &lt; global.scoreCount; i+=1)
     
     c1 = make_color_hsv((35+i*25) mod 255,255,255);
     
-    drawText(WIDTH/2,row+i*TILE,suffix + string(global.scores[i]),c1,c_none,fntScoreSmall);
+    drawText(WIDTH/2,row+i*TILE,suffix + string(global.scores[i]),c1,c_none,fntShopSmall);
 }
 </string>
           </argument>

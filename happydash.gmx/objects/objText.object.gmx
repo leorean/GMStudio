@@ -36,8 +36,7 @@ t = 40;
 color = c_white;
 colorBack = c_black;
 
-//fnt = global.fntDefault;
-fnt = fntScoreSmall;
+fnt = fntText;
 
 halign = fa_center;
 

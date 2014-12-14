@@ -126,16 +126,16 @@ if (g.theme != g.themePrev &amp;&amp; fade == 0)
     g.themePrev = g.theme;
 }
 
-draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,(a),0,1,1,c_white,1);
-draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,(a+w),0,1,1,c_white,1);
+draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,floor(a),0,1,1,c_white,1);
+draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,floor(a+w),0,1,1,c_white,1);
 
 
-draw_sprite_part_ext(spriteBg,-1,theme,1*h,w,h,(b),0,1,1,c_white,1);
-draw_sprite_part_ext(spriteBg,-1,theme,1*h,w,h,(b+w),0,1,1,c_white,1);
+draw_sprite_part_ext(spriteBg,-1,theme,1*h,w,h,floor(b),0,1,1,c_white,1);
+draw_sprite_part_ext(spriteBg,-1,theme,1*h,w,h,floor(b+w),0,1,1,c_white,1);
 
 
-draw_sprite_part_ext(spriteBg,-1,theme,2*h,w,h,(c),0,1,1,c_white,1);
-draw_sprite_part_ext(spriteBg,-1,theme,2*h,w,h,(c+w),0,1,1,c_white,1);
+draw_sprite_part_ext(spriteBg,-1,theme,2*h,w,h,floor(c),0,1,1,c_white,1);
+draw_sprite_part_ext(spriteBg,-1,theme,2*h,w,h,floor(c+w),0,1,1,c_white,1);
 
 draw_set_alpha(alpha);
 

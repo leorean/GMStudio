@@ -425,7 +425,8 @@ else
 
 //TORNADO EFFECT
 if (state == ATTACK &amp;&amp; dashSpeed &gt; 0)
-    draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,dashSpeed * .8);
+    draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,
+    floor(x-TILE*.5),floor(y-TILE*.5),1,1,c_white, (pow/maxPow)/*dashSpeed * .8*/);
 
 draw_set_color(c_white);
 

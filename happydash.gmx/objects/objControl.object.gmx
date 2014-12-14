@@ -332,7 +332,7 @@ if (room == MAIN)
     global.hp = 1 + global.upgrade[UPGRADE.upHealth, UPGRADE.TIER];
     for (i = 1; i &lt; global.hp; i+=1)
     {
-        h = instance_create((i-1)*TILE,3.5*TILE,objEffectFollowHeart);
+        h = instance_create((i-1)*TILE,2.5*TILE,objEffectFollowHeart);
         h.hp = i;
     }
     
@@ -423,12 +423,13 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//show_message("TEST VERSION - DO NOT DISTRIBUTE! The game will now load.");
+            <string>//show_message("TEST VERSION - DO NOT DISTRIBUTE!");
+//show_message("LOADING TAKES A WHILE, PLEASE BE PATIENT.");
 
 depth = HUDDEPTH;
 randomize();
 
-global.version = 107; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
+global.version = 109; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
@@ -450,7 +451,7 @@ global.tbStop.type = 2;
 switch(os_type)
 {
     case os_browser:
-        show_message("TEST VERSION - DO NOT DISTRIBUTE!");
+        //show_message("TEST VERSION - DO NOT DISTRIBUTE!");
     case os_windows:
     case os_linux:
         global.input = INPUT_KEYBOARD;
@@ -688,9 +689,10 @@ if (room == MAIN &amp;&amp; !global.gameOver)
 
     draw_set_font(global.fntDefault);
     
-    //COINS    
+    //COINS
+    draw_sprite_part(spriteHud,-1,3*TILE,5*TILE,TILE,TILE,0,HEIGHT-TILE);
     draw_set_halign(fa_left);
-    draw_text(0,HEIGHT-TILE, " $ " + string(global.coinsCollected));
+    drawText(TILE+2,HEIGHT-TILE-1, string(global.coinsCollected),c_white,c_black,fntNumbers);
 
     //LEVEL
     draw_set_halign(fa_center);
@@ -702,15 +704,17 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     drawText(WIDTH/2,3,"LVL " + string(global.level),c_white,c_black,fntTiny);
 
     //CHARGE BAR
-    draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
-    draw_sprite_part(spriteHud,-1,0,2.5*TILE,4*TILE*min(max(1-(global.player.pow/global.player.maxPow),0),1),TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
+    //draw_sprite_part(spriteHud,-1,0,2*TILE,4*TILE,TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
+    //draw_sprite_part(spriteHud,-1,0,2.5*TILE,4*TILE*min(max(1-(global.player.pow/global.player.maxPow),0),1),TILE*.5,WIDTH*.5-2*TILE,HEIGHT-.5*TILE);
     
     //PAUSE BUTTON
     draw_sprite_part(spriteHud,-1,2*TILE*global.pause,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
     
     //meters
     draw_set_halign(fa_center);
-    drawText(floor(WIDTH/2),floor(HEIGHT-1.3*TILE),string(floor(global.distance*.1))+" m",c_white,c_black,fntTiny);
+    draw_set_valign(fa_top);
+    drawText(floor(WIDTH/2),TILE+1,string(floor(global.distance*.1))+" m",c_white,c_black,fntTiny);
+    draw_set_valign(fa_top);
     
     //combo counter
     if (global.player.state != DEAD)
@@ -719,17 +723,18 @@ if (room == MAIN &amp;&amp; !global.gameOver)
         draw_set_valign(fa_center);
         //draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,.5*TILE,0,2.5*TILE);
         //draw_sprite_part(spriteHud,-1,4*TILE,2.5*TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),.5*TILE,0,2.5*TILE);
+        c = make_color_hsv(floor((global.player.alarm[1]/global.player.alarm1)*80),255,255);
         draw_sprite_part(spriteHud,-1,4*TILE,2*TILE,4*TILE,TILE,0,1.5*TILE);
-        draw_sprite_part(spriteHud,-1,8*TILE,2*TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),TILE,0,1.5*TILE);
+        draw_sprite_part_ext(spriteHud,-1,8*TILE,2*TILE,4*TILE*(global.player.alarm[1]/global.player.alarm1),TILE,0,1.5*TILE,1,1,c,1);
         if(global.player.combo &gt; 0)
             drawText(4*TILE,2*TILE," x "+string(global.player.combo),c_white,c_black,fntTiny);
     }
     
     //JUMPS
     for (i = 0; i &lt; global.maxJumps; i+=1)
-        draw_sprite_part(spriteHud,-1,3*TILE,8*TILE,TILE,TILE,i*TILE,HEIGHT-2*TILE);
+        draw_sprite_part_ext(spriteHud,-1,3*TILE,8*TILE,TILE,TILE,i*TILE*.5,HEIGHT-2*TILE,1,1,c_white,.5);
     for (i = 0; i &lt; (global.maxJumps - global.player.jumpPerformed); i+=1)
-        draw_sprite_part(spriteHud,-1,2*TILE,8*TILE,TILE,TILE,i*TILE,HEIGHT-2*TILE);
+        draw_sprite_part(spriteHud,-1,2*TILE,8*TILE,TILE,TILE,i*TILE*.5,HEIGHT-2*TILE);
 }
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
