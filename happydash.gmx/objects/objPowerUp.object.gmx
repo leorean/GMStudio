@@ -34,9 +34,9 @@ pm = global.upgrade[UPGRADE.upPowerUpNew,UPGRADE.TIER];
 powTime = global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.TIER];
 
 if (pm == 0)
-    type = choose(POW_1, POW_2, POW_3);
+    type = choose(POW_2, POW_3);
 else if (pm == 1)
-    type = choose(POW_1, POW_2, POW_3, POW_4);
+    type = choose(POW_2, POW_3, POW_4);
 else if (pm == 2)
     type = choose(POW_1, POW_2, POW_3, POW_4, POW_5);
 else if (pm &gt;= 3)

@@ -122,6 +122,13 @@ dsA = ds_list_create();//alpha-list
 dsD = ds_list_create();//check if drawable
 //canDrawRainbow = false;
 
+ri = 0;
+rTemp[0] = 0;
+rTemp[1] = 0;
+L = 16;
+for (i = 0; i &lt; L; i+= 1)
+    for (j = 0; j &lt;= 3; j+= 1)
+        rainbow[i,j] = 0;
 </string>
           </argument>
         </arguments>
@@ -319,13 +326,47 @@ switch(state)
     break;*/
 }
 
-
-/*if (invincible &amp;&amp; !hurt)
-{
-    draw_sprite_part(spritePlayer,-1,0,10*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5));
-}*/
-
 //RAINBOWWWW EFFECT
+if (!global.pause &amp;&amp; state != DEAD &amp;&amp; global.timer mod 6 == 0)
+{
+
+    rainbow[ri,0] = ceil(cx);
+    rainbow[ri,1] = ceil(cy);
+    rainbow[ri,2] = 1;
+    rainbow[ri,3] = global.player.combo;
+    
+    if (ri &lt; L-1)
+        ri+=1;
+    else
+    {
+        for (i = 0; i &lt; L; ++i)
+        {
+            for (j = 0; j &lt;= 3; j+=1)
+                rainbow[i,j] = rainbow[(i+1) mod L,j];
+        }
+    }
+}
+
+for(i = 0;i &lt; ri; i+=1)
+{
+    rainbow[i,0] -= global.xSpeed;
+    rainbow[i,2] = min(2*i/L,1);
+    if (i &gt; 0)
+    {
+        if (rainbow[i-1,2] &gt; 0)
+        {
+            draw_set_alpha(rainbow[i-1,2]);
+            for (j = -8; j &lt; 8; j+=2)
+            {
+                draw_set_color(make_color_hsv((j+8)*11,255,255));
+                if (abs(j) &lt; rainbow[i,3])
+                    draw_line_width(rainbow[i-1,0],rainbow[i-1,1]+j,ceil(rainbow[i,0]),rainbow[i,1]+j,2);
+            }
+        }
+    }
+}
+
+/*
 p = 2;//performance coefficient, as in "how smooth is the rainbow?"
 if (true)
 {
@@ -352,7 +393,7 @@ if (true)
         for (i = 0; i &lt; ds_list_size(dsX);i+=1)
         {
             ds_list_replace(dsX,i,ds_list_find_value(dsX,i)-global.xSpeed);
-            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-(.01 * p),0));
+            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-(.01),0));
             
             draw_set_alpha(ds_list_find_value(dsA,i));
     
@@ -362,19 +403,11 @@ if (true)
                 {
                     draw_set_color(make_color_hsv((j+8)*11,255,255));
                     if (abs(j) &lt; ds_list_find_value(dsD,i))
-                    draw_line_width(ds_list_find_value(dsX,i-1)/*-abs(xVel)*/,ds_list_find_value(dsY,i-1)+j,ceil(ds_list_find_value(dsX,i)),ds_list_find_value(dsY,i)+j,2);
+                    draw_line_width(ds_list_find_value(dsX,i-1),ds_list_find_value(dsY,i-1)+j,ceil(ds_list_find_value(dsX,i)),ds_list_find_value(dsY,i)+j,2);
                 }
-
-                /*
-                for (j = -8; j &lt; 8; j+=1)
-                {
-                    draw_set_color(make_color_hsv(((j+8) div 2)*22,255,255));
-                    if (abs(j) &lt; ds_list_find_value(dsD,i))
-                    draw_line_width(ds_list_find_value(dsX,i-1)-abs(xVel),ds_list_find_value(dsY,i-1)+j,ds_list_find_value(dsX,i),ds_list_find_value(dsY,i)+j,1);
-                }*/
             }
         }
-}
+}*/
 
 //power up stuff
 if (objControl.alarm[1] &amp;&amp; state != DEAD)

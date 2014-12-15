@@ -26,36 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>depth = TILEDEPTH-1;
-a = 1;
-s = 1;
-alarm0 = 30;
-alarm[0] = alarm0;
-angle = 0;
-
-xD = 0;
+a = 1.5;
+c = global.player.combo;
+//s = 1;
+//alarm0 = 30;
+//alarm[0] = alarm0;
+//angle = 0;
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>alive</string>
           </argument>
         </arguments>
       </action>
@@ -77,7 +54,14 @@ xD = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0;
+            <string>cycle();
+
+a = max(a - .02, 0);
+if (a == 0)
+    instance_destroy();
+
+draw_sprite_part_ext(spriteGfx,-1,8*TILE,4*TILE,l,TILE,x,y,1,1,c_white,a);
+/*image_speed = 0;
 
 x -= global.xSpeed;
 
@@ -89,7 +73,7 @@ for (j = 0; j &lt; TILE; j+=1)
     draw_set_alpha(a);
     draw_set_color(make_color_hsv((j div 2)*15,255,255));
     draw_line_width(x-1,y+j,x,y+j,1);
-}
+}*/
 </string>
           </argument>
         </arguments>

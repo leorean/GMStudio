@@ -463,7 +463,7 @@ switch(os_type)
     break;
     default:
         global.input = INPUT_KEYBOARD; 
-        show_message("DEVICE UNKNOWN :(");
+        //show_message("DEVICE UNKNOWN :(");
         //game_end();
     break;
 }
