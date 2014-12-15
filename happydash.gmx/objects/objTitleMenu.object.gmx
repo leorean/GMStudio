@@ -190,7 +190,7 @@ draw_set_color(c_white);
 draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
 
 draw_set_halign(fa_left);
-drawText(0,HEIGHT-TILE,"Test Version - do not distribute!",c_white,c_none,fntTiny);
+drawText(0,HEIGHT-1.5*TILE,"(c) Peter Sperl #Do not distribute!",c_white,c_none,fntTiny);
 /*
 //HELP
 if (showHelp)
