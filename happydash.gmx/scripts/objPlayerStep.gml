@@ -195,6 +195,8 @@ else //IF NOT DEAD
         pow = min(pow+2*(1-(x*.0025)),maxPow);
         yGrav = yGravDefault;
     }
+    if (global.powerUp == POW_3)
+        alarm[1] = alarm1;
     if (!alarm[1] && state != DEAD)
     {
         if (combo > 0)

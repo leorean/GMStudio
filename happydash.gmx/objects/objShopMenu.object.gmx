@@ -52,12 +52,12 @@ unlockUpgrades();
 p = ds_list_create();
 ds_list_add(p,1000); ds_list_add(p,3500);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
-    arrayFromList(p), "&lt;Unlocked by reaching the level 5&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching level 5&gt;");
 
 p = ds_list_create();
 ds_list_add(p,5000);
 item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "J-J-Jump!", "Additional mid-air jump!", 
-    arrayFromList(p), "&lt;Unlocked by reaching the level 10&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching level 10&gt;");
 
 p = ds_list_create();
 ds_list_add(p,30); ds_list_add(p,60); ds_list_add(p,240); ds_list_add(p,420); ds_list_add(p,1000);
@@ -77,17 +77,17 @@ item[UPGRADE.upBlockChance] = createItem(13*TILE, 8.5*TILE, UPGRADE.upBlockChanc
 p = ds_list_create();
 ds_list_add(p,1300); ds_list_add(p,1450); ds_list_add(p,1650); ds_list_add(p,2000);
 item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Endless Trip!", "Increases the duration of #Power-Up effects.", 
-    arrayFromList(p), "&lt;Unlocked by reaching the level 10&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching level 10&gt;");
 
 p = ds_list_create();
 ds_list_add(p,250); ds_list_add(p,400); ds_list_add(p,750); ds_list_add(p,900); ds_list_add(p,1200); ds_list_add(p,1500);
 item[UPGRADE.upComboCooldown] = createItem(9*TILE, 6.5*TILE, UPGRADE.upComboCooldown, "Keep It Going", "Combo cooldown duration increased.", 
-    arrayFromList(p), "&lt;Unlocked by reaching the level 5&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching level 5&gt;");
 
 p = ds_list_create();
 ds_list_add(p,25000);
 item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "SERPER DERSH!!1", "Unleash your full potential!", 
-    arrayFromList(p), "&lt;Unlocked by reaching the level 15&gt;");
+    arrayFromList(p), "&lt;Unlocked by reaching level 15&gt;");
 
 p = ds_list_create();
 ds_list_add(p,300); ds_list_add(p,700); ds_list_add(p,900); ds_list_add(p,2400);

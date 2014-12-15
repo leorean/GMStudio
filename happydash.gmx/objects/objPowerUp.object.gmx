@@ -113,11 +113,12 @@ frame = 0;
             break;
             case POW_2: //flying
                 global.powDuration = 10*FPS + pt;
-                t.text = "Dead Bird";
+                t.text = "Crucified Bird";
             break;
             case POW_3: //invincible
                 global.powDuration = 12*FPS + pt;
                 t.text = "Rainbow Pill";
+                global.player.combo += 10;
             break;
             case POW_4:
                 global.powDuration = 12*FPS + pt;
