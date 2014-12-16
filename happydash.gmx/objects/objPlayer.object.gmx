@@ -125,7 +125,7 @@ dsD = ds_list_create();//check if drawable
 ri = 0;
 rTemp[0] = 0;
 rTemp[1] = 0;
-L = 16;
+L = 12;
 for (i = 0; i &lt; L; i+= 1)
     for (j = 0; j &lt;= 3; j+= 1)
         rainbow[i,j] = 0;
@@ -459,7 +459,7 @@ else
 //TORNADO EFFECT
 if (state == ATTACK &amp;&amp; dashSpeed &gt; 0)
     draw_sprite_part_ext(spriteGfx,-1,2*floor(frame)*TILE,16*TILE,2*TILE,2*TILE,
-    floor(x-TILE*.5),floor(y-TILE*.5),1,1,c_white, (pow/maxPow)/*dashSpeed * .8*/);
+    floor(x-TILE*.5),floor(y-TILE*.5),1,1,c_white,dashSpeed * .8); //1-abs(.5-(pow/maxPow))
 
 draw_set_color(c_white);
 

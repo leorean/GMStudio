@@ -15,6 +15,8 @@ if (true)
     {
         c = instance_create(x+TILE,y,objCoin);
         c.spawn = true;
+        global.xp += 1;
+
     }
     if (global.player.combo == 10)
         playSound(sfxApplause,1);

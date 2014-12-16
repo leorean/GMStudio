@@ -423,8 +423,8 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//show_message("TEST VERSION - DO NOT DISTRIBUTE!");
-//show_message("LOADING TAKES A WHILE, PLEASE BE PATIENT.");
+            <string>//for (i = 0; i &lt; 50; i+=1)
+//    show_debug_message(string(i)+":"+string(maxEXP(i)));
 
 depth = HUDDEPTH;
 randomize();
@@ -740,13 +740,13 @@ if (room == MAIN &amp;&amp; !global.gameOver)
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
-if(room == MAIN)
+if(room == MAIN &amp;&amp; !global.pause)
     if (os_type == os_android || os_browser != browser_not_a_browser)
     {
         draw_set_alpha(1);
         draw_set_halign(fa_center);
         draw_set_valign(fa_top);
-        drawText(WIDTH/2,HEIGHT/2-5*TILE,"Test Version #Do not distribute!",c_white,c_none,fntTiny);
+        drawText(WIDTH/2,HEIGHT/2-5*TILE,"Beta Version",c_white,c_none,fntTiny);
     }
 </string>
           </argument>
