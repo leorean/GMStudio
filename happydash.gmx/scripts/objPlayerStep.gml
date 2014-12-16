@@ -131,6 +131,14 @@ if (state == DEAD && !global.gameOver)
 }
 else //IF NOT DEAD
 {
+    //SUPER DASH
+    if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
+        if (/*!alarm[2] && */jumpPerformed < global.maxJumps && state == JUMP && statePrev == ATTACK)
+        {
+            instance_create(x,y,objProjectileSuperDash);
+            //alarm[2] = alarm2;
+        }
+                
     //DESTROY BLOCKS BY JUMPING
     destroyBlock = instance_place(x,y-5/*max(3,abs(1.5*yVel))*/,objDestroyBlock);
     if (instance_exists(destroyBlock) && state != RUN)
@@ -186,6 +194,8 @@ else //IF NOT DEAD
         {
             invincible = FPS*.5; //short invincibility after attack?
             state = JUMP;
+            //if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
+            //    instance_create(x,y,objProjectileSuperDash);
         }
         dashSpeed = min(dashSpeed+.03,1);
     } else

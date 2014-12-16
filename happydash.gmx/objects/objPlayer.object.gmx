@@ -56,6 +56,9 @@ alive = true;
 alarm[1] = 0;
 alarm1 = 3*FPS + .5*FPS*global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER];
 
+//alarm[2] = 0;
+//alarm2 = 25; //superdash cooldown
+
 //attack variables
 db = noone;
 maxPow = 50;
@@ -156,6 +159,28 @@ ds_list_destroy(dsY);
 ds_list_destroy(dsA);
 ds_list_destroy(dsD);
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>superdash</string>
           </argument>
         </arguments>
       </action>
@@ -407,6 +432,15 @@ if (true)
                 }
             }
         }
+}*/
+
+//SUPER DASH
+/*if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
+{
+    if (state == ATTACK)
+    {
+        drawLightning(cx,cy,cx,0,c_white);
+    }
 }*/
 
 //power up stuff

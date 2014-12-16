@@ -1533,6 +1533,7 @@
       <object>objects\objProjectilePlayer2</object>
       <object>objects\objProjectilePlayer3</object>
       <object>objects\objExplosion</object>
+      <object>objects\objProjectileSuperDash</object>
     </objects>
     <objects name="effects">
       <object>objects\objParticle</object>
@@ -1562,7 +1563,8 @@
     <room>rooms\MAIN</room>
     <room>rooms\SHOP</room>
   </rooms>
-  <constants number="39">
+  <constants number="40">
+    <constant name="ZOOM">2</constant>
     <constant name="POW_NONE">-1</constant>
     <constant name="POW_1">0</constant>
     <constant name="POW_2">1</constant>

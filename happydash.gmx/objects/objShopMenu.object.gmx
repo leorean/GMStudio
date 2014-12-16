@@ -86,7 +86,7 @@ item[UPGRADE.upComboCooldown] = createItem(9*TILE, 6.5*TILE, UPGRADE.upComboCool
 
 p = ds_list_create();
 ds_list_add(p,25000);
-item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "SERPER DERSH!!1", "Unleash your full potential!", 
+item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "Sharknado!!", "Unleash your full potential!", 
     arrayFromList(p), "&lt;Unlocked by reaching level 15&gt;");
 
 p = ds_list_create();
