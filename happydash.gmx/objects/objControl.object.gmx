@@ -644,39 +644,35 @@ if (room == MAIN &amp;&amp; !global.gameOver)
         else
             global.distMagnet = global.distMagnetDefault;
     
-    }
-    
-    //power up stuff
-    if (global.powerUp[POW_ANY])
-    {
-        var j;
-        j = 1;
-        for (i = 0; i &lt; POW_SIZE; i+=1)
+        //power up stuff
+        if (global.powerUp[POW_ANY])
         {
-            if (!global.pause)
-                global.powDuration[i] = max(global.powDuration[i]-1,0);
-            
-            if (global.powDuration[i] &gt; 0)
+            var j;
+            j = 1;
+            for (i = 0; i &lt; POW_SIZE; i+=1)
             {
-                if (i &gt; POW_ANY) //ignore the "any" power up
+                if (!global.pause)
+                    global.powDuration[i] = max(global.powDuration[i]-1,0);
+                
+                if (global.powDuration[i] &gt; 0)
                 {
-                    draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
-                    draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*global.powDuration[i]/global.maxPowDuration[i]),6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
-                    j += 1;
-                }
-            } else
-                global.powerUp[i] = false;
-        }
-
-        if (global.powDuration[POW_ANY] == 0)
-        {
-            playSound(sfxPowerDown,1);
-            global.powerUp[POW_ANY] = false;//necessary?
+                    if (i &gt; POW_ANY) //ignore the "any" power up
+                    {
+                        draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
+                        draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*global.powDuration[i]/global.maxPowDuration[i]),6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
+                        j += 1;
+                    }
+                } else
+                    global.powerUp[i] = false;
+            }
+    
+            if (global.powDuration[POW_ANY] == 0)
+            {
+                playSound(sfxPowerDown,1);
+                global.powerUp[POW_ANY] = false;//necessary?
+            }
         }
     }
-    
-    if (global.pause)//this "stops" the alarm
-        alarm[1] += 1;
     
     a = 0
     b = 0;

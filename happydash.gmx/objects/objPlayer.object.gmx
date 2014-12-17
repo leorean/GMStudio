@@ -126,9 +126,7 @@ dsD = ds_list_create();//check if drawable
 //canDrawRainbow = false;
 
 ri = 0;
-rTemp[0] = 0;
-rTemp[1] = 0;
-L = 12;
+L = 8;
 for (i = 0; i &lt; L; i+= 1)
     for (j = 0; j &lt;= 3; j+= 1)
         rainbow[i,j] = 0;
@@ -352,7 +350,7 @@ switch(state)
 }
 
 //RAINBOWWWW EFFECT
-if (!global.pause &amp;&amp; state != DEAD &amp;&amp; global.timer mod 6 == 0)
+if (!global.pause &amp;&amp; state != DEAD &amp;&amp; global.timer mod 5 == 0)
 {
 
     rainbow[ri,0] = ceil(cx);

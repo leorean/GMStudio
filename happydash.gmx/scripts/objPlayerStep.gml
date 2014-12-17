@@ -133,7 +133,7 @@ else //IF NOT DEAD
 {
     //SUPER DASH
     if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
-        if (/*!alarm[2] && */jumpPerformed < global.maxJumps && state == JUMP && statePrev == ATTACK)
+        if (instance_number(objProjectileSuperDash) < 3 && state == JUMP && statePrev == ATTACK)
         {
             instance_create(x,y,objProjectileSuperDash);
             //alarm[2] = alarm2;

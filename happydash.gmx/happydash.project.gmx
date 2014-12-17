@@ -1417,6 +1417,7 @@
       <sprite>sprites\sprCheckPointMask</sprite>
       <sprite>sprites\sprProjectileMask</sprite>
       <sprite>sprites\sprProjectileBigMask</sprite>
+      <sprite>sprites\sprProjectileSuperDashMask</sprite>
       <sprite>sprites\sprEnemySpikeMask</sprite>
       <sprite>sprites\sprBlockMask</sprite>
       <sprite>sprites\sprDestroyBlockMask</sprite>

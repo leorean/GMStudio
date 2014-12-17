@@ -29,7 +29,7 @@
 xVel = 0;
 yVel = 0;
 
-mask_index = sprEnemyBigMask;
+mask_index = sprProjectileSuperDashMask;
 
 fCur = 0;
 fSpeed = .3;
@@ -62,9 +62,14 @@ x+= xVel;
 
 destroyStuff();
 
+
 if (place_meeting(x-xVel,y,objBlock))
 {
-    instance_create(x,y,objExplosion);
+    //instance_create(x,y,objExplosion);
+    t = instance_create(x,y,objEffectDust);
+    t.type = 6;
+    repeat(10)
+        spawnParticle(x+TILE/2,y+TILE/2,make_color_hsv(120+random(40),255,255));
     instance_destroy();
 }
 
@@ -75,6 +80,7 @@ if (x &gt; WIDTH+2*TILE)
     instance_destroy();
     
 draw_sprite_part(spriteGfx,-1,frame*2*TILE,18*TILE,2*TILE,2*TILE,x-TILE/2,y-TILE/2);
+//draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,1);
 </string>
           </argument>
         </arguments>
