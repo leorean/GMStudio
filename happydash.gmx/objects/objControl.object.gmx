@@ -8,28 +8,6 @@
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="2" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>POWER UP COOLDOWN</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -361,9 +339,11 @@ if (room == MAIN)
     global.difficulty = 0;
     
     for (i = 0; i &lt; POW_SIZE; i+=1)
+    {
         global.powerUp[i] = false;
-    alarm[1] = 0;
-    global.powDuration = 0;
+        global.powDuration[i] = 0;
+        global.maxPowDuration[i] = 0;   
+    }
     
     curSeg = 0;
     prevSeg = 0;
@@ -545,10 +525,14 @@ global.xSeg = 0;
 global.spawnSegment = false;
 
 for (i = 0; i &lt; POW_SIZE; i+=1)
+{
     global.powerUp[i] = false;
+    global.powDuration[i] = 0;
+    global.maxPowDuration[i] = 0;       
+}
     
-alarm[1] = 0;
-global.powDuration = 0;
+//alarm[1] = 0;
+//global.powDuration = 0;
 
 global.screenShake = false;
 shakeTime = 0;
@@ -646,11 +630,11 @@ if (room == MAIN &amp;&amp; !global.gameOver)
         
         if (global.powerUp[POW_1]) //MONEY POWER UP
         {
-            draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
+            draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-global.powDuration[POW_1]/global.maxPowDuration[POW_1])*WIDTH,0);
             if (global.timer mod 4 == 0)
             {
                 var c;
-                c = instance_create((1-alarm[1]/global.powDuration)*WIDTH,TILE,objCoin);
+                c = instance_create((1-global.powDuration[POW_1]/global.maxPowDuration[POW_1])*WIDTH,TILE,objCoin);
                 c.spawn = true;
             }
         }
@@ -663,30 +647,33 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     }
     
     //power up stuff
-    if (!alarm[1])
+    if (global.powerUp[POW_ANY])
     {
-        if (global.powerUp[POW_ANY])
+        var j;
+        j = 1;
+        for (i = 0; i &lt; POW_SIZE; i+=1)
+        {
+            if (!global.pause)
+                global.powDuration[i] = max(global.powDuration[i]-1,0);
+            
+            if (global.powDuration[i] &gt; 0)
+            {
+                if (i &gt; POW_ANY) //ignore the "any" power up
+                {
+                    draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
+                    draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*global.powDuration[i]/global.maxPowDuration[i]),6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
+                    j += 1;
+                }
+            } else
+                global.powerUp[i] = false;
+        }
+
+        if (global.powDuration[POW_ANY] == 0)
         {
             playSound(sfxPowerDown,1);
-            for (i = 0; i &lt; POW_SIZE; i+=1)
-                global.powerUp[i] = false; //0 includes POW_ANY
+            global.powerUp[POW_ANY] = false;//necessary?
         }
     }
-    /*
-    if (alarm[1] &amp;&amp; global.player.state != DEAD)
-    {
-        //current power up
-        //draw_sprite_part(spriteGfx,-1,5*TILE+global.powerUp*TILE,0,TILE,TILE,WIDTH*.5-TILE*.5,.5*TILE);
-
-    } else
-    {
-        //if (global.powerUp[ != POW_NONE)
-            //playSound(sfxPowerDown,1);
-        //global.powerUp = POW_NONE;
-    }*/
-
-    //power up hud border
-    //draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);
     
     if (global.pause)//this "stops" the alarm
         alarm[1] += 1;

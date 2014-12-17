@@ -39,6 +39,7 @@ mask_index = sprCoinMask;
 fSpeed = .12;
 fMax = 4;
 fCur = random(fMax);
+frame = 0;
 alpha = 10;
 
 alarm0 = FPS/4;

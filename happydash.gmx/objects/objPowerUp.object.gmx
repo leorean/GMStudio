@@ -109,24 +109,24 @@ frame = 0;
         switch(type)
         {
             case POW_1: //moneeeey
-                global.powDuration = 8*FPS + pt;
+                global.maxPowDuration[type] = 8*FPS + pt;
                 t.text = "Golden Shower";
             break;
             case POW_2: //flying
-                global.powDuration = 10*FPS + pt;
+                global.maxPowDuration[type] = 10*FPS + pt;
                 t.text = "Crucified Bird";
             break;
             case POW_3: //invincible
-                global.powDuration = 12*FPS + pt;
+                global.maxPowDuration[type] = 12*FPS + pt;
                 t.text = "Rainbow Pill";
                 global.player.combo += 10;
             break;
             case POW_4:
-                global.powDuration = 12*FPS + pt;
+                global.maxPowDuration[type] = 12*FPS + pt;
                 t.text = "Bananarama";
             break;
             case POW_5:
-                global.powDuration = 8*FPS + pt;
+                global.maxPowDuration[type] = 8*FPS + pt;
                 t.text = "Chick Magnet";
                 with(objProjectilePlayer2)
                     instance_destroy();
@@ -148,12 +148,12 @@ frame = 0;
                 }
             break;
             case POW_6:
-                global.powDuration = 8*FPS + pt;
+                global.maxPowDuration[type] = 8*FPS + pt;
                 t.text = "Red Rocket!";
             break;
-
         }
-        objControl.alarm[1] = global.powDuration;
+        global.powDuration[type] = global.maxPowDuration[type];
+        global.powDuration[POW_ANY] = global.maxPowDuration[type]; //maximum.
         instance_destroy();
     }
     
