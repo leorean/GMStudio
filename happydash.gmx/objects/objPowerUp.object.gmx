@@ -102,10 +102,11 @@ frame = 0;
     {
         playSound(sfxPowerUp,1);
         t = instance_create(x+TILE*.5,y+TILE*.5,objText);
-        global.powerUp = type;
+        global.powerUp[type] = true;
+        global.powerUp[POW_ANY] = true;
         var pt;
         pt = powTime * 1.5*FPS;
-        switch(global.powerUp)
+        switch(type)
         {
             case POW_1: //moneeeey
                 global.powDuration = 8*FPS + pt;
@@ -183,7 +184,7 @@ frame = 0;
             <kind>1</kind>
             <string>image_speed = 0;
 draw_sprite_part(spriteGfx,-1,2*frame*TILE,9*TILE,2*TILE,TILE,floor(x)-TILE*.5,floor(y));
-draw_sprite_part(spriteGfx,-1,5*TILE+type*TILE,0,TILE,TILE,floor(x),floor(y));
+draw_sprite_part(spriteGfx,-1,4*TILE+type*TILE,0,TILE,TILE,floor(x),floor(y));
 </string>
           </argument>
         </arguments>

@@ -229,8 +229,8 @@ if (room == INIT || global.gameOver || global.player.state == DEAD || !global.st
 }
 else
 {
-    audio_sound_gain(sfxBgm,(global.powerUp == POW_NONE &amp;&amp; !global.pause),0);
-    audio_sound_gain(sfxBgmPow,(global.powerUp != POW_NONE &amp;&amp; !global.pause),0);
+    audio_sound_gain(sfxBgm,(!global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
+    audio_sound_gain(sfxBgmPow,(global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
     playMusic(sfxBgm,!global.mute);
     playMusic(sfxBgmPow,!global.mute);
 }
@@ -360,7 +360,8 @@ if (room == MAIN)
     
     global.difficulty = 0;
     
-    global.powerUp = POW_NONE;
+    for (i = 0; i &lt; POW_SIZE; i+=1)
+        global.powerUp[i] = false;
     alarm[1] = 0;
     global.powDuration = 0;
     
@@ -543,7 +544,9 @@ global.distance = 0;
 global.xSeg = 0;
 global.spawnSegment = false;
 
-global.powerUp = POW_NONE;
+for (i = 0; i &lt; POW_SIZE; i+=1)
+    global.powerUp[i] = false;
+    
 alarm[1] = 0;
 global.powDuration = 0;
 
@@ -641,7 +644,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     if (!global.pause)
     {
         
-        if (global.powerUp == POW_1) //MONEY POWER UP
+        if (global.powerUp[POW_1]) //MONEY POWER UP
         {
             draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-alarm[1]/global.powDuration)*WIDTH,0);
             if (global.timer mod 4 == 0)
@@ -652,7 +655,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
             }
         }
         
-        if (global.powerUp == POW_5) //MAGNET POWERUP
+        if (global.powerUp[POW_5]) //MAGNET POWERUP
             global.distMagnet = global.distMagnetLarge;
         else
             global.distMagnet = global.distMagnetDefault;
@@ -660,6 +663,16 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     }
     
     //power up stuff
+    if (!alarm[1])
+    {
+        if (global.powerUp[POW_ANY])
+        {
+            playSound(sfxPowerDown,1);
+            for (i = 0; i &lt; POW_SIZE; i+=1)
+                global.powerUp[i] = false; //0 includes POW_ANY
+        }
+    }
+    /*
     if (alarm[1] &amp;&amp; global.player.state != DEAD)
     {
         //current power up
@@ -667,10 +680,10 @@ if (room == MAIN &amp;&amp; !global.gameOver)
 
     } else
     {
-        if (global.powerUp != POW_NONE)
-            playSound(sfxPowerDown,1);
-        global.powerUp = POW_NONE;
-    }
+        //if (global.powerUp[ != POW_NONE)
+            //playSound(sfxPowerDown,1);
+        //global.powerUp = POW_NONE;
+    }*/
 
     //power up hud border
     //draw_sprite_part(spriteHud,-1,0,9*TILE,2*TILE,2*TILE,WIDTH*.5-TILE,0);

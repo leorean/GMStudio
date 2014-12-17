@@ -78,7 +78,7 @@ enemy = noone;
     tx = (cos(rad_angle)) * radius;
     ty = -(sin(rad_angle)) * radius;
     
-    if (global.powerUp != POW_5)
+    if (!global.powerUp[POW_5])
     {
         if (bound)
         {

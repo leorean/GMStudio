@@ -1,8 +1,8 @@
-if (jumpPerformed < global.maxJumps || (global.powerUp == POW_2 && y > -2*TILE))
+if (jumpPerformed < global.maxJumps || (global.powerUp[POW_2] && y > -2*TILE))
 {
 
     playSound(sfxJump,1 + .3*jumpPerformed);
-    if (global.powerUp != POW_2)
+    if (!global.powerUp[POW_2])
         jumpPerformed += 1;
         
     if(true)//jumpPerformed > 1)

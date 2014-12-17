@@ -53,7 +53,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
     {
         if (enemy.alive)
         {
-            if (global.powerUp != POW_3)//player ain't on pill
+            if (!global.powerUp[POW_3])//player ain't on pill
                 hurtPlayer();
             else
                 enemy.alive = false;
@@ -77,7 +77,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
             }
             if (enemy.alive)
             {
-                if (global.powerUp != POW_3)
+                if (!global.powerUp[POW_3])
                     hurtPlayer();
                 else
                     killEnemy(enemy);
@@ -152,7 +152,7 @@ else //IF NOT DEAD
     global.curScore = 10*floor(global.distance*0.0625) + global.addScore;
 
     //POWER UP no. 4 (shooting)
-    if (global.powerUp == POW_4)
+    if (global.powerUp[POW_4])
     {
         if (global.timer mod 10 == 0)
             instance_create(cx,cy,objProjectilePlayer1);
@@ -189,7 +189,7 @@ else //IF NOT DEAD
         //d = 1.8 - .33*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
         d = 1.8 - .22*global.upgrade[UPGRADE.upDash,UPGRADE.TIER];
         
-        pow = max(pow - d, 0+(global.powerUp == POW_2));
+        pow = max(pow - d, 0+(global.powerUp[POW_2]));
         if (pow == 0 && enemy == noone)
         {
             invincible = FPS*.5; //short invincibility after attack?
@@ -205,7 +205,7 @@ else //IF NOT DEAD
         pow = min(pow+2*(1-(x*.0025)),maxPow);
         yGrav = yGravDefault;
     }
-    if (global.powerUp == POW_3)
+    if (global.powerUp[POW_3])
         alarm[1] = alarm1;
     if (!alarm[1] && state != DEAD)
     {
