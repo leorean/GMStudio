@@ -80,6 +80,7 @@ alive = true;
         {
             t = instance_create(x-TILE*.5,y-TILE*.5,objEffectDust);
             t.type = 5;
+            t.color = make_color_hsv(70,255,255);
             instance_destroy();
         }
 }

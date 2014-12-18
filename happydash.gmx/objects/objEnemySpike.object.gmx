@@ -29,7 +29,7 @@
 mask = 4;
 
 state = IDLE;
-checking = TILE;
+checking = 1;
 l = false; r = false; u = false; d = false;
 
 isFlying = false;

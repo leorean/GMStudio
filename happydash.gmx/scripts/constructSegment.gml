@@ -132,7 +132,7 @@ var dr;
 dr = 25;
 if (global.difficulty > dr)
 {
-    var ri, rx, ry;
+    var ri, rx, ry, rb;
     
     ri = 0;
     for (i = 0; i < 10; i+= 1)
@@ -143,8 +143,12 @@ if (global.difficulty > dr)
     {
         rx = (2*TILE + random(WIDTH-2*TILE)) div TILE;
         ry = (2*TILE + random(HEIGHT-2*TILE)) div TILE;
-        if (!place_free(a+rx*TILE,b+ry*TILE))
+        //rb = instance_place(a+rx*TILE,b+ry*TILE,objSolid);
+        
+        if (!place_free(a+rx*TILE,b+ry*TILE))//rb != noone)
+        {
             instance_create(a+rx*TILE,b+ry*TILE,objEnemyRotator);
+        }
     }
 }
 //RANDOM ENEMY SPAWNING

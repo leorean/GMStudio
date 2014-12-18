@@ -133,10 +133,9 @@ else //IF NOT DEAD
 {
     //SUPER DASH
     if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
-        if (instance_number(objProjectileSuperDash) < 3 && state == JUMP && statePrev == ATTACK)
+        if (instance_number(objProjectileSuperDash) == 0 && state == JUMP && statePrev == ATTACK)
         {
-            instance_create(x,y,objProjectileSuperDash);
-            //alarm[2] = alarm2;
+            instance_create(x+TILE/2,y,objProjectileSuperDash);
         }
                 
     //DESTROY BLOCKS BY JUMPING

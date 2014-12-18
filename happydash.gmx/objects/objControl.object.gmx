@@ -630,7 +630,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
         
         if (global.powerUp[POW_1]) //MONEY POWER UP
         {
-            draw_sprite_part(spriteGfx,-1,5*TILE,6*TILE,2*TILE,2*TILE,(1-global.powDuration[POW_1]/global.maxPowDuration[POW_1])*WIDTH,0);
+            draw_sprite_part(spriteGfx,-1,4*TILE,3*TILE,2*TILE,2*TILE,(1-global.powDuration[POW_1]/global.maxPowDuration[POW_1])*WIDTH,0);
             if (global.timer mod 4 == 0)
             {
                 var c;

@@ -34,6 +34,7 @@ mask_index = sprProjectileSuperDashMask;
 fCur = 0;
 fSpeed = .3;
 fMax = 3;
+frame = 0;
 </string>
           </argument>
         </arguments>
@@ -56,30 +57,35 @@ fMax = 3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel += .1;
-
-x+= xVel;
-
-destroyStuff();
-
-
-if (place_meeting(x-xVel,y,objBlock))
+            <string>if (!global.pause)
 {
-    //instance_create(x,y,objExplosion);
-    t = instance_create(x,y,objEffectDust);
-    t.type = 6;
-    repeat(10)
-        spawnParticle(x+TILE/2,y+TILE/2,make_color_hsv(120+random(40),255,255));
-    instance_destroy();
+    xVel += .1;
+    
+    x+= xVel;
+    
+    destroyStuff();
+    
+    if (global.timer mod 15 == 0)
+        playSound(sfxBite,1);
+    
+    if (place_meeting(x-xVel,y,objBlock))
+    {
+        //instance_create(x,y,objExplosion);
+        t = instance_create(x,y,objEffectDust);
+        t.type = 6;
+        repeat(10)
+            spawnParticle(x+TILE/2,y+TILE/2,make_color_hsv(120+random(40),255,255));
+        instance_destroy();
+    }
+    
+    fCur = (fCur + fSpeed) mod fMax;
+    frame = floor(fCur);
+    
+    if (x &gt; WIDTH+2*TILE)
+        instance_destroy();
 }
 
-fCur = (fCur + fSpeed) mod fMax;
-frame = floor(fCur);
-
-if (x &gt; WIDTH+2*TILE)
-    instance_destroy();
-    
-draw_sprite_part(spriteGfx,-1,frame*2*TILE,18*TILE,2*TILE,2*TILE,x-TILE/2,y-TILE/2);
+draw_sprite_part(spriteGfx,-1,frame*2*TILE,18*TILE,2*TILE,2*TILE,x-TILE,y-TILE/2);
 //draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,1);
 </string>
           </argument>
