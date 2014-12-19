@@ -32,4 +32,4 @@ if (col2 != c_none)
 
 draw_set_color(col1);
 
-draw_text(px,py,txt);
+draw_text(floor(px),floor(py),txt);
