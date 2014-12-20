@@ -62,7 +62,7 @@ if(in(x,enemy.x-TILE,enemy.x+TILE)) //just to be safe..
     {
         if (enemy.alive)
         {
-            if (state == ATTACK || (yVel <= 0 && y > enemy.y) || (y < enemy.y))
+            if (state == ATTACK || state == JUMP || (yVel <= 0 && y > enemy.y) || (y < enemy.y))
             {
                 //jump on enemies
                 if (state != ATTACK)
@@ -114,6 +114,7 @@ if (!alive)
         
         saveProgress();
         loadProgress();
+        unlockUpgrades();
     }
     global.hasControl = false;
     state = DEAD;

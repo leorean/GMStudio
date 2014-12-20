@@ -35,7 +35,9 @@ for (i = 0; i &lt; UPGRADE.SIZE; i+=1)
 {
     var p;
     p = global.upgrade[i,UPGRADE.PRICE];
-    if (p[global.upgrade[i,UPGRADE.TIER]] &lt;= global.wallet)
+    if (!global.upgrade[i,UPGRADE.LOCKED]
+    &amp;&amp; (global.upgrade[i,UPGRADE.TIER] &lt; array_length_1d(p)
+    &amp;&amp; (p[global.upgrade[i,UPGRADE.TIER]] &lt;= global.wallet)))
         canBuySomething = true;
 }
 
@@ -243,8 +245,8 @@ drawBorder(8.5*TILE,8*TILE,8*TILE,7*TILE);
 
 if (canBuySomething)
 {
-draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,btn[0].x+TILE,btn[0].y-TILE);
-//drawText(btn[0].x+btn[0].w,btn[0].y-TILE*.5,"NEW!",c_white,c_black,fntTiny);
+    zz = 2*sin(((.02*global.timer) mod 2*pi));
+    draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,btn[0].x+2*TILE,btn[0].y-TILE+zz);
 }
 </string>
           </argument>
