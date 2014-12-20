@@ -49,55 +49,35 @@ unlockUpgrades();
 
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 
-p = ds_list_create();
-ds_list_add(p,1000); ds_list_add(p,3500);
 item[UPGRADE.upHealth] = createItem(1*TILE, 2.5*TILE, UPGRADE.upHealth, "Extra Health", "Start the game with more health.", 
-    arrayFromList(p), "&lt;Unlocked by reaching level 5&gt;");
+    global.upgrade[UPGRADE.upHealth,UPGRADE.PRICE], "&lt;Unlocked by reaching level 5&gt;");
 
-p = ds_list_create();
-ds_list_add(p,5000);
 item[UPGRADE.upJump] = createItem(5*TILE, 4.5*TILE, UPGRADE.upJump, "J-J-Jump!", "Additional mid-air jump!", 
-    arrayFromList(p), "&lt;Unlocked by reaching level 10&gt;");
+    global.upgrade[UPGRADE.upJump,UPGRADE.PRICE], "&lt;Unlocked by reaching level 10&gt;");
 
-p = ds_list_create();
-ds_list_add(p,30); ds_list_add(p,60); ds_list_add(p,240); ds_list_add(p,420); ds_list_add(p,1000);
 item[UPGRADE.upMagnet] = createItem(9*TILE, 2.5*TILE, UPGRADE.upMagnet, "Magnetic", "Coins will be more attracted to you.", 
-    arrayFromList(p), "");
+    global.upgrade[UPGRADE.upMagnet,UPGRADE.PRICE], "");
 
-p = ds_list_create();
-ds_list_add(p,50); ds_list_add(p,250); ds_list_add(p,400); ds_list_add(p,650); ds_list_add(p,1200);
 item[UPGRADE.upDash] = createItem(13*TILE, 4.5*TILE, UPGRADE.upDash, "Endurance", "Dash faster, further, longer!", 
-    arrayFromList(p), "");
+    global.upgrade[UPGRADE.upDash,UPGRADE.PRICE], "");
 
-p = ds_list_create();
-ds_list_add(p,400); ds_list_add(p,650); ds_list_add(p,800); ds_list_add(p,1000); ds_list_add(p,1300); ds_list_add(p,1450); ds_list_add(p,1600);
 item[UPGRADE.upBlockChance] = createItem(13*TILE, 8.5*TILE, UPGRADE.upBlockChance, "I Feel Lucky", "Increase spawning chance of #special Blocks.", 
-    arrayFromList(p), "&lt;Unlocked after 'Blueprints' is #level 1 or higher&gt;");
+    global.upgrade[UPGRADE.upBlockChance,UPGRADE.PRICE], "&lt;Unlocked after 'Blueprints' is #level 1 or higher&gt;");
 
-p = ds_list_create();
-ds_list_add(p,1300); ds_list_add(p,1450); ds_list_add(p,1650); ds_list_add(p,2000);
 item[UPGRADE.upPowerUpTime] = createItem(1*TILE, 6.5*TILE, UPGRADE.upPowerUpTime, "Endless Trip!", "Increases the duration of #Power-Up effects.", 
-    arrayFromList(p), "&lt;Unlocked by reaching level 10&gt;");
+    global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.PRICE], "&lt;Unlocked by reaching level 10&gt;");
 
-p = ds_list_create();
-ds_list_add(p,250); ds_list_add(p,400); ds_list_add(p,750); ds_list_add(p,900); ds_list_add(p,1200); ds_list_add(p,1500);
 item[UPGRADE.upComboCooldown] = createItem(9*TILE, 6.5*TILE, UPGRADE.upComboCooldown, "Keep It Going", "Combo cooldown duration increased.", 
-    arrayFromList(p), "&lt;Unlocked by reaching level 5&gt;");
+    global.upgrade[UPGRADE.upComboCooldown,UPGRADE.PRICE], "&lt;Unlocked by reaching level 5&gt;");
 
-p = ds_list_create();
-ds_list_add(p,25000);
 item[UPGRADE.upSuperDash] = createItem(17*TILE, 6.5*TILE, UPGRADE.upSuperDash, "Sharknado!", "Release deadly tornado-sharks!", 
-    arrayFromList(p), "&lt;Unlocked by reaching level 15&gt;");
+    global.upgrade[UPGRADE.upSuperDash,UPGRADE.PRICE], "&lt;Unlocked by reaching level 15&gt;");
 
-p = ds_list_create();
-ds_list_add(p,300); ds_list_add(p,700); ds_list_add(p,900); ds_list_add(p,2400);
 item[UPGRADE.upPowerUpNew] = createItem(5*TILE, 8.5*TILE, UPGRADE.upPowerUpNew, "What's That?", "Find better Power-Ups!", 
-    arrayFromList(p), "&lt;Unlocked after 'Blueprints' is #level 2 or higher&gt;");
+    global.upgrade[UPGRADE.upPowerUpNew,UPGRADE.PRICE], "&lt;Unlocked after 'Blueprints' is #level 2 or higher&gt;");
 
-p = ds_list_create();
-ds_list_add(p,100); ds_list_add(p,350); ds_list_add(p,700);
 item[UPGRADE.upBlockNew] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockNew, "Blueprints", "New types of blocks!", 
-    arrayFromList(p), "");
+    global.upgrade[UPGRADE.upBlockNew,UPGRADE.PRICE], "");
         
 //loadProgress();
 //saveProgress();

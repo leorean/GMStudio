@@ -87,7 +87,7 @@ if (enabled &amp;&amp; in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+
         {
             t = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
             t.type = 3;
-            t.depth = HUDDEPTH;
+            t.depth = depth-1;
             instance_destroy();
         }
             

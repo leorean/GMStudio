@@ -25,9 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = HUDDEPTH+2;
+            <string>depth = HUDDEPTH-1;//+2;
 index = 0;
 maxIndex = 2;
+
+canBuySomething = false;
+
+for (i = 0; i &lt; UPGRADE.SIZE; i+=1)
+{
+    var p;
+    p = global.upgrade[i,UPGRADE.PRICE];
+    if (p[global.upgrade[i,UPGRADE.TIER]] &lt;= global.wallet)
+        canBuySomething = true;
+}
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
@@ -228,19 +238,14 @@ switch(m)
     case 1: drawText(WIDTH*.5, (row+0)*TILE,"Coins collected: " +string(global.coinsCollected),c1,c2,f);
     break;
 }
-/*
-draw_set_halign(fa_right);
-switch(m)
-{
-    case 5: drawText(WIDTH*.5+d, (row+4)*TILE,string(global.enemiesKilled),c1,c2,f);
-    case 4: drawText(WIDTH*.5+d, (row+3)*TILE,string(floor(global.distance*.1)),c1,c2,f);
-    case 3: drawText(WIDTH*.5+d, (row+2)*TILE,string(global.level),c1,c2,f);
-    case 2: drawText(WIDTH*.5+d, (row+1)*TILE,"x"+string(global.maxCombo),c1,c2,f);
-    case 1: drawText(WIDTH*.5+d, (row+0)*TILE,string(global.coinsCollected),c1,c2,f);
-    break;
-}*/
 
 drawBorder(8.5*TILE,8*TILE,8*TILE,7*TILE);
+
+if (canBuySomething)
+{
+draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,btn[0].x+TILE,btn[0].y-TILE);
+//drawText(btn[0].x+btn[0].w,btn[0].y-TILE*.5,"NEW!",c_white,c_black,fntTiny);
+}
 </string>
           </argument>
         </arguments>

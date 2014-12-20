@@ -1465,6 +1465,7 @@
       <script>scripts\playSound.gml</script>
       <script>scripts\playMusic.gml</script>
       <script>scripts\unlockUpgrades.gml</script>
+      <script>scripts\setUpgradePrices.gml</script>
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
@@ -1485,6 +1486,7 @@
       <script>scripts\spawnParticle.gml</script>
       <script>scripts\createItem.gml</script>
       <script>scripts\arrayFromList.gml</script>
+      <script>scripts\array.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

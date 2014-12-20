@@ -3,6 +3,25 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="1" name="datafiles">
+    <datafile>
+      <name>assets.png</name>
+      <exists>-1</exists>
+      <size>870</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>assets.png</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites"/>
@@ -10,14 +29,27 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\generateDungeon.gml</script>
+    <script>scripts\array.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fnt</font>
+  </fonts>
   <objects name="objects">
     <object>objects\objGenerator</object>
     <object>objects\objControl</object>
   </objects>
+  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\TEST</room>
   </rooms>
+  <constants number="6">
+    <constant name="TILE">16</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
+    <constant name="UP">-2</constant>
+    <constant name="DOWN">2</constant>
+    <constant name="NONE">0</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

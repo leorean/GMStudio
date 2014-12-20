@@ -4,10 +4,34 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (keyboard_check_pressed(ord('Q')))
+    game_restart();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="4">
       <action>
         <libid>1</libid>
@@ -31,6 +55,31 @@
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="3">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//this event is only necessary because of game_restart()
+instance_create(0,0,objControl);
+instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="2">
       <action>
         <libid>1</libid>
@@ -48,12 +97,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>enum C //CONTROL CONSTANTS
+            <string>randomize();
+
+enum C //CONTROL CONSTANTS
 {
     ZOOM = 3,
     WIDTH = 400,
     HEIGHT = 240
 };
+
+/*
 enum ROOM //THERE ARE 4 "TYPES" OF ROOMS
 {
     NONE = 0,
@@ -61,18 +114,57 @@ enum ROOM //THERE ARE 4 "TYPES" OF ROOMS
     s1x2 = 2,
     s2x1 = 3,
     s2x2 = 4    
-};
+};*/
+
+global.sprAssets = sprite_add("assets.png",1,true,false,0,0);
 
 w = 10; h = 10;
+generateDungeon(w,h);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(fnt);
 
 for (i = 0; i &lt; w; i++)
     for (j = 0; j &lt; h; j++)
     {
-        global.rooms = ROOM.NONE;
+        type = global.rooms[i,j];
+        draw_sprite_part(global.sprAssets,-1,(type[0]&gt;0)*TILE,0,TILE,TILE,i*TILE,j*TILE);
+        
+        if (type[1])
+            draw_sprite_part(global.sprAssets,-1,0*TILE,TILE,TILE,TILE,i*TILE,j*TILE);
+        if (type[2])
+            draw_sprite_part(global.sprAssets,-1,1*TILE,TILE,TILE,TILE,i*TILE,j*TILE);
+        if (type[3])
+            draw_sprite_part(global.sprAssets,-1,2*TILE,TILE,TILE,TILE,i*TILE,j*TILE);
+        if (type[4])
+            draw_sprite_part(global.sprAssets,-1,3*TILE,TILE,TILE,TILE,i*TILE,j*TILE);
+            
+        if (type[0]&gt; 0)
+            draw_text(i*TILE+TILE*.5,j*TILE+TILE*.5,string(type[0]));
     }
-
-generateDungeon(w,h);
-
 </string>
           </argument>
         </arguments>
