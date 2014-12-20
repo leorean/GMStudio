@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(ord('Q')))
+            <string>if (keyboard_check(ord('Q')))
     game_restart();
 </string>
           </argument>

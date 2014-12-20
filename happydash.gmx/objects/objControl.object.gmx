@@ -8,28 +8,6 @@
   <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="2" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>room starts scrolling</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
@@ -133,8 +111,9 @@ if (room == MAIN &amp;&amp; !global.gameOver)
             }
 
         }
-        //the scrolling speed!!
-        if (!alarm[0])
+        startTimer = max(startTimer -1,0);
+        //game starts to scroll and stuff AFTER the startsignal is set
+        if (startTimer == 0)
         {
             if (!global.startSignal)
             {
@@ -219,10 +198,22 @@ if (global.gameOver)
 
 if keyboard_check_pressed(vk_escape)
 {
-    if (room != INIT)
-        room_goto(INIT);
-    else
+    if (room == MAIN)
+    {
+        if (!global.pause)
+        {
+            global.pause = true;
+            instance_create(0,0,objPauseMenu);
+        } else
+        {
+            saveRun();
+            room_goto(INIT);
+        }
+    }
+    else if (room == INIT)
         game_end();
+    else
+        room_goto(INIT);
 }
 
 ////////////////////////////////////////////////////debug keys:   
@@ -332,7 +323,7 @@ if (room == MAIN)
     themePrev = theme;
     objCamera.theme = theme * WIDTH;
     
-    alarm[0]= alarm0;
+    startTimer = maxStartTimer;
 
     global.startSignal = false;
     
@@ -475,8 +466,8 @@ global.player = noone;
     
 //other stuff / local variables
 
-alarm0 = FPS;
-alarm[0] = alarm0;
+maxStartTimer = FPS;
+startTimer = maxStartTimer;
 mouse_xprev = mouse_x;
 mouse_yprev = mouse_y;
 

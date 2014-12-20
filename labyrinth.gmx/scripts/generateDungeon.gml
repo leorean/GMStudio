@@ -6,8 +6,6 @@ h = argument1;
 
 steps = 10;
 
-ind = 1;
-
 //clear room array
 for (i = 0; i < w; i++)
     for (j = 0; j < h; j++)
@@ -16,14 +14,46 @@ for (i = 0; i < w; i++)
         global.rooms[i,j] = data;
     }
 
-//choose a random starting point and set room to 1
-a = irandom(w-1);
-b = irandom(h-1);
-aPrev = a;
-bPrev = b;
+//choose a random starting point
+a = 1 + irandom(w-3);
+b = 1 + irandom(h-3);
 
-show_debug_message("Starting:"+string(a)+":"+string(b));
+global.rooms[a,b] = array(1,0,0,0,0);
 
+next = array(0,0,0,0,0);
+
+repeat(steps)
+{
+
+    //choose next room
+    next = global.rooms[a,b];
+    while(next[0] != 0)
+    {
+        //either search in horizontal or vertical direction
+        if (choose(true,false))
+            a = clamp(a-1+irandom(2),0,w-1);
+        else
+            b = clamp(b-1+irandom(2),0,h-1);
+        next = global.rooms[a,b];
+    }
+    global.rooms[a,b] = array(1,0,0,0,0);
+
+        
+
+}
+/*
+data = array(1,(dir == DOWN),(dir==UP),(dir==LEFT),(dir==RIGHT));
+global.rooms[a,b] = data;
+
+a = min(max(a + sign(dir)*(dir == LEFT || dir == RIGHT), 0), w-1);
+b = min(max(b + sign(dir)*(dir == UP || dir == DOWN), 0), h-1);
+*/
+
+
+
+
+
+/*
 //choose random direction and build random steps in that direction
 repeat(steps)
 {
@@ -66,7 +96,7 @@ repeat(steps)
         if (a == 0 || b == 0 || a == w-1 || b == h-1) continue;
         
     }
-    /*
+    
     var t;
     t = global.rooms[a,b];
     
@@ -74,5 +104,5 @@ repeat(steps)
     {
         a = irandom(w-1);
         b = irandom(h-1);
-    }*/
-}
+    }
+}*/

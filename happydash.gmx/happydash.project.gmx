@@ -1487,6 +1487,7 @@
       <script>scripts\createItem.gml</script>
       <script>scripts\arrayFromList.gml</script>
       <script>scripts\array.gml</script>
+      <script>scripts\saveRun.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

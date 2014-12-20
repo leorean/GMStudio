@@ -38,7 +38,6 @@
     <object>objects\objGenerator</object>
     <object>objects\objControl</object>
   </objects>
-  <timelines name="timelines"/>
   <rooms name="rooms">
     <room>rooms\TEST</room>
   </rooms>

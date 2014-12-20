@@ -108,13 +108,8 @@ if (!alive)
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
-        global.wallet += global.coinsCollected;
+        saveRun();
         
-        global.maxLevelReached = max(global.maxLevelReached,global.level);
-        
-        saveProgress();
-        loadProgress();
-        unlockUpgrades();
     }
     global.hasControl = false;
     state = DEAD;
