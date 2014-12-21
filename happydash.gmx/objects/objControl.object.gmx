@@ -395,8 +395,7 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//for (i = 0; i &lt; 50; i+=1)
-//    show_debug_message(string(i)+":"+string(maxEXP(i)));
+            <string>application_surface_enable(false);
 
 depth = HUDDEPTH;
 randomize();

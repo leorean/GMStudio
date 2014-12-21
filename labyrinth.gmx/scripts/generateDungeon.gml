@@ -36,6 +36,7 @@ repeat(steps)
             b = clamp(b-1+irandom(2),0,h-1);
         next = global.rooms[a,b];
     }
+    
     global.rooms[a,b] = array(1,0,0,0,0);
 
         

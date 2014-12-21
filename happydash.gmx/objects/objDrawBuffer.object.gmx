@@ -64,7 +64,6 @@ if (!surface_exists(global.drawBuffer))
     view_surface_id[0] = global.drawBuffer;
 
 }
-
     
 surface_reset_target();
 
@@ -93,12 +92,19 @@ if (surface_exists(global.drawBuffer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>window_center();
+            <string>draw_enable_alphablend(false);
+texture_set_interpolation(false);
+draw_set_alpha_test(false);
+
+window_center();
 
 if (surface_exists(global.drawBuffer))
     with(objAll)
         surface_set_target(global.drawBuffer);
 
+draw_enable_alphablend(true);
+//texture_set_interpolation(true);
+//draw_set_alpha_test(true);
 </string>
           </argument>
         </arguments>
