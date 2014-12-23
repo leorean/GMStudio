@@ -3,7 +3,13 @@
 ds = ds_grid_create(WIDTH/TILE,HEIGHT/TILE);
 ds_grid_clear(ds,-1);
 
-file = file_text_open_read(argument0);
+if (file_exists(argument0))
+    file = file_text_open_read(argument0);
+else
+{
+    show_debug_message("File " + string(argument0) + " doesn't exist");
+    exit;
+}
 
 var data, f,i,j;
 

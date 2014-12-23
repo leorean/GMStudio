@@ -32,18 +32,6 @@ function jsDrawCenteredText(_graphics, x, y, colour, text) {
 ///
 function custom_preloader(_graphics, _width, _height, _total, _current, _loadingscreen)
 {
-	//////////////////////  LOADING BAR SETTINGS ////////////////////////////////	
-	/*var barwidth = (_width - 50) ;					
-	var barheight = 25;                          	
-	var x = (_width - barwidth) / 2;				
-	var y = (_height - barheight) / 2;
-	var w = (barwidth / _total) * _current;
-	var percent = Math.floor(100 * (_current / _total));
-	var border=3;   						
-	var border_color= "rgb(102,79,52)";   	
-	var bar_bg= "rgb(0,0,0)";   			
-	var progress_bg= "rgb(226,174,85)";
-	*/
 	var percent = Math.floor(100 * (_current / _total));
 	
 	var load_bg = new Image();
@@ -51,37 +39,11 @@ function custom_preloader(_graphics, _width, _height, _total, _current, _loading
 	//var load_fg = new Image();
 	//load_fg.src = '../html5game/loader_fg.png';
 	
-	//Color the background 
-	//_graphics.fillStyle = window_bgd;
-	//_graphics.fillRect(0, 0, _width, _height);
-	
-	//If GM splashscreen is set use it, and make it same width and height as canvas, start drawing at x=0 and y=0
-	/*if (_loadingscreen != 0)
-	{
-		_graphics.drawImage(_loadingscreen, 0, 0, _width, _height);
-	}*/
-	//var s = 0;
-	//s += 1;
 	_graphics.drawImage(load_bg, 0,0);
 	//_graphics.drawImage(load_fg, s % (_width + 80),80,80,48);
 
-	// Only draw the bar once "something" has loaded in.
-	if (true)//_current != 0)
+	if (true)
 	{
-		/*
-		//Border
-		_graphics.fillStyle = border_color;  /////////////////////
-		_graphics.fillRect(x-border, y-border, barwidth+(border*2), barheight+(border*2));///////////////////
-
-		
-		// Bar Background
-		_graphics.fillStyle = bar_bg;
-		_graphics.fillRect(x, y, barwidth, barheight);
-
-		// Progress Bar
-		_graphics.fillStyle = progress_bg;
-		_graphics.fillRect(x, y, w, barheight);*/
-		
 		var x = 200;
 		var y = _height/2;
 		var b = 2;

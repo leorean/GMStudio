@@ -78,8 +78,8 @@
     <option_frequency>0</option_frequency>
     <option_frontimage>nil</option_frontimage>
     <option_fullscreen>False</option_fullscreen>
-    <option_gameguid>{D538E3B3-B0AF-4879-A430-AE4616E2CC51}</option_gameguid>
-    <option_gameid>891136532</option_gameid>
+    <option_gameguid>{475B8D84-058C-4147-9075-1C2EBECB97B5}</option_gameguid>
+    <option_gameid>673594918</option_gameid>
     <option_haptic_effects>-1</option_haptic_effects>
     <option_hasloadimage>false</option_hasloadimage>
     <option_helpkey>true</option_helpkey>
@@ -98,7 +98,7 @@
     <option_html5_google_analytics_enable>-1</option_html5_google_analytics_enable>
     <option_html5_google_tracking_id>UA-57939076-1</option_html5_google_tracking_id>
     <option_html5_icon>Configs\Default\html5\fav.ico</option_html5_icon>
-    <option_html5_index>0</option_html5_index>
+    <option_html5_index>-1</option_html5_index>
     <option_html5_interpolate>0</option_html5_interpolate>
     <option_html5_jsprepend></option_html5_jsprepend>
     <option_html5_loadingbar>0</option_html5_loadingbar>

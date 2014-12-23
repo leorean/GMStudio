@@ -450,20 +450,25 @@ global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
 global.fntScore = font_add_sprite(spriteFontScore,ord('0'),true,1);
 
 //SEGMENTS
-
-var zip;
-zip = zip_unzip("seg.zip",working_directory);
-
-if (zip &lt;= 0)
-{
-    show_message("Unable to load data!");
-    game_end();
-    instance_destroy();    
-}
-
 maxSegments = 80;
+
+//zip = zip_unzip("seg.zip", working_directory);
+
+//show_message (kbzipUnzipAll("seg.zip", working_directory));
+
+//show_message(string(zip));
+
+/*if (is_undefined(zip))
+{
+    show_message("Failed to extract files.");
+    game_end();
+    instance_destroy();
+} else
+{
+}*/
+
 for (i = 0; i &lt;= maxSegments;i+=1)
-    segment[i] = importSegment(string(i)+".tmx");
+    segment[i] = importSegment(working_directory + string(i)+".tmx");
 
 curSeg = 0;
 prevSeg = 0;
