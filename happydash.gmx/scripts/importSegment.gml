@@ -1,4 +1,4 @@
-//file = argument0;
+var file;
 
 ds = ds_grid_create(WIDTH/TILE,HEIGHT/TILE);
 ds_grid_clear(ds,-1);

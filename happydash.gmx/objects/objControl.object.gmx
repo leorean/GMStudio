@@ -452,6 +452,10 @@ global.fntScore = font_add_sprite(spriteFontScore,ord('0'),true,1);
 //SEGMENTS
 maxSegments = 80;
 
+segment = unzip("seg.zip",maxSegments);
+//for (i = 0; i &lt;= maxSegments;i+=1)
+//    segment[i] = importSegment(working_directory + string(i)+".tmx");
+
 //zip = zip_unzip("seg.zip", working_directory);
 
 //show_message (kbzipUnzipAll("seg.zip", working_directory));
@@ -467,8 +471,8 @@ maxSegments = 80;
 {
 }*/
 
-for (i = 0; i &lt;= maxSegments;i+=1)
-    segment[i] = importSegment(working_directory + string(i)+".tmx");
+//for (i = 0; i &lt;= maxSegments;i+=1)
+//    segment[i] = importSegment(working_directory + string(i)+".tmx");
 
 curSeg = 0;
 prevSeg = 0;
