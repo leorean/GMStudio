@@ -12,4 +12,3 @@ if (instance_exists(coin))
     }
 }
 coin = noone;
-

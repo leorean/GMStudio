@@ -96,7 +96,7 @@ if (surface_exists(global.drawBuffer))
 texture_set_interpolation(false);
 draw_set_alpha_test(false);
 
-window_center();
+//window_center();
 
 if (surface_exists(global.drawBuffer))
     with(objAll)

@@ -36,6 +36,7 @@ alpha = 1;
 fade = 2;
 
 depth = CAMERADEPTH;
+image_speed = 0;
 
 g = objControl;
 </string>
@@ -113,7 +114,6 @@ fade = 2;
           <argument>
             <kind>1</kind>
             <string>//DRAW BACKGROUND
-image_speed = 0;
 draw_set_color(c_white);
 draw_set_alpha(1);
 
@@ -126,18 +126,19 @@ if (g.theme != g.themePrev &amp;&amp; fade == 0)
     g.themePrev = g.theme;
 }
 
-draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,floor(a),0,1,1,c_white,1);
-draw_sprite_part_ext(spriteBg,-1,theme,0*h,w,h,floor(a+w),0,1,1,c_white,1);
+draw_sprite_part(spriteBg,-1,theme,0*h,w,h,floor(a),0);
+draw_sprite_part(spriteBg,-1,theme,0*h,w,h,floor(a+w),0);
 
 
-draw_sprite_part_ext(spriteBg,-1,theme,1*h,w,h,floor(b),0,1,1,c_white,1);
-draw_sprite_part_ext(spriteBg,-1,theme,1*h,w,h,floor(b+w),0,1,1,c_white,1);
+draw_sprite_part(spriteBg,-1,theme,1*h,w,h,floor(b),0);
+draw_sprite_part(spriteBg,-1,theme,1*h,w,h,floor(b+w),0);
 
 
-draw_sprite_part_ext(spriteBg,-1,theme,2*h,w,h,floor(c),0,1,1,c_white,1);
-draw_sprite_part_ext(spriteBg,-1,theme,2*h,w,h,floor(c+w),0,1,1,c_white,1);
+draw_sprite_part(spriteBg,-1,theme,2*h,w,h,floor(c),0);
+draw_sprite_part(spriteBg,-1,theme,2*h,w,h,floor(c+w),0);
 
-draw_set_alpha(alpha);
+if (fade != 0)
+    draw_set_alpha(alpha);
 
 if (fade == 1)
 {

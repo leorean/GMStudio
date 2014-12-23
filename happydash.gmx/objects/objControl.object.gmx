@@ -278,11 +278,13 @@ if (room == SHOP) instance_deactivate_object(objControl);
 if (room == SCORE) instance_deactivate_object(objControl);
 
 //room start
+/*
 view_visible[0] = true;
 view_wview[0] = WIDTH;
 view_hview[0] = HEIGHT;
 view_wport[0] = WIDTH;
 view_hport[0] = HEIGHT;
+*/
 
 global.pause = false;    
 global.gameOver = false;
@@ -396,8 +398,8 @@ if (surface_exists(global.drawBuffer))
           <argument>
             <kind>1</kind>
             <string>application_surface_enable(false);
-window_center();
-window_set_size(ZOOM*WIDTH,ZOOM*HEIGHT);
+//window_center();
+//window_set_size(ZOOM*WIDTH,ZOOM*HEIGHT);
 
 depth = HUDDEPTH;
 randomize();
