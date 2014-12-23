@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="133" name="datafiles">
+  <datafiles number="138" name="datafiles">
     <datafile>
       <name>seg.zip</name>
       <exists>-1</exists>
@@ -39,9 +39,9 @@
       <filename>index.html</filename>
     </datafile>
     <datafile>
-      <name>preloader.png</name>
+      <name>loader_fg.png</name>
       <exists>-1</exists>
-      <size>19689</size>
+      <size>4732</size>
       <exportAction>2</exportAction>
       <exportDir></exportDir>
       <overwrite>0</overwrite>
@@ -53,7 +53,24 @@
           <CopyToMask>9223372036854775807</CopyToMask>
         </Config>
       </ConfigOptions>
-      <filename>preloader.png</filename>
+      <filename>loader_fg.png</filename>
+    </datafile>
+    <datafile>
+      <name>loader_bg.png</name>
+      <exists>-1</exists>
+      <size>12107</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>loader_bg.png</filename>
     </datafile>
   </datafiles>
   <NewExtensions>

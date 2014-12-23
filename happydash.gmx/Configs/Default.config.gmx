@@ -101,7 +101,7 @@
     <option_html5_index>0</option_html5_index>
     <option_html5_interpolate>0</option_html5_interpolate>
     <option_html5_jsprepend></option_html5_jsprepend>
-    <option_html5_loadingbar>-1</option_html5_loadingbar>
+    <option_html5_loadingbar>0</option_html5_loadingbar>
     <option_html5_outputdebugtoconsole>True</option_html5_outputdebugtoconsole>
     <option_html5_outputname>index.html</option_html5_outputname>
     <option_html5_scale>-1</option_html5_scale>
