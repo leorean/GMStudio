@@ -33,6 +33,10 @@ with(objButton)
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
+    
+if (!instance_exists(objHelpMe))
+    instance_create(2*TILE,HEIGHT-6*TILE,objHelpMe);
+
 
 index = 0;
 maxIndex = 3;
@@ -137,6 +141,7 @@ if (btn[2].pressed)
     room_goto(SCORE);
 if (btn[3].pressed)
     game_end();
+
 
 </string>
           </argument>

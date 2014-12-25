@@ -100,6 +100,7 @@
     <sound>sound\sfxExplode</sound>
     <sound>sound\sfxHurt</sound>
     <sound>sound\sfxBite</sound>
+    <sound>sound\sfxTitle</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -144,6 +145,7 @@
     <sprite>sprites\spriteConfetti</sprite>
     <sprite>sprites\spriteShop</sprite>
     <sprite>sprites\spriteLevelUp</sprite>
+    <sprite>sprites\spriteHelp</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -161,6 +163,7 @@
       <script>scripts\setUpgradePrices.gml</script>
       <script>scripts\unzip.gml</script>
       <script>scripts\zip.gml</script>
+      <script>scripts\saveOptions.gml</script>
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
@@ -210,6 +213,7 @@
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
       <object>objects\objMouse</object>
+      <object>objects\objSoundManager</object>
     </objects>
     <objects name="content">
       <object>objects\objBlock</object>
@@ -256,6 +260,8 @@
       <object>objects\objScoreMenu</object>
       <object>objects\objShopMenu</object>
       <object>objects\objShopItem</object>
+      <object>objects\objHelpMenu</object>
+      <object>objects\objHelpMe</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -263,6 +269,7 @@
     <room>rooms\SCORE</room>
     <room>rooms\MAIN</room>
     <room>rooms\SHOP</room>
+    <room>rooms\HELP</room>
   </rooms>
   <constants number="41">
     <constant name="ZOOM">2</constant>
