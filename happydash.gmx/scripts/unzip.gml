@@ -22,15 +22,17 @@ while (!file_text_eof(file))
     {
         if (string_pos('SEGNUM',string(f)) != 0)
             number = floor(real(string_digits(f)));
-        show_debug_message(number);
         file_text_readln(file);
     }
     else
-    {    
-        if (string_pos('<data>',string(f)) != 0)
-            data = true; //found data segment in file
-    
-        if (data)//handle tile data
+    {   
+        if (!data)
+        {
+            if (string_pos('<data>',string(f)) != 0)
+                data = true; //found data segment in file
+            file_text_readln(file);
+        }
+        else//handle tile data
         {
             ds_grid_add(r[number],i,j,floor(real(string_digits(f))+1));
             i += 1;
@@ -39,7 +41,7 @@ while (!file_text_eof(file))
                 i = 0;
                 j += 1;
             }
-            
+            file_text_readln(file);
             if (j >= HEIGHT/TILE) || (string_pos('/data>',string(f)) != 0)
             {
                 number = -1;
