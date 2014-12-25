@@ -455,8 +455,8 @@ segment = unzip("seg.z",maxSegments);
 //zip("seg.z",maxSegments);
 //game_end();
 
-for (i = 0; i &lt;= maxSegments;i+=1)
-    segment[i] = importSegment(working_directory + string(i)+".tmx");
+//for (i = 0; i &lt;= maxSegments;i+=1)
+//    segment[i] = importSegment(working_directory + string(i)+".tmx");
 
 curSeg = 0;
 prevSeg = 0;

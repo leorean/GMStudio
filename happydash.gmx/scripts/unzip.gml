@@ -6,7 +6,7 @@ if (file_exists(argument0))
 
 for (s = 0; s <= argument1; s++)
 {
-    r[s] = ds_grid_create(WIDTH/TILE,HEIGHT/TILE);
+    r[s] = ds_grid_create(WIDTH/TILE+1,HEIGHT/TILE+1);
     ds_grid_clear(r[s],-1);
 }
 
@@ -23,6 +23,7 @@ while (!file_text_eof(file))
         if (string_pos('SEGNUM',string(f)) != 0)
             number = floor(real(string_digits(f)));
         show_debug_message(number);
+        file_text_readln(file);
     }
     else
     {    
@@ -38,8 +39,8 @@ while (!file_text_eof(file))
                 i = 0;
                 j += 1;
             }
-                
-            if (string_pos('/data>',string(f)) != 0)
+            
+            if (j >= HEIGHT/TILE) || (string_pos('/data>',string(f)) != 0)
             {
                 number = -1;
                 data = false;
@@ -48,7 +49,7 @@ while (!file_text_eof(file))
         }
     }
     
-    file_text_readln(file);
+    
 }
 
 file_text_close(file);
