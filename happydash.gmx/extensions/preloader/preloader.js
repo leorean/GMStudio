@@ -34,40 +34,40 @@ function custom_preloader(_graphics, _width, _height, _total, _current, _loading
 {
 	var percent = Math.floor(100 * (_current / _total));
 	
-	var load_bg = new Image();
-	load_bg.src = '../html5game/loader_bg.png';
-	//var load_fg = new Image();
-	//load_fg.src = '../html5game/loader_fg.png';
+	//var load_bg = new Image();
+	//load_bg.src = '../html5game/loader_bg.png';
+	var load_fg = new Image(); //160 x 112
+	load_fg.src = '../html5game/loader_fg.png';
+
+	_graphics.fillStyle = "rgb(255,255,255)";
+	_graphics.fillRect(0,0,_width,_height);
 	
-	_graphics.drawImage(load_bg, 0,0);
+	_graphics.drawImage(load_fg, _width/2 - 160 / 2, 32);
 	//_graphics.drawImage(load_fg, s % (_width + 80),80,80,48);
 
-	if (true)
+	var x = 200;
+	var y = _height/2;
+	var b = 2;
+	var s = 3;
+	var a = 10;
+
+	
+	_graphics.fillStyle = "rgb(0,0,0)";
+	_graphics.fillRect(x-b,y-b,_width - 2*x + 2*b,s*a + 2*b);
+
+	_graphics.fillStyle = "rgb(255,255,255)";
+	_graphics.fillRect(x,y,_width - 2*x,s*a);
+
+	
+	//for (var i = 0; i < _width*(percent/100); i+= 1)
+	for (var j = 0; j < a; j+= 1)
 	{
-		var x = 200;
-		var y = _height/2;
-		var b = 2;
-		var s = 3;
-		var a = 10;
-
-		
-		_graphics.fillStyle = "rgb(0,0,0)";
-		_graphics.fillRect(x-b,y-b,_width - 2*x + 2*b,s*a + 2*b);
-
-		_graphics.fillStyle = "rgb(255,255,255)";
-		_graphics.fillRect(x,y,_width - 2*x,s*a);
-
-		
-		//for (var i = 0; i < _width*(percent/100); i+= 1)
-		for (var j = 0; j < a; j+= 1)
-		{
-			_graphics.fillStyle = "hsl("+j*25+",100%,50%)";
-			_graphics.fillRect(x,y+j*s,(_width - 2*x) * (_current / _total),s);
-		}
-		
-		jsDrawCenteredText(_graphics, _width/2, _height/2 - 35, "rgb(0,0,0)", percent + "%");
-		jsDrawCenteredText(_graphics, _width/2, _height/2 + 70 + s*a, "rgb(0,0,0)", "Game is loading..");
-		
+		_graphics.fillStyle = "hsl("+j*25+",100%,50%)";
+		_graphics.fillRect(x,y+j*s,(_width - 2*x) * (_current / _total),s);
 	}
+	
+	jsDrawCenteredText(_graphics, _width/2, _height/2 - 35, "rgb(0,0,0)", percent + "%");
+	jsDrawCenteredText(_graphics, _width/2, _height/2 + 70 + s*a, "rgb(0,0,0)", "Game is loading..");
+
 }
 

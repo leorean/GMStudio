@@ -415,13 +415,13 @@ global.mute = false;
 instance_create(mouse_x,mouse_y,objMouse);
 
 //TOUCH BUTTONS
-global.tbJump = instance_create(0,floor(HEIGHT/2)-2*TILE,objTouchButton);
+/*global.tbJump = instance_create(0,floor(HEIGHT/2)-2*TILE,objTouchButton);
 global.tbJump.type = 0;
 global.tbDash = instance_create(WIDTH-3*TILE,floor(HEIGHT/2)-2*TILE,objTouchButton);
 global.tbDash.type = 1;
 global.tbStop = instance_create(WIDTH-6*TILE,floor(HEIGHT/2)+1*TILE,objTouchButton);
 global.tbStop.type = 2;
-
+*/
 //DEVICE TYPE/INPUT TYPE
 switch(os_type)
 {
@@ -436,10 +436,8 @@ switch(os_type)
     case os_ios:
         global.input = INPUT_TOUCH;
     break;
-    default:
+    case os_unknown:
         global.input = INPUT_KEYBOARD; 
-        //show_message("DEVICE UNKNOWN :(");
-        //game_end();
     break;
 }
 
@@ -452,27 +450,13 @@ global.fntScore = font_add_sprite(spriteFontScore,ord('0'),true,1);
 //SEGMENTS
 maxSegments = 80;
 
-segment = unzip("seg.zip",maxSegments);
-//for (i = 0; i &lt;= maxSegments;i+=1)
-//    segment[i] = importSegment(working_directory + string(i)+".tmx");
+segment = unzip("seg.z",maxSegments);
 
-//zip = zip_unzip("seg.zip", working_directory);
+//zip("seg.z",maxSegments);
+//game_end();
 
-//show_message (kbzipUnzipAll("seg.zip", working_directory));
-
-//show_message(string(zip));
-
-/*if (is_undefined(zip))
-{
-    show_message("Failed to extract files.");
-    game_end();
-    instance_destroy();
-} else
-{
-}*/
-
-//for (i = 0; i &lt;= maxSegments;i+=1)
-//    segment[i] = importSegment(working_directory + string(i)+".tmx");
+for (i = 0; i &lt;= maxSegments;i+=1)
+    segment[i] = importSegment(working_directory + string(i)+".tmx");
 
 curSeg = 0;
 prevSeg = 0;

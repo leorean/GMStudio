@@ -253,10 +253,30 @@ pressedMute = (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2
 //CONTROLS
 if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
 {
+    
+    var jumpPressed, dashPressed, stopPressing;
+    jumpPressed = false; dashPressed = false; stopPressing = false;
+    if (global.input == INPUT_TOUCH)
+        for (i = 0; i &lt; 5; i+=1)
+        {
+            if (device_mouse_check_button_pressed(i,mb_left))
+                &amp;&amp; (in(device_mouse_x(i),0,4*TILE))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+                    jumpPressed = true;
+            
+            if (device_mouse_check_button_pressed(i,mb_left))
+                &amp;&amp; (in(device_mouse_x(i),WIDTH-4*TILE,WIDTH))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+                    dashPressed = true;
+    
+            if (device_mouse_check_button(i,mb_left))
+                &amp;&amp; (in(device_mouse_x(i),4*TILE,WIDTH-4*TILE))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+                    stopPressing = true;
+        }
+
+
     //KEY INPUT (touch AND keys)
-    keyUpPressed = keyboard_check_pressed(vk_up) || global.tbJump.pressed;
-    keyRightPressed = keyboard_check_pressed(vk_right) || global.tbDash.pressed;
-    keyDown = keyboard_check(vk_down) || keyboard_check(vk_left) || global.tbStop.pressing;
+    keyUpPressed = keyboard_check_pressed(vk_up) || jumpPressed;// || global.tbJump.pressed;
+    keyRightPressed = keyboard_check_pressed(vk_right) || dashPressed;// || global.tbDash.pressed;
+    keyDown = keyboard_check(vk_down) || keyboard_check(vk_left) || stopPressing;// || global.tbStop.pressing;
     
     //MOUSE VISIBILITY
     if (keyUpPressed || keyRightPressed || keyDown)
