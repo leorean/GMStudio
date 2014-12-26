@@ -9,6 +9,7 @@
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\mskThing</sprite>
     <sprite>sprites\mskRope</sprite>
+    <sprite>sprites\mskBrick</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -21,6 +22,7 @@
     <object>objects\objThing</object>
     <object>objects\objRope</object>
     <object>objects\objRopeHolder</object>
+    <object>objects\objBrick</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>

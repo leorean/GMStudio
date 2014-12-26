@@ -25,29 +25,34 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>offset_y = 0;
+            <string>dragged = false;
+
+offset_y = 0;
 host = self;
 next_rope = instance_create(x,y + offset_y, objRope);
 
 attach = physics_joint_distance_create(host,next_rope,host.x,host.y,next_rope.x,next_rope.y,false);
-physics_joint_set_value(attach,phy_joint_damping_ratio,1);
+physics_joint_set_value(attach,phy_joint_damping_ratio,.8);
 physics_joint_set_value(attach,phy_joint_frequency,10);
+physics_joint_set_value(attach,phy_joint_max_length,3);
 
+//physics_joint_rope_create
 
 with (next_rope)
 {
     parent = other.id;
 }
 
-repeat(30)
+repeat(15)
 {
     offset_y += 1;
     last_rope = next_rope;
     next_rope = instance_create(x,y + offset_y,objRope);
     
     link = physics_joint_distance_create(last_rope,next_rope,last_rope.x,last_rope.y,next_rope.x,next_rope.y,false);
-    physics_joint_set_value(link,phy_joint_damping_ratio,1);
+    physics_joint_set_value(link,phy_joint_damping_ratio,.1);
     physics_joint_set_value(link,phy_joint_frequency,10);
+    physics_joint_set_value(link,phy_joint_max_length,3);
 
     with(next_rope)
         parent = other.last_rope;
@@ -55,6 +60,9 @@ repeat(30)
 
 thing = instance_create(x,y + offset_y,objThing);
 link = physics_joint_distance_create(next_rope,thing,next_rope.x,next_rope.y,thing.x,thing.y,false);
+physics_joint_set_value(link,phy_joint_damping_ratio,.8);
+physics_joint_set_value(link,phy_joint_frequency,10);
+physics_joint_set_value(link,phy_joint_max_length,3);
 
 </string>
           </argument>
@@ -78,9 +86,21 @@ link = physics_joint_distance_create(next_rope,thing,next_rope.x,next_rope.y,thi
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>phy_position_x = mouse_x;
-phy_position_y = mouse_y;
+            <string>if (mouse_x &gt; bbox_left &amp;&amp; mouse_x &lt; bbox_right
+&amp;&amp; mouse_y &gt; bbox_top &amp;&amp; mouse_y &lt; bbox_bottom
+&amp;&amp; mouse_check_button(mb_left))
+{
+    dragged = true;
+}
 
+if (mouse_check_button_released(mb_left))
+    dragged = false;
+
+if (dragged)
+{
+    phy_position_x = mouse_x;
+    phy_position_y = mouse_y;
+}
 </string>
           </argument>
         </arguments>
@@ -113,11 +133,11 @@ phy_position_y = mouse_y;
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>0</PhysicsObjectDensity>
-  <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
+  <PhysicsObjectRestitution>1</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>1</PhysicsObjectLinearDamping>
+  <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
+  <PhysicsObjectFriction>0.00999999977648258</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
