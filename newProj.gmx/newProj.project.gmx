@@ -7,17 +7,27 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\mskBlock</sprite>
+    <sprite>sprites\mskThing</sprite>
+    <sprite>sprites\mskRope</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts"/>
+  <shaders name="shaders"/>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objSolid</object>
     <object>objects\objBlock</object>
+    <object>objects\objThing</object>
+    <object>objects\objRope</object>
+    <object>objects\objRopeHolder</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
+  <constants number="1">
+    <constant name="TILE">16</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
