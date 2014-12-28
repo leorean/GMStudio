@@ -15,6 +15,9 @@
     <background>background\tiles</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\resetRope.gml</script>
+  </scripts>
   <objects name="objects">
     <objects name="misc">
       <object>objects\objSolid</object>

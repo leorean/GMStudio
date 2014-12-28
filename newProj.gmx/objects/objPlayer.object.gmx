@@ -40,9 +40,8 @@ yVel = 0;
 xAcc = .1;
 xVelMax = 3;
 
-spd = 40;
+spd = 100;
 spdMax = 4;
-jmp = 700;
 jumpedEh = false;
 
 rope = noone;
@@ -50,8 +49,9 @@ ropeOrig = noone;
 joint = -1;
 ropeCount = 0;
 maxRopeCount = 15;
-produceRope = false;
-canShootRope = true;
+canThrowRope = true;
+
+attached = false;
 </string>
           </argument>
         </arguments>
@@ -97,15 +97,13 @@ kJump = keyboard_check(vk_up);
 kAction = keyboard_check(vk_space);
 kActionReleased = keyboard_check_released(vk_space);
 
-if (phy_speed_x &lt; 0)
-    dir = LEFT;
-if (phy_speed_x &gt; 0)
-    dir = RIGHT;
-if (kLeft)
-    dir = LEFT;
-if (kRight)
-    dir = RIGHT;
-
+if (!kAction)
+{
+    if (kLeft)
+        dir = LEFT;
+    if (kRight)
+        dir = RIGHT;
+}
 if (abs(phy_speed_x) &lt; spdMax)
 {
     if (kLeft)
@@ -113,45 +111,77 @@ if (abs(phy_speed_x) &lt; spdMax)
     if (kRight)
         physics_apply_force(x,y,spd,0);
 }
-if (kJump &amp;&amp; !jumpedEh &amp;&amp; phy_speed_y &gt;= 0)
-{
-    physics_apply_force(x,y,0,-jmp);
-    jumpedEh = true;
-}   
 
-if (physics_test_overlap(x,y+1,0,objSolid))
-    jumpedEh = false;
+if (kActionReleased)
+    canThrowRope = false;
 
 if (kAction)
 {
-
-    if (ropeCount &lt; maxRopeCount)
+    if (canThrowRope &amp;&amp; !attached)
     {
-        produceRope = true;
-
         if (rope == noone)
         {
-            rope = instance_create(x,y, objRope);
+            rope = instance_create(x+sign(dir)*TILE/2,y-TILE/2,objRope);
             ropeOrig = rope;
             rope.parent = noone;
             rope.sticky = true;
             rope.orig = ropeOrig;
-            
+        }
+        else
+        {
+            with(ropeOrig)
+                physics_apply_impulse(x,y,sign(global.player.dir)*3,-2);
+
+            if (ropeCount &lt; maxRopeCount)
+            {
+                physics_joint_delete(joint);
+                r = instance_create(x+sign(dir)*TILE/2,y,objRope);
+                r.parent = rope;
+                r.orig = ropeOrig;
+                
+                //attach new rope segment  to its parent
+                //attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,5,false);
+                attach = physics_joint_revolute_create(r, rope, r.x, r.y, 0, 360, 0, 0, 0, 0, false); 
+
+                rope = r;
+                ropeCount += 1;
+                
+                joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,TILE/2,false);
+            } else
+                canThrowRope = false;
+        }
+    }
+} else //GET ROPE BACK IN
+{
+    resetRope();
+}
+
+/*
+if (kAction)
+{
+    if (ropeCount &lt; maxRopeCount)
+    {
+        joint = -1;
+        if (rope == noone)
+        {
+            rope = instance_create(x+sign(dir*TILE),y-TILE, objRope);
+            ropeOrig = rope;
+            rope.parent = noone;
+            rope.sticky = true;
+            rope.orig = ropeOrig;
             with(rope)
             {
-                //physics_apply_force(x,y,sign(global.player.dir)*40,-40);
+                phy_speed_x = sign(global.player.dir)*50;
+                phy_speed_y = -50;
             }
         }
         else
         {
-            r = instance_create(x,y,objRope);
+            r = instance_create(x+sign(dir*TILE),y-TILE, objRope);
             r.parent = rope;
             r.orig = ropeOrig;
-            with(rope)
-            {
-                physics_apply_force(x,y,sign(global.player.dir)*40,-40);
-            }
             
+            //attach new rope segment  to its parent
             attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,5,false);
             
             rope = r;
@@ -159,51 +189,63 @@ if (kAction)
         }
     } else
     {
-        if (produceRope)
-        {
-            joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,5,false);
-        }
-        produceRope = false;
+        if (!joint)
+            joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,false);
     }
 }
 
 if (kActionReleased)
 {
-    produceRope = false;
-    
-    with (objRope)
-        sticky = false;
+    //with (objRope)
+    //    sticky = false;
 
     rope = noone;
-    ropeOrig = noone;
+    //ropeOrig = noone;
     ropeCount = 0;
     physics_joint_delete(joint);
-    
-    canShootRope = true;
+    joint = -1;
 }
+
+if (joint) //if hanging somewhere
+{
+    if (keyboard_check(vk_down))
+    {
+        //add new rope segments
+        r = instance_create(x,y,objRope);
+        r.parent = rope;
+        r.orig = ropeOrig;
+        attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,4,false);
+        rope = r;
+        //rearrange joint
+        physics_joint_delete(joint);
+        joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,false);
+    }
+    
+    if (keyboard_check(vk_up))
+    {
+        if (instance_exists(rope))
+        {
+            r = rope.parent;
+            if (instance_exists(r))
+            {
+                with (rope)
+                    instance_destroy();
+                rope = r;
+                
+                //rearrange joint
+                if (instance_exists(rope.parent))
+                {
+                    //rearrange joint
+                    physics_joint_delete(joint);
+                    joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,false);
+                } else
+                    with (rope)
+                        instance_destroy();
+            }
+        }
+    }
+} */
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objThing">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//</string>
           </argument>
         </arguments>
       </action>
@@ -212,16 +254,16 @@ if (kActionReleased)
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
+  <PhysicsObjectDensity>2</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>1</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>50</PhysicsObjectFriction>
+  <PhysicsObjectFriction>1</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
-  <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
+  <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>8,8</point>
-    <point>8,8</point>
+    <point>6,8</point>
   </PhysicsShapePoints>
 </object>

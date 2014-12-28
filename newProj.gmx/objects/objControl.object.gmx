@@ -89,8 +89,7 @@ physics_world_update_speed(60); //Update speed
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(TILE,TILE,global.player);
-draw_text(TILE,2*TILE,global.player.dir);
+            <string>draw_text(TILE,2*TILE,global.player.ropeCount);
 
 </string>
           </argument>

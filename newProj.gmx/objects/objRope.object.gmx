@@ -53,14 +53,19 @@ joint = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (sticky) //end of rope
+            <string>if (point_distance(parent.x,parent.y,x,y) &gt; 2*TILE)
+    with (global.player) resetRope();
+
+if (sticky) //end of rope
 {
     if (joint == -1)
     {
         target = instance_place(x,y,objSolid);
         if (instance_exists(target))
         {
-            joint = physics_joint_rope_create(self,target,x,y,x,y,1,false);
+            //joint = physics_joint_wheel_create(self,target,x,y,x,y,true,1,0,10,.8,false);
+            joint = physics_joint_revolute_create(self, target, x, y, 0, 360, 0, 0, 0, 0, false); 
+            global.player.attached = true;
         }
     }
 }
@@ -117,6 +122,20 @@ if (instance_exists(parent))
 {
     draw_line_width(x,y,parent.x,parent.y,2);
 }
+
+draw_set_color(c_yellow)
+draw_rectangle(x,y,x+1,y+1,false);
+
+/*if (instance_exists(target))
+{
+    if (joint != -1)
+    {
+        tx = physics_joint_get_value(joint,phy_joint_anchor_2_x);
+        ty = physics_joint_get_value(joint,phy_joint_anchor_2_y);
+        
+        draw_line_width(x,y,target.x+tx,target.y+ty,2);
+    }
+}*/
 </string>
           </argument>
         </arguments>
@@ -125,17 +144,19 @@ if (instance_exists(parent))
   </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
-  <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>0.100000001490116</PhysicsObjectDensity>
+  <PhysicsObjectShape>1</PhysicsObjectShape>
+  <PhysicsObjectDensity>2</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>3</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>50</PhysicsObjectFriction>
-  <PhysicsObjectAwake>0</PhysicsObjectAwake>
-  <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
+  <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
+  <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
+  <PhysicsObjectFriction>0.100000001490116</PhysicsObjectFriction>
+  <PhysicsObjectAwake>-1</PhysicsObjectAwake>
+  <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>2,8</point>
-    <point>2,8</point>
+    <point>1,7</point>
+    <point>3,7</point>
+    <point>3,9</point>
+    <point>1,9</point>
   </PhysicsShapePoints>
 </object>
