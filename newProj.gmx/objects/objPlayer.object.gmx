@@ -46,7 +46,7 @@ jmp = 700;
 jumpedEh = false;
 
 rope = noone;
-firstRope = noone;
+ropeOrig = noone;
 joint = -1;
 ropeCount = 0;
 maxRopeCount = 15;
@@ -101,6 +101,10 @@ if (phy_speed_x &lt; 0)
     dir = LEFT;
 if (phy_speed_x &gt; 0)
     dir = RIGHT;
+if (kLeft)
+    dir = LEFT;
+if (kRight)
+    dir = RIGHT;
 
 if (abs(phy_speed_x) &lt; spdMax)
 {
@@ -118,56 +122,49 @@ if (kJump &amp;&amp; !jumpedEh &amp;&amp; phy_speed_y &gt;= 0)
 if (physics_test_overlap(x,y+1,0,objSolid))
     jumpedEh = false;
 
-if (kAction &amp;&amp; canShootRope)
+if (kAction)
 {
-    produceRope = true;
-    canShootRope = false;
-}
-    
-if (produceRope)
-{
+
     if (ropeCount &lt; maxRopeCount)
     {
+        produceRope = true;
+
         if (rope == noone)
         {
             rope = instance_create(x,y, objRope);
-            firstRope = rope;
+            ropeOrig = rope;
             rope.parent = noone;
             rope.sticky = true;
+            rope.orig = ropeOrig;
+            
             with(rope)
             {
-                physics_apply_force(x,y,sign(global.player.dir)*40,-40);
+                //physics_apply_force(x,y,sign(global.player.dir)*40,-40);
             }
         }
         else
         {
             r = instance_create(x,y,objRope);
             r.parent = rope;
+            r.orig = ropeOrig;
             with(rope)
             {
                 physics_apply_force(x,y,sign(global.player.dir)*40,-40);
             }
             
-            attach = physics_joint_distance_create(r,rope,r.x,r.y,rope.x,rope.y,false);
-            physics_joint_set_value(attach,phy_joint_damping_ratio,.8);
-            physics_joint_set_value(attach,phy_joint_frequency,10);
-            physics_joint_set_value(attach,phy_joint_max_length,1);
+            attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,5,false);
             
             rope = r;
             ropeCount += 1;
         }
-        if (kAction &amp;&amp; !joint &amp;&amp; firstRope.target != noone)
+    } else
+    {
+        if (produceRope)
         {
-            joint = physics_joint_distance_create(self,rope,x,y,rope.x,rope.y,false);
-            physics_joint_set_value(joint,phy_joint_damping_ratio,.8);
-            physics_joint_set_value(joint,phy_joint_frequency,10);
-            physics_joint_set_value(joint,phy_joint_max_length,1);
+            joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,5,false);
         }
+        produceRope = false;
     }
-}
-if (ropeCount &gt;= maxRopeCount)
-{
-    produceRope = false;
 }
 
 if (kActionReleased)
@@ -178,9 +175,10 @@ if (kActionReleased)
         sticky = false;
 
     rope = noone;
-    firstRope = noone;
+    ropeOrig = noone;
     ropeCount = 0;
-    joint = -1;
+    physics_joint_delete(joint);
+    
     canShootRope = true;
 }
 </string>

@@ -60,10 +60,7 @@ joint = -1;
         target = instance_place(x,y,objSolid);
         if (instance_exists(target))
         {
-            joint = physics_joint_distance_create(self,target,x,y,x,y,false);
-            physics_joint_set_value(joint,phy_joint_damping_ratio,.8);
-            physics_joint_set_value(joint,phy_joint_frequency,10);
-            physics_joint_set_value(joint,phy_joint_max_length,1);
+            joint = physics_joint_rope_create(self,target,x,y,x,y,1,false);
         }
     }
 }
