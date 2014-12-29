@@ -230,6 +230,7 @@ if (btn[0].pressed)
                 
                 global.upgrade[item[itemFocus].index,UPGRADE.TIER]+=1; //save global upgrade.
                 unlockUpgrades();
+                playSound(sfxBuy,1);
                 itemDescription = "Thank you!";
             } else
                 itemDescription = "Not enough coins!";
