@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>0</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,35 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//SHOP MUSIC HANDLING
-if (room == SHOP)
-    playMusic(sfxShop,!global.mute);
-else
-    playMusic(sfxShop,false);
-
-//TITLE MUSIC HANDLING
-if (room == INIT || room == HELP || room == SCORE)
-    playMusic(sfxTitle,!global.mute);
-else
-    playMusic(sfxTitle,false);
-
-//MAIN MUSIC HANDLING
-if (room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD &amp;&amp; global.startSignal)
-{
-    audio_sound_gain(sfxBgm,(!global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
-    audio_sound_gain(sfxBgmPow,(global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
-    playMusic(sfxBgm,!global.mute);
-    playMusic(sfxBgmPow,!global.mute);
-} else
-{
-    playMusic(sfxBgm,false);
-    playMusic(sfxBgmPow,false);
-}
-
-if (room == MAIN &amp;&amp; global.mode == M.TUTORIALMODE &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD &amp;&amp; global.startSignal)
-    playMusic(sfxTutorial,!global.mute &amp;&amp; !global.pause);
-else
-    playMusic(sfxTutorial,false);
+            <string>/// This object ensures that API is loaded in actual game rooms.
+if (fgl_is_ready())
+    room_goto(INIT);
 
 </string>
           </argument>

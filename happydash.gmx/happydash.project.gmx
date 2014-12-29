@@ -92,6 +92,7 @@
   </datafiles>
   <NewExtensions>
     <extension index="0">extensions\preloader</extension>
+    <extension index="1">extensions\FGL</extension>
   </NewExtensions>
   <sounds name="sound">
     <sound>sound\sfxJump</sound>
@@ -119,6 +120,7 @@
     <sound>sound\sfxBite</sound>
     <sound>sound\sfxTitle</sound>
     <sound>sound\sfxShop</sound>
+    <sound>sound\sfxTutorial</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -232,6 +234,7 @@
       <object>objects\objCamera</object>
       <object>objects\objMouse</object>
       <object>objects\objSoundManager</object>
+      <object>objects\objFGLinit</object>
     </objects>
     <objects name="content">
       <object>objects\objBlock</object>
@@ -284,6 +287,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\FGL_INIT</room>
     <room>rooms\INIT</room>
     <room>rooms\SCORE</room>
     <room>rooms\MAIN</room>

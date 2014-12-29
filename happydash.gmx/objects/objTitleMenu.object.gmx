@@ -83,6 +83,11 @@ xx = 0;
 yy = 0;
 
 ti = 0; //highscore iterator
+
+if (fgl_is_branding_enabled())
+{
+    fgl_branding_url();
+}
 </string>
           </argument>
         </arguments>
@@ -145,7 +150,10 @@ if (btn[0].pressed)
 if (btn[1].pressed)
     room_goto(SHOP);
 if (btn[2].pressed)
-    room_goto(SCORE);
+{
+    fgl_score_display("");
+    //room_goto(SCORE);
+}
 if (btn[3].pressed)
     game_end();
 

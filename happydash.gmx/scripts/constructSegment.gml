@@ -100,7 +100,7 @@ for (i = 0; i<w; i += 1)
                 
                 if (c)
                     instance_create(a+i*TILE,b+j*TILE,objEnemySpike);
-                else
+                else if (global.difficulty >= 5)
                     instance_create(a+i*TILE,b+j*TILE,objEnemyAutoSpike);
             }
 

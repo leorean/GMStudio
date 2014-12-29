@@ -45,14 +45,15 @@ txt[2] = "So listen up!";
 txt[3] = "Press &lt;UP&gt; to jump#and collect those coins!";
 txt[4] = "Very good!";
 txt[5] = "Press &lt;RIGHT&gt; to dash#and destroy those blocks!";
-txt[6] = "Exzellent!";
+txt[6] = "Excellent!";
 txt[7] = "Hold &lt;DOWN&gt; to stop";
 txt[8] = "Awesome!";
 txt[9] = "You get EXP from everything#you collect or destroy!";
-txt[10] = "You get LEVEL UPs from EXP#and unlock new worlds!";
-txt[11] = "Use the SHOP to#upgrade your stuff!";
-txt[12] = "Each time you play,#the levels will be different!";
-txt[13] = "Are you ready#for the real deal?##Then let's go!";
+txt[10] = "If you hit something,#you can jump again!";
+txt[11] = "You get LEVEL UPs from EXP#and unlock new worlds!";
+txt[12] = "Use the SHOP to#upgrade your stuff!";
+txt[13] = "Each time you play,#the levels will be different!";
+txt[14] = "Are you ready#for the real deal?##Then let's go!";
 
 </string>
           </argument>
@@ -112,7 +113,9 @@ if (!global.pause)
         if (i == 2)
         {
             for (j = 0; j &lt; 3*TILE; j+= TILE)
-                instance_create(WIDTH+j,HEIGHT-4*TILE,objCoin);
+                instance_create(WIDTH+j,HEIGHT-5*TILE,objCoin);
+            for (j = 0; j &lt; 3*TILE; j+= TILE)
+                instance_create(WIDTH+5*TILE+j,HEIGHT-7*TILE,objCoin);
             i=3;timer = 2*FPS;exit
         }
         if (i == 4)
@@ -126,9 +129,9 @@ if (!global.pause)
         }
         if (i == 6)
             {i=7;timer = 2*FPS;exit}
-        if (i &gt;= 8 &amp;&amp; i &lt; 13)
+        if (i &gt;= 8 &amp;&amp; i &lt; 14)
             {i++;timer = 5*FPS;exit}
-        if (i == 13)
+        if (i == 14 &amp;&amp; (mouse_check_button_released(mb_left) || keyboard_check_released(vk_anykey)))
         {
             global.mode = M.NORMALMODE;
             saveOptions();

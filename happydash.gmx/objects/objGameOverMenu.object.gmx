@@ -25,9 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = HUDDEPTH-1;//+2;
+            <string>depth = HUDDEPTH+1;//+2;
 index = 0;
-maxIndex = 2;
+maxIndex = 3;
 
 canBuySomething = false;
 
@@ -45,21 +45,27 @@ if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
 
 finalScore = global.curScore;
-
-btn[0] = instance_create(WIDTH/2,HEIGHT/2+1.5*TILE,objButton);
+var r;
+r = 3.5*TILE;
+btn[0] = instance_create(WIDTH/2,r+1.5*TILE,objButton);
 btn[0].text = "Shop";
 btn[0].index = 0;
 btn[0].parent = id;
 
-btn[1] = instance_create(WIDTH/2,HEIGHT/2+3.5*TILE,objButton);
-btn[1].text = "Retry";
+btn[1] = instance_create(WIDTH/2,r+3.5*TILE,objButton);
+btn[1].text = "Try Again";
 btn[1].index = 1;
 btn[1].parent = id;
 
-btn[2] = instance_create(WIDTH/2,HEIGHT/2+5.5*TILE,objButton);
-btn[2].text = "Quit";
+btn[2] = instance_create(WIDTH/2,r+5.5*TILE,objButton);
+btn[2].text = "Submit Score";
 btn[2].index = 2;
 btn[2].parent = id;
+
+btn[3] = instance_create(WIDTH/2,r+7.5*TILE,objButton);
+btn[3].text = "Quit";
+btn[3].index = 2;
+btn[3].parent = id;
 
 //effect
 dx = -2*TILE;
@@ -67,6 +73,8 @@ dxx = -WIDTH*.5;
 dy = 1*TILE;
 t = 0;
 m = 0;
+
+fgl_ad_show();
 
 playSound(sfxRocketFall,1);
 </string>
@@ -121,6 +129,8 @@ if (btn[0].pressed)
 if (btn[1].pressed)
     room_restart();
 if (btn[2].pressed)
+    fgl_score_submit(finalScore,"");
+if (btn[3].pressed)
     room_goto(INIT);
 
 
@@ -201,7 +211,7 @@ else
         t +=1;
         if (t &gt; 5)
         {
-            playSound(sfxCaching,1);
+            //playSound(sfxCaching,1);
             m+=1;
             t = 0;
         }
@@ -224,7 +234,7 @@ draw_set_font(global.fntScore);
 draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 
 //draw_set_font(global.fntDefault);
-
+/*
 var c1,c2,f;
 c1 = c_white;
 c2 = c_none;
@@ -240,8 +250,8 @@ switch(m)
     case 1: drawText(WIDTH*.5, (row+0)*TILE,"Coins collected: " +string(global.coinsCollected),c1,c2,f);
     break;
 }
-
-drawBorder(8.5*TILE,8*TILE,8*TILE,7*TILE);
+*/
+drawBorder(7*TILE,4*TILE,11*TILE,10*TILE);
 
 if (canBuySomething)
 {
