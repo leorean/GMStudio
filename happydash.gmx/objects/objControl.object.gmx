@@ -32,6 +32,8 @@
 depth = HUDDEPTH;
 randomize();
 
+global.playthrough = 0; //for ads
+
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';

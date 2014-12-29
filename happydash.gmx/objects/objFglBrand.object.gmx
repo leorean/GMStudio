@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>objAll</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,89 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_index = 0;
-depth = 2;
+            <string>spr = -1;
+depth = HUDDEPTH-1;
 
-with(objButton)
-    instance_destroy();
+if (fgl_is_branding_enabled() &amp;&amp; spr == -1)
+    spr = sprite_add(fgl_branding_url(), 1, false, false, 0, 0);
 
-if (global.input != INPUT_TOUCH)
-    global.mouseVisible = true;
-    
-if (global.mode != M.TUTORIALMODE)
-    if (!instance_exists(objHelpMe))
-        instance_create(2*TILE,HEIGHT-6*TILE,objHelpMe);
-
-
-index = 0;
-maxIndex = 3;
-showHelp = false;
-showHighscore = false;
-
-row = 8;
-
-by = row*TILE - TILE;
-bw = 8*TILE;
-bx = WIDTH/2-.5*bw;
-bh = 3*TILE + ceil(maxIndex*1.5)*TILE;
-
-btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
-btn[0].text = "Start";
-btn[0].index = 0;
-btn[0].parent = id;
-
-btn[1] = instance_create(WIDTH/2,row*TILE+1.5*TILE,objButton);
-btn[1].text = "Shop";
-btn[1].index = 1;
-btn[1].parent = id;
-
-btn[2] = instance_create(WIDTH/2,row*TILE+3*TILE,objButton);
-btn[2].text = "Scores";
-btn[2].index = 2;
-btn[2].parent = id;
-
-btn[3] = instance_create(WIDTH/2,row*TILE+4.5*TILE,objButton);
-btn[3].text = "More";
-btn[3].index = 3;
-btn[3].parent = id;
-
-//draw_set_font(fntButton); //to set the correct width
-textCredits = "by Peter Sperl 2014"; //"=== A game by Peter Sperl © 2014 ===";
-textCreditsY = HEIGHT+2*TILE;//+string_width(textCredits);
-
-page = 0;
-
-t = pi/2;
-z = 0;
-xx = 0;
-yy = 0;
-
-ti = 0; //highscore iterator
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>with (objButton)
-    instance_destroy();
-
+w = 0;
+h = 0;
 </string>
           </argument>
         </arguments>
@@ -130,32 +55,36 @@ ti = 0; //highscore iterator
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>handleButtons();
-
-//screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
-
-if (btn[0].pressed)
-{
-    //if (global.mode == M.TUTORIALMODE)
-    //    room_goto(TUTORIAL);
-    //else
-    room_goto(MAIN);
-    
-}
-if (btn[1].pressed)
-    room_goto(SHOP);
-if (btn[2].pressed)
-{
-    fgl_score_display("");
-    //room_goto(SCORE);
-}
-if (btn[3].pressed)
-{
-    //game_end();
-    fgl_moregames();
-}
-
-
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="60">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*if (ds_map_find_value(async_load, "id") == spr) {
+    // center the logo once it has loaded
+    w = sprite_get_width(spr);
+    h = sprite_get_height(spr);
+    sprite_set_offset(spr,
+        sprite_get_width(spr) div 2,
+        sprite_get_height(spr) div 2)
+}*/
 </string>
           </argument>
         </arguments>
@@ -178,37 +107,14 @@ if (btn[3].pressed)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>image_speed = 0;
-draw_set_font(global.fntBig);
-draw_set_color(c_white);
-draw_set_alpha(1);
-draw_set_halign(fa_center);
-draw_set_valign(fa_top);
+            <string>if (sprite_exists(spr))
+{
+    if (in(mouse_x,x-w/2,x+w/2) &amp;&amp; in(mouse_y,y-h/2,y+h/2) &amp;&amp; 
+        mouse_check_button_released(mb_left))
+            fgl_branding_click();
 
-//hover title
-t += .05;
-if (t&gt;2*pi)
-    t = 0;
-
-z = 2*sin(t);
-
-//background
-xx = (xx - 1) mod WIDTH;
-
-draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
-draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx+WIDTH,yy);
-draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
-
-//drawBorder(7.5*TILE,6*TILE,10*TILE,9*TILE);
-drawBorder(bx,by,bw,bh);
-
-//title
-draw_set_alpha(1);
-draw_set_color(c_white);
-draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
-
-draw_set_halign(fa_left);
-drawText(0,HEIGHT-1.5*TILE,"(c) Peter Sperl #Do not distribute!",c_white,c_none,fntTiny);
+    draw_sprite(spr,0,x,y);
+}
 </string>
           </argument>
         </arguments>

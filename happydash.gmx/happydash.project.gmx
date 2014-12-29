@@ -234,7 +234,10 @@
       <object>objects\objCamera</object>
       <object>objects\objMouse</object>
       <object>objects\objSoundManager</object>
-      <object>objects\objFGLinit</object>
+      <objects name="FGL">
+        <object>objects\objFGLinit</object>
+        <object>objects\objFglBrand</object>
+      </objects>
     </objects>
     <objects name="content">
       <object>objects\objBlock</object>
