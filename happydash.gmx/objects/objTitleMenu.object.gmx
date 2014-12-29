@@ -34,8 +34,9 @@ with(objButton)
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
     
-if (!instance_exists(objHelpMe))
-    instance_create(2*TILE,HEIGHT-6*TILE,objHelpMe);
+if (global.mode != M.TUTORIALMODE)
+    if (!instance_exists(objHelpMe))
+        instance_create(2*TILE,HEIGHT-6*TILE,objHelpMe);
 
 
 index = 0;
@@ -134,7 +135,13 @@ ti = 0; //highscore iterator
 //screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
 
 if (btn[0].pressed)
+{
+    //if (global.mode == M.TUTORIALMODE)
+    //    room_goto(TUTORIAL);
+    //else
     room_goto(MAIN);
+    
+}
 if (btn[1].pressed)
     room_goto(SHOP);
 if (btn[2].pressed)

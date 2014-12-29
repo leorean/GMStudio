@@ -10,6 +10,7 @@
     <sprite>sprites\mskThing</sprite>
     <sprite>sprites\mskRope</sprite>
     <sprite>sprites\mskBrick</sprite>
+    <sprite>sprites\mskPlayer</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\tiles</background>
@@ -18,6 +19,9 @@
   <scripts name="scripts">
     <script>scripts\resetRope.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fntDefault</font>
+  </fonts>
   <objects name="objects">
     <objects name="misc">
       <object>objects\objSolid</object>

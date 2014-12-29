@@ -76,22 +76,10 @@ draw_set_valign(fa_top);
 drawText(.5*TILE, .5*TILE,"HOW TO PLAY:",c_black,c_none,fntMenu);
 
 if (global.input == INPUT_KEYBOARD)
-{
     draw_sprite_part(spriteHelp,-1,WIDTH,0,WIDTH,HEIGHT,0,0);
-    /*drawText(.5*TILE, 2*TILE,"Press &lt;UP&gt; to jump",c_black,c_none,fntText);
-    drawText(.5*TILE, 3*TILE,"Press &lt;RIGHT&gt; to dash",c_black,c_none,fntText);
-    drawText(.5*TILE, 4*TILE,"Hold &lt;DOWN&gt; to stop",c_black,c_none,fntText);
-    drawText(.5*TILE, 5*TILE,"Press &lt;ESC&gt; or &lt;P&gt; to pause",c_black,c_none,fntText);
-    drawText(.5*TILE, 6*TILE,"Press &lt;M&gt; to mute",c_black,c_none,fntText);*/
-} else
-{
+else
     draw_sprite_part(spriteHelp,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0);
-    /*drawText(.5*TILE, 2*TILE,"Tap the Left Screen to jump",c_black,c_none,fntText);
-    drawText(.5*TILE, 3*TILE,"Tap the Right Screen to dash",c_black,c_none,fntText);
-    drawText(.5*TILE, 4*TILE,"Tap the Middle Screen to stop",c_black,c_none,fntText);
-    drawText(.5*TILE, 5*TILE,"Tap the Pause-Symbol to pause",c_black,c_none,fntText);
-    drawText(.5*TILE, 6*TILE,"Tap the Sound Symbol to mute",c_black,c_none,fntText);*/
-}    
+
 drawText(.5*TILE, 9*TILE,"WHAT TO DO:",c_black,c_none,fntMenu);
 drawText(.5*TILE, 10.5*TILE,"Collect as many Coins as you can!",c_black,c_none,fntText);
 drawText(.5*TILE, 11.5*TILE,"Earn EXP from Enemies, Blocks &amp; Coins!",c_black,c_none,fntText);

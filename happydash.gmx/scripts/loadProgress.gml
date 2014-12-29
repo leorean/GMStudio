@@ -16,6 +16,8 @@ if (file_exists(working_directory + global.saveFile))
     ds_list_destroy(loadlist);
 
     global.mute = real(ini_read_string('Options','sfx','0'));
+    global.mode = real(ini_read_string('Options','mode',string(M.TUTORIALMODE)));
+        
     global.wallet = real(ini_read_string('Shop','wallet','0'));
     
     global.maxLevelReached = real(ini_read_string('Progress','maxLevelReached','0'));

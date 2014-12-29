@@ -67,6 +67,8 @@ window_center();
 physics_world_create(0.1); //Pixel to meters scale
 physics_world_update_iterations(20); //iterations per step
 physics_world_update_speed(60); //Update speed
+physics_world_gravity(0,1);
+
 </string>
           </argument>
         </arguments>
@@ -89,7 +91,10 @@ physics_world_update_speed(60); //Update speed
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(TILE,2*TILE,global.player.ropeCount);
+            <string>draw_set_color(c_black);
+draw_set_font(fntDefault);
+
+draw_text(TILE,2*TILE,global.player.ropeCount);
 
 </string>
           </argument>

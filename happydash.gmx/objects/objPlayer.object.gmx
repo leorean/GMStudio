@@ -409,66 +409,6 @@ for(i = 0;i &lt; ri; i+=1)
     }
 }
 
-/*
-p = 2;//performance coefficient, as in "how smooth is the rainbow?"
-if (true)
-{
-        if (!global.pause &amp;&amp; global.timer mod p == 0)
-        {
-            if (ds_list_size(dsX) &lt; floor(48/p) &amp;&amp; state != DEAD)
-            {
-                ds_list_add(dsX,ceil(cx));
-                ds_list_add(dsY,ceil(cy));
-                ds_list_add(dsA,1);
-                if (canDrawRainbow)
-                    ds_list_add(dsD,combo);
-                else
-                    ds_list_add(dsD,0);
-            } else
-            {
-                ds_list_delete(dsX,0);
-                ds_list_delete(dsY,0);
-                ds_list_delete(dsA,0);
-                ds_list_delete(dsD,0);
-            }
-        }
-        
-        for (i = 0; i &lt; ds_list_size(dsX);i+=1)
-        {
-            ds_list_replace(dsX,i,ds_list_find_value(dsX,i)-global.xSpeed);
-            ds_list_replace(dsA,i,max(ds_list_find_value(dsA,i)-(.01),0));
-            
-            draw_set_alpha(ds_list_find_value(dsA,i));
-    
-            if (i &gt; 0 &amp;&amp; ds_list_find_value(dsD,i)&gt;0)
-            {
-                for (j = -8; j &lt; 8; j+=2)
-                {
-                    draw_set_color(make_color_hsv((j+8)*11,255,255));
-                    if (abs(j) &lt; ds_list_find_value(dsD,i))
-                    draw_line_width(ds_list_find_value(dsX,i-1),ds_list_find_value(dsY,i-1)+j,ceil(ds_list_find_value(dsX,i)),ds_list_find_value(dsY,i)+j,2);
-                }
-            }
-        }
-}*/
-
-//SUPER DASH
-/*if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
-{
-    if (state == ATTACK)
-    {
-        drawLightning(cx,cy,cx,0,c_white);
-    }
-}*/
-
-//power up stuff
-/*if (objControl.alarm[1] &amp;&amp; state != DEAD)
-{
-    //power up bar
-    draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,6,x-TILE*.5,y-TILE*.5);
-    draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*objControl.alarm[1]/global.powDuration),6,x-TILE*.5,y-TILE*.5);
-}*/
-
 if (global.powerUp[POW_6]) // red rockets
 {
     if (global.timer mod 30 == 0 &amp;&amp; !global.pause &amp;&amp; state != DEAD)

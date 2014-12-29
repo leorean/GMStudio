@@ -137,7 +137,12 @@ if (btn[0].pressed
 if (btn[1].pressed)
     room_restart();
 if (btn[2].pressed)
+{
+    if (global.mode == M.TUTORIALMODE)
+        global.mode = M.NORMALMODE;
+    saveOptions();
     room_goto(INIT);
+}
 
 if (!global.pause || global.player.state == DEAD)
 {

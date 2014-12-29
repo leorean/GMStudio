@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="88" name="datafiles">
+  <datafiles number="92" name="datafiles">
     <datafile>
       <name>loader_bg.png</name>
       <exists>-1</exists>
@@ -72,6 +72,23 @@
       </ConfigOptions>
       <filename>seg.z</filename>
     </datafile>
+    <datafile>
+      <name>tut.tmx</name>
+      <exists>-1</exists>
+      <size>7504</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>tut.tmx</filename>
+    </datafile>
   </datafiles>
   <NewExtensions>
     <extension index="0">extensions\preloader</extension>
@@ -101,6 +118,7 @@
     <sound>sound\sfxHurt</sound>
     <sound>sound\sfxBite</sound>
     <sound>sound\sfxTitle</sound>
+    <sound>sound\sfxShop</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -250,6 +268,7 @@
       <object>objects\objEffectConfetti</object>
       <object>objects\objEffectLevelUp</object>
       <object>objects\objEffectFollowHeart</object>
+      <object>objects\objTutorial</object>
     </objects>
     <objects name="HUD">
       <object>objects\objButton</object>

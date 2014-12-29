@@ -73,7 +73,10 @@ else
 drawText(x+2.5*TILE,y+2*TILE,t,c_white,c_black,fntMenu);
 
 if (in(mouse_x,x,x+5*TILE) &amp;&amp; in(mouse_y,y,y+4*TILE) &amp;&amp; mouse_check_button_released(mb_left))
-    room_goto(HELP);
+{
+    global.mode = M.TUTORIALMODE;
+    room_goto(MAIN);
+}
 </string>
           </argument>
         </arguments>

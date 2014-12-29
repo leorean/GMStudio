@@ -7,4 +7,3 @@ ropeOrig = noone;
 canThrowRope = true;
 ropeCount = 0;
 attached = false;
-

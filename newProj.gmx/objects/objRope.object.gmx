@@ -26,11 +26,15 @@
           <argument>
             <kind>1</kind>
             <string>parent = noone;
+child = noone;
+
 sticky = false;
 
 target = noone;
-stuck = false;
 joint = -1;
+
+spd = .01;
+alive = true;
 </string>
           </argument>
         </arguments>
@@ -53,21 +57,29 @@ joint = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (point_distance(parent.x,parent.y,x,y) &gt; 2*TILE)
-    with (global.player) resetRope();
-
-if (sticky) //end of rope
+            <string>if (sticky) //end of rope
 {
     if (joint == -1)
     {
         target = instance_place(x,y,objSolid);
         if (instance_exists(target))
         {
-            //joint = physics_joint_wheel_create(self,target,x,y,x,y,true,1,0,10,.8,false);
-            joint = physics_joint_revolute_create(self, target, x, y, 0, 360, 0, 0, 0, 0, false); 
+            joint = physics_joint_rope_create(self,target,x,y,x,y,1,false);
+            
+            //joint = physics_joint_distance_create(self,target,x,y,target.x+TILE/2,target.y+TILE/2,false);
+            //physics_joint_set_value(joint,phy_joint_damping_ratio,1);
+            //physics_joint_set_value(joint,phy_joint_frequency,10);
+            //joint = physics_joint_revolute_create(self, target, x, y, 0, 360, 0, 0, 0, 0, false); 
             global.player.attached = true;
         }
+        target = noone;
     }
+}
+
+if (!alive)
+{
+    parent.alive = false;
+    instance_destroy();
 }
 </string>
           </argument>
@@ -113,18 +125,20 @@ if (sticky) //end of rope
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>c = min((point_distance(parent.x,parent.y,x,y)/TILE)*255,255);
-color = make_color_hsv(0,c,c);
-
-draw_set_color(color);
+            <string>
 
 if (instance_exists(parent))
 {
+    c = min((point_distance(parent.x,parent.y,x,y)/TILE)*255,255);
+    color = make_color_hsv(0,c,c);
+    
+    draw_set_color(color);
+    
     draw_line_width(x,y,parent.x,parent.y,2);
 }
 
-draw_set_color(c_yellow)
-draw_rectangle(x,y,x+1,y+1,false);
+//draw_set_color(c_yellow)
+//draw_rectangle(x,y,x+1,y+1,false);
 
 /*if (instance_exists(target))
 {
@@ -144,19 +158,17 @@ draw_rectangle(x,y,x+1,y+1,false);
   </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
-  <PhysicsObjectShape>1</PhysicsObjectShape>
-  <PhysicsObjectDensity>2</PhysicsObjectDensity>
+  <PhysicsObjectShape>0</PhysicsObjectShape>
+  <PhysicsObjectDensity>1</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
+  <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0.100000001490116</PhysicsObjectFriction>
+  <PhysicsObjectFriction>1</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>1,7</point>
-    <point>3,7</point>
-    <point>3,9</point>
-    <point>1,9</point>
+    <point>2,2</point>
+    <point>2,1</point>
   </PhysicsShapePoints>
 </object>

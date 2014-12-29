@@ -142,10 +142,6 @@ else //IF NOT DEAD
         doCombo();
     }
 
-    //SCORE COUNTING
-    //*0.0625 = 1 / TILE
-    global.curScore = 10*floor(global.distance*0.0625) + global.addScore;
-
     //POWER UP no. 4 (shooting)
     if (global.powerUp[POW_4])
     {

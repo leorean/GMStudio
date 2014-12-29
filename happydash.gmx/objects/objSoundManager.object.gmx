@@ -25,18 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//TITLE MUSIC HANDLING
-if (room == INIT)
-{
-    playMusic(sfxTitle,!global.mute);
-}
+            <string>//SHOP MUSIC HANDLING
+if (room == SHOP)
+    playMusic(sfxShop,!global.mute);
 else
-{
+    playMusic(sfxShop,false);
+
+//TITLE MUSIC HANDLING
+if (room == INIT || room == HELP || room == SCORE)
+    playMusic(sfxTitle,!global.mute);
+else
     playMusic(sfxTitle,false);
-}
 
 //MAIN MUSIC HANDLING
-if (room == MAIN &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD &amp;&amp; global.startSignal)
+if (room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD &amp;&amp; global.startSignal)
 {
     audio_sound_gain(sfxBgm,(!global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
     audio_sound_gain(sfxBgmPow,(global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
