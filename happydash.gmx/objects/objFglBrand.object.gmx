@@ -25,20 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>spr = -1;
-depth = HUDDEPTH-1;
+            <string>depth = HUDDEPTH - 1;
 
-if (fgl_is_branding_enabled() &amp;&amp; spr == -1)
-    spr = sprite_add(fgl_branding_url(), 1, false, false, 0, 0);
+spr = -1;
+zoom = .5;
 
-w = 0;
-h = 0;
+if (fgl_is_branding_enabled()) {
+    sprite_index = sprite_add(fgl_branding_url(), 1, false, false, 0, 0)
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="6" enumb="7">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -55,7 +55,8 @@ h = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>fgl_branding_click();
+</string>
           </argument>
         </arguments>
       </action>
@@ -77,14 +78,12 @@ h = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*if (ds_map_find_value(async_load, "id") == spr) {
+            <string>if (ds_map_find_value(async_load, "id") == sprite_index) {
     // center the logo once it has loaded
-    w = sprite_get_width(spr);
-    h = sprite_get_height(spr);
-    sprite_set_offset(spr,
-        sprite_get_width(spr) div 2,
-        sprite_get_height(spr) div 2)
-}*/
+    sprite_set_offset(sprite_index,
+        sprite_get_width(sprite_index) div 2,
+        sprite_get_height(sprite_index))
+}
 </string>
           </argument>
         </arguments>
@@ -107,13 +106,9 @@ h = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (sprite_exists(spr))
+            <string>if (sprite_exists(sprite_index))
 {
-    if (in(mouse_x,x-w/2,x+w/2) &amp;&amp; in(mouse_y,y-h/2,y+h/2) &amp;&amp; 
-        mouse_check_button_released(mb_left))
-            fgl_branding_click();
-
-    draw_sprite(spr,0,x,y);
+    draw_sprite_ext(sprite_index,0,x,y,zoom,zoom,0,c_white,1);
 }
 </string>
           </argument>

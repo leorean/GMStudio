@@ -59,9 +59,35 @@
 		<canvas id="canvas" width="800" height="480" >
 			<p>Your browser doesn't support HTML5 canvas.</p>
 		</canvas>
-		<!-- Run the game code -->
+		<!-- CROSS ORIGIN IMAGE -->
+		<script type="text/javascript">
+		var bind = Function.bind;
+		var unbind = bind.bind(bind);
+
+		function instantiate(constructor, args) {
+			return new (unbind(constructor, null).apply(null, args));
+		}
+
+		Image = function (Image) {
+			return function () {
+			   var img = instantiate(Image, arguments);
+			   img.crossOrigin='anonymous';
+			   return img;
+				}
+		}(Image);
+		</script>
+		<script type = "text/javascript" src = "fgl.js"> </script>
 		<script type="text/javascript" src="html5game/happydash.js?CNDBC=1992754112"></script>
-		<!--<script type = "text/javascript" src = "html5game/fgl.js"> </script>-->
+		<!--<script type="text/javascript">
+			if(fgl.brandingEnabled)
+			{
+				var game = document.getElementById('gm4html5_div_id');
+				var img = document.createElement('img');
+				img.src = fgl.getBrandingLogo();
+				img.onclick = fgl.handleBrandingClick;
+				game.
+			}
+		</script>-->
 		</div>
     </body>
 </html>
