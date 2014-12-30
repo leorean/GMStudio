@@ -25,30 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dragged = false;
+            <string>phy_rotation = 0;
+phy_fixed_rotation = true;
 
-global.player = id;
-
-dx = 0;
-dy = 0;
-
-kLeft = false;
-kRight = false;
-kUp = false;
-kDown = false;
-
-spd = .5;
-spdMax = 1;
-jumpedEh = false;
-
-rope = noone;
-ropeOrig = noone;
-joint = -1;
-ropeCount = 0;
-maxRopeCount = 15;
-canThrowRope = true;
-
-attached = false;
+isJumped = false;
 </string>
           </argument>
         </arguments>
@@ -71,288 +51,52 @@ attached = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mouse_x &gt; bbox_left &amp;&amp; mouse_x &lt; bbox_right
-&amp;&amp; mouse_y &gt; bbox_top &amp;&amp; mouse_y &lt; bbox_bottom
-&amp;&amp; mouse_check_button(mb_left))
+            <string>//++++input
+keyL = keyboard_check(vk_left);
+keyR = keyboard_check(vk_right);
+keyU = keyboard_check(vk_up);
+keyD = keyboard_check(vk_down);
+keyAction = keyboard_check(vk_space);
+keyActionReleased = keyboard_check_released(vk_space);
+
+//++++flag control
+onGround = (phy_speed_y &gt;= 0 &amp;&amp; physics_test_overlap(x,y,0,objCollider))
+
+if (onGround)
+    isJumped = false;
+
+if (!physics_test_overlap(x,y,0,objCollider))
+    isJumped = true;
+
+//++++movement
+if (keyL &amp;&amp; !keyR)
+    physics_apply_force(x,y,-150,0);
+
+if (keyR &amp;&amp; !keyL)
+    physics_apply_force(x,y,150,0);
+
+if (!keyL &amp;&amp; !keyR)
+    if (abs(phy_speed_x) &gt; friction)
+        phy_speed_x *= .95;
+
+//++++jumping
+if (keyU)
 {
-    dragged = true;
+    if (!isJumped)
+    {
+        physics_apply_impulse(x,y,0,-60);
+        isJumped = true;
+    }
 }
 
-if (mouse_check_button_released(mb_left))
-    dragged = false;
-
-if (dragged)
-{
-    phy_position_x = mouse_x;
-    phy_position_y = mouse_y;
-}
-
-dx = sin(degtorad(phy_rotation)+90);
-dy = -cos(degtorad(phy_rotation)+90);
-
-//++++++++++++++++++++++++++++++++++++++++
-kLeft = keyboard_check(vk_left);
-kRight = keyboard_check(vk_right);
-kUp = keyboard_check(vk_up);
-kDown = keyboard_check(vk_down);
-kAction = keyboard_check(vk_space);
-kActionReleased = keyboard_check_released(vk_space);
-
-
-if (kLeft)
-    physics_apply_angular_impulse(-.1);
-if (kRight)
-    physics_apply_angular_impulse(.1);
-
-
+//++++rope action
 if (kAction)
 {
-
-    /*rot = (180 + point_direction(x,y,x+phy_speed_x,y+phy_speed_y)) mod 360;
-    if (phy_rotation &gt; rot) 
-        physics_apply_angular_(-.01);
-    if (phy_rotation &lt; rot) 
-        physics_apply_angular_impulse(.01);*/
-        
-    if (kLeft)
-        physics_apply_impulse(x,y,-spd,0);
-    if (kRight)
-        physics_apply_impulse(x,y,spd,0);
-    if (kUp)
-        physics_apply_impulse(x,y,0,-spd);
-    if (kDown)
-        physics_apply_impulse(x,y,0,spd);
-}
-/*
-if (!kAction || !attached)
-{
-    if (kLeft)
-        dir = LEFT;
-    if (kRight)
-        dir = RIGHT;
-    if (kUp)
-        dir = UP;
-    if (kDown)
-        dir = DOWN;
-}
-if (attached &amp;&amp; abs(phy_speed_x) &lt; spdMax &amp;&amp; abs(phy_speed_y) &lt; spdMax)
-{
-    if (kLeft)
-        physics_apply_impulse(x,y,-spd,0);
-    if (kRight)
-        physics_apply_impulse(x,y,spd,0);
-    if (kUp)
-        physics_apply_impulse(x,y,0,-spd);
-    if (kDown)
-        physics_apply_impulse(x,y,0,spd);
-}
-
-if (!attached)
-{
-    with(objRope)
-        if (sticky)
-        {
-            if (global.player.kLeft)
-                physics_apply_impulse(x,y,-spd,0);
-            if (global.player.kRight)
-                physics_apply_impulse(x,y,spd,0);
-            if (global.player.kUp)
-                physics_apply_impulse(x,y,0,-spd);
-            if (global.player.kDown)
-                physics_apply_impulse(x,y,0,spd);
-        
-        }
-}*/
-
-if (kActionReleased)
-    canThrowRope = false;
-
-if (kAction)
-{
-    if (canThrowRope &amp;&amp; !attached)
-    {
-        if (rope == noone)
-        {
-            rope = instance_create(x,y,objRope);
-            ropeOrig = rope;
-            ropeOrig.child = rope;
-            rope.parent = noone;
-            rope.sticky = true;
-            rope.orig = ropeOrig;
-        }
-        else
-        {
-
-            with(ropeOrig)
-            {
-                var ax,ay,s;
-                s = 30;
-                ax = global.player.dx;
-                ay = global.player.dy;
-                physics_apply_force(x,y,s*ax,s*ay);
-            }
-
-            if (ropeCount &lt; maxRopeCount)
-            {
-                physics_joint_delete(joint);
-                r = instance_create(x,y,objRope);
-                rope.child = r;
-                r.parent = rope;
-                r.orig = ropeOrig;
-                
-                //attach new rope segment  to its parent
-                attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,5,true);
-                //attach = physics_joint_revolute_create(r, rope, r.x, r.y, 0, 360, 0, 0, 0, 0, false); 
-
-                rope = r;
-                ropeCount += 1;
-                
-                joint = physics_joint_revolute_create(self, rope, x, y, 0, 360, 0, 0, 0, 0, false); 
-                //joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,TILE/2,false);
-                //joint = physics_joint_friction_create(self, rope, x, y, 0, 0, false);
-            } else
-                canThrowRope = false;
-        }
-    }
-} else //GET ROPE BACK IN
-{
-    if (instance_exists(objRope))
-    {
-        with(objRope)
-            instance_destroy();
-        
-        
-    } else
-    {
-        physics_joint_delete(joint);
-        joint = -1;
-        rope = noone;
-        ropeOrig = noone;
-        canThrowRope = true;
-        ropeCount = 0;
-        attached = false;
-    }
-    /*
-    if (instance_exists(rope))
-    {
-        r = rope.parent;
-        if (instance_exists(r))
-        {
-            with (rope)
-                instance_destroy();
-            rope = r;
-            
-            //rearrange joint
-            if (instance_exists(rope.parent))
-            {
-                //rearrange joint
-                physics_joint_delete(joint);
-                joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,5,false);
-            } else
-            {
-                physics_joint_delete(joint);
-                with (rope)
-                    instance_destroy();
-                joint = -1;
-                rope = noone;
-                ropeOrig = noone;
-                canThrowRope = true;
-                ropeCount = 0;
-                attached = false;
-            }
-        }
-    }*/
-}
-
-/*
-if (kAction)
-{
-    if (ropeCount &lt; maxRopeCount)
-    {
-        joint = -1;
-        if (rope == noone)
-        {
-            rope = instance_create(x+sign(dir*TILE),y-TILE, objRope);
-            ropeOrig = rope;
-            rope.parent = noone;
-            rope.sticky = true;
-            rope.orig = ropeOrig;
-            with(rope)
-            {
-                phy_speed_x = sign(global.player.dir)*50;
-                phy_speed_y = -50;
-            }
-        }
-        else
-        {
-            r = instance_create(x+sign(dir*TILE),y-TILE, objRope);
-            r.parent = rope;
-            r.orig = ropeOrig;
-            
-            //attach new rope segment  to its parent
-            attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,5,false);
-            
-            rope = r;
-            ropeCount += 1;
-        }
-    } else
-    {
-        if (!joint)
-            joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,false);
-    }
-}
-
-if (kActionReleased)
-{
-    //with (objRope)
-    //    sticky = false;
-
-    rope = noone;
-    //ropeOrig = noone;
-    ropeCount = 0;
-    physics_joint_delete(joint);
-    joint = -1;
-}
-
-if (joint) //if hanging somewhere
-{
-    if (keyboard_check(vk_down))
-    {
-        //add new rope segments
-        r = instance_create(x,y,objRope);
-        r.parent = rope;
-        r.orig = ropeOrig;
-        attach = physics_joint_rope_create(r,rope,r.x,r.y,rope.x,rope.y,4,false);
-        rope = r;
-        //rearrange joint
-        physics_joint_delete(joint);
-        joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,false);
-    }
     
-    if (keyboard_check(vk_up))
-    {
-        if (instance_exists(rope))
-        {
-            r = rope.parent;
-            if (instance_exists(r))
-            {
-                with (rope)
-                    instance_destroy();
-                rope = r;
-                
-                //rearrange joint
-                if (instance_exists(rope.parent))
-                {
-                    //rearrange joint
-                    physics_joint_delete(joint);
-                    joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,false);
-                } else
-                    with (rope)
-                        instance_destroy();
-            }
-        }
-    }
-} */
+}
+
+
+
 </string>
           </argument>
         </arguments>
@@ -376,8 +120,7 @@ if (joint) //if hanging somewhere
           <argument>
             <kind>1</kind>
             <string>draw_self();
-
-draw_text(x,y-2*TILE,phy_rotation);
+//draw_sprite_ext(mskPlayer,-1,x,y,1,1,0,c_white,1);
 </string>
           </argument>
         </arguments>
@@ -388,15 +131,15 @@ draw_text(x,y-2*TILE,phy_rotation);
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>2</PhysicsObjectDensity>
-  <PhysicsObjectRestitution>0.25</PhysicsObjectRestitution>
+  <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>1</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>1</PhysicsObjectFriction>
+  <PhysicsObjectLinearDamping>1</PhysicsObjectLinearDamping>
+  <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
+  <PhysicsObjectFriction>0</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>8,8</point>
-    <point>6,8</point>
+    <point>8,8</point>
   </PhysicsShapePoints>
 </object>

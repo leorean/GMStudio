@@ -11,6 +11,8 @@
     <sprite>sprites\mskRope</sprite>
     <sprite>sprites\mskBrick</sprite>
     <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\mskPlayerBody</sprite>
+    <sprite>sprites\mskCollider</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\tiles</background>
@@ -24,12 +26,12 @@
   </fonts>
   <objects name="objects">
     <objects name="misc">
-      <object>objects\objSolid</object>
+      <object>objects\objCollider</object>
     </objects>
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
-    <object>objects\objThing</object>
+    <object>objects\objPlayerBody</object>
     <object>objects\objRope</object>
     <object>objects\objBrick</object>
   </objects>

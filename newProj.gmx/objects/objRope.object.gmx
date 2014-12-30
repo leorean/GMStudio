@@ -86,7 +86,7 @@ if (!alive)
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="objSolid">
+    <event eventtype="4" ename="objCollider">
       <action>
         <libid>1</libid>
         <id>605</id>
