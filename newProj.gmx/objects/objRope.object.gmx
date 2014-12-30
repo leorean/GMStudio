@@ -28,13 +28,21 @@
             <string>parent = noone;
 child = noone;
 
-sticky = false;
+isSticky = false;
+isStuck = false;
 
 target = noone;
-joint = -1;
+joint = noone;
 
-spd = .01;
 alive = true;
+
+phy_rotation = 0;
+phy_fixed_rotation = true;
+
+fixture = physics_fixture_create();
+radius = 3;
+physics_fixture_set_circle_shape(fixture,radius);
+
 </string>
           </argument>
         </arguments>
@@ -57,26 +65,7 @@ alive = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (sticky) //end of rope
-{
-    if (joint == -1)
-    {
-        target = instance_place(x,y,objSolid);
-        if (instance_exists(target))
-        {
-            joint = physics_joint_rope_create(self,target,x,y,x,y,1,false);
-            
-            //joint = physics_joint_distance_create(self,target,x,y,target.x+TILE/2,target.y+TILE/2,false);
-            //physics_joint_set_value(joint,phy_joint_damping_ratio,1);
-            //physics_joint_set_value(joint,phy_joint_frequency,10);
-            //joint = physics_joint_revolute_create(self, target, x, y, 0, 360, 0, 0, 0, 0, false); 
-            global.player.attached = true;
-        }
-        target = noone;
-    }
-}
-
-if (!alive)
+            <string>if (!alive)
 {
     parent.alive = false;
     instance_destroy();
@@ -89,12 +78,12 @@ if (!alive)
     <event eventtype="4" ename="objCollider">
       <action>
         <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
+        <id>603</id>
+        <kind>7</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
@@ -103,7 +92,23 @@ if (!alive)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//</string>
+            <string>if (isSticky) //end of rope
+{
+    target = collision_circle(x+phy_speed_x,y+phy_speed_y,2*radius,objCollider,true,true);
+    if (instance_exists(target))
+    if (joint == noone)
+    {
+        /*
+        joint = physics_joint_distance_create(self,target,x,y,x,y,false);
+        physics_joint_set_value(joint,phy_joint_damping_ratio,1);
+        physics_joint_set_value(joint,phy_joint_frequency,10);
+        */
+        joint = physics_joint_revolute_create(self,target,x,y,0,360,false,0,0,false,true);
+    }
+    target = noone;
+}
+
+</string>
           </argument>
         </arguments>
       </action>
@@ -125,8 +130,7 @@ if (!alive)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-
+            <string>draw_self();
 if (instance_exists(parent))
 {
     c = min((point_distance(parent.x,parent.y,x,y)/TILE)*255,255);
@@ -137,19 +141,15 @@ if (instance_exists(parent))
     draw_line_width(x,y,parent.x,parent.y,2);
 }
 
-//draw_set_color(c_yellow)
-//draw_rectangle(x,y,x+1,y+1,false);
-
-/*if (instance_exists(target))
+if (joint != noone)
 {
-    if (joint != -1)
-    {
-        tx = physics_joint_get_value(joint,phy_joint_anchor_2_x);
-        ty = physics_joint_get_value(joint,phy_joint_anchor_2_y);
-        
-        draw_line_width(x,y,target.x+tx,target.y+ty,2);
-    }
-}*/
+    ax = physics_joint_get_value(joint,phy_joint_anchor_1_x);
+    ay = physics_joint_get_value(joint,phy_joint_anchor_1_y);
+    bx = physics_joint_get_value(joint,phy_joint_anchor_2_x);
+    by = physics_joint_get_value(joint,phy_joint_anchor_2_y);
+    
+    draw_line_width(ax,ay,bx,by,2);
+}
 </string>
           </argument>
         </arguments>
@@ -159,16 +159,16 @@ if (instance_exists(parent))
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>1</PhysicsObjectDensity>
+  <PhysicsObjectDensity>0.00999999977648258</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>1</PhysicsObjectFriction>
+  <PhysicsObjectLinearDamping>0.800000011920929</PhysicsObjectLinearDamping>
+  <PhysicsObjectAngularDamping>0.800000011920929</PhysicsObjectAngularDamping>
+  <PhysicsObjectFriction>0.00999999977648258</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
-  <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
+  <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>2,2</point>
-    <point>2,1</point>
+    <point>2,2</point>
   </PhysicsShapePoints>
 </object>

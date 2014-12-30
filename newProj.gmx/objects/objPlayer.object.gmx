@@ -29,6 +29,10 @@
 phy_fixed_rotation = true;
 
 isJumped = false;
+
+rope = noone;
+ropeEnd = noone;
+ropeNew = noone;
 </string>
           </argument>
         </arguments>
@@ -56,7 +60,7 @@ keyL = keyboard_check(vk_left);
 keyR = keyboard_check(vk_right);
 keyU = keyboard_check(vk_up);
 keyD = keyboard_check(vk_down);
-keyAction = keyboard_check(vk_space);
+keyActionPressed = keyboard_check_pressed(vk_space);
 keyActionReleased = keyboard_check_released(vk_space);
 
 //++++flag control
@@ -90,11 +94,37 @@ if (keyU)
 }
 
 //++++rope action
-if (kAction)
+if (keyActionPressed)
 {
+    if (rope == noone)
+    {
+        rope = instance_create(x,y,objRope);
+        rope.isSticky = true;
+        ropeEnd = rope;
+        with (rope)
+        {
+            physics_apply_impulse(x,y,30,-30);
+        }
+    
+        repeat(15)
+        {
+            ropeNew = instance_create(x,y,objRope);
+            ropeNew.parent = rope;
+            ropeJoint = physics_joint_rope_create(rope,ropeNew,rope.x,rope.y,ropeNew.x,ropeNew.y,5,true);
+            rope = ropeNew;
+        }
+        
+        joint = physics_joint_rope_create(self,rope,x,y,rope.x,rope.y,1,true);
+    }
     
 }
 
+if (keyActionReleased)
+{
+    rope = noone;
+    physics_joint_delete(joint);
+    joint = noone;
+}
 
 
 </string>
