@@ -29,7 +29,7 @@
 child = noone;
 
 isSticky = false;
-isStuck = false;
+children = ds_list_create();
 
 target = noone;
 joint = noone;
@@ -39,10 +39,18 @@ alive = true;
 phy_rotation = 0;
 phy_fixed_rotation = true;
 
-fixture = physics_fixture_create();
 radius = 3;
-physics_fixture_set_circle_shape(fixture,radius);
 
+fixture = physics_fixture_create();
+
+physics_fixture_set_circle_shape(fixture,radius);
+physics_fixture_set_density(fixture, 0.01);
+physics_fixture_set_friction(fixture, 0.01);
+physics_fixture_set_restitution(fixture, .2);
+physics_fixture_set_linear_damping(fixture, .8);
+physics_fixture_set_angular_damping(fixture, 1);
+
+physics_fixture_bind(fixture, id);
 </string>
           </argument>
         </arguments>
@@ -65,10 +73,40 @@ physics_fixture_set_circle_shape(fixture,radius);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!alive)
+            <string>if (isSticky) //end of rope
 {
-    parent.alive = false;
-    instance_destroy();
+    //Todo: better collision criteria/detection
+    if (joint == noone)
+        target = collision_circle(x,y,2*radius,objCollider,true,true);    
+    if (instance_exists(target))
+    {
+        if (joint == noone)
+        {
+            joint = physics_joint_revolute_create(self,target,x,y,0,360,false,0,0,false,true);
+            
+            with (global.player)
+            {
+                phy_speed_x = 0;
+                phy_speed_y = 0;        
+            }
+            
+            var child;
+            for(i = 0; i &lt; ds_list_size(children); i++)
+            {
+                child = ds_list_find_value(children,i);
+                
+                with (child)
+                {
+                    physics_fixture_set_density(fixture, 1);
+                    physics_fixture_bind(fixture, self);
+                }
+            }
+            physics_fixture_set_density(fixture, 1);
+            physics_fixture_bind(fixture, self);
+    
+        }
+        target = noone;
+    }
 }
 </string>
           </argument>
@@ -92,22 +130,7 @@ physics_fixture_set_circle_shape(fixture,radius);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (isSticky) //end of rope
-{
-    target = collision_circle(x+phy_speed_x,y+phy_speed_y,2*radius,objCollider,true,true);
-    if (instance_exists(target))
-    if (joint == noone)
-    {
-        /*
-        joint = physics_joint_distance_create(self,target,x,y,x,y,false);
-        physics_joint_set_value(joint,phy_joint_damping_ratio,1);
-        physics_joint_set_value(joint,phy_joint_frequency,10);
-        */
-        joint = physics_joint_revolute_create(self,target,x,y,0,360,false,0,0,false,true);
-    }
-    target = noone;
-}
-
+            <string>//
 </string>
           </argument>
         </arguments>
@@ -150,6 +173,12 @@ if (joint != noone)
     
     draw_line_width(ax,ay,bx,by,2);
 }
+
+if (isSticky)
+{
+    draw_set_color(c_green)
+    draw_circle(x+phy_speed_x,y+phy_speed_y,radius,1);
+}
 </string>
           </argument>
         </arguments>
@@ -160,13 +189,13 @@ if (joint != noone)
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>0.00999999977648258</PhysicsObjectDensity>
-  <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
+  <PhysicsObjectRestitution>0.200000002980232</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.800000011920929</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>0.800000011920929</PhysicsObjectAngularDamping>
+  <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.00999999977648258</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
-  <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
+  <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>2,2</point>
     <point>2,2</point>

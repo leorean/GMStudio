@@ -2,7 +2,7 @@
 <room>
   <caption></caption>
   <width>400</width>
-  <height>240</height>
+  <height>480</height>
   <vsnap>16</vsnap>
   <hsnap>16</hsnap>
   <isometric>0</isometric>
@@ -11,24 +11,24 @@
   <colour>12632256</colour>
   <showcolour>-1</showcolour>
   <code></code>
-  <enableViews>0</enableViews>
+  <enableViews>-1</enableViews>
   <clearViewBackground>0</clearViewBackground>
   <clearDisplayBuffer>0</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
     <w>1024</w>
     <h>600</h>
-    <showGrid>0</showGrid>
+    <showGrid>-1</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
     <showBackgrounds>-1</showBackgrounds>
     <showForegrounds>-1</showForegrounds>
     <showViews>0</showViews>
-    <deleteUnderlyingObj>-1</deleteUnderlyingObj>
+    <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>0</page>
-    <xoffset>-24</xoffset>
-    <yoffset>-63</yoffset>
+    <page>4</page>
+    <xoffset>-79</xoffset>
+    <yoffset>13</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -41,7 +41,7 @@
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
   </backgrounds>
   <views>
-    <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
+    <view visible="-1" objName="objPlayer" xview="0" yview="0" wview="400" hview="240" xport="0" yport="0" wport="400" hport="240" hborder="128" vborder="128" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
@@ -53,7 +53,7 @@
   <instances>
     <instance objName="objControl" x="0" y="0" name="inst_4DA0C38A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBrick" x="336" y="176" name="inst_3348AFCD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objPlayer" x="64" y="160" name="inst_07881FDB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objPlayer" x="144" y="272" name="inst_07881FDB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBrick" x="320" y="176" name="inst_30DA941D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBrick" x="336" y="160" name="inst_B742439B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBrick" x="304" y="160" name="inst_00EF838F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -66,20 +66,27 @@
     <instance objName="objBrick" x="320" y="144" name="inst_752E91D8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBrick" x="336" y="144" name="inst_D6CB2189" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="32" y="80" name="inst_A869087F" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="96" y="96" name="inst_596DE1C0" locked="0" code="" scaleX="3" scaleY="3" colour="4294967295" rotation="45"/>
+    <instance objName="objCollider" x="48" y="304" name="inst_9C78DFFF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="240" y="192" name="inst_C4ACCD0F" locked="0" code="" scaleX="10" scaleY="3" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="208" y="176" name="inst_3CD841D8" locked="0" code="" scaleX="5" scaleY="1" colour="4294967295" rotation="345"/>
+    <instance objName="objCollider" x="208" y="320" name="inst_E001B7F9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="144" y="144" name="inst_44C844E0" locked="0" code="" scaleX="4" scaleY="3" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="384" y="32" name="inst_51432A90" locked="0" code="" scaleX="1" scaleY="11" colour="4294967295" rotation="355"/>
+    <instance objName="objCollider" x="240" y="320" name="inst_EACB3FED" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="224" y="32" name="inst_764EF84F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="320" y="64" name="inst_DE63FEC9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="272" y="48" name="inst_2052398B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="0" y="96" name="inst_B5F5235E" locked="0" code="" scaleX="1" scaleY="9" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="0" y="224" name="inst_8C708CD1" locked="0" code="" scaleX="16" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="32" y="144" name="inst_65AB150A" locked="0" code="" scaleX="5" scaleY="1" colour="4294967295" rotation="48"/>
+    <instance objName="objCollider" x="176" y="32" name="inst_6EB6873D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="64" y="320" name="inst_EDDFC1A0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="112" y="176" name="inst_AB69E869" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="64" y="192" name="inst_1BDA118D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="94"/>
-    <instance objName="objCollider" x="0" y="208" name="inst_8B2AFC7A" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="343"/>
+    <instance objName="objCollider" x="128" y="320" name="inst_3B4A1CCE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="192" y="336" name="inst_A57E7C4D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="176" y="240" name="inst_9855E7A5" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="96" y="288" name="inst_7FAD00DF" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="192" y="64" name="inst_6BF09A63" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="192" y="272" name="inst_372E584D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="160" y="320" name="inst_E6A3E4B1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="176" y="304" name="inst_356C1A68" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="48" y="144" name="inst_2E4B76FE" locked="0" code="" scaleX="2.13333344459534" scaleY="6" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>-1</PhysicsWorld>

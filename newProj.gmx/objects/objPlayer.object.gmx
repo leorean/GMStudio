@@ -28,6 +28,8 @@
             <string>phy_rotation = 0;
 phy_fixed_rotation = true;
 
+global.player = id;
+
 isJumped = false;
 
 rope = noone;
@@ -88,7 +90,7 @@ if (keyU)
 {
     if (!isJumped)
     {
-        physics_apply_impulse(x,y,0,-60);
+        physics_apply_impulse(x,y,0,-40);
         isJumped = true;
     }
 }
@@ -100,17 +102,18 @@ if (keyActionPressed)
     {
         rope = instance_create(x,y,objRope);
         rope.isSticky = true;
+        //with(rope) phy_bullet = true;
+        with (rope) physics_apply_impulse(x-1,y+1,30,-30);
         ropeEnd = rope;
-        with (rope)
-        {
-            physics_apply_impulse(x,y,30,-30);
-        }
     
-        repeat(15)
+        repeat(30)
         {
             ropeNew = instance_create(x,y,objRope);
+            with(ropeEnd) ds_list_add(children,global.player.ropeNew);
+            //with (rope) physics_apply_impulse(x-1,y+1,30,-30);
+
             ropeNew.parent = rope;
-            ropeJoint = physics_joint_rope_create(rope,ropeNew,rope.x,rope.y,ropeNew.x,ropeNew.y,5,true);
+            ropeJoint = physics_joint_rope_create(rope,ropeNew,rope.x,rope.y,ropeNew.x,ropeNew.y,2,true);
             rope = ropeNew;
         }
         
@@ -124,6 +127,7 @@ if (keyActionReleased)
     rope = noone;
     physics_joint_delete(joint);
     joint = noone;
+    with(objRope) instance_destroy();
 }
 
 
@@ -170,6 +174,6 @@ if (keyActionReleased)
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>8,8</point>
-    <point>8,8</point>
+    <point>6,8</point>
   </PhysicsShapePoints>
 </object>
