@@ -75,6 +75,7 @@ physics_world_update_iterations(20); //iterations per step
 physics_world_update_speed(60); //Update speed
 physics_world_gravity(0,50);
 
+global.sprPlayer = sprite_add("sprPlayer.png",-1,true,false,0,0);
 </string>
           </argument>
         </arguments>

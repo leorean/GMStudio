@@ -39,7 +39,16 @@ ropeEnd = noone;
 ropeNew = noone;
 
 state = IDLE;
+statePrev = state;
 
+//+++animation
+dir = RIGHT;
+
+frame = 0;
+row = 0;
+fSpeed = 0;
+fMax = 3;
+fCur = 0;
 </string>
           </argument>
         </arguments>
@@ -69,6 +78,7 @@ if (global.hasControl)
     keyR = keyboard_check(vk_right);
     keyU = keyboard_check(vk_up);
     keyD = keyboard_check(vk_down);
+    keyUPressed = keyboard_check_pressed(vk_up);
     keyActionPressed = keyboard_check_pressed(ord('A'));
     keyActionReleased = keyboard_check_released(ord('A'));
 }
@@ -84,8 +94,11 @@ else
 }
 
 //++++flag control
-onGround = (phy_speed_y &gt;= 0 &amp;&amp; collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true))
+//collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true)
+onGround = (phy_speed_y &gt;= 0
+    &amp;&amp; collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true))
 
+    
 if (onGround)
     isJumped = false;
 
@@ -93,27 +106,49 @@ if (onGround)
 if (state == IDLE || state == JUMP || state == RUN)
 {
     if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
-        physics_apply_force(x,y,-300,0);
+    {
+        physics_apply_force(x,y,-300,-100);
+        if (onGround) state = RUN;
+    }
     
     if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
-        physics_apply_force(x,y,300,0);
-}
+    {
+        physics_apply_force(x,y,300,-100);
+        if (onGround) state = RUN;
+    }
 
-if (!keyL &amp;&amp; phy_speed_x &lt; 0)
-    phy_speed_x = min(phy_speed_x + .1, 0);
-if (!keyR &amp;&amp; phy_speed_x &gt; 0)
-    phy_speed_x = max(phy_speed_x - .1, 0);
+    if (keyL &amp;&amp; phy_speed_x &lt; 0)
+        dir = LEFT;
+    if (keyR &amp;&amp; phy_speed_x &gt; 0)
+        dir = RIGHT;
+
+    if ((keyL || keyR) &amp;&amp; onGround)
+        state = RUN;
+            
+        
+    if (!keyL &amp;&amp; phy_speed_x &lt; 0)
+        phy_speed_x = min(phy_speed_x + .1, 0);
+    if (!keyR &amp;&amp; phy_speed_x &gt; 0)
+        phy_speed_x = max(phy_speed_x - .1, 0);
+        
+    if (!keyL &amp;&amp; !keyR &amp;&amp; abs(ceil(phy_speed_x)) &lt;= 1 &amp;&amp; onGround)
+    {
+        state = IDLE;
+        
+    }
+}
 
 //++++jumping
 if (state != ATTACK)
 {
-    if (keyU)
+    if (keyUPressed)
     {
         if (!isJumped)
         {
-            physics_apply_impulse(x,y,0,-220);
+            physics_apply_impulse(x,y,0,-240);
             //phy_speed_y = -3.5;
             isJumped = true;
+            state = JUMP;
         }
     }
 }
@@ -128,6 +163,10 @@ if (keyActionReleased)
 {
 }
 
+//++++ end routine
+if (state != statePrev)
+    fCur = 0;
+statePrev = state;
 
 </string>
           </argument>
@@ -151,8 +190,40 @@ if (keyActionReleased)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
-//draw_sprite_ext(mskPlayer,-1,x,y,1,1,0,c_white,1);
+            <string>fCur = (fCur + fSpeed) mod (fMax + 1);
+frame = floor(fCur);
+
+switch(state)
+{
+    case IDLE:
+        fSpeed = .1;
+        row = 0;
+    break;
+    case RUN:
+        fSpeed = .2;
+        row = 1;
+    break;
+    case JUMP:
+        fSpeed = .1;
+        row = 2;
+    break;
+    case DIE:
+        
+    break;
+    case ATTACK:
+        
+    break;
+    case HURT:
+        
+    break;
+    
+}
+
+if (dir == RIGHT)
+    draw_sprite_part(global.sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x-TILE/2),(y-TILE/2));
+if (dir == LEFT)
+    draw_sprite_part_ext(global.sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x+TILE/2),(y-TILE/2),-1,1,c_white,1);
+    
 </string>
           </argument>
         </arguments>
@@ -162,18 +233,18 @@ if (keyActionReleased)
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>1</PhysicsObjectShape>
-  <PhysicsObjectDensity>8</PhysicsObjectDensity>
+  <PhysicsObjectDensity>6</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0</PhysicsObjectFriction>
+  <PhysicsObjectFriction>1</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>2,2</point>
     <point>14,2</point>
-    <point>14,14</point>
-    <point>2,14</point>
+    <point>14,15</point>
+    <point>2,15</point>
   </PhysicsShapePoints>
 </object>
