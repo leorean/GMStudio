@@ -81,6 +81,11 @@ if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
 if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
     physics_apply_force(x,y,300,0);
 
+if (!keyL &amp;&amp; phy_speed_x &lt; 0)
+    phy_speed_x = min(phy_speed_x + .1, 0);
+if (!keyR &amp;&amp; phy_speed_x &gt; 0)
+    phy_speed_x = max(phy_speed_x - .1, 0);
+
 //if (!keyL &amp;&amp; !keyR &amp;&amp; onGround)
 //    phy_speed_x *= .85;
 
@@ -194,7 +199,7 @@ if (keyActionReleased)
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0.75</PhysicsObjectFriction>
+  <PhysicsObjectFriction>0</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
