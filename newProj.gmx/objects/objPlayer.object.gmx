@@ -68,13 +68,11 @@ keyActionReleased = keyboard_check_released(vk_space);
 //++++flag control
 onGround = (phy_speed_y &gt;= 0 &amp;&amp; collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true))
 
-if (onGround)/*
-    &amp;&amp; !collision_point(x+TILE/2,y,objCollider,true,true)
-    &amp;&amp; !collision_point(x-TILE/2,y,objCollider,true,true))*/
+if (onGround)
     isJumped = false;
 
-if (!physics_test_overlap(x,y+1,0,objCollider))
-    isJumped = true;
+//if (!physics_test_overlap(x,y+1,0,objCollider))
+//    isJumped = true;
 
 //++++movement
 if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
@@ -83,15 +81,15 @@ if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
 if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
     physics_apply_force(x,y,300,0);
 
-if (!keyL &amp;&amp; !keyR &amp;&amp; onGround)
-    phy_speed_x *= .9;
+//if (!keyL &amp;&amp; !keyR &amp;&amp; onGround)
+//    phy_speed_x *= .85;
 
 //++++jumping
 if (keyU)
 {
     if (!isJumped)
     {
-        physics_apply_impulse(x,y,0,-120);
+        physics_apply_impulse(x,y,0,-220);
         isJumped = true;
     }
 }
@@ -191,12 +189,12 @@ if (keyActionReleased)
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>1</PhysicsObjectShape>
-  <PhysicsObjectDensity>5</PhysicsObjectDensity>
+  <PhysicsObjectDensity>10</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0</PhysicsObjectFriction>
+  <PhysicsObjectFriction>0.75</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>

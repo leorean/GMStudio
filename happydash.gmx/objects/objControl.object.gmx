@@ -32,6 +32,16 @@
 depth = HUDDEPTH;
 randomize();
 
+
+//SL
+fm = "This game has been stolen!";
+if (string(url_get_domain()) != "spg.erdbeermil.ch")
+{
+    show_message(fm);
+    instance_destroy();
+}
+
+
 global.playthrough = 0; //for ads
 
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
