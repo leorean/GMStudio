@@ -67,7 +67,7 @@
     <instance objName="objBrick" x="336" y="144" name="inst_D6CB2189" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="32" y="80" name="inst_A869087F" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="304" name="inst_9C78DFFF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="240" y="192" name="inst_C4ACCD0F" locked="0" code="" scaleX="10" scaleY="3" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="288" y="192" name="inst_C4ACCD0F" locked="0" code="" scaleX="10" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="208" y="320" name="inst_E001B7F9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="144" y="144" name="inst_44C844E0" locked="0" code="" scaleX="4" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="240" y="320" name="inst_EACB3FED" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -80,7 +80,7 @@
     <instance objName="objCollider" x="112" y="176" name="inst_AB69E869" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="128" y="320" name="inst_3B4A1CCE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="192" y="336" name="inst_A57E7C4D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="176" y="240" name="inst_9855E7A5" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="144" y="208" name="inst_9855E7A5" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="96" y="288" name="inst_7FAD00DF" locked="0" code="" scaleX="4" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="192" y="64" name="inst_6BF09A63" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="192" y="288" name="inst_372E584D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -88,11 +88,13 @@
     <instance objName="objCollider" x="176" y="304" name="inst_356C1A68" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="144" name="inst_2E4B76FE" locked="0" code="" scaleX="2.13333344459534" scaleY="6" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="368" name="inst_0BCFAFF5" locked="0" code="" scaleX="22" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="208" y="272" name="inst_BA58F145" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeR" x="192" y="272" name="inst_BA58F145" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="240" y="256" name="inst_29A57B54" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="304" y="272" name="inst_33092FDE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="272" y="304" name="inst_561CBEBB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="96" y="320" name="inst_ABE0C66B" locked="0" code="" scaleX="5" scaleY="2" colour="4294967295" rotation="161"/>
+    <instance objName="objSlopeR" x="272" y="240" name="inst_7A026388" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeR" x="96" y="272" name="inst_ABC4EE2C" locked="0" code="" scaleX="-1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeR" x="64" y="256" name="inst_20AA17B2" locked="0" code="" scaleX="-0.5" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>-1</PhysicsWorld>
