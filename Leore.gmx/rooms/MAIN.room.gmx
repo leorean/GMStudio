@@ -26,9 +26,9 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>4</page>
-    <xoffset>-79</xoffset>
-    <yoffset>13</yoffset>
+    <page>2</page>
+    <xoffset>-35</xoffset>
+    <yoffset>200</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -67,7 +67,7 @@
     <instance objName="objBrick" x="336" y="144" name="inst_D6CB2189" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="32" y="80" name="inst_A869087F" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="304" name="inst_9C78DFFF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="288" y="192" name="inst_C4ACCD0F" locked="0" code="" scaleX="10" scaleY="3" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="288" y="240" name="inst_74BD8B8F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="208" y="320" name="inst_E001B7F9" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="144" y="144" name="inst_44C844E0" locked="0" code="" scaleX="4" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="240" y="320" name="inst_EACB3FED" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -86,7 +86,7 @@
     <instance objName="objCollider" x="192" y="288" name="inst_372E584D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="160" y="320" name="inst_E6A3E4B1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="176" y="304" name="inst_356C1A68" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="48" y="144" name="inst_2E4B76FE" locked="0" code="" scaleX="2.13333344459534" scaleY="6" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeR" x="64" y="256" name="inst_20AA17B2" locked="0" code="" scaleX="-0.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="368" name="inst_0BCFAFF5" locked="0" code="" scaleX="22" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="192" y="272" name="inst_BA58F145" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="240" y="256" name="inst_29A57B54" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -94,9 +94,28 @@
     <instance objName="objSlopeR" x="272" y="304" name="inst_561CBEBB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="272" y="240" name="inst_7A026388" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="96" y="272" name="inst_ABC4EE2C" locked="0" code="" scaleX="-1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="64" y="256" name="inst_20AA17B2" locked="0" code="" scaleX="-0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="48" y="144" name="inst_ACA3D211" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="32" y="224" name="inst_793A5EF3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="32" y="256" name="inst_A16038DE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="16" y="256" name="inst_AC1B9252" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="0" y="256" name="inst_325462CC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="0" y="240" name="inst_F95479CE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="256" y="208" name="inst_7492180C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="288" y="192" name="inst_9EB3CB3C" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
   </instances>
-  <tiles/>
+  <tiles>
+    <tile bgName="tiles" x="96" y="288" w="16" h="16" xo="0" yo="16" id="10000001" name="inst_2E074F13" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="112" y="288" w="16" h="16" xo="0" yo="16" id="10000002" name="inst_E60AC470" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="128" y="288" w="16" h="16" xo="0" yo="16" id="10000003" name="inst_ADE013BA" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="144" y="288" w="16" h="16" xo="0" yo="16" id="10000004" name="inst_E875B5AF" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="192" y="272" w="32" h="16" xo="0" yo="0" id="10000011" name="inst_EC1E8AFE" depth="1000000" locked="0" colour="4294967295" scaleX="1.5" scaleY="1"/>
+    <tile bgName="tiles" x="240" y="256" w="32" h="16" xo="0" yo="0" id="10000012" name="inst_66B360FE" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="272" y="240" w="32" h="16" xo="0" yo="0" id="10000013" name="inst_78B9C52E" depth="1000000" locked="0" colour="4294967295" scaleX="0.5" scaleY="1"/>
+    <tile bgName="tiles" x="272" y="256" w="16" h="16" xo="0" yo="16" id="10000014" name="inst_4C79FD05" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="240" y="272" w="16" h="16" xo="0" yo="16" id="10000015" name="inst_5889A957" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="144" y="272" w="16" h="16" xo="32" yo="0" id="10000016" name="inst_A714C53C" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="tiles" x="112" y="272" w="16" h="16" xo="32" yo="0" id="10000017" name="inst_A15C088E" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+  </tiles>
   <PhysicsWorld>-1</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>
   <PhysicsWorldLeft>0</PhysicsWorldLeft>
