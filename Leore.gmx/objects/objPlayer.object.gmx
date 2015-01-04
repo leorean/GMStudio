@@ -196,6 +196,35 @@ statePrev = state;
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="objEnemy">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>enemy = instance_place(x,y,objEnemy);
+if (enemy != noone &amp;&amp; instance_exists(enemy))
+{
+    physics_apply_impulse(x,y,sign(enemy.x-x)*-30,-50);
+    //phy_speed_x = sign(enemy.x-x) * 2;
+    //phy_speed_y = -2;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="objCollider">
       <action>
         <libid>1</libid>

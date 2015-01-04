@@ -102,6 +102,10 @@
     <instance objName="objCollider" x="0" y="240" name="inst_F95479CE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="256" y="208" name="inst_7492180C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="288" y="192" name="inst_9EB3CB3C" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="96" y="272" name="inst_5136426A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="144" y="224" name="inst_C21D9869" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="176" y="224" name="inst_C8705217" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="64" y="208" name="inst_77D5790F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tiles" x="96" y="288" w="16" h="16" xo="0" yo="16" id="10000001" name="inst_2E074F13" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

@@ -76,9 +76,10 @@ physics_world_update_speed(60); //Update speed
 physics_world_gravity(0,50);
 
 //++++ASSET LOADING
-global.sprPlayer = sprite_add("sprPlayer.png",-1,true,false,TILE,TILE);
+//TODO: for HTML5, these sprites have to be added manually.
+global.sprPlayer = sprite_add(working_directory + "sprPlayer.png",-1,true,false,TILE,TILE);
 
-sprTiles = background_add("sprTiles.png",true,false);
+sprTiles = background_add(working_directory + "sprTiles.png",true,false);
 background_assign(tiles,sprTiles);
 background_delete(sprTiles);
 </string>
