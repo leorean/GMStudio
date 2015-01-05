@@ -102,7 +102,7 @@ var colL, colR, colD;
 
 colL = collision_point(bbox_left-1,y,objCollider,true,true);
 colR = collision_point(bbox_right+1,y,objCollider,true,true);
-colD = collision_point(x,bbox_bottom+1,objCollider,true,true);
+colD = collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objCollider,true,true);//collision_point(x,bbox_bottom+1,objCollider,true,true);
 colU = collision_point(x,bbox_top-1,objCollider,true,true);
 
 onGround = //(phy_speed_y &gt;= 0 &amp;&amp;
