@@ -137,7 +137,7 @@
     <option_ios_icon_57>Configs\Default\ios\icons\icon57.png</option_ios_icon_57>
     <option_ios_icon_72>Configs\Default\ios\icons\icon72.png</option_ios_icon_72>
     <option_ios_icon_76>Configs\Default\ios\icons\icon76.png</option_ios_icon_76>
-    <option_ios_interpolate>-1</option_ios_interpolate>
+    <option_ios_interpolate>0</option_ios_interpolate>
     <option_ios_ipad_retina_splash_png>Configs\Default\ios\iPadRetinasplash.png</option_ios_ipad_retina_splash_png>
     <option_ios_ipad_splash_png>Configs\Default\ios\iPadsplash.png</option_ios_ipad_splash_png>
     <option_ios_iphone5_splash_png>Configs\Default\ios\iPhone5splash.png</option_ios_iphone5_splash_png>
@@ -145,8 +145,8 @@
     <option_ios_iphone_splash_png>Configs\Default\ios\iPhonesplash.png</option_ios_iphone_splash_png>
     <option_ios_major_version>1</option_ios_major_version>
     <option_ios_minor_version>0</option_ios_minor_version>
-    <option_ios_orient_landscape>-1</option_ios_orient_landscape>
-    <option_ios_orient_landscape_right>-1</option_ios_orient_landscape_right>
+    <option_ios_orient_landscape>0</option_ios_orient_landscape>
+    <option_ios_orient_landscape_right>0</option_ios_orient_landscape_right>
     <option_ios_orient_portrait>-1</option_ios_orient_portrait>
     <option_ios_orient_portrait_upside_down>-1</option_ios_orient_portrait_upside_down>
     <option_ios_provisioning>&lt; Press refresh to fetch provisioning list from Mac&gt;</option_ios_provisioning>

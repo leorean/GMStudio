@@ -146,13 +146,15 @@ if (btn[1].pressed)
     room_goto(SHOP);
 if (btn[2].pressed)
 {
-    fgl_score_display("");
+    if (os_type != os_android)
+        fgl_score_display("");
     //room_goto(SCORE);
 }
 if (btn[3].pressed)
 {
     //game_end();
-    fgl_moregames();
+    if (os_type != os_android)
+        fgl_moregames();
 }
 
 

@@ -25,7 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = HUDDEPTH - 1;
+            <string>if (os_type == os_android)
+    instance_destroy();
+
+depth = HUDDEPTH - 1;
 
 spr = -1;
 zoom = .5;

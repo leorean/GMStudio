@@ -26,9 +26,9 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>0</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>3</page>
-    <xoffset>-35</xoffset>
-    <yoffset>200</yoffset>
+    <page>0</page>
+    <xoffset>-118</xoffset>
+    <yoffset>38</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -86,14 +86,14 @@
     <instance objName="objCollider" x="192" y="288" name="inst_372E584D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="160" y="320" name="inst_E6A3E4B1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="176" y="304" name="inst_356C1A68" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="64" y="256" name="inst_20AA17B2" locked="0" code="" scaleX="-0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="288" y="192" name="inst_9EB3CB3C" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="368" name="inst_0BCFAFF5" locked="0" code="" scaleX="22" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="192" y="272" name="inst_BA58F145" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="240" y="256" name="inst_29A57B54" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="64" y="208" name="inst_77D5790F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="176" y="224" name="inst_C8705217" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="304" y="272" name="inst_33092FDE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="272" y="304" name="inst_561CBEBB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="272" y="240" name="inst_7A026388" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeR" x="96" y="272" name="inst_ABC4EE2C" locked="0" code="" scaleX="-1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="144" y="224" name="inst_C21D9869" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemy" x="96" y="272" name="inst_5136426A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="48" y="144" name="inst_ACA3D211" locked="0" code="" scaleX="1" scaleY="5" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="32" y="224" name="inst_793A5EF3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="32" y="256" name="inst_A16038DE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -101,11 +101,14 @@
     <instance objName="objCollider" x="0" y="256" name="inst_325462CC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="0" y="240" name="inst_F95479CE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="256" y="208" name="inst_7492180C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="288" y="192" name="inst_9EB3CB3C" locked="0" code="" scaleX="6" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="objEnemy" x="96" y="272" name="inst_5136426A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objEnemy" x="144" y="224" name="inst_C21D9869" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objEnemy" x="176" y="224" name="inst_C8705217" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objEnemy" x="64" y="208" name="inst_77D5790F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="192" y="272" name="inst_2B37D594" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="240" y="256" name="inst_8FF076F1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="272" y="240" name="inst_D6DA54CC" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeR" x="64" y="272" name="inst_8BA7785E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeR" x="48" y="256" name="inst_2C5B6176" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBrick" x="240" y="224" name="inst_F9FB8E25" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBrick" x="224" y="208" name="inst_10AEC6DD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBrick" x="240" y="176" name="inst_53A85EB3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tiles" x="96" y="288" w="16" h="16" xo="0" yo="16" id="10000001" name="inst_2E074F13" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

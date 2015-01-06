@@ -34,13 +34,15 @@ randomize();
 
 
 //SL
-fm = "This game has been stolen!";
-if (string(url_get_domain()) != "spg.erdbeermil.ch")
+if (os_type != os_android)
 {
-    show_message(fm);
-    instance_destroy();
+    fm = "This game has been stolen!";
+    if (string(url_get_domain()) != "spg.erdbeermil.ch")
+    {
+        show_message(fm);
+        instance_destroy();
+    }
 }
-
 
 global.playthrough = 0; //for ads
 

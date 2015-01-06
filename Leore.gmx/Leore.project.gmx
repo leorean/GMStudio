@@ -50,6 +50,7 @@
     <sprite>sprites\mskPlayerBody</sprite>
     <sprite>sprites\mskCollider</sprite>
     <sprite>sprites\mskSlopeR</sprite>
+    <sprite>sprites\mskSlopeL</sprite>
     <sprite>sprites\mskEnemy</sprite>
   </sprites>
   <backgrounds name="background">
@@ -66,7 +67,9 @@
     <objects name="misc">
       <object>objects\objControl</object>
       <object>objects\objSlopeR</object>
+      <object>objects\objSlopeL</object>
       <object>objects\objCollider</object>
+      <object>objects\objSlope</object>
     </objects>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>

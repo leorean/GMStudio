@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprite_index,-1,ceil(x),ceil(y));
+            <string>draw_self();
+//draw_sprite_ext(sprite_index,-1,ceil(x),ceil(y),1,1,phy_rotation,c_white,1);
 </string>
           </argument>
         </arguments>

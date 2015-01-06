@@ -32,6 +32,9 @@ image_speed = 0;
 
 global.player = id;
 
+xPrev = x;
+yPrev = y;
+
 isJumped = false;
 
 rope = noone;
@@ -102,11 +105,13 @@ var colL, colR, colD;
 
 colL = collision_point(bbox_left-1,y,objCollider,true,true);
 colR = collision_point(bbox_right+1,y,objCollider,true,true);
-colD = collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objCollider,true,true);//collision_point(x,bbox_bottom+1,objCollider,true,true);
+colD = collision_point(x,bbox_bottom+1,objCollider,true,true) ||
+    collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objSlope,true,true);//collision_point(x,bbox_bottom+1,objCollider,true,true);
 colU = collision_point(x,bbox_top-1,objCollider,true,true);
 
 onGround = //(phy_speed_y &gt;= 0 &amp;&amp;
-    (physics_test_overlap(x,y+1,0,objCollider)
+    ((physics_test_overlap(x,y+1,0,objCollider)
+        || physics_test_overlap(x,y+3,0,objSlope))
     &amp;&amp; (colD));
     //&amp;&amp; (((!colL || colD) &amp;&amp; !colU) &amp;&amp; ((!colR || colD) &amp;&amp; !colU)));
     //&amp;&amp; collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true))
@@ -121,13 +126,13 @@ if (state == IDLE || state == JUMP || state == RUN)
 {
     if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
     {
-        physics_apply_force(x,y,-300,-0);
+        physics_apply_force(x,y,-300,-300*onGround);
         if (onGround) state = RUN;
     }
     
     if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
     {
-        physics_apply_force(x,y,300,-0);
+        physics_apply_force(x,y,300,-300*onGround);
         if (onGround) state = RUN;
     }
 
@@ -136,20 +141,29 @@ if (state == IDLE || state == JUMP || state == RUN)
     if (keyR &amp;&amp; phy_speed_x &gt; 0)
         dir = RIGHT;
 
-    if ((keyL || keyR) &amp;&amp; onGround)
-        state = RUN;
-            
+    if (keyL || keyR)
+    {
+        if (onGround)
+            state = RUN;
+        else
+            state = JUMP;
+    }
+    
     if (onGround)
     {
-        if (!keyL &amp;&amp; phy_speed_x &lt; 0)
+        show_debug_message(abs(phy_position_x-phy_position_xprevious));
+        if (!keyL &amp;&amp; abs(phy_position_x-phy_position_xprevious) &gt;= 0)
         {
-            phy_speed_x = min(phy_speed_x + .1, 0);
+            if (sign(phy_position_x-phy_position_xprevious) &lt;= 0)
+                phy_speed_x = min(phy_speed_x + .2, 0);
         }
-        if (!keyR &amp;&amp; phy_speed_x &gt; 0)
+        if (!keyR &amp;&amp; abs(phy_position_x-phy_position_xprevious) &gt;= 0)
         {
-            phy_speed_x = max(phy_speed_x - .1, 0);
+            if (sign(phy_position_x-phy_position_xprevious) &gt;= 0)
+            phy_speed_x = max(phy_speed_x - .2, 0);
         }
-    }
+    } else
+        show_debug_message("not onground");
         
     if (!keyL &amp;&amp; !keyR &amp;&amp; onGround)
     {
@@ -169,7 +183,7 @@ if (state != ATTACK)
         if (!isJumped)
         {
             //physics_apply_impulse(x,y,0,-230);
-            phy_speed_y = -3.5;
+            phy_speed_y = -3.2;
             isJumped = true;
             state = JUMP;
         }
@@ -190,6 +204,9 @@ if (keyActionReleased)
 if (state != statePrev)
     fCur = 0;
 statePrev = state;
+xPrev = x;
+yPrev = y;
+
 
 </string>
           </argument>
@@ -313,12 +330,12 @@ draw_point(x,bbox_bottom);*/
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>2</PhysicsObjectShape>
-  <PhysicsObjectDensity>12</PhysicsObjectDensity>
+  <PhysicsObjectDensity>10</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>0</PhysicsObjectFriction>
+  <PhysicsObjectFriction>0.100000001490116</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
   <PhysicsShapePoints>

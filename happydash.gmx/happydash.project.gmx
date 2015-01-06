@@ -291,12 +291,12 @@
     </objects>
   </objects>
   <rooms name="rooms">
-    <room>rooms\FGL_INIT</room>
     <room>rooms\INIT</room>
     <room>rooms\SCORE</room>
     <room>rooms\MAIN</room>
     <room>rooms\SHOP</room>
     <room>rooms\HELP</room>
+    <room>rooms\FGL_INIT</room>
   </rooms>
   <constants number="41">
     <constant name="ZOOM">2</constant>
