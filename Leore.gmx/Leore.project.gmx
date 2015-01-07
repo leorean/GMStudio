@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="5" name="datafiles">
+  <datafiles number="6" name="datafiles">
     <datafile>
       <name>sprPlayer.png</name>
       <exists>-1</exists>
@@ -38,6 +38,23 @@
       </ConfigOptions>
       <filename>sprTiles.png</filename>
     </datafile>
+    <datafile>
+      <name>sprHud.png</name>
+      <exists>-1</exists>
+      <size>1185</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>sprHud.png</filename>
+    </datafile>
   </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
@@ -52,16 +69,23 @@
     <sprite>sprites\mskSlopeR</sprite>
     <sprite>sprites\mskSlopeL</sprite>
     <sprite>sprites\mskEnemy</sprite>
+    <sprite>sprites\sprWeapon</sprite>
+    <sprite>sprites\mskEnemy1</sprite>
+    <sprite>sprites\mskTower</sprite>
+    <sprite>sprites\mskPlatform</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\tiles</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\resetRope.gml</script>
+    <script>scripts\drawText.gml</script>
+    <script>scripts\array.gml</script>
+    <script>scripts\get.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntDefault</font>
+    <font>fonts\fntHud</font>
   </fonts>
   <objects name="objects">
     <objects name="misc">
@@ -69,19 +93,26 @@
       <object>objects\objSlopeR</object>
       <object>objects\objSlopeL</object>
       <object>objects\objCollider</object>
+      <object>objects\objPlatform</object>
       <object>objects\objSlope</object>
+      <object>objects\objEnemy</object>
+      <object>objects\objTowerMenu</object>
     </objects>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
     <object>objects\objPlayerBody</object>
     <object>objects\objRope</object>
     <object>objects\objBrick</object>
-    <object>objects\objEnemy</object>
+    <object>objects\objWeapon</object>
+    <object>objects\objEnemy1</object>
+    <object>objects\objTower</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="19">
+  <constants number="21">
+    <constant name="c_none">-1</constant>
+    <constant name="HUDDEPTH">-100</constant>
     <constant name="INFINITE">90000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">400</constant>

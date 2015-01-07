@@ -27,13 +27,49 @@
             <kind>1</kind>
             <string>global.timer = (global.timer + 1) mod INFINITE;
 
+global.keyAction = keyboard_check(ord('A'));
+
+x = floor(view_xview[0]);
+y = floor(view_yview[0]);
+
+
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
 
 if (keyboard_check_pressed(vk_escape))
     game_end();
 
-
+if (global.timer mod 90 == 0)
+{
+    var e;
+    e = instance_create(3*TILE,6*TILE,objEnemy1);
+    e.dir = RIGHT;
+    e.hp = 20;
+    
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>global.wallet = 1000;
 </string>
           </argument>
         </arguments>
@@ -66,6 +102,7 @@ global.timer = 0;
 global.hasControl = true;
 
 image_speed = 0;
+depth = HUDDEPTH;
 
 window_set_size(3*WIDTH,3*HEIGHT);
 window_center();
@@ -78,10 +115,47 @@ physics_world_gravity(0,50);
 //++++ASSET LOADING
 //TODO: for HTML5, these sprites have to be added manually.
 global.sprPlayer = sprite_add(working_directory + "sprPlayer.png",-1,true,false,TILE,TILE);
+global.sprHud = sprite_add(working_directory + "sprHud.png",-1,true,false,0,0);
 
 sprTiles = background_add(working_directory + "sprTiles.png",true,false);
 background_assign(tiles,sprTiles);
 background_delete(sprTiles);
+
+//++++TOWER VARIABLES
+
+enum T
+{
+    DMG = 0,
+    CD = 1,
+    RNG = 2,
+    COST = 3,
+    MAXLVL = 4
+}
+
+global.tower[0,T.DMG] = array(1,1.5,2,4);
+global.tower[0,T.CD] = array(30,30,25,25);
+global.tower[0,T.RNG] = array(1.5*TILE,1.6*TILE,1.8*TILE,2*TILE);
+global.tower[0,T.COST] = array(10,50,150,400);
+global.tower[0,T.MAXLVL] = 3;
+
+global.tower[1,T.DMG] = array(0.1,0.2,0.4,0.8);
+global.tower[1,T.CD] = array(5,5,5,4);
+global.tower[1,T.RNG] = array(3*TILE,3.1*TILE,3.3*TILE,3.5*TILE);
+global.tower[1,T.COST] = array(50,120,280,650);
+global.tower[1,T.MAXLVL] = 3;
+
+global.tower[2,T.DMG] = array(10,15,20,25);
+global.tower[2,T.CD] = array(120,300,480,900);
+global.tower[2,T.RNG] = array(2*TILE,2.2*TILE,2.3*TILE,2.5*TILE);
+global.tower[2,T.COST] = array(200,570,1000,1700);
+global.tower[2,T.MAXLVL] = 3;
+
+global.tower[3,T.DMG] = array(1.5,1.8,2.3,2.6);
+global.tower[3,T.CD] = array(90,85,80,75);
+global.tower[3,T.RNG] = array(4*TILE,4.3*TILE,4.7*TILE,5.2*TILE);
+global.tower[3,T.COST] = array(150,420,850,1200);
+global.tower[3,T.MAXLVL] = 3;
+
 </string>
           </argument>
         </arguments>
@@ -105,7 +179,13 @@ background_delete(sprTiles);
           <argument>
             <kind>1</kind>
             <string>draw_set_color(c_black);
-draw_set_font(fntDefault);
+draw_set_alpha(1);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+
+drawText(x,y," $: "+string(global.wallet),c_white,c_black,fntHud);
+
+
 </string>
           </argument>
         </arguments>

@@ -35,6 +35,8 @@ global.player = id;
 xPrev = x;
 yPrev = y;
 
+platform = noone;
+
 isJumped = false;
 
 rope = noone;
@@ -55,6 +57,13 @@ row = 0;
 fSpeed = 0;
 fMax = 3;
 fCur = 0;
+
+//++++ weapon stuff
+/*
+weapon = noone;
+joint = -1;
+createWeapon();
+*/
 </string>
           </argument>
         </arguments>
@@ -81,43 +90,47 @@ fCur = 0;
 if (global.hasControl)
 {
     keyL = keyboard_check(vk_left);
+    keyLPressed = keyboard_check_pressed(vk_left);
+    keyLReleased = keyboard_check_released(vk_left);
     keyR = keyboard_check(vk_right);
+    keyRPressed = keyboard_check_pressed(vk_right);
+    keyRReleased = keyboard_check_released(vk_right);
     keyU = keyboard_check(vk_up);
-    keyD = keyboard_check(vk_down);
     keyUPressed = keyboard_check_pressed(vk_up);
-    keyActionPressed = keyboard_check_pressed(ord('A'));
-    keyActionReleased = keyboard_check_released(ord('A'));
+    keyUReleased = keyboard_check_released(vk_up);
+    keyD = keyboard_check(vk_down);
+    keyDPressed = keyboard_check_pressed(vk_down);
+    keyDReleased = keyboard_check_released(vk_down);
 }
 else
 {
     keyL = false;
+    keyLPressed = false;
+    keyLReleased = false;
     keyR = false;
+    keyRPressed = false;
+    keyRReleased = false;
     keyU = false;
+    keyUPressed = false;
+    keyUReleased = false;
     keyD = false;
-    keyActionPressed = false;
-    keyActionReleased = false;
-
+    keyDPressed = false;
+    keyDReleased = false;
 }
 
 //++++flag control
-//collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true)
 var colL, colR, colD;
 
 colL = collision_point(bbox_left-1,y,objCollider,true,true);
 colR = collision_point(bbox_right+1,y,objCollider,true,true);
-colD = collision_point(x,bbox_bottom+1,objCollider,true,true) ||
-    collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objSlope,true,true);//collision_point(x,bbox_bottom+1,objCollider,true,true);
+colD = collision_line(bbox_left+3,bbox_bottom+1,bbox_right-3,bbox_bottom+1,objCollider,true,true);
+    
 colU = collision_point(x,bbox_top-1,objCollider,true,true);
 
-onGround = //(phy_speed_y &gt;= 0 &amp;&amp;
-    ((physics_test_overlap(x,y+1,0,objCollider)
-        || physics_test_overlap(x,y+3,0,objSlope))
+onGround = ((physics_test_overlap(x,y+1,0,objCollider)
+    || physics_test_overlap(x,y+3,0,objSlope))
     &amp;&amp; (colD));
-    //&amp;&amp; (((!colL || colD) &amp;&amp; !colU) &amp;&amp; ((!colR || colD) &amp;&amp; !colU)));
-    //&amp;&amp; collision_line(x-TILE/2+2,y+TILE/2,x+TILE/2-2,y+TILE/2,objCollider,true,true))
-    
 
-    
 if (onGround)
     isJumped = false;
 
@@ -126,21 +139,24 @@ if (state == IDLE || state == JUMP || state == RUN)
 {
     if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
     {
-        physics_apply_force(x,y,-300,-300*onGround);
+        physics_apply_force(x,y,-300,-150*onGround);
         if (onGround) state = RUN;
     }
     
     if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
     {
-        physics_apply_force(x,y,300,-300*onGround);
+        physics_apply_force(x,y,300,-150*onGround);
         if (onGround) state = RUN;
     }
 
     if (keyL &amp;&amp; phy_speed_x &lt; 0)
+    {
         dir = LEFT;
+    }
     if (keyR &amp;&amp; phy_speed_x &gt; 0)
+    {
         dir = RIGHT;
-
+    }
     if (keyL || keyR)
     {
         if (onGround)
@@ -151,20 +167,18 @@ if (state == IDLE || state == JUMP || state == RUN)
     
     if (onGround)
     {
-        show_debug_message(abs(phy_position_x-phy_position_xprevious));
         if (!keyL &amp;&amp; abs(phy_position_x-phy_position_xprevious) &gt;= 0)
         {
             if (sign(phy_position_x-phy_position_xprevious) &lt;= 0)
-                phy_speed_x = min(phy_speed_x + .2, 0);
+                phy_speed_x = min(phy_speed_x + .3, 0);
         }
         if (!keyR &amp;&amp; abs(phy_position_x-phy_position_xprevious) &gt;= 0)
         {
             if (sign(phy_position_x-phy_position_xprevious) &gt;= 0)
-            phy_speed_x = max(phy_speed_x - .2, 0);
+            phy_speed_x = max(phy_speed_x - .3, 0);
         }
-    } else
-        show_debug_message("not onground");
-        
+    }
+       
     if (!keyL &amp;&amp; !keyR &amp;&amp; onGround)
     {
         if (abs(ceil(phy_speed_x)) == 0)
@@ -190,15 +204,35 @@ if (state != ATTACK)
     }
 }
 
-//ATTACKING
-if (keyActionPressed)
+if (global.keyAction &amp;&amp; onGround &amp;&amp; !instance_exists(objTowerMenu))
 {
-
+    global.hasControl = false;
+    var tm;
+    tm = instance_create(0,0,objTowerMenu);
+    tm.target = instance_place(x,y,objTower);
 }
 
-if (keyActionReleased)
+//++++ATTACKING
+/*
+if (instance_exists(weapon))
 {
-}
+
+    if (!keyAction1)
+    {
+        weapon.phy_rotation = -sign(dir)*80;
+    }
+    if (weapon.dir != dir)
+    {
+        createWeapon();
+    }
+
+    show_debug_message(weapon.phy_rotation);    
+    if (keyAction1Pressed)
+    {
+        with(weapon) physics_apply_angular_impulse(sign(global.player.dir)*15);
+    }// else
+     //   with(weapon) physics_apply_angular_impulse(sign(global.player.dir)*-5);
+}*/
 
 //++++ end routine
 if (state != statePrev)
@@ -208,35 +242,6 @@ xPrev = x;
 yPrev = y;
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objEnemy">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>enemy = instance_place(x,y,objEnemy);
-if (enemy != noone &amp;&amp; instance_exists(enemy))
-{
-    physics_apply_impulse(x,y,sign(enemy.x-x)*-30,-50);
-    //phy_speed_x = sign(enemy.x-x) * 2;
-    //phy_speed_y = -2;
-}
 </string>
           </argument>
         </arguments>
@@ -281,7 +286,10 @@ if (enemy != noone &amp;&amp; instance_exists(enemy))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur + fSpeed) mod (fMax + 1);
+            <string>draw_set_alpha(1);
+draw_set_color(c_white);
+
+fCur = (fCur + fSpeed) mod (fMax + 1);
 frame = floor(fCur);
 
 switch(state)
@@ -332,12 +340,12 @@ draw_point(x,bbox_bottom);*/
   <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>10</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
-  <PhysicsObjectGroup>0</PhysicsObjectGroup>
+  <PhysicsObjectGroup>10</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.100000001490116</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
-  <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
+  <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>12,12</point>
     <point>20,12</point>
