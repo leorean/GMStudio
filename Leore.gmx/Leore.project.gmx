@@ -68,11 +68,11 @@
     <sprite>sprites\mskCollider</sprite>
     <sprite>sprites\mskSlopeR</sprite>
     <sprite>sprites\mskSlopeL</sprite>
-    <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\sprWeapon</sprite>
-    <sprite>sprites\mskEnemy1</sprite>
+    <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskTower</sprite>
     <sprite>sprites\mskPlatform</sprite>
+    <sprite>sprites\mskCoin</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\tiles</background>
@@ -95,7 +95,6 @@
       <object>objects\objCollider</object>
       <object>objects\objPlatform</object>
       <object>objects\objSlope</object>
-      <object>objects\objEnemy</object>
       <object>objects\objTowerMenu</object>
     </objects>
     <object>objects\objPlayer</object>
@@ -104,14 +103,16 @@
     <object>objects\objRope</object>
     <object>objects\objBrick</object>
     <object>objects\objWeapon</object>
-    <object>objects\objEnemy1</object>
+    <object>objects\objEnemy</object>
     <object>objects\objTower</object>
+    <object>objects\objCoin</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="21">
+  <constants number="22">
     <constant name="c_none">-1</constant>
+    <constant name="PLAYERDEPTH">0</constant>
     <constant name="HUDDEPTH">-100</constant>
     <constant name="INFINITE">90000000000</constant>
     <constant name="TILE">16</constant>

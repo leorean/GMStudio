@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = HUDDEPTH+1;
+            <string>
+image_speed = 0;
+depth = HUDDEPTH+1;
 
 cursor = 0;
 maxCursor = 3;
@@ -99,7 +101,10 @@ if (!instance_exists(target))
 }
 else
 {
-    price = get(global.tower[cursor,T.COST],target.level);
+    if (target.level &lt; global.tower[cursor,T.MAXLVL])
+        price = get(global.tower[cursor,T.COST],(target.level + 1));
+    else
+        price = 0;
     sellPrice = floor(get(global.tower[cursor,T.COST],target.level) * .25);
 }
         
@@ -111,7 +116,7 @@ if (keyUReleased)
         if (!instance_exists(target))
         {
             var tower;
-            tower = instance_create(global.player.x,global.player.y,objTower);
+            tower = instance_create(floor(global.player.x),floor(global.player.y),objTower);
             
             tower.type = cursor;
             tower.dmg = get(global.tower[cursor,T.DMG],0);
@@ -218,9 +223,14 @@ if (instance_exists(target))
 //cursor
 draw_sprite_part(global.sprHud,-1,0,0,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
 
-draw_sprite_part(global.sprHud,-1, ((cursor + maxCursor) % (maxCursor + 1)) *2*TILE,4*TILE,2*TILE,2*TILE,x + WIDTH/2 - 3*TILE,y + 4*TILE);
-draw_sprite_part(global.sprHud,-1,cursor*2*TILE,4*TILE,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
-draw_sprite_part(global.sprHud,-1,((cursor + 1) % (maxCursor + 1))*2*TILE,4*TILE,2*TILE,2*TILE,x + WIDTH/2 + 1*TILE,y + 4*TILE);
+//icons
+if (!instance_exists(target))
+{
+    draw_sprite_part(global.sprHud,-1,0, 4*TILE + ((cursor + maxCursor) % (maxCursor + 1)) *2*TILE,2*TILE,2*TILE,x + WIDTH/2 - 3*TILE,y + 4*TILE);
+    draw_sprite_part(global.sprHud,-1,0, 4*TILE + ((cursor + 1) % (maxCursor + 1))*2*TILE,2*TILE,2*TILE,x + WIDTH/2 + 1*TILE,y + 4*TILE);
+}
+
+draw_sprite_part(global.sprHud,-1,0, 4*TILE + cursor*2*TILE,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
 
 </string>
           </argument>

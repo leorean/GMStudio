@@ -29,22 +29,22 @@
 
 global.keyAction = keyboard_check(ord('A'));
 
-x = floor(view_xview[0]);
-y = floor(view_yview[0]);
-
-
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
 
 if (keyboard_check_pressed(vk_escape))
     game_end();
 
+//TODO: HANDLE THIS 
 if (global.timer mod 90 == 0)
 {
     var e;
-    e = instance_create(3*TILE,6*TILE,objEnemy1);
+    e = instance_create(3*TILE,6*TILE,objEnemy);
     e.dir = RIGHT;
-    e.hp = 20;
+    e.maxHp = 20;
+    e.hp = e.maxHp;
+
+    e.value = 3;
     
 }
 </string>
@@ -70,6 +70,8 @@ if (global.timer mod 90 == 0)
           <argument>
             <kind>1</kind>
             <string>global.wallet = 1000;
+global.hp = 10;
+global.wave = 0;
 </string>
           </argument>
         </arguments>
@@ -183,7 +185,11 @@ draw_set_alpha(1);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
+x = floor(view_xview[0]);
+y = floor(view_yview[0]);
+
 drawText(x,y," $: "+string(global.wallet),c_white,c_black,fntHud);
+drawText(x,y+TILE," HP: "+string(global.hp),c_white,c_black,fntHud);
 
 
 </string>

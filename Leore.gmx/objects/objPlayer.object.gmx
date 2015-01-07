@@ -29,6 +29,7 @@
 phy_fixed_rotation = true;
 
 image_speed = 0;
+depth = PLAYERDEPTH;
 
 global.player = id;
 
@@ -58,12 +59,7 @@ fSpeed = 0;
 fMax = 3;
 fCur = 0;
 
-//++++ weapon stuff
-/*
-weapon = noone;
-joint = -1;
-createWeapon();
-*/
+target = noone; //tower
 </string>
           </argument>
         </arguments>
@@ -139,13 +135,13 @@ if (state == IDLE || state == JUMP || state == RUN)
 {
     if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
     {
-        physics_apply_force(x,y,-300,-150*onGround);
+        physics_apply_force(x,y,-300,-200*onGround);
         if (onGround) state = RUN;
     }
     
     if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
     {
-        physics_apply_force(x,y,300,-150*onGround);
+        physics_apply_force(x,y,300,-200*onGround);
         if (onGround) state = RUN;
     }
 
@@ -204,35 +200,19 @@ if (state != ATTACK)
     }
 }
 
+if (!instance_exists(target) || !physics_test_overlap(x,y,0,objTower))
+        target = noone;
+
+if (target == noone)
+    target = instance_place(x,y,objTower);
+
 if (global.keyAction &amp;&amp; onGround &amp;&amp; !instance_exists(objTowerMenu))
 {
     global.hasControl = false;
     var tm;
     tm = instance_create(0,0,objTowerMenu);
-    tm.target = instance_place(x,y,objTower);
+    tm.target = target;
 }
-
-//++++ATTACKING
-/*
-if (instance_exists(weapon))
-{
-
-    if (!keyAction1)
-    {
-        weapon.phy_rotation = -sign(dir)*80;
-    }
-    if (weapon.dir != dir)
-    {
-        createWeapon();
-    }
-
-    show_debug_message(weapon.phy_rotation);    
-    if (keyAction1Pressed)
-    {
-        with(weapon) physics_apply_angular_impulse(sign(global.player.dir)*15);
-    }// else
-     //   with(weapon) physics_apply_angular_impulse(sign(global.player.dir)*-5);
-}*/
 
 //++++ end routine
 if (state != statePrev)
@@ -340,17 +320,17 @@ draw_point(x,bbox_bottom);*/
   <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>10</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
-  <PhysicsObjectGroup>10</PhysicsObjectGroup>
+  <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.100000001490116</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>12,12</point>
-    <point>20,12</point>
-    <point>20,21</point>
+    <point>12,11</point>
+    <point>20,11</point>
+    <point>20,20</point>
     <point>16,22</point>
-    <point>12,21</point>
+    <point>12,20</point>
   </PhysicsShapePoints>
 </object>
