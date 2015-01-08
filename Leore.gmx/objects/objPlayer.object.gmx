@@ -117,6 +117,12 @@ else
     keyDReleased = false;
 }
 
+//++++level bounds
+if (bbox_left &lt;= 0) {xVel = 0; x += .1;}
+if (bbox_right &gt;= room_width) {xVel = 0; x -= .1;}
+
+
+
 //++++flag control
 prePhysics();
 

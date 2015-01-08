@@ -23,6 +23,7 @@
     <sprite>sprites\mskCoin</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\mskBase</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -63,6 +64,7 @@
     <object>objects\objEnemy</object>
     <object>objects\objTower</object>
     <object>objects\objCoin</object>
+    <object>objects\objBase</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>

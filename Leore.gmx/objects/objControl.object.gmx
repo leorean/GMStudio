@@ -129,14 +129,16 @@ physics_world_gravity(0,50);
 
 enum T
 {
-    DMG = 0,
-    CD = 1,
-    RNG = 2,
-    COST = 3,
-    MAXLVL = 4,
-    MAXENEMIES = 5
+    NAME = 0,
+    DMG = 1,
+    CD = 2,
+    RNG = 3,
+    COST = 4,
+    MAXLVL = 5,
+    MAXENEMIES = 6
 }
 
+global.tower[0,T.NAME] = "Standard Turret";
 global.tower[0,T.DMG] = array(1,1.5,2,4);
 global.tower[0,T.CD] = array(30,30,25,25);
 global.tower[0,T.RNG] = array(1.5*TILE,1.6*TILE,1.8*TILE,2*TILE);
@@ -144,6 +146,7 @@ global.tower[0,T.COST] = array(10,50,150,400);
 global.tower[0,T.MAXLVL] = 3;
 global.tower[0,T.MAXENEMIES] = 1;
 
+global.tower[1,T.NAME] = "Splash Turret";
 global.tower[1,T.DMG] = array(0.1,0.2,0.4,0.8);
 global.tower[1,T.CD] = array(5,5,5,4);
 global.tower[1,T.RNG] = array(3*TILE,3.1*TILE,3.3*TILE,3.5*TILE);
@@ -151,6 +154,7 @@ global.tower[1,T.COST] = array(50,120,280,650);
 global.tower[1,T.MAXLVL] = 3;
 global.tower[1,T.MAXENEMIES] = 5;
 
+global.tower[2,T.NAME] = "Heavy Turret";
 global.tower[2,T.DMG] = array(3.5,3.5,4,5);
 global.tower[2,T.CD] = array(120,100,80,70);
 global.tower[2,T.RNG] = array(2*TILE,2.2*TILE,2.3*TILE,2.5*TILE);
@@ -158,6 +162,7 @@ global.tower[2,T.COST] = array(200,570,1000,1700);
 global.tower[2,T.MAXLVL] = 3;
 global.tower[2,T.MAXENEMIES] = 3;
 
+global.tower[3,T.NAME] = "Snipe Turret";
 global.tower[3,T.DMG] = array(1.5,1.8,2.3,2.6);
 global.tower[3,T.CD] = array(90,85,80,75);
 global.tower[3,T.RNG] = array(4*TILE,4.3*TILE,4.7*TILE,5.2*TILE);

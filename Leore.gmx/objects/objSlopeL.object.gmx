@@ -3,7 +3,7 @@
   <spriteName>mskSlopeL</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>5</depth>
   <persistent>0</persistent>
   <parentName>objSlope</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -19,5 +19,9 @@
   <PhysicsObjectFriction>1</PhysicsObjectFriction>
   <PhysicsObjectAwake>0</PhysicsObjectAwake>
   <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>-16,-8</point>
+    <point>16,-8</point>
+    <point>16,8</point>
+  </PhysicsShapePoints>
 </object>

@@ -56,22 +56,90 @@
     <instance objName="objPlayer" x="96" y="240" name="inst_3454C0EE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="176" y="272" name="inst_3DBAA59E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSlopeR" x="112" y="256" name="inst_6D9A4933" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeL" x="432" y="272" name="inst_15C63E9A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeL" x="464" y="256" name="inst_489A91E9" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="256" y="272" name="inst_CEE8D753" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="272" y="256" name="inst_F43573E3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="0" y="256" name="inst_B3BCBB4D" locked="0" code="" scaleX="7" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="528" y="256" name="inst_95107B84" locked="0" code="" scaleX="7" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="352" y="224" name="inst_5073A259" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="0" y="272" name="inst_0CBEA472" locked="0" code="" scaleX="11" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="464" y="272" name="inst_E784F2D9" locked="0" code="" scaleX="11" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSlopeL" x="304" y="240" name="inst_73BC996E" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objCollider" x="272" y="272" name="inst_0ED16145" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="224" y="240" name="inst_8025FF40" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="128" y="208" name="inst_D7E4D9B1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeL" x="240" y="208" name="inst_F43573E3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeL" x="224" y="224" name="inst_CEE8D753" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeL" x="272" y="192" name="inst_73BC996E" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSlopeL" x="320" y="176" name="inst_5073A259" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="240" y="224" name="inst_6AE9F197" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="272" y="208" name="inst_869ACA2F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCollider" x="320" y="192" name="inst_E476F2E8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="288" y="272" name="inst_8BE9B6C1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="304" y="256" name="inst_2AC9B13E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="320" y="272" name="inst_D643C85C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="304" y="272" name="inst_B793D88A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="320" y="256" name="inst_93B53A3A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="336" y="256" name="inst_3A2BC7D7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="352" y="256" name="inst_CD730EB3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="368" y="256" name="inst_3098D67E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="384" y="256" name="inst_8B55632E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="400" y="256" name="inst_7E918292" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="416" y="256" name="inst_78D01622" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="432" y="256" name="inst_19BD40BC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="448" y="256" name="inst_F2EC662D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="464" y="256" name="inst_89FAAD56" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="480" y="256" name="inst_DEB9D6EB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="496" y="256" name="inst_D9BB8AED" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="512" y="256" name="inst_0FAFF522" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="528" y="256" name="inst_DD722971" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="544" y="256" name="inst_287D76FB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="560" y="256" name="inst_5605D932" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="576" y="256" name="inst_84D2D5E1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="592" y="256" name="inst_3DB177B6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="608" y="256" name="inst_008AC522" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="624" y="256" name="inst_151EA033" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="624" y="272" name="inst_3DD16619" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="608" y="272" name="inst_4C973576" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="592" y="272" name="inst_4329055D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="576" y="272" name="inst_8F7747D2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="560" y="272" name="inst_C54B2C64" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="544" y="272" name="inst_DE5F4750" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="528" y="272" name="inst_30C3CEF0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="512" y="272" name="inst_296533E6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="496" y="272" name="inst_24C85A8B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="480" y="272" name="inst_414C6072" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="464" y="272" name="inst_2A470C9C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="448" y="272" name="inst_3644EC31" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="432" y="272" name="inst_6F0964FB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="416" y="272" name="inst_EB562C6E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="400" y="272" name="inst_F380F0BA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="384" y="272" name="inst_E8C99F69" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="368" y="272" name="inst_DFFB61AB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="352" y="272" name="inst_E7A04785" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="336" y="272" name="inst_79A47EBD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="352" y="240" name="inst_36A9ACA4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="368" y="240" name="inst_66437B9E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="384" y="240" name="inst_326AC274" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="400" y="240" name="inst_8EF2B49A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="416" y="240" name="inst_A44EB6D3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="432" y="240" name="inst_14059639" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="448" y="240" name="inst_0E76159B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="464" y="240" name="inst_C45B69EF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="480" y="240" name="inst_58DD6E1C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="496" y="240" name="inst_4889D501" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="512" y="240" name="inst_A8FF03A0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="528" y="240" name="inst_C2A5243F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="544" y="240" name="inst_3B246196" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="560" y="240" name="inst_63BECD09" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="576" y="240" name="inst_A43C3242" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="592" y="240" name="inst_9FE98810" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="608" y="240" name="inst_14AF3C44" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="624" y="240" name="inst_9DDD0CD3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="624" y="224" name="inst_786DB6AB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="608" y="224" name="inst_9FB17002" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="592" y="224" name="inst_AA174C3E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="576" y="224" name="inst_EB17FFE2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="560" y="224" name="inst_FBD2976B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="544" y="224" name="inst_E01C9B63" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="528" y="224" name="inst_E261DA3E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="512" y="224" name="inst_E3588EA0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="496" y="224" name="inst_8D2C151A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="480" y="224" name="inst_9CBE3A64" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="464" y="224" name="inst_B23DDCC7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="448" y="224" name="inst_E7FC2BD1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="432" y="224" name="inst_35BDAD40" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCollider" x="416" y="224" name="inst_DAF1AE3A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBase" x="592" y="192" name="inst_F1BCC837" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBase" x="224" y="256" name="inst_13A78BDB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

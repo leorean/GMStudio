@@ -72,8 +72,8 @@ y = floor(view_yview[0]);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = floor(view_xview[0]);
-y = floor(view_yview[0]);
+            <string>x = view_xview[0];
+y = view_yview[0];
 
 keyUPressed = keyboard_check_pressed(vk_up);
 keyDPressed = keyboard_check_pressed(vk_down);
@@ -133,6 +133,7 @@ if (keyUPressed &amp;&amp; (buyMode == 0 || buyMode == 1))
             tower = instance_create(ceil(global.player.x), ceil(global.player.y),objTower);
             
             tower.type = cursor;
+            tower.name = global.tower[cursor,T.NAME];
             tower.dmg = get(global.tower[cursor,T.DMG],0);
             tower.cd = get(global.tower[cursor,T.CD],0);
             tower.rng = get(global.tower[cursor,T.RNG],0);
@@ -223,9 +224,14 @@ if (buyMode != 3)
     draw_sprite_part(sprHud,-1,6*TILE,(keyU*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 2*TILE);
 }
 
-//sell
+//if (!instance_exists(target))
+
+drawText(x + WIDTH/2,y + 0.5*TILE,global.tower[cursor,T.NAME],c_white,c_black,fntDefault);
+
+
 if (instance_exists(target))
 {
+    //sell
     drawText(x + WIDTH/2,y + 7.5*TILE,"Sell for $" + string(sellPrice),c_white,c_black,fntDefault);
     draw_sprite_part(sprHud,-1,8*TILE,(keyD*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 6*TILE);
     
