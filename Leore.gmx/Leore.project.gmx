@@ -3,59 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="6" name="datafiles">
-    <datafile>
-      <name>sprPlayer.png</name>
-      <exists>-1</exists>
-      <size>1734</size>
-      <exportAction>2</exportAction>
-      <exportDir></exportDir>
-      <overwrite>0</overwrite>
-      <freeData>-1</freeData>
-      <removeEnd>0</removeEnd>
-      <store>0</store>
-      <ConfigOptions>
-        <Config name="Default">
-          <CopyToMask>49402094</CopyToMask>
-        </Config>
-      </ConfigOptions>
-      <filename>sprPlayer.png</filename>
-    </datafile>
-    <datafile>
-      <name>sprTiles.png</name>
-      <exists>-1</exists>
-      <size>1116</size>
-      <exportAction>2</exportAction>
-      <exportDir></exportDir>
-      <overwrite>0</overwrite>
-      <freeData>-1</freeData>
-      <removeEnd>0</removeEnd>
-      <store>0</store>
-      <ConfigOptions>
-        <Config name="Default">
-          <CopyToMask>9223372036854775807</CopyToMask>
-        </Config>
-      </ConfigOptions>
-      <filename>sprTiles.png</filename>
-    </datafile>
-    <datafile>
-      <name>sprHud.png</name>
-      <exists>-1</exists>
-      <size>1185</size>
-      <exportAction>2</exportAction>
-      <exportDir></exportDir>
-      <overwrite>0</overwrite>
-      <freeData>-1</freeData>
-      <removeEnd>0</removeEnd>
-      <store>0</store>
-      <ConfigOptions>
-        <Config name="Default">
-          <CopyToMask>9223372036854775807</CopyToMask>
-        </Config>
-      </ConfigOptions>
-      <filename>sprHud.png</filename>
-    </datafile>
-  </datafiles>
+  <datafiles number="6" name="datafiles"/>
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -73,15 +21,24 @@
     <sprite>sprites\mskTower</sprite>
     <sprite>sprites\mskPlatform</sprite>
     <sprite>sprites\mskCoin</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprHud</sprite>
   </sprites>
   <backgrounds name="background">
-    <background>background\tiles</background>
+    <background>background\sprTiles</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\drawText.gml</script>
     <script>scripts\array.gml</script>
     <script>scripts\get.gml</script>
+    <script>scripts\drawRadius.gml</script>
+    <script>scripts\findEnemies.gml</script>
+    <scripts name="physics">
+      <script>scripts\prePhysics.gml</script>
+      <script>scripts\doPhysics.gml</script>
+      <script>scripts\fricPhysics.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntDefault</font>

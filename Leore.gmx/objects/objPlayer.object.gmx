@@ -25,10 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>phy_rotation = 0;
-phy_fixed_rotation = true;
-
-image_speed = 0;
+            <string>image_speed = 0;
 depth = PLAYERDEPTH;
 
 global.player = id;
@@ -36,13 +33,19 @@ global.player = id;
 xPrev = x;
 yPrev = y;
 
-platform = noone;
+colL = false;
+colR = false;
+colU = false;
+colD = false;
+
+xVel = 0;
+xVelMax = 2;
+yVel = 0;
+xAcc = .1;
+yGrav = .15;
+yJump = 3.2;
 
 isJumped = false;
-
-rope = noone;
-ropeEnd = noone;
-ropeNew = noone;
 
 state = IDLE;
 statePrev = state;
@@ -115,41 +118,28 @@ else
 }
 
 //++++flag control
-var colL, colR, colD;
-
-colL = collision_point(bbox_left-1,y,objCollider,true,true);
-colR = collision_point(bbox_right+1,y,objCollider,true,true);
-colD = collision_line(bbox_left+3,bbox_bottom+1,bbox_right-3,bbox_bottom+1,objCollider,true,true);
-    
-colU = collision_point(x,bbox_top-1,objCollider,true,true);
-
-onGround = ((physics_test_overlap(x,y+1,0,objCollider)
-    || physics_test_overlap(x,y+3,0,objSlope))
-    &amp;&amp; (colD));
-
-if (onGround)
-    isJumped = false;
+prePhysics();
 
 //++++movement
 if (state == IDLE || state == JUMP || state == RUN)
 {
-    if (keyL &amp;&amp; !keyR  &amp;&amp; phy_speed_x &gt; -2)
+    if (keyL &amp;&amp; !keyR)
     {
-        physics_apply_force(x,y,-300,-200*onGround);
+        xVel = max(xVel - xAcc, -xVelMax);
         if (onGround) state = RUN;
     }
     
-    if (keyR &amp;&amp; !keyL &amp;&amp; phy_speed_x &lt; 2)
+    if (keyR &amp;&amp; !keyL)
     {
-        physics_apply_force(x,y,300,-200*onGround);
+        xVel = min(xVel + xAcc, xVelMax);
         if (onGround) state = RUN;
     }
 
-    if (keyL &amp;&amp; phy_speed_x &lt; 0)
+    if (keyL &amp;&amp; xVel &lt; 0)
     {
         dir = LEFT;
     }
-    if (keyR &amp;&amp; phy_speed_x &gt; 0)
+    if (keyR &amp;&amp; xVel &gt; 0)
     {
         dir = RIGHT;
     }
@@ -161,27 +151,13 @@ if (state == IDLE || state == JUMP || state == RUN)
             state = JUMP;
     }
     
-    if (onGround)
-    {
-        if (!keyL &amp;&amp; abs(phy_position_x-phy_position_xprevious) &gt;= 0)
-        {
-            if (sign(phy_position_x-phy_position_xprevious) &lt;= 0)
-                phy_speed_x = min(phy_speed_x + .3, 0);
-        }
-        if (!keyR &amp;&amp; abs(phy_position_x-phy_position_xprevious) &gt;= 0)
-        {
-            if (sign(phy_position_x-phy_position_xprevious) &gt;= 0)
-            phy_speed_x = max(phy_speed_x - .3, 0);
-        }
-    }
-       
     if (!keyL &amp;&amp; !keyR &amp;&amp; onGround)
     {
-        if (abs(ceil(phy_speed_x)) == 0)
+        fricPhysics();
+        if (xVel == 0)
             state = IDLE;
         else
             state = RUN;
-        
     }
 }
 
@@ -192,27 +168,36 @@ if (state != ATTACK)
     {
         if (!isJumped)
         {
-            //physics_apply_impulse(x,y,0,-230);
-            phy_speed_y = -3.2;
+            yVel = -yJump;
             isJumped = true;
             state = JUMP;
         }
     }
 }
 
-if (!instance_exists(target) || !physics_test_overlap(x,y,0,objTower))
-        target = noone;
+show_debug_message(target);
 
-if (target == noone)
+if (target == noone &amp;&amp; instance_number(objTower) &gt; 0)
     target = instance_place(x,y,objTower);
 
+if (instance_exists(target))
+{
+    if (!place_meeting(x,y,target))
+        target = noone;
+} else
+    target = noone;
+    
 if (global.keyAction &amp;&amp; onGround &amp;&amp; !instance_exists(objTowerMenu))
 {
+    xVel = 0;
+    yVel = 0;
     global.hasControl = false;
     var tm;
     tm = instance_create(0,0,objTowerMenu);
     tm.target = target;
 }
+
+doPhysics();
 
 //++++ end routine
 if (state != statePrev)
@@ -223,28 +208,6 @@ yPrev = y;
 
 
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objCollider">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//</string>
           </argument>
         </arguments>
       </action>
@@ -299,23 +262,16 @@ switch(state)
 }
 
 if (dir == RIGHT)
-    draw_sprite_part(global.sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x-TILE/2),(y-TILE/2)-2);
+    draw_sprite_part(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2));
 if (dir == LEFT)
-    draw_sprite_part_ext(global.sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x+TILE/2),(y-TILE/2)-2,-1,1,c_white,1);
-
-/*draw_set_color(c_yellow);
-draw_point(bbox_right,y);
-draw_point(bbox_left,y);
-draw_point(x,bbox_top);
-draw_point(x,bbox_bottom);*/
-
+    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
   </events>
-  <PhysicsObject>-1</PhysicsObject>
+  <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>10</PhysicsObjectDensity>
@@ -327,10 +283,8 @@ draw_point(x,bbox_bottom);*/
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>12,11</point>
-    <point>20,11</point>
-    <point>20,20</point>
-    <point>16,22</point>
-    <point>12,20</point>
+    <point>0,0</point>
+    <point>32,0</point>
+    <point>32,32</point>
   </PhysicsShapePoints>
 </object>

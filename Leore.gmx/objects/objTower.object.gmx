@@ -25,10 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>phy_rotation = 0;
-phy_fixed_rotation = true;
-
-image_speed = 0;
+            <string>image_speed = 0;
 depth = PLAYERDEPTH+10;
 
 timer = 0;
@@ -40,8 +37,10 @@ cd = 60;
 dmg = 1;
 rng = 2*TILE;
 type = 0;
+maxenemies = 10; // just in case...
 
-target = noone;
+for (i = 0; i &lt; maxenemies; i++)
+    target[i] = noone;
 </string>
           </argument>
         </arguments>
@@ -66,20 +65,18 @@ target = noone;
             <kind>1</kind>
             <string>if (timer == 0)
 {
-    if (!instance_exists(target))
-        target = instance_nearest(x,y,objEnemy);
+    for (i = 0; i &lt; maxenemies; i++)
+        target[i] = noone;
     
-    if (instance_exists(target))
+    target = findEnemies(x,y,2*rng,maxenemies);
+    for (i = 0; i &lt; array_length_1d(target); i++)
     {
-        //todo: circular collision?
-        if ((abs(abs(target.phy_position_x) - abs(phy_position_x)) &lt;= 2*rng)
-            &amp;&amp; (abs(abs(target.phy_position_y) - abs(phy_position_y)) &lt;= 2*rng))            
+        if (instance_exists(target[i]))
         {
-            target.hp -= dmg;
+            target[i].hp -= dmg;
         } else
-            target = noone;
-    } else
-        target = noone;
+            target[i] = noone;
+    }
 
     timer = cd;
 } else
@@ -106,30 +103,22 @@ target = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw_self();
-draw_sprite_part(global.sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,x - TILE, y - TILE);
-
-if (id == global.player.target)
+            <string>if (id == global.player.target &amp;&amp; global.keyAction)
 {
+    
     draw_set_alpha(.2);
     draw_set_color(make_color_hsv(30,255,255));
     draw_circle(x,y,2*rng,0);
     
-    draw_set_alpha(1);
-    draw_set_color(c_white);
+    drawRadius(x,y,2*rng,c_white);
     
-    draw_circle(x,y,2*rng,1);
-    draw_circle(x,y,2*rng-.5,1);
-    draw_circle(x,y,2*rng-1,1);
-
-    if (instance_exists(target))
-    {
-        draw_sprite_part(global.sprHud,-1,0,2*TILE,2*TILE,2*TILE,target.x-TILE,target.y-TILE);
-    }    
+    for (i = 0; i &lt; array_length_1d(target); i++)
+        if (instance_exists(target[i]))
+            draw_sprite_part(sprHud,-1,0,2*TILE,2*TILE,2*TILE,target[i].x-TILE,target[i].y-TILE);
 }
 
 
-draw_sprite_part(global.sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,x - TILE, y - TILE);
+draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE), floor(y - TILE));
 
 </string>
           </argument>
@@ -137,7 +126,7 @@ draw_sprite_part(global.sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,x - TILE
       </action>
     </event>
   </events>
-  <PhysicsObject>-1</PhysicsObject>
+  <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>0</PhysicsObjectDensity>
@@ -148,11 +137,5 @@ draw_sprite_part(global.sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,x - TILE
   <PhysicsObjectFriction>0</PhysicsObjectFriction>
   <PhysicsObjectAwake>0</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints>
-    <point>4,4</point>
-    <point>12,4</point>
-    <point>14,14</point>
-    <point>8,16</point>
-    <point>2,14</point>
-  </PhysicsShapePoints>
+  <PhysicsShapePoints/>
 </object>

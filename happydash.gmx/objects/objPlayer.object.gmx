@@ -260,15 +260,15 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
         for (i = 0; i &lt; 5; i+=1)
         {
             if (device_mouse_check_button_pressed(i,mb_left))
-                &amp;&amp; (in(device_mouse_x(i),0,4*TILE))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+                &amp;&amp; (in(device_mouse_x(i),0,5*TILE))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
                     jumpPressed = true;
             
             if (device_mouse_check_button_pressed(i,mb_left))
-                &amp;&amp; (in(device_mouse_x(i),WIDTH-4*TILE,WIDTH))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+                &amp;&amp; (in(device_mouse_x(i),WIDTH-5*TILE,WIDTH))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
                     dashPressed = true;
     
             if (device_mouse_check_button(i,mb_left))
-                &amp;&amp; (in(device_mouse_x(i),4*TILE,WIDTH-4*TILE))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
+                &amp;&amp; (in(device_mouse_x(i),5*TILE,WIDTH-5*TILE))// &amp;&amp; in(device_mouse_y(i),y,y+3*TILE))
                     stopPressing = true;
         }
 

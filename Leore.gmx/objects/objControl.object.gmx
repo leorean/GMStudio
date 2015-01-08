@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.timer = (global.timer + 1) mod INFINITE;
+            <string>window_center();
+
+global.timer = (global.timer + 1) mod INFINITE;
 
 global.keyAction = keyboard_check(ord('A'));
 
@@ -36,6 +38,7 @@ if (keyboard_check_pressed(vk_escape))
     game_end();
 
 //TODO: HANDLE THIS 
+
 if (global.timer mod 90 == 0)
 {
     var e;
@@ -44,8 +47,7 @@ if (global.timer mod 90 == 0)
     e.maxHp = 20;
     e.hp = e.maxHp;
 
-    e.value = 3;
-    
+    e.value = 3;    
 }
 </string>
           </argument>
@@ -116,12 +118,12 @@ physics_world_gravity(0,50);
 
 //++++ASSET LOADING
 //TODO: for HTML5, these sprites have to be added manually.
-global.sprPlayer = sprite_add(working_directory + "sprPlayer.png",-1,true,false,TILE,TILE);
-global.sprHud = sprite_add(working_directory + "sprHud.png",-1,true,false,0,0);
+//global.sprPlayer = sprite_add(working_directory + "sprPlayer.png",-1,true,false,TILE,TILE);
+//global.sprHud = sprite_add(working_directory + "sprHud.png",-1,true,false,0,0);
 
-sprTiles = background_add(working_directory + "sprTiles.png",true,false);
-background_assign(tiles,sprTiles);
-background_delete(sprTiles);
+//sprTiles = background_add(working_directory + "sprTiles.png",true,false);
+//background_assign(tiles,sprTiles);
+//background_delete(sprTiles);
 
 //++++TOWER VARIABLES
 
@@ -131,7 +133,8 @@ enum T
     CD = 1,
     RNG = 2,
     COST = 3,
-    MAXLVL = 4
+    MAXLVL = 4,
+    MAXENEMIES = 5
 }
 
 global.tower[0,T.DMG] = array(1,1.5,2,4);
@@ -139,24 +142,28 @@ global.tower[0,T.CD] = array(30,30,25,25);
 global.tower[0,T.RNG] = array(1.5*TILE,1.6*TILE,1.8*TILE,2*TILE);
 global.tower[0,T.COST] = array(10,50,150,400);
 global.tower[0,T.MAXLVL] = 3;
+global.tower[0,T.MAXENEMIES] = 1;
 
 global.tower[1,T.DMG] = array(0.1,0.2,0.4,0.8);
 global.tower[1,T.CD] = array(5,5,5,4);
 global.tower[1,T.RNG] = array(3*TILE,3.1*TILE,3.3*TILE,3.5*TILE);
 global.tower[1,T.COST] = array(50,120,280,650);
 global.tower[1,T.MAXLVL] = 3;
+global.tower[1,T.MAXENEMIES] = 5;
 
-global.tower[2,T.DMG] = array(10,15,20,25);
-global.tower[2,T.CD] = array(120,300,480,900);
+global.tower[2,T.DMG] = array(3.5,3.5,4,5);
+global.tower[2,T.CD] = array(120,100,80,70);
 global.tower[2,T.RNG] = array(2*TILE,2.2*TILE,2.3*TILE,2.5*TILE);
 global.tower[2,T.COST] = array(200,570,1000,1700);
 global.tower[2,T.MAXLVL] = 3;
+global.tower[2,T.MAXENEMIES] = 3;
 
 global.tower[3,T.DMG] = array(1.5,1.8,2.3,2.6);
 global.tower[3,T.CD] = array(90,85,80,75);
 global.tower[3,T.RNG] = array(4*TILE,4.3*TILE,4.7*TILE,5.2*TILE);
 global.tower[3,T.COST] = array(150,420,850,1200);
 global.tower[3,T.MAXLVL] = 3;
+global.tower[3,T.MAXENEMIES] = 1;
 
 </string>
           </argument>
@@ -185,8 +192,13 @@ draw_set_alpha(1);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-x = floor(view_xview[0]);
-y = floor(view_yview[0]);
+/*
+view_xview[0] = round(view_xview[0])
+view_yview[0] = round(view_yview[0])
+*/
+
+x = view_xview[0];
+y = view_yview[0];
 
 drawText(x,y," $: "+string(global.wallet),c_white,c_black,fntHud);
 drawText(x,y+TILE," HP: "+string(global.hp),c_white,c_black,fntHud);

@@ -25,17 +25,22 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>phy_rotation = 0;
-phy_fixed_rotation = true;
-
+            <string>
 hp = 0;
 maxHp = 0;
 
 dir = RIGHT;
 
-maxSpd = .3;
-acc = 100;
-fric = .1;
+xVel = 0;
+yVel = 0;
+yGrav = .15;
+xVelMax = .3;
+xAcc = .01;
+
+colL = false;
+colR = false;
+colU = false;
+colD = false;
 </string>
           </argument>
         </arguments>
@@ -69,16 +74,7 @@ if (hp == 0)
 }
 
 //++++flag control
-var colL, colR, colD;
-
-colL = collision_point(bbox_left-1,y,objCollider,true,true);
-colR = collision_point(bbox_right+1,y,objCollider,true,true);
-colD = collision_line(bbox_left+3,bbox_bottom+1,bbox_right-3,bbox_bottom+1,objCollider,true,true);//collision_point(x,bbox_bottom+1,objCollider,true,true);
-colU = collision_point(x,bbox_top-1,objCollider,true,true);
-
-onGround = ((physics_test_overlap(x,y+1,0,objCollider)
-        || physics_test_overlap(x,y+3,0,objSlope))
-    &amp;&amp; (colD));
+prePhysics();
 
 if (colL &amp;&amp; !colR)
     dir = RIGHT;
@@ -86,55 +82,21 @@ if (colL &amp;&amp; !colR)
 if (colR &amp;&amp; !colL)
     dir = LEFT;
 
-if (onGround)
+if (dir == LEFT)
 {
-    if (dir == LEFT &amp;&amp; phy_speed_x &gt; -maxSpd)
-    {
-        physics_apply_force(x,y,-acc,-300*onGround);
-        if (onGround) state = RUN;
-    }
-    
-    if (dir == RIGHT &amp;&amp; phy_speed_x &lt; maxSpd)
-    {
-        physics_apply_force(x,y,acc,-300*onGround);
-        if (onGround) state = RUN;
-    }
-    
-    if (abs(phy_position_x-phy_position_xprevious) &gt;= 1)
-    {
-        if (sign(phy_position_x-phy_position_xprevious) &lt;= 0)
-            phy_speed_x = min(phy_speed_x + fric, 0);
-    }
-    if (abs(phy_position_x-phy_position_xprevious) &gt;= 1)
-    {
-        if (sign(phy_position_x-phy_position_xprevious) &gt;= 0)
-        phy_speed_x = max(phy_speed_x - fric, 0);
-    }
-
+    xVel = max(xVel - xAcc, -xVelMax);
+    if (colL) dir = RIGHT;
 }
+
+if (dir == RIGHT)
+{
+    xVel = min(xVel + xAcc, xVelMax);
+    if (colL) dir = LEFT;    
+}
+
+doPhysics();
+
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objCollider">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//</string>
           </argument>
         </arguments>
       </action>
@@ -188,9 +150,9 @@ c = make_color_hsv(h,255,255);
 
 if (hp &lt; maxHp)
 {
-    draw_sprite_part_ext(global.sprHud,-1,10*TILE,0,2*TILE,TILE,x-TILE,y-TILE,1,1,c_black,.5);
-    draw_sprite_part(global.sprHud,-1,10*TILE,1*TILE,2*TILE,TILE,x-TILE,y-TILE);
-    draw_sprite_part_ext(global.sprHud,-1,10*TILE,0,ceil(2*TILE*hp/maxHp),TILE,x-TILE,y-TILE,1,1,c,1);
+    draw_sprite_part_ext(sprHud,-1,10*TILE,0,2*TILE,TILE,x-TILE,y-TILE,1,1,c_black,.5);
+    draw_sprite_part(sprHud,-1,10*TILE,1*TILE,2*TILE,TILE,x-TILE,y-TILE);
+    draw_sprite_part_ext(sprHud,-1,10*TILE,0,ceil(2*TILE*hp/maxHp),TILE,x-TILE,y-TILE,1,1,c,1);
 }
 </string>
           </argument>
@@ -198,7 +160,7 @@ if (hp &lt; maxHp)
       </action>
     </event>
   </events>
-  <PhysicsObject>-1</PhysicsObject>
+  <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>5</PhysicsObjectDensity>
@@ -211,6 +173,6 @@ if (hp &lt; maxHp)
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>8,8</point>
-    <point>6,16</point>
+    <point>8,8</point>
   </PhysicsShapePoints>
 </object>

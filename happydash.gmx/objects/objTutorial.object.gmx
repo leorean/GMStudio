@@ -39,22 +39,42 @@ achieved = 0;
 timer = 2*FPS;
 
 i = 0;
-txt[0] = "Hello there!";
-txt[1] = "I'll show you#how to play the game!";
-txt[2] = "So listen up!";
-txt[3] = "Press &lt;UP&gt; to jump#and collect those coins!";
-txt[4] = "Very good!";
-txt[5] = "Press &lt;RIGHT&gt; to dash#and destroy those blocks!";
-txt[6] = "Excellent!";
-txt[7] = "Hold &lt;DOWN&gt; to stop";
-txt[8] = "Awesome!";
-txt[9] = "You get EXP from everything#you collect or destroy!";
-txt[10] = "If you hit something,#you can jump again!";
-txt[11] = "You get LEVEL UPs from EXP#and unlock new worlds!";
-txt[12] = "Use the SHOP to#upgrade your stuff!";
-txt[13] = "Each time you play,#the levels will be different!";
-txt[14] = "Are you ready#for the real deal?##Then let's go!";
-
+if (os_type != os_android)
+{
+    txt[0] = "Hello there!";
+    txt[1] = "I'll show you#how to play the game!";
+    txt[2] = "So listen up!";
+    txt[3] = "Press &lt;UP&gt; to jump#and collect those coins!";
+    txt[4] = "Very good!";
+    txt[5] = "Press &lt;RIGHT&gt; to dash#and destroy those blocks!";
+    txt[6] = "Excellent!";
+    txt[7] = "Hold &lt;DOWN&gt; to stop";
+    txt[8] = "Awesome!";
+    txt[9] = "You get EXP from everything#you collect or destroy!";
+    txt[10] = "If you hit something,#you can jump again!";
+    txt[11] = "You get LEVEL UPs from EXP#and unlock new worlds!";
+    txt[12] = "Use the SHOP to#upgrade your stuff!";
+    txt[13] = "Each time you play,#the levels will be different!";
+    txt[14] = "Are you ready#for the real deal?##Then let's go!";
+}
+else
+{
+    txt[0] = "Hello there!";
+    txt[1] = "I'll show you#how to play the game!";
+    txt[2] = "So listen up!";
+    txt[3] = "Tap the LEFT screen to#jump and collect those coins!";
+    txt[4] = "Very good!";
+    txt[5] = "Tap the RIGHT screen to#dash and destroy those blocks!";
+    txt[6] = "Excellent!";
+    txt[7] = "Hold the MIDDLE screen to stop";
+    txt[8] = "Awesome!";
+    txt[9] = "You get EXP from everything#you collect or destroy!";
+    txt[10] = "If you hit something,#you can jump again!";
+    txt[11] = "You get LEVEL UPs from EXP#and unlock new worlds!";
+    txt[12] = "Use the SHOP to#upgrade your stuff!";
+    txt[13] = "Each time you play,#the levels will be different!";
+    txt[14] = "Are you ready#for the real deal?##Then let's go!";    
+}
 </string>
           </argument>
         </arguments>
@@ -99,6 +119,22 @@ if (!global.pause)
 
     timer = max(timer - 1, 0);    
 
+    if (os_type == os_android)
+    {
+        draw_set_alpha(.3);
+        draw_set_color(c_red);
+    
+        if (i == 3)
+            draw_rectangle(0,0,5*TILE,HEIGHT,0);
+        if (i == 5)
+            draw_rectangle(WIDTH-5*TILE,0,WIDTH,HEIGHT,0);
+        if (i == 7)
+            draw_rectangle(5*TILE,0,WIDTH-5*TILE,HEIGHT,0);
+
+        draw_set_color(c_white);
+        draw_set_alpha(1);
+    }
+    
     if (i &lt; 3)
         global.hasControl = false;
     else if (global.player.state != DEAD)

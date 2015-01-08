@@ -46,11 +46,10 @@ keyD = false;
 keyL = false;
 keyR = false;
 
+buyMode = 0; //0 = buy, 1 = upgrade, 2 = cant afford, 3 = done
+
 x = floor(view_xview[0]);
 y = floor(view_yview[0]);
-
-with(global.player)
-    phy_active = false;
 </string>
           </argument>
         </arguments>
@@ -76,15 +75,16 @@ with(global.player)
             <string>x = floor(view_xview[0]);
 y = floor(view_yview[0]);
 
-keyUReleased = keyboard_check_released(vk_up);
-keyDReleased = keyboard_check_pressed(vk_down);
+keyUPressed = keyboard_check_pressed(vk_up);
+keyDPressed = keyboard_check_pressed(vk_down);
 keyLPressed = keyboard_check_pressed(vk_left);
 keyRPressed = keyboard_check_pressed(vk_right);
-
 keyU = keyboard_check(vk_up);
 keyD = keyboard_check(vk_down);
 keyL = keyboard_check(vk_left);
 keyR = keyboard_check(vk_right);
+
+target = global.player.target;
 
 if (!instance_exists(target))
 {
@@ -107,21 +107,37 @@ else
         price = 0;
     sellPrice = floor(get(global.tower[cursor,T.COST],target.level) * .25);
 }
+
+buyMode = 3;
+if (!instance_exists(target))
+    buyMode = 0;
+if (instance_exists(target))
+{
+    if (target.level &lt; global.tower[cursor,T.MAXLVL])
+        buyMode = 1;
+    else
+        buyMode = 3;
+}
+
+if (global.wallet &lt;= price &amp;&amp; buyMode != 3)
+    buyMode = 2;
         
 
-if (keyUReleased)
+if (keyUPressed &amp;&amp; (buyMode == 0 || buyMode == 1))
 {
     if (price &lt;= global.wallet)
     {
         if (!instance_exists(target))
         {
             var tower;
-            tower = instance_create(floor(global.player.x),floor(global.player.y),objTower);
+            tower = instance_create(ceil(global.player.x), ceil(global.player.y),objTower);
             
             tower.type = cursor;
             tower.dmg = get(global.tower[cursor,T.DMG],0);
             tower.cd = get(global.tower[cursor,T.CD],0);
             tower.rng = get(global.tower[cursor,T.RNG],0);
+            tower.maxenemies = global.tower[cursor,T.MAXENEMIES];
+
             global.wallet -= price;
             
             target = tower;
@@ -140,24 +156,19 @@ if (keyUReleased)
     }
 }
 
-if (keyDReleased)
+if (keyDPressed)
 {
     if (instance_exists(target))
     {
         //give back 25% of the cost of that tower
         global.wallet += sellPrice;
         with(target) instance_destroy();
-        target = noone;
     }
 }
 
 if (!global.keyAction)
 {
-    with(global.player)
-    {
-        phy_active = true;
-        global.hasControl = true;
-    }
+    global.hasControl = true;
     instance_destroy();
 }
 </string>
@@ -192,45 +203,50 @@ draw_set_alpha(1);
 //arrows
 if (!instance_exists(target))
 {
-    draw_sprite_part(global.sprHud,-1,2*TILE,(keyL*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 5*TILE,y + 4*TILE);
-    draw_sprite_part(global.sprHud,-1,4*TILE,(keyR*2*TILE),2*TILE,2*TILE,x + WIDTH/2 + 3*TILE,y + 4*TILE);
+    draw_sprite_part(sprHud,-1,2*TILE,(keyL*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 5*TILE,y + 4*TILE);
+    draw_sprite_part(sprHud,-1,4*TILE,(keyR*2*TILE),2*TILE,2*TILE,x + WIDTH/2 + 3*TILE,y + 4*TILE);
 }
 
 //buy/upgrade
-if (!instance_exists(target)) actionText = "Create for $" + string(price);
-else if (target.level &lt; global.tower[cursor,T.MAXLVL]) actionText = "Upgrade for $" + string(price);
+if (buyMode == 0) actionText = "Create for $" + string(price);
+if (buyMode == 1) actionText = "Upgrade for $" + string(price);
+if (buyMode &gt; 1) actionText = "";
 
-if (price &gt; global.wallet)
+if (buyMode == 2)
     c = c_red;
 else
     c = c_white;
 
-if ((!instance_exists(target) &amp;&amp; global.wallet &lt;= price) || (target.level &lt; global.tower[cursor,T.MAXLVL]))
+if (buyMode != 3)
 {
     drawText(x + WIDTH/2,y + 1.5*TILE,actionText,c,c_black,fntDefault);
-    draw_sprite_part(global.sprHud,-1,6*TILE,(keyU*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 2*TILE);
+    draw_sprite_part(sprHud,-1,6*TILE,(keyU*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 2*TILE);
 }
 
 //sell
 if (instance_exists(target))
 {
     drawText(x + WIDTH/2,y + 7.5*TILE,"Sell for $" + string(sellPrice),c_white,c_black,fntDefault);
-    draw_sprite_part(global.sprHud,-1,8*TILE,(keyD*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 6*TILE);
+    draw_sprite_part(sprHud,-1,8*TILE,(keyD*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 6*TILE);
     
-    draw_sprite_part(global.sprHud,-1,0,0,2*TILE,2*TILE,target.x -TILE, target.y -TILE);
+    draw_sprite_part(sprHud,-1,0,0,2*TILE,2*TILE,target.x -TILE, target.y -TILE);
 }
 
 //cursor
-draw_sprite_part(global.sprHud,-1,0,0,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
+draw_sprite_part(sprHud,-1,0,0,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
+
+
+if (!instance_exists(target))
+    drawRadius(ceil(global.player.x), ceil(global.player.y),2*get(global.tower[cursor,T.RNG],0),c_white);
 
 //icons
 if (!instance_exists(target))
 {
-    draw_sprite_part(global.sprHud,-1,0, 4*TILE + ((cursor + maxCursor) % (maxCursor + 1)) *2*TILE,2*TILE,2*TILE,x + WIDTH/2 - 3*TILE,y + 4*TILE);
-    draw_sprite_part(global.sprHud,-1,0, 4*TILE + ((cursor + 1) % (maxCursor + 1))*2*TILE,2*TILE,2*TILE,x + WIDTH/2 + 1*TILE,y + 4*TILE);
+    draw_sprite_part(sprHud,-1,0, 4*TILE + ((cursor + maxCursor) % (maxCursor + 1)) *2*TILE,2*TILE,2*TILE,x + WIDTH/2 - 3*TILE,y + 4*TILE);
+    draw_sprite_part(sprHud,-1,0, 4*TILE + ((cursor + 1) % (maxCursor + 1))*2*TILE,2*TILE,2*TILE,x + WIDTH/2 + 1*TILE,y + 4*TILE);
 }
 
-draw_sprite_part(global.sprHud,-1,0, 4*TILE + cursor*2*TILE,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
+draw_sprite_part(sprHud,-1,0, 4*TILE + cursor*2*TILE,2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 4*TILE);
 
 </string>
           </argument>
@@ -241,7 +257,7 @@ draw_sprite_part(global.sprHud,-1,0, 4*TILE + cursor*2*TILE,2*TILE,2*TILE,x + WI
   <PhysicsObject>0</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>0</PhysicsObjectShape>
-  <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
+  <PhysicsObjectDensity>0</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>

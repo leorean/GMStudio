@@ -1,7 +1,7 @@
 var px,py,txt,col1,col2,fnt;
 
-px = argument0;
-py = argument1;
+px = round(argument0);
+py = round(argument1);
 txt = argument2;
 col1 = argument3;
 col2 = argument4;

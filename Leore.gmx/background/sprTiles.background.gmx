@@ -15,5 +15,5 @@
   <For3D>0</For3D>
   <width>400</width>
   <height>240</height>
-  <data>images\tiles.png</data>
+  <data>images\sprTiles.png</data>
 </background>
