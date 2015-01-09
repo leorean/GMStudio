@@ -45,6 +45,8 @@ colL = false;
 colR = false;
 colU = false;
 colD = false;
+onSlope = false;
+onGround = false;
 
 //++++physic variables
 xVel = 0;
@@ -60,8 +62,8 @@ state = IDLE;
 statePrev = state;
 
 //+++animation
-w = abs(bbox_left - bbox_right);
-h = abs(bbox_top - bbox_bottom);
+w = abs(sprite_get_bbox_right(sprite_index)-sprite_get_bbox_left(sprite_index));
+h = abs(sprite_get_bbox_bottom(sprite_index)-sprite_get_bbox_top(sprite_index));
 
 dir = RIGHT;
 

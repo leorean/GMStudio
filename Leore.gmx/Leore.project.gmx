@@ -37,6 +37,7 @@
     <scripts name="physics">
       <script>scripts\prePhysics.gml</script>
       <script>scripts\doPhysics.gml</script>
+      <script>scripts\doPhysics_kopie.gml</script>
       <script>scripts\fricPhysics.gml</script>
     </scripts>
   </scripts>

@@ -116,7 +116,7 @@ else //TURRET READY TO DO STUFF
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (id == global.player.target &amp;&amp; global.keyAction)
+            <string>if (id == global.target &amp;&amp; global.keyAction)
 {
     
     draw_set_alpha(.2);
