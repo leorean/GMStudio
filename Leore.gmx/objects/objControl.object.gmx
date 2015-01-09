@@ -72,7 +72,7 @@ if (global.timer mod 90 == 0)
           <argument>
             <kind>1</kind>
             <string>global.wallet = 1000;
-global.hp = 10;
+global.hp = 1000;
 global.wave = 0;
 </string>
           </argument>

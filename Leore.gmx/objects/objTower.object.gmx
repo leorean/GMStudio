@@ -28,6 +28,9 @@
             <string>image_speed = 0;
 depth = PLAYERDEPTH+10;
 
+maxBuildTimer = 60;
+buildTimer = maxBuildTimer;
+
 timer = 0;
 
 level = 0;
@@ -63,24 +66,34 @@ for (i = 0; i &lt; maxenemies; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (timer == 0)
+            <string>if (buildTimer &gt; 0) //TURRET BUILDING ITSELF
 {
-    for (i = 0; i &lt; maxenemies; i++)
-        target[i] = noone;
     
-    target = findEnemies(x,y,2*rng,maxenemies);
-    for (i = 0; i &lt; array_length_1d(target); i++)
+    buildTimer = max(buildTimer - 1, 0);
+}
+else //TURRET READY TO DO STUFF
+{
+    
+    if (timer == 0)
     {
-        if (instance_exists(target[i]))
-        {
-            target[i].hp -= dmg;
-        } else
+        for (i = 0; i &lt; maxenemies; i++)
             target[i] = noone;
-    }
-
-    timer = cd;
-} else
-    timer = max(timer - 1, 0);
+        
+        target = findEnemies(x,y,2*rng,maxenemies);
+        for (i = 0; i &lt; array_length_1d(target); i++)
+        {
+            if (instance_exists(target[i]))
+            {
+                target[i].hp -= dmg;
+            } else
+                target[i] = noone;
+        }
+    
+        timer = cd;
+    } else
+        timer = max(timer - 1, 0);
+   
+}
 </string>
           </argument>
         </arguments>
@@ -117,9 +130,21 @@ for (i = 0; i &lt; maxenemies; i++)
             draw_sprite_part(sprHud,-1,0,2*TILE,2*TILE,2*TILE,target[i].x-TILE,target[i].y-TILE);
 }
 
+if (buildTimer &gt; 0)
+{
+    if (level == 0)
+        draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE*(1-(buildTimer/maxBuildTimer)),floor(x - TILE - 1 + random(2)), floor(y - TILE) + 2*TILE*((buildTimer/maxBuildTimer)));
+    else
+        draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE - 1 + random(2)), floor(y - TILE));
+} else
+    draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE), floor(y - TILE));
 
-draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE), floor(y - TILE));
-
+//draw level
+var dx,dy;
+dx = floor(x) - level*3;
+dy = floor(y - TILE);
+for (i = 0; i &lt; level; i++)
+    draw_sprite_part(sprHud,-1, 10*TILE,2*TILE,6,5,dx + i*6, dy);
 </string>
           </argument>
         </arguments>
@@ -137,5 +162,9 @@ draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE)
   <PhysicsObjectFriction>0</PhysicsObjectFriction>
   <PhysicsObjectAwake>0</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
-  <PhysicsShapePoints/>
+  <PhysicsShapePoints>
+    <point>0,0</point>
+    <point>16,0</point>
+    <point>16,16</point>
+  </PhysicsShapePoints>
 </object>

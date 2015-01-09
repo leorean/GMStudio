@@ -86,6 +86,9 @@ keyR = keyboard_check(vk_right);
 
 target = global.player.target;
 
+if (instance_exists(target))
+    cursor = target.type;
+
 if (!instance_exists(target))
 {
     if (keyLPressed)
@@ -138,7 +141,8 @@ if (keyUPressed &amp;&amp; (buyMode == 0 || buyMode == 1))
             tower.cd = get(global.tower[cursor,T.CD],0);
             tower.rng = get(global.tower[cursor,T.RNG],0);
             tower.maxenemies = global.tower[cursor,T.MAXENEMIES];
-
+            tower.buildTimer = tower.maxBuildTimer;
+            
             global.wallet -= price;
             
             target = tower;
@@ -150,7 +154,8 @@ if (keyUPressed &amp;&amp; (buyMode == 0 || buyMode == 1))
                 target.dmg = get(global.tower[cursor,T.DMG],target.level);
                 target.cd = get(global.tower[cursor,T.CD],target.level);
                 target.rng = get(global.tower[cursor,T.RNG],target.level);
-                
+                target.buildTimer = target.maxBuildTimer;
+            
                 global.wallet -= price;
             }
         }
@@ -167,7 +172,7 @@ if (keyDPressed)
     }
 }
 
-if (!global.keyAction)
+if (!global.keyAction || global.player.hurt)
 {
     global.hasControl = true;
     instance_destroy();
@@ -224,8 +229,7 @@ if (buyMode != 3)
     draw_sprite_part(sprHud,-1,6*TILE,(keyU*2*TILE),2*TILE,2*TILE,x + WIDTH/2 - 1*TILE,y + 2*TILE);
 }
 
-//if (!instance_exists(target))
-
+//name
 drawText(x + WIDTH/2,y + 0.5*TILE,global.tower[cursor,T.NAME],c_white,c_black,fntDefault);
 
 

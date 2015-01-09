@@ -30,7 +30,7 @@
 //++++touching the base
 if (instance_exists(enemy))
 {
-    global.hp = max(global.hp - 1, 0);
+    global.hp = floor(max(global.hp - enemy.hp, 0));
     with(enemy) instance_destroy();
 }
 </string>

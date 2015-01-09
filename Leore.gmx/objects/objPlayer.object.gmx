@@ -30,14 +30,22 @@ depth = PLAYERDEPTH;
 
 global.player = id;
 
+//++++hurt mechanism
+hurtTimer = 0;
+maxHurtTimer = 60;
+enemy = noone;
+hurt = false;
+
 xPrev = x;
 yPrev = y;
 
+//++++collision flags
 colL = false;
 colR = false;
 colU = false;
 colD = false;
 
+//++++physic variables
 xVel = 0;
 xVelMax = 2;
 yVel = 0;
@@ -121,7 +129,29 @@ else
 if (bbox_left &lt;= 0) {xVel = 0; x += .1;}
 if (bbox_right &gt;= room_width) {xVel = 0; x -= .1;}
 
+//++++touching enemies
 
+enemy = instance_place(x,y,objEnemy);
+if (instance_exists(enemy) &amp;&amp; !hurt)
+{
+    xVel = -sign(enemy.x-x)*2;
+    yVel = -2;
+    //global.hasControl = false;
+    global.hp = floor(max(global.hp - enemy.hp, 0));
+    hurtTimer = maxHurtTimer;
+    hurt = true;
+}
+
+if (hurt)
+{
+    //global.hasControl = false;
+    hurtTimer = max(hurtTimer - 1, 0);
+    if (hurtTimer == 0)
+    {
+        //global.hasControl = true;
+        hurt = false;
+    }
+}
 
 //++++flag control
 prePhysics();
@@ -181,19 +211,10 @@ if (state != ATTACK)
     }
 }
 
-show_debug_message(target);
-
-if (target == noone &amp;&amp; instance_number(objTower) &gt; 0)
-    target = instance_place(x,y,objTower);
-
-if (instance_exists(target))
-{
-    if (!place_meeting(x,y,target))
-        target = noone;
-} else
-    target = noone;
+target = instance_place(x,y,objTower);
     
-if (global.keyAction &amp;&amp; onGround &amp;&amp; !instance_exists(objTowerMenu))
+    
+if (global.hasControl &amp;&amp; global.keyAction &amp;&amp; !hurt &amp;&amp; onGround &amp;&amp; !instance_exists(objTowerMenu))
 {
     xVel = 0;
     yVel = 0;
@@ -267,10 +288,13 @@ switch(state)
     
 }
 
-if (dir == RIGHT)
-    draw_sprite_part(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2));
-if (dir == LEFT)
-    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
+if (!hurt || global.timer mod 2 == 0)
+{
+    if (dir == RIGHT)
+        draw_sprite_part(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2));
+    if (dir == LEFT)
+        draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
+}
 </string>
           </argument>
         </arguments>
