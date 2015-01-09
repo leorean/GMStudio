@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>image_speed = 0;
+image_index = 0;
 depth = PLAYERDEPTH;
 
 global.player = id;
@@ -130,7 +131,7 @@ if (bbox_left &lt;= 0) {xVel = 0; x += .1;}
 if (bbox_right &gt;= room_width) {xVel = 0; x -= .1;}
 
 //++++touching enemies
-
+/*
 enemy = instance_place(x,y,objEnemy);
 if (instance_exists(enemy) &amp;&amp; !hurt)
 {
@@ -151,7 +152,7 @@ if (hurt)
         //global.hasControl = true;
         hurt = false;
     }
-}
+}*/
 
 //++++flag control
 prePhysics();
@@ -211,17 +212,14 @@ if (state != ATTACK)
     }
 }
 
-target = instance_place(x,y,objTower);
-    
-    
+global.target = instance_place(x,y,objTower);
+
 if (global.hasControl &amp;&amp; global.keyAction &amp;&amp; !hurt &amp;&amp; onGround &amp;&amp; !instance_exists(objTowerMenu))
 {
     xVel = 0;
     yVel = 0;
     global.hasControl = false;
-    var tm;
-    tm = instance_create(0,0,objTowerMenu);
-    tm.target = target;
+    instance_create(0,0,objTowerMenu);
 }
 
 doPhysics();
@@ -290,10 +288,10 @@ switch(state)
 
 if (!hurt || global.timer mod 2 == 0)
 {
-    if (dir == RIGHT)
-        draw_sprite_part(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2));
-    if (dir == LEFT)
-        draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
+    //if (dir == RIGHT)
+    draw_sprite_part(sprPlayer,-1,frame*TILE+(4*(dir == LEFT)*TILE),row*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2));
+//    if (dir == LEFT)
+//        draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
 }
 </string>
           </argument>

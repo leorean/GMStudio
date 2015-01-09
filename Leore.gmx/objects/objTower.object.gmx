@@ -132,19 +132,18 @@ else //TURRET READY TO DO STUFF
 
 if (buildTimer &gt; 0)
 {
-    if (level == 0)
-        draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE*(1-(buildTimer/maxBuildTimer)),floor(x - TILE - 1 + random(2)), floor(y - TILE) + 2*TILE*((buildTimer/maxBuildTimer)));
-    else
-        draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE - 1 + random(2)), floor(y - TILE));
+    draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE*(1-(buildTimer/maxBuildTimer)),floor(x - TILE - 1 + random(2)), floor(y - TILE) + 2*TILE*((buildTimer/maxBuildTimer)));
 } else
     draw_sprite_part(sprHud,-1,0, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE), floor(y - TILE));
 
-//draw level
+//draw rank
+/*
 var dx,dy;
 dx = floor(x) - level*3;
 dy = floor(y - TILE);
 for (i = 0; i &lt; level; i++)
     draw_sprite_part(sprHud,-1, 10*TILE,2*TILE,6,5,dx + i*6, dy);
+*/
 </string>
           </argument>
         </arguments>

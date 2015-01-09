@@ -12,7 +12,6 @@
     <sprite>sprites\mskRope</sprite>
     <sprite>sprites\mskBrick</sprite>
     <sprite>sprites\mskPlayer</sprite>
-    <sprite>sprites\mskPlayerBody</sprite>
     <sprite>sprites\mskCollider</sprite>
     <sprite>sprites\mskSlopeR</sprite>
     <sprite>sprites\mskSlopeL</sprite>
@@ -21,9 +20,9 @@
     <sprite>sprites\mskTower</sprite>
     <sprite>sprites\mskPlatform</sprite>
     <sprite>sprites\mskCoin</sprite>
-    <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\mskBase</sprite>
+    <sprite>sprites\sprPlayer</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -52,12 +51,10 @@
       <object>objects\objSlopeL</object>
       <object>objects\objCollider</object>
       <object>objects\objPlatform</object>
-      <object>objects\objSlope</object>
       <object>objects\objTowerMenu</object>
     </objects>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
-    <object>objects\objPlayerBody</object>
     <object>objects\objRope</object>
     <object>objects\objBrick</object>
     <object>objects\objWeapon</object>
