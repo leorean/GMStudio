@@ -31,6 +31,8 @@ depth = PLAYERDEPTH;
 
 global.player = id;
 
+atk = noone;
+
 //++++hurt mechanism
 hurtTimer = 0;
 maxHurtTimer = 60;
@@ -40,13 +42,7 @@ hurt = false;
 xPrev = x;
 yPrev = y;
 
-//++++collision flags
-colL = false;
-colR = false;
-colU = false;
-colD = false;
-onSlope = false;
-onGround = false;
+initPhysics();
 
 //++++physic variables
 xVel = 0;
@@ -60,10 +56,6 @@ isJumped = false;
 
 state = IDLE;
 statePrev = state;
-
-//+++animation
-w = abs(sprite_get_bbox_right(sprite_index)-sprite_get_bbox_left(sprite_index));
-h = abs(sprite_get_bbox_bottom(sprite_index)-sprite_get_bbox_top(sprite_index));
 
 dir = RIGHT;
 
@@ -111,6 +103,8 @@ if (global.hasControl)
     keyD = keyboard_check(vk_down);
     keyDPressed = keyboard_check_pressed(vk_down);
     keyDReleased = keyboard_check_released(vk_down);
+    
+    keyAttackPressed = keyboard_check_pressed(ord('S'));
 }
 else
 {
@@ -126,6 +120,8 @@ else
     keyD = false;
     keyDPressed = false;
     keyDReleased = false;
+    
+    keyAttackPressed = false;
 }
 
 //++++level bounds
@@ -200,17 +196,21 @@ if (state == IDLE || state == JUMP || state == RUN)
     }
 }
 
-//++++jumping
-if (state != ATTACK)
+//++++attacking
+if (keyAttackPressed &amp;&amp; !instance_exists(atk))
 {
-    if (keyUPressed)
+    atk = instance_create(x,y,objAttack);
+    atk.dir = dir;
+}
+
+//++++jumping
+if (keyUPressed)
+{
+    if (!isJumped)
     {
-        if (!isJumped)
-        {
-            yVel = -yJump;
-            isJumped = true;
-            state = JUMP;
-        }
+        yVel = -yJump;
+        isJumped = true;
+        state = JUMP;
     }
 }
 
@@ -280,7 +280,8 @@ switch(state)
         
     break;
     case ATTACK:
-        
+        fSpeed = .3;
+        row = 3;
     break;
     case HURT:
         
@@ -291,7 +292,7 @@ switch(state)
 if (!hurt || global.timer mod 2 == 0)
 {
     //if (dir == RIGHT)
-    draw_sprite_part(sprPlayer,-1,frame*TILE+(4*(dir == LEFT)*TILE),row*TILE,TILE,TILE,floor(x-TILE/2),floor(y-TILE/2));
+    draw_sprite_part(sprPlayer,-1,frame*2*TILE+(4*(dir == LEFT)*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE),floor(y-TILE));
 //    if (dir == LEFT)
 //        draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
 }

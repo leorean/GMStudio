@@ -37,15 +37,7 @@ yGrav = .15;
 xVelMax = .3;
 xAcc = .01;
 
-colL = false;
-colR = false;
-colU = false;
-colD = false;
-onSlope = false;
-onGround = false;
-
-w = abs(sprite_get_bbox_right(sprite_index)-sprite_get_bbox_left(sprite_index));
-h = abs(sprite_get_bbox_bottom(sprite_index)-sprite_get_bbox_top(sprite_index));
+initPhysics();
 
 </string>
           </argument>
@@ -74,8 +66,11 @@ h = abs(sprite_get_bbox_bottom(sprite_index)-sprite_get_bbox_top(sprite_index));
 hp = max(hp,0);
 if (hp == 0)
 {
-    repeat(value)
-        instance_create(x,y,objCoin);
+    //repeat(value)
+    //    instance_create(x,y,objCoin);
+    t = instance_create(x,y,objText);
+    t.text = "+"+string(value);
+    global.wallet += value;
     instance_destroy();
 }
 

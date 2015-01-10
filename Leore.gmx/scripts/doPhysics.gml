@@ -13,7 +13,7 @@ if (yVel >= 0)
         off = (sprite_get_height(sprite_index) - sprite_get_bbox_bottom(sprite_index));
         shift = 
         max(min(floor(slopeR.y + h/2 - (.5*(slopeR.x+2*TILE-x))),
-        slopeR.y + TILE - h/2), slopeR.y - h);
+        slopeR.y + TILE - off), slopeR.y - h);
         //onGround = true;      
         if (y >= shift)
         {
@@ -28,7 +28,7 @@ if (yVel >= 0)
         off = (sprite_get_height(sprite_index) - sprite_get_bbox_bottom(sprite_index));
         shift = 
         max(min(floor(slopeL.y + h/2 - (.5*(x - slopeL.x))),
-        slopeL.y + TILE - h/2), slopeL.y - h);
+        slopeL.y + TILE - off), slopeL.y - h);
         //onGround = true;        
         if (y >= shift)
         {

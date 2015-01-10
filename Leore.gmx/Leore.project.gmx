@@ -7,22 +7,21 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskBlock</sprite>
-    <sprite>sprites\mskThing</sprite>
-    <sprite>sprites\mskRope</sprite>
-    <sprite>sprites\mskBrick</sprite>
-    <sprite>sprites\mskPlayer</sprite>
-    <sprite>sprites\mskCollider</sprite>
-    <sprite>sprites\mskSlopeR</sprite>
-    <sprite>sprites\mskSlopeL</sprite>
+    <sprites name="masks">
+      <sprite>sprites\mskBase</sprite>
+      <sprite>sprites\mskCoin</sprite>
+      <sprite>sprites\mskPlatform</sprite>
+      <sprite>sprites\mskTower</sprite>
+      <sprite>sprites\mskEnemy</sprite>
+      <sprite>sprites\mskSlopeL</sprite>
+      <sprite>sprites\mskSlopeR</sprite>
+      <sprite>sprites\mskCollider</sprite>
+      <sprite>sprites\mskPlayer</sprite>
+    </sprites>
     <sprite>sprites\sprWeapon</sprite>
-    <sprite>sprites\mskEnemy</sprite>
-    <sprite>sprites\mskTower</sprite>
-    <sprite>sprites\mskPlatform</sprite>
-    <sprite>sprites\mskCoin</sprite>
     <sprite>sprites\sprHud</sprite>
-    <sprite>sprites\mskBase</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\spriteAttack</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -35,6 +34,7 @@
     <script>scripts\drawRadius.gml</script>
     <script>scripts\findEnemies.gml</script>
     <scripts name="physics">
+      <script>scripts\initPhysics.gml</script>
       <script>scripts\prePhysics.gml</script>
       <script>scripts\doPhysics.gml</script>
       <script>scripts\doPhysics_kopie.gml</script>
@@ -63,6 +63,8 @@
     <object>objects\objTower</object>
     <object>objects\objCoin</object>
     <object>objects\objBase</object>
+    <object>objects\objText</object>
+    <object>objects\objAttack</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
