@@ -17,11 +17,10 @@
       <sprite>sprites\mskSlopeR</sprite>
       <sprite>sprites\mskCollider</sprite>
       <sprite>sprites\mskPlayer</sprite>
+      <sprite>sprites\mskAttack</sprite>
     </sprites>
-    <sprite>sprites\sprWeapon</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\spriteAttack</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>

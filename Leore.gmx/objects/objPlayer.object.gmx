@@ -199,8 +199,7 @@ if (state == IDLE || state == JUMP || state == RUN)
 //++++attacking
 if (keyAttackPressed &amp;&amp; !instance_exists(atk))
 {
-    atk = instance_create(x,y,objAttack);
-    atk.dir = dir;
+    atk = instance_create(x+sign(dir)*TILE/2,y,objAttack);
 }
 
 //++++jumping

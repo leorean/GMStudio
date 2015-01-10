@@ -8,17 +8,17 @@
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
   <bbox_left>0</bbox_left>
-  <bbox_right>399</bbox_right>
+  <bbox_right>559</bbox_right>
   <bbox_top>0</bbox_top>
-  <bbox_bottom>239</bbox_bottom>
-  <HTile>-1</HTile>
-  <VTile>-1</VTile>
+  <bbox_bottom>287</bbox_bottom>
+  <HTile>0</HTile>
+  <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>400</width>
-  <height>240</height>
+  <width>560</width>
+  <height>288</height>
   <frames>
     <frame index="0">images\sprHud_0.png</frame>
   </frames>
