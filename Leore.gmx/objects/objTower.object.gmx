@@ -85,20 +85,31 @@ else //TURRET READY TO DO STUFF
 {
     if (timer == 0)
     {
-        for (i = 0; i &lt; maxenemies; i++)
-            target[i] = noone;
-        
+    
         target = findEnemies(x,y,2*rng,maxenemies);
         for (i = 0; i &lt; array_length_1d(target); i++)
         {
             if (instance_exists(target[i]))
             {
                 state = ATTACK;
-                target[i].hp -= dmg;
+                switch(type) // DO DIFFERENT ATTACKS DEPENDING ON TYPE
+                {
+                    case 0:
+                        var proj, ang;
+                        proj = instance_create(x,y,objProjectile);
+                        ang = point_direction(x,y,target[i].x,target[i].y);
+                        proj.xVel = lengthdir_x(2,ang);
+                        proj.yVel = lengthdir_y(2,ang);
+                        proj.dmg = dmg;
+                    break;
+                    case 1:
+                        target[i].hp -= dmg;
+                    break;
+                }
+                
             } else
                 target[i] = noone;
         }
-    
         timer = cd;
     } else
         timer = max(timer - 1, 0);

@@ -21,6 +21,7 @@
     </sprites>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\mskProjectile</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -64,6 +65,7 @@
     <object>objects\objBase</object>
     <object>objects\objText</object>
     <object>objects\objAttack</object>
+    <object>objects\objProjectile</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>

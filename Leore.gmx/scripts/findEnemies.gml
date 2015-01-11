@@ -20,6 +20,13 @@ for (i = 0; i < instance_number(objEnemy); i++)
     t = instance_find(objEnemy,i);
     if (instance_exists(t))
     {
+        /*
+            TODO:
+            calculate circular radius.
+            x = length * cos (angle);
+            y = length * sin (angle);
+
+        */
         if ((abs(abs(t.x) - abs(a)) <= c)
             && (abs(abs(t.y) - abs(b)) <= c)) 
         {
