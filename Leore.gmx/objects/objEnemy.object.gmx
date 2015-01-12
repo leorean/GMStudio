@@ -34,6 +34,8 @@ dir = RIGHT;
 xVel = 0;
 yVel = 0;
 yGrav = .15;
+
+
 xVelMax = .3;
 xAcc = .01;
 
@@ -77,22 +79,22 @@ if (hp == 0)
 //++++flag control
 prePhysics();
 
-if (colL &amp;&amp; !colR)
+/*if (colL &amp;&amp; !colR)
     dir = RIGHT;
 
 if (colR &amp;&amp; !colL)
     dir = LEFT;
-
+*/
 if (dir == LEFT)
 {
     xVel = max(xVel - xAcc, -xVelMax);
-    if (colL) dir = RIGHT;
+    if (colL &amp;&amp; !colR) dir = RIGHT;
 }
 
 if (dir == RIGHT)
 {
     xVel = min(xVel + xAcc, xVelMax);
-    if (colL) dir = LEFT;    
+    if (colR &amp;&amp; !colL) dir = LEFT;    
 }
 
 doPhysics();

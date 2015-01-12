@@ -146,12 +146,15 @@ statePrev = state;
     draw_set_alpha(.2);
     draw_set_color(make_color_hsv(30,255,255));
     draw_circle(x,y,2*rng,0);
-    
     drawRadius(x,y,2*rng,c_white);
+    draw_set_alpha(1);
     
     for (i = 0; i &lt; array_length_1d(target); i++)
         if (instance_exists(target[i]))
+        {
+            //CROSSHAIR
             draw_sprite_part(sprHud,-1,0,2*TILE,2*TILE,2*TILE,target[i].x-TILE,target[i].y-TILE);
+        }
 }
 
 if (buildTimer &gt; 0)
@@ -172,6 +175,18 @@ if (buildTimer &gt; 0)
             column = 1;
             fSpeed = .3;
             if (fCur &gt;= fMax-fSpeed) state = IDLE;
+            
+            switch(type)
+            {
+                case 0:
+                break;
+                case 1:
+                for (i = 0; i &lt; array_length_1d(target); i++)
+                    if (instance_exists(target[i]))
+                        drawLightning(x,y,target[i].x,target[i].y,choose(make_color_hsv(135,255,255),c_white));
+                break;
+            }
+            
         break;
     }
     draw_sprite_part(sprHud,-1,column*fMax*2*TILE+frame*2*TILE, 4*TILE + type*2*TILE,2*TILE,2*TILE,floor(x - TILE), floor(y - TILE));
