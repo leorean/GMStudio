@@ -25,31 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-timer = 0;
+            <string>timer = 0;
 cursor = 0; //which command should be executed
-
-//++++read spawn protocol, then set stuff here
-filename = working_directory + "0.txt";
-
-if (file_exists(filename))
-    file = file_text_open_read(filename);
-else
-{
-    show_debug_message("File " + string(filename) + " doesn't exist");
-    exit;
-}
-
-i = 0;
-while (!file_text_eof(file))
-{
-    command[i] = file_text_read_string(file);
-    //show_debug_message(command[i]);
-    i++;
-    file_text_readln(file);
-}
-    
-file_text_close(file);
+waiting = false;
 </string>
           </argument>
         </arguments>
@@ -72,42 +50,60 @@ file_text_close(file);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (timer == 0 &amp;&amp; cursor &lt; array_length_1d(command))
+            <string>if (timer == 0 &amp;&amp; !waiting &amp;&amp; cursor &lt; array_length_1d(global.command))
 {
-    if (string_pos("wave",command[cursor]) != 0)
+    if (string_pos("wave",global.command[cursor]) != 0)
     {
-        var tmp,t;
-        tmp = explodeString(command[cursor],":");
-        timer = real(tmp[2]);
-        t = instance_create(global.player.x,global.player.y-TILE,objText);
-        t.text = "Wave: "+ string(tmp[1]);
-    }
-    else if (string_pos("wait",command[cursor]) != 0)
-    {
-        var tmp,e;
-        tmp = explodeString(command[cursor],":");
+        var tmp;
+        tmp = explodeString(global.command[cursor],":");
         timer = real(tmp[1]);
+        if (!instance_exists(global.waveText))
+        {
+            global.waveText = instance_create(0,view_yview[0]+3*TILE,objText);
+            global.waveText.free = false;
+            global.waveText.halign = fa_right;
+            global.waveText.yVel = 0;
+            global.waveText.xVel = 3;
+            global.waveText.font = fntWave;
+            global.waveText.t = 180;
+            global.waveText.text = "Wave " + string(global.wave);
+        }
+    
     }
-    else if (string_pos("spawn",command[cursor]) != 0)
+    else if (string_pos("wait",global.command[cursor]) != 0)
+        waiting = true;
+    else if (string_pos("spawn",global.command[cursor]) != 0)
     {
         var tmp,e;
-        tmp = explodeString(command[cursor],":");
+        tmp = explodeString(global.command[cursor],":");
         timer = real(tmp[3]);
         e = instance_create(x,y,objEnemy);
         if (tmp[2] == "left") e.dir = LEFT;
         if (tmp[2] == "right") e.dir = RIGHT;
-        if(real(tmp[1]) == 0)
+        e.type = real(tmp[1]);
+        /*if(real(tmp[1]) == 0)
         {
             e.maxHp = 20;
             e.hp = e.maxHp;
             e.value = 2;
-        }
+        }*/
     }
     //show_debug_message(timer);
-    cursor += 1;
-    
-} else
-    timer = max(timer - 1,0);
+    cursor ++;
+}
+else
+{
+    if (waiting)
+    {
+        if (instance_exists(objEnemy))
+            global.waiting = true;
+
+    } else
+        timer = max(timer - 1,0);
+}
+
+
+
 </string>
           </argument>
         </arguments>

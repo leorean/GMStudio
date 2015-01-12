@@ -3,11 +3,11 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="7" name="datafiles">
+  <datafiles number="8" name="datafiles">
     <datafile>
-      <name>0.txt</name>
+      <name>LV1</name>
       <exists>-1</exists>
-      <size>90</size>
+      <size>100</size>
       <exportAction>2</exportAction>
       <exportDir></exportDir>
       <overwrite>0</overwrite>
@@ -19,7 +19,7 @@
           <CopyToMask>9223372036854775807</CopyToMask>
         </Config>
       </ConfigOptions>
-      <filename>0.txt</filename>
+      <filename>LV1</filename>
     </datafile>
   </datafiles>
   <NewExtensions/>
@@ -41,18 +41,13 @@
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskProjectile</sprite>
     <sprite>sprites\mskSpawner</sprite>
+    <sprite>sprites\mskControl</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
-    <script>scripts\drawText.gml</script>
-    <script>scripts\array.gml</script>
-    <script>scripts\get.gml</script>
-    <script>scripts\drawRadius.gml</script>
-    <script>scripts\findEnemies.gml</script>
-    <script>scripts\drawLightning.gml</script>
     <scripts name="physics">
       <script>scripts\initPhysics.gml</script>
       <script>scripts\prePhysics.gml</script>
@@ -60,11 +55,24 @@
       <script>scripts\doPhysics_kopie.gml</script>
       <script>scripts\fricPhysics.gml</script>
     </scripts>
-    <script>scripts\explodeString.gml</script>
+    <scripts name="spawn">
+      <script>scripts\explodeString.gml</script>
+      <script>scripts\importSpawn.gml</script>
+    </scripts>
+    <scripts name="UTIL">
+      <script>scripts\drawLightning.gml</script>
+      <script>scripts\get.gml</script>
+      <script>scripts\drawRadius.gml</script>
+      <script>scripts\array.gml</script>
+      <script>scripts\drawText.gml</script>
+      <script>scripts\findEnemies.gml</script>
+      <script>scripts\placeColliders.gml</script>
+    </scripts>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntDefault</font>
     <font>fonts\fntHud</font>
+    <font>fonts\fntWave</font>
   </fonts>
   <objects name="objects">
     <objects name="misc">
@@ -93,10 +101,13 @@
     <room>rooms\TITLE</room>
     <room>rooms\LV1</room>
   </rooms>
-  <constants number="22">
+  <constants number="25">
+    <constant name="YV">view_yview[0]</constant>
+    <constant name="XV">view_xview[0]</constant>
     <constant name="c_none">-1</constant>
     <constant name="PLAYERDEPTH">0</constant>
     <constant name="HUDDEPTH">-100</constant>
+    <constant name="TILEDEPTH">5</constant>
     <constant name="INFINITE">90000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">400</constant>

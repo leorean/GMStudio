@@ -13,7 +13,7 @@
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>400</width>
-  <height>240</height>
+  <width>448</width>
+  <height>256</height>
   <data>images\sprTiles.png</data>
 </background>

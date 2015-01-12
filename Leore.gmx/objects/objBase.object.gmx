@@ -30,7 +30,12 @@
 //++++touching the base
 if (instance_exists(enemy))
 {
-    global.hp = floor(max(global.hp - enemy.hp, 0));
+    global.hp = floor(max(global.hp - 1, 0));
+    var t;
+    t = instance_create(global.player.x,global.player.y,objText);
+    t.c1 = c_red;
+    t.c2 = c_none;
+    t.text = "-1 HP";
     with(enemy) instance_destroy();
 }
 </string>

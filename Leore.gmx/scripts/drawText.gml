@@ -1,7 +1,7 @@
 var px,py,txt,col1,col2,fnt;
 
-px = round(argument0);
-py = round(argument1);
+px = argument0;
+py = argument1;
 txt = argument2;
 col1 = argument3;
 col2 = argument4;
@@ -31,4 +31,4 @@ if (col2 != c_none)
 
 draw_set_color(col1);
 
-draw_text(floor(px),floor(py),txt);
+draw_text(px,py,txt);

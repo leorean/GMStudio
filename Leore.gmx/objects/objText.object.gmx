@@ -28,10 +28,10 @@
             <string>depth = HUDDEPTH+1;
 image_speed = 0;
 
-t = 60;
+t = 75;
 
 xVel = 0;
-yVel = -.5;
+yVel = -.4;
 c1 = c_white;
 c2 = c_black;
 font = fntDefault;
@@ -39,6 +39,13 @@ halign = fa_center;
 valign = fa_top;
 
 text = "";
+
+dx = abs(XV-x);
+dy = abs(YV-y);
+xO = 0;
+yO = 0;
+free = true; //if false, bind the text to the view
+
 </string>
           </argument>
         </arguments>
@@ -61,16 +68,24 @@ text = "";
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x += xVel;
-y += yVel;
-
-t = max(t-1,0);
+            <string>t = max(t-1,0);
 if (t == 0) instance_destroy();
 
 draw_set_alpha(1);
 draw_set_halign(halign);
 draw_set_valign(valign);
-drawText(x,y,text,c1,c2,font);
+
+if (!free) //draw on HUD
+{
+    xO += xVel;
+    yO += yVel;
+    drawText(XV+xO+dx,YV+yO+dy,text,c1,c2,font);
+} else //draw free
+{
+    x += xVel;
+    y += yVel;
+    drawText(x,y,text,c1,c2,font);
+}
 </string>
           </argument>
         </arguments>

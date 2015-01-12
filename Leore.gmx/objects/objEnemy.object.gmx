@@ -2,7 +2,7 @@
 <object>
   <spriteName>mskEnemy</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -25,8 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-hp = 0;
+            <string>hp = 0;
 maxHp = 0;
 
 dir = RIGHT;
@@ -34,13 +33,12 @@ dir = RIGHT;
 xVel = 0;
 yVel = 0;
 yGrav = .15;
+xVelMax = 0;
+xAcc = 0;
 
-
-xVelMax = .3;
-xAcc = .01;
+checked = false;
 
 initPhysics();
-
 </string>
           </argument>
         </arguments>
@@ -63,18 +61,45 @@ initPhysics();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//++++dieing
+            <string>//++++ADJUSTING STATS
+if (!checked)
+{
+    switch(type)
+    {
+        case 0:
+            maxHp = 5+(global.wave div 2)*3;
+            value = global.wave;
+            xVelMax = .2;
+            xAcc = .03;
+        break;
+        case 1:
+            
+        break;
+    }
+    
+    hp = maxHp;
 
+    visible = true;
+    checked = true;
+}
+
+//++++dieing
 hp = max(hp,0);
 if (hp == 0)
 {
     //repeat(value)
     //    instance_create(x,y,objCoin);
     t = instance_create(x,y,objText);
-    t.text = "+"+string(value);
+    t.text = "+"+string(value)+"$";
+    //t.c1 = make_color_hsv(33,255,255);
+    t.c2 = c_none;
     global.wallet += value;
     instance_destroy();
 }
+
+//++++level bounds
+if (bbox_left &lt;= 0) {xVel = -xVel; x += .1; dir = RIGHT}
+if (bbox_right &gt;= room_width) {xVel = -xVel; x -= .1; dir = LEFT}
 
 //++++flag control
 prePhysics();

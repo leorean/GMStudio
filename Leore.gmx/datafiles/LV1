@@ -1,0 +1,15 @@
+wave:150
+spawn:0:right:0
+wait
+wave:60
+spawn:0:right:20
+spawn:0:right:20
+spawn:0:right:20
+wait
+wave:60
+spawn:0:right:15
+spawn:0:right:15
+spawn:0:right:15
+spawn:0:right:15
+spawn:0:right:15
+wait
