@@ -60,7 +60,7 @@
       <script>scripts\doPhysics_kopie.gml</script>
       <script>scripts\fricPhysics.gml</script>
     </scripts>
-    <script>scripts\importSegment.gml</script>
+    <script>scripts\explodeString.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntDefault</font>
