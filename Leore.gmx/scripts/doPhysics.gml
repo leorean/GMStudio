@@ -4,7 +4,6 @@ var slopeL, slopeR;
 slopeL = collision_rectangle(x-2,bbox_bottom-1,x+2,bbox_bottom+3,objSlopeL,true,true);
 slopeR = collision_rectangle(x-2,bbox_bottom-1,x+2,bbox_bottom+3,objSlopeR,true,true);
 
-
 if (yVel >= 0)
 {
     if (slopeR != noone)
@@ -14,7 +13,6 @@ if (yVel >= 0)
         shift = 
         max(min(floor(slopeR.y + h/2 - (.5*(slopeR.x+2*TILE-x))),
         slopeR.y + TILE - off), slopeR.y - h);
-        //onGround = true;      
         if (y >= shift)
         {
             y = shift + 2;
@@ -38,7 +36,10 @@ if (yVel >= 0)
         }
     }
 } else
+{
     onSlope = false;
+    isJumped = true;
+}
 
 if (slopeL == noone && slopeR == noone) onSlope = false;
 /*

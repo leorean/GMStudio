@@ -25,9 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>timer = 0;
+            <string>depth = BLOCKDEPTH;
+image_speed = 0;
+
+timer = 150;
 cursor = 0; //which command should be executed
 waiting = false;
+count = 0; //for iterating through the same command x times
 </string>
           </argument>
         </arguments>
@@ -54,9 +58,6 @@ waiting = false;
 {
     if (string_pos("wave",global.command[cursor]) != 0)
     {
-        var tmp;
-        tmp = explodeString(global.command[cursor],":");
-        timer = real(tmp[1]);
         if (!instance_exists(global.waveText))
         {
             global.waveText = instance_create(0,view_yview[0]+3*TILE,objText);
@@ -68,7 +69,6 @@ waiting = false;
             global.waveText.t = 180;
             global.waveText.text = "Wave " + string(global.wave);
         }
-    
     }
     else if (string_pos("wait",global.command[cursor]) != 0)
         waiting = true;
@@ -76,20 +76,25 @@ waiting = false;
     {
         var tmp,e;
         tmp = explodeString(global.command[cursor],":");
-        timer = real(tmp[3]);
+
+        if (count == 0)
+            count = real(tmp[3]);
+
+        timer = real(tmp[4]);
         e = instance_create(x,y,objEnemy);
         if (tmp[2] == "left") e.dir = LEFT;
         if (tmp[2] == "right") e.dir = RIGHT;
         e.type = real(tmp[1]);
-        /*if(real(tmp[1]) == 0)
-        {
-            e.maxHp = 20;
-            e.hp = e.maxHp;
-            e.value = 2;
-        }*/
+
     }
-    //show_debug_message(timer);
-    cursor ++;
+    if (count == 0)
+        cursor ++;
+    else
+    {
+        count --;
+        if (count == 0)
+            cursor ++;
+    }
 }
 else
 {

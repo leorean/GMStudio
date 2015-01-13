@@ -46,7 +46,7 @@ initPhysics();
 
 //++++physic variables
 xVel = 0;
-xVelMax = 2;
+xVelMax = 1.5;
 yVel = 0;
 xAcc = .1;
 yGrav = .15;
@@ -291,7 +291,7 @@ switch(state)
 if (!hurt || global.timer mod 2 == 0)
 {
     //if (dir == RIGHT)
-    draw_sprite_part(sprPlayer,-1,frame*2*TILE+(4*(dir == LEFT)*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE),floor(y-TILE));
+    draw_sprite_part(sprPlayer,-1,frame*2*TILE+(4*(dir == LEFT)*2*TILE),row*2*TILE,2*TILE,2*TILE,(x-TILE),(y-TILE));
 //    if (dir == LEFT)
 //        draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x+TILE/2),floor(y-TILE/2),-1,1,c_white,1);
 }

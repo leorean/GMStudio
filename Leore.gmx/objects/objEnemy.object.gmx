@@ -68,9 +68,9 @@ if (!checked)
     {
         case 0:
             maxHp = 5+(global.wave div 2)*3;
-            value = global.wave;
-            xVelMax = .2;
-            xAcc = .03;
+            value = 2 + global.wave div 2;
+            xVelMax = .4;
+            xAcc = .01;
         break;
         case 1:
             
