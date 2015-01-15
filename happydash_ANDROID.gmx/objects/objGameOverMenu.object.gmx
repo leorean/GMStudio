@@ -76,10 +76,10 @@ m = 0;
 
 playSound(sfxRocketFall,1);
 
-if (os_type != os_android)
+/*if (os_type != os_android)
     if (global.playthrough &gt; 2 &amp;&amp; global.playthrough mod 3 == 0)
         fgl_ad_show();
-
+*/
 </string>
           </argument>
         </arguments>
@@ -131,8 +131,8 @@ if (btn[0].pressed)
     room_goto(SHOP);
 if (btn[1].pressed)
     room_restart();
-if (btn[2].pressed)
-    fgl_score_submit(finalScore,"");
+/*if (btn[2].pressed)
+    fgl_score_submit(finalScore,"");*/
 if (btn[3].pressed)
     room_goto(INIT);
 

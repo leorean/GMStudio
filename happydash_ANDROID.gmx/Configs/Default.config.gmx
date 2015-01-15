@@ -12,21 +12,21 @@
     <option_android_amazon_gc_leaderboards>0</option_android_amazon_gc_leaderboards>
     <option_android_amazon_gc_whispersync>0</option_android_amazon_gc_whispersync>
     <option_android_amazon_iap>0</option_android_amazon_iap>
-    <option_android_apk_expansion>-1</option_android_apk_expansion>
+    <option_android_apk_expansion>0</option_android_apk_expansion>
     <option_android_arch_armv5>True</option_android_arch_armv5>
     <option_android_arch_armv7>True</option_android_arch_armv7>
     <option_android_arch_mips>True</option_android_arch_mips>
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
     <option_android_arch_x86>True</option_android_arch_x86>
-    <option_android_build_version>5</option_android_build_version>
+    <option_android_build_version>8</option_android_build_version>
     <option_android_color_depth>1</option_android_color_depth>
     <option_android_display_name>Happy Dash</option_android_display_name>
     <option_android_flurry_enable>0</option_android_flurry_enable>
     <option_android_flurry_id></option_android_flurry_id>
     <option_android_google_analytics_enable>0</option_android_google_analytics_enable>
     <option_android_google_play>-1</option_android_google_play>
-    <option_android_google_play_id>960673059339</option_android_google_play_id>
+    <option_android_google_play_id>433876440882</option_android_google_play_id>
     <option_android_google_tracking_id></option_android_google_tracking_id>
     <option_android_iap_suppress_toast>false</option_android_iap_suppress_toast>
     <option_android_icade_support>0</option_android_icade_support>
@@ -39,7 +39,7 @@
     <option_android_install_location>auto</option_android_install_location>
     <option_android_interpolate>0</option_android_interpolate>
     <option_android_licensing_enable>-1</option_android_licensing_enable>
-    <option_android_licensing_key>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgvE9r7r6e1YNk6fNke7t8tlO9fhctFCScF7h8hWdJb4Pip7oYGzTKewYRF6GkHLS6efPR6DoqwZfirwB67VrES9Vcri5Uwn6Hn2TTOzHKHNH9P8cYGdd+lsXXLqhkpVfGYcMe1+c1IEcFwyMWV7qa47BAL8YQtbPED7CIm7IopPeCXNdzAkHXlS3TV8rWmf+OnUm7nIMhnieXLpUR72pJguwh2kDrdp0QdHbSn7Un5Ih7MEFKA4SBZZ/TRq4UCZOSNgLU4fD+E1XfWp2MQ9DH3Xjm81DjI0VnLRrXIA8AQyTHzqXFaqyAyMNUJxYzsOOFQf5DXDd5FJeljL5Gnn/tQIDAQAB</option_android_licensing_key>
+    <option_android_licensing_key>MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA23nsIrA1yp1XKjNDxPCucOi5bCjFc6FZ09EfiNfLy1UpKY1z0HNdKyx3gXCLwLe0zXZNqoVrm9fMvFsFaTybRJbDAtrAEWJT/1W7bXlah1QgpmN+7MwTqCRWLSHe5rF30/osTuXxMiwZ9iMmAeHUHPSpTU8iWhhsagYrSukaqXaS3oVVsw5npJ6sXrYOr9jJ145+LGHpUL5Sx0xJIftZWmiDbhkMNKFogUXECJjjCRiYpwSfGb5NlTOTY28owAVfZ6qU43cmuNOmqr4SOKEe4rlDvcIzzdtDEykiSo1yGocjaapoATSinFvasDj1bP1BBIMeM5vzIwWdNbsABO6MKwIDAQAB</option_android_licensing_key>
     <option_android_major_version>1</option_android_major_version>
     <option_android_minor_version>0</option_android_minor_version>
     <option_android_orient_landscape>True</option_android_orient_landscape>
@@ -48,7 +48,7 @@
     <option_android_orient_portrait_flipped>False</option_android_orient_portrait_flipped>
     <option_android_orientation>2</option_android_orientation>
     <option_android_ouya_icon>Configs\Default\android\icons\ouyaIcon.png</option_android_ouya_icon>
-    <option_android_package_company>shinypixelgames</option_android_package_company>
+    <option_android_package_company>spg</option_android_package_company>
     <option_android_package_domain>com</option_android_package_domain>
     <option_android_package_product>happydash</option_android_package_product>
     <option_android_permission_flags>15</option_android_permission_flags>
@@ -110,7 +110,7 @@
     <option_html5_splash_png>Configs\Default\html5\splash.png</option_html5_splash_png>
     <option_html5_texture_page>2048</option_html5_texture_page>
     <option_html5_use_test_ads>0</option_html5_use_test_ads>
-    <option_html5_usebuiltinparticles>true</option_html5_usebuiltinparticles>
+    <option_html5_usebuiltinparticles>True</option_html5_usebuiltinparticles>
     <option_html5_usesplash>False</option_html5_usesplash>
     <option_icon>nil</option_icon>
     <option_in_app_purchase_enable>-1</option_in_app_purchase_enable>
@@ -443,7 +443,7 @@
     <option_xbone_minor_version>0</option_xbone_minor_version>
     <option_xbone_publisher></option_xbone_publisher>
     <option_xbone_publisher_display_name></option_xbone_publisher_display_name>
-    <option_xbone_require_xbox_live>false</option_xbone_require_xbox_live>
+    <option_xbone_require_xbox_live>0</option_xbone_require_xbox_live>
     <option_xbone_revision_version>0</option_xbone_revision_version>
     <option_xbone_scale>-1</option_xbone_scale>
     <option_xbone_service_config_id></option_xbone_service_config_id>
