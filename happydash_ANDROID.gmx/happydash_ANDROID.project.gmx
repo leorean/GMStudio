@@ -288,6 +288,7 @@
     <room>rooms\SCORE</room>
     <room>rooms\MAIN</room>
     <room>rooms\SHOP</room>
+    <room>rooms\PREMIUM</room>
     <room>rooms\HELP</room>
   </rooms>
   <constants number="41">

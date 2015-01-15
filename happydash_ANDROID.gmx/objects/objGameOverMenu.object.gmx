@@ -45,6 +45,7 @@ if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
 
 finalScore = global.curScore;
+submitted = false;
 var r;
 r = 3.5*TILE;
 btn[0] = instance_create(WIDTH/2,r+1.5*TILE,objButton);
@@ -131,8 +132,24 @@ if (btn[0].pressed)
     room_goto(SHOP);
 if (btn[1].pressed)
     room_restart();
-/*if (btn[2].pressed)
-    fgl_score_submit(finalScore,"");*/
+if (btn[2].pressed)
+{
+    if (os_is_network_connected())
+    {
+        if(!achievement_login_status())
+            achievement_login();
+            
+        if achievement_available()
+        {
+            achievement_show_leaderboards();
+            if (!submitted) // can only submit ONCE per run
+            {
+                achievement_post_score("CgkIsq60qNAMEAIQBg", finalScore);
+                submitted = true;
+            }
+        }
+    }
+}
 if (btn[3].pressed)
     room_goto(INIT);
 

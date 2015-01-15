@@ -48,9 +48,7 @@ if (os_type != os_android &amp;&amp; os_type != os_windows)
 if (os_type == os_android &amp;&amp; os_is_network_connected())
 {
     if (!achievement_login_status())
-    {
         achievement_login();
-    }
 }
 
 global.playthrough = 0; //for ads
@@ -507,6 +505,7 @@ if (debug_mode)
 if (room == SHOP) instance_deactivate_object(objControl);
 if (room == SCORE) instance_deactivate_object(objControl);
 if (room == HELP) instance_deactivate_object(objControl);
+if (room == PREMIUM) instance_deactivate_object(objControl);
 
 global.pause = false;    
 global.gameOver = false;
@@ -759,7 +758,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
-if(room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.pause)
+/*if(room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.pause)
     if (os_type == os_android || os_browser != browser_not_a_browser)
     {
         draw_set_alpha(1);
@@ -767,6 +766,7 @@ if(room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.paus
         draw_set_valign(fa_top);
         drawText(WIDTH/2,HEIGHT/2-5*TILE,"Beta Version",c_white,c_none,fntTiny);
     }
+*/
 </string>
           </argument>
         </arguments>

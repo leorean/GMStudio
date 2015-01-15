@@ -64,9 +64,13 @@ btn[2] = instance_create(WIDTH/2,row*TILE+3*TILE,objButton);
 btn[2].text = "PREMIUM";
 btn[2].index = 2;
 btn[2].parent = id;
+btn[2].cActive1 = make_color_hsv(35,255,255);
+btn[2].cActive2 = make_color_hsv(23,255,255);
+btn[2].cInactive1 = make_color_hsv(23,255,255);
+btn[2].cInactive2 = c_black;
 
 btn[3] = instance_create(WIDTH/2,row*TILE+4.5*TILE,objButton);
-btn[3].text = "Score";
+btn[3].text = "Scores";
 btn[3].index = 3;
 btn[3].parent = id;
 
@@ -144,9 +148,7 @@ if (btn[0].pressed)
 if (btn[1].pressed)
     room_goto(SHOP);
 if (btn[2].pressed)
-{
-
-}
+    room_goto(PREMIUM);
 if (btn[3].pressed)
 {
     if (os_is_network_connected())
@@ -214,8 +216,8 @@ draw_set_alpha(1);
 draw_set_color(c_white);
 draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
 
-draw_set_halign(fa_left);
-drawText(0,HEIGHT-1.5*TILE,"(c) Peter Sperl #Do not distribute!",c_white,c_none,fntTiny);
+//draw_set_halign(fa_left);
+//drawText(0,HEIGHT-1.5*TILE,"(c) Peter Sperl #Do not distribute!",c_white,c_none,fntTiny);
 </string>
           </argument>
         </arguments>
