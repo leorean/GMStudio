@@ -33,17 +33,20 @@ else
 
 //TITLE MUSIC HANDLING
 if (room == INIT || room == HELP || room == SCORE)
-    playMusic(sfxTitle,!global.mute);
+{
+    playMusic(sfxTitle,true);
+    audio_sound_gain(sfxTitle,!global.mute,0);
+}
 else
     playMusic(sfxTitle,false);
 
 //MAIN MUSIC HANDLING
 if (room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD &amp;&amp; global.startSignal)
 {
-    audio_sound_gain(sfxBgm,(!global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
-    audio_sound_gain(sfxBgmPow,(global.powerUp[POW_ANY] &amp;&amp; !global.pause),0);
-    playMusic(sfxBgm,!global.mute);
-    playMusic(sfxBgmPow,!global.mute);
+    audio_sound_gain(sfxBgm,!global.mute &amp;&amp; !global.powerUp[POW_ANY] &amp;&amp; !global.pause,0);
+    audio_sound_gain(sfxBgmPow,!global.mute &amp;&amp; global.powerUp[POW_ANY] &amp;&amp; !global.pause,0);
+    playMusic(sfxBgm,true);
+    playMusic(sfxBgmPow,true);
 } else
 {
     playMusic(sfxBgm,false);
@@ -51,7 +54,10 @@ if (room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.gam
 }
 
 if (room == MAIN &amp;&amp; global.mode == M.TUTORIALMODE &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD &amp;&amp; global.startSignal)
-    playMusic(sfxTutorial,!global.mute &amp;&amp; !global.pause);
+{
+    audio_sound_gain(sfxTutorial,!global.mute &amp;&amp; !global.pause,0);
+    playMusic(sfxTutorial,true);
+}
 else
     playMusic(sfxTutorial,false);
 

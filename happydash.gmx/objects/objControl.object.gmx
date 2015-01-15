@@ -34,7 +34,7 @@ randomize();
 
 
 //SL
-if (os_type != os_android)
+if (os_type != os_android &amp;&amp; os_type != os_windows)
 {
     fm = "This game has been stolen!";
     if (string(url_get_domain()) != "spg.erdbeermil.ch")
@@ -421,7 +421,7 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
     if (room == MAIN)
     {
-        if (!global.pause)
+        if (!global.pause &amp;&amp; !global.gameOver)
         {
             global.pause = true;
             instance_create(0,0,objPauseMenu);
@@ -498,15 +498,6 @@ if (debug_mode)
 if (room == SHOP) instance_deactivate_object(objControl);
 if (room == SCORE) instance_deactivate_object(objControl);
 if (room == HELP) instance_deactivate_object(objControl);
-
-//room start
-/*
-view_visible[0] = true;
-view_wview[0] = WIDTH;
-view_hview[0] = HEIGHT;
-view_wport[0] = WIDTH;
-view_hport[0] = HEIGHT;
-*/
 
 global.pause = false;    
 global.gameOver = false;

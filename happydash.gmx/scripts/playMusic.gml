@@ -4,7 +4,6 @@ if (argument1) //play
     if (audio_system() == audio_new_system)
     {
         if (!audio_is_playing(argument0))
-            //audio_play_music(argument0,true);
             audio_play_sound(argument0,0,true);
     }
     else if (audio_system() == audio_old_system)
