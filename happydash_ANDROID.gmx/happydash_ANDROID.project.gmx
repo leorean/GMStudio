@@ -162,6 +162,7 @@
     <sprite>sprites\spriteFontScore</sprite>
     <sprite>sprites\spriteConfetti</sprite>
     <sprite>sprites\spriteShop</sprite>
+    <sprite>sprites\spritePremium</sprite>
     <sprite>sprites\spriteLevelUp</sprite>
     <sprite>sprites\spriteHelp</sprite>
   </sprites>
@@ -182,6 +183,7 @@
       <script>scripts\unzip.gml</script>
       <script>scripts\zip.gml</script>
       <script>scripts\saveOptions.gml</script>
+      <script>scripts\initIAP.gml</script>
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
@@ -278,7 +280,9 @@
       <object>objects\objTouchButton</object>
       <object>objects\objScoreMenu</object>
       <object>objects\objShopMenu</object>
+      <object>objects\objPremiumMenu</object>
       <object>objects\objShopItem</object>
+      <object>objects\objPremiumItem</object>
       <object>objects\objHelpMenu</object>
       <object>objects\objHelpMe</object>
     </objects>

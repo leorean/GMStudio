@@ -51,6 +51,12 @@ if (os_type == os_android &amp;&amp; os_is_network_connected())
         achievement_login();
 }
 
+//IN APP PURCHASE RELATED STUFF
+global.noads = false;
+global.unlockupgrades = false;
+
+initIAP(); //INIT IN APP PURCHASES
+
 global.playthrough = 0; //for ads
 
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE

@@ -1,5 +1,5 @@
 for (i = 0; i < UPGRADE.SIZE; i+=1)
-    global.upgrade[i,UPGRADE.LOCKED] = true;
+    global.upgrade[i,UPGRADE.LOCKED] = !global.unlockupgrades;
 
 if (true) //unlocked right away
 {
