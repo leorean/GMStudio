@@ -90,7 +90,9 @@
       <filename>tut.tmx</filename>
     </datafile>
   </datafiles>
-  <NewExtensions/>
+  <NewExtensions>
+    <extension index="0">extensions\GoogleMobileAdsExt</extension>
+  </NewExtensions>
   <sounds name="sound">
     <sound>sound\sfxJump</sound>
     <sound>sound\sfxDash</sound>
@@ -218,6 +220,7 @@
   </fonts>
   <objects name="objects">
     <objects name="MISC">
+      <object>objects\objControl</object>
       <objects name="hierarchy">
         <object>objects\objEnemy</object>
         <object>objects\objProjectileEnemy</object>
@@ -228,12 +231,12 @@
         <object>objects\objAny</object>
         <object>objects\objAll</object>
       </objects>
-      <object>objects\objControl</object>
       <object>objects\objDrawBuffer</object>
       <object>objects\objPlayer</object>
       <object>objects\objCamera</object>
       <object>objects\objMouse</object>
       <object>objects\objSoundManager</object>
+      <object>objects\objAD</object>
     </objects>
     <objects name="content">
       <object>objects\objBlock</object>
@@ -285,6 +288,7 @@
       <object>objects\objPremiumItem</object>
       <object>objects\objHelpMenu</object>
       <object>objects\objHelpMe</object>
+      <object>objects\objPremiumMe</object>
     </objects>
   </objects>
   <rooms name="rooms">

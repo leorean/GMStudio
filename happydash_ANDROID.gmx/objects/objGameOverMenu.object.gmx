@@ -47,7 +47,7 @@ if (global.input != INPUT_TOUCH)
 finalScore = global.curScore;
 submitted = false;
 var r;
-r = 3.5*TILE;
+r = 3*TILE;
 btn[0] = instance_create(WIDTH/2,r+1.5*TILE,objButton);
 btn[0].text = "Shop";
 btn[0].index = 0;
@@ -105,6 +105,8 @@ playSound(sfxRocketFall,1);
             <kind>1</kind>
             <string>with (objButton)
     instance_destroy();
+    
+
 </string>
           </argument>
         </arguments>
@@ -127,7 +129,10 @@ playSound(sfxRocketFall,1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>handleButtons();
+            <string>if (!global.gameOver || room != MAIN)
+    instance_destroy();
+
+handleButtons();
 if (btn[0].pressed)
     room_goto(SHOP);
 if (btn[1].pressed)
@@ -251,7 +256,7 @@ d = 11*TILE;
 draw_set_font(global.fntScore);
 draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 
-drawBorder(7*TILE,4*TILE,11*TILE,10*TILE);
+drawBorder(7*TILE,3.5*TILE,11*TILE,9*TILE);
 
 if (canBuySomething)
 {

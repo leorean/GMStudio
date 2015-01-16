@@ -4,9 +4,9 @@
     <option_aborterrors>False</option_aborterrors>
     <option_android_GPU_device>0</option_android_GPU_device>
     <option_android_adcolony_enable_V4VC>0</option_android_adcolony_enable_V4VC>
-    <option_android_advertising_enable>0</option_android_advertising_enable>
-    <option_android_advertising_key></option_android_advertising_key>
-    <option_android_advertising_type>MoPub</option_android_advertising_type>
+    <option_android_advertising_enable>-1</option_android_advertising_enable>
+    <option_android_advertising_key>ca-app-pub-3438177514702788/3814879955|0|</option_android_advertising_key>
+    <option_android_advertising_type>AdMob</option_android_advertising_type>
     <option_android_amazon_game_circle>0</option_android_amazon_game_circle>
     <option_android_amazon_gc_achievements>0</option_android_amazon_gc_achievements>
     <option_android_amazon_gc_leaderboards>0</option_android_amazon_gc_leaderboards>
@@ -19,7 +19,7 @@
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
     <option_android_arch_x86>True</option_android_arch_x86>
-    <option_android_build_version>11</option_android_build_version>
+    <option_android_build_version>10</option_android_build_version>
     <option_android_color_depth>1</option_android_color_depth>
     <option_android_display_name>Happy Dash</option_android_display_name>
     <option_android_flurry_enable>0</option_android_flurry_enable>
@@ -58,10 +58,10 @@
     <option_android_push_enable>0</option_android_push_enable>
     <option_android_push_id></option_android_push_id>
     <option_android_scale>-1</option_android_scale>
-    <option_android_set_device_id></option_android_set_device_id>
+    <option_android_set_device_id>73D7B39415A51B45B5C3E6E1A8B6C60E</option_android_set_device_id>
     <option_android_splash_png>Configs\Default\android\splash.png</option_android_splash_png>
     <option_android_texture_page>2048</option_android_texture_page>
-    <option_android_use_test_ads>0</option_android_use_test_ads>
+    <option_android_use_test_ads>-1</option_android_use_test_ads>
     <option_argumenterrors>True</option_argumenterrors>
     <option_audioGroupCount>1</option_audioGroupCount>
     <option_author>Peter Sperl</option_author>
@@ -295,7 +295,7 @@
     <option_tizen_flurry_enable>0</option_tizen_flurry_enable>
     <option_tizen_flurry_id></option_tizen_flurry_id>
     <option_tizen_google_analytics_enable>0</option_tizen_google_analytics_enable>
-    <option_tizen_google_tracking_id></option_tizen_google_tracking_id>
+    <option_tizen_google_tracking_id>UA-57939076-3</option_tizen_google_tracking_id>
     <option_tizen_iap_groupID></option_tizen_iap_groupID>
     <option_tizen_icon>Configs\Default\tizen\icon117.png</option_tizen_icon>
     <option_tizen_interpolate>-1</option_tizen_interpolate>

@@ -65,7 +65,7 @@ y = floor(yO + 1.5*sin(timer*.05));
 
 var t;
 
-if ((timer mod (2*FPS)) &lt; FPS)
+if ((timer mod (2.5*FPS)) &lt; FPS)
     t = "HOW#TO#PLAY?"
 else
     t = "CLICK#HERE!";
