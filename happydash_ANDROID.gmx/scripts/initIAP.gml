@@ -58,19 +58,19 @@ ds_map_add(pUnlockUpgrades, "description", "Instantly unlock every upgrade in th
 
 pCoinpack1 = ds_map_create();
 ds_map_add(pCoinpack1, "id", "coinpack1");
-ds_map_add(pCoinpack1, "title", "1000 Coins!");
+ds_map_add(pCoinpack1, "title", "2000 Coins!");
 ds_map_add(pCoinpack1, "description", "A small sackful of coins.");
 //ds_map_add(pCoinpack1, "type", "Consumable");
 
 pCoinpack2 = ds_map_create();
 ds_map_add(pCoinpack2, "id", "coinpack2");
-ds_map_add(pCoinpack2, "title", "3000 Coins!");
+ds_map_add(pCoinpack2, "title", "5000 Coins!");
 ds_map_add(pCoinpack2, "description", "A medium sackful of coins.");
 //ds_map_add(pCoinpack2, "type", "Consumable");
 
 pCoinpack3 = ds_map_create();
 ds_map_add(pCoinpack3, "id", "coinpack3");
-ds_map_add(pCoinpack3, "title", "6000 Coins!");
+ds_map_add(pCoinpack3, "title", "10000 Coins!");
 ds_map_add(pCoinpack3, "description", "A big sackful of coins.");
 //ds_map_add(pCoinpack3, "type", "Consumable");
 

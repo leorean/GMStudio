@@ -28,18 +28,12 @@
             <string>depth = HUDDEPTH;
 image_speed = 0;
 
-S = objShopMenu;
+S = objPremiumMenu;
 
+product = "&lt;product&gt;"; //THE GOOGLE IAP PRODUCT ID
 name = "&lt;name&gt;";
 description = "&lt;description&gt;";
 index = 0;
-maxTier = 1; //default 1
-tier = 0;
-locked = true;//global.upgrade[index,UPGRADE.LOCKED];
-unlockText = "&lt;unlock description&gt;";
-
-t = pi/2;
-z = 0;
 </string>
           </argument>
         </arguments>
@@ -62,26 +56,7 @@ z = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (locked &amp;&amp; !global.upgrade[index,UPGRADE.LOCKED])
-{
-        t = instance_create(x,y,objEffectDust);t.depth=depth-1;
-        t = instance_create(x+TILE,y,objEffectDust);t.depth = depth-1;
-        t = instance_create(x,y+TILE,objEffectDust);t.depth=depth-1;
-        t = instance_create(x+TILE,y+TILE,objEffectDust);t.depth=depth-1;
-        t = instance_create(x+.5*TILE,y+.5*TILE,objEffectDust);t.depth=depth-1;
-}
-
-locked = global.upgrade[index,UPGRADE.LOCKED];
-tier = global.upgrade[index,UPGRADE.TIER];
-
-//if (
-//if (S.itemFocus == index)
-//    depth = HUDDEPTH-1;
-//else
-//    depth = HUDDEPTH;
-
-depth = HUDDEPTH-y;
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -104,17 +79,13 @@ depth = HUDDEPTH-y;
           <argument>
             <kind>1</kind>
             <string>//draw item background
-draw_sprite_part(spriteShop,-1,WIDTH,4*TILE,2*TILE,2*TILE,x,y);
+draw_sprite_part(spritePremium,-1,WIDTH,4*TILE,2*TILE,2*TILE,x,y);
 
 //draw item image
-var c;
-if (tier &lt;= 0 || locked) c = c_black; else c = c_white;
-draw_sprite_part_ext(spriteShop,-1,WIDTH+index*2*TILE,0,2*TILE,2*TILE,x,y,1,1,c,.5+.5*(tier!= 0 &amp;&amp; !locked));
-
-if (locked)
-    draw_sprite_part(spriteShop,-1,WIDTH+4*TILE,4*TILE,2*TILE,2*TILE,x,y);
+draw_sprite_part(spritePremium,-1,WIDTH+index*2*TILE,0,2*TILE,2*TILE,x,y);
 
 //draw upgrade tier stuff.
+/*
 if (S.itemFocus == index &amp;&amp; !locked)
 {
     var r, pp;
@@ -134,38 +105,11 @@ if (S.itemFocus == index &amp;&amp; !locked)
         }
         draw_sprite_part(spriteShop,-1,WIDTH+r*TILE,6*TILE,TILE,TILE,x+2*TILE+i*.5*TILE,y+.5*TILE);
     }
-}
+}*/
 
 //DRAW BORDER
 if (S.itemFocus == index)
-    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE,4*TILE,2*TILE,2*TILE,x,y);
-
-
-//DRAW TIER EFFECTS
-if (!locked)
-{
-    if (tier &gt;= maxTier)
-    {
-        if (random(30) &gt; 28)
-        {
-            var d;
-            d = instance_create(x-.5*TILE+random(2*TILE),y-.5*TILE+random(2*TILE),objEffectDust);
-            d.depth = depth-1;
-            d.type = 7;
-        }
-        
-    } else
-    {
-        t = (t+.06)mod(2*pi);
-        z = 2*cos(t);
-
-        if (real(price[tier]) &lt;= global.wallet)
-            draw_sprite_part_ext(spriteShop,-1,WIDTH,2*TILE+(tier == 0)*TILE,2*TILE,TILE,x,y-z,1,1,c_white,1/*.5+.5*(S.itemFocus == index)*/);
-    }
-}
-
-if (tier == maxTier)//MAX symbol
-    draw_sprite_part(spriteShop,-1,WIDTH+2*TILE,2*TILE,2*TILE,2*TILE,x,y+.25*TILE);
+    draw_sprite_part(spritePremium,-1,WIDTH+2*TILE,4*TILE,2*TILE,2*TILE,x,y);
 </string>
           </argument>
         </arguments>

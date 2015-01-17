@@ -45,7 +45,13 @@ descriptionTimer = 0;
 loadProgress();
 unlockUpgrades();
 
-////////////////////////////SHOP ITEMS///////////////////////////////
+////////////////////////////PREMIUM ITEMS///////////////////////////////
+
+item[0] = instance_create(4*TILE,4*TILE,objPremiumItem);
+item[0].index = 0;
+item[0].product = "coinpack1"; //IMPORTANT!
+item[0].name = "small coinpack asdf";
+item[0].description = "asd description coins small";
 
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 /*
@@ -86,7 +92,7 @@ item[UPGRADE.upBlockNew] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockNew, "Bl
 
 ////BUTTONS
 index = 0;
-maxIndex = 0;
+maxIndex = 1;
 
 //back
 btn[0] = instance_create(2*TILE,0,objButton);
@@ -96,6 +102,16 @@ btn[0].parent = id;
 btn[0].fnt = fntMenu;
 btn[0].w = 2*TILE;
 btn[0].h = 2*TILE;
+
+//purchase
+btn[1] = instance_create(WIDTH-2*TILE,0,objButton);
+btn[1].text = "";
+btn[1].index = 1;
+btn[1].parent = id;
+btn[1].fnt = fntMenu;
+btn[1].w = 2*TILE;
+btn[1].h = 2*TILE;
+
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
@@ -152,20 +168,33 @@ if (btn[0].pressed)
     room_goto(INIT);
 }
 
-/*
+//IAP!!!!!!
+if (itemFocus != -1)
+{
+    if (btn[1].pressed)
+    {
+        global.product = item[itemFocus].product;
+        //show_message(global.product);
+        with(objIAP)
+            buyIAP(global.product);
+        global.product = -1;
+    }
+}
+
 if (mouse_check_button_released(mb_left))
 {
     i = instance_place(mouse_x,mouse_y,objPremiumItem);
     if (instance_exists(i))
     {
         itemFocus = i.index;
-        descriptionTimer = 0;
+        //descriptionTimer = 0;
     } else
         if (!btn[0].pressed) //only release focus when clicking elsewhere.
             itemFocus = -1;
     i = noone;  
 }
 
+/*
 if (itemFocus != -1)
 {
     itemPrice = item[itemFocus].price[item[itemFocus].tier];
@@ -286,11 +315,26 @@ if (debug_mode)
 
 draw_sprite_part(spritePremium,-1,0,0,WIDTH,HEIGHT,0,0);
 
+draw_set_color(c_white);
+draw_set_font(fntMenu);
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+
+drawText(WIDTH/2,0,string(global.wallet),c_white,c_black,fntNumbers);
+
+
+//BACK BUTTON
+var a;
+a = 0;
+if (btn[0].active &amp;&amp; mouse_check_button(mb_left)) a = 1;
+draw_sprite_part(spritePremium,-1,4*TILE*a,HEIGHT,4*TILE,2*TILE,btn[0].x-2*TILE,btn[0].y);
+
 //PURCHASE BUTTON
 var b;
 b = 0;
-if (btn[0].active &amp;&amp; mouse_check_button(mb_left)) b = 1;
-draw_sprite_part(spritePremium,-1,4*TILE*b,HEIGHT,4*TILE,2*TILE,btn[0].x-2*TILE,btn[0].y);
+if (btn[1].active &amp;&amp; mouse_check_button(mb_left)) b = 1;
+draw_sprite_part(spritePremium,-1,4*TILE*b,HEIGHT+2*TILE,4*TILE,2*TILE,btn[1].x-2*TILE,btn[1].y);
+
 /*
 //EXIT BUTTON
 draw_sprite_part(spritePremium,-1,2*TILE*(btn[2].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+2*TILE,2*TILE,2*TILE,0,0);
@@ -298,12 +342,6 @@ draw_sprite_part(spritePremium,-1,2*TILE*(btn[2].active &amp;&amp; mouse_check_b
 //PLAY BUTTON
 draw_sprite_part(spritePremium,-1,2*TILE*(btn[1].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+4*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
 
-draw_set_color(c_white);
-draw_set_font(fntMenu);
-draw_set_halign(fa_center);
-draw_set_valign(fa_top);
-
-drawText(WIDTH/2,0,string(global.wallet),c_white,c_black,fntNumbers);
 
 //CURRENT DESCRIPTION
 draw_set_halign(fa_left);

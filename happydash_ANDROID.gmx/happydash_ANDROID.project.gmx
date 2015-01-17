@@ -186,6 +186,7 @@
       <script>scripts\zip.gml</script>
       <script>scripts\saveOptions.gml</script>
       <script>scripts\initIAP.gml</script>
+      <script>scripts\buyIAP.gml</script>
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
@@ -237,6 +238,7 @@
       <object>objects\objMouse</object>
       <object>objects\objSoundManager</object>
       <object>objects\objAD</object>
+      <object>objects\objIAP</object>
     </objects>
     <objects name="content">
       <object>objects\objBlock</object>

@@ -85,7 +85,7 @@ GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobi
             <kind>1</kind>
             <string>//AD STUFF
 showbanner = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; global.pause)));
+    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
 
 showinterstitial = (os_type == os_android &amp;&amp; !global.noads
     &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver

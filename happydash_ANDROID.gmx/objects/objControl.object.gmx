@@ -58,7 +58,14 @@ global.unlockupgrades = false;
 
 initIAP(); //INIT IN APP PURCHASES
 
-instance_create(0,0,objAD);
+global.product = -1; //STORES THE PRODUCT ID FOR THE IAP OBJECT.
+
+if (os_type == os_android)
+{
+    instance_create(0,0,objAD);
+    instance_create(0,0,objIAP);
+}
+
 global.playthrough = 0; //for ads
 
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
