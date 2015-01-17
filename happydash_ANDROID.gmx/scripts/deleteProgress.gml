@@ -13,3 +13,7 @@ for (i = 0; i < UPGRADE.SIZE; i+=1)
         
 global.wallet = 0;
 global.maxLevelReached = 0;
+
+global.unlockupgrades = false;
+global.noads = false;
+

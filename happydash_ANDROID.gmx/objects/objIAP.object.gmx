@@ -65,17 +65,23 @@ switch(val)
         if ds_map_find_value(iap_data, "consumed")
         {
             ds_map_replace(global.purchaseMap, product_id, 0);
+            var amount = -1;
             switch (product_id)
             {
                 case "coinpack1":
-                    global.wallet += 2000;
+                    amount = 2000;
                 break;
                 case "coinpack2":
-                    global.wallet += 5000;
+                    amount = 5000;
                 break;
                 case "coinpack3":
-                    global.wallet += 10000;
+                    amount = 10000;
                 break;
+            }
+            if (amount != -1)
+            {
+                global.wallet += amount;
+                saveProgress(); loadProgress();
             }
         }
     break;
