@@ -4,10 +4,66 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>showads = (os_type == os_android &amp;&amp; !global.noads
+    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
+
+show_message(showads);
+        
+px = display_get_width()/2 - GoogleMobileAds_BannerGetWidth/2;
+py = display_get_height() - GoogleMobileAds_BannerGetHeight();
+    
+GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
+    px, py);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>GoogleMobileAds_RemoveBanner();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -27,30 +83,12 @@
             <kind>1</kind>
             <string>//AD STUFF
 showads = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; (room == INIT || (room == MAIN &amp;&amp; (global.pause || global.gameOver))));
+    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
 
 if (timer == 0)
 {
-    if (showads &amp;&amp; banner)
-    {
-        GoogleMobileAds_MoveBanner(display_get_width(),display_get_height());
-        banner = false;
-    }
-    
-/*
-    if (showads)
-    {
-        GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,0,0);
-            //display_get_width()/2 - 160,display_get_height()-50);
-    } else
-    {
-        if (banner)
-        {
-            GoogleMobileAds_RemoveBanner();
-            banner = false;
-        }
-            
-    }*/
+    if (!showads)
+        instance_destroy();
     timer = FPS;
 }
 timer = max(timer - 1, 0);
@@ -84,48 +122,12 @@ if (ident == "banner_load")
     {
         var bw = ds_map_find_value(async_load, "width");
         var bh = ds_map_find_value(async_load, "height");
-        var px = display_get_width()/2 - bw/2;
-        var py = display_get_height() - bh;
-        GoogleMobileAds_MoveBanner(max(px,0), max(py,0));
-        banner = true;
+        px = display_get_width()/2 - bw/2;
+        py = display_get_height() - bh;
+        GoogleMobileAds_MoveBanner(px,py);
+//        banner = true;
     }
 }
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="4">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>showads = false;
-banner = false;
-timer = 0;
-
-//MOBILE ADS
-GoogleMobileAds_Init("");//ca-app-pub-3438177514702788/3814879955 if i use interstitial ads
-//GoogleMobileAds_UseTestAds (true, "73D7B39415A51B45B5C3E6E1A8B6C60E");
-
-//TEST ID IS 73D7B39415A51B45B5C3E6E1A8B6C60E for my old samsung galaxy s+
-//GoogleMobileAds_UseTestAds(true,"73D7B39415A51B45B5C3E6E1A8B6C60E");
-
-GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
-    display_get_width()/2 - 160,display_get_height()-50);
-
 </string>
           </argument>
         </arguments>

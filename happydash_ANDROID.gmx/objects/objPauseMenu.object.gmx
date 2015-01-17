@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;
 
+instance_create(0,0,objAD);
+
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
 

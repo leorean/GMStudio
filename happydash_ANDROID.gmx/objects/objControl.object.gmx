@@ -30,7 +30,6 @@
 depth = HUDDEPTH;
 randomize();
 
-
 //SL
 if (os_type != os_android &amp;&amp; os_type != os_windows)
 {
@@ -42,9 +41,11 @@ if (os_type != os_android &amp;&amp; os_type != os_windows)
     }
 }
 
-instance_create(0,0,objAD);
+//MOBILE ADS
+GoogleMobileAds_Init("");//ca-app-pub-3438177514702788/3814879955 if i use interstitial ads
+//GoogleMobileAds_UseTestAds (true, "73D7B39415A51B45B5C3E6E1A8B6C60E");
 
-//GOOGLE
+//GOOGLE PLAY SERVICES
 if (os_type == os_android &amp;&amp; os_is_network_connected())
 {
     if (!achievement_login_status())

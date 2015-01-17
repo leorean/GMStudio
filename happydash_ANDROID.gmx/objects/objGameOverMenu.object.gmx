@@ -29,6 +29,8 @@
 index = 0;
 maxIndex = 3;
 
+instance_create(0,0,objAD);
+
 canBuySomething = false;
 
 for (i = 0; i &lt; UPGRADE.SIZE; i+=1)

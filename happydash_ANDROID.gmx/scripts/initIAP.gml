@@ -1,5 +1,8 @@
 if (os_type != os_android)
+{
+    global.noads = true;
     exit;
+}
 
 var map_create = true;
 if file_exists("iap_data.json")
