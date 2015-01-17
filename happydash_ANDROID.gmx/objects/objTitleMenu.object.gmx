@@ -30,8 +30,6 @@ depth = 2;
 
 with(objButton)
     instance_destroy();
-
-instance_create(0,0,objAD);
     
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;

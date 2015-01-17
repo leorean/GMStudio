@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,14 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>showads = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
+            <string>showbanner = true;
+showinterstitial = false;
 
-show_message(showads);
-        
-px = display_get_width()/2 - GoogleMobileAds_BannerGetWidth/2;
-py = display_get_height() - GoogleMobileAds_BannerGetHeight();
-    
+timer = 60;
+
+px = display_get_width()/2 - 360/2;
+py = display_get_height() - 60;
+
+GoogleMobileAds_LoadInterstitial();
+
 GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
     px, py);
 
@@ -82,15 +84,33 @@ GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobi
           <argument>
             <kind>1</kind>
             <string>//AD STUFF
-showads = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
+showbanner = (os_type == os_android &amp;&amp; !global.noads
+    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; global.pause)));
+
+showinterstitial = (os_type == os_android &amp;&amp; !global.noads
+    &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver
+    &amp;&amp; global.playthrough % 3 == 0 &amp;&amp; global.playthrough &gt; 0); //every n-th run
 
 if (timer == 0)
 {
-    if (!showads)
-        instance_destroy();
+
+    if (!showinterstitial)
+    {
+    }
+    else
+    {
+        if (GoogleMobileAds_InterstitialStatus() == "Ready")
+            GoogleMobileAds_ShowInterstitial();
+    }
+
+    if (!showbanner)
+        GoogleMobileAds_MoveBanner(-1,-1);
+    else
+        GoogleMobileAds_MoveBanner(px, py);
+        
     timer = FPS;
 }
+
 timer = max(timer - 1, 0);
 </string>
           </argument>
@@ -127,6 +147,11 @@ if (ident == "banner_load")
         GoogleMobileAds_MoveBanner(px,py);
 //        banner = true;
     }
+}
+else if ident == "interstitial_load"
+{
+    //?
+    //global.interLoading = false; 
 }
 </string>
           </argument>

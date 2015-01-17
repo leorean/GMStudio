@@ -5,7 +5,7 @@
     <option_android_GPU_device>0</option_android_GPU_device>
     <option_android_adcolony_enable_V4VC>0</option_android_adcolony_enable_V4VC>
     <option_android_advertising_enable>-1</option_android_advertising_enable>
-    <option_android_advertising_key>ca-app-pub-3438177514702788/3814879955|0|</option_android_advertising_key>
+    <option_android_advertising_key>ca-app-pub-3438177514702788/3814879955|0|ca-app-pub-3438177514702788/3422770352|5|</option_android_advertising_key>
     <option_android_advertising_type>AdMob</option_android_advertising_type>
     <option_android_amazon_game_circle>0</option_android_amazon_game_circle>
     <option_android_amazon_gc_achievements>0</option_android_amazon_gc_achievements>
@@ -19,7 +19,7 @@
     <option_android_arch_mipsr2>false</option_android_arch_mipsr2>
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
     <option_android_arch_x86>True</option_android_arch_x86>
-    <option_android_build_version>11</option_android_build_version>
+    <option_android_build_version>15</option_android_build_version>
     <option_android_color_depth>1</option_android_color_depth>
     <option_android_display_name>Happy Dash</option_android_display_name>
     <option_android_flurry_enable>0</option_android_flurry_enable>

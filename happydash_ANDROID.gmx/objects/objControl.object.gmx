@@ -42,7 +42,7 @@ if (os_type != os_android &amp;&amp; os_type != os_windows)
 }
 
 //MOBILE ADS
-GoogleMobileAds_Init("");//ca-app-pub-3438177514702788/3814879955 if i use interstitial ads
+GoogleMobileAds_Init("ca-app-pub-3438177514702788/3422770352");//ca-app-pub-3438177514702788/3814879955 if i use interstitial ads
 //GoogleMobileAds_UseTestAds (true, "73D7B39415A51B45B5C3E6E1A8B6C60E");
 
 //GOOGLE PLAY SERVICES
@@ -56,10 +56,9 @@ if (os_type == os_android &amp;&amp; os_is_network_connected())
 global.noads = false;
 global.unlockupgrades = false;
 
-showads = true;
-
 initIAP(); //INIT IN APP PURCHASES
 
+instance_create(0,0,objAD);
 global.playthrough = 0; //for ads
 
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
