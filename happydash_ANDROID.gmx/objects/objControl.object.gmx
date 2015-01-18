@@ -58,8 +58,6 @@ global.unlockupgrades = false;
 
 instance_create(0,0,objIAP);
 
-global.product = -1; //STORES THE PRODUCT ID FOR THE IAP OBJECT.
-
 global.ad = noone;
 initAD();
 

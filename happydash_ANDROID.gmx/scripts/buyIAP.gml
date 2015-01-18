@@ -3,11 +3,11 @@ if (os_type != os_android)
 
 if (iap_status() == iap_status_available)
 {
-    var product = argument0;
-    if (ds_map_find_value(global.purchaseMap, product) == 0)
+    var prod = argument0;
+    if (ds_map_find_value(global.purchaseMap, prod) == 0)
     {
-        iap_acquire(product, "");
+        iap_acquire(prod, "");
     }
 }
 else
-    show_message_async("Store is not available. Please try again!");
+    show_message_async("Unavailable. Please try again!");

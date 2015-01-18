@@ -26,8 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>//global.products = ds_map_create();
+
+global.pCount = 4; // HAS TO BE ADJUSTED WHEN ADDING NEW ITEMS!!!!
+
 var i;
-for (i = 0; i &lt; 4; i++)
+for (i = 0; i &lt; global.pCount; i++)
 {
     global.p_id[i] = "none";
     global.p_title[i] = "none";
@@ -137,12 +140,13 @@ switch(val)
         global.p_description[global.pCur] = p_description;
         global.p_price[global.pCur] = p_price;
         global.p_type[global.pCur] = p_type;
+
+        global.pCur ++;
         
         //show_message(p_id + ":" + p_title + ":" + p_price + ":" + p_type);
         
         //store map in a map
         //ds_map_add(global.products,global.pCur, p_map);
-        global.pCur ++;
         
         ds_map_destroy(p_map);
     break;

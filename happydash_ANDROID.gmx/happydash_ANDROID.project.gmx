@@ -167,6 +167,7 @@
     <sprite>sprites\spritePremium</sprite>
     <sprite>sprites\spriteLevelUp</sprite>
     <sprite>sprites\spriteHelp</sprite>
+    <sprite>sprites\sprPremiumItemMask</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -205,6 +206,7 @@
       <script>scripts\yCollision.gml</script>
       <script>scripts\destroyStuff.gml</script>
       <script>scripts\drawText.gml</script>
+      <script>scripts\drawTextExt.gml</script>
       <script>scripts\hurtPlayer.gml</script>
       <script>scripts\spawnParticle.gml</script>
       <script>scripts\createItem.gml</script>

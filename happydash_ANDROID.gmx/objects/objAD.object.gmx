@@ -30,8 +30,8 @@ showinterstitial = false;
 
 timer = 30;
 
-px = display_get_width()/2 - 360/2;
-py = display_get_height() - 60;
+px = 160;//display_get_width()/2 - 360/2;
+py = 405;//display_get_height() - 60;
 
 GoogleMobileAds_LoadInterstitial();
 

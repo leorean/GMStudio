@@ -78,7 +78,11 @@ if (mouse_check_button_released(mb_left))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>active = (index == parent.tabIndex);
+            <string>draw_set_alpha(1);
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+
+active = (index == parent.tabIndex);
 
 draw_sprite_part(spritePremium,-1,6*TILE+(4*TILE*!active),HEIGHT,4*TILE,2*TILE,x,y);
 

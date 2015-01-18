@@ -34,19 +34,18 @@ with(objPlayer)
 global.xSpeed = 0; //lol...
 global.player = noone;
 
-itemFocus = -1;
-
 loadProgress();
 unlockUpgrades();
 
 ////////////////////////////PREMIUM ITEMS///////////////////////////////
+product = noone;
 
-item[0] = instance_create(4*TILE,5*TILE,objPremiumItem);
-item[0].index = 0;
+item[0] = instance_create(2*TILE,5*TILE,objPremiumItem);
+item[0].p_id = "coinpack1";
 item[0].tab = 0;
 
-item[1] = instance_create(8*TILE,5*TILE,objPremiumItem);
-item[1].index = 1;
+item[1] = instance_create(6*TILE,5*TILE,objPremiumItem);
+item[1].p_id = "noads";
 item[1].tab = 0;
 
 //createItem(x, y, index, name, description, pricearray, locked, tier);
@@ -85,7 +84,6 @@ btn[1].parent = id;
 btn[1].fnt = fntMenu;
 btn[1].w = 3*TILE;
 btn[1].h = 3*TILE;
-
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
@@ -142,32 +140,42 @@ if (btn[0].pressed || keyboard_check_pressed(vk_backspace))
     room_goto(INIT);
 }
 
-//IAP!!!!!!
-if (itemFocus != -1)
-{
-    if (btn[1].pressed)
-    {
-        //global.product = item[itemFocus].p_id;
-        show_message(item[itemFocus].p_id);
-        with(objIAP)
-            buyIAP(item[itemFocus].p_id);
-        global.product = -1;
-    }
-}
-
 if (mouse_check_button_released(mb_left))
 {
     i = instance_place(mouse_x,mouse_y,objPremiumItem);
     if (instance_exists(i))
     {
         if (i.tab == tabIndex)
-            itemFocus = i.index;
-        //descriptionTimer = 0;
+            product = instance_place(mouse_x,mouse_y,objPremiumItem);
+        else
+            product = noone;
     } else
-        if (!btn[0].pressed) //only release focus when clicking elsewhere.
-            itemFocus = -1;
+        if (!btn[1].active) //only release focus when clicking elsewhere.
+            product = noone;
     i = noone;  
 }
+
+//IAP PURCHASE
+if (true)//instance_exists(product))
+{
+    if (btn[1].pressed)
+    {
+        if (instance_exists(product))
+        {
+            if (product.index != -1) //check if product REALLY exists in store
+            {
+                with(objIAP)
+                    buyIAP(objPremiumMenu.product.p_id);
+                
+            } else
+                show_message("Could not fetch item info from store.");
+        }
+        //show_message("pid: " + string(product));
+        product = noone;
+    }
+}
+
+
 </string>
           </argument>
         </arguments>
@@ -191,78 +199,35 @@ if (mouse_check_button_released(mb_left))
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-//draw_set_color(c_maroon);
-//draw_rectangle(0,0,WIDTH,HEIGHT,0);
 
 draw_sprite_part(spritePremium,-1,0,0,WIDTH,HEIGHT,0,0);
 
 draw_set_color(c_white);
-draw_set_font(fntMenu);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
 drawText(WIDTH/2,0,string(global.wallet),c_white,c_black,fntNumbers);
+//drawText(WIDTH/2,TILE,string(product),c_white,c_black,fntNumbers);
 
-if (itemFocus != -1)
+if (instance_exists(product))
 {
-    drawText(2*TILE,5*TILE,item[itemFocus].p_id,c_white,c_black,fntTiny);
-    drawText(2*TILE,6*TILE,item[itemFocus].p_title,c_white,c_black,fntTiny);
-    drawText(2*TILE,7*TILE,item[itemFocus].p_description,c_white,c_black,fntTiny);
-    drawText(2*TILE,8*TILE,item[itemFocus].p_price,c_white,c_black,fntTiny);
-    drawText(2*TILE,9*TILE,item[itemFocus].p_type,c_white,c_black,fntTiny);
+    //drawTextExt(2*TILE,5*TILE,product.p_id,c_white,c_black,fntTiny,9*TILE);
+    draw_set_halign(fa_left);
+    drawTextExt(14.5*TILE,4.5*TILE,product.p_title,c_white,c_black,fntButton,9*TILE);
+    drawText(14.5*TILE,6*TILE,product.p_price,c_white,c_black,fntButton);
+    drawTextExt(14.5*TILE,8*TILE,product.p_description,make_color_hsv(35,255,132),c_none,fntShopSmall,9*TILE);
+    //drawTextExt(2*TILE,9*TILE,product.p_type,c_white,c_black,fntTiny,9*TILE);
 }
 
 //BACK BUTTON
-var a;
-a = 0;
+var a; a = 0;
 if (btn[0].active &amp;&amp; mouse_check_button(mb_left)) a = 1;
 draw_sprite_part(spritePremium,-1,3*TILE*a,HEIGHT+3*TILE,3*TILE,3*TILE,btn[0].x-1.5*TILE,btn[0].y);
 
 //PURCHASE BUTTON
-var b;
-b = 0;
+var b; b = 0;
 if (btn[1].active &amp;&amp; mouse_check_button(mb_left)) b = 1;
 draw_sprite_part(spritePremium,-1,3*TILE*b,HEIGHT,3*TILE,3*TILE,btn[1].x-1.5*TILE,btn[1].y);
-
-/*
-//EXIT BUTTON
-draw_sprite_part(spritePremium,-1,2*TILE*(btn[2].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+2*TILE,2*TILE,2*TILE,0,0);
-
-//PLAY BUTTON
-draw_sprite_part(spritePremium,-1,2*TILE*(btn[1].active &amp;&amp; mouse_check_button(mb_left)),HEIGHT+4*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
-
-
-//CURRENT DESCRIPTION
-draw_set_halign(fa_left);
-//if (!itemLocked)
-    drawText(TILE,HEIGHT-2.5*TILE,itemDescription,c_white,c_none,fntShopSmall);
-//else
-//    drawText(TILE,HEIGHT-2.5*TILE,item[itemFocus].unlockText,c_red,c_none,fntShopSmall);
-
-
-//CURRENT PRICE
-draw_set_halign(fa_right);
-var c1,c2;
-if (itemFocus != -1)
-{
-    var c1,c2;
-    
-    if (itemLocked)
-        {c1 = c_gray; c2 = c_none}
-    else if (real(itemPrice) &lt;= global.wallet)
-        {c1 = c_white;c2 = c_none}
-    else
-        {c1 = c_red;c2 = c_none}
-}
-    else {c1 = c_white; c2 = c_none};
-
-drawText(WIDTH-.5*TILE,HEIGHT-4*TILE-2,string(itemPrice),c1,c2,fntNumbers);
-
-
-//ITEM NAME
-draw_set_halign(fa_left);
-drawText(.5*TILE,HEIGHT-4*TILE,string(itemName),make_color_hsv(33,170,255),c_none,fntShopSmall);
-*/
 </string>
           </argument>
         </arguments>

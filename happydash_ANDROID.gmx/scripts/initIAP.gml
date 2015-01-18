@@ -58,34 +58,15 @@ if (map_create) // if no save file is found, we create one.
 var productList = ds_list_create();
 
 var pNoAds = ds_map_create();
-ds_map_add(pNoAds, "id", "noads"); //the id from google play
-//ds_map_add(pNoAds, "title", "No Ads!");
-//ds_map_add(pNoAds, "description", "Get rid of ads permanently!");
-//ds_map_add(pNoAds, "type", "Durable");
-
+ds_map_add(pNoAds, "id", "noads");
 var pUnlockUpgrades = ds_map_create();
-ds_map_add(pUnlockUpgrades, "id", "unlockupgrades"); //the id from google play
-//ds_map_add(pUnlockUpgrades, "title", "Unlock all Upgrades!");
-//ds_map_add(pUnlockUpgrades, "description", "Instantly unlock every upgrade in the game! But you still have to upgrade them!");
-//ds_map_add(pUnlockUpgrades, "type", "Durable");
-
+ds_map_add(pUnlockUpgrades, "id", "unlockupgrades");
 pCoinpack1 = ds_map_create();
 ds_map_add(pCoinpack1, "id", "coinpack1");
-//ds_map_add(pCoinpack1, "title", "2000 Coins!");
-//ds_map_add(pCoinpack1, "description", "A small sackful of coins.");
-//ds_map_add(pCoinpack1, "type", "Consumable");
-
 pCoinpack2 = ds_map_create();
 ds_map_add(pCoinpack2, "id", "coinpack2");
-//ds_map_add(pCoinpack2, "title", "5000 Coins!");
-//ds_map_add(pCoinpack2, "description", "A medium sackful of coins.");
-//ds_map_add(pCoinpack2, "type", "Consumable");
-
 pCoinpack3 = ds_map_create();
 ds_map_add(pCoinpack3, "id", "coinpack3");
-//ds_map_add(pCoinpack3, "title", "10000 Coins!");
-//ds_map_add(pCoinpack3, "description", "A big sackful of coins.");
-//ds_map_add(pCoinpack3, "type", "Consumable");
 
 ds_list_add(productList, pNoAds);
 ds_list_add(productList, pUnlockUpgrades);
