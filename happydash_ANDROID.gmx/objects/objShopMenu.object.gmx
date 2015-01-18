@@ -162,42 +162,6 @@ if (global.input != INPUT_TOUCH)
             <kind>1</kind>
             <string>if (room != SHOP) instance_destroy();
 
-if (mouse_check_button_released(mb_left))
-{
-    i = instance_place(mouse_x,mouse_y,objShopItem);
-    if (instance_exists(i))
-    {
-        itemFocus = i.index;
-        descriptionTimer = 0;
-    } else
-        if (!btn[0].pressed) //only release focus when clicking elsewhere.
-            itemFocus = -1;
-    i = noone;  
-}
-
-if (itemFocus != -1)
-{
-    itemPrice = item[itemFocus].price[item[itemFocus].tier];
-    itemLocked = item[itemFocus].locked;
-    if (!itemLocked)
-    {
-        itemName = string(item[itemFocus].name) + " (" + string(item[itemFocus].tier) + " / " + string(item[itemFocus].maxTier) + ")";
-        if (!descriptionTimer) itemDescription = item[itemFocus].description;
-    } else
-    {
-        itemName = "&lt;locked&gt;";
-        if (!descriptionTimer) itemDescription = item[itemFocus].unlockText;
-    }    
-}
-else
-{
-    itemPrice = "---";
-    itemName = "";
-    itemDescription = "Select what you want to buy.";
-}
-
-descriptionTimer = max(descriptionTimer -1,0);
-
 if (btn[0].pressed)
 {
     if (itemFocus != -1)
@@ -240,6 +204,42 @@ if (btn[0].pressed)
     }
     descriptionTimer = 1.5*FPS;
 }
+
+if (mouse_check_button_released(mb_left) &amp;&amp; !btn[0].active)
+{
+    i = instance_place(mouse_x,mouse_y,objShopItem);
+    if (instance_exists(i))
+    {
+        itemFocus = i.index;
+        descriptionTimer = 0;
+    } else
+        if (!btn[0].pressed) //only release focus when clicking elsewhere.
+            itemFocus = -1;
+    i = noone;  
+}
+
+if (itemFocus != -1)
+{
+    itemPrice = item[itemFocus].price[item[itemFocus].tier];
+    itemLocked = item[itemFocus].locked;
+    if (!itemLocked)
+    {
+        itemName = string(item[itemFocus].name) + " (" + string(item[itemFocus].tier) + " / " + string(item[itemFocus].maxTier) + ")";
+        if (!descriptionTimer) itemDescription = item[itemFocus].description;
+    } else
+    {
+        itemName = "&lt;locked&gt;";
+        if (!descriptionTimer) itemDescription = item[itemFocus].unlockText;
+    }    
+}
+else
+{
+    itemPrice = "---";
+    itemName = "";
+    itemDescription = "Select what you want to buy.";
+}
+
+descriptionTimer = max(descriptionTimer -1,0);
 
 if (btn[1].pressed || keyboard_check_pressed(vk_space) || (itemFocus == -1 &amp;&amp; keyboard_check_pressed(vk_enter))) //PLAY
 {

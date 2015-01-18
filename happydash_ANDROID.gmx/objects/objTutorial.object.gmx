@@ -53,7 +53,7 @@ if (os_type != os_android)
     txt[9] = "You get EXP from everything#you collect or destroy!";
     txt[10] = "If you hit something,#you can jump again!";
     txt[11] = "You get LEVEL UPs from EXP#and unlock new worlds!";
-    txt[12] = "Use the SHOP to#upgrade your stuff!";
+    txt[12] = "Use the shop to#upgrade your stuff!";
     txt[13] = "Each time you play,#the levels will be different!";
     txt[14] = "Are you ready#for the real deal?##Then let's go!";
 }
@@ -71,7 +71,7 @@ else
     txt[9] = "You get EXP from everything#you collect or destroy!";
     txt[10] = "If you hit something,#you can jump again!";
     txt[11] = "You get LEVEL UPs from EXP#and unlock new worlds!";
-    txt[12] = "Use the SHOP to#upgrade your stuff!";
+    txt[12] = "Use the shop to#upgrade your stuff!";
     txt[13] = "Each time you play,#the levels will be different!";
     txt[14] = "Are you ready#for the real deal?##Then let's go!";    
 }
@@ -165,8 +165,10 @@ if (!global.pause)
         }
         if (i == 6)
             {i=7;timer = 2*FPS;exit}
-        if (i &gt;= 8 &amp;&amp; i &lt; 14)
+        if (i &gt;= 8 &amp;&amp; i &lt; 13)
             {i++;timer = 5*FPS;exit}
+        if (i == 13)
+            {i++;timer = .5*FPS;exit}
         if (i == 14 &amp;&amp; (mouse_check_button_released(mb_left) || keyboard_check_released(vk_anykey)))
         {
             global.mode = M.NORMALMODE;

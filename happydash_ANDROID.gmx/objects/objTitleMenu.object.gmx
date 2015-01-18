@@ -28,6 +28,8 @@
             <string>image_index = 0;
 depth = 2;
 
+initAD();
+
 with(objButton)
     instance_destroy();
     
@@ -151,6 +153,12 @@ if (btn[0].pressed)
 }
 if (btn[1].pressed)
     room_goto(SHOP);
+    
+if (!os_is_network_connected())
+    btn[2].enabled = false;
+else
+    btn[2].enabled = true;
+
 if (btn[2].pressed)
 {
     if (os_is_network_connected())

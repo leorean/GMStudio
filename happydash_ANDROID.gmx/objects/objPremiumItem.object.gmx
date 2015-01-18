@@ -28,12 +28,24 @@
             <string>depth = HUDDEPTH;
 image_speed = 0;
 
-S = objPremiumMenu;
+P = objPremiumMenu;
 
+p_id = "&lt;";
+p_title = "&lt;";
+p_description = "&lt;";
+p_price = "&lt;";
+p_type = "&lt;";
+
+/*
 product = "&lt;product&gt;"; //THE GOOGLE IAP PRODUCT ID
 name = "&lt;name&gt;";
 description = "&lt;description&gt;";
+*/
+
+product = -1;
+
 index = 0;
+tab = 0;
 </string>
           </argument>
         </arguments>
@@ -56,7 +68,56 @@ index = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>//ds_map_add(global.products,global.pCur, p_map);
+//global.pCur ++;
+if (p_id == "&lt;" || p_id == "none") p_id = global.p_id[index];
+if (p_title == "&lt;" || p_title == "none") p_title = global.p_title[index];
+if (p_description == "&lt;" || p_description == "none") p_description = global.p_description[index];
+if (p_price == "&lt;" || p_price == "none") p_price = global.p_price[index];
+if (p_type == "&lt;" || p_type == "none") p_type = global.p_type[index];
+
+/*
+var map, c;
+
+map = ds_map_create();
+
+c = index; //TODO: get the product index (not id)
+//if (!is_undefined(ds_map_find_value(global.products,string(c))))
+ds_map_copy(map, ds_map_find_value(global.products,string(c)));
+
+if (p_id == "&lt;")
+{
+    //if (!is_undefined(ds_map_find_value(map,"id")))
+        p_id = ds_map_find_value(map,"id");    
+}
+if (p_title == "&lt;")
+{
+    //if (!is_undefined(ds_map_find_value(map,"title")))
+        p_title = ds_map_find_value(map,"title");
+}
+if (p_description == "&lt;")
+{
+    //if (!is_undefined(ds_map_find_value(map,"description")))
+        p_description = ds_map_find_value(map,"description");
+}
+if (p_price == "&lt;")
+{
+    //if (!is_undefined(ds_map_find_value(map,"price")))
+        p_price = ds_map_find_value(map,"price");
+}
+if (p_type == "&lt;")
+{
+    //if (!is_undefined(ds_map_find_value(map,"type")))
+        p_type = ds_map_find_value(map,"type");
+}
+
+ds_map_destroy(map);*/
+
+if (tab != P.tabIndex)
+    visible = false;
+else
+    visible = true;
+</string>
           </argument>
         </arguments>
       </action>
@@ -108,7 +169,7 @@ if (S.itemFocus == index &amp;&amp; !locked)
 }*/
 
 //DRAW BORDER
-if (S.itemFocus == index)
+if (P.itemFocus == index)
     draw_sprite_part(spritePremium,-1,WIDTH+2*TILE,4*TILE,2*TILE,2*TILE,x,y);
 </string>
           </argument>

@@ -3,8 +3,8 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-100</depth>
-  <persistent>-1</persistent>
+  <depth>0</depth>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,42 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>showbanner = true;
-showinterstitial = false;
-
-timer = 30;
-
-px = display_get_width()/2 - 360/2;
-py = display_get_height() - 60;
-
-GoogleMobileAds_LoadInterstitial();
-
-GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
-    px, py);
-
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>GoogleMobileAds_RemoveBanner();
+            <string>index = -1;
+text = "";
 </string>
           </argument>
         </arguments>
@@ -83,48 +49,19 @@ GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobi
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//AD STUFF
-showbanner = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
+            <string>depth = parent.depth-1;
 
-showinterstitial = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver
-    &amp;&amp; ((global.playthrough % 2) == 0) &amp;&amp; global.playthrough &gt; 0); //every n-th run
-
-if (timer == 0)
+if (in(mouse_x,x,x+4*TILE) &amp;&amp; in(mouse_y,y,y+2*TILE))
+if (mouse_check_button_released(mb_left))
 {
-
-    if (!showinterstitial)
-    {
-    }
-    else
-    {
-        if (GoogleMobileAds_InterstitialStatus() == "Ready")
-            GoogleMobileAds_ShowInterstitial();
-    }
-        
-    if (global.noads)
-    {
-        GoogleMobileAds_RemoveBanner();
-    } else
-    {
-        if (!showbanner)
-            GoogleMobileAds_MoveBanner(-1,-1);
-        else
-            GoogleMobileAds_MoveBanner(px, py);        
-    }
-
-    timer = 30;
-    
+    parent.tabIndex = index;
 }
-
-timer = max(timer - 1, 0);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="7" enumb="70">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -141,25 +78,23 @@ timer = max(timer - 1, 0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ident = ds_map_find_value(async_load, "type");
-var loaded = ds_map_find_value(async_load, "loaded");
-if (ident == "banner_load")
+            <string>active = (index == parent.tabIndex);
+
+draw_sprite_part(spritePremium,-1,6*TILE+(4*TILE*!active),HEIGHT,4*TILE,2*TILE,x,y);
+
+var c1,c2;
+if (active)
 {
-    if (loaded)
-    {
-        var bw = ds_map_find_value(async_load, "width");
-        var bh = ds_map_find_value(async_load, "height");
-        px = display_get_width()/2 - bw/2;
-        py = display_get_height() - bh;
-        GoogleMobileAds_MoveBanner(px,py);
-//        banner = true;
-    }
+    c1 = c_white;
+    c2 = make_color_hsv(21,56,91);
 }
-else if ident == "interstitial_load"
+else
 {
-    //?
-    //global.interLoading = false; 
+    c1 = make_color_hsv(35,255,132);
+    c2 = c_none;
 }
+drawText(x+2*TILE,y+.5*TILE,text,c1,c2,fntNumbers);
+
 </string>
           </argument>
         </arguments>

@@ -185,8 +185,10 @@
       <script>scripts\unzip.gml</script>
       <script>scripts\zip.gml</script>
       <script>scripts\saveOptions.gml</script>
+      <script>scripts\initAD.gml</script>
       <script>scripts\initIAP.gml</script>
       <script>scripts\buyIAP.gml</script>
+      <script>scripts\showIAP.gml</script>
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>
@@ -275,22 +277,25 @@
       <object>objects\objEffectConfetti</object>
       <object>objects\objEffectLevelUp</object>
       <object>objects\objEffectFollowHeart</object>
-      <object>objects\objTutorial</object>
     </objects>
     <objects name="HUD">
-      <object>objects\objButton</object>
       <object>objects\objPauseMenu</object>
       <object>objects\objGameOverMenu</object>
       <object>objects\objTitleMenu</object>
-      <object>objects\objTouchButton</object>
       <object>objects\objScoreMenu</object>
       <object>objects\objShopMenu</object>
       <object>objects\objPremiumMenu</object>
-      <object>objects\objShopItem</object>
-      <object>objects\objPremiumItem</object>
       <object>objects\objHelpMenu</object>
       <object>objects\objHelpMe</object>
       <object>objects\objPremiumMe</object>
+      <objects name="sub">
+        <object>objects\objTutorial</object>
+        <object>objects\objPremiumItem</object>
+        <object>objects\objShopItem</object>
+        <object>objects\objButton</object>
+        <object>objects\objTouchButton</object>
+        <object>objects\objTab</object>
+      </objects>
     </objects>
   </objects>
   <rooms name="rooms">

@@ -44,7 +44,7 @@ cInactive1 = make_color_hsv(0,0,100);
 cInactive2 = c_black;
 
 cDisabled1 = make_color_hsv(0,0,80);
-cDisabled2 = make_color_hsv(0,0,30);
+cDisabled2 = c_none;//make_color_hsv(0,0,30);
 
 pressed = false;
 active = false;

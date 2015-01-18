@@ -29,7 +29,7 @@
 index = 0;
 maxIndex = 3;
 
-instance_create(0,0,objAD);
+initAD();
 
 canBuySomething = false;
 
@@ -139,6 +139,11 @@ if (btn[0].pressed)
     room_goto(SHOP);
 if (btn[1].pressed)
     room_restart();
+if (!os_is_network_connected())
+    btn[2].enabled = false;
+else
+    btn[2].enabled = true;
+
 if (btn[2].pressed)
 {
     if (os_is_network_connected())

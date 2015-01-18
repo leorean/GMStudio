@@ -10,4 +10,4 @@ if (iap_status() == iap_status_available)
     }
 }
 else
-    show_message_async("Store is not available. :(");
+    show_message_async("Store is not available. Please try again!");

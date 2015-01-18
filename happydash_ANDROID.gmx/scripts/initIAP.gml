@@ -12,7 +12,7 @@ if file_exists("iap_data.json")
     //WARNING: WHEN PURCHASING, MAKE SURE TO SET THESE GLOBALS TOO!!!
     if ds_exists(global.purchaseMap, ds_type_map)
     {
-        if ds_map_exists(global.purchaseMap, "noads")
+        if (ds_map_exists(global.purchaseMap, "noads"))
         {
             map_create = false;
             if (ds_map_find_value(global.purchaseMap, "noads") == 0)
@@ -20,7 +20,7 @@ if file_exists("iap_data.json")
             else
                 global.noads = true;
         }
-        if ds_map_exists(global.purchaseMap, "unlockupgrades")
+        if (ds_map_exists(global.purchaseMap, "unlockupgrades"))
         {
             map_create = false;
             if (ds_map_find_value(global.purchaseMap, "unlockupgrades") == 0)
@@ -28,6 +28,12 @@ if file_exists("iap_data.json")
             else
                 global.unlockupgrades = true;
         }
+        if (ds_map_exists(global.purchaseMap, "coinpack1"))
+            map_create = false;
+        if (ds_map_exists(global.purchaseMap, "coinpack2"))
+            map_create = false;
+        if (ds_map_exists(global.purchaseMap, "coinpack3"))
+            map_create = false;
     }
 }
 
@@ -35,8 +41,15 @@ if (map_create) // if no save file is found, we create one.
 {
     global.purchaseMap = ds_map_create();
     var product1 = "noads";
+    var product2 = "unlockupgrades";
+    var product3 = "coinpack1";
+    var product4 = "coinpack2";
+    var product5 = "coinpack3";
     ds_map_add(global.purchaseMap, product1, 0);
-    //ds_map_add(global.purchaseMap, product2, 0);
+    ds_map_add(global.purchaseMap, product2, 0);
+    ds_map_add(global.purchaseMap, product3, 0);
+    ds_map_add(global.purchaseMap, product4, 0);
+    ds_map_add(global.purchaseMap, product5, 0);
     ds_map_secure_save(global.purchaseMap, "iap_data.json");
 }
 
@@ -46,32 +59,32 @@ var productList = ds_list_create();
 
 var pNoAds = ds_map_create();
 ds_map_add(pNoAds, "id", "noads"); //the id from google play
-ds_map_add(pNoAds, "title", "No Ads!");
-ds_map_add(pNoAds, "description", "Get rid of ads permanently!");
+//ds_map_add(pNoAds, "title", "No Ads!");
+//ds_map_add(pNoAds, "description", "Get rid of ads permanently!");
 //ds_map_add(pNoAds, "type", "Durable");
 
 var pUnlockUpgrades = ds_map_create();
 ds_map_add(pUnlockUpgrades, "id", "unlockupgrades"); //the id from google play
-ds_map_add(pUnlockUpgrades, "title", "Unlock all Upgrades!");
-ds_map_add(pUnlockUpgrades, "description", "Instantly unlock every upgrade in the game! But you still have to upgrade them!");
-//ds_map_add(pNoAds, "type", "Durable");
+//ds_map_add(pUnlockUpgrades, "title", "Unlock all Upgrades!");
+//ds_map_add(pUnlockUpgrades, "description", "Instantly unlock every upgrade in the game! But you still have to upgrade them!");
+//ds_map_add(pUnlockUpgrades, "type", "Durable");
 
 pCoinpack1 = ds_map_create();
 ds_map_add(pCoinpack1, "id", "coinpack1");
-ds_map_add(pCoinpack1, "title", "2000 Coins!");
-ds_map_add(pCoinpack1, "description", "A small sackful of coins.");
+//ds_map_add(pCoinpack1, "title", "2000 Coins!");
+//ds_map_add(pCoinpack1, "description", "A small sackful of coins.");
 //ds_map_add(pCoinpack1, "type", "Consumable");
 
 pCoinpack2 = ds_map_create();
 ds_map_add(pCoinpack2, "id", "coinpack2");
-ds_map_add(pCoinpack2, "title", "5000 Coins!");
-ds_map_add(pCoinpack2, "description", "A medium sackful of coins.");
+//ds_map_add(pCoinpack2, "title", "5000 Coins!");
+//ds_map_add(pCoinpack2, "description", "A medium sackful of coins.");
 //ds_map_add(pCoinpack2, "type", "Consumable");
 
 pCoinpack3 = ds_map_create();
 ds_map_add(pCoinpack3, "id", "coinpack3");
-ds_map_add(pCoinpack3, "title", "10000 Coins!");
-ds_map_add(pCoinpack3, "description", "A big sackful of coins.");
+//ds_map_add(pCoinpack3, "title", "10000 Coins!");
+//ds_map_add(pCoinpack3, "description", "A big sackful of coins.");
 //ds_map_add(pCoinpack3, "type", "Consumable");
 
 ds_list_add(productList, pNoAds);
