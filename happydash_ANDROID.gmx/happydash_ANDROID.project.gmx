@@ -213,6 +213,8 @@
       <script>scripts\arrayFromList.gml</script>
       <script>scripts\array.gml</script>
       <script>scripts\saveRun.gml</script>
+      <script>scripts\priceText.gml</script>
+      <script>scripts\cutString.gml</script>
     </scripts>
   </scripts>
   <fonts name="fonts">

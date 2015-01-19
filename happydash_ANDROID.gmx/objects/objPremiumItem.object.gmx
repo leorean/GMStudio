@@ -31,9 +31,9 @@ image_speed = 0;
 P = objPremiumMenu;
 
 p_id = "&lt;id&gt;";
-p_title = "&lt;title&gt;";
-p_description = "&lt;placeholder for the item description&gt;";
-p_price = "$0.00";
+p_title = "&lt;title&gt; (Happy Dash)";
+p_description = "&lt;This text is just a placeholder for the item description&gt;";
+p_price = "0.00";
 p_type = "???";
 
 index = -1;
@@ -60,9 +60,7 @@ tab = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//ds_map_add(global.products,global.pCur, p_map);
-//global.pCur ++;
-if (index == -1)
+            <string>if (index == -1)
 {
     for (i = 0; i &lt; global.pCount; i++)
     {
@@ -80,47 +78,6 @@ if (index == -1)
     p_price = global.p_price[index];
     p_type = global.p_type[index];
 }
-/*
-if (p_id == "&lt;" || p_id == "none") p_id = global.p_id[index];
-if (p_title == "&lt;" || p_title == "none") p_title = global.p_title[index];
-if (p_description == "&lt;" || p_description == "none") p_description = global.p_description[index];
-if (p_price == "&lt;" || p_price == "none") p_price = global.p_price[index];
-if (p_type == "&lt;" || p_type == "none") p_type = global.p_type[index];
-var map, c;
-
-map = ds_map_create();
-
-c = index; //TODO: get the product index (not id)
-//if (!is_undefined(ds_map_find_value(global.products,string(c))))
-ds_map_copy(map, ds_map_find_value(global.products,string(c)));
-
-if (p_id == "&lt;")
-{
-    //if (!is_undefined(ds_map_find_value(map,"id")))
-        p_id = ds_map_find_value(map,"id");    
-}
-if (p_title == "&lt;")
-{
-    //if (!is_undefined(ds_map_find_value(map,"title")))
-        p_title = ds_map_find_value(map,"title");
-}
-if (p_description == "&lt;")
-{
-    //if (!is_undefined(ds_map_find_value(map,"description")))
-        p_description = ds_map_find_value(map,"description");
-}
-if (p_price == "&lt;")
-{
-    //if (!is_undefined(ds_map_find_value(map,"price")))
-        p_price = ds_map_find_value(map,"price");
-}
-if (p_type == "&lt;")
-{
-    //if (!is_undefined(ds_map_find_value(map,"type")))
-        p_type = ds_map_find_value(map,"type");
-}
-
-ds_map_destroy(map);*/
 
 if (tab != P.tabIndex)
     visible = false;
@@ -159,7 +116,18 @@ draw_sprite_part(spritePremium,-1,WIDTH+(id == P.product)*3*TILE,3*TILE,3*TILE,3
 //draw item image
 draw_sprite_part(spritePremium,-1,WIDTH+(index+1)*3*TILE,0,3*TILE,3*TILE,x,y);
 
-drawText(x+3*TILE,y+3*TILE,p_price,c_white,c_black,fntTiny);
+var c1,c2;
+if (id == P.product)
+{
+    c1 = c_white;
+    c2 = c_black;
+} else
+{
+    c1 = c_white;
+    c2 = make_color_hsv(0,0,27);
+}
+
+drawText(x+3*TILE,y+3*TILE,priceText(p_price),c1,c2,fntTiny);
 </string>
           </argument>
         </arguments>

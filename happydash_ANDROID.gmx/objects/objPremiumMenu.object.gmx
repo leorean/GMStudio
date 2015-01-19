@@ -213,10 +213,11 @@ if (instance_exists(product))
 {
     //drawTextExt(2*TILE,5*TILE,product.p_id,c_white,c_black,fntTiny,9*TILE);
     draw_set_halign(fa_left);
-    drawTextExt(14.5*TILE,4.5*TILE,product.p_title,c_white,c_black,fntButton,9*TILE);
-    drawText(14.5*TILE,6*TILE,product.p_price,c_white,c_black,fntButton);
+    drawText(14.5*TILE,4.5*TILE,cutString(product.p_title," (Happy Dash)"),c_white,c_black,fntShopSmall);
+    drawText(14.5*TILE,6*TILE,priceText(product.p_price),c_white,c_black,fntNumbers);
     drawTextExt(14.5*TILE,8*TILE,product.p_description,make_color_hsv(35,255,132),c_none,fntShopSmall,9*TILE);
-    //drawTextExt(2*TILE,9*TILE,product.p_type,c_white,c_black,fntTiny,9*TILE);
+
+    draw_sprite_part(spritePremium,-1,WIDTH,6*TILE,3*TILE,3*TILE,WIDTH-4*TILE,4*TILE);
 }
 
 //BACK BUTTON
