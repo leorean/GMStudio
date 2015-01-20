@@ -1,4 +1,4 @@
-global.upgrade[UPGRADE.upHealth,UPGRADE.PRICE] = array(1500,4500,7500);
+global.upgrade[UPGRADE.upHealth,UPGRADE.PRICE] = array(2000,5000,10000);
 global.upgrade[UPGRADE.upJump,UPGRADE.PRICE] = array(10000);
 global.upgrade[UPGRADE.upMagnet,UPGRADE.PRICE] = array(60,120,480,840,2000);
 global.upgrade[UPGRADE.upDash,UPGRADE.PRICE] = array(100,500,800,1300,2400);
