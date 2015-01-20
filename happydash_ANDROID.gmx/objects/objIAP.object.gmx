@@ -100,8 +100,8 @@ switch(val)
                 playSound(sfxBuy,1);
                 if (instance_exists(objPremiumMenu))
                     with(objPremiumMenu)
-                        show_message_async("Thank you for purchasing " + 
-                            cutString(product.p_title," (Happy Dash)") + "!");
+                        show_message_async('Thank you for purchasing "' + 
+                            cutString(product.p_title," (Happy Dash)") + '"!');
             }
             
             global.iap = true;

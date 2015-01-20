@@ -31,6 +31,22 @@ maxIndex = 3;
 
 initAD();
 
+if (os_is_network_connected())
+{
+    if(!achievement_login_status())
+        achievement_login();
+        
+    if (achievement_available())
+    {
+        //"A New World" - unlocked when reaching level 5
+        if (global.maxLevelReached &gt;= 5)
+        {
+            achievement_post("CgkIsq60qNAMEAIQAQ",100);
+        }
+    }
+}
+
+//to show an icon if you can buy something new from shop
 canBuySomething = false;
 
 for (i = 0; i &lt; UPGRADE.SIZE; i+=1)

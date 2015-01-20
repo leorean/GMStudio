@@ -24,6 +24,9 @@ if (file_exists(working_directory + global.saveFile))
     global.noads = real(ini_read_string('IAP','noAds','0'));
     
     global.maxLevelReached = real(ini_read_string('Progress','maxLevelReached','0'));
+    
+    global.playthrough = real(ini_read_string('Progress','playThrough','0'));
+    
     global.saveVersion = real(ini_read_string('Save','version','0'));
     
     global.upgrade[UPGRADE.upHealth, UPGRADE.TIER] = real(ini_read_string('Tier','upHealth','0'));

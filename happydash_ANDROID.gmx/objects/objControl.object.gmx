@@ -61,7 +61,7 @@ instance_create(0,0,objIAP);
 global.ad = noone;
 initAD();
 
-global.playthrough = 0; //for ads
+global.playthrough = 0; //for ads, etc
 
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;

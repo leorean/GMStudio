@@ -99,7 +99,7 @@ if (!alive)
     //DIE IMPULSE
     if (state != DEAD)
     {
-        global.playthrough += 1; //for ads
+        global.playthrough += 1; //for ads etc.
         
         yVel = -3;
         alarm[0] = alarm0;
