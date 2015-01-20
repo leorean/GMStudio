@@ -98,7 +98,10 @@ switch(val)
             if (global.iap)
             {
                 playSound(sfxBuy,1);
-                show_message_async("Purchased " + product_id);
+                if (instance_exists(objPremiumMenu))
+                    with(objPremiumMenu)
+                        show_message_async("Thank you for purchasing " + 
+                            cutString(product.p_title," (Happy Dash)") + "!");
             }
             
             global.iap = true;
