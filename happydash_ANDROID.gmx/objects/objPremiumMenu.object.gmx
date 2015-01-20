@@ -45,8 +45,20 @@ item[0].p_id = "coinpack1";
 item[0].tab = 0;
 
 item[1] = instance_create(6*TILE,5*TILE,objPremiumItem);
-item[1].p_id = "noads";
+item[1].p_id = "coinpack2";
 item[1].tab = 0;
+
+item[2] = instance_create(10*TILE,5*TILE,objPremiumItem);
+item[2].p_id = "coinpack3";
+item[2].tab = 0;
+
+item[3] = instance_create(2*TILE,5*TILE,objPremiumItem);
+item[3].p_id = "noads";
+item[3].tab = 1;
+
+item[4] = instance_create(6*TILE,5*TILE,objPremiumItem);
+item[4].p_id = "unlockupgrades";
+item[4].tab = 1;
 
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 
@@ -164,14 +176,17 @@ if (true)//instance_exists(product))
         {
             if (product.index != -1) //check if product REALLY exists in store
             {
-                with(objIAP)
-                    buyIAP(objPremiumMenu.product.p_id);
+                if (!product.p_purchased)
+                {
+                    with(objIAP)
+                        buyIAP(objPremiumMenu.product.p_id);
+                } else
+                    show_message("You already own this!");
                 
             } else
-                show_message("Could not fetch item info from store.");
+                show_message("This item is currently unavailable.");
         }
-        //show_message("pid: " + string(product));
-        product = noone;
+        //product = noone;
     }
 }
 
@@ -213,11 +228,17 @@ if (instance_exists(product))
 {
     //drawTextExt(2*TILE,5*TILE,product.p_id,c_white,c_black,fntTiny,9*TILE);
     draw_set_halign(fa_left);
-    drawText(14.5*TILE,4.5*TILE,cutString(product.p_title," (Happy Dash)"),c_white,c_black,fntShopSmall);
+    drawText(14.5*TILE,4.5*TILE,cutString(product.p_title," (Happy Dash)"),c_white,c_black,fntNumbers);
     drawText(14.5*TILE,6*TILE,priceText(product.p_price),c_white,c_black,fntNumbers);
-    drawTextExt(14.5*TILE,8*TILE,product.p_description,make_color_hsv(35,255,132),c_none,fntShopSmall,9*TILE);
+    drawTextExt(14.5*TILE,8*TILE,product.p_description,c_white,c_none,fntShopSmall,9*TILE);
 
-    draw_sprite_part(spritePremium,-1,WIDTH,6*TILE,3*TILE,3*TILE,WIDTH-4*TILE,4*TILE);
+    //DRAW IF ITEM IS DURABLE AND OWNED
+    if (product.p_purchased)
+    {
+        draw_sprite_part(spritePremium,-1,WIDTH,6*TILE,3*TILE,3*TILE,WIDTH-4*TILE,4*TILE);
+        draw_set_halign(fa_center);
+        drawText(22.5*TILE,6.5*TILE,"OWNED",c_white,c_black,fntTiny);
+    }
 }
 
 //BACK BUTTON

@@ -33,11 +33,13 @@ timer = 30;
 px = 160;//display_get_width()/2 - 360/2;
 py = 405;//display_get_height() - 60;
 
-GoogleMobileAds_LoadInterstitial();
-
-GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
-    px, py);
-
+if (!global.noads)
+{
+    GoogleMobileAds_LoadInterstitial();
+    GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
+        px, py);
+} else
+    instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -89,7 +91,7 @@ showbanner = (os_type == os_android &amp;&amp; !global.noads
 
 showinterstitial = (os_type == os_android &amp;&amp; !global.noads
     &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver
-    &amp;&amp; ((global.playthrough % 2) == 0) &amp;&amp; global.playthrough &gt; 0); //every n-th run
+    &amp;&amp; ((global.playthrough % 5) == 0) &amp;&amp; global.playthrough &gt; 0); //every n-th run
 
 if (timer == 0)
 {
@@ -106,6 +108,7 @@ if (timer == 0)
     if (global.noads)
     {
         GoogleMobileAds_RemoveBanner();
+        instance_destroy();
     } else
     {
         if (!showbanner)

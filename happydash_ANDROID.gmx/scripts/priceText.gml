@@ -1,8 +1,22 @@
 var ret, suff;
 
-ret = string(real(argument0));
-
-ret = string_format(real(ret),string_length(ret),2);
+var pos, prefix, suffix;
+pos = string_pos(".",argument0);
+if (pos == 0)
+    pos = string_pos(",",argument0);
+    
+if (pos != 0)
+{
+    prefix = string_digits(string_copy(argument0,1,pos));
+    suffix = string_digits(string_copy(argument0,pos,string_length(argument0)+1-pos));
+    ret = prefix + "." + suffix;
+}
+else
+{
+    prefix = string_digits(argument0);
+    suffix = "";
+    ret = prefix;
+}
 
 switch (os_get_language())
 {

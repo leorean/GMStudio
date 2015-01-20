@@ -25,9 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//global.products = ds_map_create();
+            <string>global.iap = false;
 
-global.pCount = 4; // HAS TO BE ADJUSTED WHEN ADDING NEW ITEMS!!!!
+global.pCount = 5; // HAS TO BE ADJUSTED WHEN ADDING NEW ITEMS!!!!
 
 var i;
 for (i = 0; i &lt; global.pCount; i++)
@@ -36,7 +36,7 @@ for (i = 0; i &lt; global.pCount; i++)
     global.p_title[i] = "none";
     global.p_description[i] = "none";
     global.p_price[i] = "none";
-    global.p_type[i] = "none";
+    //global.p_type[i] = "none";
 }
 global.pCur = 0;
 initIAP(); //INIT IN APP PURCHASES
@@ -72,20 +72,21 @@ switch(val)
         var purchase_id = ds_map_find_value(iap_data, "index");
         iap_purchase_details(purchase_id, map);
         //these events are triggered when a purchase is SUCCESSFUL
+        // - also triggers at the start of the game
         if (ds_map_find_value(map, "status") == iap_purchased)
         {
             var product_id = ds_map_find_value(map, "product");
-            ds_map_replace(global.purchaseMap, product_id, 1);
+            
             switch(product_id)
             {
                 case "noads":
                     global.noads = true;
+                    saveProgress(); loadProgress();
                 break;
                 case "unlockupgrades":
                     global.unlockupgrades = true;
                     unlockUpgrades();
-                    saveProgress();
-                    loadProgress();
+                    saveProgress(); loadProgress();
                 break;
                 case "coinpack1":
                 case "coinpack2":
@@ -93,33 +94,44 @@ switch(val)
                     iap_consume(product_id);
                 break;
             }
-            show_message("Purchased!");
+            
+            if (global.iap)
+            {
+                playSound(sfxBuy,1);
+                show_message_async("Purchased " + product_id);
+            }
+            
+            global.iap = true;
+            
+            ds_map_replace(global.purchaseMap, product_id, 1);
         }
         ds_map_destroy(map);
     break;
     //consumables
     case iap_ev_consume:
         var product_id = ds_map_find_value(iap_data, "product");
-        if ds_map_find_value(iap_data, "consumed")
+        if (ds_map_find_value(iap_data, "consumed"))
         {
             ds_map_replace(global.purchaseMap, product_id, 0);
             var amount = -1;
             switch (product_id)
             {
                 case "coinpack1":
-                    amount = 2000;
+                    amount = 10000;
                 break;
                 case "coinpack2":
-                    amount = 5000;
+                    amount = 25000;
                 break;
                 case "coinpack3":
-                    amount = 10000;
+                    amount = 50000;
                 break;
             }
             if (amount != -1)
             {
                 global.wallet += amount;
                 saveProgress(); loadProgress();
+                //playSound(sfxBuy,1);
+                //show_message("Purchased!");
             }
         }
     break;
@@ -129,24 +141,14 @@ switch(val)
         var p_map = ds_map_create();
         iap_product_details(ds_map_find_value(iap_data, "index"), p_map);
 
-        p_id = string(ds_map_find_value(p_map, "id"));
-        p_title = string(ds_map_find_value(p_map, "title"));
-        p_description = string(ds_map_find_value(p_map, "description"));
-        p_price = string(ds_map_find_value(p_map, "price"));
-        p_type = string(ds_map_find_value(p_map, "type"));
+        global.p_id[global.pCur] = string(ds_map_find_value(p_map, "id"));
+        global.p_title[global.pCur] = string(ds_map_find_value(p_map, "title"));
+        global.p_description[global.pCur] = string(ds_map_find_value(p_map, "description"));
+        global.p_price[global.pCur] = string(ds_map_find_value(p_map, "price"));
+        //global.p_type[global.pCur] = string(ds_map_find_value(p_map, "type"));
 
-        global.p_id[global.pCur] = p_id;
-        global.p_title[global.pCur] = p_title;
-        global.p_description[global.pCur] = p_description;
-        global.p_price[global.pCur] = p_price;
-        global.p_type[global.pCur] = p_type;
-
+        //show_message_async(global.p_id[global.pCur] + string(ds_map_find_value(p_map,"verified")));
         global.pCur ++;
-        
-        //show_message(p_id + ":" + p_title + ":" + p_price + ":" + p_type);
-        
-        //store map in a map
-        //ds_map_add(global.products,global.pCur, p_map);
         
         ds_map_destroy(p_map);
     break;

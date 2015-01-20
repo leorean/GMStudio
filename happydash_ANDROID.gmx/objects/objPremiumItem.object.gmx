@@ -30,11 +30,13 @@ image_speed = 0;
 
 P = objPremiumMenu;
 
-p_id = "&lt;id&gt;";
-p_title = "&lt;title&gt; (Happy Dash)";
-p_description = "&lt;This text is just a placeholder for the item description&gt;";
+p_id = "unknown";
+p_title = "Sold Out";
+p_description = "This item is currently unavailable.";
 p_price = "0.00";
-p_type = "???";
+p_type = "unknown";//"???";
+
+p_purchased = false;
 
 index = -1;
 tab = 0;
@@ -76,13 +78,38 @@ tab = 0;
     p_title = global.p_title[index];
     p_description = global.p_description[index];
     p_price = global.p_price[index];
-    p_type = global.p_type[index];
+    
+    switch (p_id)
+    {
+        case "noads":
+            p_type = "Durable";
+            if (global.noads)
+                p_purchased = true;
+        break;        
+        case "unlockupgrades":
+            p_type = "Durable";
+            if (global.unlockupgrades)
+                p_purchased = true;
+        break;
+        case "coinpack1":
+        case "coinpack2":
+        case "coinpack3":
+            p_type = "Consumable";
+        break;
+    }
+    //p_type = global.p_type[index];
 }
 
 if (tab != P.tabIndex)
+{
     visible = false;
+    mask_index = sprNone;
+}
 else
+{
     visible = true;
+    mask_index = sprPremiumItemMask;
+}
 </string>
           </argument>
         </arguments>
@@ -114,7 +141,29 @@ draw_set_valign(fa_center);
 draw_sprite_part(spritePremium,-1,WIDTH+(id == P.product)*3*TILE,3*TILE,3*TILE,3*TILE,x,y);
 
 //draw item image
-draw_sprite_part(spritePremium,-1,WIDTH+(index+1)*3*TILE,0,3*TILE,3*TILE,x,y);
+var col;
+switch(p_id)
+{
+    case "coinpack1":
+        col = 1;
+    break;
+    case "coinpack2":
+        col = 2;
+    break;
+    case "coinpack3":
+        col = 3;
+    break;
+    case "noads":
+        col = 4;
+    break;
+    case "unlockupgrades":
+        col = 5;
+    break;
+    default:
+        col = 0;
+    break;
+}
+draw_sprite_part(spritePremium,-1,WIDTH+col*3*TILE,0,3*TILE,3*TILE,x,y);
 
 var c1,c2;
 if (id == P.product)
@@ -124,10 +173,17 @@ if (id == P.product)
 } else
 {
     c1 = c_white;
-    c2 = make_color_hsv(0,0,27);
+    c2 = make_color_hsv(23,59,61);
 }
 
 drawText(x+3*TILE,y+3*TILE,priceText(p_price),c1,c2,fntTiny);
+
+//if durable item is already purchased
+if (p_type == "Durable" &amp;&amp; p_purchased)
+{    
+    draw_sprite_part_ext(spritePremium,-1,WIDTH+3*TILE,6*TILE,3*TILE,3*TILE,x+TILE/4+2,y-TILE/4+2,1,1,c_black,.5);
+    draw_sprite_part(spritePremium,-1,WIDTH+3*TILE,6*TILE,3*TILE,3*TILE,x+TILE/4,y-TILE/4);
+}
 </string>
           </argument>
         </arguments>

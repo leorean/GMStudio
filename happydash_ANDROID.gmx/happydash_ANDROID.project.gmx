@@ -189,7 +189,6 @@
       <script>scripts\initAD.gml</script>
       <script>scripts\initIAP.gml</script>
       <script>scripts\buyIAP.gml</script>
-      <script>scripts\showIAP.gml</script>
     </scripts>
     <script>scripts\collide.gml</script>
     <script>scripts\cycle.gml</script>

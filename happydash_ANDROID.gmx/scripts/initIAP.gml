@@ -78,9 +78,9 @@ ds_list_add(productList, pCoinpack3);
 iap_activate(productList);
 
 ds_map_destroy(pNoAds);
+ds_map_destroy(pUnlockUpgrades);
 ds_map_destroy(pCoinpack1);
 ds_map_destroy(pCoinpack2);
 ds_map_destroy(pCoinpack3);
-ds_map_destroy(pUnlockUpgrades);
 
 ds_list_destroy(productList);
