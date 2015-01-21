@@ -128,8 +128,6 @@ if (!global.pause)
                     global.xp += 1;
                     global.coinsCollected += 1;
                     playSound(sfxCoin,1);
-                    
-                    postAchievement("CgkIsq60qNAMEAIQCA",1);
                 }
                 else if (type == 1)
                 {

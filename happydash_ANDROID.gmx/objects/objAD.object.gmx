@@ -28,7 +28,9 @@
             <string>showbanner = true;
 showinterstitial = false;
 
-timer = 30;
+timer = 0;
+
+adLoaded = false;
 
 px = 160;//display_get_width()/2 - 360/2;
 py = 405;//display_get_height() - 60;
@@ -93,32 +95,33 @@ showinterstitial = (os_type == os_android &amp;&amp; !global.noads
     &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver
     &amp;&amp; ((global.playthrough % 5) == 0) &amp;&amp; global.playthrough &gt; 0); //every n-th run
 
-if (timer == 0)
+if (showinterstitial)
 {
-
-    if (!showinterstitial)
+    if (GoogleMobileAds_InterstitialStatus() == "Ready")
+        GoogleMobileAds_ShowInterstitial();
+}
+    
+if (global.noads)
+{
+    GoogleMobileAds_RemoveBanner();
+    instance_destroy();
+} else
+{
+    if (!showbanner)
     {
+        if (timer == 0)
+        {
+            GoogleMobileAds_RemoveBanner();
+            adLoaded = false;
+        }
+        timer = 60;
     }
     else
-    {
-        if (GoogleMobileAds_InterstitialStatus() == "Ready")
-            GoogleMobileAds_ShowInterstitial();
-    }
-        
-    if (global.noads)
-    {
-        GoogleMobileAds_RemoveBanner();
-        instance_destroy();
-    } else
-    {
-        if (!showbanner)
-            GoogleMobileAds_MoveBanner(-1,-1);
-        else
-            GoogleMobileAds_MoveBanner(px, py);        
-    }
-
-    timer = 30;
-    
+        if (adLoaded)
+        {
+            GoogleMobileAds_MoveBanner(px, py);
+            adLoaded = false;
+        }            
 }
 
 timer = max(timer - 1, 0);
@@ -155,7 +158,7 @@ if (ident == "banner_load")
         px = display_get_width()/2 - bw/2;
         py = display_get_height() - bh;
         GoogleMobileAds_MoveBanner(px,py);
-//        banner = true;
+        adLoaded = true;
     }
 }
 else if ident == "interstitial_load"

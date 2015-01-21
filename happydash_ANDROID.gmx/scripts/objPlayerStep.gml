@@ -129,6 +129,12 @@ if (state == DEAD && !global.gameOver)
 }
 else //IF NOT DEAD
 {
+    if (bbox_bottom < 0 && !reachedSky)
+    {
+        //Reach For The Sky Achievement
+        postAchievement("CgkIsq60qNAMEAIQDA",100,false);
+        reachedSky = true;
+    }
     //SUPER DASH
     if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER] == 1)
         if (instance_number(objProjectileSuperDash) == 0 && state == JUMP && statePrev == ATTACK)

@@ -193,8 +193,27 @@ if (btn[0].pressed)
                 item[itemFocus].tier = min(item[itemFocus].tier + 1, item[itemFocus].maxTier);
                 
                 global.upgrade[item[itemFocus].index,UPGRADE.TIER]+=1; //save global upgrade.
+                
+                //Woah I'm Powerful Achievement
+                if (global.upgrade[UPGRADE.upSuperDash,UPGRADE.TIER]&gt; 0)
+                    postAchievement("CgkIsq60qNAMEAIQCw",100,false);
+                
                 unlockUpgrades();
                 playSound(sfxBuy,1);
+                
+                //MAXED OUT achievement!!
+                var up;up = 0;
+                for (i = 0; i &lt; UPGRADE.SIZE; i++)
+                {
+                    var up1,up2;
+                    up1 = real(global.upgrade[i,UPGRADE.TIER]);
+                    up2 = array_length_1d(global.upgrade[i,UPGRADE.PRICE]);
+                    if (up1 == up2)
+                        up++;
+                }
+                if (up == UPGRADE.SIZE)
+                    postAchievement("CgkIsq60qNAMEAIQEg",100,false);
+                
                 itemDescription = "Thank you!";
             } else
                 itemDescription = "Not enough coins!";

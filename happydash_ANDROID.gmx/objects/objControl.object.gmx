@@ -111,6 +111,8 @@ global.fntDefault = font_add_sprite(spriteFontDefault,ord(' '),true,1);
 global.fntCombo = font_add_sprite(spriteFontCombo,ord('0'),true,1);
 global.fntScore = font_add_sprite(spriteFontScore,ord('0'),true,1);
 
+achPowerUp = false; //achievement power up check
+
 //SEGMENTS
 maxSegments = 80;
 
@@ -352,6 +354,17 @@ if (room == MAIN &amp;&amp; !global.gameOver)
             {
                 theme = (theme + 1) mod (maxTheme+1);//+1??
                 playSound(sfxThemeChange,1);
+
+                //Achievements:
+                if (global.level == 5)//Cave Explorer
+                    postAchievement("CgkIsq60qNAMEAIQAQ",100,false);
+                if (global.level == 10)//Hot Sands
+                    postAchievement("CgkIsq60qNAMEAIQAw",100,false);
+                if (global.level == 15)//Dungeon Dasher
+                    postAchievement("CgkIsq60qNAMEAIQBA",100,false);
+                if (global.level == 20)//What A Run
+                    postAchievement("CgkIsq60qNAMEAIQBQ",100,false);
+                    
             }
 
         }
@@ -538,6 +551,9 @@ if (room == MAIN)
     {
         SL = instance_create(0,0,objStartLevel);
         playSound(sfxStart,1);
+        
+        //I'm A Player achievement
+        postAchievement("CgkIsq60qNAMEAIQCQ",1,true);
     }
     
     //INTEGRATE THE UPGRADE EFFECTS:
@@ -553,6 +569,8 @@ if (room == MAIN)
     global.distMagnetDefault = 1*TILE + .4*global.upgrade[UPGRADE.upMagnet, UPGRADE.TIER]*TILE;
     
     //-------------------
+    
+    achPowerUp = false; //achievement power up check
     
     time = 0;
     global.coinsCollected = 0;
@@ -705,6 +723,14 @@ if (room == MAIN &amp;&amp; !global.gameOver)
                         draw_sprite_part(spriteHud,-1,0,8*TILE,2*TILE,6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
                         draw_sprite_part(spriteHud,-1,0,8*TILE+6,ceil(2*TILE*global.powDuration[i]/global.maxPowDuration[i]),6,global.player.x-TILE*.5,global.player.y-j*TILE*.5);
                         j += 1;
+                        
+                        //
+                        if (j &gt;= 4 &amp;&amp; !achPowerUp)
+                        {
+                            //power up master achievement
+                            postAchievement("CgkIsq60qNAMEAIQDQ",100,false);
+                            achPowerUp = true;
+                        }
                     }
                 } else
                     global.powerUp[i] = false;

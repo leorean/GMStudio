@@ -23,7 +23,7 @@ if (global.maxLevelReached >= 10) //if reached world 3
     global.upgrade[UPGRADE.upPowerUpTime,UPGRADE.LOCKED] = false;
     global.upgrade[UPGRADE.upJump,UPGRADE.LOCKED] = false;
 }
-if (global.maxLevelReached >= 15) //if reached world 3
+if (global.maxLevelReached >= 15) //if reached world 4
 {
     global.upgrade[UPGRADE.upSuperDash,UPGRADE.LOCKED] = false;
 }

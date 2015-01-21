@@ -91,7 +91,8 @@ if (enabled &amp;&amp; in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+
             parent.confetti ++;
             if (parent.confetti == 50)
             {
-                postAchievement("CgkIsq60qNAMEAIQAg",100);
+                //Confetti Master Achievement
+                postAchievement("CgkIsq60qNAMEAIQAg",100,false);
             }
             instance_destroy();
         }

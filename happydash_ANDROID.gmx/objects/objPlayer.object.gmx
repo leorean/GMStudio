@@ -35,6 +35,9 @@ global.hasControl = false;
 
 //////////////////local variables///////////////////
 
+//for achievement
+reachedSky = false;
+
 //invincibility
 invincible = 0; //cant get hit
 invincibleTimer = FPS;

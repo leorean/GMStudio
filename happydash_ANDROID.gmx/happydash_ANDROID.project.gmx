@@ -256,7 +256,6 @@
       <object>objects\objPowerUp</object>
       <objects name="enemies">
         <object>objects\objEnemyAutoSpike</object>
-        <object>objects\object48</object>
         <object>objects\objEnemySpike</object>
         <object>objects\objEnemyRotator</object>
         <object>objects\objEnemy1</object>

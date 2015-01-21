@@ -31,6 +31,26 @@ maxIndex = 3;
 
 initAD();
 
+
+//"I'm Rich Achievement (incremental)
+postAchievement("CgkIsq60qNAMEAIQCA",global.coinsCollected,true);
+
+//Happy Carnage Achievement (incremental)
+postAchievement("CgkIsq60qNAMEAIQBw",global.enemiesKilled,true);
+
+//combo rookie achievement
+if (global.maxCombo &gt;= 10)
+    postAchievement("CgkIsq60qNAMEAIQDg",100,false);
+//combo novice achievement
+if (global.maxCombo &gt;= 50)
+    postAchievement("CgkIsq60qNAMEAIQDw",100,false);
+//combo expert achievement
+if (global.maxCombo &gt;= 100)
+    postAchievement("CgkIsq60qNAMEAIQEA",100,false);
+//combo master achievement
+if (global.maxCombo &gt;= 200)
+    postAchievement("CgkIsq60qNAMEAIQEQ",100,false);
+
 confetti = 0;
 
 //if (global.maxLevelReached &gt;= 5)
@@ -141,6 +161,7 @@ playSound(sfxRocketFall,1);
     instance_destroy();
 
 handleButtons();
+
 if (btn[0].pressed)
     room_goto(SHOP);
 if (btn[1].pressed)
@@ -152,20 +173,20 @@ else
 
 if (btn[2].pressed)
 {
-    if (os_is_network_connected())
+    if(!achievement_login_status())
+        achievement_login();
+        
+    if (achievement_available())
     {
-        if(!achievement_login_status())
-            achievement_login();
-            
-        if achievement_available()
+        if (!submitted) // can only submit ONCE per run
         {
-            achievement_show_leaderboards();
-            if (!submitted) // can only submit ONCE per run
-            {
-                achievement_post_score("CgkIsq60qNAMEAIQBg", finalScore);
-                submitted = true;
-            }
-        }
+            achievement_post_score("CgkIsq60qNAMEAIQBg", finalScore);
+            
+            //Look at my Swag Achievement
+            postAchievement("CgkIsq60qNAMEAIQCg",100,false);
+            submitted = true;
+        }            
+        achievement_show_leaderboards();
     }
 }
 if (btn[3].pressed)
