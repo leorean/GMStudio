@@ -360,7 +360,10 @@ if (room == MAIN &amp;&amp; !global.gameOver)
             if (!global.startSignal)
             {
             if (global.mode != M.TUTORIALMODE)
-                instance_create(0,0,objStartLevel);
+            {
+                SL.start = true;
+                playSound(sfxStart2,1);
+            }
             else
                 instance_create(WIDTH-3*TILE,HEIGHT/2,objTutorial);
                 global.hasControl = true;
@@ -528,6 +531,9 @@ if (room == INIT)
 if (room == MAIN)
 {
     instance_create(0,0,objCamera);
+    
+    SL = instance_create(0,0,objStartLevel);
+    playSound(sfxStart,1);
     
     //INTEGRATE THE UPGRADE EFFECTS:
     

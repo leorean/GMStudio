@@ -121,6 +121,7 @@
     <sound>sound\sfxShop</sound>
     <sound>sound\sfxTutorial</sound>
     <sound>sound\sfxBuy</sound>
+    <sound>sound\sfxStart2</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">

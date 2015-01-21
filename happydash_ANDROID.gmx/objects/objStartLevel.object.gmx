@@ -25,9 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alpha = 2.5;
+            <string>alpha = 3;
+start = false;
+
 depth = HUDDEPTH+2;
-playSound(sfxStart,1);
+
 </string>
           </argument>
         </arguments>
@@ -52,10 +54,13 @@ playSound(sfxStart,1);
             <kind>1</kind>
             <string>if (alpha &gt; 0 &amp;&amp; !global.pause)
 {
-    draw_sprite_ext(spriteStartLevel,-1,0,0,1,1,0,c_white,alpha);
-    alpha = max(alpha - .03,0);
+    draw_sprite_part_ext(spriteStartLevel,-1,WIDTH*start,0,WIDTH,HEIGHT,0,0,1,1,c_white,alpha);
+    if (start)
+        alpha = max(alpha - .03,0);
 } else
-    instance_destroy();
+    if (start)
+        instance_destroy();
+
 </string>
           </argument>
         </arguments>

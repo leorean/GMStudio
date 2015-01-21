@@ -128,14 +128,16 @@ if (g.theme != g.themePrev &amp;&amp; fade == 0)
 
 draw_sprite_part(spriteBg,-1,theme,0*h,w,h,floor(a),0);
 draw_sprite_part(spriteBg,-1,theme,0*h,w,h,floor(a+w),0);
-
+draw_sprite_part(spriteBg,-1,theme+w-2,0*h,2,h,(a+w-1),0);
 
 draw_sprite_part(spriteBg,-1,theme,1*h,w,h,floor(b),0);
 draw_sprite_part(spriteBg,-1,theme,1*h,w,h,floor(b+w),0);
+draw_sprite_part(spriteBg,-1,theme+w-2,1*h,2,h,(b+w-1),0);
 
 
 draw_sprite_part(spriteBg,-1,theme,2*h,w,h,floor(c),0);
 draw_sprite_part(spriteBg,-1,theme,2*h,w,h,floor(c+w),0);
+draw_sprite_part(spriteBg,-1,theme+w-2,2*h,2,h,(c+w-1),0);
 
 if (fade != 0)
     draw_set_alpha(alpha);
