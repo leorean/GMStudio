@@ -37,6 +37,8 @@ ini_write_string('Save','version',string(global.version));
 ini_write_string('Progress','maxLevelReached',string(global.maxLevelReached));
 ini_write_string('Progress','playThrough',string(global.playthrough));
 
+//ini_write_string('Achievement','ach0',string(global.ach[0]));
+
 ini_write_string('IAP','unlockUpgrades',string(global.unlockupgrades));
 ini_write_string('IAP','noAds',string(global.noads));
 

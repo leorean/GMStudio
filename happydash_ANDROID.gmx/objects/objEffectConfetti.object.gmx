@@ -86,8 +86,13 @@ if (enabled &amp;&amp; in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+
         || global.input == INPUT_KEYBOARD)
         {
             t = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
-            t.type = 3;
+            t.type = 7;
             t.depth = depth-1;
+            parent.confetti ++;
+            if (parent.confetti == 50)
+            {
+                postAchievement("CgkIsq60qNAMEAIQAg",100);
+            }
             instance_destroy();
         }
             

@@ -134,7 +134,6 @@ draw_sprite_part(spriteBg,-1,theme,1*h,w,h,floor(b),0);
 draw_sprite_part(spriteBg,-1,theme,1*h,w,h,floor(b+w),0);
 draw_sprite_part(spriteBg,-1,theme+w-2,1*h,2,h,(b+w-1),0);
 
-
 draw_sprite_part(spriteBg,-1,theme,2*h,w,h,floor(c),0);
 draw_sprite_part(spriteBg,-1,theme,2*h,w,h,floor(c+w),0);
 draw_sprite_part(spriteBg,-1,theme+w-2,2*h,2,h,(c+w-1),0);

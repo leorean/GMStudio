@@ -63,6 +63,8 @@ initAD();
 
 global.playthrough = 0; //for ads, etc
 
+//global.ach[0] = 0;
+
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
@@ -532,8 +534,11 @@ if (room == MAIN)
 {
     instance_create(0,0,objCamera);
     
-    SL = instance_create(0,0,objStartLevel);
-    playSound(sfxStart,1);
+    if (global.mode != M.TUTORIALMODE)
+    {
+        SL = instance_create(0,0,objStartLevel);
+        playSound(sfxStart,1);
+    }
     
     //INTEGRATE THE UPGRADE EFFECTS:
     

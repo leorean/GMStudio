@@ -31,20 +31,10 @@ maxIndex = 3;
 
 initAD();
 
-if (os_is_network_connected())
-{
-    if(!achievement_login_status())
-        achievement_login();
-        
-    if (achievement_available())
-    {
-        //"A New World" - unlocked when reaching level 5
-        if (global.maxLevelReached &gt;= 5)
-        {
-            achievement_post("CgkIsq60qNAMEAIQAQ",100);
-        }
-    }
-}
+confetti = 0;
+
+//if (global.maxLevelReached &gt;= 5)
+//    postAchievement("CgkIsq60qNAMEAIQAQ",100);
 
 //to show an icon if you can buy something new from shop
 canBuySomething = false;
@@ -83,7 +73,7 @@ btn[2].parent = id;
 
 btn[3] = instance_create(WIDTH/2,r+7.5*TILE,objButton);
 btn[3].text = "Quit";
-btn[3].index = 2;
+btn[3].index = 3;
 btn[3].parent = id;
 
 //effect
@@ -245,6 +235,7 @@ if (dx &lt; WIDTH+2*TILE)
     if (global.timer mod 2 == 0)
     {
         c = instance_create(random(WIDTH),-TILE,objEffectConfetti);
+        c.parent = id;
         c.depth = depth-2;
     }
 }
