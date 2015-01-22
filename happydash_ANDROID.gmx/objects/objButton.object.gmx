@@ -78,52 +78,56 @@ fnt = fntButton;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = parent.depth-1;
-
-if (enabled)
+            <string>if (!instance_exists(parent)) instance_destroy();
+else
 {
+    depth = parent.depth-1;
     
-    a = x-w;
-    b = y;
-    c = x+w;
-    d = y+h;
-    
-    if (global.mouseVisible || global.input == INPUT_TOUCH)
+    if (enabled)
     {
-        if (visible &amp;&amp; (in(mouse_x,a,c) &amp;&amp; in(mouse_y,b,d))
-         &amp;&amp; (mouse_x != mxPrev || mouse_y != myPrev))
+        
+        a = x-w;
+        b = y;
+        c = x+w;
+        d = y+h;
+        
+        if (global.mouseVisible || global.input == INPUT_TOUCH)
         {
-            if (!active) playSound(sfxCaching, 1);
-            active = true;
+            if (visible &amp;&amp; (in(mouse_x,a,c) &amp;&amp; in(mouse_y,b,d))
+             &amp;&amp; (mouse_x != mxPrev || mouse_y != myPrev))
+            {
+                if (!active) playSound(sfxCaching, 1);
+                active = true;
+            }
+            else
+                active = false;
         }
         else
-            active = false;
-    }
-    else
-    {
-        if (visible &amp;&amp; (parent.index == index))
         {
-            if (!active) playSound(sfxCaching, 1);
-            active = true;
+            if (visible &amp;&amp; (parent.index == index))
+            {
+                if (!active) playSound(sfxCaching, 1);
+                active = true;
+            }
+            else
+                active = false;
         }
+        
+        if (mouse_check_button_released(mb_left)
+            &amp;&amp; in(mouse_x,a,c)
+            &amp;&amp; in(mouse_y,b,d))
+        ||
+            ((keyboard_check_released(vk_space) || keyboard_check_released(vk_enter))
+            &amp;&amp; index == parent.index)
+            pressed = true;
         else
-            active = false;
-    }
-    
-    if (mouse_check_button_released(mb_left)
-        &amp;&amp; in(mouse_x,a,c)
-        &amp;&amp; in(mouse_y,b,d))
-    ||
-        ((keyboard_check_released(vk_space) || keyboard_check_released(vk_enter))
-        &amp;&amp; index == parent.index)
-        pressed = true;
-    else
-        pressed = false;
-    
-    if (global.input == INPUT_TOUCH &amp;&amp; !mouse_check_button(mb_left))
-    {
-        mxPrev = mouse_x;
-        myPrev = mouse_y;
+            pressed = false;
+        
+        if (global.input == INPUT_TOUCH &amp;&amp; !mouse_check_button(mb_left))
+        {
+            mxPrev = mouse_x;
+            myPrev = mouse_y;
+        }
     }
 }
 </string>

@@ -69,6 +69,11 @@ global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
+global.playerSelected = 0;
+global.maxPlayerSelected = 2;
+for (i = 0; i &lt;= global.maxPlayerSelected; i++)
+    global.playerLocked[i] = true;
+    
 enum M //mode
 {
     TUTORIALMODE = 0,

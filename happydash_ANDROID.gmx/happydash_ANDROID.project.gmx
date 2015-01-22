@@ -175,6 +175,7 @@
   <scripts name="scripts">
     <script>scripts\objPlayerStep.gml</script>
     <scripts name="manage">
+      <script>scripts\saveOptions.gml</script>
       <script>scripts\saveProgress.gml</script>
       <script>scripts\loadProgress.gml</script>
       <script>scripts\deleteProgress.gml</script>
@@ -186,7 +187,6 @@
       <script>scripts\setUpgradePrices.gml</script>
       <script>scripts\unzip.gml</script>
       <script>scripts\zip.gml</script>
-      <script>scripts\saveOptions.gml</script>
       <script>scripts\initAD.gml</script>
       <script>scripts\initIAP.gml</script>
       <script>scripts\buyIAP.gml</script>
@@ -289,6 +289,7 @@
       <object>objects\objScoreMenu</object>
       <object>objects\objShopMenu</object>
       <object>objects\objPremiumMenu</object>
+      <object>objects\objPlayerMenu</object>
       <object>objects\objHelpMenu</object>
       <object>objects\objHelpMe</object>
       <object>objects\objPremiumMe</object>

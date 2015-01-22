@@ -30,6 +30,12 @@ if (true)//(room == MAIN) //dont overwrite score with zeros?
 
 //write options and shop
 ini_write_string('Options','sfx',string(global.mute));
+ini_write_string('Options','mode',string(global.mode));
+ini_write_string('Options','playerSelected',string(global.playerSelected));
+
+for (i = 0; i <= global.maxPlayerSelected; i++)
+    ini_write_string('Options','playerLocked'+string(i),string(global.playerLocked[i]));
+
 ini_write_string('Shop','wallet',string(global.wallet));
 
 ini_write_string('Save','version',string(global.version));

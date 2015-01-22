@@ -77,6 +77,7 @@ if (in(mouse_x,x,x+5*TILE) &amp;&amp; in(mouse_y,y,y+4*TILE) &amp;&amp; mouse_ch
     global.mode = M.TUTORIALMODE;
     room_goto(MAIN);
 }
+
 </string>
           </argument>
         </arguments>

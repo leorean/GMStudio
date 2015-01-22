@@ -162,6 +162,19 @@ if (global.input != INPUT_TOUCH)
             <kind>1</kind>
             <string>if (room != SHOP) instance_destroy();
 
+//MAXED OUT achievement!!
+var up;up = 0;
+for (i = 0; i &lt; UPGRADE.SIZE; i++)
+{
+    var up1,up2;
+    up1 = real(global.upgrade[i,UPGRADE.TIER]);
+    up2 = array_length_1d(global.upgrade[i,UPGRADE.PRICE]);
+    if (up1 == up2)
+        up++;
+}
+if (up == UPGRADE.SIZE)
+    postAchievement("CgkIsq60qNAMEAIQEg",100,false);
+
 if (btn[0].pressed)
 {
     if (itemFocus != -1)
@@ -200,19 +213,6 @@ if (btn[0].pressed)
                 
                 unlockUpgrades();
                 playSound(sfxBuy,1);
-                
-                //MAXED OUT achievement!!
-                var up;up = 0;
-                for (i = 0; i &lt; UPGRADE.SIZE; i++)
-                {
-                    var up1,up2;
-                    up1 = real(global.upgrade[i,UPGRADE.TIER]);
-                    up2 = array_length_1d(global.upgrade[i,UPGRADE.PRICE]);
-                    if (up1 == up2)
-                        up++;
-                }
-                if (up == UPGRADE.SIZE)
-                    postAchievement("CgkIsq60qNAMEAIQEg",100,false);
                 
                 itemDescription = "Thank you!";
             } else

@@ -37,16 +37,15 @@ if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
 
 if (!instance_exists(objPremiumMe))
-    instance_create(.5*TILE,HEIGHT-8*TILE,objPremiumMe);
+    pme = instance_create(.5*TILE,HEIGHT-8*TILE,objPremiumMe);
 
 if (global.mode != M.TUTORIALMODE)
     if (!instance_exists(objHelpMe))
-        instance_create(WIDTH-6.5*TILE,HEIGHT-8*TILE,objHelpMe);
+        hme = instance_create(WIDTH-6.5*TILE,HEIGHT-8*TILE,objHelpMe);
         
 index = 0;
 maxIndex = 2;
-showHelp = false;
-showHighscore = false;
+playerSelection = false;
 
 row = 7;
 
@@ -65,33 +64,15 @@ btn[1].text = "Shop";
 btn[1].index = 1;
 btn[1].parent = id;
 
-/*
-btn[2] = instance_create(WIDTH/2,row*TILE+3*TILE,objButton);
-btn[2].text = "PREMIUM";
-btn[2].index = 2;
-btn[2].parent = id;
-btn[2].cActive1 = make_color_hsv(35,255,255);
-btn[2].cActive2 = make_color_hsv(23,255,255);
-btn[2].cInactive1 = make_color_hsv(23,255,255);
-btn[2].cInactive2 = c_black;
-*/
 btn[2] = instance_create(WIDTH/2,row*TILE+3*TILE,objButton);
 btn[2].text = "Scores";
 btn[2].index = 3;
 btn[2].parent = id;
 
-//draw_set_font(fntButton); //to set the correct width
-textCredits = "by Peter Sperl 2014"; //"=== A game by Peter Sperl © 2014 ===";
-textCreditsY = HEIGHT+2*TILE;//+string_width(textCredits);
-
-page = 0;
-
 t = pi/2;
 z = 0;
 xx = 0;
 yy = 0;
-
-ti = 0; //highscore iterator
 </string>
           </argument>
         </arguments>
@@ -139,41 +120,64 @@ ti = 0; //highscore iterator
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>handleButtons();
-
-//screenPressed = mouse_check_button_released(mb_any) || keyboard_check_released(vk_anykey);
-
-if (btn[0].pressed)
+            <string>if (!playerSelection)
 {
-    //if (global.mode == M.TUTORIALMODE)
-    //    room_goto(TUTORIAL);
-    //else
-    room_goto(MAIN);
+    handleButtons();
     
-}
-if (btn[1].pressed)
-    room_goto(SHOP);
-    
-if (!os_is_network_connected())
-    btn[2].enabled = false;
-else
-    btn[2].enabled = true;
-
-if (btn[2].pressed)
-{
-    if (os_is_network_connected())
+    if (btn[0].pressed)
     {
-        if(!achievement_login_status())
+        playerSelection = true;
+        pm = instance_create(0,0,objPlayerMenu);
+        pm.parent = id;
+        //if (global.mode == M.TUTORIALMODE)
+        //    room_goto(TUTORIAL);
+        //else
+        //room_goto(MAIN);
+        
+    }
+    
+    if (btn[1].pressed)
+        room_goto(SHOP);
+    
+    pme.visible = true;
+    hme.visible = true;
+    
+    btn[0].enabled = true;
+    btn[1].enabled = true;
+    btn[0].visible = true;
+    btn[1].visible = true;
+    btn[2].visible = true;
+    if (!os_is_network_connected())
+        btn[2].enabled = false;
+    else
+        btn[2].enabled = true;
+    
+    if (btn[2].pressed)
+    {
+        if (os_is_network_connected())
         {
-            achievement_login();
-        }
-        else
-        {
-            achievement_show_leaderboards();
+            if(!achievement_login_status())
+            {
+                achievement_login();
+            }
+            else
+            {
+                achievement_show_leaderboards();
+            }
         }
     }
-}
+} else
+{
+    pme.visible = false;
+    hme.visible = false;
+    btn[0].enabled = false;
+    btn[1].enabled = false;
+    btn[2].enabled = false;
+    btn[0].visible = false;
+    btn[1].visible = false;
+    btn[2].visible = false;
 
+}
 
 </string>
           </argument>
@@ -218,28 +222,31 @@ draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,0,WIDTH,HEIGHT,xx+WIDTH,yy);
 draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
-//drawBorder(7.5*TILE,6*TILE,10*TILE,9*TILE);
-drawBorder(bx,by,bw,bh);
-
-//title
-draw_set_alpha(1);
-draw_set_color(c_white);
-draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
-
-if (os_type == os_windows || (os_type == os_android &amp;&amp; os_is_network_connected()))
+if (!playerSelection)
 {
-    //ACHIEVMENTS
-    var ap;
-    ap = (in(mouse_x,0,3*TILE) &amp;&amp; in(mouse_y,0,3*TILE) &amp;&amp; mouse_check_button_released(mb_left));
+    //drawBorder(7.5*TILE,6*TILE,10*TILE,9*TILE);
+    drawBorder(bx,by,bw,bh);
     
-    draw_sprite_part(spriteHud,-1,12*TILE+3*(global.timer % 20 &gt; 10)*TILE,0,3*TILE,3*TILE,0,0);
-    if (ap)
+    //title
+    draw_set_alpha(1);
+    draw_set_color(c_white);
+    draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
+    
+    if (os_type == os_windows || (os_type == os_android &amp;&amp; os_is_network_connected()))
     {
-        if(!achievement_login_status())
-            achievement_login();
-            
-        if (achievement_available())
-            achievement_show_achievements();
+        //ACHIEVMENTS
+        var ap;
+        ap = (in(mouse_x,0,3*TILE) &amp;&amp; in(mouse_y,0,3*TILE) &amp;&amp; mouse_check_button_released(mb_left));
+        
+        draw_sprite_part(spriteHud,-1,12*TILE+3*(global.timer % 20 &gt; 10)*TILE,0,3*TILE,3*TILE,0,0);
+        if (ap)
+        {
+            if(!achievement_login_status())
+                achievement_login();
+                
+            if (achievement_available())
+                achievement_show_achievements();
+        }
     }
 }
 </string>

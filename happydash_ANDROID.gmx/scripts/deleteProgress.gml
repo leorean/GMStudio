@@ -15,6 +15,7 @@ global.wallet = 0;
 
 global.maxLevelReached = 0;
 global.playThrough = 0;
+global.playerSelected = 0;
 
 global.unlockupgrades = false;
 global.noads = false;
