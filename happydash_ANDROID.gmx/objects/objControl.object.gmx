@@ -71,6 +71,11 @@ global.saveFile = 'sv.ini';
 
 global.playerSelected = 0;
 global.maxPlayerSelected = 2;
+
+global.playerName[0] = "Happy";
+global.playerName[1] = "Tammy";
+global.playerName[2] = "Pipes";
+
 for (i = 0; i &lt;= global.maxPlayerSelected; i++)
     global.playerLocked[i] = true;
     
@@ -369,9 +374,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
                     postAchievement("CgkIsq60qNAMEAIQBA",100,false);
                 if (global.level == 20)//What A Run
                     postAchievement("CgkIsq60qNAMEAIQBQ",100,false);
-                    
             }
-
         }
         startTimer = max(startTimer -1,0);
         //game starts to scroll and stuff AFTER the startsignal is set
@@ -549,6 +552,8 @@ if (room == PREMIUM) instance_deactivate_object(objControl);
 global.pause = false;    
 global.gameOver = false;
 
+mouse_clear(mb_left);
+
 if (room == INIT)
 {
     instance_create(0,0,objTitleMenu);
@@ -563,7 +568,7 @@ if (room == MAIN)
         SL = instance_create(0,0,objStartLevel);
         playSound(sfxStart,1);
         
-        //I'm A Player achievement
+        //addicted achievement
         postAchievement("CgkIsq60qNAMEAIQCQ",1,true);
     }
     

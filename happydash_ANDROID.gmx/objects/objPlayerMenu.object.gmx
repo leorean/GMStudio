@@ -180,7 +180,13 @@ draw_sprite_part_ext(spriteHud,-1,3*TILE,11*TILE+3*b*TILE,3*TILE,3*TILE,btn[1].x
 //TEXT
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
-drawText(WIDTH/2,3*TILE,"Choose Your Character!",c_white,c_black,fntButton);
+
+var txtName;
+if (!locked1)
+    txtName = "Play as " + '"' + global.playerName[cursor] + '"!';
+else
+    txtName = "&lt;locked&gt;";
+drawText(WIDTH/2,3*TILE,txtName,c_white,c_black,fntButton);
 
 //SELECTORS
 var ax,ay,bx,by,lp, rp;

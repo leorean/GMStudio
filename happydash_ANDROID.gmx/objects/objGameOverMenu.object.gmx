@@ -51,6 +51,17 @@ if (global.maxCombo &gt;= 100)
 if (global.maxCombo &gt;= 200)
     postAchievement("CgkIsq60qNAMEAIQEQ",100,false);
 
+if (global.maxLevelReached &gt;= 20)
+{
+    if (global.playerLocked[2])
+    {
+        global.playerLocked[2] = false;
+        saveOptions();
+        show_message_async("Congratulations! You have unlocked a new character!");
+    }
+}
+
+    
 confetti = 0;
 
 //if (global.maxLevelReached &gt;= 5)
