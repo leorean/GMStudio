@@ -36,6 +36,7 @@ with(objButton)
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
 
+pme = noone; hme = noone;
 if (!instance_exists(objPremiumMe))
     pme = instance_create(.5*TILE,HEIGHT-8*TILE,objPremiumMe);
 
@@ -139,8 +140,10 @@ yy = 0;
     if (btn[1].pressed)
         room_goto(SHOP);
     
-    pme.visible = true;
-    hme.visible = true;
+    if (instance_exists(pme))
+        pme.visible = true;
+    if (instance_exists(hme))
+        hme.visible = true;
     
     btn[0].enabled = true;
     btn[1].enabled = true;
@@ -168,8 +171,10 @@ yy = 0;
     }
 } else
 {
-    pme.visible = false;
-    hme.visible = false;
+    if (instance_exists(pme))
+        pme.visible = false;
+    if (instance_exists(hme))
+        hme.visible = false;
     btn[0].enabled = false;
     btn[1].enabled = false;
     btn[2].enabled = false;

@@ -444,11 +444,12 @@ else
     a = 1;
 
 draw_set_color(color);
-
+var imageRow;
+imageRow = 10*TILE*global.playerSelected;
 if (!global.powerUp[POW_ANY])
-    draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
+    draw_sprite_part_ext(spritePlayer,-1,floor(frame*2*TILE),imageRow+row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 else
-    draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
+    draw_sprite_part_ext(spritePlayer,-1,8*TILE+floor(frame*2*TILE),imageRow+row*2*TILE,2*TILE,2*TILE,floor(x-TILE*.5),floor(y-TILE*.5),1,1,color,a);
 
 
 //TORNADO EFFECT

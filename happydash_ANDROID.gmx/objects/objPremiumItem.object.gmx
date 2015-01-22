@@ -144,21 +144,12 @@ draw_sprite_part(spritePremium,-1,WIDTH+(id == P.product)*3*TILE,3*TILE,3*TILE,3
 var col;
 switch(p_id)
 {
-    case "coinpack1":
-        col = 1;
-    break;
-    case "coinpack2":
-        col = 2;
-    break;
-    case "coinpack3":
-        col = 3;
-    break;
-    case "noads":
-        col = 4;
-    break;
-    case "unlockupgrades":
-        col = 5;
-    break;
+    case "coinpack1":col = 1;break;
+    case "coinpack2":col = 2;break;
+    case "coinpack3":col = 3;break;
+    case "noads":col = 4;break;
+    case "unlockupgrades":col = 5;break;
+    case "player1":col = 6;break;
     default:
         col = 0;
     break;

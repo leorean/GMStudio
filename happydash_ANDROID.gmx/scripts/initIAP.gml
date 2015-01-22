@@ -28,6 +28,15 @@ if file_exists("iap_data.json")
             else
                 global.unlockupgrades = true;
         }
+        if (ds_map_exists(global.purchaseMap, "player1"))
+        {
+            map_create = false;
+            if (ds_map_find_value(global.purchaseMap, "player1") == 0)
+                global.playerLocked[1] = true;
+            else
+                global.playerLocked[1] = false;
+        }
+        
         if (ds_map_exists(global.purchaseMap, "coinpack1"))
             map_create = false;
         if (ds_map_exists(global.purchaseMap, "coinpack2"))
@@ -45,11 +54,13 @@ if (map_create) // if no save file is found, we create one.
     var product3 = "coinpack1";
     var product4 = "coinpack2";
     var product5 = "coinpack3";
+    var product6 = "player1";
     ds_map_add(global.purchaseMap, product1, 0);
     ds_map_add(global.purchaseMap, product2, 0);
     ds_map_add(global.purchaseMap, product3, 0);
     ds_map_add(global.purchaseMap, product4, 0);
     ds_map_add(global.purchaseMap, product5, 0);
+    ds_map_add(global.purchaseMap, product6, 0);
     ds_map_secure_save(global.purchaseMap, "iap_data.json");
 }
 
@@ -67,12 +78,15 @@ pCoinpack2 = ds_map_create();
 ds_map_add(pCoinpack2, "id", "coinpack2");
 pCoinpack3 = ds_map_create();
 ds_map_add(pCoinpack3, "id", "coinpack3");
+pPlayer1 = ds_map_create();
+ds_map_add(pPlayer1, "id", "player1");
 
 ds_list_add(productList, pNoAds);
 ds_list_add(productList, pUnlockUpgrades);
 ds_list_add(productList, pCoinpack1);
 ds_list_add(productList, pCoinpack2);
 ds_list_add(productList, pCoinpack3);
+ds_list_add(productList, pPlayer1);
 
 //VERY IMPORTANT
 iap_activate(productList);
@@ -82,5 +96,6 @@ ds_map_destroy(pUnlockUpgrades);
 ds_map_destroy(pCoinpack1);
 ds_map_destroy(pCoinpack2);
 ds_map_destroy(pCoinpack3);
+ds_map_destroy(pPlayer1);
 
 ds_list_destroy(productList);

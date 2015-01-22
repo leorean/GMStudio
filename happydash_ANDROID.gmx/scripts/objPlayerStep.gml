@@ -110,6 +110,9 @@ if (!alive)
         t = instance_create(x,y,objEffectDust);
         t.type = 2;
 
+        //sir die-a-lot achievement
+        postAchievement("CgkIsq60qNAMEAIQEw",1,true);
+        
         saveRun();
         
     }

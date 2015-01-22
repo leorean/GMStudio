@@ -16,6 +16,8 @@ global.wallet = 0;
 global.maxLevelReached = 0;
 global.playThrough = 0;
 global.playerSelected = 0;
+for (i = 0; i <= global.maxPlayerSelected; i++)
+    global.playerLocked[i] = true;
 
 global.unlockupgrades = false;
 global.noads = false;

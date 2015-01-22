@@ -472,7 +472,13 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
         }
     }
     else if (room == INIT)
-        game_end();
+    {
+        with(objTitleMenu)
+            if (playerSelection)
+                playerSelection = false;
+            else
+                game_end();
+    }
     else
         room_goto(INIT);
 }

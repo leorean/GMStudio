@@ -128,8 +128,14 @@ if (btn[0].pressed || keyboard_check_pressed(vk_backspace))
     instance_destroy();
 }
 
-if (!locked1 &amp;&amp; btn[1].pressed)
+if ((!locked1 || (os_type == os_windows &amp;&amp; debug_mode)) &amp;&amp; btn[1].pressed)
 {
+    global.playerSelected = cursor;
+    
+    //who am i achievement
+    if (global.playerSelected != 0)
+        postAchievement("CgkIsq60qNAMEAIQFA",100,false);
+    
     saveOptions();
     room_goto(MAIN);
     instance_destroy();

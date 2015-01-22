@@ -60,6 +60,10 @@ item[4] = instance_create(6*TILE,5*TILE,objPremiumItem);
 item[4].p_id = "unlockupgrades";
 item[4].tab = 1;
 
+item[5] = instance_create(2*TILE,5*TILE,objPremiumItem);
+item[5].p_id = "player1";
+item[5].tab = 2;
+
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 
 //TABS
@@ -74,6 +78,11 @@ tab[1] = instance_create(8*TILE,2*TILE,objTab);
 tab[1].index = 1;
 tab[1].text = "Game";
 tab[1].parent = id;
+
+tab[2] = instance_create(12*TILE,2*TILE,objTab);
+tab[2].index = 2;
+tab[2].text = "Player";
+tab[2].parent = id;
 
 ////BUTTONS
 index = 0;

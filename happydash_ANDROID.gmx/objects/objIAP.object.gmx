@@ -88,6 +88,10 @@ switch(val)
                     unlockUpgrades();
                     saveProgress(); loadProgress();
                 break;
+                case "player1":
+                    global.playerLocked[1] = false;
+                    saveProgress(); loadProgress();
+                break;
                 case "coinpack1":
                 case "coinpack2":
                 case "coinpack3":
