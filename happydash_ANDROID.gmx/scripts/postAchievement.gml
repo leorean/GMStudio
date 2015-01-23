@@ -9,5 +9,12 @@ if (os_is_network_connected())
             achievement_post(argument0,argument1);
         else
             achievement_increment(argument0,argument1);
+    } else
+    {
+        /*
+            TODO: store achievement in queue
+            have a persistent object check periodically
+            if successfull, remove from queue
+        */
     }
 }

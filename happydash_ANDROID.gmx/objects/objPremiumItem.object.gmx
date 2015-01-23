@@ -30,7 +30,7 @@ image_speed = 0;
 
 P = objPremiumMenu;
 
-p_id = "unknown";
+p_id = "";
 p_title = "Sold Out";
 p_description = "This item is currently unavailable.";
 p_price = "0.00";
@@ -96,6 +96,10 @@ tab = 0;
         case "coinpack3":
             p_type = "Consumable";
         break;
+        case "player1":
+        p_type = "Durable";
+        if (!global.playerLocked[1])
+            p_purchased = true;
     }
     //p_type = global.p_type[index];
 }

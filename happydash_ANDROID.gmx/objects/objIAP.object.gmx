@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>global.iap = false;
 
-global.pCount = 5; // HAS TO BE ADJUSTED WHEN ADDING NEW ITEMS!!!!
+global.pCount = 10; // HAS TO BE ADJUSTED WHEN ADDING NEW ITEMS!!!!
 
 var i;
 for (i = 0; i &lt; global.pCount; i++)
@@ -104,8 +104,13 @@ switch(val)
                 playSound(sfxBuy,1);
                 if (instance_exists(objPremiumMenu))
                     with(objPremiumMenu)
-                        show_message_async('Thank you for purchasing "' + 
-                            cutString(product.p_title," (Happy Dash)") + '"!');
+                    {
+                        if (product.p_title != "")
+                        {
+                            show_message_async('Thank you for purchasing "' + 
+                                cutString(product.p_title," (Happy Dash)") + '"!');
+                        }
+                    }
             }
             
             global.iap = true;
@@ -127,18 +132,16 @@ switch(val)
                     amount = 10000;
                 break;
                 case "coinpack2":
-                    amount = 20000;
+                    amount = 25000;
                 break;
                 case "coinpack3":
-                    amount = 40000;
+                    amount = 50000;
                 break;
             }
             if (amount != -1)
             {
                 global.wallet += amount;
                 saveProgress(); loadProgress();
-                //playSound(sfxBuy,1);
-                //show_message("Purchased!");
             }
         }
     break;
@@ -153,8 +156,6 @@ switch(val)
         global.p_description[global.pCur] = string(ds_map_find_value(p_map, "description"));
         global.p_price[global.pCur] = string(ds_map_find_value(p_map, "price"));
         //global.p_type[global.pCur] = string(ds_map_find_value(p_map, "type"));
-
-        //show_message_async(global.p_id[global.pCur] + string(ds_map_find_value(p_map,"verified")));
         global.pCur ++;
         
         ds_map_destroy(p_map);
