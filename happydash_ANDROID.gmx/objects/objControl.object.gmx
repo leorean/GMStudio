@@ -126,13 +126,15 @@ achPowerUp = false; //achievement power up check
 //SEGMENTS
 maxSegments = 80;
 
-segment = unzip("seg.z",maxSegments);
-
-segTut = importSegment(working_directory + "tut.tmx")
-
-//zip("seg.z",maxSegments);
-//game_end();
-
+if (true)
+{
+    segment = unzip("seg.z",maxSegments);
+    segTut = importSegment(working_directory + "tut.tmx")
+} else
+{
+    zip("seg.z",maxSegments);
+    game_end();
+}
 //for (i = 0; i &lt;= maxSegments;i+=1)
 //    segment[i] = importSegment(working_directory + string(i)+".tmx");
 
@@ -386,6 +388,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
             {
                 SL.start = true;
                 playSound(sfxStart2,1);
+                global.startSignal = true;
             }
             else
                 instance_create(WIDTH-3*TILE,HEIGHT/2,objTutorial);

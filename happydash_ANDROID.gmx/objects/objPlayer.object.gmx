@@ -290,6 +290,10 @@ if (global.hasControl &amp;&amp; !global.pause &amp;&amp; !pressedMute)
             global.mouseVisible = true;
 } else
 {
+    if (!global.pause &amp;&amp; !global.gameOver)
+        if(global.input == INPUT_TOUCH)
+            mouse_clear(mb_any);
+    
     //keyboard
     keyUpPressed = false;
     keyRightPressed = false;
