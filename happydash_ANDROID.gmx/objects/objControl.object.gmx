@@ -25,7 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>application_surface_enable(false);
+            <string>//this is the "real" version (the internal version is only to delete everyones savestates)
+global.ver = "v1.0.19";
+
+application_surface_enable(false);
 
 depth = HUDDEPTH;
 randomize();
@@ -63,8 +66,7 @@ initAD();
 
 global.playthrough = 0; //for ads, etc
 
-//global.ach[0] = 0;
-
+//this is just an INTERNAL version
 global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
@@ -384,16 +386,16 @@ if (room == MAIN &amp;&amp; !global.gameOver)
         {
             if (!global.startSignal)
             {
-            if (global.mode != M.TUTORIALMODE)
-            {
-                SL.start = true;
-                playSound(sfxStart2,1);
-                global.startSignal = true;
-            }
-            else
-                instance_create(WIDTH-3*TILE,HEIGHT/2,objTutorial);
-                global.hasControl = true;
-                global.startSignal = true;
+                if (global.mode != M.TUTORIALMODE)
+                {
+                    SL.start = true;
+                    playSound(sfxStart2,1);
+                    global.startSignal = true;
+                }
+                else
+                    instance_create(WIDTH-3*TILE,HEIGHT/2,objTutorial);
+                    global.hasControl = true;
+                    global.startSignal = true;
             }
             //if player dashes, speed is higher.
             global.xSpeed = global.xSpeedDefault*.5+((1+global.player.dashSpeed));

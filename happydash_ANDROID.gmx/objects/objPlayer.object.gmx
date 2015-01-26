@@ -36,6 +36,7 @@ global.hasControl = false;
 //////////////////local variables///////////////////
 
 //for achievement
+txtCmb = noone;
 reachedSky = false;
 
 //invincibility

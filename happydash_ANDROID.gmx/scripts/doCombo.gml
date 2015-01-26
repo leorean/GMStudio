@@ -1,6 +1,17 @@
 var pitch, c;
 
 global.player.combo += 1;
+
+if (global.player.combo > 1)
+{
+    if (instance_exists(global.player.txtCmb))
+        with(global.player.txtCmb) instance_destroy();
+    
+    global.player.txtCmb = instance_create(global.player.cx,global.player.y,objText);
+    txtCmb.text = "x"+string(global.player.combo);
+    txtCmb.fnt = fntNumbers;
+}
+
 global.player.alarm[1] = global.player.alarm1;
 global.player.jumpPerformed = 0;
 

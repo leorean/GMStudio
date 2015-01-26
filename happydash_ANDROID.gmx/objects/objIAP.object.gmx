@@ -132,10 +132,10 @@ switch(val)
                     amount = 10000;
                 break;
                 case "coinpack2":
-                    amount = 25000;
+                    amount = 20000;
                 break;
                 case "coinpack3":
-                    amount = 50000;
+                    amount = 40000;
                 break;
             }
             if (amount != -1)
