@@ -28,6 +28,8 @@
             <string>image_index = 0;
 depth = 2;
 
+//loadProgress();
+
 initAD();
 
 with(objButton)
