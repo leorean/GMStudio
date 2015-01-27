@@ -28,6 +28,8 @@
             <string>showbanner = true;
 showinterstitial = false;
 
+//73D7B39415A51B45B5C3E6E1A8B6C60E for testing ads
+
 timer = 0;
 
 adLoaded = false;

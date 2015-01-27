@@ -12,6 +12,7 @@ if (global.player.combo > 0)
         txtCmb = instance_create(cx,y,objText);
         txtCmb.text = "x"+string(combo);
         txtCmb.fnt = fntNumbers;
+        txtCmb.depth = HUDDEPTH+2;
     }
     /*
     if (instance_exists(global.player.txtCmb))
