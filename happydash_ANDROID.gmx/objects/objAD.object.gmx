@@ -90,12 +90,13 @@ if (!global.noads)
           <argument>
             <kind>1</kind>
             <string>//AD STUFF
-showbanner = (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
-
 showinterstitial = (os_type == os_android &amp;&amp; !global.noads
     &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver
     &amp;&amp; ((global.playthrough % 5) == 0) &amp;&amp; global.playthrough &gt; 0); //every n-th run
+
+showbanner = !showinterstitial &amp;&amp; (os_type == os_android &amp;&amp; !global.noads
+    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
+
 
 if (showinterstitial)
 {

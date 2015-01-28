@@ -86,7 +86,7 @@ if (enabled &amp;&amp; in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y-TILE,y+
         || global.input == INPUT_KEYBOARD)
         {
             t = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
-            t.type = 7;
+            t.type = 2;
             t.depth = depth-1;
             parent.confetti ++;
             if (parent.confetti == 50)

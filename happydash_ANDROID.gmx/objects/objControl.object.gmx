@@ -26,7 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>//this is the "real" version (the internal version is only to delete everyones savestates)
-global.ver = "v1.1.1";
+global.ver = "v1.1.3";
+global.loggedIn = false;
 
 application_surface_enable(false);
 
@@ -53,6 +54,9 @@ if (os_type == os_android &amp;&amp; os_is_network_connected())
 {
     if (!achievement_login_status())
         achievement_login();
+    
+    if (achievement_login_status())
+        global.loggedIn = true;
 }
 
 //IN APP PURCHASE RELATED STUFF
@@ -333,6 +337,11 @@ if (room == MAIN &amp;&amp; !global.gameOver &amp;&amp; !global.pause &amp;&amp;
             <kind>1</kind>
             <string>//ticker for timed obstacles etc.
 global.timer = (global.timer + 1) mod INFINITE;
+
+if (global.loggedIn &amp;&amp; !os_is_network_connected())
+{
+    global.loggedIn = false;
+}
 
 //MUTE/UNMUTE
 if (mouse_check_button_pressed(mb_any) &amp;&amp; (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,0,2*TILE)))
