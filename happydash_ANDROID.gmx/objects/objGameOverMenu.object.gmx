@@ -110,10 +110,11 @@ btn[3].text = "Quit";
 btn[3].index = 3;
 btn[3].parent = id;
 
-btn[0].visible = false;
-btn[1].visible = false;
-btn[2].visible = false;
-btn[3].visible = false;
+for (i = 0; i &lt;= maxIndex; i++)
+{
+    btn[i].visible = false;
+//    btn[i].depth = HUDDEPTH - 1;
+}
 
 //effect
 dx = -2*TILE;
@@ -251,9 +252,9 @@ if (canProceed)
             <kind>1</kind>
             <string>image_speed = 0;
 
-draw_set_alpha((dx/WIDTH));
-draw_set_color(c_white);
-with(objLiving) instance_destroy();
+draw_set_alpha((dx/WIDTH)*.75);
+draw_set_color(c_black);
+//with(objLiving) depth = objGameOverMenu.depth-1;
 draw_rectangle(0,0,WIDTH,HEIGHT,0);
 
 draw_set_font(global.fntDefault);
