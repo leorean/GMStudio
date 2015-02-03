@@ -207,7 +207,7 @@ if (canProceed)
         {
             if (!submitted) // can only submit ONCE per run
             {
-                achievement_post_score("CgkIsq60qNAMEAIQBg", finalScore);
+                achievement_post_score("CgkIsq60qNAMEAIQFg", finalScore);
                 
                 //Look at my Swag Achievement
                 postAchievement("CgkIsq60qNAMEAIQCg",100,false);

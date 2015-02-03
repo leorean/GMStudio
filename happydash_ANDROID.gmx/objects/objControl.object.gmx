@@ -71,7 +71,7 @@ initAD();
 global.playthrough = 0; //for ads, etc
 
 //this is just an INTERNAL version
-global.version = 110; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
+global.version = 115; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
@@ -525,6 +525,8 @@ if (debug_mode)
             instance_destroy();
         instance_create(global.player.x,global.player.y-TILE,objPowerUp);
     }
+    
+    
     
     if keyboard_check(ord('C'))
     {

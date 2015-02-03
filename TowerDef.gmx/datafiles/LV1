@@ -1,0 +1,13 @@
+wave
+spawn:0:right:2:60
+wait
+wave
+spawn:0:right:3:40
+wait
+wave
+spawn:0:right:5:35
+wait
+wave
+spawn:0:left:5:25
+spawn:0:right:5:25
+wait

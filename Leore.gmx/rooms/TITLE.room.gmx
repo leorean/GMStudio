@@ -28,8 +28,8 @@ room_goto(LV1);</code>
     <deleteUnderlyingObj>-1</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
     <page>1</page>
-    <xoffset>-77</xoffset>
-    <yoffset>-63</yoffset>
+    <xoffset>-318</xoffset>
+    <yoffset>-239</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
