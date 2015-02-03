@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>//this is the "real" version (the internal version is only to delete everyones savestates)
-global.ver = "v1.1.5";
+global.ver = "v1.1.6";
 global.loggedIn = false;
 
 application_surface_enable(false);
