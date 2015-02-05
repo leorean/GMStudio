@@ -45,7 +45,7 @@ with(objButton)
     
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
-
+/*
 pme = noone; hme = noone;
 if (!instance_exists(objPremiumMe))
     pme = instance_create(.5*TILE,HEIGHT-8*TILE,objPremiumMe);
@@ -53,32 +53,42 @@ if (!instance_exists(objPremiumMe))
 if (global.mode != M.TUTORIALMODE)
     if (!instance_exists(objHelpMe))
         hme = instance_create(WIDTH-6.5*TILE,HEIGHT-8*TILE,objHelpMe);
-        
+*/        
 index = 0;
-maxIndex = 2;
+maxIndex = 4;
 playerSelection = false;
 
-row = 7;
-
+row = 9;
+/*
 by = row*TILE - TILE;
 bw = 8*TILE;
 bx = WIDTH/2-.5*bw;
 bh = 3*TILE + ceil(maxIndex*1.5)*TILE;
-
+*/
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Start";
 btn[0].index = 0;
 btn[0].parent = id;
 
-btn[1] = instance_create(WIDTH/2,row*TILE+1.5*TILE,objButton);
-btn[1].text = "Shop";
+btn[1] = instance_create(WIDTH/2-6*TILE,row*TILE-2*TILE,objButton);
+btn[1].text = "Premium Shop";
 btn[1].index = 1;
 btn[1].parent = id;
 
-btn[2] = instance_create(WIDTH/2,row*TILE+3*TILE,objButton);
-btn[2].text = "Scores";
-btn[2].index = 3;
+btn[2] = instance_create(WIDTH/2-6*TILE,row*TILE+2*TILE,objButton);
+btn[2].text = "Upgrade Shop";
+btn[2].index = 2;
 btn[2].parent = id;
+
+btn[3] = instance_create(WIDTH/2+6*TILE,row*TILE-2*TILE,objButton);
+btn[3].text = "Achievements";
+btn[3].index = 3;
+btn[3].parent = id;
+
+btn[4] = instance_create(WIDTH/2+6*TILE,row*TILE+2*TILE,objButton);
+btn[4].text = "Scoreboard";
+btn[4].index = 4;
+btn[4].parent = id;
 
 t = pi/2;
 z = 0;
@@ -148,24 +158,45 @@ yy = 0;
     }
     
     if (btn[1].pressed)
+        room_goto(PREMIUM);
+    
+    if (btn[2].pressed)
         room_goto(SHOP);
     
+    /*
     if (instance_exists(pme))
         pme.visible = true;
     if (instance_exists(hme))
         hme.visible = true;
+    */
     
-    btn[0].enabled = true;
-    btn[1].enabled = true;
-    btn[0].visible = true;
-    btn[1].visible = true;
-    btn[2].visible = true;
+    for(i=0;i&lt;=maxIndex;i++)
+    {
+        btn[i].enabled = true;
+        btn[i].visible = true;
+    }
+
     if (!os_is_network_connected())
-        btn[2].enabled = false;
+    {
+        btn[3].enabled = false;
+        btn[4].enabled = false;
+    }
     else
-        btn[2].enabled = true;
+    {
+        btn[3].enabled = true;    
+        btn[4].enabled = true;
+    }
     
-    if (btn[2].pressed)
+    if (btn[3].pressed)//achievements
+    {
+        if(!achievement_login_status())
+                achievement_login();
+                
+        if (achievement_available())
+            achievement_show_achievements();
+    }
+    
+    if (btn[4].pressed)//leaderboard
     {
         if (os_is_network_connected())
         {
@@ -179,18 +210,25 @@ yy = 0;
             }
         }
     }
+    
+    if (in(mouse_x,0,2*TILE) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button_released(mb_left))//help
+    {
+        global.mode = M.TUTORIALMODE;
+        room_goto(MAIN);
+    }
 } else
 {
+    /*
     if (instance_exists(pme))
         pme.visible = false;
     if (instance_exists(hme))
         hme.visible = false;
-    btn[0].enabled = false;
-    btn[1].enabled = false;
-    btn[2].enabled = false;
-    btn[0].visible = false;
-    btn[1].visible = false;
-    btn[2].visible = false;
+    */
+    for(i=0;i&lt;=maxIndex;i++)
+    {
+        btn[i].enabled = false;
+        btn[i].visible = false;
+    }
 
 }
 
@@ -239,15 +277,16 @@ draw_sprite_part(spriteTitleMenu,-1,0,HEIGHT,WIDTH,HEIGHT,0,0);
 
 if (!playerSelection)
 {
-    //drawBorder(7.5*TILE,6*TILE,10*TILE,9*TILE);
-    drawBorder(bx,by,bw,bh);
+    //drawBorder(bx,by,bw,bh);
     
     //title
     draw_set_alpha(1);
     draw_set_color(c_white);
     draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
     
-    if (os_type == os_windows || (os_type == os_android &amp;&amp; os_is_network_connected()))
+    draw_sprite_part(spriteHud,-1,10*TILE+2*TILE*(in(mouse_x,0,2*TILE) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button(mb_left)),3*TILE,2*TILE,2*TILE,0,0);
+    
+    /*if (os_type == os_windows || (os_type == os_android &amp;&amp; os_is_network_connected()))
     {
         //ACHIEVMENTS
         var ap;
@@ -262,7 +301,7 @@ if (!playerSelection)
             if (achievement_available())
                 achievement_show_achievements();
         }
-    }
+    }*/
 }
 
 draw_set_halign(fa_right);

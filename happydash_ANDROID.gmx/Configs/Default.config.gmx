@@ -294,8 +294,8 @@
     <option_tizen_display_name>happydash</option_tizen_display_name>
     <option_tizen_flurry_enable>0</option_tizen_flurry_enable>
     <option_tizen_flurry_id></option_tizen_flurry_id>
-    <option_tizen_google_analytics_enable>0</option_tizen_google_analytics_enable>
-    <option_tizen_google_tracking_id>UA-57939076-3</option_tizen_google_tracking_id>
+    <option_tizen_google_analytics_enable>-1</option_tizen_google_analytics_enable>
+    <option_tizen_google_tracking_id>UA-57939076-5</option_tizen_google_tracking_id>
     <option_tizen_iap_groupID></option_tizen_iap_groupID>
     <option_tizen_icon>Configs\Default\tizen\icon117.png</option_tizen_icon>
     <option_tizen_interpolate>-1</option_tizen_interpolate>
