@@ -40,21 +40,25 @@ maxIndex = 2;
 //with(objLiving) x += global.xSpeed;
 //with(objEnemy) x += global.xSpeed;
 
-row = 6;
+row = 4;
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Continue";
 btn[0].index = 0;
 btn[0].parent = id;
+btn[0].drawBg = true;
 
-btn[1] = instance_create(WIDTH/2,row*TILE+2*TILE,objButton);
+btn[1] = instance_create(WIDTH/2,row*TILE+2.5*TILE,objButton);
 btn[1].text = "Restart";
 btn[1].index = 1;
 btn[1].parent = id;
+btn[1].drawBg = true;
 
-btn[2] = instance_create(WIDTH/2,row*TILE+4*TILE,objButton);
+btn[2] = instance_create(WIDTH/2,row*TILE+5*TILE,objButton);
 btn[2].text = "Quit";
 btn[2].index = 2;
 btn[2].parent = id;
+btn[2].drawBg = true;
+btn[2].w = 3*TILE;
 </string>
           </argument>
         </arguments>
@@ -184,10 +188,8 @@ draw_set_alpha(1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 
-drawBorder(8.5*TILE,5*TILE,8*TILE,7*TILE);
-
-
-drawText(WIDTH/2,3*TILE,"-paused-",c_white,c_none,fntMenu);
+//drawBorder(8.5*TILE,5*TILE,8*TILE,7*TILE);
+//drawText(WIDTH/2,3*TILE,"-paused-",c_white,c_none,fntMenu);
 </string>
           </argument>
         </arguments>

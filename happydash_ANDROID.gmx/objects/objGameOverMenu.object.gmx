@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;//+2;
 index = 0;
-maxIndex = 3;
+maxIndex = 4;
 
 canProceed = false;
 
@@ -90,25 +90,40 @@ finalScore = global.curScore;
 submitted = false;
 var r;
 r = 2.5*TILE;
-btn[0] = instance_create(WIDTH/2,r+1.5*TILE,objButton);
-btn[0].text = "Shop";
+btn[0] = instance_create(WIDTH/2-6*TILE,r+2.5*TILE,objButton);
+btn[0].text = "Upgrade";
 btn[0].index = 0;
 btn[0].parent = id;
+btn[0].drawBg = true;
+btn[0].w = 4*TILE;
 
-btn[1] = instance_create(WIDTH/2,r+3.5*TILE,objButton);
+btn[1] = instance_create(WIDTH/2-7*TILE,r+5.5*TILE,objButton);
 btn[1].text = "Try Again";
 btn[1].index = 1;
 btn[1].parent = id;
+btn[1].drawBg = true;
+btn[1].w = 4*TILE;
 
-btn[2] = instance_create(WIDTH/2,r+5.5*TILE,objButton);
+btn[2] = instance_create(WIDTH/2+5*TILE,r+2.5*TILE,objButton);
 btn[2].text = "Submit Score";
 btn[2].index = 2;
 btn[2].parent = id;
+btn[2].drawBg = true;
+btn[2].w = 5*TILE;
 
-btn[3] = instance_create(WIDTH/2,r+7.5*TILE,objButton);
-btn[3].text = "Quit";
+btn[3] = instance_create(WIDTH/2+6*TILE,r+5.5*TILE,objButton);
+btn[3].text = "Achievements";
 btn[3].index = 3;
 btn[3].parent = id;
+btn[3].drawBg = true;
+btn[3].w = 6*TILE;
+
+btn[4] = instance_create(WIDTH/2,r+8.5*TILE,objButton);
+btn[4].text = "Quit";
+btn[4].index = 4;
+btn[4].parent = id;
+btn[4].drawBg = true;
+btn[4].w = 3*TILE;
 
 for (i = 0; i &lt;= maxIndex; i++)
 {
@@ -186,6 +201,7 @@ if (canProceed)
     btn[1].visible = true;
     btn[2].visible = true;
     btn[3].visible = true;
+    btn[4].visible = true;
     
     handleButtons();
     
@@ -217,6 +233,15 @@ if (canProceed)
         }
     }
     if (btn[3].pressed)
+    {
+        if(!achievement_login_status())
+                achievement_login();
+                
+        if (achievement_available())
+            achievement_show_achievements();        
+    }
+    
+    if (btn[4].pressed)
         room_goto(INIT);
         
 } else
@@ -225,6 +250,7 @@ if (canProceed)
     btn[1].visible = false;
     btn[2].visible = false;
     btn[3].visible = false;
+    btn[4].visible = false;
 }
 
 
@@ -330,8 +356,8 @@ d = 11*TILE;
 draw_set_font(global.fntScore);
 draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 
-if (canProceed)
-    drawBorder(7*TILE,3*TILE,11*TILE,9*TILE);
+//if (canProceed)
+//    drawBorder(7*TILE,3*TILE,11*TILE,9*TILE);
 
 if (canBuySomething &amp;&amp; canProceed)
 {

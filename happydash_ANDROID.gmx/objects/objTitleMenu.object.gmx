@@ -66,29 +66,44 @@ bx = WIDTH/2-.5*bw;
 bh = 3*TILE + ceil(maxIndex*1.5)*TILE;
 */
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
-btn[0].text = "Start";
+btn[0].text = " Play";
 btn[0].index = 0;
 btn[0].parent = id;
+btn[0].drawBg = true;
+btn[0].w = 3*TILE;
+btn[0].img = 0;
 
-btn[1] = instance_create(WIDTH/2-6*TILE,row*TILE-2*TILE,objButton);
-btn[1].text = "Premium Shop";
+btn[1] = instance_create(WIDTH/2-6*TILE,row*TILE-2.5*TILE,objButton);
+btn[1].text = " Goodies!";
 btn[1].index = 1;
 btn[1].parent = id;
+btn[1].drawBg = true;
+btn[1].w = 5*TILE;
+btn[1].img = 1;
 
-btn[2] = instance_create(WIDTH/2-6*TILE,row*TILE+2*TILE,objButton);
-btn[2].text = "Upgrade Shop";
+btn[2] = instance_create(WIDTH/2-6*TILE,row*TILE+2.5*TILE,objButton);
+btn[2].text = " Upgrades";
 btn[2].index = 2;
 btn[2].parent = id;
+btn[2].drawBg = true;
+btn[2].w = 5*TILE;
+btn[2].img = 2;
 
-btn[3] = instance_create(WIDTH/2+6*TILE,row*TILE-2*TILE,objButton);
-btn[3].text = "Achievements";
+btn[3] = instance_create(WIDTH/2+6*TILE,row*TILE-2.5*TILE,objButton);
+btn[3].text = "  Achievmnt.";
+//btn[3].text = "  Statistics";
 btn[3].index = 3;
 btn[3].parent = id;
+btn[3].drawBg = true;
+btn[3].w = 5*TILE;
+btn[3].img = 3;
 
-btn[4] = instance_create(WIDTH/2+6*TILE,row*TILE+2*TILE,objButton);
-btn[4].text = "Scoreboard";
+btn[4] = instance_create(WIDTH/2+6*TILE,row*TILE+2.5*TILE,objButton);
+btn[4].text = " Scores";
 btn[4].index = 4;
 btn[4].parent = id;
+btn[4].drawBg = true;
+btn[4].img = 4;
 
 t = pi/2;
 z = 0;
@@ -266,7 +281,7 @@ t += .05;
 if (t&gt;2*pi)
     t = 0;
 
-z = 2*sin(t);
+z = 1*sin(t);
 
 //background
 xx = (xx - 1) mod WIDTH;
@@ -284,7 +299,8 @@ if (!playerSelection)
     draw_set_color(c_white);
     draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
     
-    draw_sprite_part(spriteHud,-1,10*TILE+2*TILE*(in(mouse_x,0,2*TILE) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button(mb_left)),3*TILE,2*TILE,2*TILE,0,0);
+    if (global.mode != M.TUTORIALMODE)
+        draw_sprite_part(spriteHud,-1,10*TILE,3*TILE,2*TILE,2*TILE,0,0);
     
     /*if (os_type == os_windows || (os_type == os_android &amp;&amp; os_is_network_connected()))
     {
