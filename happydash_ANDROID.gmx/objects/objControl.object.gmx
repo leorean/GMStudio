@@ -29,6 +29,8 @@
 global.ver = "v1.1.6";
 global.loggedIn = false;
 
+global.fbAuth = false;
+
 application_surface_enable(false);
 
 depth = HUDDEPTH;
@@ -64,6 +66,8 @@ global.noads = false;
 global.unlockupgrades = false;
 
 instance_create(0,0,objIAP);
+
+//instance_create(0,0,objFacebook);
 
 global.ad = noone;
 initAD();

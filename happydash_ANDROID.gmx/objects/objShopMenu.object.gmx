@@ -28,6 +28,11 @@
             <string>depth = HUDDEPTH+2;
 mask_index = sprParticleMask;
 
+global.lastRoom = room;
+
+with(objButton)
+    instance_destroy();
+
 with(objPlayer)
     instance_destroy();
     
@@ -78,7 +83,8 @@ item[UPGRADE.upPowerUpNew] = createItem(5*TILE, 8.5*TILE, UPGRADE.upPowerUpNew, 
 
 item[UPGRADE.upBlockNew] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockNew, "Blueprints", "New types of blocks!", 
     global.upgrade[UPGRADE.upBlockNew,UPGRADE.PRICE], "");
-        
+
+
 //loadProgress();
 //saveProgress();
 
@@ -86,7 +92,7 @@ item[UPGRADE.upBlockNew] = createItem(17*TILE, 2.5*TILE, UPGRADE.upBlockNew, "Bl
 
 ////BUTTONS
 index = 0;
-maxIndex = 1;
+maxIndex = 3;
 
 //purchase
 btn[0] = instance_create(WIDTH-2.5*TILE,HEIGHT-2.5*TILE,objButton);
@@ -112,6 +118,16 @@ btn[2].index = 2;
 btn[2].parent = id;
 btn[2].w = 1*TILE;
 btn[2].h = 2*TILE;
+
+//premium menu
+btn[3] = instance_create(22.5*TILE,5*TILE,objButton);
+btn[3].text = "";
+btn[3].tooltip = "Goodies";
+btn[3].index = 3;
+btn[3].parent = id;
+btn[3].w = 1*TILE;
+btn[3].drawBg = true;
+btn[3].img = 1;
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
@@ -272,6 +288,12 @@ if (btn[2].pressed || keyboard_check_pressed(vk_escape))
 {
     instance_activate_object(objControl);
     room_goto(INIT);
+}
+
+if (btn[3].pressed)
+{
+    instance_activate_object(objControl);
+    room_goto(PREMIUM);
 }
 
 if (debug_mode)

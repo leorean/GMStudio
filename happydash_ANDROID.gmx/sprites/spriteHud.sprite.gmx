@@ -8,7 +8,7 @@
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
   <bbox_left>0</bbox_left>
-  <bbox_right>351</bbox_right>
+  <bbox_right>511</bbox_right>
   <bbox_top>0</bbox_top>
   <bbox_bottom>271</bbox_bottom>
   <HTile>0</HTile>
@@ -17,7 +17,7 @@
     <TextureGroup0>3</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>352</width>
+  <width>512</width>
   <height>272</height>
   <frames>
     <frame index="0">images\spriteHud_0.png</frame>

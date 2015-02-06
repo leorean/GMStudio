@@ -72,9 +72,9 @@
     <option_colordepth>0</option_colordepth>
     <option_display_name>GameMaker: Studio</option_display_name>
     <option_displayerrors>True</option_displayerrors>
-    <option_facebook_app_display_name></option_facebook_app_display_name>
-    <option_facebook_appid></option_facebook_appid>
-    <option_facebook_enable>0</option_facebook_enable>
+    <option_facebook_app_display_name>Happy Dash</option_facebook_app_display_name>
+    <option_facebook_appid>343779359161186</option_facebook_appid>
+    <option_facebook_enable>-1</option_facebook_enable>
     <option_freeze>false</option_freeze>
     <option_frequency>0</option_frequency>
     <option_frontimage>nil</option_frontimage>

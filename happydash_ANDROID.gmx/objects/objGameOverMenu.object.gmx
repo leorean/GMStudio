@@ -27,9 +27,10 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;//+2;
 index = 0;
-maxIndex = 4;
+maxIndex = 5;
 
 canProceed = false;
+shared = false;
 
 initAD();
 
@@ -90,40 +91,63 @@ finalScore = global.curScore;
 submitted = false;
 var r;
 r = 2.5*TILE;
-btn[0] = instance_create(WIDTH/2-6*TILE,r+2.5*TILE,objButton);
-btn[0].text = "Upgrade";
+btn[0] = instance_create(WIDTH/2-4.5*TILE,r+1.5*TILE,objButton);
+btn[0].text = "";//upgrade shop
+btn[0].tooltip = "Upgrade Shop";
 btn[0].index = 0;
 btn[0].parent = id;
 btn[0].drawBg = true;
-btn[0].w = 4*TILE;
+btn[0].w = 1*TILE;
+btn[0].img = 2;
+if (canBuySomething) btn[0].new = true;
 
-btn[1] = instance_create(WIDTH/2-7*TILE,r+5.5*TILE,objButton);
-btn[1].text = "Try Again";
+btn[1] = instance_create(WIDTH/2+4.5*TILE,r+1.5*TILE,objButton);
+btn[1].text = "";//try again
+btn[1].tooltip = "Try again";
 btn[1].index = 1;
 btn[1].parent = id;
 btn[1].drawBg = true;
-btn[1].w = 4*TILE;
+btn[1].w = 1*TILE;
+btn[1].img = 6;
 
-btn[2] = instance_create(WIDTH/2+5*TILE,r+2.5*TILE,objButton);
-btn[2].text = "Submit Score";
+btn[2] = instance_create(WIDTH/2-9*TILE,r+4*TILE,objButton);
+btn[2].text = "";//submit score
+btn[2].tooltip = "Submit Score";
 btn[2].index = 2;
 btn[2].parent = id;
 btn[2].drawBg = true;
-btn[2].w = 5*TILE;
+btn[2].w = 1*TILE;
+btn[2].img = 5;
 
-btn[3] = instance_create(WIDTH/2+6*TILE,r+5.5*TILE,objButton);
-btn[3].text = "Achievements";
+btn[3] = instance_create(WIDTH/2-4.5*TILE,r+6.5*TILE,objButton);
+btn[3].text = "";//achievements
+btn[3].tooltip = "Achievements";
 btn[3].index = 3;
 btn[3].parent = id;
 btn[3].drawBg = true;
-btn[3].w = 6*TILE;
+btn[3].w = 1*TILE;
+btn[3].img = 3;
 
-btn[4] = instance_create(WIDTH/2,r+8.5*TILE,objButton);
-btn[4].text = "Quit";
+btn[4] = instance_create(WIDTH/2+4.5*TILE,r+6.5*TILE,objButton);
+btn[4].text = "";//quit
+btn[4].tooltip = "Quit";
 btn[4].index = 4;
 btn[4].parent = id;
 btn[4].drawBg = true;
-btn[4].w = 3*TILE;
+btn[4].w = 1*TILE;
+btn[4].img = 7;
+
+btn[5] = instance_create(WIDTH/2+9*TILE,r+4*TILE,objButton);
+btn[5].text = "";//share on fb
+
+gift = min(max(floor(global.coinsCollected/10),5),500);
+
+btn[5].tooltip = "Share Score# and get " + string(gift)+" Coins";
+btn[5].index = 5;
+btn[5].parent = id;
+btn[5].drawBg = true;
+btn[5].w = 1*TILE;
+btn[5].img = 8;
 
 for (i = 0; i &lt;= maxIndex; i++)
 {
@@ -202,6 +226,7 @@ if (canProceed)
     btn[2].visible = true;
     btn[3].visible = true;
     btn[4].visible = true;
+    btn[5].visible = true;
     
     handleButtons();
     
@@ -210,9 +235,19 @@ if (canProceed)
     if (btn[1].pressed)
         room_restart();
     if (!os_is_network_connected())
+    {
         btn[2].enabled = false;
+        btn[3].enabled = false;
+        btn[5].enabled = false;
+    
+    }
     else
+    {
         btn[2].enabled = true;
+        btn[3].enabled = true;
+        btn[5].enabled = true;
+    
+    }
     
     if (btn[2].pressed)
     {
@@ -244,6 +279,37 @@ if (canProceed)
     if (btn[4].pressed)
         room_goto(INIT);
         
+    if (btn[5].pressed)
+    {
+        if (!global.Auth)
+        {
+            if (!instance_exists(objFacebook))
+                instance_create(0,0,objFacebook);
+        }
+        
+        if (global.Auth)
+        {
+            wallPostMap = ds_map_create();//Create a ds_map that holds the details used to create the wall post
+            ds_map_add(wallPostMap, "message", "Test");   //The content message of the post
+            //ds_map_add(wallPostMap, "picture", "http://mcsweenygames.com/Clown.jpg");               //An image link that is to accompany the post
+            ds_map_add(wallPostMap, "link", "http://shinypixelgames.com/");//The link that the "Name" will direct you to when clicked
+            ds_map_add(wallPostMap, "name", "Happy Dash Test");//The post name
+            ds_map_add(wallPostMap, "caption", "Test Caption");//The post caption
+            ds_map_add(wallPostMap, "description", "Test Description!");//Post description
+            facebook_dialog("feed", wallPostMap, -1);
+            ds_map_destroy(wallPostMap);//Destroy the ds_grid
+            
+            if (!shared)
+            {
+                global.wallet += gift;
+                saveProgress();
+                loadProgress();
+            }
+            
+            shared = true;
+        }
+    }
+        
 } else
 {
     btn[0].visible = false;
@@ -251,6 +317,8 @@ if (canProceed)
     btn[2].visible = false;
     btn[3].visible = false;
     btn[4].visible = false;
+    btn[5].visible = false;
+    
 }
 
 
@@ -359,11 +427,7 @@ draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 //if (canProceed)
 //    drawBorder(7*TILE,3*TILE,11*TILE,9*TILE);
 
-if (canBuySomething &amp;&amp; canProceed)
-{
-    zz = 2*sin(((.02*global.timer) mod 2*pi));
-    draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,btn[0].x+2*TILE,btn[0].y-TILE+zz);
-}
+
 </string>
           </argument>
         </arguments>

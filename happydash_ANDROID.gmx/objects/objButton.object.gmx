@@ -33,6 +33,8 @@ myPrev = mouse_y;
 
 drawBg = false;
 img = -1;
+tooltip = "";
+new = false;zz = 0;
 
 a=0;b=0;c=0;d=0;
 
@@ -46,7 +48,7 @@ cInactive1 = make_color_hsv(33,128,255);
 //cInactive1 = make_color_hsv(0,0,100);
 cInactive2 = c_black;
 
-cDisabled1 = make_color_hsv(0,0,80);
+cDisabled1 = make_color_hsv(0,0,90);
 cDisabled2 = c_none;//make_color_hsv(0,0,30);
 
 pressed = false;
@@ -84,7 +86,7 @@ fnt = fntButton;
             <string>if (!instance_exists(parent)) instance_destroy();
 else
 {
-    depth = parent.depth-1;
+    depth = parent.depth-1-(active);
     
     if (enabled)
     {
@@ -177,9 +179,11 @@ if (drawBg)
     if (img &gt; -1)
     {
         if (active)
-            c = c_white
+            c = make_color_hsv(7,131,76);
+            //c = c_white;
         else
             c = make_color_hsv(33,128,255);
+        if (!enabled) c = cDisabled1;
         draw_sprite_part_ext(spriteHud,-1,8*TILE+2*img*TILE,9*TILE,2*TILE,2*TILE,x-w,y-TILE/3,1,1,c,1);
     }
     
@@ -195,6 +199,17 @@ if (text != "")
             drawText(x,y,text,cInactive1,cInactive2,fnt);
     } else
         drawText(x,y,text,cDisabled1,cDisabled2,fnt);
+}
+
+if (tooltip != "")
+{
+    drawText(x,y+1.5*TILE,tooltip,c_white,c_black,fntTiny);
+}
+
+if (new)
+{
+    zz = 2*sin(((.02*global.timer) mod 2*pi));
+    draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,x+w-.5*TILE,y-TILE+zz);
 }
 
 prevIndex = parent.index;

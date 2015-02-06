@@ -28,6 +28,8 @@
             <string>image_index = 0;
 depth = 2;
 
+global.lastRoom = room;
+
 //loadProgress();
 if (!global.loggedIn &amp;&amp; os_is_network_connected())
 {
@@ -58,14 +60,14 @@ index = 0;
 maxIndex = 4;
 playerSelection = false;
 
-row = 9;
+row = 8.5 * TILE - 4;
 /*
 by = row*TILE - TILE;
 bw = 8*TILE;
 bx = WIDTH/2-.5*bw;
 bh = 3*TILE + ceil(maxIndex*1.5)*TILE;
 */
-btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
+btn[0] = instance_create(WIDTH/2,row,objButton);
 btn[0].text = " Play";
 btn[0].index = 0;
 btn[0].parent = id;
@@ -73,7 +75,7 @@ btn[0].drawBg = true;
 btn[0].w = 3*TILE;
 btn[0].img = 0;
 
-btn[1] = instance_create(WIDTH/2-6*TILE,row*TILE-2.5*TILE,objButton);
+btn[1] = instance_create(WIDTH/2-6*TILE,row-2.5*TILE,objButton);
 btn[1].text = " Goodies!";
 btn[1].index = 1;
 btn[1].parent = id;
@@ -81,7 +83,7 @@ btn[1].drawBg = true;
 btn[1].w = 5*TILE;
 btn[1].img = 1;
 
-btn[2] = instance_create(WIDTH/2-6*TILE,row*TILE+2.5*TILE,objButton);
+btn[2] = instance_create(WIDTH/2-6*TILE,row+2.5*TILE,objButton);
 btn[2].text = " Upgrades";
 btn[2].index = 2;
 btn[2].parent = id;
@@ -89,7 +91,7 @@ btn[2].drawBg = true;
 btn[2].w = 5*TILE;
 btn[2].img = 2;
 
-btn[3] = instance_create(WIDTH/2+6*TILE,row*TILE-2.5*TILE,objButton);
+btn[3] = instance_create(WIDTH/2+6*TILE,row-2.5*TILE,objButton);
 btn[3].text = "  Achievmnt.";
 //btn[3].text = "  Statistics";
 btn[3].index = 3;
@@ -98,7 +100,7 @@ btn[3].drawBg = true;
 btn[3].w = 5*TILE;
 btn[3].img = 3;
 
-btn[4] = instance_create(WIDTH/2+6*TILE,row*TILE+2.5*TILE,objButton);
+btn[4] = instance_create(WIDTH/2+6*TILE,row+2.5*TILE,objButton);
 btn[4].text = " Scores";
 btn[4].index = 4;
 btn[4].parent = id;
@@ -229,7 +231,7 @@ yy = 0;
     if (in(mouse_x,0,2*TILE) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button_released(mb_left))//help
     {
         global.mode = M.TUTORIALMODE;
-        room_goto(MAIN);
+        room_goto(MAIN);                
     }
 } else
 {
@@ -294,7 +296,7 @@ if (!playerSelection)
 {
     //drawBorder(bx,by,bw,bh);
     
-    //title
+    //TITEL MENU IMAGE
     draw_set_alpha(1);
     draw_set_color(c_white);
     draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);

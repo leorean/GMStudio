@@ -28,6 +28,9 @@
             <string>depth = HUDDEPTH+2;
 mask_index = sprParticleMask;
 
+with (objButton)
+    instance_destroy();
+
 with(objPlayer)
     instance_destroy();
     
@@ -158,7 +161,7 @@ if (global.input != INPUT_TOUCH)
 if (btn[0].pressed || keyboard_check_pressed(vk_backspace))
 {
     instance_activate_object(objControl);
-    room_goto(INIT);
+    room_goto(global.roomLast);
 }
 
 if (mouse_check_button_released(mb_left))

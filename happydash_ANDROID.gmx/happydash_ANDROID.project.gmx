@@ -246,6 +246,7 @@
       <object>objects\objSoundManager</object>
       <object>objects\objAD</object>
       <object>objects\objIAP</object>
+      <object>objects\objFacebook</object>
     </objects>
     <objects name="content">
       <object>objects\objBlock</object>
