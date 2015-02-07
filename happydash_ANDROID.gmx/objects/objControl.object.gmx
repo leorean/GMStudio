@@ -30,6 +30,7 @@ global.ver = "v1.1.6";
 global.loggedIn = false;
 
 global.fbAuth = false;
+global.useFb = false;
 
 application_surface_enable(false);
 
@@ -842,6 +843,34 @@ if (room == MAIN &amp;&amp; !global.gameOver)
 }
 //MUTE BUTTON
 draw_sprite_part(spriteHud,-1,4*TILE+global.mute*2*TILE,3*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
+
+if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
+{
+    if (global.fbAuth)
+    {
+        draw_sprite_part(spriteHud,-1,9*TILE,15*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
+        if (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT) &amp;&amp; mouse_check_button_released(mb_left))
+        {
+            facebook_logout();
+            global.fbAuth = false;
+            global.useFb = false;
+            saveOptions();
+            show_message("Unlinked Facebook.");
+        }        
+    } else
+    {
+        draw_sprite_part(spriteHud,-1,11*TILE,15*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
+        if (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT) &amp;&amp; mouse_check_button_released(mb_left))
+        {
+            if (!global.fbAuth)
+            {
+                if (!instance_exists(objFacebook))
+                    instance_create(0,0,objFacebook);
+                show_debug_message("no fb auth yet");
+            }
+        }
+    }
+}
 
 /*if(room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.pause)
     if (os_type == os_android || os_browser != browser_not_a_browser)

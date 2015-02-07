@@ -30,6 +30,9 @@ depth = 2;
 
 global.lastRoom = room;
 
+if (global.useFb &amp;&amp; !instance_exists(objFacebook))
+    instance_create(0,0,objFacebook);
+
 //loadProgress();
 if (!global.loggedIn &amp;&amp; os_is_network_connected())
 {

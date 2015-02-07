@@ -18,6 +18,7 @@ if (file_exists(working_directory + global.saveFile))
     global.mute = real(ini_read_string('Options','sfx','0'));
     global.mode = real(ini_read_string('Options','mode',string(M.TUTORIALMODE)));
     global.playerSelected = real(ini_read_string('Options','playerSelected','0'));
+    global.useFb = real(ini_read_string('Options','useFb',string(false)));
     
     for (i = 0; i <= global.maxPlayerSelected; i++)
         global.playerLocked[i] = real(ini_read_string('Options','playerLocked'+string(i),string(true)));

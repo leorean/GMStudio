@@ -27,10 +27,10 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;//+2;
 index = 0;
-maxIndex = 4;
+maxIndex = 5;
 
 canProceed = false;
-global.shared = false;
+shared = false;
 
 initAD();
 
@@ -110,7 +110,7 @@ btn[1].drawBg = true;
 btn[1].w = 1*TILE;
 btn[1].img = 6;
 
-btn[2] = instance_create(WIDTH/2,r+4*TILE,objButton);
+btn[2] = instance_create(WIDTH/2-9*TILE,r+4*TILE,objButton);
 btn[2].text = "";//submit score
 btn[2].tooltip = "Submit Score";
 btn[2].index = 2;
@@ -137,19 +137,19 @@ btn[4].drawBg = true;
 btn[4].w = 1*TILE;
 btn[4].img = 7;
 
-/*
+
 btn[5] = instance_create(WIDTH/2+9*TILE,r+4*TILE,objButton);
 btn[5].text = "";//share on fb
 
 gift = min(max(floor(global.coinsCollected/10),5),500);
 
-btn[5].tooltip = "Share Score# and get " + string(gift)+" Coins";
+btn[5].tooltip = "Share on FB# and get " + string(gift)+" Coins";
 btn[5].index = 5;
 btn[5].parent = id;
 btn[5].drawBg = true;
 btn[5].w = 1*TILE;
 btn[5].img = 8;
-*/
+
 
 for (i = 0; i &lt;= maxIndex; i++)
 {
@@ -228,7 +228,7 @@ if (canProceed)
     btn[2].visible = true;
     btn[3].visible = true;
     btn[4].visible = true;
-    //btn[5].visible = true;
+    btn[5].visible = true;
     
     handleButtons();
     
@@ -240,14 +240,14 @@ if (canProceed)
     {
         btn[2].enabled = false;
         btn[3].enabled = false;
-        //btn[5].enabled = false;
+        btn[5].enabled = false;
     
     }
     else
     {
         btn[2].enabled = true;
         btn[3].enabled = true;
-        //btn[5].enabled = true;
+        btn[5].enabled = true;
     
     }
     
@@ -280,16 +280,54 @@ if (canProceed)
     
     if (btn[4].pressed)
         room_goto(INIT);
+    
+    /*if (!global.fbAuth)
+        btn[5].enabled = false;
+    else
+        btn[5].enabled = true;*/
         
-    /*if (btn[5].pressed)
+    if (btn[5].pressed)
     {
-        if (!global.shared &amp;&amp; !instance_exists(objFacebook))
+        if (!global.fbAuth)
         {
-            var fb;
-            fb = instance_create(0,0,objFacebook);
-            fb.gift = gift;
+            show_message("Please connect to Facebook by tapping the 'f' Symbol in the corner first.");
         }
+        else
+        {
+            if (!shared)
+            {
+                //show_debug_message("fb auth true");
+                
+                /*var map;
+                map = ds_map_create();
+                ds_map_add(map, "score","1337"); // score : 105615
+                facebook_graph_request("me/scores", "POST",map, -1);
+                ds_map_destroy(map);
+                */
+                
+                var interactiveMap;
+                interactiveMap = ds_map_create();
+                ds_map_add(interactiveMap, "picture", "http://shinypixelgames.com/img/title.png");
+                ds_map_add(interactiveMap, "link", "https://play.google.com/store/apps/details?id=com.spg.happydash");
+                ds_map_add(interactiveMap, "name", "I just scored " + string(finalScore) + " points and got " + string(gift) + " coins as a reward!");
+                ds_map_add(interactiveMap, "caption", "- shinypixelgames.com");
+                ds_map_add(interactiveMap, "description", "");
+                facebook_dialog("feed", interactiveMap, -1);
+                ds_map_destroy(interactiveMap);
+                
+                show_debug_message("fb gifted money");
             
+                global.wallet += gift;
+                saveProgress();
+                loadProgress();
+                
+                btn[5].tooltip = "Shared!";
+                
+                shared = true;
+            }
+        }
+        
+        /*
         if (!global.fbAuth)
         {
             if (!instance_exists(objFacebook))
@@ -316,8 +354,8 @@ if (canProceed)
             }
             
             shared = true;
-        }
-    }*/
+        }*/
+    }
         
 } else
 {

@@ -32,6 +32,7 @@ if (true)//(room == MAIN) //dont overwrite score with zeros?
 ini_write_string('Options','sfx',string(global.mute));
 ini_write_string('Options','mode',string(global.mode));
 ini_write_string('Options','playerSelected',string(global.playerSelected));
+ini_write_string('Options','useFb',string(global.useFb));
 
 for (i = 0; i <= global.maxPlayerSelected; i++)
     ini_write_string('Options','playerLocked'+string(i),string(global.playerLocked[i]));

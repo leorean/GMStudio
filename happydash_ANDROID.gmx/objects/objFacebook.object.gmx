@@ -25,15 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>facebook_init(); // Initialise Facebook
+            <string>depth = HUDDEPTH - 10;
+
+facebook_init(); // Initialise Facebook
 global.fbAuth = false; // Control variable
+
+fbStatus = "";
 
 permissions = ds_list_create();
 ds_list_add(permissions, "public_profile");
 facebook_login(permissions, fb_login_default);
 //ds_list_destroy(permissions);
 
-alarm[0] = 0; //Set an alarm to check the login status
+alarm[0] = 1; //Set an alarm to check the login status
 </string>
           </argument>
         </arguments>
@@ -57,14 +61,20 @@ alarm[0] = 0; //Set an alarm to check the login status
           <argument>
             <kind>1</kind>
             <string>//Check the Facebook status and set a global variable
-var fbStatus;
+//var fbStatus;
 fbStatus = facebook_status();                                       // Get the Facebook status
 show_debug_message( "facebook status: " + fbStatus);
 switch (fbStatus)                                          
 {
     case "AUTHORISED":                                                  //Facebook authorised!
-        global.fbAuth = true;
         
+        if (!global.useFb)
+        {
+            global.useFb = true;
+            saveOptions();
+            show_debug_message("From now on uses FB");
+        }
+       
         var request = "publish_actions";
         if (!facebook_check_permission(request))
         {
@@ -74,24 +84,7 @@ switch (fbStatus)
             ds_list_destroy(perm);
         }
         
-        if (!global.shared)
-        {
-            wallPostMap = ds_map_create();//Create a ds_map that holds the details used to create the wall post
-            ds_map_add(wallPostMap, "message", "Test");   //The content message of the post
-            //ds_map_add(wallPostMap, "picture", "http://mcsweenygames.com/Clown.jpg");               //An image link that is to accompany the post
-            ds_map_add(wallPostMap, "link", "http://shinypixelgames.com/");//The link that the "Name" will direct you to when clicked
-            ds_map_add(wallPostMap, "name", "Happy Dash Test");//The post name
-            ds_map_add(wallPostMap, "caption", "Test Caption");//The post caption
-            ds_map_add(wallPostMap, "description", "Test Description!");//Post description
-            facebook_dialog("feed", wallPostMap, -1);
-            ds_map_destroy(wallPostMap);//Destroy the ds_grid
-            
-            global.wallet += gift;
-            saveProgress();
-            loadProgress();
-            
-            global.shared = true;
-        }
+        global.fbAuth = true;
         
         instance_destroy(); 
         break;   
@@ -114,6 +107,39 @@ switch (fbStatus)
         break;
         
     default: alarm[0] = 30;                                             //None of the above options, so repeat the alarm until we have a result
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (fbStatus == "PROCESSING")
+{
+    draw_set_alpha(.5);
+    draw_set_color(c_black);
+    draw_rectangle(0,0,WIDTH,HEIGHT,0);
+    draw_set_alpha(1);
+    draw_set_color(c_white);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    drawText(WIDTH/2,HEIGHT/2,"Please wait while#Facebook is connecting...",c_white,c_none,fntButton);
 }
 </string>
           </argument>
