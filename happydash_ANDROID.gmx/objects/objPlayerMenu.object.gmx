@@ -32,7 +32,8 @@ mask_index = sprParticleMask;
 cursor = global.playerSelected;
 maxCursor = global.maxPlayerSelected;
 
-global.playerLocked[0] = false;
+global.playerLocked[0] = false; //happy - default
+global.playerLocked[3] = false; //horse - free gift
 
 locked0 = true;
 locked1 = true;

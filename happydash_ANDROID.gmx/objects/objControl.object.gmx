@@ -80,11 +80,12 @@ global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
 global.playerSelected = 0;
-global.maxPlayerSelected = 2;
+global.maxPlayerSelected = 3;
 
 global.playerName[0] = "Happy";
 global.playerName[1] = "Tammy";
 global.playerName[2] = "Pipes";
+global.playerName[3] = "Claus";
 
 for (i = 0; i &lt;= global.maxPlayerSelected; i++)
     global.playerLocked[i] = true;

@@ -34,7 +34,6 @@ facebook_login(permissions, fb_login_default);
 //ds_list_destroy(permissions);
 
 alarm[0] = 0; //Set an alarm to check the login status
-
 </string>
           </argument>
         </arguments>
@@ -64,7 +63,7 @@ show_debug_message( "facebook status: " + fbStatus);
 switch (fbStatus)                                          
 {
     case "AUTHORISED":                                                  //Facebook authorised!
-        global.Auth = true;
+        global.fbAuth = true;
         
         var request = "publish_actions";
         if (!facebook_check_permission(request))
@@ -73,6 +72,25 @@ switch (fbStatus)
             ds_list_add(perm, request);
             request_ID = facebook_request_publish_permissions(perm);
             ds_list_destroy(perm);
+        }
+        
+        if (!global.shared)
+        {
+            wallPostMap = ds_map_create();//Create a ds_map that holds the details used to create the wall post
+            ds_map_add(wallPostMap, "message", "Test");   //The content message of the post
+            //ds_map_add(wallPostMap, "picture", "http://mcsweenygames.com/Clown.jpg");               //An image link that is to accompany the post
+            ds_map_add(wallPostMap, "link", "http://shinypixelgames.com/");//The link that the "Name" will direct you to when clicked
+            ds_map_add(wallPostMap, "name", "Happy Dash Test");//The post name
+            ds_map_add(wallPostMap, "caption", "Test Caption");//The post caption
+            ds_map_add(wallPostMap, "description", "Test Description!");//Post description
+            facebook_dialog("feed", wallPostMap, -1);
+            ds_map_destroy(wallPostMap);//Destroy the ds_grid
+            
+            global.wallet += gift;
+            saveProgress();
+            loadProgress();
+            
+            global.shared = true;
         }
         
         instance_destroy(); 
@@ -92,9 +110,7 @@ switch (fbStatus)
             alarm[0] = 30;      
         }
         else
-        {
             instance_destroy();                                         //Denied, probably because the user as not given permission.
-        }
         break;
         
     default: alarm[0] = 30;                                             //None of the above options, so repeat the alarm until we have a result

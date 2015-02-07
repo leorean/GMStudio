@@ -27,10 +27,10 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;//+2;
 index = 0;
-maxIndex = 5;
+maxIndex = 4;
 
 canProceed = false;
-shared = false;
+global.shared = false;
 
 initAD();
 
@@ -110,7 +110,7 @@ btn[1].drawBg = true;
 btn[1].w = 1*TILE;
 btn[1].img = 6;
 
-btn[2] = instance_create(WIDTH/2-9*TILE,r+4*TILE,objButton);
+btn[2] = instance_create(WIDTH/2,r+4*TILE,objButton);
 btn[2].text = "";//submit score
 btn[2].tooltip = "Submit Score";
 btn[2].index = 2;
@@ -137,6 +137,7 @@ btn[4].drawBg = true;
 btn[4].w = 1*TILE;
 btn[4].img = 7;
 
+/*
 btn[5] = instance_create(WIDTH/2+9*TILE,r+4*TILE,objButton);
 btn[5].text = "";//share on fb
 
@@ -148,6 +149,7 @@ btn[5].parent = id;
 btn[5].drawBg = true;
 btn[5].w = 1*TILE;
 btn[5].img = 8;
+*/
 
 for (i = 0; i &lt;= maxIndex; i++)
 {
@@ -226,7 +228,7 @@ if (canProceed)
     btn[2].visible = true;
     btn[3].visible = true;
     btn[4].visible = true;
-    btn[5].visible = true;
+    //btn[5].visible = true;
     
     handleButtons();
     
@@ -238,14 +240,14 @@ if (canProceed)
     {
         btn[2].enabled = false;
         btn[3].enabled = false;
-        btn[5].enabled = false;
+        //btn[5].enabled = false;
     
     }
     else
     {
         btn[2].enabled = true;
         btn[3].enabled = true;
-        btn[5].enabled = true;
+        //btn[5].enabled = true;
     
     }
     
@@ -279,15 +281,22 @@ if (canProceed)
     if (btn[4].pressed)
         room_goto(INIT);
         
-    if (btn[5].pressed)
+    /*if (btn[5].pressed)
     {
-        if (!global.Auth)
+        if (!global.shared &amp;&amp; !instance_exists(objFacebook))
+        {
+            var fb;
+            fb = instance_create(0,0,objFacebook);
+            fb.gift = gift;
+        }
+            
+        if (!global.fbAuth)
         {
             if (!instance_exists(objFacebook))
                 instance_create(0,0,objFacebook);
         }
         
-        if (global.Auth)
+        if (global.fbAuth)
         {
             wallPostMap = ds_map_create();//Create a ds_map that holds the details used to create the wall post
             ds_map_add(wallPostMap, "message", "Test");   //The content message of the post
@@ -308,7 +317,7 @@ if (canProceed)
             
             shared = true;
         }
-    }
+    }*/
         
 } else
 {
@@ -317,7 +326,7 @@ if (canProceed)
     btn[2].visible = false;
     btn[3].visible = false;
     btn[4].visible = false;
-    btn[5].visible = false;
+    //btn[5].visible = false;
     
 }
 
