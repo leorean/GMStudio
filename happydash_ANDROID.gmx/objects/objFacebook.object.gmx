@@ -39,6 +39,17 @@ facebook_login(permissions, fb_login_default);
 
 alarm[0] = 1; //Set an alarm to check the login status
 try = 5;
+
+index = 0;
+maxIndex = 0;
+
+//exit to main menu
+btn[0] = instance_create(TILE,TILE/3,objButton);
+btn[0].text = "x";
+btn[0].index = 2;
+btn[0].parent = id;
+btn[0].w = 1*TILE;
+btn[0].drawBg = true;
 </string>
           </argument>
         </arguments>
@@ -108,9 +119,9 @@ switch (fbStatus)
         break;
         
     default:
-        try = max(try-1,0);
-        if (try == 0)
-            instance_destroy();
+        //try = max(try-1,0);
+        //if (try == 0)
+        //    instance_destroy();
         alarm[0] = 30;                                             //None of the above options, so repeat the alarm until we have a result
     break;        
 }
@@ -146,7 +157,11 @@ switch (fbStatus)
     draw_set_halign(fa_center);
     draw_set_valign(fa_center);
     drawText(WIDTH/2,HEIGHT/2,"Please wait while#Facebook is connecting...",c_white,c_none,fntButton);
+
 }
+
+if (btn[0].pressed)
+    instance_destroy();
 </string>
           </argument>
         </arguments>

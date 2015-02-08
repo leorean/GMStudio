@@ -31,6 +31,8 @@ global.loggedIn = false;
 
 global.fbAuth = false;
 global.useFb = false;
+global.gift = 0; //used to gift coins
+global.returnMap = ds_map_create(); //fb post return map
 
 application_surface_enable(false);
 
@@ -545,6 +547,31 @@ if (debug_mode)
     if keyboard_check(ord('V'))
         global.difficulty += 1;
 }
+
+//facebook gift stuff
+
+var count,ri;
+count = 0; ri = ds_map_find_first(global.returnMap);
+if(!ds_map_empty(global.returnMap))
+{
+    for(i=ds_map_find_first(global.returnMap); count&lt;ds_map_size(global.returnMap); ri=ds_map_find_next(global.returnMap,ri))
+    {
+        show_debug_message("++++found " + string(ri));
+        count++;
+        if (ri == "post_id")
+        {
+            show_debug_message("++++gonna gift " + string(ri));
+            global.wallet += global.gift;
+            saveProgress();
+            loadProgress();
+        
+            if (global.gift &gt; 0)
+                show_message("You aquired " + string(global.gift) + " coins!");    
+            ds_list_clear(global.returnMap);
+            global.gift = 0;
+        }
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -864,7 +891,9 @@ if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
     } else
     {
         draw_sprite_part(spriteHud,-1,11*TILE,15*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
-        if (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT) &amp;&amp; mouse_check_button_released(mb_left))
+        
+        if ((in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT) &amp;&amp; mouse_check_button_released(mb_left))
+            || (instance_exists(objGameOverMenu) &amp;&amp; objGameOverMenu.btn[5].pressed &amp;&amp; !global.fbAuth))
         {
             if (!global.fbAuth)
             {
@@ -875,6 +904,7 @@ if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
                     
                     show_debug_message("starting fb auth...");
                 }
+                
             }
         }
     }

@@ -231,11 +231,6 @@ yy = 0;
         }
     }
     
-    if (in(mouse_x,0,2*TILE) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button_released(mb_left))//help
-    {
-        global.mode = M.TUTORIALMODE;
-        room_goto(MAIN);                
-    }
 } else
 {
     /*
@@ -304,25 +299,16 @@ if (!playerSelection)
     draw_set_color(c_white);
     draw_sprite_part(spriteTitleMenu,-1,0,2*HEIGHT,WIDTH,HEIGHT,0,-z);
     
-    if (global.mode != M.TUTORIALMODE)
+    if (global.mode != M.TUTORIALMODE &amp;&amp; !instance_exists(objFacebook))
+    {
         draw_sprite_part(spriteHud,-1,10*TILE,3*TILE,2*TILE,2*TILE,0,0);
     
-    /*if (os_type == os_windows || (os_type == os_android &amp;&amp; os_is_network_connected()))
-    {
-        //ACHIEVMENTS
-        var ap;
-        ap = (in(mouse_x,0,3*TILE) &amp;&amp; in(mouse_y,0,3*TILE) &amp;&amp; mouse_check_button_released(mb_left));
-        
-        draw_sprite_part(spriteHud,-1,12*TILE+3*(global.timer % 20 &gt; 10)*TILE,0,3*TILE,3*TILE,0,0);
-        if (ap)
+        if (in(mouse_x,0,2*TILE) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button_released(mb_left))//help
         {
-            if(!achievement_login_status())
-                achievement_login();
-                
-            if (achievement_available())
-                achievement_show_achievements();
+            global.mode = M.TUTORIALMODE;
+            room_goto(MAIN);                
         }
-    }*/
+    }        
 }
 
 draw_set_halign(fa_left);
