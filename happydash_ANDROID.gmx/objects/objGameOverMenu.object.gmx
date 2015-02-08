@@ -430,6 +430,7 @@ if (dx &lt; WIDTH+2*TILE)
     
 } else
 {
+    
     if (global.timer mod 2 == 0)
     {
         c = instance_create(random(WIDTH),-TILE,objEffectConfetti);
@@ -470,6 +471,12 @@ d = 11*TILE;
 
 draw_set_font(global.fntScore);
 draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
+
+if (canProceed)
+{
+    //meters
+    drawText(floor(WIDTH/2),2.5*TILE,string(floor(global.distance*.1))+" m",c_white,c_none,fntNumbers);
+}
 
 //if (canProceed)
 //    drawBorder(7*TILE,3*TILE,11*TILE,9*TILE);

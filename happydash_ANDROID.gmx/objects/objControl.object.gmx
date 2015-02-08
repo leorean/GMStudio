@@ -542,7 +542,8 @@ if (debug_mode)
     //    with(global.player)
     //        doCombo();
     }
-
+    if keyboard_check(ord('V'))
+        global.difficulty += 1;
 }
 </string>
           </argument>
@@ -851,11 +852,14 @@ if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
         draw_sprite_part(spriteHud,-1,9*TILE,15*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
         if (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT) &amp;&amp; mouse_check_button_released(mb_left))
         {
-            facebook_logout();
-            global.fbAuth = false;
-            global.useFb = false;
-            saveOptions();
-            show_message("Unlinked Facebook.");
+            if (show_question("Disconnect Facebook?"))
+            {
+                facebook_logout();
+                global.fbAuth = false;
+                global.useFb = false;
+                saveOptions();
+                //show_message("Unlinked Facebook.");
+            }
         }        
     } else
     {
@@ -864,9 +868,13 @@ if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
         {
             if (!global.fbAuth)
             {
-                if (!instance_exists(objFacebook))
-                    instance_create(0,0,objFacebook);
-                show_debug_message("no fb auth yet");
+                if (show_question("Connect with Facebook?"))
+                {
+                    if (!instance_exists(objFacebook))
+                        instance_create(0,0,objFacebook);
+                    
+                    show_debug_message("starting fb auth...");
+                }
             }
         }
     }
