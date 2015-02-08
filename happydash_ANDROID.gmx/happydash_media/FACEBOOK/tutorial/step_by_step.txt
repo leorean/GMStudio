@@ -1,0 +1,9 @@
+Since this app is sent to you via Facebook and not downloaded regularily through Google Play, there will be a consequent message that says "Unable to get a valid license..". You have to click this message away by choosing "Retry" several times until it won't come up again. Sorry for that. 
+
+Step 1: Click the blue symbol on the right bottom of the screen. Choose 'Yes' to connect to Facebook. Make sure you have an internet connection.
+
+Step 2: Click "Play" - a tutorial will come up. You can skip this by clicking the Pause-Symbol at the right bottom of the screen, then select "Quit".
+
+Step 3: Play the game and die somewhere, so the game-over screen comes up.
+
+Step 4: Click the button that has the caption "Share on FB". Now the post-message dialog will come up and you can publish a post with a message of your choice, also posting your latest score.

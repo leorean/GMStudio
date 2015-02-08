@@ -141,14 +141,20 @@ btn[4].img = 7;
 btn[5] = instance_create(WIDTH/2+9*TILE,r+4*TILE,objButton);
 btn[5].text = "";//share on fb
 
-global.gift = min(max(floor(global.coinsCollected/10),0),500);
+global.gift = min(max(floor(
+(global.coinsCollected div 10) * 10
+),0),500);
+if (global.gift &gt; 0)
+    btn[5].tooltip = "Share on FB#-get " + string(global.gift)+" Coins-";
+else
+    btn[5].tooltip = "Share on#Facebook";
 
-btn[5].tooltip = "Share on FB# and get " + string(global.gift)+" Coins";
 btn[5].index = 5;
 btn[5].parent = id;
 btn[5].drawBg = true;
 btn[5].w = 1*TILE;
 btn[5].img = 8;
+btn[5].cBg = 1;
 
 
 for (i = 0; i &lt;= maxIndex; i++)
@@ -281,11 +287,6 @@ if (canProceed)
     if (btn[4].pressed)
         room_goto(INIT);
     
-    if (shared || !os_is_network_connected())
-        btn[5].enabled = false;
-    else
-        btn[5].enabled = true;
-        
     if (btn[5].pressed)
     {
         if (!global.fbAuth)
@@ -298,67 +299,27 @@ if (canProceed)
         {
             if (!shared)
             {
-                //show_debug_message("fb auth true");
-                
-                /*var map;
-                map = ds_map_create();
-                ds_map_add(map, "score","1337"); // score : 105615
-                facebook_graph_request("me/scores", "POST",map, -1);
-                ds_map_destroy(map);
-                */
-                
-                //with (objControl)
-                {
-                    var interactiveMap;
-                    ds_list_clear(global.returnMap);
-                    interactiveMap = ds_map_create();
-                    ds_map_add(interactiveMap, "picture", "http://shinypixelgames.com/img/fb_share.png");
-                    ds_map_add(interactiveMap, "link", "https://play.google.com/store/apps/details?id=com.spg.happydash");
-                    var n;
-                    if (global.gift == 0)
-                        n = "I just scored " + string(global.curScore) + " points!";
-                    else
-                        n = "I just scored " + string(global.curScore) + " points and got " + string(global.gift) + " coins as a reward!";
-                    ds_map_add(interactiveMap, "name", n);
-                    ds_map_add(interactiveMap, "caption", "- shinypixelgames.com");
-                    ds_map_add(interactiveMap, "description", "");
-                    facebook_dialog("feed", interactiveMap, global.returnMap);
-                    ds_map_destroy(interactiveMap);
-                    
-                }
-                
-                shared = true;
-            }
-        }
-        
-        /*
-        if (!global.fbAuth)
-        {
-            if (!instance_exists(objFacebook))
-                instance_create(0,0,objFacebook);
-        }
-        
-        if (global.fbAuth)
-        {
-            wallPostMap = ds_map_create();//Create a ds_map that holds the details used to create the wall post
-            ds_map_add(wallPostMap, "message", "Test");   //The content message of the post
-            //ds_map_add(wallPostMap, "picture", "http://mcsweenygames.com/Clown.jpg");               //An image link that is to accompany the post
-            ds_map_add(wallPostMap, "link", "http://shinypixelgames.com/");//The link that the "Name" will direct you to when clicked
-            ds_map_add(wallPostMap, "name", "Happy Dash Test");//The post name
-            ds_map_add(wallPostMap, "caption", "Test Caption");//The post caption
-            ds_map_add(wallPostMap, "description", "Test Description!");//Post description
-            facebook_dialog("feed", wallPostMap, -1);
-            ds_map_destroy(wallPostMap);//Destroy the ds_grid
+                var interactiveMap;
+                ds_list_clear(global.returnMap[global.returnCur]);
+                interactiveMap = ds_map_create();
+                ds_map_add(interactiveMap, "picture", "http://shinypixelgames.com/img/fb_share.png");
+                ds_map_add(interactiveMap, "link", "https://play.google.com/store/apps/details?id=com.spg.happydash");
+                var n;
+                if (global.gift == 0)
+                    n = "I just scored " + string(global.curScore) + " points!";
+                else
+                    n = "I just scored " + string(global.curScore) + " points and got " + string(global.gift) + " coins as a reward!";
+                ds_map_add(interactiveMap, "name", n);
+                ds_map_add(interactiveMap, "caption", "- shinypixelgames.com");
+                ds_map_add(interactiveMap, "description", "");
+                facebook_dialog("feed", interactiveMap, global.returnMap[global.returnCur]);
+                ds_map_destroy(interactiveMap);
             
-            if (!shared)
-            {
-                global.wallet += gift;
-                saveProgress();
-                loadProgress();
+                //shared = true;
             }
-            
-            shared = true;
-        }*/
+            else
+                show_message_async("You already shared your score.");
+        }        
     }
         
 } else
@@ -479,7 +440,7 @@ draw_text(min(dxx,WIDTH*.5), dy-.5*TILE,":"+string(finalScore)+":");
 if (canProceed)
 {
     //meters
-    drawText(floor(WIDTH/2),2.5*TILE,string(floor(global.distance*.1))+" m",c_white,c_none,fntNumbers);
+    drawText(floor(WIDTH/2),2.5*TILE,string(floor(global.distance*.1))+"m",c_white,c_none,fntNumbers);
 }
 
 //if (canProceed)

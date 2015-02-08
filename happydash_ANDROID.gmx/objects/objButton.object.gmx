@@ -35,6 +35,7 @@ drawBg = false;
 img = -1;
 tooltip = "";
 new = false;zz = 0;
+cBg = 0;//type of the button background
 
 a=0;b=0;c=0;d=0;
 
@@ -171,19 +172,34 @@ if (drawBg)
 {
     var r,a;
     if (enabled) a = 1; else a = .5;
-    r = (active*3*TILE);//+((active &amp;&amp; mouse_check_button(mb_left)) *3*TILE);
-    draw_sprite_part_ext(spriteHud,-1,2*TILE+r,9*TILE,TILE,2*TILE,x-w,y-TILE/3,1,1,c_white,a);
-    for (i = TILE; i &lt; 2*w - TILE; i+= TILE)
-        draw_sprite_part_ext(spriteHud,-1,3*TILE+r,9*TILE,TILE,2*TILE,x-w+i,y-TILE/3,1,1,c_white,a);
-    draw_sprite_part_ext(spriteHud,-1,4*TILE+r,9*TILE,TILE,2*TILE,x+w-TILE,y-TILE/3,1,1,c_white,a);
-    
+    r = (active*3*TILE);
+    if (cBg == 0)
+    {
+        draw_sprite_part_ext(spriteHud,-1,2*TILE+r,9*TILE,TILE,2*TILE,x-w,y-TILE/3,1,1,c_white,a);
+        for (i = TILE; i &lt; 2*w - TILE; i+= TILE)
+            draw_sprite_part_ext(spriteHud,-1,3*TILE+r,9*TILE,TILE,2*TILE,x-w+i,y-TILE/3,1,1,c_white,a);
+        draw_sprite_part_ext(spriteHud,-1,4*TILE+r,9*TILE,TILE,2*TILE,x+w-TILE,y-TILE/3,1,1,c_white,a);
+    } else
+    {
+        draw_sprite_part_ext(spriteHud,-1,13*TILE+r,11*TILE,TILE,2*TILE,x-w,y-TILE/3,1,1,c_white,a);
+        for (i = TILE; i &lt; 2*w - TILE; i+= TILE)
+            draw_sprite_part_ext(spriteHud,-1,14*TILE+r,11*TILE,TILE,2*TILE,x-w+i,y-TILE/3,1,1,c_white,a);
+        draw_sprite_part_ext(spriteHud,-1,15*TILE+r,11*TILE,TILE,2*TILE,x+w-TILE,y-TILE/3,1,1,c_white,a);
+
+    }
     if (img &gt; -1)
     {
         if (active)
+        {
             c = make_color_hsv(7,131,76);
+            if (cBg == 1) c = c_white;
             //c = c_white;
+        }
         else
+        {
             c = make_color_hsv(33,128,255);
+            if (cBg == 1) c = make_color_hsv(156,105,199);
+        }
         if (!enabled) c = make_color_hsv(0,0,120);
         draw_sprite_part_ext(spriteHud,-1,8*TILE+2*img*TILE,9*TILE,2*TILE,2*TILE,x-w,y-TILE/3,1,1,c,1);
     }

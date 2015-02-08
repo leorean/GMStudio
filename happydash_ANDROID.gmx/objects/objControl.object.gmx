@@ -32,7 +32,9 @@ global.loggedIn = false;
 global.fbAuth = false;
 global.useFb = false;
 global.gift = 0; //used to gift coins
-global.returnMap = ds_map_create(); //fb post return map
+global.returnMap[0] = ds_map_create(); //fb post return map
+global.returnCur = 0;
+
 
 application_surface_enable(false);
 
@@ -88,7 +90,7 @@ global.maxPlayerSelected = 3;
 global.playerName[0] = "Happy";
 global.playerName[1] = "Tammy";
 global.playerName[2] = "Pipes";
-global.playerName[3] = "Claus";
+global.playerName[3] = "Blue Guy";
 
 for (i = 0; i &lt;= global.maxPlayerSelected; i++)
     global.playerLocked[i] = true;
@@ -548,28 +550,36 @@ if (debug_mode)
         global.difficulty += 1;
 }
 
-//facebook gift stuff
+//++++facebook gift stuff++++
 
-var count,ri;
-count = 0; ri = ds_map_find_first(global.returnMap);
-if(!ds_map_empty(global.returnMap))
+if (!is_undefined(global.returnMap[global.returnCur]))
 {
-    for(i=ds_map_find_first(global.returnMap); count&lt;ds_map_size(global.returnMap); ri=ds_map_find_next(global.returnMap,ri))
+    var count,ri;
+    count = 0; ri = ds_map_find_first(global.returnMap[global.returnCur]);
+    if(!ds_map_empty(global.returnMap[global.returnCur]))
     {
-        show_debug_message("++++found " + string(ri));
-        count++;
-        if (ri == "post_id")
+        for(i=ds_map_find_first(global.returnMap[global.returnCur]); count&lt;ds_map_size(global.returnMap[global.returnCur]); ri=ds_map_find_next(global.returnMap[global.returnCur],ri))
         {
-            show_debug_message("++++gonna gift " + string(ri));
-            global.wallet += global.gift;
-            saveProgress();
-            loadProgress();
-        
-            if (global.gift &gt; 0)
-                show_message("You aquired " + string(global.gift) + " coins!");    
-            ds_list_clear(global.returnMap);
-            global.gift = 0;
+            //show_debug_message("++++found " + 
+            with(objGameOverMenu) shared = true;
+            count++;
+            if (ri == "post_id")
+            {
+                show_debug_message("++++gonna gift " + string(ri) + " (cursor: " + string(global.returnCur)+")");
+                global.wallet += global.gift;
+                saveProgress();
+                loadProgress();
+            
+                if (global.gift &gt; 0)
+                    show_message_async("Thanks for sharing! You got " + string(global.gift) + " coins!");
+                else
+                    show_message_async("Thanks for sharing!");
+                global.gift = 0;
+            }
         }
+        ds_list_destroy(global.returnMap[global.returnCur]);
+        global.returnCur += 1;
+        global.returnMap[global.returnCur] = ds_map_create(); //create next segment
     }
 }
 </string>
