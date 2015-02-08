@@ -7,20 +7,27 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sprPixel</sprite>
+    <sprite>sprites\sprChicken</sprite>
+    <sprite>sprites\sprBlock</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\objControl</object>
-    <object>objects\objPixel</object>
+    <object>objects\objChicken</object>
+    <objects name="hierarchy">
+      <object>objects\objSolid</object>
+    </objects>
+    <object>objects\objBlock</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="3">
+  <constants number="4">
     <constant name="HEIGHT">240</constant>
     <constant name="WIDTH">400</constant>
     <constant name="TILE">16</constant>
+    <constant name="INFINITE">9000000000</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
