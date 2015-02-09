@@ -9,6 +9,7 @@
     <sprite>sprites\sprPixel</sprite>
     <sprite>sprites\sprChicken</sprite>
     <sprite>sprites\sprBlock</sprite>
+    <sprite>sprites\sprHuman</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -19,6 +20,7 @@
       <object>objects\objSolid</object>
     </objects>
     <object>objects\objBlock</object>
+    <object>objects\objHuman</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
