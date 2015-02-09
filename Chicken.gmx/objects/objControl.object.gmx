@@ -35,7 +35,8 @@
 enum D //depth
 {
     HUD = -100,
-    PLAYER = 0
+    TILES = 1000000,
+    LIVING = -1
 }
 
 mask_index = sprHuman; //should be a mask larger than the humans
@@ -103,7 +104,7 @@ if (keyboard_check_pressed(ord('Q')))
           <argument>
             <kind>1</kind>
             <string>//spawn humans:
-repeat(30)
+repeat(10)
 {
     var i;
     i = 0;

@@ -10,9 +10,16 @@
     <sprite>sprites\sprChicken</sprite>
     <sprite>sprites\sprBlock</sprite>
     <sprite>sprites\sprHuman</sprite>
+    <sprite>sprites\sprCar</sprite>
+    <sprite>sprites\sprCarSpawner</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\sprTiles</background>
+  </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\initMap.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objChicken</object>
@@ -21,15 +28,21 @@
     </objects>
     <object>objects\objBlock</object>
     <object>objects\objHuman</object>
+    <object>objects\objCarSpawner</object>
+    <object>objects\objCar</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="4">
+  <constants number="8">
     <constant name="HEIGHT">240</constant>
     <constant name="WIDTH">400</constant>
     <constant name="TILE">16</constant>
     <constant name="INFINITE">9000000000</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
+    <constant name="UP">-2</constant>
+    <constant name="DOWN">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
