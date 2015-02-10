@@ -31,4 +31,3 @@ for (i = 0; i < room_width/TILE; i++)
         */
     }
 }
-

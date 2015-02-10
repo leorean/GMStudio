@@ -27,6 +27,7 @@
     <object>objects\objChicken</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
+      <object>objects\objLiving</object>
     </objects>
     <object>objects\objBlock</object>
     <object>objects\objHuman</object>

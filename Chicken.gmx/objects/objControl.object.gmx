@@ -39,7 +39,7 @@ enum D //depth
     LIVING = -1
 }
 
-instance_create(0,0,objCamera);
+instance_create(room_width/2,room_height/2,objCamera);
 device_mouse_dbclick_enable(true);
 
 mask_index = sprHuman; //should be a mask larger than the humans
