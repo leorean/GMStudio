@@ -40,7 +40,7 @@ enum D //depth
 }
 
 mask_index = sprHuman; //should be a mask larger than the humans
-
+randomize();
 window_set_size(3*WIDTH,3*HEIGHT);
 window_center();
 depth = D.HUD;

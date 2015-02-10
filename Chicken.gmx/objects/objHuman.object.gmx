@@ -36,9 +36,11 @@ timer = 20*irandom(3);
 spd = .3;
 spdPanic = .9;
 
+dieTimer = 60;
+
 maxStamina = 300;
 stamina = maxStamina;
-
+knockback = 0;
 </string>
           </argument>
         </arguments>
@@ -93,7 +95,6 @@ stamina = maxStamina;
             yVel = lengthdir_y(spdPanic*(stamina/maxStamina),angle);
             angle = (angle - 20 + random(40)) mod 360;
             
-            
             stamina = max(stamina - choose(0,1,2),0);
             if (stamina == 0)
             {
@@ -101,24 +102,35 @@ stamina = maxStamina;
                 stamina = maxStamina;
             }
         break;
+        case S.DIE:
+            xVel *= .95;
+            yVel *= .95;
+            if (abs(xVel) == 0 &amp;&amp; abs(yVel) == 0)
+            {
+                instance_destroy();
+            }
+        break;
     }
     
-    //fall in panic
-    source = instance_place(x+xVel,y+yVel,objChicken);
-        if (source != noone)
-            if (source.state != S.PANIC)
-                source = noone;
-    if (source == noone)
+    if (state != S.DIE)
     {
-        source = instance_place(x+xVel,y+yVel,objHuman);
-        if (source != noone)
-            if (source.state != S.PANIC)
-                source = noone;
-    }
-    if (state != S.PANIC &amp;&amp; source != noone)
-    {
-        angle = (angle + 180) mod 360;
-        state = S.PANIC;
+        //fall in panic
+        source = instance_place(x+xVel,y+yVel,objChicken);
+            if (source != noone)
+                if (source.state != S.PANIC)
+                    source = noone;
+        if (source == noone)
+        {
+            source = instance_place(x+xVel,y+yVel,objHuman);
+            if (source != noone)
+                if (source.state != S.PANIC)
+                    source = noone;
+        }
+        if (state != S.PANIC &amp;&amp; source != noone)
+        {
+            angle = (angle + 180) mod 360;
+            state = S.PANIC;
+        }
     }
         
     //collisions
@@ -127,7 +139,8 @@ stamina = maxStamina;
     else
     {
         xVel = 0;
-        angle = (angle + 180) mod 360;
+        if (state != S.DIE)
+            angle = (angle + 180) mod 360;
         timer = 0;
     }
     if (place_free(x,y+yVel) &amp;&amp; y+yVel &gt; 0 &amp;&amp; y+yVel &lt; room_height)
@@ -135,7 +148,8 @@ stamina = maxStamina;
     else
     {
         yVel = 0;
-        angle = (angle + 180) mod 360;
+        if (state != S.DIE)
+            angle = (angle + 180) mod 360;
         timer = 0;        
     }
 
@@ -162,9 +176,11 @@ stamina = maxStamina;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != S.PANIC)
-    c = c_white;
-else
+            <string>var c;
+c = c_white;
+if (state == S.PANIC)
+    c = c_yellow;
+if (state == S.DIE)
     c = c_red;
 
 draw_sprite_ext(sprHuman,-1,x,y,1,1,angle,c,1);

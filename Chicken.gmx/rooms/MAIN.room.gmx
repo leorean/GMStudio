@@ -79,7 +79,7 @@
     <instance objName="objBlock" x="240" y="32" name="inst_5A65EFE5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="240" y="16" name="inst_A6E22CEF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="224" y="16" name="inst_2EFAC3C6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objCarSpawner" x="0" y="176" name="inst_11E2640E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objCarSpawner" x="0" y="176" name="inst_11E2640E" locked="0" code="cars = 5;&#xA;delay = 3*60;&#xA;dir = RIGHT;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="sprTiles" x="0" y="176" w="16" h="16" xo="0" yo="16" id="10000252" name="inst_57A94D71" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

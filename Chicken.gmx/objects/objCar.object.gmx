@@ -29,9 +29,15 @@
 xVel = 0;
 yVel = 0;
 angle = 0;
-spd = .4;
 
-dir = RIGHT;
+spd = .5; //between .5 and 2, no problem
+rot = spd*10; //has to be 10 times the speed because of reasons
+
+spdPanic = 3*spd;
+
+steer = 0; //panic steering
+
+dir = NONE; //has to be set by spawner
 </string>
           </argument>
         </arguments>
@@ -67,10 +73,8 @@ dir = RIGHT;
             
             tile = tile_layer_find(D.TILES,x-xVel,y-yVel);
             
-            if (tile != -1)// &amp;&amp; ((x % TILE) == (TILE/2)))// &amp;&amp; ((y % TILE) == (TILE/2)))
+            if (tile != -1)
             {
-                if ((dir == LEFT || dir == RIGHT) &amp;&amp; ((round(y) % TILE) == (TILE/2))
-                || (dir == UP || dir == DOWN)  &amp;&amp; ((round(y) % TILE) == (TILE/2)))
                 if (tile_get_top(tile) == 1*TILE)
                 {
                     var col;
@@ -78,71 +82,100 @@ dir = RIGHT;
                     switch (col)
                     {
                         case 0:
-                            if (dir == RIGHT) angle = 0;
-                            else angle = 180;
-                        break;
                         case 1:
-                            if (dir == DOWN) angle = 270;
-                            else angle = 90;
+                            if (angle == 0) dir = RIGHT;
+                            if (angle == 90) dir = UP;
+                            if (angle == 180) dir = LEFT;
+                            if (angle == 270) dir = DOWN;                         
                         break;
                         case 2:
-                            if (dir == UP) {dir = RIGHT}
-                            if (dir == LEFT) {dir = DOWN}
+                            if (dir == UP) angle = max(angle - rot, 0);
+                            if (dir == LEFT) angle = min(angle + rot, 270);
                         break;
                         case 3:
-                            if (dir == RIGHT) {dir = DOWN}
-                            if (dir == UP) {dir = LEFT}
+                            if (angle == 0) angle = 360;
+                            if (dir == RIGHT) angle = max(angle - rot, 270);
+                            if (dir == UP) angle = min(angle + rot, 180);
                         break;
                         case 4:
-                            if (dir == DOWN) {dir = LEFT}
-                            if (dir == RIGHT) {dir = UP}
+                            if (dir == RIGHT) angle = min(angle + rot, 90);
+                            if (dir == DOWN) angle = max(angle - rot, 180);
                         break;
                         case 5:
-                            if (dir == LEFT) {dir = UP}
-                            if (dir == DOWN) {dir = RIGHT}
+                            if (dir == LEFT) angle = max(angle - rot, 90);
+                            if (dir == DOWN) angle = min(angle + rot, 360);
+                            if (angle == 360) angle = 0;
                         break;
                         
                     }
-                    if (dir == LEFT) angle = 180;
-                    if (dir == RIGHT) angle = 0;
-                    if (dir == UP) angle = 90;
-                    if (dir == DOWN) angle = 270;
-                    
                 }
             }
-            
-            
         break;
         case S.PANIC:
-        /*
-            xVel = lengthdir_x(spdPanic*(stamina/maxStamina),angle);
-            yVel = lengthdir_y(spdPanic*(stamina/maxStamina),angle);
-            angle = (angle - 20 + random(40)) mod 360;
-            
-            stamina = max(stamina - choose(0,1,2),0);
-            
-            if (stamina == 0)
-            {
-                stamina = maxStamina;
-                state = S.WAIT;
-                //instance_destroy();
-            }*/
+            spd = min(spd + .01,spdPanic);
+            xVel = lengthdir_x(spd,angle);
+            yVel = lengthdir_y(spd,angle);
+            angle = (angle + steer) mod 360;
+        break;
+        case S.DIE:
+            xVel *= .9;
+            yVel *= .9;
+            if (xVel == 0 &amp;&amp; yVel == 0)
+                instance_destroy();
         break;
     }
+    
+    if (state != S.DIE)
+    {
+        //humancreash
+        var human;
+        human = instance_place(x+xVel,y+yVel,objHuman);
+        if (instance_exists(human))
+        {
+            human.state = S.DIE;
+            human.angle = point_direction(x,y,human.x,human.y);
+            human.xVel = lengthdir_x(3*spd,human.angle);
+            human.yVel = lengthdir_y(3*spd,human.angle);
+            
+            state = S.PANIC;
+            steer = choose(-2,-1,0,1,2);
+        }
         
+        //carcrash:
+        var car;
+        car = instance_place(x+xVel,y+yVel,objCar);
+        if (instance_exists(car))
+        {
+            state = S.DIE;
+            angle = point_direction(car.x,car.y,x,y);
+            xVel = lengthdir_x(3*spd,angle);
+            yVel = lengthdir_y(3*spd,angle);
+            
+            car.state = S.DIE;
+            car.angle = point_direction(x,y,car.x,car.y);
+            car.xVel = lengthdir_x(3*car.spd,car.angle);
+            car.yVel = lengthdir_y(3*car.spd,car.angle);
+                        
+        }
+    }
+
+    
     //collisions
-    if (place_free(x+xVel,y))// &amp;&amp; x+xVel &gt; 0 &amp;&amp; x+xVel &lt; room_width)
+    if (place_free(x+xVel,y) &amp;&amp; x+xVel &gt; 0 &amp;&amp; x+xVel &lt; room_width)
         x += xVel;
     else
     {
         xVel = 0;
-        //angle = (angle + 180) mod 360;
+        yVel = 0;
+        state = S.DIE;//angle = (angle + 180) mod 360;
     }
-    if (place_free(x,y+yVel))// &amp;&amp; y+yVel &gt; 0 &amp;&amp; y+yVel &lt; room_height)
+    if (place_free(x,y+yVel) &amp;&amp; y+yVel &gt; 0 &amp;&amp; y+yVel &lt; room_height)
         y += yVel;
     else
     {
+        xVel = 0;
         yVel = 0;
+        state = S.DIE;
         //angle = (angle + 180) mod 360;
     }
 
@@ -169,11 +202,12 @@ dir = RIGHT;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != S.PANIC)
-    c = c_white;
-else
+            <string>var c;
+c = c_white;
+if (state == S.PANIC)
+    c = c_yellow;
+if (state == S.DIE)
     c = c_red;
-
 
 draw_sprite_ext(sprCar,-1,x,y,1,1,angle,c,1);
 
