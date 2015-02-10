@@ -12,6 +12,7 @@
     <sprite>sprites\sprHuman</sprite>
     <sprite>sprites\sprCar</sprite>
     <sprite>sprites\sprCarSpawner</sprite>
+    <sprite>sprites\sprCarTaker</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -19,6 +20,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\initMap.gml</script>
+    <script>scripts\in.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -30,6 +32,8 @@
     <object>objects\objHuman</object>
     <object>objects\objCarSpawner</object>
     <object>objects\objCar</object>
+    <object>objects\objCarTaker</object>
+    <object>objects\objCamera</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
