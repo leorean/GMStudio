@@ -34,7 +34,7 @@ state = S.WAIT;
 
 spd = 1;
 
-maxStamina = 6000;
+maxStamina = 600;
 stamina = maxStamina;
 </string>
           </argument>
@@ -69,8 +69,8 @@ stamina = maxStamina;
             yVel = 0;
         break;
         case S.PANIC:
-            xVel = lengthdir_x(spd*(stamina/maxStamina),angle);
-            yVel = lengthdir_y(spd*(stamina/maxStamina),angle);
+            xVel = lengthdir_x(1+spd*(stamina/maxStamina),angle);
+            yVel = lengthdir_y(1+spd*(stamina/maxStamina),angle);
             
             if (keyboard_check(vk_left))
                 angle = (angle + 3) % 360;
@@ -116,15 +116,13 @@ stamina = maxStamina;
         x += xVel;
     else
     {
-        xVel = -xVel;
-        angle = (angle + 180) mod 360;
+        xVel = 0;
     }
     if (place_free(x,y+yVel) &amp;&amp; y+yVel &gt; 0 &amp;&amp; y+yVel &lt; room_height)
         y += yVel;
     else
     {
-        yVel = -yVel;
-        angle = (angle + 180) mod 360;
+        yVel = 0;
     }
 
 }

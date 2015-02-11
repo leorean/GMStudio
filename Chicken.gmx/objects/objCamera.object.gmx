@@ -73,18 +73,18 @@ view_hview[0] = HEIGHT*zoom;
 if (in(mouse_x,view_xview[0],view_xview[0]+view_wview[0]) &amp;&amp; 
     in(mouse_y,view_yview[0],view_yview[0]+view_hview[0]))
     global.inGame = true;
-else
+else if (mouse_check_button(mb_any))
     global.inGame = false;    
 
 //++++adjust camera to player if playing
 if (global.mode == M.PLAY)
 {
-    view_object[0] = objPlayer;
+    //view_object[0] = objPlayer;
     automatic = true;
     
 } else if (global.mode == M.SPECTATE)
 {
-    view_object[0] = objCamera;
+    //view_object[0] = objCamera;
 }
     
 //++++wheel gesture++++++++++++++++++
@@ -142,8 +142,6 @@ if (global.inGame)
     }
     if (mouse_check_button(mb_left) &amp;&amp; fingerCount == 1)
     {
-        //x += -sign(x - mouse_x) * zoom;
-        //y += -sign(y - mouse_y) * zoom;
         x = mouse_x;
         y = mouse_y;
         view_hspeed[0] = ceil(1 + zoom);
@@ -155,7 +153,7 @@ if (global.inGame)
     }
 }
 //+++++++++++++++++++++++++++++++++++
-if (!global.inGame || mouse_check_button(mb_any) || mouse_wheel_up() || mouse_wheel_down() || wheelGesture != NONE)
+if (mouse_check_button(mb_any) || mouse_wheel_up() || mouse_wheel_down() || wheelGesture != NONE)
 {
     wheelTimer = 60;
 } else
@@ -172,51 +170,65 @@ else if (mouse_wheel_down() || wheelGesture == DOWN)
 }
 else if (automatic)
 {
+    var xMin,yMin,xMax,yMax;
+    xMin = 0; yMin = 0; xMax = 0; yMax = 0;
+    for(i = 0; i &lt;= instance_number(objLiving); i++)
+    {
+        var l;
+        l = instance_find(objLiving,i);
+        xMin = min(xMin, l.x);
+        yMin = min(yMin, l.y);
+        xMax = max(xMax, l.x);
+        yMax = max(yMax, l.y);
+    }
+    
+    var w,h;
+    w = abs(xMax - xMin)/room_width;
+    h = abs(yMax - yMin)/room_height;
+    
     if (global.mode == M.SPECTATE)
     {
-        var xMin,yMin,xMax,yMax;
-        xMin = 0; yMin = 0; xMax = 0; yMax = 0;
-        for(i = 0; i &lt;= instance_number(objLiving); i++)
-        {
-            var l;
-            l = instance_find(objLiving,i);
-            xMin = min(xMin, l.x);
-            yMin = min(yMin, l.y);
-            xMax = max(xMax, l.x);
-            yMax = max(yMax, l.y);
-        }
-        
-        var w,h;
-        w = abs(xMax - xMin)/room_width;
-        h = abs(yMax - yMin)/room_height;
-        
         zoomAim = 2.2*max(w,h);
-        
-        if (wheelTimer == 0)
+        view_object[0] = objCamera;
+    }
+    else
+    {
+        zoomAim = max(.5,2.2*(objPlayer.stamina / objPlayer.maxStamina));
+        view_object[0] = objPlayer;
+    }
+    
+    
+    if (wheelTimer == 0)
+    {
+        if (global.mode == M.SPECTATE)
         {
             x = (xMin + xMax)/2;
             y = (yMin + yMax)/2;
+        } else
+        {
+            x = objPlayer.x;
+            y = objPlayer.y;
         }
     }
-    else if (global.mode == M.PLAY)
+    /*
+    if (global.mode == M.PLAY)
     {
         if (!instance_exists(objPlayer))
             zoomAim = .5;
         else
             zoomAim = max(.5, (objPlayer.stamina / objPlayer.maxStamina));
-    }
+    }*/
     
-    if (wheelTimer == 0 || global.mode == M.PLAY)
+    if (wheelTimer == 0)
     {
         if (zoom &gt; zoomAim)
-            zoom = max(zoom - .02, .5);
+            zoom = max(zoom - .001, .5);
         if (zoom &lt; zoomAim)
-            zoom = min(zoom + .02, min(room_height/HEIGHT, room_width/WIDTH));
+            zoom = min(zoom + .001, min(room_height/HEIGHT, room_width/WIDTH));
     }
 
     
 }
-show_debug_message(zoom);
 
 x = min(max(0 + view_wview[0]/2, x) , room_width - view_wview[0]/2);
 y = min(max(0 + view_hview[0]/2, y) , room_height - view_hview[0]/2);

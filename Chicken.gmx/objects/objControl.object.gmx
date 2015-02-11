@@ -101,7 +101,6 @@ if (global.inGame)
         player.state = S.PANIC;
         global.mode = M.PLAY;
     }
-    show_debug_message(player);
 }
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
