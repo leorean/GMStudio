@@ -30,6 +30,10 @@ window_set_size(3*WIDTH,3*HEIGHT);
 window_center();
 
 wheelTimer = 0;
+pressTimer = 0;
+diameter = 0;
+lastDiameter = 0;
+
 zoom = 1;
 xP = x;
 yP = y;
@@ -58,32 +62,75 @@ yP = y;
             <string>view_wview[0] = WIDTH*zoom;
 view_hview[0] = HEIGHT*zoom;
 
+//++++wheel gesture++++++++++++++++++
+wheelGesture = NONE;
+fingerCount = 0;
+for (i = 0; i &lt; 5; i++)
+    if (device_mouse_check_button(i,mb_left))
+            fingerCount++;
+
+xW[0] = 0; yW[0] = 0; xW[1] = 0; yW[1] = 0;
+        
+if (device_mouse_check_button(0,mb_left))
+{
+    xW[0] = device_mouse_x_to_gui(0);
+    yW[0] = device_mouse_y_to_gui(0);
+}
+if (device_mouse_check_button(1,mb_left))
+{
+    xW[1] = device_mouse_x_to_gui(1);
+    yW[1] = device_mouse_y_to_gui(1);
+}
+
+if (fingerCount == 2) //2 fingers used
+{
+    diameter = sqrt( power(abs(xW[0]  - xW[1]), 2) + power(abs(yW[0]  - yW[1]), 2));
+    show_debug_message("diameter: " + string(diameter));
+    
+    if ((diameter - lastDiameter) &gt; 5)
+        wheelGesture = UP;
+    if ((diameter - lastDiameter) &lt; -5)
+        wheelGesture = DOWN;
+        
+    lastDiameter = diameter; //stored for comparison
+}
+//+++++++++++++++++++++++++++++++++++
+
+
+//++++ move the mouse by dragging++++
+if (mouse_check_button_pressed(mb_left))
+{
+    xP = device_mouse_x_to_gui(0);
+    yP = device_mouse_y_to_gui(0);
+    x = xP;
+    y = yP;
+    
+}
 if (mouse_check_button(mb_left))
 {
     x = mouse_x;
     y = mouse_y;
-    view_hspeed[0] = (abs(x - (view_xview[0] + view_wview[0]/2)) / (view_xview[0] + view_wview[0]/2)) * 8;
-    view_vspeed[0] = (abs(y - (view_yview[0] + view_hview[0]/2)) / (view_yview[0] + view_hview[0]/2)) * 8;
-} else
-{
-    view_hspeed[0] = 4;
-    view_vspeed[0] = 4;
 }
 
-if (mouse_wheel_up())
+//+++++++++++++++++++++++++++++++++++
+
+if (mouse_check_button(mb_any) || mouse_wheel_up() || mouse_wheel_down() || wheelGesture != NONE)
+{
+    wheelTimer = 120;
+} else
+    wheelTimer = max(wheelTimer - 1, 0);
+
+
+if (mouse_wheel_up() || wheelGesture == UP)
 {
     zoom = max(zoom - .02, .5);
-    wheelTimer = 60;
 }
-else if (mouse_wheel_down())
+else if (mouse_wheel_down() || wheelGesture == DOWN)
 {
     zoom = min(zoom + .02, min(room_height/HEIGHT, room_width/WIDTH));
-    wheelTimer = 60;
 }
 else
 {
-    wheelTimer = max(wheelTimer - 1, 0);
-    
     var xMin,yMin,xMax,yMax;
     xMin = 0; yMin = 0; xMax = 0; yMax = 0;
     for(i = 0; i &lt;= instance_number(objLiving); i++)
@@ -97,25 +144,73 @@ else
     }
     
     var w,h;
-    w = abs(xMin - xMax)/room_width;
-    h = abs(yMin - yMax)/room_height;
+    w = abs(xMax - xMin)/room_width;
+    h = abs(yMax - yMin)/room_height;
     
     if (wheelTimer == 0)
-        //zoom = max(w,h);//sqrt(power(w,2) + power(h,2));
-        /*
-         zoom = max(min(
-                sqrt(power(w,2) + power(h,2)),//min(abs(xMin - xMax)/room_width, abs(yMin - yMax)/room_height),
-                min(room_height/window_get_height(), room_width/window_get_width())),
-                .5);
-                */
-         zoom = sqrt(power(w,2) + power(h,2));
-    if (!mouse_check_button(mb_left))
     {
+        zoomAim = 2.2*max(w,h);
         x = (xMin + xMax)/2;
         y = (yMin + yMax)/2;
+        
+        if (zoom &gt; zoomAim)
+            zoom = max(zoom - .02, .5);
+        if (zoom &lt; zoomAim)
+            zoom = min(zoom + .02, min(room_height/HEIGHT, room_width/WIDTH));
     }
         
 }
+
+x = min(max(0 + view_wview[0]/2, x) , room_width - view_wview[0]/2);
+y = min(max(0 + view_hview[0]/2, y) , room_height - view_hview[0]/2);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//draw_text(TILE,TILE,"TEST");
+//draw_text(3*WIDTH - TILE, 3*HEIGHT - TILE,"BLUB");
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_color(c_red);
+draw_point(x,y);
 </string>
           </argument>
         </arguments>
