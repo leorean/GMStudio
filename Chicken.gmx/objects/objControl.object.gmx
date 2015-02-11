@@ -49,7 +49,7 @@ depth = D.HUD;
 
 global.paused = false;
 global.timer = 0;
-
+global.inGame = true; //if true, ingame actions enabled, else: HUD/camera actions enabled.
 </string>
           </argument>
         </arguments>
@@ -72,11 +72,19 @@ global.timer = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (mouse_check_button_pressed(mb_right) &amp;&amp; !place_meeting(mouse_x,mouse_y,objSolid)
-    &amp;&amp; in(mouse_x,0,room_width) &amp;&amp; in(mouse_y,0,room_height))
-    instance_create(mouse_x,mouse_y,objChicken);
-    
-global.timer = (global.timer + 1) mod INFINITE;
+            <string>global.timer = (global.timer + 1) mod INFINITE;
+
+if (global.inGame)
+{
+    if (mouse_check_button_pressed(mb_right) &amp;&amp; !place_meeting(mouse_x,mouse_y,objSolid)
+        &amp;&amp; in(mouse_x,0,room_width) &amp;&amp; in(mouse_y,0,room_height))
+        instance_create(mouse_x,mouse_y,objChicken);
+}
+
+if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
+    game_end();
+
+//++++DEBUG KEYS+++++++++++++++++++++++++++
 
 if (keyboard_check_pressed(ord('P')))
     with(objChicken)
@@ -85,8 +93,6 @@ if (keyboard_check_pressed(ord('P')))
 if (keyboard_check_pressed(ord('Q')))
     room_restart();
     
-if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
-    game_end();
 
 </string>
           </argument>
@@ -149,8 +155,7 @@ repeat(10)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

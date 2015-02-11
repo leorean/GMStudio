@@ -26,8 +26,15 @@
           <argument>
             <kind>1</kind>
             <string>
-window_set_size(3*WIDTH,3*HEIGHT);
+window_set_size(ZOOM*400,ZOOM*240);
 window_center();
+
+view_xview[1] = 0;
+view_yview[1] = -400;
+
+depth = D.HUD;
+
+automatic = false;
 
 wheelTimer = 0;
 pressTimer = 0;
@@ -62,61 +69,73 @@ yP = y;
             <string>view_wview[0] = WIDTH*zoom;
 view_hview[0] = HEIGHT*zoom;
 
+//check if the mouse is in the game view or in the HUD view
+if (in(mouse_x,view_xview[0],view_xview[0]+view_wview[0]) &amp;&amp; 
+    in(mouse_y,view_yview[0],view_yview[0]+view_hview[0]))
+    global.inGame = true;
+else
+    global.inGame = false;    
+
 //++++wheel gesture++++++++++++++++++
 wheelGesture = NONE;
-fingerCount = 0;
-for (i = 0; i &lt; 5; i++)
-    if (device_mouse_check_button(i,mb_left))
-            fingerCount++;
 
-xW[0] = 0; yW[0] = 0; xW[1] = 0; yW[1] = 0;
-        
-if (device_mouse_check_button(0,mb_left))
+if (global.inGame)
 {
-    xW[0] = device_mouse_x_to_gui(0);
-    yW[0] = device_mouse_y_to_gui(0);
-}
-if (device_mouse_check_button(1,mb_left))
-{
-    xW[1] = device_mouse_x_to_gui(1);
-    yW[1] = device_mouse_y_to_gui(1);
-}
-
-if (fingerCount == 2) //2 fingers used
-{
-    diameter = sqrt( power(abs(xW[0]  - xW[1]), 2) + power(abs(yW[0]  - yW[1]), 2));
-    show_debug_message("diameter: " + string(diameter));
+    fingerCount = 0;
+    for (i = 0; i &lt; 5; i++)
+        if (device_mouse_check_button(i,mb_left))
+                fingerCount++;
     
-    if ((diameter - lastDiameter) &gt; 5)
-        wheelGesture = UP;
-    if ((diameter - lastDiameter) &lt; -5)
-        wheelGesture = DOWN;
+    xW[0] = 0; yW[0] = 0; xW[1] = 0; yW[1] = 0;
+    
+    if (device_mouse_check_button(0,mb_left))
+    {
+        xW[0] = device_mouse_x_to_gui(0);
+        yW[0] = device_mouse_y_to_gui(0);
+    }
+    if (device_mouse_check_button(1,mb_left))
+    {
+        xW[1] = device_mouse_x_to_gui(1);
+        yW[1] = device_mouse_y_to_gui(1);
+    }
+    
+    if (fingerCount == 2) //2 fingers used
+    {
+        diameter = sqrt( power(abs(xW[0]  - xW[1]), 2) + power(abs(yW[0]  - yW[1]), 2));
+        show_debug_message("diameter: " + string(diameter));
         
-    lastDiameter = diameter; //stored for comparison
+        if ((diameter - lastDiameter) &gt; 5)
+            wheelGesture = UP;
+        if ((diameter - lastDiameter) &lt; -5)
+            wheelGesture = DOWN;
+            
+        lastDiameter = diameter; //stored for comparison
+    }
 }
 //+++++++++++++++++++++++++++++++++++
 
 
 //++++ move the mouse by dragging++++
-if (mouse_check_button_pressed(mb_left))
+if (global.inGame)
 {
-    xP = device_mouse_x_to_gui(0);
-    yP = device_mouse_y_to_gui(0);
-    x = xP;
-    y = yP;
-    
+    if (mouse_check_button_pressed(mb_left))
+    {
+        xP = device_mouse_x_to_gui(0);
+        yP = device_mouse_y_to_gui(0);
+        x = xP;
+        y = yP;
+        
+    }
+    if (mouse_check_button(mb_left))
+    {
+        x = mouse_x;
+        y = mouse_y;
+    }
 }
-if (mouse_check_button(mb_left))
-{
-    x = mouse_x;
-    y = mouse_y;
-}
-
 //+++++++++++++++++++++++++++++++++++
-
-if (mouse_check_button(mb_any) || mouse_wheel_up() || mouse_wheel_down() || wheelGesture != NONE)
+if (!global.inGame || mouse_check_button(mb_any) || mouse_wheel_up() || mouse_wheel_down() || wheelGesture != NONE)
 {
-    wheelTimer = 120;
+    wheelTimer = 60;
 } else
     wheelTimer = max(wheelTimer - 1, 0);
 
@@ -129,7 +148,7 @@ else if (mouse_wheel_down() || wheelGesture == DOWN)
 {
     zoom = min(zoom + .02, min(room_height/HEIGHT, room_width/WIDTH));
 }
-else
+else if (automatic)
 {
     var xMin,yMin,xMax,yMax;
     xMin = 0; yMin = 0; xMax = 0; yMax = 0;
@@ -147,9 +166,10 @@ else
     w = abs(xMax - xMin)/room_width;
     h = abs(yMax - yMin)/room_height;
     
+    zoomAim = 2.2*max(w,h);
+    
     if (wheelTimer == 0)
     {
-        zoomAim = 2.2*max(w,h);
         x = (xMin + xMax)/2;
         y = (yMin + yMax)/2;
         
@@ -158,7 +178,6 @@ else
         if (zoom &lt; zoomAim)
             zoom = min(zoom + .02, min(room_height/HEIGHT, room_width/WIDTH));
     }
-        
 }
 
 x = min(max(0 + view_wview[0]/2, x) , room_width - view_wview[0]/2);
@@ -185,8 +204,23 @@ y = min(max(0 + view_hview[0]/2, y) , room_height - view_hview[0]/2);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw_text(TILE,TILE,"TEST");
+            <string>/*draw_text(TILE,5*TILE,automatic);
 //draw_text(3*WIDTH - TILE, 3*HEIGHT - TILE,"BLUB");
+
+draw_set_color(c_black);
+draw_set_alpha(.5);
+draw_rectangle(0,HEIGHT-ZOOM*TILE,ZOOM*WIDTH,ZOOM*HEIGHT,0);
+
+draw_set_color(c_red);
+draw_set_alpha(1);
+draw_rectangle(0,0,TILE,TILE,0);
+if (in(device_mouse_x_to_gui(0),0,3*TILE)
+    &amp;&amp; in(device_mouse_y_to_gui(0),0,3*TILE)
+    &amp;&amp; mouse_check_button_released(mb_left))
+{
+    automatic = !automatic;
+}
+*/
 </string>
           </argument>
         </arguments>
@@ -209,8 +243,27 @@ y = min(max(0 + view_hview[0]/2, y) , room_height - view_hview[0]/2);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_red);
-draw_point(x,y);
+            <string>//++++DRAW IN HUD VIEW
+if (view_current == 1)
+{
+    var a,b,c,d;
+    a = view_xview[1]; b = view_yview[1]; c = view_wview[1]; d = view_hview[1];
+    
+    draw_set_color(c_black);
+    draw_set_alpha(1);
+    draw_rectangle(a,b,a+c,b+d,0);
+
+    
+}
+
+/*
+draw_set_color(c_black);
+draw_set_alpha(1);
+draw_rectangle(view_xview[1],view_yview[1],view_xview[1]+view_wview[1],view_yview[1]+view_hview[1],0);
+
+draw_set_color(c_red);
+draw_rectangle(view_xview[1],view_yview[1],view_xview[1]+2*TILE,view_yview[1]+2*TILE,0);
+*/
 </string>
           </argument>
         </arguments>
