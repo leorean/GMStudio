@@ -13,6 +13,8 @@
     <sprite>sprites\sprCar</sprite>
     <sprite>sprites\sprCarSpawner</sprite>
     <sprite>sprites\sprCarTaker</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprControl</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -35,12 +37,13 @@
     <object>objects\objCar</object>
     <object>objects\objCarTaker</object>
     <object>objects\objCamera</object>
+    <object>objects\objPlayer</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
   <constants number="10">
-    <constant name="HEIGHT">208</constant>
+    <constant name="HEIGHT">192</constant>
     <constant name="WIDTH">400</constant>
     <constant name="ZOOM">3</constant>
     <constant name="TILE">16</constant>

@@ -114,19 +114,37 @@ knockback = 0;
     
     if (state != S.DIE)
     {
-        //fall in panic
-        source = instance_place(x+xVel,y+yVel,objChicken);
-            if (source != noone)
-                if (source.state != S.PANIC)
-                    source = noone;
-        if (source == noone)
+        //watch out for street
+        tile = tile_layer_find(D.TILES,x+xVel,y+yVel);
+        if (tile != -1)
         {
-            source = instance_place(x+xVel,y+yVel,objHuman);
-            if (source != noone)
-                if (source.state != S.PANIC)
-                    source = noone;
+            if (tile_get_top(tile) == 1*TILE)
+            {
+                if (state != S.PANIC)
+                {
+                    x -= xVel;
+                    y -= yVel;
+                    angle = (angle + 180) mod 360;
+                    timer += irandom(2)*20;
+                } else
+                {
+                    stamina = min(stamina + 1, maxStamina);
+                }
+            }
         }
-        if (state != S.PANIC &amp;&amp; source != noone)
+        //fall in panic
+        victim = instance_place(x+xVel,y+yVel,objChicken);
+            if (victim != noone)
+                if (victim.state != S.PANIC)
+                    victim = noone;
+        if (victim == noone)
+        {
+            victim = instance_place(x+xVel,y+yVel,objHuman);
+            if (victim != noone)
+                if (victim.state != S.PANIC)
+                    victim = noone;
+        }
+        if (state != S.PANIC &amp;&amp; victim != noone)
         {
             angle = (angle + 180) mod 360;
             state = S.PANIC;

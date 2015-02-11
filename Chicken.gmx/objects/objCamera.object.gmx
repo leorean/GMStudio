@@ -34,7 +34,7 @@ view_yview[1] = -400;
 
 depth = D.HUD;
 
-automatic = false;
+automatic = true;
 
 wheelTimer = 0;
 pressTimer = 0;
@@ -76,6 +76,17 @@ if (in(mouse_x,view_xview[0],view_xview[0]+view_wview[0]) &amp;&amp;
 else
     global.inGame = false;    
 
+//++++adjust camera to player if playing
+if (global.mode == M.PLAY)
+{
+    view_object[0] = objPlayer;
+    automatic = true;
+    
+} else if (global.mode == M.SPECTATE)
+{
+    view_object[0] = objCamera;
+}
+    
 //++++wheel gesture++++++++++++++++++
 wheelGesture = NONE;
 
@@ -101,6 +112,9 @@ if (global.inGame)
     
     if (fingerCount == 2) //2 fingers used
     {
+        x = (xW[0] + xW[1]) / 2;
+        y = (yW[0] + yW[1]) / 2;
+        
         diameter = sqrt( power(abs(xW[0]  - xW[1]), 2) + power(abs(yW[0]  - yW[1]), 2));
         show_debug_message("diameter: " + string(diameter));
         
@@ -118,18 +132,26 @@ if (global.inGame)
 //++++ move the mouse by dragging++++
 if (global.inGame)
 {
-    if (mouse_check_button_pressed(mb_left))
+    if (mouse_check_button_pressed(mb_left) &amp;&amp; fingerCount == 1)
     {
         xP = device_mouse_x_to_gui(0);
         yP = device_mouse_y_to_gui(0);
-        x = xP;
-        y = yP;
+        //x = xP;
+        //y = yP;
         
     }
-    if (mouse_check_button(mb_left))
+    if (mouse_check_button(mb_left) &amp;&amp; fingerCount == 1)
     {
+        //x += -sign(x - mouse_x) * zoom;
+        //y += -sign(y - mouse_y) * zoom;
         x = mouse_x;
         y = mouse_y;
+        view_hspeed[0] = ceil(1 + zoom);
+        view_vspeed[0] = ceil(1 + zoom);
+    } else
+    {
+        view_hspeed[0] = 4;
+        view_vspeed[0] = 4;
     }
 }
 //+++++++++++++++++++++++++++++++++++
@@ -150,77 +172,54 @@ else if (mouse_wheel_down() || wheelGesture == DOWN)
 }
 else if (automatic)
 {
-    var xMin,yMin,xMax,yMax;
-    xMin = 0; yMin = 0; xMax = 0; yMax = 0;
-    for(i = 0; i &lt;= instance_number(objLiving); i++)
+    if (global.mode == M.SPECTATE)
     {
-        var l;
-        l = instance_find(objLiving,i);
-        xMin = min(xMin, l.x);
-        yMin = min(yMin, l.y);
-        xMax = max(xMax, l.x);
-        yMax = max(yMax, l.y);
+        var xMin,yMin,xMax,yMax;
+        xMin = 0; yMin = 0; xMax = 0; yMax = 0;
+        for(i = 0; i &lt;= instance_number(objLiving); i++)
+        {
+            var l;
+            l = instance_find(objLiving,i);
+            xMin = min(xMin, l.x);
+            yMin = min(yMin, l.y);
+            xMax = max(xMax, l.x);
+            yMax = max(yMax, l.y);
+        }
+        
+        var w,h;
+        w = abs(xMax - xMin)/room_width;
+        h = abs(yMax - yMin)/room_height;
+        
+        zoomAim = 2.2*max(w,h);
+        
+        if (wheelTimer == 0)
+        {
+            x = (xMin + xMax)/2;
+            y = (yMin + yMax)/2;
+        }
+    }
+    else if (global.mode == M.PLAY)
+    {
+        if (!instance_exists(objPlayer))
+            zoomAim = .5;
+        else
+            zoomAim = max(.5, (objPlayer.stamina / objPlayer.maxStamina));
     }
     
-    var w,h;
-    w = abs(xMax - xMin)/room_width;
-    h = abs(yMax - yMin)/room_height;
-    
-    zoomAim = 2.2*max(w,h);
-    
-    if (wheelTimer == 0)
+    if (wheelTimer == 0 || global.mode == M.PLAY)
     {
-        x = (xMin + xMax)/2;
-        y = (yMin + yMax)/2;
-        
         if (zoom &gt; zoomAim)
             zoom = max(zoom - .02, .5);
         if (zoom &lt; zoomAim)
             zoom = min(zoom + .02, min(room_height/HEIGHT, room_width/WIDTH));
     }
+
+    
 }
+show_debug_message(zoom);
 
 x = min(max(0 + view_wview[0]/2, x) , room_width - view_wview[0]/2);
 y = min(max(0 + view_hview[0]/2, y) , room_height - view_hview[0]/2);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>/*draw_text(TILE,5*TILE,automatic);
-//draw_text(3*WIDTH - TILE, 3*HEIGHT - TILE,"BLUB");
-
-draw_set_color(c_black);
-draw_set_alpha(.5);
-draw_rectangle(0,HEIGHT-ZOOM*TILE,ZOOM*WIDTH,ZOOM*HEIGHT,0);
-
-draw_set_color(c_red);
-draw_set_alpha(1);
-draw_rectangle(0,0,TILE,TILE,0);
-if (in(device_mouse_x_to_gui(0),0,3*TILE)
-    &amp;&amp; in(device_mouse_y_to_gui(0),0,3*TILE)
-    &amp;&amp; mouse_check_button_released(mb_left))
-{
-    automatic = !automatic;
-}
-*/
 </string>
           </argument>
         </arguments>
@@ -253,7 +252,11 @@ if (view_current == 1)
     draw_set_alpha(1);
     draw_rectangle(a,b,a+c,b+d,0);
 
-    
+    draw_set_color(c_red);
+    draw_rectangle(a,b,a+2*TILE,b+2*TILE,0);
+
+    if (in(mouse_x,a,a+2*TILE) &amp;&amp; in(mouse_y,b,b+2*TILE) &amp;&amp; mouse_check_button_released(mb_left))
+        global.menu = !global.menu;
 }
 
 /*

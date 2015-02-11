@@ -35,9 +35,10 @@ rot = spd*10; //has to be 10 times the speed because of reasons
 
 spdPanic = 3*spd;
 
-steer = 0; //panic steering
+steer = 0; //panic steering / also used for locking turns
 
 dir = NONE; //has to be set by spawner
+next = NONE; //for maneuvers, decision for next direction
 </string>
           </argument>
         </arguments>
@@ -72,7 +73,6 @@ dir = NONE; //has to be set by spawner
             yVel = lengthdir_y(spd,angle);
             
             tile = tile_layer_find(D.TILES,x-xVel,y-yVel);
-            
             if (tile != -1)
             {
                 if (tile_get_top(tile) == 1*TILE)
@@ -86,7 +86,8 @@ dir = NONE; //has to be set by spawner
                             if (angle == 0) dir = RIGHT;
                             if (angle == 90) dir = UP;
                             if (angle == 180) dir = LEFT;
-                            if (angle == 270) dir = DOWN;                         
+                            if (angle == 270) dir = DOWN;
+                            steer = 0; next = NONE;
                         break;
                         case 2:
                             if (dir == UP) angle = max(angle - rot, 0);
@@ -106,7 +107,29 @@ dir = NONE; //has to be set by spawner
                             if (dir == DOWN) angle = min(angle + rot, 360);
                             if (angle == 360) angle = 0;
                         break;
-                        
+                        case 8:
+                            if (steer == 0)
+                            {
+                                if (dir == RIGHT)
+                                    next = choose(UP,RIGHT);
+                                else if (dir == LEFT)
+                                    next = choose(UP,LEFT);
+                                else if (dir == DOWN)
+                                    next = choose(LEFT,RIGHT);
+                                steer = 1;
+                            }
+                        break;
+                    }
+                    //TODO: all intersections!!
+                    
+                    //steering at intersections:
+                    if (steer == 1)
+                    {
+                        if (dir == RIGHT)
+                        {
+                            if (next == UP) angle = min(angle + rot, 90);
+                            if (next == DOWN) angle = min(angle + 360 - rot, 270);
+                        }
                     }
                 }
             }
@@ -128,14 +151,17 @@ dir = NONE; //has to be set by spawner
     if (state != S.DIE)
     {
         //humancreash
-        var human;
-        human = instance_place(x+xVel,y+yVel,objHuman);
-        if (instance_exists(human))
+        var victim;
+        victim = instance_place(x+xVel,y+yVel,objHuman);
+        if (!instance_exists(victim))
+            victim = instance_place(x+xVel,y+yVel,objChicken);
+        
+        if (instance_exists(victim))
         {
-            human.state = S.DIE;
-            human.angle = point_direction(x,y,human.x,human.y);
-            human.xVel = lengthdir_x(3*spd,human.angle);
-            human.yVel = lengthdir_y(3*spd,human.angle);
+            victim.state = S.DIE;
+            victim.angle = point_direction(x,y,victim.x,victim.y);
+            victim.xVel = lengthdir_x(3*spd,victim.angle);
+            victim.yVel = lengthdir_y(3*spd,victim.angle);
             
             state = S.PANIC;
             steer = choose(-2,-1,0,1,2);
