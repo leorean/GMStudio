@@ -69,8 +69,8 @@ stamina = maxStamina;
             yVel = 0;
         break;
         case S.PANIC:
-            xVel = lengthdir_x(1+spd*(stamina/maxStamina),angle);
-            yVel = lengthdir_y(1+spd*(stamina/maxStamina),angle);
+            xVel = lengthdir_x(spd*(stamina/maxStamina),angle);
+            yVel = lengthdir_y(spd*(stamina/maxStamina),angle);
             
             if (keyboard_check(vk_left))
                 angle = (angle + 3) % 360;
@@ -82,7 +82,7 @@ stamina = maxStamina;
             {
                 stamina = maxStamina;
                 state = S.WAIT;
-                global.mode = M.SPECTATE;
+                global.mode = M.GAMEOVER;
                 //instance_destroy();
             }
             
@@ -116,13 +116,15 @@ stamina = maxStamina;
         x += xVel;
     else
     {
-        xVel = 0;
+        xVel = -xVel;
+        angle = point_direction(x,y,x+xVel,y+yVel);
     }
     if (place_free(x,y+yVel) &amp;&amp; y+yVel &gt; 0 &amp;&amp; y+yVel &lt; room_height)
         y += yVel;
     else
     {
-        yVel = 0;
+        yVel = -yVel;
+        angle = point_direction(x,y,x+xVel,y+yVel);
     }
 
 }

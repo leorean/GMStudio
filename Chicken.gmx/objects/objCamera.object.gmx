@@ -78,14 +78,7 @@ else if (mouse_check_button(mb_any))
 
 //++++adjust camera to player if playing
 if (global.mode == M.PLAY)
-{
-    //view_object[0] = objPlayer;
     automatic = true;
-    
-} else if (global.mode == M.SPECTATE)
-{
-    //view_object[0] = objCamera;
-}
     
 //++++wheel gesture++++++++++++++++++
 wheelGesture = NONE;
@@ -132,24 +125,27 @@ if (global.inGame)
 //++++ move the mouse by dragging++++
 if (global.inGame)
 {
-    if (mouse_check_button_pressed(mb_left) &amp;&amp; fingerCount == 1)
+    if (global.mode != M.AIM)
     {
-        xP = device_mouse_x_to_gui(0);
-        yP = device_mouse_y_to_gui(0);
-        //x = xP;
-        //y = yP;
-        
-    }
-    if (mouse_check_button(mb_left) &amp;&amp; fingerCount == 1)
-    {
-        x = mouse_x;
-        y = mouse_y;
-        view_hspeed[0] = ceil(1 + zoom);
-        view_vspeed[0] = ceil(1 + zoom);
-    } else
-    {
-        view_hspeed[0] = 4;
-        view_vspeed[0] = 4;
+        if (mouse_check_button_pressed(mb_left) &amp;&amp; fingerCount == 1)
+        {
+            xP = device_mouse_x_to_gui(0);
+            yP = device_mouse_y_to_gui(0);
+            //x = xP;
+            //y = yP;
+            
+        }
+        if (mouse_check_button(mb_left) &amp;&amp; fingerCount == 1)
+        {
+            x = mouse_x;
+            y = mouse_y;
+            view_hspeed[0] = ceil(1 + zoom);
+            view_vspeed[0] = ceil(1 + zoom);
+        } else
+        {
+            view_hspeed[0] = 4;
+            view_vspeed[0] = 4;
+        }
     }
 }
 //+++++++++++++++++++++++++++++++++++
@@ -188,13 +184,18 @@ else if (automatic)
     
     if (global.mode == M.SPECTATE)
     {
-        zoomAim = 2.2*max(w,h);
+        zoomAim = 2.5*max(w,h);
         view_object[0] = objCamera;
     }
-    else
+    else if (global.mode == M.PLAY)
     {
-        zoomAim = max(.5,2.2*(objPlayer.stamina / objPlayer.maxStamina));
+        zoomAim = max(.5,2.5*(objPlayer.stamina / objPlayer.maxStamina));
         view_object[0] = objPlayer;
+    }
+    else if (global.mode == M.GAMEOVER)
+    {
+        zoomAim = min(room_height/HEIGHT, room_width/WIDTH);
+        view_object[0] = objCamera;
     }
     
     

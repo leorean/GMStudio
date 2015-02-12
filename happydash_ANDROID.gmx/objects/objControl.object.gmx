@@ -489,7 +489,7 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
     if (room == MAIN)
     {
-        if (!global.pause &amp;&amp; !global.gameOver)
+        if (!global.pause &amp;&amp; !global.gameOver &amp;&amp; global.player.state != DEAD)
         {
             global.pause = true;
             instance_create(0,0,objPauseMenu);
