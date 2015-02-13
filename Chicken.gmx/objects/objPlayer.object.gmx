@@ -82,7 +82,13 @@ stamina = maxStamina;
             {
                 stamina = maxStamina;
                 state = S.WAIT;
-                global.mode = M.GAMEOVER;
+                if (global.turns == 0)
+                    global.mode = M.GAMEOVER;
+                else
+                {
+                    global.turns = max(global.turns - 1, 0);
+                    global.mode = M.SPECTATE;
+                }
                 //instance_destroy();
             }
             

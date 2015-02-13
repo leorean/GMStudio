@@ -55,10 +55,14 @@ randomize();
 
 depth = D.HUD;
 
+//++++important globals
 global.paused = false;
 global.timer = 0;
 global.inGame = true; //mouse check.. if true, ingame actions enabled, else: HUD/camera actions enabled.
 global.mode = M.SPECTATE;
+
+global.player = noone;
+global.turns = 5;
 
 force = 0;
 minForce = TILE;
@@ -66,7 +70,7 @@ maxForce = 4*TILE;
 
 //++++menu stuff
 global.menu = false;
-vs = 4;
+vs = 8;
 vhp = 48;
 vyp = 192;
 vhw = 48;
@@ -115,8 +119,7 @@ if (global.inGame)
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
 
-//++++DEBUG KEYS+++++++++++++++++++++++++++
-
+//menu slider
 if (global.menu)
 {
     vhp = min(vhp + vs, 240);
@@ -128,12 +131,14 @@ if (global.menu)
     vhp = max(vhp - vs, 48);
     vyp = min(vyp + vs, 192);
     vhw = max(vhw - vs, 48);
-    global.paused = false;    
+    if (vyp == 192) 
+        global.paused = false;
 }
 view_hport[1] = vhp;
 view_yport[1] = vyp;
 view_hview[1] = vhw;
 
+//++++DEBUG KEYS+++++++++++++++++++++++++++
 if (keyboard_check_pressed(ord('D')))
     global.menu = !global.menu;
 
@@ -167,7 +172,7 @@ if (keyboard_check_pressed(ord('Q')))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>player = noone;
+            <string>global.player = noone;
 
 //spawn humans:
 /*
@@ -215,11 +220,20 @@ if (global.inGame &amp;&amp; global.mode != M.GAMEOVER)
 {
     if (global.mode == M.SPECTATE)
     {
+        if (mouse_check_button_pressed(mb_right))
+            if (!instance_exists(global.player))
+                global.player = instance_create(mouse_x,mouse_y, objPlayer);
+        
         if (mouse_check_button_pressed(mb_left))
         {
-            sX = mouse_x;
-            sY = mouse_y;
-            global.mode = M.AIM;
+            p = instance_place(mouse_x,mouse_y,objPlayer);
+            if (instance_exists(p))
+            {
+                global.player = p;
+                sX = global.player.x;
+                sY = global.player.y;
+                global.mode = M.AIM;
+            }
         }
     }
     if (global.mode == M.AIM)
@@ -228,22 +242,15 @@ if (global.inGame &amp;&amp; global.mode != M.GAMEOVER)
         {
             force = max(min(sqrt(power(abs(mouse_x - sX),2) + power(abs(mouse_y - sY),2)), maxForce), minForce);
             angle = point_direction(sX,sY,mouse_x,mouse_y);
+            global.player.angle = angle;
+            global.player.spd = force / TILE;
             draw_circle(sX,sY,force,1);
             draw_circle(sX,sY,maxForce,1);        
         }
         if (mouse_check_button_released(mb_left))
         {
-            if (!instance_exists(player))
-            {
-                player = instance_create(sX,sY,objPlayer);
-                player.angle = angle;
-                player.spd = force / TILE;
-                player.state = S.PANIC;
-                global.mode = M.PLAY;
-            }
-    
-            sX = mouse_x;
-            sY = mouse_y;
+            global.player.state = S.PANIC;
+            global.mode = M.PLAY;
         }
     }
 }

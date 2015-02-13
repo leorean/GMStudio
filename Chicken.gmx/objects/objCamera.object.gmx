@@ -185,9 +185,12 @@ else if (automatic)
     if (global.mode == M.SPECTATE)
     {
         zoomAim = 2.5*max(w,h);
-        view_object[0] = objCamera;
+        if (!instance_exists(global.player) || mouse_check_button(mb_left))
+            view_object[0] = objCamera;
+        else
+            view_object[0] = objPlayer;
     }
-    else if (global.mode == M.PLAY)
+    else if (global.mode == M.PLAY || global.mode == M.AIM)
     {
         zoomAim = max(.5,2.5*(objPlayer.stamina / objPlayer.maxStamina));
         view_object[0] = objPlayer;
