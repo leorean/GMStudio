@@ -13,8 +13,11 @@
     <sprite>sprites\sprCar</sprite>
     <sprite>sprites\sprCarSpawner</sprite>
     <sprite>sprites\sprCarTaker</sprite>
-    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\sprShadow</sprite>
     <sprite>sprites\sprControl</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprAim</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -23,6 +26,7 @@
   <scripts name="scripts">
     <script>scripts\initMap.gml</script>
     <script>scripts\in.gml</script>
+    <script>scripts\drawCircle.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -38,6 +42,7 @@
     <object>objects\objCarTaker</object>
     <object>objects\objCamera</object>
     <object>objects\objPlayer</object>
+    <object>objects\objShadow</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>

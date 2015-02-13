@@ -28,6 +28,10 @@
             <string>state = S.WALK;
 xVel = 0;
 yVel = 0;
+zVel = 0;
+zGrav = .1;
+z = 0;
+
 angle = 0;
 
 spd = .5; //between .5 and 2, no problem
@@ -39,6 +43,9 @@ steer = 0; //panic steering / also used for locking turns
 
 dir = NONE; //has to be set by spawner
 next = NONE; //for maneuvers, decision for next direction
+
+shadow = instance_create(x,y,objShadow);
+shadow.parent = id;
 </string>
           </argument>
         </arguments>
@@ -63,7 +70,7 @@ next = NONE; //for maneuvers, decision for next direction
             <kind>1</kind>
             <string>if (!global.paused)
 {
-    depth = D.LIVING + (room_height - y);
+    depth = (z &gt;= 0) * (D.LIVING + (room_height - y));
     
     switch (state)
     {
@@ -150,21 +157,29 @@ next = NONE; //for maneuvers, decision for next direction
     
     if (state != S.DIE)
     {
-        //humancreash
+        //human crash
         var victim;
         victim = instance_place(x+xVel,y+yVel,objHuman);
-        if (!instance_exists(victim))
-            victim = instance_place(x+xVel,y+yVel,objChicken);
-        
         if (instance_exists(victim))
         {
             victim.state = S.DIE;
             victim.angle = point_direction(x,y,victim.x,victim.y);
             victim.xVel = lengthdir_x(3*spd,victim.angle);
             victim.yVel = lengthdir_y(3*spd,victim.angle);
-            
-            state = S.PANIC;
-            steer = choose(-2,-1,0,1,2);
+        }
+        
+        //player interaction
+        if (!instance_exists(victim))
+            victim = instance_place(x+xVel,y+yVel,objPlayer);
+        if (instance_exists(victim))
+        {
+            if (victim.z != z)
+                victim = noone;
+            else
+            {
+                state = S.PANIC;
+                steer = choose(-2,-1,0,1,2);
+            }
         }
         
         //carcrash:
@@ -186,7 +201,15 @@ next = NONE; //for maneuvers, decision for next direction
     }
 
     
-    //collisions
+    //++++collisions++++
+    zVel += zGrav;
+    z = min(z + zVel, 2);
+    
+    if (z &gt; 0)
+    {
+        z = 0;
+        zVel = 0;
+    }
     if (place_free(x+xVel,y) &amp;&amp; x+xVel &gt; 0 &amp;&amp; x+xVel &lt; room_width)
         x += xVel;
     else

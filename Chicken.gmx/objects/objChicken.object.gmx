@@ -27,6 +27,9 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
+zVel = 0;
+zGrav = .15;
+z = 0;
 
 angle = 270; //down
 

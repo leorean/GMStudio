@@ -43,7 +43,8 @@ enum D //depth
 {
     HUD = -100,
     TILES = 1000000,
-    LIVING = -1
+    LIVING = -1,
+    PLAYER = -10
 }
 mask_index = sprChicken;
 
@@ -174,9 +175,20 @@ if (keyboard_check_pressed(ord('Q')))
             <kind>1</kind>
             <string>global.player = noone;
 
+//initiate map:
+for (i = 0; i &lt; room_width; i+= TILE)
+for (j = 0; j &lt; room_height; j+= TILE)
+{
+    tile = tile_layer_find(D.TILES,i,j);
+    if (tile != -1)
+        if (tile_get_top(tile) &gt;= 2*TILE)
+        {
+            instance_create(i,j,objBlock);
+        }
+}
+
 //spawn humans:
-/*
-repeat(10)
+repeat(100)
 {
     var i;
     i = 0;
@@ -184,13 +196,19 @@ repeat(10)
     {
         rx = TILE + TILE*random(room_width/TILE - 2) + TILE/2;
         ry = TILE + TILE*random(room_height/TILE - 2) + TILE/2;
-        if (place_free(rx,ry))
+        tile = tile_layer_find(D.TILES,rx,ry);
+
+        //no spawning on the street
+        if (tile != -1)
+            if (tile_get_top(tile) == 1*TILE) tile = -1;
+            
+        if (place_free(rx,ry) &amp;&amp; tile != -1)
         {
             instance_create(rx,ry,objHuman);
              i++;
         }
     }
-}*/
+}
 </string>
           </argument>
         </arguments>
@@ -214,43 +232,49 @@ repeat(10)
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-draw_set_color(c_red);
+draw_set_color(c_white);
 
-if (global.inGame &amp;&amp; global.mode != M.GAMEOVER)
+if (!global.paused)
 {
-    if (global.mode == M.SPECTATE)
+
+    if (global.inGame &amp;&amp; global.mode != M.GAMEOVER)
     {
-        if (mouse_check_button_pressed(mb_right))
-            if (!instance_exists(global.player))
-                global.player = instance_create(mouse_x,mouse_y, objPlayer);
-        
-        if (mouse_check_button_pressed(mb_left))
+        if (global.mode == M.SPECTATE)
         {
-            p = instance_place(mouse_x,mouse_y,objPlayer);
-            if (instance_exists(p))
+            if (mouse_check_button_pressed(mb_right))
+                if (!instance_exists(global.player))
+                    global.player = instance_create(mouse_x,mouse_y, objPlayer);
+            
+            if (mouse_check_button_pressed(mb_left))
             {
-                global.player = p;
-                sX = global.player.x;
-                sY = global.player.y;
-                global.mode = M.AIM;
+                p = instance_place(mouse_x,mouse_y,objPlayer);
+                if (instance_exists(p))
+                {
+                    global.player = p;
+                    sX = global.player.x;
+                    sY = global.player.y;
+                    global.mode = M.AIM;
+                }
             }
         }
-    }
-    if (global.mode == M.AIM)
-    {
-        if (mouse_check_button(mb_left))
+        if (global.mode == M.AIM)
         {
-            force = max(min(sqrt(power(abs(mouse_x - sX),2) + power(abs(mouse_y - sY),2)), maxForce), minForce);
-            angle = point_direction(sX,sY,mouse_x,mouse_y);
-            global.player.angle = angle;
-            global.player.spd = force / TILE;
-            draw_circle(sX,sY,force,1);
-            draw_circle(sX,sY,maxForce,1);        
-        }
-        if (mouse_check_button_released(mb_left))
-        {
-            global.player.state = S.PANIC;
-            global.mode = M.PLAY;
+            if (mouse_check_button(mb_left))
+            {
+                force = max(min(sqrt(power(abs(mouse_x - sX),2) + power(abs(mouse_y - sY),2)), maxForce), minForce);
+                angle = point_direction(sX,sY,mouse_x,mouse_y);
+                global.player.angle = angle;
+                global.player.spd = force / TILE;
+                
+                //drawCircle(sX,sY,force,1);
+                //drawCircle(sX,sY,maxForce,1);
+                draw_sprite_ext(sprAim,-1,sX,sY,force/TILE/2,force/TILE/2,angle,c_white,1);
+            }
+            if (mouse_check_button_released(mb_left))
+            {
+                global.player.state = S.PANIC;
+                global.mode = M.PLAY;
+            }
         }
     }
 }

@@ -27,6 +27,9 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
+zVel = 0;
+zGrav = .1;
+z = 0;
 
 angle = 270; //down
 
@@ -35,12 +38,18 @@ timer = 20*irandom(3);
 
 spd = .3;
 spdPanic = .9;
+steer = 5;
 
 dieTimer = 60;
 
 maxStamina = 300;
 stamina = maxStamina;
 knockback = 0;
+
+onStreet = false;
+
+shadow = instance_create(x,y,objShadow);
+shadow.parent = id;
 </string>
           </argument>
         </arguments>
@@ -65,9 +74,10 @@ knockback = 0;
             <kind>1</kind>
             <string>if (!global.paused)
 {
-    timer = max(timer - 1,0);
-    depth = D.LIVING + (room_height - y);
+    depth = (z &gt;= 0) * (D.LIVING + (room_height - y));
     
+    timer = max(timer - 1,0);
+        
     switch (state)
     {
         case S.WAIT:
@@ -81,9 +91,9 @@ knockback = 0;
             }
         break;
         case S.WALK:
-            xVel = lengthdir_x(spd,angle);
-            yVel = lengthdir_y(spd,angle);
-            if (timer == 0)
+            xVel = lengthdir_x(spd+onStreet*spd,angle);
+            yVel = lengthdir_y(spd+onStreet*spd,angle);
+            if (timer == 0 &amp;&amp; !onStreet)
             {
                 //angle = random(360);
                 timer = irandom(3)*30;
@@ -93,9 +103,9 @@ knockback = 0;
         case S.PANIC:
             xVel = lengthdir_x(spdPanic*(stamina/maxStamina),angle);
             yVel = lengthdir_y(spdPanic*(stamina/maxStamina),angle);
-            angle = (angle - 20 + random(40)) mod 360;
+            angle = (angle - steer + random(2*steer)) mod 360;
             
-            stamina = max(stamina - choose(0,1,2),0);
+            stamina = max(stamina - 1,0);
             if (stamina == 0)
             {
                 state = S.WALK;
@@ -120,17 +130,20 @@ knockback = 0;
         {
             if (tile_get_top(tile) == 1*TILE)
             {
-                if (state != S.PANIC)
+                if (state == S.PANIC)
+                    onStreet = true;                
+                if (state != S.PANIC &amp;&amp; !onStreet)
                 {
                     x -= xVel;
                     y -= yVel;
-                    angle = (angle + 180) mod 360;
+                    xVel = -xVel;
+                    yVel = -yVel;
+                    angle = point_direction(x,y,x+xVel,y+yVel);
                     timer += irandom(2)*20;
-                } else
-                {
-                    stamina = min(stamina + 1, maxStamina);
                 }
-            }
+                stamina = min(stamina + 1, maxStamina);                
+            } else
+                onStreet = false;
         }
         //fall in panic
         victim = instance_place(x+xVel,y+yVel,objChicken);
@@ -151,26 +164,47 @@ knockback = 0;
         }
     }
         
-    //collisions
+    //++++collisions++++
+    zVel += zGrav;
+    z = min(z + zVel, 2);
+    
+    if (z &gt; 0)
+    {
+        z = 0;
+        zVel = 0;
+    }
     if (place_free(x+xVel,y) &amp;&amp; x+xVel &gt; 0 &amp;&amp; x+xVel &lt; room_width)
         x += xVel;
     else
     {
-        xVel = 0;
-        if (state != S.DIE)
-            angle = (angle + 180) mod 360;
+        if (!place_free(x+xVel+sign(xVel),y))
+            x -= sign(xVel);
+            
+        xVel = -xVel;
+        angle = point_direction(x,y,x+xVel,y+yVel);
+        if (state == S.DIE)
+            xVel = 0;
+
         timer = 0;
     }
     if (place_free(x,y+yVel) &amp;&amp; y+yVel &gt; 0 &amp;&amp; y+yVel &lt; room_height)
         y += yVel;
     else
     {
-        yVel = 0;
-        if (state != S.DIE)
-            angle = (angle + 180) mod 360;
+        if (!place_free(x,y+yVel+sign(yVel)))
+            y -= sign(yVel);
+
+        yVel = -yVel;
+        angle = point_direction(x,y,x+xVel,y+yVel);
+        if (state == S.DIE)
+            yVel = 0;
+
         timer = 0;        
     }
-
+    if (x &lt; 0) x++;
+    if (x &gt; room_width)x--;
+    if (y &lt; 0) y++;
+    if (y &gt; room_height)y--;    
 }
 </string>
           </argument>
@@ -201,7 +235,7 @@ if (state == S.PANIC)
 if (state == S.DIE)
     c = c_red;
 
-draw_sprite_ext(sprHuman,-1,x,y,1,1,angle,c,1);
+draw_sprite_ext(sprHuman,-1,x,y+z,1,1,angle,c,1);
 
 </string>
           </argument>
