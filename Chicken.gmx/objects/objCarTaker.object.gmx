@@ -51,7 +51,7 @@
             <string>car = instance_place(x,y,objCar);
 if (instance_exists(car))
 {
-    if (car.state != S.DIE &amp;&amp; car.state != S.PANIC)
+    if (car.state != S.DIE &amp;&amp; car.state != S.DIE)
     {
         with(car)
             instance_destroy();

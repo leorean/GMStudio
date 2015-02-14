@@ -18,6 +18,7 @@
     <sprite>sprites\sprControl</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprAim</sprite>
+    <sprite>sprites\sprMisc</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>

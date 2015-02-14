@@ -121,7 +121,8 @@ col = 0;
                     victim.yVel = lengthdir_y(3*spd,victim.angle);
                     victim.stamina = victim.maxStamina;
                     
-                    stamina *= .9;
+                    stamina *= .99;
+                    //angle = point_direction(victim.x,victim.y,x,y);
                     
                     if (place_free(victim.x + victim.xVel + xVel, victim.y + victim.yVel + xVel))
                     {
@@ -136,9 +137,7 @@ col = 0;
             {
                 if (z == victim.z)
                 {
-                    xVel = -xVel;
-                    yVel = -yVel;
-                    angle = point_direction(x,y,x+xVel,y+yVel);
+                    angle = point_direction(victim.x,victim.y,x,y);
                     zVel = -2;
                 }
             }

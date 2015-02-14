@@ -99,22 +99,11 @@ vhw = 48;
             <kind>1</kind>
             <string>global.timer = (global.timer + 1) mod INFINITE;
 
+//if (!in(device_mouse_raw_x(0),0,window_get_width()) || !in(device_mouse_raw_y(0),0,window_get_height()))
+//    mouse_clear(mb_any);
+
 if (global.inGame)
 {
-    /*if (mouse_check_button_pressed(mb_right) &amp;&amp; !place_meeting(mouse_x,mouse_y,objSolid)
-        &amp;&amp; in(mouse_x,0,room_width) &amp;&amp; in(mouse_y,0,room_height))
-        instance_create(mouse_x,mouse_y,objChicken);
-    */
-    
-    /*
-    player = instance_place(mouse_x,mouse_y,objPlayer);   
-    if (instance_exists(player))
-    if (player.state == S.WAIT &amp;&amp; mouse_check_button(mb_left))
-    {
-        player.state = S.PANIC;
-        global.mode = M.PLAY;
-    }*/
-    
 }
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
@@ -241,7 +230,17 @@ if (!global.paused)
     {
         if (global.mode == M.SPECTATE)
         {
-            if (mouse_check_button_pressed(mb_right))
+            //++++ show where player can be placed++++
+            tile = tile_layer_find(D.TILES,mouse_x,mouse_y);
+            if (tile != -1)
+                canPlace = (tile_get_top(tile) == 0*TILE);
+            else
+                canPlace = false;
+            
+            if (!canPlace &amp;&amp; !instance_exists(global.player))
+                draw_sprite_part(sprMisc,-1,0,0,TILE,TILE,(mouse_x div TILE)*TILE, (mouse_y div TILE)*TILE);
+            
+            if (mouse_check_button_pressed(mb_right) &amp;&amp; canPlace)
                 if (!instance_exists(global.player))
                     global.player = instance_create(mouse_x,mouse_y, objPlayer);
             
