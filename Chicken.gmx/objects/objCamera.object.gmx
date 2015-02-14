@@ -214,9 +214,9 @@ else if (automatic &amp;&amp; global.inGame)
     if (wheelTimer == 0)
     {
         if (zoom &gt; zoomAim)
-            zoom = max(zoom - .001, .5);
+            zoom = max(zoom - .003, .5);
         if (zoom &lt; zoomAim)
-            zoom = min(zoom + .001, min(room_height/HEIGHT, room_width/WIDTH));
+            zoom = min(zoom + .003, min(room_height/HEIGHT, room_width/WIDTH));
     }
 
     

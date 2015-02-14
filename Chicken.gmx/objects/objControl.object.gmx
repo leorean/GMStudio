@@ -63,7 +63,7 @@ global.inGame = true; //mouse check.. if true, ingame actions enabled, else: HUD
 global.mode = M.SPECTATE;
 
 global.player = noone;
-global.turns = 5;
+//global.turns = 5;
 
 force = 0;
 minForce = TILE;
@@ -237,12 +237,16 @@ if (!global.paused)
             else
                 canPlace = false;
             
-            if (!canPlace &amp;&amp; !instance_exists(global.player))
-                draw_sprite_part(sprMisc,-1,0,0,TILE,TILE,(mouse_x div TILE)*TILE, (mouse_y div TILE)*TILE);
-            
+            if (!instance_exists(global.player))
+            {
+                if (!canPlace)
+                    draw_sprite_part(sprMisc,-1,0,0,TILE,TILE,(mouse_x div TILE)*TILE, (mouse_y div TILE)*TILE);
+                else
+                    draw_sprite_part(sprMisc,-1,TILE,0,TILE,TILE,(mouse_x div TILE)*TILE, (mouse_y div TILE)*TILE);
+            }
             if (mouse_check_button_pressed(mb_right) &amp;&amp; canPlace)
                 if (!instance_exists(global.player))
-                    global.player = instance_create(mouse_x,mouse_y, objPlayer);
+                    global.player = instance_create((mouse_x div TILE)*TILE + TILE/2, (mouse_y div TILE)*TILE + TILE/2, objPlayer);
             
             if (mouse_check_button_pressed(mb_left))
             {

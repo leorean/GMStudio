@@ -72,6 +72,12 @@ shadow.parent = id;
 {
     depth = (z &gt;= 0) * (D.LIVING + (room_height - y));
     
+    if (in(x,view_xview[0]-TILE,view_xview[0]+view_wview[0]+TILE)
+    &amp;&amp; in(y,view_yview[0]-TILE,view_yview[0]+view_hview[0]+TILE))
+        visible = true;
+    else
+        visible = false;
+        
     switch (state)
     {
         case S.WALK:

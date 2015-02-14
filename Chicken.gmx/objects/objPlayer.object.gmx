@@ -75,6 +75,12 @@ col = 0;
 {
     depth = (z &gt;= 0) * (D.PLAYER + (room_height - y));
     
+    if (in(x,view_xview[0]-TILE,view_xview[0]+view_wview[0]+TILE)
+    &amp;&amp; in(y,view_yview[0]-TILE,view_yview[0]+view_hview[0]+TILE))
+        visible = true;
+    else
+        visible = false;
+        
     switch (state)
     {
         case S.WAIT:
@@ -91,21 +97,23 @@ col = 0;
                 angle = (angle - 3) % 360;
             
             stamina = max(stamina - 1,0);
+            
             if (stamina == 0)
             {
                 stamina = maxStamina;
                 state = S.WAIT;
-                with (objHuman)
-                    if (state != S.DIE) state = choose(S.WAIT,S.WALK);
+                //with (objHuman)
+                //    if (state != S.DIE) state = choose(S.WAIT,S.WALK);
                 
-                if (global.turns == 0)
+                global.mode = M.SPECTATE;
+            
+                /*/if (global.turns == 0)
                     global.mode = M.GAMEOVER;
                 else
                 {
                     global.turns = max(global.turns - 1, 0);
                     global.mode = M.SPECTATE;
-                }
-                //instance_destroy();
+                }*/
             }
             
             //spread panic (chicken and humans)
@@ -211,11 +219,11 @@ if (state == S.DIE)
 switch(state)
 {
     case S.WAIT:
-        fSpeed = .01;
+        fSpeed = .02;
         col = 0;
     break;
     case S.PANIC:
-        fSpeed = .03;
+        fSpeed = .04;
         col = 1;
     break;
     case S.DIE:
@@ -224,7 +232,7 @@ switch(state)
     break;
 
 }
-
+/*
 drawAngle = point_direction(xprevious,yprevious,x,y);
 if (in(drawAngle,315,360) || in(drawAngle,0,45))
     {row = 0;sx = 1}
@@ -234,12 +242,14 @@ if (in(drawAngle,45,45+90))
     {row = 2;sx = 1}
 if (in(drawAngle,270-45,270+45))
     {row = 1;sx = 1}
-        
+*/
+if (y-yprevious &lt; 0) row = 1 else row = 0;
+if (x-xprevious &lt;= 0) sx = -1 else sx = 1;
     
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 
-draw_sprite_part_ext(sprPlayer,-1,frame*TILE+(fMax*col*TILE),row*TILE,TILE,TILE,floor(x-TILE/2+(sx == -1)*TILE),floor(y-TILE/2) + z,sx,1,c_white,1);
+draw_sprite_part_ext(sprPlayer,-1,frame*TILE+(fMax*col*TILE),row*2*TILE,TILE,2*TILE,floor(x-TILE/2+(sx == -1)*TILE),floor(y-TILE-TILE/2) + z,sx,1,c_white,1);
 </string>
           </argument>
         </arguments>

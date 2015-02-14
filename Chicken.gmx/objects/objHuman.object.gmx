@@ -75,9 +75,18 @@ shadow.parent = id;
             <string>if (!global.paused)
 {
     depth = (z &gt;= 0) * (D.LIVING + (room_height - y));
-    
-    timer = max(timer - 1,0);
+
+    if (in(x,view_xview[0]-TILE,view_xview[0]+view_wview[0]+TILE)
+    &amp;&amp; in(y,view_yview[0]-TILE,view_yview[0]+view_hview[0]+TILE))
+        visible = true;
+    else
+        visible = false;
         
+    timer = max(timer - 1,0);
+    
+    if (state == S.WALK || state == S.WAIT)
+        spread = choose(true,false);
+    
     switch (state)
     {
         case S.WAIT:
@@ -145,22 +154,15 @@ shadow.parent = id;
             } else
                 onStreet = false;
         }
-        //fall in panic
-        victim = instance_place(x+xVel,y+yVel,objChicken);
-            if (victim != noone)
-                if (victim.state != S.PANIC)
-                    victim = noone;
-        if (victim == noone)
+        //spread panic
+        victim = instance_place(x,y,objHuman);
+        if (instance_exists(victim))
+            if (victim.state == S.DIE)
+                victim = noone;
+        if (state == S.PANIC &amp;&amp; spread &amp;&amp; instance_exists(victim))
         {
-            victim = instance_place(x+xVel,y+yVel,objHuman);
-            if (victim != noone)
-                if (victim.state != S.PANIC)
-                    victim = noone;
-        }
-        if (state != S.PANIC &amp;&amp; victim != noone)
-        {
-            angle = (angle + 180) mod 360;
-            state = S.PANIC;
+            victim.angle = point_direction(x,y,victim.x,victim.y);
+            victim.state = S.PANIC;
         }
     }
         
