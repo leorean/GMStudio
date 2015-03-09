@@ -66,8 +66,8 @@ yP = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>view_wview[0] = WIDTH*zoom;
-view_hview[0] = HEIGHT*zoom;
+            <string>view_wview[0] = floor(WIDTH*zoom);
+view_hview[0] = floor(HEIGHT*zoom);
 
 //check if the mouse is in the game view or in the HUD view
 if (in(mouse_x,view_xview[0],view_xview[0]+view_wview[0]) &amp;&amp; 

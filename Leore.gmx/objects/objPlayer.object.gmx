@@ -48,9 +48,13 @@ initPhysics();
 xVel = 0;
 xVelMax = 1.5;
 yVel = 0;
-xAcc = .1;
+xAcc = .08;
+
 yGrav = .15;
-yJump = 3.2;
+jumpVelMin = 1.8;
+jumpVel = jumpVelMin;
+jumpAcc = .08;
+jumpVelMax = 2.6;
 
 isJumped = false;
 
@@ -203,14 +207,19 @@ if (keyAttackPressed &amp;&amp; !instance_exists(atk))
 }
 
 //++++jumping
-if (keyUPressed)
+if (keyU &amp;&amp; !isJumped)
 {
-    if (!isJumped)
-    {
-        yVel = -yJump;
+    jumpVel = min(jumpVel+jumpAcc,jumpVelMax);
+    if (jumpVel &gt;= jumpVelMax)
         isJumped = true;
-        state = JUMP;
-    }
+
+    yVel = -jumpVel;
+    state = JUMP;
+}
+if (keyUReleased)
+{
+    isJumped = true;
+    jumpVel = jumpVelMin;
 }
 
 global.target = instance_place(x,y,objTower);

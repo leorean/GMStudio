@@ -168,10 +168,16 @@ shadow.parent = id;
         victim = instance_place(x+xVel,y+yVel,objHuman);
         if (instance_exists(victim))
         {
-            victim.state = S.DIE;
-            victim.angle = point_direction(x,y,victim.x,victim.y);
-            victim.xVel = lengthdir_x(3*spd,victim.angle);
-            victim.yVel = lengthdir_y(3*spd,victim.angle);
+            if (victim.z != z)
+                victim = noone;
+            else
+            {
+                victim.hp = 0;
+                //victim.state = S.DIE;
+                victim.angle = point_direction(x,y,victim.x,victim.y);
+                victim.xVel = lengthdir_x(3*spd,victim.angle);
+                victim.yVel = lengthdir_y(3*spd,victim.angle);
+            }
         }
         
         //player interaction

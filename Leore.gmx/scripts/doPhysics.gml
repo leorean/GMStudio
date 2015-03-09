@@ -38,7 +38,8 @@ if (yVel >= 0)
 } else
 {
     onSlope = false;
-    isJumped = true;
+    if (!keyU)
+        isJumped = true;
 }
 
 if (slopeL == noone && slopeR == noone) onSlope = false;
@@ -99,7 +100,17 @@ else
 
 //Y-COLLISION
 yVel += yGrav;
-repeat(round(abs(yVel)))
+if (yVel < 0)
+{
+    if (place_free(x,y+yVel))
+    {
+        y += yVel;
+    }
+    else
+        yVel = 0;
+}
+else
+repeat(ceil(yVel))
 {
     if (place_free(x,y+sign(yVel)) || onSlope)
     {

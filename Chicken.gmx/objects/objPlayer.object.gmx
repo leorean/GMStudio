@@ -43,12 +43,16 @@ stamina = maxStamina;
 shadow = instance_create(x,y,objShadow);
 shadow.parent = id;
 
+//draw variables
 fCur = 0;
 fSpeed = 0;
 fMax = 4;
 sx = 1;
 row = 0;
 col = 0;
+
+//rpg variables
+dmg = 1;
 </string>
           </argument>
         </arguments>
@@ -116,11 +120,13 @@ col = 0;
                 }*/
             }
             
-            //spread panic (chicken and humans)
-            victim = instance_place(x+xVel,y+yVel,objChicken);
-            if (!instance_exists(victim))
+            //spread panic (humans)
             victim = instance_place(x+xVel,y+yVel,objHuman);
             if (instance_exists(victim))
+            {
+                if (victim.z != z)
+                    victim = noone;
+                else
                 if (victim.state != S.DIE)
                 {
                     victim.state = S.PANIC;
@@ -128,6 +134,8 @@ col = 0;
                     victim.xVel = lengthdir_x(3*spd,victim.angle);
                     victim.yVel = lengthdir_y(3*spd,victim.angle);
                     victim.stamina = victim.maxStamina;
+                    
+                    victim.hp = max(victim.hp - dmg, 0);
                     
                     stamina *= .99;
                     //angle = point_direction(victim.x,victim.y,x,y);
@@ -139,15 +147,16 @@ col = 0;
                     }
                     victim = noone;
                 }
+            }
             //car interaction
-            victim = instance_place(x-xVel,y-yVel,objCar);
-            if (instance_exists(victim))
+            car = instance_place(x-xVel,y-yVel,objCar);
+            if (instance_exists(car))
             {
-                if (z == victim.z)
+                if (z == car.z &amp;&amp; car.state != S.DIE)
                 {
-                    angle = point_direction(victim.x,victim.y,x,y);
                     zVel = -2;
                 }
+                angle = point_direction(car.x,car.y,x,y);
             }
             
         
@@ -210,46 +219,51 @@ col = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>c = c_white;
-if (state == S.PANIC)
-    c = c_yellow;
-if (state == S.DIE)
-    c = c_red;
-
-switch(state)
+            <string>if (!global.paused)
 {
-    case S.WAIT:
-        fSpeed = .02;
-        col = 0;
-    break;
-    case S.PANIC:
-        fSpeed = .04;
-        col = 1;
-    break;
-    case S.DIE:
-        fSpeed = .01;
-        col = 2;
-    break;
-
-}
-/*
-drawAngle = point_direction(xprevious,yprevious,x,y);
-if (in(drawAngle,315,360) || in(drawAngle,0,45))
-    {row = 0;sx = 1}
-if (in(drawAngle,90+45,180+45))
-    {row = 0;sx = -1}
-if (in(drawAngle,45,45+90))
-    {row = 2;sx = 1}
-if (in(drawAngle,270-45,270+45))
-    {row = 1;sx = 1}
-*/
-if (y-yprevious &lt; 0) row = 1 else row = 0;
-if (x-xprevious &lt;= 0) sx = -1 else sx = 1;
+    c = c_white;
+    if (state == S.PANIC)
+        c = c_yellow;
+    if (state == S.DIE)
+        c = c_red;
     
-fCur = (fCur + fSpeed) % fMax;
-frame = floor(fCur);
+    switch(state)
+    {
+        case S.WAIT:
+            fSpeed = .04;
+            col = 0;
+        break;
+        case S.PANIC:
+            fSpeed = .1;
+            col = 1;
+        break;
+        case S.DIE:
+            fSpeed = .1;
+            col = 2;
+        break;
+    
+    }
+    
+    drawAngle = angle;//point_direction(xprevious,yprevious,x,y);
+    if (in(drawAngle,315,360) || in(drawAngle,0,45))
+        {row = 0;sx = 1;drawDir = RIGHT}
+    if (in(drawAngle,90+45,180+45))
+        {row = 0;sx = -1; drawDir = LEFT}
+    if (in(drawAngle,45,45+90))
+        {row = 2;sx = 1; drawDir = UP}
+    if (in(drawAngle,270-45,270+45))
+        {row = 1;sx = 1; drawDir = DOWN}
+    
+    //if (y-yprevious &lt; 0) row = 1 else row = 0;
+    //if (x-xprevious &lt;= 0) sx = -1 else sx = 1;
+        
+    fCur = (fCur + fSpeed) % fMax;
+    frame = floor(fCur);
+    
+    draw_sprite_part_ext(sprPlayer,-1,frame*TILE+(fMax*col*TILE),row*TILE,TILE,TILE,floor(x-TILE/2+(sx == -1)*TILE),floor(y-TILE/2) + z,sx,1,c_white,1);
+}
 
-draw_sprite_part_ext(sprPlayer,-1,frame*TILE+(fMax*col*TILE),row*2*TILE,TILE,2*TILE,floor(x-TILE/2+(sx == -1)*TILE),floor(y-TILE-TILE/2) + z,sx,1,c_white,1);
+
 </string>
           </argument>
         </arguments>

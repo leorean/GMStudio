@@ -257,6 +257,14 @@ if (!global.paused)
                     sX = global.player.x;
                     sY = global.player.y;
                     global.mode = M.AIM;
+                    /*
+                    objCamera.zoom = .5;
+                    objCamera.x = global.player.x;
+                    objCamera.y = global.player.y;
+                    view_hspeed[0] = -1;
+                    view_vspeed[0] = -1;
+                    */
+                                        
                 }
             }
         }
@@ -275,8 +283,15 @@ if (!global.paused)
             }
             if (mouse_check_button_released(mb_left))
             {
-                global.player.state = S.PANIC;
-                global.mode = M.PLAY;
+                if (instance_exists(instance_place(mouse_x,mouse_y,objPlayer)))
+                {
+                    
+                }
+                else
+                {
+                    global.player.state = S.PANIC;
+                    global.mode = M.PLAY;
+                }
             }
         }
     }

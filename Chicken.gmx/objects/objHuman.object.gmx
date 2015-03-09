@@ -48,8 +48,13 @@ knockback = 0;
 
 onStreet = false;
 
+maxHp = 30;
+hp = maxHp;
+
 shadow = instance_create(x,y,objShadow);
 shadow.parent = id;
+
+
 </string>
           </argument>
         </arguments>
@@ -133,6 +138,15 @@ shadow.parent = id;
     
     if (state != S.DIE)
     {
+        //die if hp is zero
+        if (hp == 0)
+        {
+            xVel *= 3;
+            yVel *= 3;
+            zVel = -2;
+            state = S.DIE;
+        }
+        
         //watch out for street
         tile = tile_layer_find(D.TILES,x+xVel,y+yVel);
         if (tile != -1)
@@ -239,6 +253,11 @@ if (state == S.DIE)
 
 draw_sprite_ext(sprHuman,-1,x,y+z,1,1,angle,c,1);
 
+if (hp &lt; maxHp &amp;&amp; state != S.DIE)
+{
+    draw_sprite_part(sprMisc,-1,2*TILE,0,TILE,1,x-TILE*.5,y-TILE*.5);
+    draw_sprite_part(sprMisc,-1,3*TILE,0,TILE*(hp/maxHp),1,x-TILE*.5,y-TILE*.5);
+}
 </string>
           </argument>
         </arguments>
