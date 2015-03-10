@@ -28,6 +28,8 @@
             <string>window_set_size(2*WIDTH,2*HEIGHT);
 window_center();
 
+mask_index = mskSolid;
+
 enum M
 {
     WAIT = 0,
@@ -36,7 +38,9 @@ enum M
 }
 
 global.mode = M.ACTION;
-global.player = instance_find(objPlayer,0);
+
+block = noone;
+hasBlock = -1;
 </string>
           </argument>
         </arguments>
@@ -63,6 +67,34 @@ global.player = instance_find(objPlayer,0);
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
 
+if (mouse_check_button_pressed(mb_right) &amp;&amp; place_free((mouse_x div TILE) * TILE, (mouse_y div TILE) * TILE))
+    instance_create((mouse_x div TILE) * TILE,(mouse_y div TILE) * TILE, objNPC);
+
+block = collision_point(mouse_x,mouse_y,objBlock,true,true);
+  
+if (mouse_check_button(mb_left) &amp;&amp; !instance_exists(block))
+{
+    x = mouse_x;
+    y = mouse_y;
+}
+
+if (hasBlock == -1)
+{
+    if (mouse_check_button_pressed(mb_left) &amp;&amp; instance_exists(block))
+    {
+        hasBlock = block.type;
+        with(block) instance_destroy();
+    }
+} else
+{
+    if (mouse_check_button_pressed(mb_left) &amp;&amp; place_free((mouse_x div TILE) * TILE, (mouse_y div TILE) * TILE))
+    {
+        block = instance_create((mouse_x div TILE) * TILE, (mouse_y div TILE) * TILE, objBlock);
+        block.type = hasBlock;
+        hasBlock = -1;
+    }
+}
+
 </string>
           </argument>
         </arguments>
@@ -85,12 +117,16 @@ if (keyboard_check_pressed(ord('Q')))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i=0; i &lt; room_width;i+= TILE)
-for (j=0; j &lt; room_height;j+= TILE)
+            <string>/*
+for (i=0; i &lt; room_width;i+= TILE)
+for (j=0; j &lt; room_width;j+= TILE)
 {
-    if (tile_layer_find(10,i,j) != -1)
-        instance_create(i,j,objSolid);
+    if (place_free(i,j))
+        instance_create(i,j,objBlock);
 }
+*/
+
+instance_create(x,y,objCamera);
 </string>
           </argument>
         </arguments>

@@ -7,16 +7,14 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sprGfx</sprite>
-    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprNPC</sprite>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\mskFixator</sprite>
-    <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\mskNPC</sprite>
     <sprite>sprites\mskSolid</sprite>
   </sprites>
-  <backgrounds name="background">
-    <background>background\sprTiles</background>
-  </backgrounds>
+  <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
@@ -25,9 +23,8 @@
     <object>objects\objSolid</object>
     <object>objects\objControl</object>
     <object>objects\objFixator</object>
-    <object>objects\objPlayer</object>
+    <object>objects\objNPC</object>
     <object>objects\objBlock</object>
-    <object>objects\objBlockTemp</object>
     <object>objects\objCamera</object>
   </objects>
   <rooms name="rooms">
