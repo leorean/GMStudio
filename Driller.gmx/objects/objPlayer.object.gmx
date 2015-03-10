@@ -25,20 +25,29 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = IDLE;
+            <string>instance_create(x,y,objCamera);
+
+state = IDLE;
 dir = DOWN;
 xVel = 0;
 yVel = 0;
+xVelMax = 4;
+yVelMax = 4;
 cx = x+TILE/2;
 cy = y+TILE/2;
 spd = 2;
 dmg = 1;
 
 yGrav = .15;
-jumpSpd = 3.5;
+jumpSpd = 3.2;
 xSpd = 2;
 
 jumped = false;
+onGround = false;
+
+hasBlock = false;
+
+inside = noone;
 </string>
           </argument>
         </arguments>
@@ -71,7 +80,69 @@ kLeft = keyboard_check(vk_left);
 kRight = keyboard_check(vk_right);
 kUp = keyboard_check(vk_up);
 kDown = keyboard_check(vk_down);
-kAction = keyboard_check(ord('A'));
+kAction = keyboard_check_pressed(ord('A'));
+
+xVel = sign(xVel)*min(abs(xVel),xVelMax);
+yVel = sign(yVel)*min(abs(yVel),yVelMax);
+
+//++++++++
+
+if (instance_exists(inside))
+    if (!place_meeting(x+xVel,y+yVel,inside))
+        inside = noone;
+
+if (!hasBlock)
+{
+    if (kAction)
+    {
+        
+        if (dir == UP) blk = collision_point(cx,cy-TILE,objSolid,true,true);
+        if (dir == DOWN) blk = collision_point(cx,cy+TILE,objSolid,true,true);
+        if (dir == LEFT) blk = collision_point(cx-TILE,cy,objSolid,true,true);
+        if (dir == RIGHT) blk = collision_point(cx+TILE,cy,objSolid,true,true);
+        
+        if (instance_exists(blk))
+        {
+            with (blk) instance_destroy();
+            hasBlock = true;
+        }
+    }
+    
+} else
+{
+    if (kAction)
+    {
+        px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
+        /*
+        if (dir == UP) py = py - TILE;
+        if (dir == DOWN) py = py + TILE;
+        if (dir == LEFT) px = px - TILE;
+        if (dir == RIGHT) px = px + TILE;
+        */
+        
+        blk = instance_create(px,py,objSolidTemp);
+        with (blk)
+        {
+            if (place_meeting(x,y,objSolid) || place_meeting(x,y,objSolidTemp))
+                instance_destroy();
+            else
+            {
+                objPlayer.hasBlock = false;
+            }
+            /*
+                with (objPlayer)
+                {
+                    if (xVel != 0 &amp;&amp; yVel != 0)
+                    {
+                        angle = point_direction(x+xVel,y+yVel,x,y);
+                        move_outside_solid(angle,TILE);
+                    }
+                    hasBlock = false;
+                }*/
+        }
+    }
+}
+
 
 //++++++++
 yVel += yGrav;
@@ -82,6 +153,14 @@ if (onGround)
     jumped = false;
     yVel = 0;
 }
+
+/*
+if (kUp &amp;&amp; !kDown)
+    dir = UP;
+
+if (kDown &amp;&amp; !kUp)
+    dir = DOWN;
+*/
 
 if (kLeft &amp;&amp; !kRight)
 {
@@ -132,7 +211,7 @@ if (!place_meeting(x+xVel,y,objSolid))
     x += xVel;
 else
     xVel = 0;
-repeat(ceil(abs(yVel*10)))
+repeat(ceil(abs(yVel))*10)
     if (!place_meeting(x,y+sign(yVel)*.1,objSolid))
         y += sign(yVel)*.1;
     else

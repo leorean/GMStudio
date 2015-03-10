@@ -19,6 +19,8 @@
     <object>objects\objFixator</object>
     <object>objects\objPlayer</object>
     <object>objects\objSolid</object>
+    <object>objects\objSolidTemp</object>
+    <object>objects\objCamera</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
