@@ -5,88 +5,9 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objSolid</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>type = choose(0,1,2);
-hp = 10;
-state = IDLE;
-
-maxCrumble = 20;
-crumble = maxCrumble;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (state == IDLE)
-{
-    connected = false;
-    bl = instance_place(x-1,y,objBlock);
-    br = instance_place(x+1,y,objBlock);
-    bd = instance_place(x,y+1,objBlock);
-    if (!instance_exists(bd)) bd = instance_place(x,y+1,objPlayer);
-    
-    if ((instance_exists(bl) &amp;&amp; bl.type == type &amp;&amp; bl.state != FALLING) || (instance_exists(br) &amp;&amp; br.type == type &amp;&amp; br.state != FALLING))
-        connected = true;
-    
-    if ((!instance_exists(bd) || bd.state == FALLING) &amp;&amp; !connected)
-    {
-        crumble = max(crumble - 1,0);
-        if (crumble == 0) state = FALLING;
-    } else
-        crumble = maxCrumble;
-}
-
-if (state == FALLING)
-{
-    y += 1;
-    if (!place_free(x,y+1) || y &gt;= room_height-TILE)
-    {
-        x = (x div TILE) * TILE;
-        y = (y div TILE) * TILE;
-        state = IDLE;
-    }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -104,27 +25,7 @@ if (state == FALLING)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var col;
-if (type == 0)
-{
-    col = make_color_hsv(0,0,255);
-}
-else if (type == 1)
-{
-    col = make_color_hsv(35,255,255);
-}
-else if (type == 2)
-{
-    col = make_color_hsv(70,255,255);
-}
-
-var xDraw;
-if (crumble &lt; maxCrumble)
-    xDraw = -1+random(2);
-else
-    xDraw = 0;
-    
-draw_sprite_ext(mskBlock,-1,x+xDraw,y,1,1,0,col,1);
+            <string>draw_sprite_part(sprGfx,-1,0,0,TILE,TILE,x,y);
 </string>
           </argument>
         </arguments>
@@ -144,6 +45,6 @@ draw_sprite_ext(mskBlock,-1,x+xDraw,y,1,1,0,col,1);
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>0,0</point>
-    <point>16,16</point>
+    <point>8,8</point>
   </PhysicsShapePoints>
 </object>

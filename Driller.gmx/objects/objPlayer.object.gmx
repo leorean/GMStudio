@@ -28,13 +28,17 @@
             <string>instance_create(x,y,objCamera);
 
 state = IDLE;
-dir = DOWN;
+statePrev = state;
+dir = RIGHT;
+look = NONE;
 xVel = 0;
 yVel = 0;
 xVelMax = 4;
 yVelMax = 4;
 cx = x+TILE/2;
 cy = y+TILE/2;
+px = -1;
+py = -1;
 spd = 2;
 dmg = 1;
 
@@ -44,10 +48,15 @@ xSpd = 2;
 
 jumped = false;
 onGround = false;
-
 hasBlock = false;
 
 inside = noone;
+
+//++++drawing++++
+fCur = 0;
+fMax = 3;
+fSpeed = 0;
+frame = 0;
 </string>
           </argument>
         </arguments>
@@ -80,26 +89,42 @@ kLeft = keyboard_check(vk_left);
 kRight = keyboard_check(vk_right);
 kUp = keyboard_check(vk_up);
 kDown = keyboard_check(vk_down);
-kAction = keyboard_check_pressed(ord('A'));
+kJump = keyboard_check_pressed(ord('A'));
+kAction = keyboard_check_pressed(ord('S'));
 
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
 
 //++++++++
 
+if (y &gt; room_height)
+    game_restart();
+
+if (kUp)
+    look = UP;
+else if (kDown)
+    look = DOWN;
+else
+    look = NONE;
+
+
 if (instance_exists(inside))
     if (!place_meeting(x+xVel,y+yVel,inside))
         inside = noone;
+        
+px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
 
+if (look == UP) py = py - TILE;
+if (look == DOWN) py = py + TILE;
+if (dir == LEFT) px = px - TILE;
+if (dir == RIGHT) px = px + TILE;
+
+        
 if (!hasBlock)
 {
     if (kAction)
     {
-        
-        if (dir == UP) blk = collision_point(cx,cy-TILE,objSolid,true,true);
-        if (dir == DOWN) blk = collision_point(cx,cy+TILE,objSolid,true,true);
-        if (dir == LEFT) blk = collision_point(cx-TILE,cy,objSolid,true,true);
-        if (dir == RIGHT) blk = collision_point(cx+TILE,cy,objSolid,true,true);
+        blk = collision_point(px,py,objBlock,true,true);
         
         if (instance_exists(blk))
         {
@@ -112,18 +137,10 @@ if (!hasBlock)
 {
     if (kAction)
     {
-        px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
-        /*
-        if (dir == UP) py = py - TILE;
-        if (dir == DOWN) py = py + TILE;
-        if (dir == LEFT) px = px - TILE;
-        if (dir == RIGHT) px = px + TILE;
-        */
-        
-        blk = instance_create(px,py,objSolidTemp);
+        blk = instance_create(px,py,objBlockTemp);
         with (blk)
         {
-            if (place_meeting(x,y,objSolid) || place_meeting(x,y,objSolidTemp))
+            if (place_meeting(x,y,objSolid) || place_meeting(x,y,objBlockTemp))
                 instance_destroy();
             else
             {
@@ -147,20 +164,10 @@ if (!hasBlock)
 //++++++++
 yVel += yGrav;
 
-onGround = collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objSolid,true,true);
+onGround = collision_line(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+1+yVel,objSolid,true,true);
 if (onGround)
-{
     jumped = false;
-    yVel = 0;
-}
 
-/*
-if (kUp &amp;&amp; !kDown)
-    dir = UP;
-
-if (kDown &amp;&amp; !kUp)
-    dir = DOWN;
-*/
 
 if (kLeft &amp;&amp; !kRight)
 {
@@ -195,19 +202,24 @@ if (kRight &amp;&amp; !kLeft)
     }
 }
 
-if (!kLeft &amp;&amp; !kRight)
+if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 {
     xVel = sign(xVel) * max(abs(xVel) - .2, 0);
-    state = IDLE;
+    if (onGround)
+        state = IDLE;
+    else
+        if (state == IDLE || state == WALK) state = JUMP;
+
 }
 
-if (kUp &amp;&amp; !jumped)
+if (kJump &amp;&amp; !jumped)
 {
+    state = JUMP;
     yVel = -jumpSpd;
     jumped = true;
 }
 
-if (!place_meeting(x+xVel,y,objSolid))
+if (!place_meeting(x+xVel,y,objSolid) &amp;&amp; in(cx+xVel,0,room_width))
     x += xVel;
 else
     xVel = 0;
@@ -216,6 +228,71 @@ repeat(ceil(abs(yVel))*10)
         y += sign(yVel)*.1;
     else
         yVel = 0;
+
+//++++end step stuff++++
+if (statePrev != state)
+    fCur = 0;
+statePrev = state;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>fCur = (fCur + fSpeed) % (fMax + 1);
+switch(state)
+{
+    case IDLE:
+        row = 0;
+        fSpeed = .1;
+        if (look == UP) fCur = 4;
+        if (look == DOWN) fCur = 5;      
+    break;
+    case WALK:
+        row = 1;
+        fSpeed = .3;
+    break;
+    case JUMP:
+        if (yVel &gt;= 0) fCur = 2;
+        else fCur = 0;
+        row = 2;
+        fSpeed = 0;
+    break;
+    case DRILL:
+        row = 3;
+        fSpeed = .3;
+    break;
+}
+frame = floor(fCur);
+
+//draw block pointer
+draw_sprite_part_ext(sprGfx,-1,TILE,0,TILE,TILE,px,py,1,1,c_white,.3);
+
+//draw block on back
+if (hasBlock)
+    draw_sprite_part(sprGfx,-1,0,0,TILE,TILE,x-sign(dir)*TILE*.4,y-TILE*.4);
+
+if (dir == LEFT)
+    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,x+TILE,y,-1,1,c_white,1);
+if (dir == RIGHT)
+    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,x,y,1,1,c_white,1);
+
 </string>
           </argument>
         </arguments>
