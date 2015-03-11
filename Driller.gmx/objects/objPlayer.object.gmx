@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,7 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(x,y,objCamera);
+            <string>objControl.spawnX = x;
+objControl.spawnY = y;
+
+if (!instance_exists(objCamera))
+    instance_create(x,y,objCamera);
+
 
 state = IDLE;
 statePrev = state;
@@ -39,16 +44,17 @@ cx = x+TILE/2;
 cy = y+TILE/2;
 px = -1;
 py = -1;
-spd = 2;
-dmg = 1;
 
 yGrav = .15;
-jumpSpd = 3.2;
+jumpSpd = 2.8;
+jumpSpdLow = 1.8;
 xSpd = 2;
+xSpdLow = 1;
+
 
 jumped = false;
 onGround = false;
-hasBlock = false;
+hasBlock = -1;
 
 inside = noone;
 
@@ -85,20 +91,28 @@ cy = y+TILE/2;
 //++++++++
 
 //++++input++++
-kLeft = keyboard_check(vk_left);
-kRight = keyboard_check(vk_right);
-kUp = keyboard_check(vk_up);
-kDown = keyboard_check(vk_down);
-kJump = keyboard_check_pressed(ord('A'));
-kAction = keyboard_check_pressed(ord('S'));
+var g = (global.gameState == G.PLAY);
+
+kLeft = keyboard_check(vk_left) &amp;&amp; g;
+kRight = keyboard_check(vk_right) &amp;&amp; g;
+kUp = keyboard_check(vk_up) &amp;&amp; g;
+kDown = keyboard_check(vk_down) &amp;&amp; g;
+kJump = keyboard_check_pressed(ord('A')) &amp;&amp; g;
+kAction = keyboard_check_pressed(ord('S')) &amp;&amp; g;
 
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
 
 //++++++++
 
-if (y &gt; room_height)
-    game_restart();
+//++++dieing++++
+if (place_meeting(x,y,objSpike) || y &gt; room_height)
+{
+    global.gameState = G.GAMEOVER;
+    global.hasBlock = hasBlock;
+    instance_create(x,y,objEffectDust);
+    instance_destroy();
+}
 
 if (kUp)
     look = UP;
@@ -120,7 +134,7 @@ if (dir == LEFT) px = px - TILE;
 if (dir == RIGHT) px = px + TILE;
 
         
-if (!hasBlock)
+if (hasBlock == -1)
 {
     if (kAction)
     {
@@ -128,8 +142,8 @@ if (!hasBlock)
         
         if (instance_exists(blk))
         {
+            hasBlock = blk.type;
             with (blk) instance_destroy();
-            hasBlock = true;
         }
     }
     
@@ -138,13 +152,14 @@ if (!hasBlock)
     if (kAction)
     {
         blk = instance_create(px,py,objBlockTemp);
+        blk.type = hasBlock;
         with (blk)
         {
             if (place_meeting(x,y,objSolid) || place_meeting(x,y,objBlockTemp))
                 instance_destroy();
             else
             {
-                objPlayer.hasBlock = false;
+                objPlayer.hasBlock = -1;
             }
             /*
                 with (objPlayer)
@@ -168,6 +183,9 @@ onGround = collision_line(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+1+
 if (onGround)
     jumped = false;
 
+var s;
+if (hasBlock == -1) s = xSpd;
+else s = xSpdLow;
 
 if (kLeft &amp;&amp; !kRight)
 {
@@ -176,12 +194,12 @@ if (kLeft &amp;&amp; !kRight)
 
     if (onGround)
     {
-        xVel = max(xVel - .2, -xSpd);
+        xVel = max(xVel - .2, -s);
         state = WALK;
     }
     else
     {
-        xVel = max(xVel - .2, -xSpd);
+        xVel = max(xVel - .2, -s);
         state = JUMP;        
     }
 }
@@ -192,12 +210,12 @@ if (kRight &amp;&amp; !kLeft)
 
     if (onGround)
     {
-        xVel = min(xVel + .2, xSpd);
+        xVel = min(xVel + .2, s);
         state = WALK;
     }
     else
     {
-        xVel = min(xVel + .2, xSpd);
+        xVel = min(xVel + .2, s);
         state = JUMP;
     }
 }
@@ -215,7 +233,10 @@ if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 if (kJump &amp;&amp; !jumped)
 {
     state = JUMP;
-    yVel = -jumpSpd;
+    if (hasBlock == -1)
+        yVel = -jumpSpd;
+    else
+        yVel = -jumpSpdLow;
     jumped = true;
 }
 
@@ -282,16 +303,16 @@ switch(state)
 frame = floor(fCur);
 
 //draw block pointer
-draw_sprite_part_ext(sprGfx,-1,TILE,0,TILE,TILE,px,py,1,1,c_white,.3);
+draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,floor(px),floor(py),1,1,c_white,.3);
 
 //draw block on back
-if (hasBlock)
-    draw_sprite_part(sprGfx,-1,0,0,TILE,TILE,x-sign(dir)*TILE*.4,y-TILE*.4);
+if (hasBlock != -1)
+    draw_sprite_part(sprGfx,-1,hasBlock*TILE,0,TILE,TILE,floor(x-sign(dir)*TILE*.4),floor(y-TILE*.4));
 
 if (dir == LEFT)
-    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,x+TILE,y,-1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x)+TILE,floor(y),-1,1,c_white,1);
 if (dir == RIGHT)
-    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,x,y,1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,floor(x),floor(y),1,1,c_white,1);
 
 </string>
           </argument>

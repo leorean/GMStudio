@@ -58,17 +58,17 @@
     <instance objName="objBlock" x="224" y="96" name="inst_E4BC3CA3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="224" y="80" name="inst_862133C0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="208" y="80" name="inst_F18F82F5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="192" y="80" name="inst_6A67E3C8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="176" y="112" name="inst_C4929E5C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="192" y="112" name="inst_19C43105" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="160" y="112" name="inst_31817460" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="208" y="96" name="inst_81BC73E0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="192" y="96" name="inst_7C809E4C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="176" y="96" name="inst_DCF28E3F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="192" y="80" name="inst_6A67E3C8" locked="0" code="type = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="80" y="96" name="inst_9B5C29F6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="64" y="112" name="inst_EB4B1C71" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="160" y="112" name="inst_31817460" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock" x="208" y="96" name="inst_81BC73E0" locked="0" code="type = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="80" y="112" name="inst_7EF4E1A3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock" x="96" y="112" name="inst_F2FCEDD8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSpike" x="176" y="112" name="inst_2524BF82" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSpike" x="192" y="112" name="inst_50CF5600" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSpike" x="48" y="144" name="inst_0310457F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSpike" x="32" y="144" name="inst_F0AD07E5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="sprTiles" x="64" y="128" w="16" h="16" xo="16" yo="0" id="10000001" name="inst_C09F36E9" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -183,6 +183,22 @@
     <tile bgName="sprTiles" x="272" y="240" w="16" h="16" xo="16" yo="16" id="10000149" name="inst_0063465C" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="256" y="240" w="16" h="16" xo="16" yo="16" id="10000150" name="inst_7DF68517" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="240" y="240" w="16" h="16" xo="16" yo="16" id="10000151" name="inst_906E462D" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="0" y="160" w="16" h="16" xo="16" yo="16" id="10000152" name="inst_32529CC6" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="16" y="176" w="16" h="16" xo="16" yo="16" id="10000153" name="inst_943D81BC" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="0" y="176" w="16" h="16" xo="16" yo="16" id="10000154" name="inst_73B38E8B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="288" y="144" w="16" h="16" xo="16" yo="16" id="10000155" name="inst_1ADF6CE0" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="304" y="144" w="16" h="16" xo="16" yo="16" id="10000156" name="inst_F73719C4" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="320" y="144" w="16" h="16" xo="16" yo="16" id="10000157" name="inst_0C1CB029" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="336" y="144" w="16" h="16" xo="16" yo="16" id="10000158" name="inst_101B1CB4" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="352" y="144" w="16" h="16" xo="16" yo="16" id="10000159" name="inst_C3CEC887" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="368" y="144" w="16" h="16" xo="16" yo="16" id="10000160" name="inst_6B4395D0" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="384" y="144" w="16" h="16" xo="16" yo="16" id="10000161" name="inst_D186F3C4" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="400" y="144" w="16" h="16" xo="16" yo="16" id="10000162" name="inst_8D45ECB8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="400" y="128" w="16" h="16" xo="16" yo="16" id="10000163" name="inst_9158437F" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="416" y="128" w="16" h="16" xo="16" yo="16" id="10000164" name="inst_F198E285" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="432" y="128" w="16" h="16" xo="16" yo="16" id="10000165" name="inst_150289AE" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="304" y="176" w="16" h="16" xo="16" yo="16" id="10000166" name="inst_D39CBA7D" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="288" y="192" w="16" h="16" xo="16" yo="16" id="10000167" name="inst_46EEFE1A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

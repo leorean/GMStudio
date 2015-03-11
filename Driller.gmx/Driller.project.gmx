@@ -13,6 +13,7 @@
     <sprite>sprites\mskFixator</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\mskSolid</sprite>
+    <sprite>sprites\mskSpike</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -29,6 +30,8 @@
     <object>objects\objBlock</object>
     <object>objects\objBlockTemp</object>
     <object>objects\objCamera</object>
+    <object>objects\objSpike</object>
+    <object>objects\objEffectDust</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
