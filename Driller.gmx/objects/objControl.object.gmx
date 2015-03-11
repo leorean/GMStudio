@@ -40,6 +40,8 @@ global.gameState = G.PLAY;
 gameStatePrev = global.gameState;
 
 global.hasBlock = -1;
+spawnX = -1;
+spawnY = -1;
 </string>
           </argument>
         </arguments>

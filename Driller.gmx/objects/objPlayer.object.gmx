@@ -28,9 +28,12 @@
             <string>objControl.spawnX = x;
 objControl.spawnY = y;
 
+die = false;
+
 if (!instance_exists(objCamera))
     instance_create(x,y,objCamera);
 
+canPlaceBlock = false;
 
 state = IDLE;
 statePrev = state;
@@ -46,9 +49,12 @@ px = -1;
 py = -1;
 
 yGrav = .15;
-jumpSpd = 2.8;
-jumpSpdLow = 1.8;
-xSpd = 2;
+yGravGlide = .08;
+
+jumpSpd = 3.4;
+jumpSpdLow = 2.5;
+jumpSpdGlide = 3;
+xSpd = 1.5;
 xSpdLow = 1;
 
 
@@ -102,11 +108,10 @@ kAction = keyboard_check_pressed(ord('S')) &amp;&amp; g;
 
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
-
-//++++++++
+//++++++++++++++
 
 //++++dieing++++
-if (place_meeting(x,y,objSpike) || y &gt; room_height)
+if (die || place_meeting(x,y,objSpike) || y &gt; room_height)
 {
     global.gameState = G.GAMEOVER;
     global.hasBlock = hasBlock;
@@ -121,35 +126,55 @@ else if (kDown)
 else
     look = NONE;
 
-
 if (instance_exists(inside))
     if (!place_meeting(x+xVel,y+yVel,inside))
         inside = noone;
         
 px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
 
-if (look == UP) py = py - TILE;
+if (look == UP) {py = py - TILE; }
 if (look == DOWN) py = py + TILE;
-if (dir == LEFT) px = px - TILE;
-if (dir == RIGHT) px = px + TILE;
+//if (look == NONE)
+{
+    if (dir == LEFT) px = px - TILE;
+    if (dir == RIGHT) px = px + TILE;
+}
 
-        
-if (hasBlock == -1)
+canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(x,y,objBlockTemp)// &amp;&amp; !(px == objControl.spawnX &amp;&amp; py == objControl.spawnY)
+    &amp;&amp; in(px,0,room_width);
+
+if (hasBlock == -1) // take block
 {
     if (kAction)
     {
         blk = collision_point(px,py,objBlock,true,true);
+        if (blk == noone)
+            blk = collision_point(px,py,objBlockTemp,true,true);
         
         if (instance_exists(blk))
         {
-            hasBlock = blk.type;
-            with (blk) instance_destroy();
+            instance_create(blk.x,blk.y,objEffectDust);
+            
+            if (blk.type == 3) //grass block
+                with(blk) instance_destroy();
+            else
+            {
+                hasBlock = blk.type;
+                
+                //so it cant be abused
+                if (hasBlock == 1)
+                    yVel = max(yVel,-jumpSpdGlide);
+                else
+                    yVel = max(yVel,-jumpSpdLow);
+                
+                with (blk) instance_destroy();
+            }
         }
     }
     
-} else
+} else //place block
 {
-    if (kAction)
+    if (kAction &amp;&amp; canPlaceBlock)
     {
         blk = instance_create(px,py,objBlockTemp);
         blk.type = hasBlock;
@@ -158,28 +183,20 @@ if (hasBlock == -1)
             if (place_meeting(x,y,objSolid) || place_meeting(x,y,objBlockTemp))
                 instance_destroy();
             else
-            {
                 objPlayer.hasBlock = -1;
-            }
-            /*
-                with (objPlayer)
-                {
-                    if (xVel != 0 &amp;&amp; yVel != 0)
-                    {
-                        angle = point_direction(x+xVel,y+yVel,x,y);
-                        move_outside_solid(angle,TILE);
-                    }
-                    hasBlock = false;
-                }*/
         }
     }
 }
 
 
 //++++++++
-yVel += yGrav;
+if (hasBlock == 1)
+    yVel += yGravGlide;
+else
+    yVel += yGrav;
 
-onGround = collision_line(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+1+yVel,objSolid,true,true);
+onGround = collision_line(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+1+yVel,objSolid,true,true)
+    || collision_rectangle(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+4,objBlock1,true,true);
 if (onGround)
     jumped = false;
 
@@ -187,7 +204,7 @@ var s;
 if (hasBlock == -1) s = xSpd;
 else s = xSpdLow;
 
-if (kLeft &amp;&amp; !kRight)
+if (kLeft &amp;&amp; !kRight) //GO LEFT
 {
     if (xVel &lt; 0)
         dir = LEFT;
@@ -203,7 +220,7 @@ if (kLeft &amp;&amp; !kRight)
         state = JUMP;        
     }
 }
-if (kRight &amp;&amp; !kLeft)
+if (kRight &amp;&amp; !kLeft) //GO RIGHT
 {
     if (xVel &gt; 0)
         dir = RIGHT;
@@ -230,11 +247,13 @@ if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 
 }
 
-if (kJump &amp;&amp; !jumped)
+if (kJump &amp;&amp; !jumped) //JUMP
 {
     state = JUMP;
     if (hasBlock == -1)
         yVel = -jumpSpd;
+    else if (hasBlock == 1)
+        yVel = -jumpSpdGlide;
     else
         yVel = -jumpSpdLow;
     jumped = true;
@@ -244,7 +263,7 @@ if (!place_meeting(x+xVel,y,objSolid) &amp;&amp; in(cx+xVel,0,room_width))
     x += xVel;
 else
     xVel = 0;
-repeat(ceil(abs(yVel))*10)
+repeat((abs(yVel))*10)
     if (!place_meeting(x,y+sign(yVel)*.1,objSolid))
         y += sign(yVel)*.1;
     else
@@ -303,7 +322,9 @@ switch(state)
 frame = floor(fCur);
 
 //draw block pointer
-draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,floor(px),floor(py),1,1,c_white,.3);
+if (canPlaceBlock || hasBlock == -1) c = c_white;
+else c = c_red;
+draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,floor(px),floor(py),1,1,c,.3);
 
 //draw block on back
 if (hasBlock != -1)

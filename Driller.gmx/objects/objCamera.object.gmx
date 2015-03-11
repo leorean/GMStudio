@@ -30,6 +30,12 @@ yVel = 0;
 
 view_object[0] = id;
 
+depth = 10000;
+
+a = 0;
+b = 0;
+w = 480; //image width
+h = 240; //image height
 </string>
           </argument>
         </arguments>
@@ -60,6 +66,37 @@ view_object[0] = id;
     x += xVel;
     y += yVel;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>a = ((view_xview[0]*.8) mod w);
+b = ((view_xview[0]*.5) mod w);
+
+draw_background_part(sprBg,0,0*h,w,h,floor(a),0);
+draw_background_part(sprBg,0,0*h,w,h,floor(a+w),0);
+
+draw_background_part(sprBg,0,1*h,w,h,floor(b),0);
+draw_background_part(sprBg,0,1*h,w,h,floor(b+w),0);
+
 </string>
           </argument>
         </arguments>

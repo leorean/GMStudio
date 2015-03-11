@@ -13,10 +13,15 @@
     <sprite>sprites\mskFixator</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\mskSolid</sprite>
-    <sprite>sprites\mskSpike</sprite>
+    <sprite>sprites\mskSpikeUp</sprite>
+    <sprite>sprites\mskBlock0</sprite>
+    <sprite>sprites\mskBlock1</sprite>
+    <sprite>sprites\mskBlock2</sprite>
+    <sprite>sprites\mskBlock3</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
+    <background>background\sprBg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -25,13 +30,19 @@
   <objects name="objects">
     <object>objects\objSolid</object>
     <object>objects\objControl</object>
-    <object>objects\objFixator</object>
     <object>objects\objPlayer</object>
-    <object>objects\objBlock</object>
-    <object>objects\objBlockTemp</object>
-    <object>objects\objCamera</object>
-    <object>objects\objSpike</object>
+    <object>objects\objBlock0</object>
+    <object>objects\objBlock1</object>
+    <object>objects\objBlock2</object>
+    <object>objects\objBlock3</object>
+    <object>objects\objSpikeUp</object>
     <object>objects\objEffectDust</object>
+    <objects name="misc">
+      <object>objects\objSpike</object>
+      <object>objects\objBlockTemp</object>
+      <object>objects\objCamera</object>
+      <object>objects\objBlock</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
