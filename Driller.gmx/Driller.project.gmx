@@ -20,6 +20,7 @@
     <sprite>sprites\mskBlock3</sprite>
     <sprite>sprites\mskBlock4</sprite>
     <sprite>sprites\mskDPad</sprite>
+    <sprite>sprites\mskDPadButton</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -46,6 +47,8 @@
       <object>objects\objBlockTemp</object>
       <object>objects\objBlock</object>
       <object>objects\objDPad</object>
+      <object>objects\objDPadButton1</object>
+      <object>objects\objDPadButton2</object>
     </objects>
   </objects>
   <rooms name="rooms">

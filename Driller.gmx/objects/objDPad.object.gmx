@@ -28,8 +28,12 @@
             <string>w = 5*TILE;
 h = 5*TILE;
 
-cx = view_xview[0]+w/2;
-cy = view_hview[0]+HEIGHT-h/2;
+offX = TILE + w/2;
+offY = HEIGHT - TILE - w/2;
+
+
+cx = view_xview[0]+offX;
+cy = view_hview[0]+offY;
 
 x = cx;
 y = cy;
@@ -37,6 +41,106 @@ y = cy;
 dx = cx;
 dy = cy;
 
+drag = false;
+dev = 0;
+
+a = view_xview[0];
+b = view_yview[0];
+
+kLeft = false;
+kRight = false;
+kUp = false;
+kDown = false;
+//stick = instance_create(cx,cy,objDPadStick);
+//stick.depth = depth-1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!drag)
+{
+    kLeft = false;
+    kRight = false;
+    kUp = false;
+    kDown = false;
+    for (i = 0; i &lt; 5; i++)
+        if (device_mouse_check_button(i,mb_left) &amp;&amp; in(device_mouse_x(i),cx-w/2-TILE,cx+w/2+TILE) &amp;&amp; in(device_mouse_y(i),cy-h/2-TILE,cy+h/2+TILE))
+        {
+            dev = i;
+            drag = true;
+            break;
+        }
+}
+else
+{
+    if (device_mouse_check_button(dev,mb_left))
+    {
+        angle = point_direction(cx,cy,device_mouse_x(dev),device_mouse_y(dev));
+        rad_angle = ((angle / 180) * pi);
+        
+        dx = cx + (cos(rad_angle)) * min(abs(cx-device_mouse_x(dev)),w/2);
+        dy = cy -(sin(rad_angle)) * min(abs(cy-device_mouse_y(dev)),h/2);
+        
+        if (true)//min(abs(cx-device_mouse_x(dev)),abs(cy-device_mouse_y(dev))) &gt; TILE)
+        {
+            if (in(angle,315,360) || in(angle,0,45))
+                kRight = true;
+            else
+                kRight = false;
+                
+            if (in(angle,45,135))
+                kUp = true;
+            else
+                kUp = false;
+                
+            if (in(angle,135,225))
+                kLeft = true;
+            else
+                kLeft = false;
+                
+            if (in(angle,225,315))
+                kDown = true;
+            else
+                kDown = false;
+        }
+    } else
+    {
+        drag = false;
+        dev = 0;
+        
+    }
+}
+
+if (!drag) //feather back in position
+{
+    if (min(abs(dx - cx),abs(dy - cy)) &gt; 4)
+    {
+        dx -= (dx - cx) / 4;
+        dy -= (dy - cy) / 4;
+    } else
+    {
+        dx = cx;
+        dy = cy;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -62,16 +166,15 @@ dy = cy;
             <string>a = view_xview[0];
 b = view_yview[0];
 
-cx = a + w/2; cy = b + HEIGHT - h/2;
+cx = a + offX; cy = b + offY;
 x = cx;
 y = cy;
 
-dx = cx;
-dy = cy;
+//show_debug_message("dev: "+string(dev)+", drag: "+string(drag)+", L: "+string(kLeft)+", R: "+string(kRight)+", U: "+string(kUp)+", D: "+string(kDown));
 
 draw_sprite_part_ext(sprGfx,-1,0,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2,1,1,c_white,.5);
+draw_sprite_part(sprGfx,-1,5*TILE,4*TILE,2*TILE,2*TILE,dx-TILE,dy-TILE);
 
-draw_sprite_part(sprGfx,-1,5*TILE,5*TILE,2*TILE,2*TILE,dx-TILE,dy-TILE);
 </string>
           </argument>
         </arguments>

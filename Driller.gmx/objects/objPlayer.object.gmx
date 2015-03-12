@@ -70,6 +70,15 @@ fCur = 0;
 fMax = 3;
 fSpeed = 0;
 frame = 0;
+
+//++++input++++
+kLeft = false;
+kRight = false;
+kUp = false;
+kDown = false;
+kJump = false;
+kAction = false;
+
 </string>
           </argument>
         </arguments>
@@ -98,14 +107,15 @@ cy = y+TILE/2;
 //++++++++
 
 //++++input++++
-var g = (global.gameState == G.PLAY);
 
-kLeft = keyboard_check(vk_left) &amp;&amp; g;
-kRight = keyboard_check(vk_right) &amp;&amp; g;
-kUp = keyboard_check(vk_up) &amp;&amp; g;
-kDown = keyboard_check(vk_down) &amp;&amp; g;
-kJump = keyboard_check_pressed(ord('A')) &amp;&amp; g;
-kAction = keyboard_check_pressed(ord('S')) &amp;&amp; g;
+//var g = (global.gameState == G.PLAY);
+
+kLeft = keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft);
+kRight = keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight);
+kUp = keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp);
+kDown = keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown);
+kJump = keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressing);
+kAction = keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed);
 
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
@@ -133,7 +143,7 @@ if (instance_exists(inside))
         
 px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
 
-if (look == UP) {py = py - TILE; }
+if (look == UP) py = py - TILE;
 if (look == DOWN) py = py + TILE;
 //if (look == NONE)
 {
@@ -148,9 +158,9 @@ if (hasBlock == -1) // take block
 {
     if (kAction)
     {
-        blk = collision_point(px,py,objBlock,true,true);
+        blk = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);
         if (blk == noone)
-            blk = collision_point(px,py,objBlockTemp,true,true);
+            blk = collision_point(px+TILE/2,py+TILE/2,objBlockTemp,true,true);
         
         if (instance_exists(blk))
         {
@@ -250,6 +260,8 @@ if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 
 if (kJump &amp;&amp; !jumped) //JUMP
 {
+    kJump = false;
+    
     state = JUMP;
     if (hasBlock == -1)
         yVel = -jumpSpd;

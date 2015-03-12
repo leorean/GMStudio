@@ -79,7 +79,8 @@ if (state == WALK)
     else
         xVel = 0;
     //if (collision_point((x+TILE/2)+sign(dir)*(TILE/2+4),y+TILE/2,objSolid,true,true))
-    if (!place_free(x+sign(dir)*max(xVel,1),y))
+    if (!place_free(x+sign(dir)*max(xVel,1),y)
+    || place_meeting(x+sign(dir)*max(xVel,1),y,objBlockTemp))
     {
         state = JUMP;
         timer = 30;
