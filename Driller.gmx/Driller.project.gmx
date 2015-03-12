@@ -53,7 +53,7 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\INIT</room>
-    <room>rooms\MAIN</room>
+    <room>rooms\TEST</room>
   </rooms>
   <constants number="13">
     <constant name="INFINITE">9000000000</constant>

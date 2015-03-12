@@ -65,21 +65,19 @@ b = view_yview[0];
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (i = 0; i &lt; 5; i++)
+            <string>pressed = false;
+
+for (i = 0; i &lt; 5; i++)
 {
     if (in(device_mouse_x(i),cx-w/2,cx+w/2) &amp;&amp; in(device_mouse_y(i),cy-h/2,cy+h/2))
     {
         if (device_mouse_check_button_pressed(i,mb_left))
             pressed = true;
-        else
-            pressed = false;
         if (device_mouse_check_button(i,mb_left))
         {
             pressing = true;
             break;
         }
-        else
-            pressing = false;
     }
 }
 </string>

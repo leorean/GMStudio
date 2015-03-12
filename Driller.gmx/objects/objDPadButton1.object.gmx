@@ -66,6 +66,8 @@ pressed = false;
             <kind>1</kind>
             <string>if (instance_exists(objPlayer))
 {
+    pressed = false;
+    pressing = false;
     for (i = 0; i &lt; 5; i++)
     {
         if (in(device_mouse_x(i),cx-w/2,cx+w/2) &amp;&amp; in(device_mouse_y(i),cy-h/2,cy+h/2))
@@ -74,19 +76,13 @@ pressed = false;
             {
                 if (instance_exists(objPlayer))
                     objPlayer.jumped = true;
-                    
                 pressed = true;
             }
-            else
-                pressed = false;
             if (device_mouse_check_button(i,mb_left))
             {
                 pressing = true;
                 break;
             }
-            else
-                pressing = false;
-                            
         }
     }
 }

@@ -152,7 +152,7 @@ if (look == DOWN) py = py + TILE;
 }
 
 canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(x,y,objBlockTemp)// &amp;&amp; !(px == objControl.spawnX &amp;&amp; py == objControl.spawnY)
-    &amp;&amp; in(px,0,room_width);
+    &amp;&amp; in(px,0,room_width-TILE) &amp;&amp; in(py,0,room_height-TILE);
 
 if (hasBlock == -1) // take block
 {
@@ -260,8 +260,6 @@ if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 
 if (kJump &amp;&amp; !jumped) //JUMP
 {
-    kJump = false;
-    
     state = JUMP;
     if (hasBlock == -1)
         yVel = -jumpSpd;

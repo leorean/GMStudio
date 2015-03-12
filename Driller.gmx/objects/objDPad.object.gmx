@@ -129,18 +129,6 @@ else
     }
 }
 
-if (!drag) //feather back in position
-{
-    if (min(abs(dx - cx),abs(dy - cy)) &gt; 4)
-    {
-        dx -= (dx - cx) / 4;
-        dy -= (dy - cy) / 4;
-    } else
-    {
-        dx = cx;
-        dy = cy;
-    }
-}
 </string>
           </argument>
         </arguments>
@@ -169,6 +157,19 @@ b = view_yview[0];
 cx = a + offX; cy = b + offY;
 x = cx;
 y = cy;
+
+if (!drag) //feather back in position
+{
+    if (min(abs(dx - cx),abs(dy - cy)) &gt; 4)
+    {
+        dx -= (dx - cx) / 4;
+        dy -= (dy - cy) / 4;
+    } else
+    {
+        dx = cx;
+        dy = cy;
+    }
+}
 
 //show_debug_message("dev: "+string(dev)+", drag: "+string(drag)+", L: "+string(kLeft)+", R: "+string(kRight)+", U: "+string(kUp)+", D: "+string(kDown));
 
