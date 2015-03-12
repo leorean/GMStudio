@@ -18,6 +18,8 @@
     <sprite>sprites\mskBlock1</sprite>
     <sprite>sprites\mskBlock2</sprite>
     <sprite>sprites\mskBlock3</sprite>
+    <sprite>sprites\mskBlock4</sprite>
+    <sprite>sprites\mskDPad</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -35,19 +37,23 @@
     <object>objects\objBlock1</object>
     <object>objects\objBlock2</object>
     <object>objects\objBlock3</object>
+    <object>objects\objBlock4</object>
     <object>objects\objSpikeUp</object>
     <object>objects\objEffectDust</object>
     <objects name="misc">
+      <object>objects\objCamera</object>
       <object>objects\objSpike</object>
       <object>objects\objBlockTemp</object>
-      <object>objects\objCamera</object>
       <object>objects\objBlock</object>
+      <object>objects\objDPad</object>
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\INIT</room>
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="12">
+  <constants number="13">
+    <constant name="INFINITE">9000000000</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>

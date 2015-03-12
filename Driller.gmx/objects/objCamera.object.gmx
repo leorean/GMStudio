@@ -60,8 +60,8 @@ h = 240; //image height
             <kind>1</kind>
             <string>if (instance_exists(objPlayer))
 {
-    xVel = (floor(objPlayer.x) - floor(x)) / 12;
-    yVel = (floor(objPlayer.y) - floor(y)) / 12;
+    xVel = ((objPlayer.x) - (x)) / 12;
+    yVel = ((objPlayer.y) - (y)) / 12;
     
     x += xVel;
     y += yVel;

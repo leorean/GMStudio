@@ -28,13 +28,15 @@
             <string>window_set_size(2*WIDTH,2*HEIGHT);
 window_center();
 
+global.timer = 0;
+deathTimer = 0;
+
 enum G
 {
     PLAY = 0,
     PAUSE = 1,
     GAMEOVER = 2
 }
-timer = 0;
 
 global.gameState = G.PLAY;
 gameStatePrev = global.gameState;
@@ -64,22 +66,32 @@ spawnY = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//
+            <string>if (room == INIT)
+    room_goto_next();
+
+global.timer = (global.timer + 1) % INFINITE;
+
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
 
+if (keyboard_check_pressed(vk_backspace) || keyboard_check_pressed(vk_escape))
+    game_end();
+
+    
 if (gameStatePrev != G.GAMEOVER)
-    timer = 1.5*60;
+    deathTimer = 1.5*60;
 
-timer = max(timer - 1, 0);
+deathTimer = max(deathTimer - 1, 0);
 
-if (!timer)
+if (!deathTimer)
 {
+    /*
     var p = instance_create(spawnX,spawnY,objPlayer);
     p.hasBlock = global.hasBlock;
     global.hasBlock = -1;
     global.gameState = G.PLAY;
-    //room_restart();
+    */
+    room_restart();
 }
 
 gameStatePrev = global.gameState;
