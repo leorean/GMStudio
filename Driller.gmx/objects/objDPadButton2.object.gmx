@@ -42,7 +42,6 @@ pressed = false;
 
 a = view_xview[0];
 b = view_yview[0];
-
 </string>
           </argument>
         </arguments>
@@ -66,6 +65,7 @@ b = view_yview[0];
           <argument>
             <kind>1</kind>
             <string>pressed = false;
+pressing = false;
 
 for (i = 0; i &lt; 5; i++)
 {
@@ -109,7 +109,7 @@ cx = a + offX; cy = b + offY;
 x = cx;
 y = cy;
 
-draw_sprite_part_ext(sprGfx,-1,5*TILE,6*TILE,3*TILE,3*TILE,cx-w/2,cy-h/2,1,1,c_white,.5);
+draw_sprite_part_ext(sprGfx,-1,8*TILE,6*TILE+pressing*3*TILE,3*TILE,3*TILE,cx-w/2,cy-h/2,1,1,c_white,global.alphaHud);
 </string>
           </argument>
         </arguments>

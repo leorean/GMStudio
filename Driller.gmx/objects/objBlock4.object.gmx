@@ -99,23 +99,22 @@ if (place_free(x+xVel,y) &amp;&amp; in(x+TILE/2+xVel,0,room_width))
     x += xVel;
 else
     xVel = 0;
-    
-repeat((abs(yVel))*10)
-    if (place_free(x,y+sign(yVel)*.1))
+
+if (instance_exists(objPlayer))
+    if (place_meeting(x,y+1,objPlayer))
     {
-        if (instance_exists(objPlayer))
-            if (place_meeting(x,y+1,objPlayer))
-            {
-                if (objPlayer.yVel &lt;= 0)
-                {
-                    timer = 30;
-                    yVel = min(objPlayer.yVel,-1);
-                }
-            }
-        y += sign(yVel)*.1;
+        timer = 30;
+        if (objPlayer.yVel &lt;= 0)
+            yVel = min(objPlayer.yVel,-1);
     }
-    else
-        yVel = 0;
+        
+if (place_free(x,y+yVel))
+{
+    timer = 30;
+    y += yVel;
+}
+else
+    yVel = 0;
         
 if (instance_exists(objPlayer))
 {

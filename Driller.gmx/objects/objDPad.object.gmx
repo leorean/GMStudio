@@ -25,15 +25,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>w = 5*TILE;
+            <string>global.alphaHud = 1;
+global.alphaTimer = 60;
+
+w = 5*TILE;
 h = 5*TILE;
 
 offX = TILE + w/2;
 offY = HEIGHT - TILE - w/2;
 
+a = view_xview[0];
+b = view_yview[0];
 
-cx = view_xview[0]+offX;
-cy = view_hview[0]+offY;
+cx = a+offX;
+cy = b+offY;
 
 x = cx;
 y = cy;
@@ -44,13 +49,12 @@ dy = cy;
 drag = false;
 dev = 0;
 
-a = view_xview[0];
-b = view_yview[0];
-
 kLeft = false;
 kRight = false;
 kUp = false;
 kDown = false;
+forceX = 1;
+forceY = 1;
 //stick = instance_create(cx,cy,objDPadStick);
 //stick.depth = depth-1;
 </string>
@@ -82,7 +86,7 @@ kDown = false;
     kUp = false;
     kDown = false;
     for (i = 0; i &lt; 5; i++)
-        if (device_mouse_check_button(i,mb_left) &amp;&amp; in(device_mouse_x(i),cx-w/2-TILE,cx+w/2+TILE) &amp;&amp; in(device_mouse_y(i),cy-h/2-TILE,cy+h/2+TILE))
+        if (device_mouse_check_button(i,mb_left) &amp;&amp; in(device_mouse_x(i),cx-w/2-2*TILE,cx+w/2+2*TILE) &amp;&amp; in(device_mouse_y(i),cy-h/2-2*TILE,cy+h/2+2*TILE))
         {
             dev = i;
             drag = true;
@@ -96,8 +100,8 @@ else
         angle = point_direction(cx,cy,device_mouse_x(dev),device_mouse_y(dev));
         rad_angle = ((angle / 180) * pi);
         
-        dx = cx + (cos(rad_angle)) * min(abs(cx-device_mouse_x(dev)),w/2);
-        dy = cy -(sin(rad_angle)) * min(abs(cy-device_mouse_y(dev)),h/2);
+        dx = cx + (cos(rad_angle)) * min(abs(cx-device_mouse_x(dev)),w/2-TILE);
+        dy = cy -(sin(rad_angle)) * min(abs(cy-device_mouse_y(dev)),h/2-TILE);
         
         if (true)//min(abs(cx-device_mouse_x(dev)),abs(cy-device_mouse_y(dev))) &gt; TILE)
         {
@@ -129,6 +133,12 @@ else
     }
 }
 
+forceX = abs(cx - dx) / (w/2 - TILE);
+forceY = abs(cy - dy) / (h/2 - TILE);
+
+show_debug_message("xf: " + string(forceX) + ", yf: " + string(forceY));
+
+
 </string>
           </argument>
         </arguments>
@@ -158,9 +168,18 @@ cx = a + offX; cy = b + offY;
 x = cx;
 y = cy;
 
-if (!drag) //feather back in position
+if (drag || objDPadButton1.pressing || objDPadButton2.pressing)//HUD alpha
 {
-    if (min(abs(dx - cx),abs(dy - cy)) &gt; 4)
+    global.alphaHud = max(global.alphaHud - .05,.15);
+    global.alphaTimer = 1.5*60;
+} else
+{
+    global.alphaTimer = max(global.alphaTimer - 1, 0);
+    global.alphaHud = min(global.alphaHud + .05*(global.alphaTimer==0), .75);
+}
+if (!drag)//feather back in position
+{
+    if (max(abs(dx - cx),abs(dy - cy)) &gt; 4)
     {
         dx -= (dx - cx) / 4;
         dy -= (dy - cy) / 4;
@@ -170,11 +189,10 @@ if (!drag) //feather back in position
         dy = cy;
     }
 }
-
 //show_debug_message("dev: "+string(dev)+", drag: "+string(drag)+", L: "+string(kLeft)+", R: "+string(kRight)+", U: "+string(kUp)+", D: "+string(kDown));
 
-draw_sprite_part_ext(sprGfx,-1,0,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2,1,1,c_white,.5);
-draw_sprite_part(sprGfx,-1,5*TILE,4*TILE,2*TILE,2*TILE,dx-TILE,dy-TILE);
+draw_sprite_part_ext(sprGfx,-1,0,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2,1,1,c_white,global.alphaHud);
+draw_sprite_part_ext(sprGfx,-1,0,9*TILE,3*TILE,3*TILE,dx-1.5*TILE,dy-1.5*TILE,1,1,c_white,global.alphaHud);
 
 </string>
           </argument>

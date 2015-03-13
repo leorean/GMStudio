@@ -107,16 +107,20 @@ cy = y+TILE/2;
 //++++++++
 
 //++++input++++
-
-//var g = (global.gameState == G.PLAY);
-
+forceX = 1;
+forceY = 1;
+if (instance_exists(objDPad))
+&amp;&amp; !keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_up) &amp;&amp; !keyboard_check(vk_down)
+{
+    forceX = objDPad.forceX;
+    forceY = objDPad.forceY;    
+}
 kLeft = keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft);
 kRight = keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight);
-kUp = keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp);
-kDown = keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown);
+kUp = keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35);
+kDown = keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35);
 kJump = keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressing);
 kAction = keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed);
-
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
 //++++++++++++++
@@ -206,46 +210,37 @@ if (hasBlock == 1)
 else
     yVel += yGrav;
 
-onGround = collision_line(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+4,objSolid,true,true);
+onGround = yVel &gt;= 0 &amp;&amp; collision_rectangle(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+4,objSolid,true,true);
 //    || collision_rectangle(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+4,objBlock1,true,true);
 if (onGround)
     jumped = false;
 
 var s;
-if (hasBlock == -1) s = xSpd;
-else s = xSpdLow;
+if (hasBlock == -1) s = xSpd*forceX;
+else s = xSpdLow*forceX;
 
 if (kLeft &amp;&amp; !kRight) //GO LEFT
 {
     if (xVel &lt; 0)
         dir = LEFT;
 
+    xVel = max(xVel - .2, -s);
     if (onGround)
-    {
-        xVel = max(xVel - .2, -s);
         state = WALK;
-    }
     else
-    {
-        xVel = max(xVel - .2, -s);
         state = JUMP;        
-    }
 }
 if (kRight &amp;&amp; !kLeft) //GO RIGHT
 {
     if (xVel &gt; 0)
         dir = RIGHT;
 
+    xVel = min(xVel + .2, s);
+
     if (onGround)
-    {
-        xVel = min(xVel + .2, s);
         state = WALK;
-    }
     else
-    {
         xVel = min(xVel + .2, s);
-        state = JUMP;
-    }
 }
 
 if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
@@ -260,6 +255,7 @@ if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 
 if (kJump &amp;&amp; !jumped) //JUMP
 {
+    jumped = true;
     state = JUMP;
     if (hasBlock == -1)
         yVel = -jumpSpd;
@@ -267,7 +263,6 @@ if (kJump &amp;&amp; !jumped) //JUMP
         yVel = -jumpSpdGlide;
     else
         yVel = -jumpSpdLow;
-    jumped = true;
 }
 
 if (!place_meeting(x+xVel+xVelOther,y,objSolid) &amp;&amp; in(cx+xVel+xVelOther,0,room_width))
