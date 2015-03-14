@@ -136,7 +136,7 @@ else
 forceX = abs(cx - dx) / (w/2 - TILE);
 forceY = abs(cy - dy) / (h/2 - TILE);
 
-show_debug_message("xf: " + string(forceX) + ", yf: " + string(forceY));
+//show_debug_message("xf: " + string(forceX) + ", yf: " + string(forceY));
 
 
 </string>

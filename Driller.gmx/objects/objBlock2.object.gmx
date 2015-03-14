@@ -3,7 +3,7 @@
   <spriteName>mskBlock2</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>objBlock</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -32,10 +32,7 @@ xVel = 0;
 yVel = 0;
 yGrav = .15;
 
-if (place_meeting(x,y+TILE,objPlayer))
-    fallDist = -.5*TILE;
-else
-    fallDist = TILE;
+canKill = false;
 </string>
           </argument>
         </arguments>
@@ -67,17 +64,32 @@ if (collision_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,objPlayer,true
     instance_destroy();
 }
 
-if (!place_free(x,y+yVel))
-    fallDist += 1;
+if (!canKill)
+{
+    inReach = instance_exists(objPlayer) &amp;&amp; objPlayer.bbox_left &gt;= x &amp;&amp; objPlayer.bbox_right &lt;= (x+TILE)
+        &amp;&amp; in(objPlayer.y,y,y+TILE);
+    if (!place_meeting(x,y+TILE,objPlayer) &amp;&amp; !place_meeting(x,y+TILE,objBlock4)
+       &amp;&amp; !inReach)
+        canKill = true;
+}
 else
-    fallDist = 0;
-
-if (fallDist &gt;= .5*TILE)
-    if (yVel &gt; 0 &amp;&amp; collision_line(bbox_left+2,bbox_bottom+yVel+1,bbox_right-2,bbox_bottom+yVel+1,objPlayer,true,true))
-        if (instance_exists(objPlayer))
+{
+    if (yVel &gt; 0)
+    {
+        if (collision_line(bbox_left+2,bbox_bottom+yVel+1,bbox_right-2,bbox_bottom+yVel+1,objPlayer,true,true))
             objPlayer.die = true;
-    
-if (place_free(x,y+yVel) &amp;&amp; !place_meeting(x,y+yVel,objBlockTemp))
+        bug = instance_place(x,y+yVel,objBlock4);
+        if (instance_exists(bug))
+            with(bug)
+            {
+                instance_create(x,y,objEffectDust);
+                instance_destroy();
+            }
+            
+    }
+}
+   
+if (canKill &amp;&amp; place_free(x,y+yVel) &amp;&amp; !place_meeting(x,y+yVel,objBlockTemp))
 {
     y += yVel;
 }

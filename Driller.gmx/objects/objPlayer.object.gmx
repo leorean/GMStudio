@@ -119,7 +119,7 @@ kLeft = keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.
 kRight = keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight);
 kUp = keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35);
 kDown = keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35);
-kJump = keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressing);
+kJump = keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed);
 kAction = keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed);
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);

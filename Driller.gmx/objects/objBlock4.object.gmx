@@ -33,6 +33,8 @@ if (!instance_exists(objPlayer))
 else
     dir = sign(x-objPlayer.x);
 
+look = dir;
+
 xVel = 0;
 yVel = 0;
 yGrav = .15;
@@ -83,8 +85,8 @@ if (state == WALK)
     || place_meeting(x+sign(dir)*max(xVel,1),y,objBlockTemp))
     {
         state = JUMP;
-        timer = 30;
         dir = -dir;
+        timer = 30;
     }
 
 }
@@ -101,11 +103,12 @@ else
     xVel = 0;
 
 if (instance_exists(objPlayer))
-    if (place_meeting(x,y+1,objPlayer))
+    if (place_meeting(x,y+yVel+1,objPlayer))
     {
+        state = JUMP;
         timer = 30;
-        if (objPlayer.yVel &lt;= 0)
-            yVel = min(objPlayer.yVel,-1);
+        //if (objPlayer.yVel &lt;= 0)
+            yVel += min(objPlayer.yVel,-2);
     }
         
 if (place_free(x,y+yVel))
@@ -149,7 +152,14 @@ if (instance_exists(objPlayer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,(global.timer % 30 &lt; 15) * TILE,3*TILE,TILE,TILE,floor(x),floor(y));
+            <string>if (xVel &lt; 0) look = LEFT;
+if (xVel &gt; 0) look = RIGHT;
+
+f = (global.timer % 20 &lt; 10) &amp;&amp; state == WALK;
+if (look == RIGHT)
+    draw_sprite_part(sprGfx,-1,f * TILE,3*TILE,TILE,TILE,floor(x),floor(y));
+else
+    draw_sprite_part_ext(sprGfx,-1,f * TILE,3*TILE,TILE,TILE,floor(x)+TILE,floor(y),-1,1,c_white,1);
 
 //draw_text(x,y+TILE,xVel);
 </string>
