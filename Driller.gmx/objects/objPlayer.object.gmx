@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-5</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objLiving</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -149,13 +149,13 @@ px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
 
 if (look == UP) py = py - TILE;
 if (look == DOWN) py = py + TILE;
-//if (look == NONE)
+if (look == NONE)
 {
     if (dir == LEFT) px = px - TILE;
     if (dir == RIGHT) px = px + TILE;
 }
 
-canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(x,y,objBlockTemp)// &amp;&amp; !(px == objControl.spawnX &amp;&amp; py == objControl.spawnY)
+canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(x,y,objBlockTemp)
     &amp;&amp; in(px,0,room_width-TILE) &amp;&amp; in(py,0,room_height-TILE);
 
 if (hasBlock == -1) // take block
@@ -168,21 +168,24 @@ if (hasBlock == -1) // take block
         
         if (instance_exists(blk))
         {
-            instance_create(blk.x,blk.y,objEffectDust);
-            
-            if (blk.type == 3) //grass block
-                with(blk) instance_destroy();
-            else
+            if (blk.type != 6) //cannot be taken
             {
-                hasBlock = blk.type;
+                instance_create(blk.x,blk.y,objEffectDust);
                 
-                //so it cant be abused
-                if (hasBlock == 1)
-                    yVel = max(yVel,-jumpSpdGlide);
+                if (blk.type == 3) //grass block
+                    with(blk) instance_destroy();
                 else
-                    yVel = max(yVel,-jumpSpdLow);
-                
-                with (blk) instance_destroy();
+                {
+                    hasBlock = blk.type;
+                    
+                    //so it cant be abused
+                    if (hasBlock == 1)
+                        yVel = max(yVel,-jumpSpdGlide);
+                    else
+                        yVel = max(yVel,-jumpSpdLow);
+                    
+                    with (blk) instance_destroy();
+                }
             }
         }
     }

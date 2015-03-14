@@ -114,7 +114,7 @@ cx = a + offX; cy = b + offY;
 x = cx;
 y = cy;
 
-draw_sprite_part_ext(sprGfx,-1,5*TILE,6*TILE+pressing*3*TILE,3*TILE,3*TILE,cx-w/2,cy-h/2,1,1,c_white,global.alphaHud);
+draw_sprite_part_ext(sprGfx,-1,5*TILE,4*TILE+pressing*3*TILE,3*TILE,3*TILE,cx-w/2,cy-h/2,1,1,c_white,global.alphaHud);
 </string>
           </argument>
         </arguments>

@@ -8,19 +8,23 @@
   <sprites name="sprites">
     <sprite>sprites\sprGfx</sprite>
     <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\mskFixator</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\mskSolid</sprite>
     <sprite>sprites\mskSpikeUp</sprite>
-    <sprite>sprites\mskBlock0</sprite>
-    <sprite>sprites\mskBlock1</sprite>
-    <sprite>sprites\mskBlock2</sprite>
-    <sprite>sprites\mskBlock3</sprite>
-    <sprite>sprites\mskBlock4</sprite>
     <sprite>sprites\mskDPad</sprite>
     <sprite>sprites\mskDPadButton</sprite>
+    <sprites name="blocks">
+      <sprite>sprites\mskBlock</sprite>
+      <sprite>sprites\mskBlock2</sprite>
+      <sprite>sprites\mskBlock0</sprite>
+      <sprite>sprites\mskBlock5</sprite>
+      <sprite>sprites\mskBlock4</sprite>
+      <sprite>sprites\mskBlock3</sprite>
+      <sprite>sprites\mskBlock6</sprite>
+      <sprite>sprites\mskBlock1</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -39,6 +43,8 @@
     <object>objects\objBlock2</object>
     <object>objects\objBlock3</object>
     <object>objects\objBlock4</object>
+    <object>objects\objBlock5</object>
+    <object>objects\objBlock6</object>
     <object>objects\objSpikeUp</object>
     <object>objects\objEffectDust</object>
     <objects name="misc">
@@ -49,6 +55,7 @@
       <object>objects\objDPad</object>
       <object>objects\objDPadButton1</object>
       <object>objects\objDPadButton2</object>
+      <object>objects\objLiving</object>
     </objects>
   </objects>
   <rooms name="rooms">

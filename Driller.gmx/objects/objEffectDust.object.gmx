@@ -28,6 +28,9 @@
             <string>fCur = 0;
 fMax = 6;
 fSpeed = .25;
+type = 0;
+
+mask_index = mskBlock;
 </string>
           </argument>
         </arguments>
@@ -56,7 +59,30 @@ frame = floor(fCur);
 if (fCur == fMax + 1)
     instance_destroy();
 
-draw_sprite_part(sprGfx,-1,frame*TILE,TILE,TILE,TILE,floor(x),floor(y));
+draw_sprite_part(sprGfx,-1,frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
+
+if (type == 1) //explosion
+{
+
+    with (instance_place(x,y,objPlayer))
+    {
+        objPlayer.die = true;
+    }
+    with (instance_place(x,y,objBlock))
+    {
+        if (type != 5)
+        {
+            instance_create(x,y,objEffectDust);
+            instance_destroy();
+        } else
+            explode = true;
+    }
+    with (instance_place(x,y,objSpike))
+    {
+        instance_create(x,y,objEffectDust);
+        instance_destroy();
+    }
+}
 </string>
           </argument>
         </arguments>

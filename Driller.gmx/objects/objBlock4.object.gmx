@@ -32,7 +32,9 @@ if (!instance_exists(objPlayer))
     dir = RIGHT;
 else
     dir = sign(x-objPlayer.x);
-
+fCur = choose(0,1,2);
+fSpeed = .15;
+frame = fCur;
 look = dir;
 
 xVel = 0;
@@ -155,11 +157,13 @@ if (instance_exists(objPlayer))
             <string>if (xVel &lt; 0) look = LEFT;
 if (xVel &gt; 0) look = RIGHT;
 
-f = (global.timer % 20 &lt; 10) &amp;&amp; state == WALK;
+fCur = (fCur + fSpeed) % 3;
+frame = floor(fCur) * (state == WALK);
+
 if (look == RIGHT)
-    draw_sprite_part(sprGfx,-1,f * TILE,3*TILE,TILE,TILE,floor(x),floor(y));
+    draw_sprite_part(sprGfx,-1,frame * TILE,3*TILE,TILE,TILE,floor(x),floor(y));
 else
-    draw_sprite_part_ext(sprGfx,-1,f * TILE,3*TILE,TILE,TILE,floor(x)+TILE,floor(y),-1,1,c_white,1);
+    draw_sprite_part_ext(sprGfx,-1,frame * TILE,3*TILE,TILE,TILE,floor(x)+TILE,floor(y),-1,1,c_white,1);
 
 //draw_text(x,y+TILE,xVel);
 </string>
