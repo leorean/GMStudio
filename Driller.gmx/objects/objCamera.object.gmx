@@ -90,12 +90,13 @@ h = 240; //image height
             <kind>1</kind>
             <string>a = ((view_xview[0]*.8) mod w);
 b = ((view_xview[0]*.5) mod w);
+c = view_yview[0];
 
-draw_background_part(sprBg,0,0*h,w,h,floor(a),0);
-draw_background_part(sprBg,0,0*h,w,h,floor(a+w),0);
+draw_background_part(sprBg,0,0*h,w,h,floor(a),c);
+draw_background_part(sprBg,0,0*h,w,h,floor(a+w),c);
 
-draw_background_part(sprBg,0,1*h,w,h,floor(b),0);
-draw_background_part(sprBg,0,1*h,w,h,floor(b+w),0);
+draw_background_part(sprBg,0,1*h,w,h,floor(b),c);
+draw_background_part(sprBg,0,1*h,w,h,floor(b+w),c);
 
 </string>
           </argument>

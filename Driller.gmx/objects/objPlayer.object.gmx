@@ -280,6 +280,9 @@ if (kJump &amp;&amp; !jumped) //JUMP
 //++++COLLECT++++
 with(instance_place(x,y,objCollectable))
 {
+    repeat(30)
+        instance_create(x+TILE/2,y+TILE/2,objParticle);
+    
     e = instance_create(x,y,objEffectDust);
     e.type = 2;
     global.collect++;

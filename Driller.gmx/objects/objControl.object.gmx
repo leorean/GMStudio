@@ -37,9 +37,6 @@ enum I
 //if(os_type == os_android)
 {
     global.input = I.TOUCH;
-    instance_create(0,0,objDPad);
-    instance_create(0,0,objDPadButton1);
-    instance_create(0,0,objDPadButton2);
 }// else
 //    global.input = I.KEYBOARD;
 
@@ -139,14 +136,69 @@ winTimer = 3*60;
 deathTimer = 1.5*60;
 
 global.collect = 0;
-global.maxCollect = instance_number(objCollectable);
+global.maxCollect = 0;
 
+var hudX = 0; var hudY = 0;
 for (i=0; i &lt; room_width;i+= TILE)
 for (j=0; j &lt; room_height;j+= TILE)
 {
-    if (tile_layer_find(10,i,j) != -1)
-        instance_create(i,j,objSolid);
+    tile = tile_layer_find(10,i,j);
+    if (tile)
+    {
+        if (tile_get_top(tile) == 0)
+        {
+            switch (tile_get_left(tile)/TILE)
+            {
+                case 0:
+                    instance_create(i,j,objPlayer);
+                    hudX = i; hudY = j;
+                break;
+                case 1:
+                    instance_create(i,j,objCollectable);
+                    global.maxCollect++;
+                break;
+                case 2:
+                    instance_create(i,j,objBlock0);
+                break;
+                case 3:
+                    instance_create(i,j,objBlock1);
+                break;
+                case 4:
+                    instance_create(i,j,objBlock2);
+                break;
+                case 5:
+                    instance_create(i,j,objBlock3);
+                break;
+                case 6:
+                    instance_create(i,j,objBlock4);
+                break;
+                case 7:
+                    instance_create(i,j,objBlock5);
+                break;
+                case 8:
+                    instance_create(i,j,objBlock6);
+                break;
+                
+            }
+        }
+        if (tile_get_top(tile) != 0)
+        {
+            instance_create(i,j,objSolid);
+        } else
+            tile_delete(tile);
+    }
 }
+
+//++++HUD++++
+if (global.input == I.TOUCH)
+{
+    instance_create(hudX,hudY,objDPad);
+    with(objDPad)
+        {dx = x; dy = y}
+    instance_create(hudX,hudY,objDPadButton1);
+    instance_create(hudX,hudY,objDPadButton2);
+}
+
 </string>
           </argument>
         </arguments>

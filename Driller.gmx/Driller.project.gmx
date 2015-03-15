@@ -26,6 +26,7 @@
       <sprite>sprites\mskBlock1</sprite>
     </sprites>
     <sprite>sprites\mskCollectable</sprite>
+    <sprite>sprites\sprParticle</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -61,12 +62,13 @@
       <object>objects\objDPadButton1</object>
       <object>objects\objDPadButton2</object>
       <object>objects\objLiving</object>
+      <object>objects\objParticle</object>
     </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\INIT</room>
+    <room>rooms\L1</room>
     <room>rooms\TEST</room>
-    <room>rooms\room2</room>
   </rooms>
   <constants number="13">
     <constant name="INFINITE">9000000000</constant>

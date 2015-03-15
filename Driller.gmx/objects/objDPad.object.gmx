@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>-1000</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -46,15 +46,16 @@ y = cy;
 dx = cx;
 dy = cy;
 
-drag = false;
-dev = 0;
+drag = false; //is the stick being dragged?
+dev = 0; //device number (0...4)
+checked = false; //to position the stick ONE time.
 
 kLeft = false;
 kRight = false;
 kUp = false;
 kDown = false;
-diag = false;
-dir = NONE;
+diag = false; //is a diagonal angle used?
+dir = NONE; //either LEFT or RIGHT, depending on the diagonal angle
 forceX = 1;
 forceY = 1;
 //stick = instance_create(cx,cy,objDPadStick);
@@ -191,7 +192,7 @@ if (drag || objDPadButton1.pressing || objDPadButton2.pressing)//HUD alpha
 }
 if (!drag)//feather back in position
 {
-    if (max(abs(dx - cx),abs(dy - cy)) &gt; 4)
+    if (max(abs(dx - cx),abs(dy - cy)) &gt; 4 &amp;&amp; checked)
     {
         dx -= (dx - cx) / 4;
         dy -= (dy - cy) / 4;
@@ -199,6 +200,7 @@ if (!drag)//feather back in position
     {
         dx = cx;
         dy = cy;
+        checked = true;
     }
 }
 //show_debug_message("dev: "+string(dev)+", drag: "+string(drag)+", L: "+string(kLeft)+", R: "+string(kRight)+", U: "+string(kUp)+", D: "+string(kDown));
