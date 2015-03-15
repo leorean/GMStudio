@@ -53,6 +53,8 @@ kLeft = false;
 kRight = false;
 kUp = false;
 kDown = false;
+diag = false;
+dir = NONE;
 forceX = 1;
 forceY = 1;
 //stick = instance_create(cx,cy,objDPadStick);
@@ -79,7 +81,9 @@ forceY = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!drag)
+            <string>diag = false;
+dir = NONE;
+if (!drag)
 {
     kLeft = false;
     kRight = false;
@@ -105,6 +109,14 @@ else
         
         if (true)//min(abs(cx-device_mouse_x(dev)),abs(cy-device_mouse_y(dev))) &gt; TILE)
         {
+            if (in(angle,90,270))
+                dir = LEFT;
+            else
+                dir = RIGHT;
+            
+            if (in(angle,30,60) || in(angle,120,150) || in(angle,210,240) || in(angle,300,330))
+                diag = true;
+            
             if (in(angle,315,360) || in(angle,0,45))
                 kRight = true;
             else

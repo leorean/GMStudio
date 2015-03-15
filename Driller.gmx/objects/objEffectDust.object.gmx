@@ -29,6 +29,7 @@
 fMax = 6;
 fSpeed = .25;
 type = 0;
+timer = 0;
 
 mask_index = mskBlock;
 </string>
@@ -53,15 +54,19 @@ mask_index = mskBlock;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = min(fCur + fSpeed, fMax + 1);
-frame = floor(fCur);
+            <string>timer = max(timer - 1, 0);
+if (!timer)
+{
+    fCur = min(fCur + fSpeed, fMax + 1);
+    frame = floor(fCur);
+    
+    if (fCur == fMax + 1)
+        instance_destroy();
+    
+    draw_sprite_part(sprGfx,-1,frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
+}
 
-if (fCur == fMax + 1)
-    instance_destroy();
-
-draw_sprite_part(sprGfx,-1,frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
-
-if (type == 1) //explosion
+if (type == 1 &amp;&amp; !timer) //explosion
 {
 
     with (instance_place(x,y,objPlayer))

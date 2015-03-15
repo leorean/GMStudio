@@ -120,7 +120,11 @@ if (place_free(x,y+yVel))
 }
 else
     yVel = 0;
-        
+
+if (yVel &gt; 1)
+    with(instance_place(x,y+yVel,objBlock5))
+        explode = true;        
+
 if (instance_exists(objPlayer))
 {
     if (place_meeting(x+xVel,y-2,objPlayer))

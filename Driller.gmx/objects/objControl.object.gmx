@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1000</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>mskPixel</maskName>
@@ -50,7 +50,8 @@ enum G
 {
     PLAY = 0,
     PAUSE = 1,
-    GAMEOVER = 2
+    GAMEOVER = 2,
+    GAMEWIN = 3
 }
 
 global.gameState = G.PLAY;
@@ -92,21 +93,20 @@ if (keyboard_check_pressed(ord('Q')))
 if (keyboard_check_pressed(vk_backspace) || keyboard_check_pressed(vk_escape))
     game_end();
 
-    
-if (gameStatePrev != G.GAMEOVER)
-    deathTimer = 1.5*60;
-
-deathTimer = max(deathTimer - 1, 0);
-
-if (!deathTimer)
+switch (global.gameState)
 {
-    /*
-    var p = instance_create(spawnX,spawnY,objPlayer);
-    p.hasBlock = global.hasBlock;
-    global.hasBlock = -1;
-    global.gameState = G.PLAY;
-    */
-    room_restart();
+    case G.GAMEOVER:
+        deathTimer = max(deathTimer-1,0);
+        if (!deathTimer)
+            room_restart();
+    break;
+    case G.GAMEWIN:
+        winTimer = max(winTimer-1,0);
+        if (!winTimer)
+            if (room != room_last)
+                room_goto_next();
+    break;
+    
 }
 
 gameStatePrev = global.gameState;
@@ -135,12 +135,49 @@ gameStatePrev = global.gameState;
             <kind>1</kind>
             <string>global.gameState = G.PLAY;
 
+winTimer = 3*60;
+deathTimer = 1.5*60;
+
+global.collect = 0;
+global.maxCollect = instance_number(objCollectable);
+
 for (i=0; i &lt; room_width;i+= TILE)
 for (j=0; j &lt; room_height;j+= TILE)
 {
     if (tile_layer_find(10,i,j) != -1)
         instance_create(i,j,objSolid);
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>a = view_xview[0];
+b = view_yview[0];
+
+draw_set_alpha(1);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_set_font(fntHud);
+
+draw_text(a,b,string(global.collect)+"/"+string(global.maxCollect));
 </string>
           </argument>
         </arguments>

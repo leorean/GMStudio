@@ -72,7 +72,7 @@ if (!canKill)
 {
     inReach = instance_exists(objPlayer) &amp;&amp; objPlayer.bbox_left &gt;= x &amp;&amp; objPlayer.bbox_right &lt;= (x+TILE)
         &amp;&amp; in(objPlayer.y,y,y+TILE);
-    if (!place_meeting(x,y+TILE,objPlayer) &amp;&amp; !place_meeting(x,y+TILE,objBlock)
+    if (!place_meeting(x,y+TILE,objLiving)
        &amp;&amp; !inReach)
         canKill = true;
 }
@@ -82,16 +82,13 @@ else
     {
         if (collision_line(bbox_left+2,bbox_bottom+yVel+1,bbox_right-2,bbox_bottom+yVel+1,objPlayer,true,true))
             objPlayer.die = true;
-        bug = instance_place(x,y+yVel,objBlock4);
-        if (instance_exists(bug))
-            with(bug)
-            {
-                instance_create(x,y,objEffectDust);
-                instance_destroy();
-            }
-        explodeBlock = instance_place(x,y+yVel,objBlock5);
-        if (instance_exists(explodeBlock))
-            with(explodeBlock) explode = true;
+        with(instance_place(x,y+yVel,objBlock4))
+        {
+            instance_create(x,y,objEffectDust);
+            instance_destroy();
+        }
+        with(instance_place(x,y+yVel,objBlock5))
+            explode = true;
     }
 }
 </string>

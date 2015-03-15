@@ -89,13 +89,26 @@ if (explode)
     e = instance_place(px,py,objEffectDust);
     if (!instance_exists(e) || (instance_exists(e) &amp;&amp; e.type != 1))
     {
+        e = instance_create(px-TILE,py-TILE,objEffectDust); e.type = 1; e.timer = 20;
+        e = instance_create(px+TILE,py-TILE,objEffectDust); e.type = 1; e.timer = 20;
+        e = instance_create(px-TILE,py+TILE,objEffectDust); e.type = 1; e.timer = 20;
+        e = instance_create(px+TILE,py+TILE,objEffectDust); e.type = 1; e.timer = 20;
+        
+        e = instance_create(px-TILE,py,objEffectDust); e.type = 1; e.timer = 10;
+        e = instance_create(px+TILE,py,objEffectDust); e.type = 1; e.timer = 10;
+        e = instance_create(px,py-TILE,objEffectDust); e.type = 1; e.timer = 10;
+        e = instance_create(px,py+TILE,objEffectDust); e.type = 1; e.timer = 10;
+
+        e = instance_create(px,py,objEffectDust); e.type = 1; e.timer = 0;
+
+        /*
         for (i = -1; i &lt; 2; i++)
             for (j = -1; j &lt; 2; j++)
             {
                 e = instance_create(px+i*TILE,py+j*TILE,objEffectDust);
                 e.type = 1;
-            }
-            instance_destroy();
+            }*/
+        instance_destroy();
     }
 }
 </string>

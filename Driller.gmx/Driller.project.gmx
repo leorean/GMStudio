@@ -25,6 +25,7 @@
       <sprite>sprites\mskBlock6</sprite>
       <sprite>sprites\mskBlock1</sprite>
     </sprites>
+    <sprite>sprites\mskCollectable</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -34,10 +35,12 @@
   <scripts name="scripts">
     <script>scripts\in.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fntHud</font>
+  </fonts>
   <objects name="objects">
-    <object>objects\objSolid</object>
-    <object>objects\objPlayer</object>
     <object>objects\objControl</object>
+    <object>objects\objPlayer</object>
     <object>objects\objBlock0</object>
     <object>objects\objBlock1</object>
     <object>objects\objBlock2</object>
@@ -46,9 +49,11 @@
     <object>objects\objBlock5</object>
     <object>objects\objBlock6</object>
     <object>objects\objSpikeUp</object>
-    <object>objects\objEffectDust</object>
+    <object>objects\objCollectable</object>
     <objects name="misc">
+      <object>objects\objEffectDust</object>
       <object>objects\objCamera</object>
+      <object>objects\objSolid</object>
       <object>objects\objSpike</object>
       <object>objects\objBlockTemp</object>
       <object>objects\objBlock</object>
@@ -61,6 +66,7 @@
   <rooms name="rooms">
     <room>rooms\INIT</room>
     <room>rooms\TEST</room>
+    <room>rooms\room2</room>
   </rooms>
   <constants number="13">
     <constant name="INFINITE">9000000000</constant>
@@ -70,7 +76,7 @@
     <constant name="IDLE">0</constant>
     <constant name="JUMP">1</constant>
     <constant name="WALK">2</constant>
-    <constant name="DRILL">3</constant>
+    <constant name="WIN">3</constant>
     <constant name="NONE">0</constant>
     <constant name="UP">-2</constant>
     <constant name="DOWN">2</constant>
