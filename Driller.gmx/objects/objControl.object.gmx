@@ -158,24 +158,27 @@ for (j=0; j &lt; room_height;j+= TILE)
                     global.maxCollect++;
                 break;
                 case 2:
-                    instance_create(i,j,objBlock0);
+                    instance_create(i,j,objSpikeUp);
                 break;
                 case 3:
-                    instance_create(i,j,objBlock1);
+                    instance_create(i,j,objBlock0);
                 break;
                 case 4:
-                    instance_create(i,j,objBlock2);
+                    instance_create(i,j,objBlock1);
                 break;
                 case 5:
-                    instance_create(i,j,objBlock3);
+                    instance_create(i,j,objBlock2);
                 break;
                 case 6:
-                    instance_create(i,j,objBlock4);
+                    instance_create(i,j,objBlock3);
                 break;
                 case 7:
-                    instance_create(i,j,objBlock5);
+                    instance_create(i,j,objBlock4);
                 break;
                 case 8:
+                    instance_create(i,j,objBlock5);
+                break;
+                case 9:
                     instance_create(i,j,objBlock6);
                 break;
                 

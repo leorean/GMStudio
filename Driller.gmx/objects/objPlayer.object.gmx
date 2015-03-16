@@ -125,8 +125,8 @@ diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.g
 ddir = NONE;
 with(objDPad) objPlayer.ddir = dir;
 
-if (ddir == LEFT  &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
-if (ddir == RIGHT  &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
+if ((ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
+if ((ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
 
 //++++++++++++++
 
@@ -172,9 +172,9 @@ if (hasBlock == -1) // take block
 {
     if (kAction)
     {
-        blk = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);
+        blk = collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
         if (blk == noone)
-            blk = collision_point(px+TILE/2,py+TILE/2,objBlockTemp,true,true);
+            blk = collision_circle(px+TILE/2,py+TILE/2,4,objBlockTemp,true,true);
         
         if (instance_exists(blk))
         {
@@ -301,8 +301,8 @@ with(instance_place(x,y,objCollectable))
 //++++win szenario++++
 if (global.gameState == G.GAMEWIN)
 {
-    //xVel = 0;
-    //yVel = 0;
+    xVel = 0;
+    yVel = max(yVel,0);
     dir = RIGHT;
     state = WIN;
 }
@@ -321,6 +321,7 @@ repeat((abs(yVel))*10)
 if (statePrev != state)
     fCur = 0;
 statePrev = state;
+xVelOther = 0;
 </string>
           </argument>
         </arguments>
@@ -374,7 +375,7 @@ if (state != WIN)
     //draw block pointer
     if (canPlaceBlock || hasBlock == -1) c = c_white;
     else c = c_red;
-    draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,(px),(py),1,1,c,.3);
+    draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,(px),(py),1,1,c,.5);
     
     //draw block on back
     if (hasBlock != -1)

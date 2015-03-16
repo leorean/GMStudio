@@ -45,7 +45,8 @@ state = JUMP;
 spd = .5;
 onGround = false;
 
-timer = 30;
+waitTimer = 60;
+timer = waitTimer;
 </string>
           </argument>
         </arguments>
@@ -88,7 +89,7 @@ if (state == WALK)
     {
         state = JUMP;
         dir = -dir;
-        timer = 30;
+        timer = waitTimer;
     }
 
 }
@@ -108,14 +109,14 @@ if (instance_exists(objPlayer))
     if (place_meeting(x,y+yVel+1,objPlayer))
     {
         state = JUMP;
-        timer = 30;
+        timer = waitTimer;
         //if (objPlayer.yVel &lt;= 0)
             yVel += min(objPlayer.yVel,-2);
     }
         
 if (place_free(x,y+yVel))
 {
-    timer = 30;
+    timer = waitTimer;
     y += yVel;
 }
 else
@@ -125,6 +126,10 @@ if (yVel &gt; 1)
     with(instance_place(x,y+yVel,objBlock5))
         explode = true;        
 
+var p = instance_place(x+xVel,y-2,objPlayer);
+if (instance_exists(p))
+    p.xVelOther = xVel;
+/*
 if (instance_exists(objPlayer))
 {
     if (place_meeting(x+xVel,y-2,objPlayer))
@@ -136,6 +141,7 @@ if (instance_exists(objPlayer))
             xVelOther = 0;
     }
 }
+*/
 </string>
           </argument>
         </arguments>
@@ -162,7 +168,7 @@ if (instance_exists(objPlayer))
 if (xVel &gt; 0) look = RIGHT;
 
 fCur = (fCur + fSpeed) % 3;
-frame = floor(fCur) * (state == WALK);
+frame = floor(fCur) * (state == WALK &amp;&amp; xVel != 0);
 
 if (look == RIGHT)
     draw_sprite_part(sprGfx,-1,frame * TILE,3*TILE,TILE,TILE,floor(x),floor(y));

@@ -74,7 +74,7 @@ type = 3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x,y);
+            <string>draw_sprite_part_ext(sprGfx,-1,type*TILE,0,TILE,TILE,x,y,1,1,c_white,1);
 </string>
           </argument>
         </arguments>
