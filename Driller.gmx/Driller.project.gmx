@@ -35,6 +35,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
+    <script>scripts\drawText.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHud</font>
@@ -63,6 +64,7 @@
       <object>objects\objDPadButton2</object>
       <object>objects\objLiving</object>
       <object>objects\objParticle</object>
+      <object>objects\objAny</object>
     </objects>
   </objects>
   <rooms name="rooms">

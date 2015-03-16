@@ -57,14 +57,15 @@ yVelMax = .2;
 
 if (y &gt; room_height) instance_destroy();
 
+if (instance_exists(objPlayer))
+    if (place_meeting(x,y+3,objPlayer))
+    {
+        if (objPlayer.yVel &lt;= 0)
+            yVel = min(objPlayer.yVel,-.1);
+    }
+
 if (place_free(x,y+yVel) &amp;&amp; !place_meeting(x,y+yVel,objLiving))
 {
-    if (instance_exists(objPlayer))
-        if (place_meeting(x,y+3,objPlayer))
-        {
-            if (objPlayer.yVel &lt;= 0)
-                yVel = min(objPlayer.yVel,-.1);
-        }
     y += yVel;
 }
 else

@@ -232,7 +232,9 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(fntHud);
 
-draw_text(a,b,string(global.collect)+"/"+string(global.maxCollect));
+//draw_text(a,b,string(global.collect)+"/"+string(global.maxCollect));
+
+drawText(a,b,string(global.collect)+"/"+string(global.maxCollect),c_white,c_black);
 </string>
           </argument>
         </arguments>

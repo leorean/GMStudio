@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>w = 3*TILE;
 h = 3*TILE;
+o = TILE; //mouse grayzone
 
 offX = WIDTH - 4*TILE - w/2;
 offY = HEIGHT - TILE - w/2;
@@ -69,7 +70,7 @@ pressing = false;
 
 for (i = 0; i &lt; 5; i++)
 {
-    if (in(device_mouse_x(i),cx-w/2,cx+w/2) &amp;&amp; in(device_mouse_y(i),cy-h/2,cy+h/2))
+    if (in(device_mouse_x(i),cx-w/2-o,cx+w/2+o) &amp;&amp; in(device_mouse_y(i),cy-h/2-o,cy+h/2+o))
     {
         if (device_mouse_check_button_pressed(i,mb_left))
             pressed = true;

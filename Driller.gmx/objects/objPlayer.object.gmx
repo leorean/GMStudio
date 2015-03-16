@@ -165,7 +165,8 @@ if (look == NONE || kLeft || kRight || diag)
     if (dir == RIGHT) px = px + TILE;
 }
 
-canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(x,y,objBlockTemp)
+canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(px,py,objBlockTemp)
+    &amp;&amp; !place_meeting(px,py,objCollectable)
     &amp;&amp; in(px,0,room_width-TILE) &amp;&amp; in(py,0,room_height-TILE);
 
 if (hasBlock == -1) // take block
@@ -292,8 +293,8 @@ with(instance_place(x,y,objCollectable))
         global.gameState = G.GAMEWIN;
         with(objPlayer)
         {
-            //xVel = 0;
-            //yVel = 0;
+            xVel = 0;
+            yVel = 0;
         }
     }
 }
@@ -301,8 +302,6 @@ with(instance_place(x,y,objCollectable))
 //++++win szenario++++
 if (global.gameState == G.GAMEWIN)
 {
-    xVel = 0;
-    yVel = max(yVel,0);
     dir = RIGHT;
     state = WIN;
 }

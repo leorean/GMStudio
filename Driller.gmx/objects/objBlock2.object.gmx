@@ -33,6 +33,9 @@ yVel = 0;
 yGrav = .15;
 
 canKill = false;
+
+maxFallTimer = 15;
+fallTimer = maxFallTimer;
 </string>
           </argument>
         </arguments>
@@ -56,13 +59,22 @@ canKill = false;
           <argument>
             <kind>1</kind>
             <string>yVel += yGrav;
-   
-if (canKill &amp;&amp; place_free(x,y+yVel) &amp;&amp; !place_meeting(x,y+yVel,objBlockTemp))
+
+fallTimer = max(fallTimer - 1,0);
+
+if (canKill &amp;&amp; !fallTimer)
 {
-    y += yVel;
+    repeat(abs(round(yVel))*10)
+    {
+        if (!place_meeting(x,y+sign(yVel)*.1,objAny))
+            y += sign(yVel)*.1;
+        else
+            yVel = 0;
+    }
 }
 else
 {
+    if (place_meeting(x,y+yVel,objAny) || !canKill) fallTimer = maxFallTimer;
     yVel = 0;
 }
 
@@ -113,7 +125,11 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x,y);
+            <string>if (canKill &amp;&amp; fallTimer != 0 &amp;&amp; fallTimer != maxFallTimer)
+    d = (fallTimer % 3) - 1;//-1+random(2);
+else
+    d = 0;
+draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x+d,y);
 </string>
           </argument>
         </arguments>
