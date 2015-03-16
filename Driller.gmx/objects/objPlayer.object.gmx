@@ -143,13 +143,13 @@ if (global.gameState != G.GAMEWIN)
         instance_create(x,y,objEffectDust);
         instance_destroy();
     }
-
+/*
 if (kUp)
     look = UP;
 else if (kDown)
     look = DOWN;
 else
-    look = NONE;
+    look = NONE;*/
 
 if (instance_exists(inside))
     if (!place_meeting(x+xVel,y+yVel,inside))
