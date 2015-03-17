@@ -40,6 +40,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHud</font>
+    <font>fonts\fntBig</font>
   </fonts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -66,6 +67,7 @@
       <object>objects\objLiving</object>
       <object>objects\objParticle</object>
       <object>objects\objAny</object>
+      <object>objects\objText</object>
     </objects>
   </objects>
   <rooms name="rooms">

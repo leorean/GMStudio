@@ -10,6 +10,7 @@ for (var j = -1; j<3; j++)
 {
     draw_text(xx+i,yy+j,txt);
 }
+
 draw_set_color(c1);
 
 draw_text(xx,yy,txt);
