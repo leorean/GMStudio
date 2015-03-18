@@ -144,14 +144,13 @@ if (global.gameState != G.GAMEWIN)
         instance_create(x,y,objEffectDust);
         instance_destroy();
     }
-/*
+
 if (kUp)
     look = UP;
 else if (kDown)
     look = DOWN;
 else
     look = NONE;
-*/
 
 if (instance_exists(inside))
     if (!place_meeting(x+xVel,y+yVel,inside))
@@ -161,7 +160,7 @@ px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
 
 if (look == UP) py = py - TILE;
 if (look == DOWN) py = py + TILE;
-if (look == NONE || kLeft || kRight || diag)
+if (look == NONE || kLeft || kRight)// || diag)
 {
     if (dir == LEFT) px = px - TILE;
     if (dir == RIGHT) px = px + TILE;
