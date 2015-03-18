@@ -291,6 +291,7 @@ with(instance_place(x,y,objCollectable))
     if ((global.collect == global.maxCollect) &amp;&amp; global.maxCollect &gt; 0)
     {
         global.gameState = G.GAMEWIN;
+        //instance_create(view_xview[0],view_yview[0],objWinEffect);
         /*var txt = instance_create(view_xview[0]+WIDTH/2,view_yview[0]+HEIGHT/2,objText);
         txt.font = fntBig;
         txt.text = "Clear!";*/

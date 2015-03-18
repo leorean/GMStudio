@@ -55,7 +55,11 @@
     <object>objects\objSpikeUp</object>
     <object>objects\objCollectable</object>
     <objects name="misc">
-      <object>objects\objEffectDust</object>
+      <objects name="effects">
+        <object>objects\objEffectDust</object>
+        <object>objects\objParticle</object>
+        <object>objects\objWinEffect</object>
+      </objects>
       <object>objects\objCamera</object>
       <object>objects\objSolid</object>
       <object>objects\objSpike</object>
@@ -65,7 +69,6 @@
       <object>objects\objDPadButton1</object>
       <object>objects\objDPadButton2</object>
       <object>objects\objLiving</object>
-      <object>objects\objParticle</object>
       <object>objects\objAny</object>
       <object>objects\objText</object>
     </objects>

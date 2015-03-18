@@ -98,13 +98,18 @@ switch (global.gameState)
             room_restart();
     break;
     case G.GAMEWIN:
+        if (!instance_exists(objWinEffect))
+            instance_create(a,b,objWinEffect);
+        /*
         winTimer = max(winTimer-1,0);
-        
-        if (!winTimer)
-            if (room != room_last)
+        if (winTimer &lt; 60)
+        {
+            if (!instance_exists(objWinEffect))
+                instance_create(a,b,objWinEffect);
+            if (keyboard_check(vk_anykey) || mouse_check_button(mb_any))
                 room_goto_next();
-            break;
-    
+        }*/
+        break;
 }
 
 gameStatePrev = global.gameState;
@@ -133,7 +138,7 @@ gameStatePrev = global.gameState;
             <kind>1</kind>
             <string>global.gameState = G.PLAY;
 
-winTimer = 3*60;
+//winTimer = 2*60;
 deathTimer = 1.5*60;
 
 global.collect = 0;
@@ -196,21 +201,17 @@ for (j=0; j &lt; room_height;j+= TILE)
 //++++HUD++++
 if (global.input == I.TOUCH)
 {
-    instance_create(hudX,hudY,objDPad);
+    if (!instance_exists(objDPad))
+        instance_create(hudX,hudY,objDPad);
     with(objDPad)
         {dx = x; dy = y}
-    instance_create(hudX,hudY,objDPadButton1);
-    instance_create(hudX,hudY,objDPadButton2);
+    if (!instance_exists(objDPadButton1))        
+        instance_create(hudX,hudY,objDPadButton1);
+    if (!instance_exists(objDPadButton2))    
+        instance_create(hudX,hudY,objDPadButton2);
 }
 
-//++++preparing win effect
-/*effectDone = false;
-ii = 0;
-jj = 0;
-for (i = 0; i &lt; WIDTH/TILE; i++)
-    for (j = 0; j &lt; HEIGHT/TILE; j++)
-        winmap[i,j] = 0;
-*/
+
 </string>
           </argument>
         </arguments>
@@ -247,32 +248,9 @@ drawText(a+TILE,b,": " + string(global.collect)+"/"+string(global.maxCollect),c_
 
 if (global.gameState == G.GAMEWIN)
 {
-    draw_set_font(fntBig);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
-    drawText(a+WIDTH/2,b+HEIGHT/2,"Clear!",c_white,c_black);
-    //instance_create(a+random(WIDTH),b+random(HEIGHT),objParticle);
-}
-/*
-    if (!effectDone)
-    {
-        if (ii == WIDTH/TILE) {ii = 0; jj++;}
-        winmap[ii,jj] = 1;
-        winmap[WIDTH/TILE-ii-1,HEIGHT/TILE-jj-1] = 1;
-        ii ++;
-        if ((HEIGHT/TILE-jj) &lt; jj) effectDone = true;
-        //if (jj &gt;= HEIGHT/TILE) effectDone = true;
-    }
+    //instance_create(a,b,objWinEffect);
     
-    for (i = 0; i &lt; WIDTH/TILE; i++)
-        for (j = 0; j &lt; HEIGHT/TILE; j++)
-        if (winmap[i,j] &gt; 0)
-        {
-            winmap[i,j] = min(winmap[i,j]+.1,3);
-            draw_sprite_part(sprGfx,-1,4*TILE+floor(winmap[i,j])*TILE,TILE,TILE,TILE,a + i*TILE,b + j*TILE);
-        }
 }
-*/
 </string>
           </argument>
         </arguments>
