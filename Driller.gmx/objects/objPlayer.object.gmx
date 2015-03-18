@@ -34,6 +34,7 @@ if (!instance_exists(objCamera))
     instance_create(x,y,objCamera);
 
 canPlaceBlock = false;
+blockDelay = 0; //wait a certain time until you can walk again after placing a block
 
 state = IDLE;
 statePrev = state;
@@ -115,8 +116,8 @@ if (instance_exists(objDPad))
     forceX = objDPad.forceX;
     forceY = objDPad.forceY;    
 }
-kLeft = (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft)) &amp;&amp; (global.gameState == G.PLAY);
-kRight = (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight)) &amp;&amp; (global.gameState == G.PLAY);
+kLeft = !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft)) &amp;&amp; (global.gameState == G.PLAY);
+kRight = !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight)) &amp;&amp; (global.gameState == G.PLAY);
 kUp = (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kDown = (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kJump = (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
@@ -129,7 +130,7 @@ if ((ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState ==
 if ((ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
 
 //++++++++++++++
-
+blockDelay = max(blockDelay - 1,0);
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
 //++++++++++++++
@@ -149,7 +150,8 @@ if (kUp)
 else if (kDown)
     look = DOWN;
 else
-    look = NONE;*/
+    look = NONE;
+*/
 
 if (instance_exists(inside))
     if (!place_meeting(x+xVel,y+yVel,inside))
@@ -184,9 +186,14 @@ if (hasBlock == -1) // take block
                 instance_create(blk.x,blk.y,objEffectDust);
                 
                 if (blk.type == 3) //grass block
+                {
+                    blockDelay = TILE; xVel = 0;
                     with(blk) instance_destroy();
+                }
                 else
                 {
+                    blockDelay = TILE; xVel = 0;
+            
                     hasBlock = blk.type;
                     
                     //so it cant be abused
@@ -212,18 +219,26 @@ if (hasBlock == -1) // take block
             if (place_meeting(x,y,objSolid) || place_meeting(x,y,objBlockTemp))
                 instance_destroy();
             else
-                objPlayer.hasBlock = -1;
+                with(objPlayer)
+                {
+                    hasBlock = -1;
+                    blockDelay = TILE;
+                    xVel = 0;                
+                }
         }
+
     }
 }
 
 
 //++++++++
-if (hasBlock == 1)
-    yVel += yGravGlide;
-else
-    yVel += yGrav;
-
+if (!blockDelay)
+{
+    if (hasBlock == 1)
+        yVel += yGravGlide;
+    else
+        yVel += yGrav;
+}
 onGround = yVel &gt;= 0 &amp;&amp; collision_rectangle(bbox_left,bbox_bottom+1+yVel,bbox_right,bbox_bottom+4,objSolid,true,true);
 if (onGround)
     jumped = false;
@@ -316,7 +331,7 @@ else
     xVel = 0;
 repeat((abs(yVel))*10)
     if (!place_meeting(x,y+sign(yVel)*.1,objSolid))
-        y += sign(yVel)*.1;
+        y += sign(yVel)*.1*(blockDelay == 0);
     else
         yVel = 0;
 

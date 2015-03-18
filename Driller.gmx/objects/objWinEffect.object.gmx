@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-1001</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = objControl.depth+1;
+            <string>//depth = objControl.depth+1;
 
 //++++preparing win effect
 maxWinTimer = 1*60;
@@ -39,6 +39,8 @@ for (i = 0; i &lt; WIDTH/TILE; i++)
         winmap[i,j] = 0;
 
 wy = 0;
+maxWy = -HEIGHT*.5+2*TILE;
+alpha = 1;
 </string>
           </argument>
         </arguments>
@@ -66,41 +68,42 @@ var b = view_yview[0];
 
 winTimer = max(winTimer - 1, 0);
 //instance_create(a+random(WIDTH),b+random(HEIGHT),objParticle);
-wy = max(wy - .5*(winTimer == 0),-HEIGHT*.5+2*TILE);
-
-if (!winTimer)
+wy = max(wy - 1*(winTimer == 0),maxWy);
+if (wy == maxWy)
 {
-    if (keyboard_check_pressed(vk_anykey) || mouse_check_button_pressed(mb_any))
+    alpha = max(alpha - .1,0);
+    if ((keyboard_check_pressed(vk_anykey) || mouse_check_button_pressed(mb_any)))
         room_goto_next();
-    
-    if (!effectDone)
-    {
-        if (ii == WIDTH/TILE) {ii = 0; jj++;}
-        winmap[ii,jj] = max(winmap[ii,jj],1);
-        winmap[WIDTH/TILE-ii-1,HEIGHT/TILE-jj-1] = max(winmap[WIDTH/TILE-ii-1,HEIGHT/TILE-jj-1],1);
-        ii ++;
-        if ((HEIGHT/TILE-jj) &lt; jj-1)
-        {
-            effectDone = true;
-            //room_goto_next();
-        }
-        //if (jj &gt;= HEIGHT/TILE) effectDone = true;
-    }
-    
-    for (i = 0; i &lt; WIDTH/TILE; i++)
-        for (j = 0; j &lt; HEIGHT/TILE; j++)
-        if (winmap[i,j] &gt; 0)
-        {
-            winmap[i,j] = min(winmap[i,j]+.2,3);
-            draw_sprite_part(sprGfx,-1,4*TILE+floor(winmap[i,j])*TILE,TILE,TILE,TILE,a + i*TILE,b + j*TILE);
-        }
 }
+if (!effectDone)
+{
+    if (ii == WIDTH/TILE) {ii = 0; jj++;}
+    winmap[ii,jj] = max(winmap[ii,jj],1);
+    winmap[WIDTH/TILE-ii-1,HEIGHT/TILE-jj-1] = max(winmap[WIDTH/TILE-ii-1,HEIGHT/TILE-jj-1],1);
+    ii ++;
+    if ((HEIGHT/TILE-jj) &lt; jj-1)
+    {
+        effectDone = true;
+        //room_goto_next();
+    }
+    //if (jj &gt;= HEIGHT/TILE) effectDone = true;
+}
+
+for (i = 0; i &lt; WIDTH/TILE; i++)
+    for (j = 0; j &lt; HEIGHT/TILE; j++)
+    if (winmap[i,j] &gt; 0)
+    {
+        winmap[i,j] = min(winmap[i,j]+.2,3);
+        draw_sprite_part(sprGfx,-1,4*TILE+floor(winmap[i,j])*TILE,TILE,TILE,TILE,a + i*TILE,b + j*TILE);
+    }
+
     
 draw_set_font(fntBig);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
+draw_set_alpha(alpha);
 drawText(a+WIDTH/2,b+HEIGHT/2+wy,"Clear!",c_white,c_black);
-    
+
 </string>
           </argument>
         </arguments>
