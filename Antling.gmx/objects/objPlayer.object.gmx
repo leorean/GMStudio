@@ -118,35 +118,24 @@ if (instance_exists(objDPad))
     forceX = objDPad.forceX;
     forceY = objDPad.forceY;    
 }
-kLeft = !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft)) &amp;&amp; (global.gameState == G.PLAY);
-kRight = !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight)) &amp;&amp; (global.gameState == G.PLAY);
-kUp = !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-kDown = !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-kJump = !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
-kAction = !blockDelay &amp;&amp; (keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed)) &amp;&amp; (global.gameState == G.PLAY);
+kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft)) &amp;&amp; (global.gameState == G.PLAY);
+kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight)) &amp;&amp; (global.gameState == G.PLAY);
+kUp = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kDown = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
+kAction = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
 ddir = NONE;
 with(objDPad) objPlayer.ddir = dir;
 
-if (!blockDelay &amp;&amp; (ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
-if (!blockDelay &amp;&amp; (ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
+if (!die &amp;&amp; !blockDelay &amp;&amp; (ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
+if (!die &amp;&amp; !blockDelay &amp;&amp; (ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
 
 //++++++++++++++
 blockDelay = max(blockDelay - 1,0);
 xVel = sign(xVel)*min(abs(xVel),xVelMax);
 yVel = sign(yVel)*min(abs(yVel),yVelMax);
 //++++++++++++++
-
-//++++dieing++++
-if (global.gameState != G.GAMEWIN)
-    if (die || place_meeting(x,y,objSpike) || y &gt; room_height)
-    {
-        global.gameState = G.GAMEOVER;
-        blockDelay = 0;
-        instance_create(x,y,objEffectDust);
-        instance_destroy();
-    }
-
 
 px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
 
@@ -167,8 +156,8 @@ if (look == NONE)// || kLeft || kRight)// || diag)
     if (dir == LEFT) px = px - TILE;
     if (dir == RIGHT) px = px + TILE;
 }
-
-block = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);//instance_place(px,py,objBlock);   
+if (!die)
+    block = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);//instance_place(px,py,objBlock);   
 if (!die &amp;&amp; (state == WALK || state == IDLE))
 {
     //collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
@@ -282,7 +271,7 @@ var s;
 if (hasBlock == -1) s = xSpd*forceX;
 else s = xSpdLow*forceX;
 
-if (kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO LEFT
+if (!die &amp;&amp; kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO LEFT
 {
     if (xVel &lt; 0)
         dir = LEFT;
@@ -293,7 +282,7 @@ if (kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG &a
     else
         state = JUMP;        
 }
-if (kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO RIGHT
+if (!die &amp;&amp; kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO RIGHT
 {
     if (xVel &gt; 0)
         dir = RIGHT;
@@ -306,7 +295,7 @@ if (kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG &a
         xVel = min(xVel + .2, s);
 }
 
-if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
+if (!die &amp;&amp; (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight)))
 {
     xVel = sign(xVel) * max(abs(xVel) - .2, 0);
     if (onGround &amp;&amp; state != PUSH &amp;&amp; state != DIG)
@@ -316,7 +305,7 @@ if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 
 }
 
-if (kJump &amp;&amp; !jumped &amp;&amp; state != PUSH &amp;&amp; state != DIG) //JUMP
+if (!die &amp;&amp; kJump &amp;&amp; !jumped &amp;&amp; state != PUSH &amp;&amp; state != DIG) //JUMP
 {
     jumped = true;
     state = JUMP;
@@ -354,7 +343,7 @@ with(instance_place(x,y,objCollectable))
 }
 
 //++++automatic states++++
-if (state == DIG || state == PUSH)
+if (!die &amp;&amp; (state == DIG || state == PUSH))
 {
     //x = (cx div TILE) * TILE;
     //y = (cy div TILE) * TILE;
@@ -380,13 +369,24 @@ if (global.gameState == G.GAMEWIN)
     state = WIN;
 }
 
+//++++die szenario++++
+if (global.gameState != G.GAMEWIN)
+    if (die || place_meeting(x,y,objSpike) || y &gt; room_height)
+    {
+        global.gameState = G.GAMEOVER;
+        blockDelay = 0;
+        instance_create(x,y,objEffectDust);
+        instance_destroy();
+    }
+
+
 if (!place_meeting(x+xVel+xVelOther,y,objSolid) &amp;&amp; in(cx+xVel+xVelOther,0,room_width))
     x += xVel + xVelOther;
 else
     xVel = 0;
 repeat((abs(yVel))*10)
     if (!place_meeting(x,y+sign(yVel)*.1,objSolid))
-        y += sign(yVel)*.1*(state != PUSH);
+        y += sign(yVel)*.1*(state != PUSH &amp;&amp; state != DIG);
     else
         yVel = 0;
 

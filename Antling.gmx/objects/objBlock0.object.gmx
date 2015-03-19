@@ -64,10 +64,10 @@ px = x;
 {
     if (!canFall)
     {
-        if (place_free(x,y+TILE))
+        if (!place_meeting(x,y+TILE,objPlayer) &amp;&amp; !place_meeting(x,y+1,objAny))
             canFall = true;
     }
-    if (objPlayer.state == DIG)
+    if ((objPlayer.state == DIG || objPlayer.state == PUSH) &amp;&amp; !objPlayer.die)
         canFall = false;
     
     if (state == IDLE)
@@ -97,7 +97,8 @@ px = x;
 
 if (canFall &amp;&amp; place_meeting(x,y+2*yVel,objPlayer))
 {
-    with(objPlayer) die = true;       
+    with(objPlayer) die = true;  
+    canFall = false;     
 }
 
 if (!place_meeting(x,y+yVel,objAny))
