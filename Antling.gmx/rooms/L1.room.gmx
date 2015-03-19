@@ -246,6 +246,7 @@
     <tile bgName="sprTiles" x="128" y="208" w="16" h="16" xo="48" yo="0" id="10003921" name="inst_F9B49A9D" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="192" y="224" w="16" h="16" xo="48" yo="0" id="10003922" name="inst_65B5CF88" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="112" y="224" w="16" h="16" xo="48" yo="0" id="10003923" name="inst_62996FB6" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="368" y="128" w="16" h="16" xo="48" yo="0" id="10003930" name="inst_2E9D6973" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

@@ -120,16 +120,16 @@ if (instance_exists(objDPad))
 }
 kLeft = !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft)) &amp;&amp; (global.gameState == G.PLAY);
 kRight = !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight)) &amp;&amp; (global.gameState == G.PLAY);
-kUp = (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-kDown = (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-kJump = (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
-kAction = (keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed)) &amp;&amp; (global.gameState == G.PLAY);
+kUp = !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kDown = !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kJump = !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
+kAction = !blockDelay &amp;&amp; (keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
 ddir = NONE;
 with(objDPad) objPlayer.ddir = dir;
 
-if ((ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
-if ((ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
+if (!blockDelay &amp;&amp; (ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
+if (!blockDelay &amp;&amp; (ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
 
 //++++++++++++++
 blockDelay = max(blockDelay - 1,0);
@@ -142,56 +142,62 @@ if (global.gameState != G.GAMEWIN)
     if (die || place_meeting(x,y,objSpike) || y &gt; room_height)
     {
         global.gameState = G.GAMEOVER;
-        global.hasBlock = hasBlock;
+        blockDelay = 0;
         instance_create(x,y,objEffectDust);
         instance_destroy();
     }
 
-if (kUp)
-    look = UP;
-else if (kDown)
-    look = DOWN;
-else
-    look = NONE;
 
-if (instance_exists(inside))
-    if (!place_meeting(x+xVel,y+yVel,inside))
-        inside = noone;
-        
 px = (cx div TILE) * TILE; py = (cy div TILE) * TILE;
+
+if (state != DIG &amp;&amp; state != PUSH)
+{
+    if (kUp)
+        look = UP;
+    else if (kDown)
+        look = DOWN;
+    else
+        look = NONE;
+}
 
 if (look == UP) py = py - TILE;
 if (look == DOWN) py = py + TILE;
-if (look == NONE || kLeft || kRight)// || diag)
+if (look == NONE)// || kLeft || kRight)// || diag)
 {
     if (dir == LEFT) px = px - TILE;
     if (dir == RIGHT) px = px + TILE;
 }
 
-/*
-canPlaceBlock = place_free(px,py) &amp;&amp; !place_meeting(px,py,objBlockTemp)
-    &amp;&amp; !place_meeting(px,py,objCollectable)
-    &amp;&amp; in(px,0,room_width-TILE) &amp;&amp; in(py,0,room_height-TILE);
-*/
-    
+block = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);//instance_place(px,py,objBlock);   
 if (state == WALK || state == IDLE)
 {
-    block = instance_place(px,py,objBlock);//collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
+    //collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
     if (kAction)
     {
         if (instance_exists(block))
         {
+            blockDelay = TILE; xVel = 0;
             if (block.type == 3) //grass block
             {
                 state = DIG;
-                with(block) instance_destroy();
+                with(block)
+                {
+                    instance_create(x,y,objEffectDust);
+                    instance_destroy();
+                }
             }
             else
             {
-                if (block.canBePushed)
+                if (look == NONE)
                 {
-                    block.state = PUSH;
-                    state = PUSH;
+                    if (block.canBePushed &amp;&amp; in(block.x,TILE,room_width-2*TILE))
+                    {
+                        x = px-sign(dir)*TILE;//(cx div TILE) * TILE;
+                        y = py;//(cy div TILE) * TILE;
+                        block.state = PUSH;
+                        state = PUSH;
+                    } else
+                        block = noone;
                 }
             }
             block = noone;
@@ -258,7 +264,6 @@ if (hasBlock == -1) // take block
     }
 }
 */
-
 //++++++++
 if (state != PUSH)
 {
@@ -275,7 +280,7 @@ var s;
 if (hasBlock == -1) s = xSpd*forceX;
 else s = xSpdLow*forceX;
 
-if (kLeft &amp;&amp; !kRight) //GO LEFT
+if (kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG) //GO LEFT
 {
     if (xVel &lt; 0)
         dir = LEFT;
@@ -286,7 +291,7 @@ if (kLeft &amp;&amp; !kRight) //GO LEFT
     else
         state = JUMP;        
 }
-if (kRight &amp;&amp; !kLeft) //GO RIGHT
+if (kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG) //GO RIGHT
 {
     if (xVel &gt; 0)
         dir = RIGHT;
@@ -302,14 +307,14 @@ if (kRight &amp;&amp; !kLeft) //GO RIGHT
 if (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight))
 {
     xVel = sign(xVel) * max(abs(xVel) - .2, 0);
-    if (onGround)
+    if (onGround &amp;&amp; state != PUSH &amp;&amp; state != DIG)
         state = IDLE;
     else
         if (state == IDLE || state == WALK) state = JUMP;
 
 }
 
-if (kJump &amp;&amp; !jumped) //JUMP
+if (kJump &amp;&amp; !jumped &amp;&amp; state != PUSH &amp;&amp; state != DIG) //JUMP
 {
     jumped = true;
     state = JUMP;
@@ -345,6 +350,26 @@ with(instance_place(x,y,objCollectable))
         }
     }
 }
+
+//++++automatic states++++
+if (state == DIG || state == PUSH)
+{
+    //x = (cx div TILE) * TILE;
+    //y = (cy div TILE) * TILE;
+    xVel = 0;
+    yVel = 0;
+    x += (px - ((cx div TILE) * TILE))/16;
+    if (look != UP)
+        y += (py - ((cy div TILE) * TILE))/16;
+    if (!blockDelay)
+    {
+        x = (cx div TILE)*TILE;
+        y = (cy div TILE)*TILE;
+        state = IDLE;
+    }
+
+}
+
 
 //++++win szenario++++
 if (global.gameState == G.GAMEWIN)
@@ -413,16 +438,35 @@ switch(state)
         row = 3;
         fSpeed = .15;
     break;
+    case PUSH:
+        row = 4
+        fSpeed = .1;
+    break;
 }
 frame = floor(fCur);
 
 if (state != WIN)
 {
+    if (state == WALK || state == IDLE)
+        c = c_white;
+    else
+        c = c_red;
+
     if (instance_exists(block))
-    {
-        draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,block.x,block.y,1,1,c_white,.5);
-    }
+        draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,block.x,block.y,1,1,c,.5);
+        
     /*
+    if (state != PUSH &amp;&amp; state != DIG)
+        draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,px,py,1,1,c,.5);
+    */
+}
+/*
+if (state != WIN)
+{
+    //if (instance_exists(block))
+    //    draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,block.x,block.y,1,1,c_white,.5);
+    
+    
     //draw block pointer
     if (canPlaceBlock || hasBlock == -1) c = c_white;
     else c = c_red;
@@ -431,8 +475,8 @@ if (state != WIN)
     //draw block on back
     if (hasBlock != -1)
         draw_sprite_part(sprGfx,-1,hasBlock*TILE,0,TILE,TILE,floor(x-sign(dir)*TILE*.4),floor(y-TILE*.4));
-    */
-}
+    
+}*/
 
 if (dir == LEFT)
     draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x)+TILE,(y),-1,1,c_white,1);

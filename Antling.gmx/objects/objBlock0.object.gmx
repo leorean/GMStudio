@@ -29,6 +29,7 @@
 type = 0;
 
 canBePushed = false;
+canFall = false;
 state = IDLE;
 dir = NONE;
 
@@ -61,17 +62,27 @@ px = x;
             <kind>1</kind>
             <string>if (instance_exists(objPlayer))
 {
+    if (!canFall)
+    {
+        if (place_free(x,y+TILE))
+            canFall = true;
+    }
+    if (objPlayer.state == DIG)
+        canFall = false;
+    
     if (state == IDLE)
     {
         canBePushed = place_free(x+sign(dir)*TILE,y);
         dir = sign(x+TILE/2 - objPlayer.cx);
         px = x;
         
-        yVel += yGrav;
+        if (canFall)
+            yVel += yGrav;
     }
     if (state == PUSH)
     {
         canBePushed = false;
+        canFall = false;
         yVel = 0;
         
         if (abs(px-x)&lt;TILE)
@@ -84,12 +95,21 @@ px = x;
     }
 }
 
+if (canFall &amp;&amp; place_meeting(x,y+sign(yVel),objPlayer))
+{
+    with(objPlayer) die = true;       
+}
+
 repeat(abs(round(yVel))*10)
 {
     if (!place_meeting(x,y+sign(yVel)*.1,objAny))
         y += sign(yVel)*.1;
     else
+    {
         yVel = 0;
+        canFall = false;
+
+    }
 }
 </string>
           </argument>
