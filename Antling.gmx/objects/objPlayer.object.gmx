@@ -169,7 +169,7 @@ if (look == NONE)// || kLeft || kRight)// || diag)
 }
 
 block = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);//instance_place(px,py,objBlock);   
-if (state == WALK || state == IDLE)
+if (!die &amp;&amp; (state == WALK || state == IDLE))
 {
     //collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
     if (kAction)
@@ -180,6 +180,8 @@ if (state == WALK || state == IDLE)
             if (block.type == 3) //grass block
             {
                 state = DIG;
+                x = (cx div TILE) * TILE;
+                y = (cy div TILE) * TILE;
                 with(block)
                 {
                     instance_create(x,y,objEffectDust);
@@ -280,7 +282,7 @@ var s;
 if (hasBlock == -1) s = xSpd*forceX;
 else s = xSpdLow*forceX;
 
-if (kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG) //GO LEFT
+if (kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO LEFT
 {
     if (xVel &lt; 0)
         dir = LEFT;
@@ -291,7 +293,7 @@ if (kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG) /
     else
         state = JUMP;        
 }
-if (kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG) //GO RIGHT
+if (kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO RIGHT
 {
     if (xVel &gt; 0)
         dir = RIGHT;
@@ -441,6 +443,10 @@ switch(state)
     case PUSH:
         row = 4
         fSpeed = .1;
+    break;
+    case DIG:
+        row = 5
+        fSpeed = .15;
     break;
 }
 frame = floor(fCur);

@@ -95,22 +95,33 @@ px = x;
     }
 }
 
-if (canFall &amp;&amp; place_meeting(x,y+sign(yVel),objPlayer))
+if (canFall &amp;&amp; place_meeting(x,y+2*yVel,objPlayer))
 {
     with(objPlayer) die = true;       
 }
 
-repeat(abs(round(yVel))*10)
+if (!place_meeting(x,y+yVel,objAny))
+    y += yVel;
+else
 {
-    if (!place_meeting(x,y+sign(yVel)*.1,objAny))
-        y += sign(yVel)*.1;
+    yVel = 0;
+    x = ((x+TILE/2) div TILE) * TILE;
+    y = ((y+TILE/2) div TILE) * TILE;    
+    canFall = false;
+
+}
+/*
+repeat(abs(round(yVel))*5)
+{
+    if (!place_meeting(x,y+sign(yVel)*.05,objAny))
+        y += sign(yVel)*.05;
     else
     {
         yVel = 0;
         canFall = false;
 
     }
-}
+}*/
 </string>
           </argument>
         </arguments>
