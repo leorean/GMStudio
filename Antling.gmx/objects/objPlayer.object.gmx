@@ -118,15 +118,15 @@ if (instance_exists(objDPad))
     forceX = objDPad.forceX;
     forceY = objDPad.forceY;    
 }
-kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft)) &amp;&amp; (global.gameState == G.PLAY);
-kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight)) &amp;&amp; (global.gameState == G.PLAY);
+kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft &amp;&amp; objDPad.forceX &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight &amp;&amp; objDPad.forceX &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kUp = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kDown = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 kAction = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
 ddir = NONE;
-with(objDPad) objPlayer.ddir = dir;
+with(objDPad) if (forceX &gt;= .35) objPlayer.ddir = dir;
 
 if (!die &amp;&amp; !blockDelay &amp;&amp; (ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
 if (!die &amp;&amp; !blockDelay &amp;&amp; (ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
@@ -161,7 +161,7 @@ if (!die)
 if (!die &amp;&amp; (state == WALK || state == IDLE))
 {
     //collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
-    if (kAction)
+    if (kAction &amp;&amp; onGround)
     {
         if (instance_exists(block))
         {

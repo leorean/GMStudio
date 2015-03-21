@@ -45,7 +45,7 @@ randomize();
 if (os_type != os_android &amp;&amp; os_type != os_windows)
 {
     fm = "This game has been stolen!";
-    if (string(url_get_domain()) != "spg.erdbeermil.ch")
+    if (string(url_get_domain()) != "shinypixelgames.com")
     {
         show_message(fm);
         instance_destroy();

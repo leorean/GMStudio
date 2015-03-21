@@ -82,8 +82,12 @@ forceY = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>diag = false;
+            <string>a = view_xview[0];
+b = view_yview[0];
+
+diag = false;
 dir = NONE;
+
 if (!drag)
 {
     kLeft = false;
@@ -91,15 +95,29 @@ if (!drag)
     kUp = false;
     kDown = false;
     for (i = 0; i &lt; 5; i++)
+    {
+        if (device_mouse_check_button_pressed(i,mb_left) &amp;&amp; in(device_mouse_x(i),a,a + WIDTH/2))
+        {
+            cx = device_mouse_x(i);
+            cy = device_mouse_y(i);
+            offX = cx - a;
+            offY = cy - b;
+            dx = x;
+            xy = y;
+        }
         if (device_mouse_check_button(i,mb_left) &amp;&amp; in(device_mouse_x(i),cx-w/2-2*TILE,cx+w/2+2*TILE) &amp;&amp; in(device_mouse_y(i),cy-h/2-2*TILE,cy+h/2+2*TILE))
         {
             dev = i;
             drag = true;
             break;
         }
+    }
 }
 else
 {
+    cx = a + offX;
+    cy = b + offY;
+    
     if (device_mouse_check_button(dev,mb_left))
     {
         angle = point_direction(cx,cy,device_mouse_x(dev),device_mouse_y(dev));
@@ -142,7 +160,8 @@ else
     {
         drag = false;
         dev = 0;
-        
+        cx = -1000;
+        cy = -1000;
     }
 }
 
@@ -177,9 +196,14 @@ forceY = abs(cy - dy) / (h/2 - TILE);
             <string>a = view_xview[0];
 b = view_yview[0];
 
+if (drag)
+    {cx = a + offX; cy = b + offY;}
+
+/*
 cx = a + offX; cy = b + offY;
 x = cx;
 y = cy;
+*/
 
 if (drag || objDPadButton1.pressing || objDPadButton2.pressing)//HUD alpha
 {
