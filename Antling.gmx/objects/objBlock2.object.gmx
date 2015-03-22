@@ -32,10 +32,12 @@ xVel = 0;
 yVel = 0;
 yGrav = .15;
 
-canKill = false;
+canFall = false;
 
 maxFallTimer = 15;
 fallTimer = maxFallTimer;
+
+state = IDLE;
 </string>
           </argument>
         </arguments>
@@ -58,54 +60,43 @@ fallTimer = maxFallTimer;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>yVel += yGrav;
-
-fallTimer = max(fallTimer - 1,0);
-
-if (canKill &amp;&amp; !fallTimer)
+            <string>if (instance_exists(objPlayer))
 {
-    repeat(abs(round(yVel))*10)
+    if (!canFall)
     {
-        if (!place_meeting(x,y+sign(yVel)*.1,objAny))
-            y += sign(yVel)*.1;
-        else
-        {
-            yVel = 0;
-            fallTimer = maxFallTimer;
-        }
+        if (!place_meeting(x,y+TILE,objPlayer) &amp;&amp; !place_meeting(x,y+1,objAny))
+            canFall = true;
     }
+    if (in(objPlayer.x,x-TILE/2,x+TILE+TILE/2) &amp;&amp; in(objPlayer.y,y,y+TILE))
+    &amp;&amp; ((objPlayer.state == DIG || objPlayer.state == PUSH) &amp;&amp; !objPlayer.die)
+        canFall = false;
+    
+    if (state == IDLE)
+    {
+        //canBePushed = place_free(x+sign(dir)*TILE,y);
+        dir = sign(x+TILE/2 - objPlayer.cx);
+        px = x;
+        
+        if (canFall)
+            yVel = min(yVel + yGrav, 3);
+    }    
 }
+
+if (canFall &amp;&amp; place_meeting(x,y+2*yVel,objPlayer))
+{
+    with(objPlayer) die = true;  
+    canFall = false;     
+}
+
+if (!place_meeting(x,y+yVel,objAny))
+    y += yVel;
 else
 {
-    if (place_meeting(x,y+yVel,objAny) || !canKill)
-        fallTimer = maxFallTimer;
     yVel = 0;
-}
+    x = ((x+TILE/2) div TILE) * TILE;
+    y = ((y+TILE/2) div TILE) * TILE;    
+    canFall = false;
 
-if (y &gt; room_height) instance_destroy();
-
-if (!canKill)
-{
-    inReach = instance_exists(objPlayer) &amp;&amp; objPlayer.bbox_left &gt;= x &amp;&amp; objPlayer.bbox_right &lt;= (x+TILE)
-        &amp;&amp; in(objPlayer.y,y,y+TILE);
-    if (!place_meeting(x,y+TILE,objAny)
-       &amp;&amp; !inReach)
-        canKill = true;
-}
-else
-{
-    if (yVel &gt; 0)
-    {
-        if (collision_line(bbox_left+2,bbox_bottom+yVel+1,bbox_right-2,bbox_bottom+yVel+1,objPlayer,true,true))
-            objPlayer.die = true;
-        with(instance_place(x,y+yVel,objBlock4))
-        {
-            instance_create(x,y,objEffectDust);
-            instance_destroy();
-        }
-        with(instance_place(x,y+yVel,objBlock5))
-            explode = true;
-    }
 }
 </string>
           </argument>
@@ -129,11 +120,13 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (canKill &amp;&amp; fallTimer != 0 &amp;&amp; fallTimer != maxFallTimer)
+            <string>/*if (fallTimer != 0 &amp;&amp; fallTimer != maxFallTimer)
     d = (fallTimer % 3) - 1;//-1+random(2);
 else
-    d = 0;
-draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x+d,y);
+    d = 0;*/
+draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x,y);
+
+//draw_text(x,y,fallTimer);
 </string>
           </argument>
         </arguments>

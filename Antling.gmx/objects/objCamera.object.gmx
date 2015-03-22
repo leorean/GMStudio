@@ -88,16 +88,15 @@ h = 240; //image height
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = ((view_xview[0]*.8) mod w);
-b = ((view_xview[0]*.5) mod w);
+            <string>a = ((view_xview[0]*.5) mod w);
+b = ((view_xview[0]*.8) mod w);
 c = view_yview[0];
 
-draw_background_part(sprBg,0,0*h,w,h,floor(a),c);
-draw_background_part(sprBg,0,0*h,w,h,floor(a+w),c);
+draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a-w),c);
+draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a),c);
 
-draw_background_part(sprBg,0,1*h,w,h,floor(b),c);
-draw_background_part(sprBg,0,1*h,w,h,floor(b+w),c);
-
+draw_background_part(sprBg,0,1*h,w,h,view_xview[0]-floor(b-w),c);
+draw_background_part(sprBg,0,1*h,w,h,view_xview[0]-floor(b),c);
 </string>
           </argument>
         </arguments>

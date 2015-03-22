@@ -87,6 +87,8 @@ instance_activate_region(view_xview[0]-2*bb,view_yview[0]-2*bb,WIDTH+bb,HEIGHT+b
 
 instance_deactivate_object(objSolid);
 instance_activate_region(view_xview[0]-2*bb,view_yview[0]-2*bb,WIDTH+2*bb,HEIGHT+2*bb,true);
+
+instance_activate_object(objCamera);
 //++++++++
 </string>
           </argument>
