@@ -429,7 +429,7 @@ switch(state)
     break;
     case WALK:
         row = 1;
-        fSpeed = .3;
+        fSpeed = .2;
     break;
     case JUMP:
         if (yVel &gt;= 0) fCur = 2;
@@ -489,10 +489,9 @@ if (state != WIN)
 }*/
 
 if (dir == LEFT)
-    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x)+TILE,(y),-1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,x+1.5*TILE,y-TILE,-1,1,c_white,1);
 if (dir == RIGHT)
-    draw_sprite_part_ext(sprPlayer,-1,frame*TILE,row*TILE,TILE,TILE,(x),(y),1,1,c_white,1);
-
+    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,x-.5*TILE,y-TILE,1,1,c_white,1);
 </string>
           </argument>
         </arguments>

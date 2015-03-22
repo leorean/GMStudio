@@ -95,11 +95,11 @@ px = x;
     }
 }
 
-if (canFall &amp;&amp; place_meeting(x,y+2*yVel,objPlayer))
+/*if (canFall &amp;&amp; place_meeting(x,y+2*yVel,objPlayer))
 {
-    with(objPlayer) die = true;  
+    //with(objPlayer) die = true;  
     canFall = false;     
-}
+}*/
 
 if (!place_meeting(x,y+yVel,objAny))
     y += yVel;
