@@ -79,16 +79,15 @@ spawnY = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>bb = 4*TILE;
-
+            <string>//++++instance management++++
+bb = 4*TILE;
 
 instance_deactivate_object(objAny);
-instance_activate_region(view_xview[0],view_yview[0],WIDTH,HEIGHT,true);
+instance_activate_region(view_xview[0]-2*bb,view_yview[0]-2*bb,WIDTH+bb,HEIGHT+bb,true);
 
 instance_deactivate_object(objSolid);
-instance_activate_region(view_xview[0]-bb,view_yview[0]-bb,WIDTH+bb,HEIGHT+bb,true);
-
-
+instance_activate_region(view_xview[0]-2*bb,view_yview[0]-2*bb,WIDTH+2*bb,HEIGHT+2*bb,true);
+//++++++++
 </string>
           </argument>
         </arguments>
@@ -234,13 +233,11 @@ for (j=0; j &lt; room_height;j+= TILE)
 if (global.input == I.TOUCH)
 {
     if (!instance_exists(objDPad))
-        instance_create(hudX,hudY,objDPad);
-    with(objDPad)
-        {dx = x; dy = y}
+        instance_create(-1000,-1000,objDPad);
     if (!instance_exists(objDPadButton1))        
-        instance_create(hudX,hudY,objDPadButton1);
+        instance_create(-1000,-1000,objDPadButton1);
     if (!instance_exists(objDPadButton2))    
-        instance_create(hudX,hudY,objDPadButton2);
+        instance_create(-1000,-1000,objDPadButton2);
 }
 
 

@@ -31,18 +31,11 @@ global.alphaTimer = 60;
 w = 5*TILE;
 h = 5*TILE;
 
-offX = TILE + w/2;
-offY = HEIGHT - TILE - w/2;
+offX = 0;//TILE + w/2;
+offY = 0;//HEIGHT - TILE - w/2;
 
-a = view_xview[0];
-b = view_yview[0];
-
-cx = a+offX;
-cy = b+offY;
-
-x = cx;
-y = cy;
-
+cx = -1000;
+cy = -1000;
 dx = cx;
 dy = cy;
 

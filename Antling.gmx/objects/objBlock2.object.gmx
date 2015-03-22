@@ -69,12 +69,16 @@ if (canKill &amp;&amp; !fallTimer)
         if (!place_meeting(x,y+sign(yVel)*.1,objAny))
             y += sign(yVel)*.1;
         else
+        {
             yVel = 0;
+            fallTimer = maxFallTimer;
+        }
     }
 }
 else
 {
-    if (place_meeting(x,y+yVel,objAny) || !canKill) fallTimer = maxFallTimer;
+    if (place_meeting(x,y+yVel,objAny) || !canKill)
+        fallTimer = maxFallTimer;
     yVel = 0;
 }
 
@@ -84,7 +88,7 @@ if (!canKill)
 {
     inReach = instance_exists(objPlayer) &amp;&amp; objPlayer.bbox_left &gt;= x &amp;&amp; objPlayer.bbox_right &lt;= (x+TILE)
         &amp;&amp; in(objPlayer.y,y,y+TILE);
-    if (!place_meeting(x,y+TILE,objLiving)
+    if (!place_meeting(x,y+TILE,objAny)
        &amp;&amp; !inReach)
         canKill = true;
 }

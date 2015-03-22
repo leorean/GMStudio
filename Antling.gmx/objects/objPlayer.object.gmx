@@ -176,8 +176,9 @@ if (!die &amp;&amp; (state == WALK || state == IDLE))
                     instance_create(x,y,objEffectDust);
                     instance_destroy();
                 }
+                block = noone;
             }
-            else
+            else if (block.type == 0)
             {
                 if (look == NONE)
                 {
@@ -187,11 +188,11 @@ if (!die &amp;&amp; (state == WALK || state == IDLE))
                         y = py;//(cy div TILE) * TILE;
                         block.state = PUSH;
                         state = PUSH;
-                    } else
-                        block = noone;
+                    }// else
+                    //    block = noone;
                 }
             }
-            block = noone;
+            
         }
     }
 }
@@ -459,7 +460,10 @@ if (state != WIN)
         c = c_red;
 
     if (instance_exists(block))
-        draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,block.x,block.y,1,1,c,.5);
+    {
+        if (block.type == 0 || block.type == 3)
+            draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,block.x,block.y,1,1,c_white,.5);
+    }
         
     /*
     if (state != PUSH &amp;&amp; state != DIG)
