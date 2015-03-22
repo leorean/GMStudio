@@ -17,7 +17,7 @@
   <makerSettings>
     <isSet>-1</isSet>
     <w>1024</w>
-    <h>862</h>
+    <h>754</h>
     <showGrid>0</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -27,8 +27,8 @@
     <deleteUnderlyingObj>-1</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
     <page>2</page>
-    <xoffset>-12</xoffset>
-    <yoffset>291</yoffset>
+    <xoffset>1002</xoffset>
+    <yoffset>-40</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -264,10 +264,7 @@
     <tile bgName="sprTiles" x="816" y="96" w="16" h="16" xo="96" yo="0" id="10004626" name="inst_4BF66AA7" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="800" y="80" w="16" h="16" xo="80" yo="0" id="10004627" name="inst_95B2E4D0" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="816" y="80" w="16" h="16" xo="80" yo="0" id="10004628" name="inst_A1932395" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="832" y="96" w="16" h="16" xo="80" yo="0" id="10004629" name="inst_21C15C23" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="848" y="96" w="16" h="16" xo="80" yo="0" id="10004630" name="inst_F3C3B159" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="864" y="128" w="16" h="16" xo="80" yo="0" id="10004631" name="inst_2B6C9D3C" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="816" y="64" w="16" h="16" xo="80" yo="0" id="10004632" name="inst_3A8D3A7F" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1008" y="240" w="16" h="16" xo="16" yo="16" id="10004633" name="inst_98A8ED0A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1024" y="240" w="16" h="16" xo="16" yo="16" id="10004634" name="inst_44991B98" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1040" y="240" w="16" h="16" xo="16" yo="16" id="10004635" name="inst_28DCFBB7" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -285,6 +282,10 @@
     <tile bgName="sprTiles" x="1216" y="224" w="16" h="16" xo="16" yo="16" id="10004647" name="inst_BF40775B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1232" y="224" w="16" h="16" xo="16" yo="16" id="10004648" name="inst_CFA11015" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1248" y="224" w="16" h="16" xo="16" yo="16" id="10004649" name="inst_B0A9E6D6" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="832" y="80" w="16" h="16" xo="128" yo="0" id="10004697" name="inst_CD4CD708" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="816" y="64" w="16" h="16" xo="128" yo="0" id="10004698" name="inst_FE35DCBC" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="912" y="192" w="16" h="16" xo="112" yo="0" id="10004699" name="inst_023A7203" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="832" y="96" w="16" h="16" xo="112" yo="0" id="10004700" name="inst_B9AA9ABC" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

@@ -58,7 +58,7 @@ forceY = 1;
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="1">
+    <event eventtype="8" enumb="72">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -161,7 +161,7 @@ else
 forceX = abs(cx - dx) / (w/2 - TILE);
 forceY = abs(cy - dy) / (h/2 - TILE);
 
-//show_debug_message("xf: " + string(forceX) + ", yf: " + string(forceY));
+////////
 
 
 </string>
@@ -191,23 +191,7 @@ b = view_yview[0];
 
 if (drag)
     {cx = a + offX; cy = b + offY;}
-
-/*
-cx = a + offX; cy = b + offY;
-x = cx;
-y = cy;
-*/
-
-if (drag || objDPadButton1.pressing || objDPadButton2.pressing)//HUD alpha
-{
-    global.alphaHud = max(global.alphaHud - .05,.15);
-    global.alphaTimer = 1.5*60;
-} else
-{
-    global.alphaTimer = max(global.alphaTimer - 1, 0);
-    global.alphaHud = min(global.alphaHud + .05*(global.alphaTimer==0), .75);
-}
-if (!drag)//feather back in position
+else//feather back in position
 {
     if (max(abs(dx - cx),abs(dy - cy)) &gt; 4 &amp;&amp; checked)
     {
@@ -220,10 +204,27 @@ if (!drag)//feather back in position
         checked = true;
     }
 }
-//show_debug_message("dev: "+string(dev)+", drag: "+string(drag)+", L: "+string(kLeft)+", R: "+string(kRight)+", U: "+string(kUp)+", D: "+string(kDown));
 
-draw_sprite_part_ext(sprGfx,-1,0,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2,1,1,c_white,global.alphaHud);
-draw_sprite_part_ext(sprGfx,-1,0,9*TILE,3*TILE,3*TILE,dx-1.5*TILE,dy-1.5*TILE,1,1,c_white,global.alphaHud);
+r = 0;
+if (kLeft) r = 1;
+if (kUp) r = 2;
+if (kRight) r = 3;
+if (kDown) r = 4;
+
+//bg:
+draw_sprite_part_ext(sprGfx,-1,5*TILE,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2,1,1,c_white,.4);
+
+//pad shadow:
+draw_sprite_part_ext(sprGfx,-1,0,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2+1,1,1,c_black,.5);
+//pad:
+draw_sprite_part_ext(sprGfx,-1,0,4*TILE,5*TILE,5*TILE,cx-w/2,cy-h/2,1,1,c_white,1);
+
+//stick shadow:
+draw_sprite_part_ext(sprGfx,-1,0,9*TILE,3*TILE,3*TILE,dx-1.5*TILE,dy-1.5*TILE+1,1,1,c_black,.3);
+//stick:
+draw_sprite_part_ext(sprGfx,-1,0,9*TILE,3*TILE,3*TILE,dx-1.5*TILE,dy-1.5*TILE,1,1,c_white,1);
+//stick dir:
+draw_sprite_part_ext(sprGfx,-1,r*3*TILE,9*TILE,3*TILE,3*TILE,dx-1.5*TILE,dy-1.5*TILE,1,1,c_white,.5);
 
 </string>
           </argument>

@@ -37,6 +37,7 @@
     <script>scripts\in.gml</script>
     <script>scripts\drawText.gml</script>
     <script>scripts\btnStep.gml</script>
+    <script>scripts\btnDraw.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHud</font>

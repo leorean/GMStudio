@@ -161,7 +161,7 @@ if (!die)
 if (!die &amp;&amp; (state == WALK || state == IDLE))
 {
     //collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
-    if (kAction &amp;&amp; onGround)
+    if (kAction &amp;&amp; onGround &amp;&amp; (xVelOther == 0))
     {
         if (instance_exists(block))
         {

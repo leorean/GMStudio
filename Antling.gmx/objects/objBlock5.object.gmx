@@ -65,6 +65,7 @@ if (y &gt; room_height) instance_destroy();
 
 if (!canExplode)
 {
+
     inReach = instance_exists(objPlayer) &amp;&amp; objPlayer.bbox_left &gt;= x &amp;&amp; objPlayer.bbox_right &lt;= (x+TILE)
         &amp;&amp; in(objPlayer.y,y,y+TILE);
     if (!place_meeting(x,y+TILE,objLiving) &amp;&amp; !place_meeting(x,y+yVel+1,objSolid)
