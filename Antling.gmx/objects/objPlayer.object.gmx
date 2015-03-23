@@ -84,6 +84,7 @@ kAction = false;
 //++++weapon stuff
 aim = 0; //the angle
 weapon = 0;
+maxWeapon = 3;
 attackDelay = 0;
 weaponFrame = 0;
 alternate = 0; //left or right hand
@@ -134,8 +135,8 @@ if (instance_exists(objDPad))
     forceX = objDPad.forceX;
     forceY = objDPad.forceY;    
 }
-kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft &amp;&amp; objDPad.forceX &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight &amp;&amp; objDPad.forceX &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft &amp;&amp; objDPad.forceX &gt;= .6)) &amp;&amp; (global.gameState == G.PLAY);
+kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight &amp;&amp; objDPad.forceX &gt;= .6)) &amp;&amp; (global.gameState == G.PLAY);
 kUp = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kDown = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
@@ -174,6 +175,9 @@ if (look == NONE)// || kLeft || kRight)// || diag)
 }
 
 //++++ATTACK++++
+//choose weapon:
+if (mouse_wheel_up()) weapon = (weapon + 1) mod (maxWeapon+1);
+if (mouse_wheel_down()) weapon = (weapon + (maxWeapon)) mod (maxWeapon+1);
 //aim angle
 if (objDPad.drag)
 {
@@ -198,10 +202,19 @@ if (!attackDelay &amp;&amp; kAction)
     switch(weapon)
     {
         case 0:
-        alternate = (alternate+1) % 2;
-        attackDelay = 5;
-        var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectile0);
-        p.angle = aim;
+            alternate = (alternate+1) % 2;
+            attackDelay = 5;
+            var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectile0);
+            p.angle = aim;
+        break;
+        case 1:
+            alternate = 0;
+            attackDelay = 0;
+            if (!instance_exists(objProjectile1))
+            {
+                var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectile1);
+                p.angle = aim;
+            }
         break;
     }
 }
@@ -552,9 +565,9 @@ if (state == IDLE || state == WALK || JUMP)
 
 //++++draw bg weapon++++
 if (dir == LEFT)
-    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*!(alternate == 0))*TILE,0,2*TILE,2*TILE,x+1.5*TILE-wx[frame]-weaponDist,y-TILE+wy[frame],-1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+2*floor(weaponFrame*!(alternate == 0))*TILE,weapon*2*TILE,2*TILE,2*TILE,x+1.5*TILE-wx[frame]-weaponDist,y-TILE+wy[frame],-1,1,c_white,1);
 if (dir == RIGHT)
-    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*!(alternate == 0))*TILE,0,2*TILE,2*TILE,x-.5*TILE+wx[frame]+weaponDist,y-TILE+wy[frame],1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+2*floor(weaponFrame*!(alternate == 0))*TILE,weapon*2*TILE,2*TILE,2*TILE,x-.5*TILE+wx[frame]+weaponDist,y-TILE+wy[frame],1,1,c_white,1);
 
 //++++draw player++++
 if (dir == LEFT)
@@ -576,9 +589,9 @@ draw_sprite_part(sprGfx,-1,2*TILE,2*TILE,TILE,TILE,aimX-TILE/2,aimY-TILE/2);
 //++++draw weapon++++
 
 if (dir == LEFT)
-    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*(alternate == 0))*TILE,0,2*TILE,2*TILE,x+1.5*TILE-wx[frame],y-TILE+wy[frame],-1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+2*floor(weaponFrame*(alternate == 0))*TILE,weapon*2*TILE,2*TILE,2*TILE,x+1.5*TILE-wx[frame],y-TILE+wy[frame],-1,1,c_white,1);
 if (dir == RIGHT)
-    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*(alternate == 0))*TILE,0,2*TILE,2*TILE,x-.5*TILE+wx[frame],y-TILE+wy[frame],1,1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+2*floor(weaponFrame*(alternate == 0))*TILE,weapon*2*TILE,2*TILE,2*TILE,x-.5*TILE+wx[frame],y-TILE+wy[frame],1,1,c_white,1);
 
 </string>
           </argument>

@@ -39,6 +39,7 @@
     <script>scripts\btnStep.gml</script>
     <script>scripts\btnDraw.gml</script>
     <script>scripts\array.gml</script>
+    <script>scripts\drawLightning.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHud</font>
@@ -79,6 +80,7 @@
     </objects>
     <objects name="projectiles">
       <object>objects\objProjectile0</object>
+      <object>objects\objProjectile1</object>
     </objects>
   </objects>
   <rooms name="rooms">

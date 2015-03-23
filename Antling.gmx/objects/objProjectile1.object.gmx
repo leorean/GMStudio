@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dmg = .1;
+            <string>dmg = .02;
 
 spd = 8;
 xVel = 0;
@@ -33,7 +33,13 @@ yVel = 0;
 angle = 0;
 
 mask_index = mskPixel;
-color = make_color_hsv(20+random(15),230+random(25),255);
+
+color = c_white;
+
+xO = x;
+yO = y;
+checkX = x;
+checkY = y;
 </string>
           </argument>
         </arguments>
@@ -56,19 +62,56 @@ color = make_color_hsv(20+random(15),230+random(25),255);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = lengthdir_x(spd,angle);
-yVel = lengthdir_y(spd,angle);
+            <string>if (instance_exists(objPlayer))
+{
+    x = objPlayer.cx;
+    y = objPlayer.cy;
+    angle = objPlayer.aim;
+    if (!objPlayer.kAction)
+        instance_destroy();
+} else
+    instance_destroy();
 
-x += xVel;
-y += yVel;
+if (global.timer % 2 == 0)
+    color = make_color_hsv(130+random(15),230+random(25),255);
+else
+    color = c_white;
 
+    
+checkX = x;
+checkY = y;
+var sample = 8;
+for (var i = 0; i &lt; WIDTH/sample; i++)
+{
+    checkX += lengthdir_x(sample,angle);
+    checkY += lengthdir_y(sample,angle);
+    if (place_meeting(checkX,checkY,objSolid))
+    {
+        break;
+    }
+} 
+//block = collision_line(xO,yO,x,y,objSolid,true,true);
+
+/*
+if (!instance_exists(block))
+{
+    x = min(max(xO + lengthdir_x(WIDTH,angle), view_xview[0]),view_xview[0]+view_wview[0]);
+    y = min(max(yO + lengthdir_y(WIDTH,angle), view_yview[0]),view_yview[0]+view_hview[0]);
+} else
+{
+    
+}*/
+
+/*
 target = instance_place(x,y,objSolid);
 if (instance_exists(target))
 {
-    var p = instance_create(x,y,objParticle1);
-    p.angle = ((angle + 180) % 360)-45+random(90);
+    //var p = instance_create(x,y,objParticle1);
+    //p.angle = ((angle + 180) % 360)-45+random(90);
     instance_destroy();
 }
+*/
+
 /*
 if (!place_meeting(x+xVel,y,objSolid))
     x += xVel;
@@ -103,16 +146,8 @@ else
             <kind>1</kind>
             <string>draw_set_color(c_white);
 draw_set_alpha(1);
-draw_line(x-.5*xVel,y-.5*yVel,x,y);
 
-draw_set_color(color);
-draw_set_alpha(.5);
-draw_line(x-xVel,y-yVel,x,y);
-
-draw_set_color(c_white);
-draw_set_alpha(1);
-draw_line(x-.25*xVel,y-.25*yVel,x,y);
-
+drawLightning(x,y,checkX,checkY,color);
 //draw_sprite_ext(mskPixel,-1,x,y,2,2,0,make_color_hsv(35,200,255),1);
 </string>
           </argument>

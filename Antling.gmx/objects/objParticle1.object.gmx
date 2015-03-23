@@ -27,8 +27,9 @@
             <kind>1</kind>
             <string>angle = random(360);
 spd = 1+random(2);
-xVel = 0;//lengthdir_x(spd,angle);
-yVel = 0;//lengthdir_y(spd,angle);
+xVel = 0;
+yVel = 0;
+yGrav = .15;
 t = 10;
 color = c_white;
 mask_index = mskPixel;
@@ -58,6 +59,8 @@ mask_index = mskPixel;
             <kind>1</kind>
             <string>xVel = lengthdir_x(spd,angle);
 yVel = lengthdir_y(spd,angle);
+
+yVel = min(yVel+yGrav,3);
 
 x += xVel;
 y += yVel;
