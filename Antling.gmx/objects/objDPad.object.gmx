@@ -39,6 +39,8 @@ cy = -1000;
 dx = cx;
 dy = cy;
 
+angle = 0;
+
 drag = false; //is the stick being dragged?
 dev = 0; //device number (0...4)
 checked = false; //to position the stick ONE time.

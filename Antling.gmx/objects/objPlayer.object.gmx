@@ -61,7 +61,6 @@ jumpSpdGlide = 3;
 xSpd = 1.5;
 xSpdLow = 1;
 
-
 jumped = false;
 onGround = false;
 hasBlock = -1;
@@ -81,6 +80,22 @@ kUp = false;
 kDown = false;
 kJump = false;
 kAction = false;
+
+//++++weapon stuff
+weapon = 0;
+attackDelay = 0;
+weaponFrame = 0;
+alternate = 0; //left or right hand
+weaponDist = 13; //the x-distance between both hands
+
+wepx[IDLE]=array(0,0,0,0); wepy[IDLE] = array(0,-1,0,1);
+wepx[WALK]=array(1,2,2,1); wepy[WALK] = array(1,1,2,3);
+wepx[JUMP]=array(0,0,0,0); wepy[JUMP] = array(0,0,-1,-1);
+wx = 0; wy = 0;
+
+/*handx[IDLE]=array(0,0,0,0); handy[IDLE] = array(0,-1,0,1);
+handx[WALK]=array(1,2,2,1); handy[WALK] = array(1,1,2,3);
+handx[JUMP]=array(0,0,0,0); handy[JUMP] = array(0,0,-1,-1);*/
 
 </string>
           </argument>
@@ -126,7 +141,7 @@ kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A'))
 kAction = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('S')) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
 ddir = NONE;
-with(objDPad) if (forceX &gt;= .35) objPlayer.ddir = dir;
+with(objDPad) /*if (forceX &gt;= .2)*/ objPlayer.ddir = dir;
 
 if (!die &amp;&amp; !blockDelay &amp;&amp; (ddir == LEFT || (kLeft &amp;&amp; !kRight)) &amp;&amp; (global.gameState == G.PLAY)) dir = LEFT;
 if (!die &amp;&amp; !blockDelay &amp;&amp; (ddir == RIGHT || (kRight &amp;&amp; !kLeft)) &amp;&amp; (global.gameState == G.PLAY)) dir = RIGHT;
@@ -156,8 +171,53 @@ if (look == NONE)// || kLeft || kRight)// || diag)
     if (dir == LEFT) px = px - TILE;
     if (dir == RIGHT) px = px + TILE;
 }
-if (!die)
-    block = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);//instance_place(px,py,objBlock);   
+
+//++++prepare weapon draw coordinates++++
+wx = 0; wy = 0;
+if (state == IDLE || state == WALK || JUMP)
+    wx = wepx[state];wy = wepy[state];
+
+//++++ATTACK++++
+attackDelay = max(attackDelay - 1, 0);
+if (!attackDelay &amp;&amp; kAction)
+{
+    //state = ATTACK;
+    weaponFrame = 1; wx = 0; wy = 0;
+    switch(weapon)
+    {
+        case 0:
+        alternate = (alternate+1) % 2;
+        attackDelay = 10;
+        var p = instance_create(cx-4*sign(dir)+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectile0);
+        if (objDPad.drag)
+        {
+            if (!onGround || state != WALK)
+                p.angle = objDPad.angle;
+            else
+            {
+                if (in(objDPad.angle,180,270))
+                    p.angle = 180;
+                else if (in(objDPad.angle,270,360))
+                    p.angle = 0;
+                else
+                    p.angle = objDPad.angle;
+            }
+        }
+        else
+            p.angle = 0 + 180*(dir == LEFT) + sign(dir)*90*(look == UP) - sign(dir)*90*(look == DOWN);
+        break;
+    }
+}
+
+/*if (state == ATTACK)
+{
+    //xVel *= .9;
+    if (fCur &gt;= (fMax + 1 - fSpeed))
+    if (onGround) state = IDLE else state = JUMP;
+}*/
+
+/*
+block = collision_point(px+TILE/2,py+TILE/2,objBlock,true,true);//instance_place(px,py,objBlock);   
 if (!die &amp;&amp; (state == WALK || state == IDLE))
 {
     //collision_circle(px+TILE/2,py+TILE/2,4,objBlock,true,true);
@@ -195,7 +255,7 @@ if (!die &amp;&amp; (state == WALK || state == IDLE))
             
         }
     }
-}
+}*/
 /*
 if (hasBlock == -1) // take block
 {
@@ -272,7 +332,7 @@ var s;
 if (hasBlock == -1) s = xSpd*forceX;
 else s = xSpdLow*forceX;
 
-if (!die &amp;&amp; kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO LEFT
+if (kLeft &amp;&amp; !kRight &amp;&amp; (state == WALK || state == JUMP || state == IDLE)) //GO LEFT
 {
     if (xVel &lt; 0)
         dir = LEFT;
@@ -283,7 +343,7 @@ if (!die &amp;&amp; kLeft &amp;&amp; !kRight &amp;&amp; state != PUSH &amp;&amp;
     else
         state = JUMP;        
 }
-if (!die &amp;&amp; kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp; state != DIG &amp;&amp; state != PUSH) //GO RIGHT
+if (kRight &amp;&amp; !kLeft &amp;&amp; (state == WALK || state == JUMP || state == IDLE)) //GO RIGHT
 {
     if (xVel &gt; 0)
         dir = RIGHT;
@@ -299,14 +359,14 @@ if (!die &amp;&amp; kRight &amp;&amp; !kLeft &amp;&amp; state != PUSH &amp;&amp;
 if (!die &amp;&amp; (!kLeft &amp;&amp; !kRight || (kLeft &amp;&amp; kRight)))
 {
     xVel = sign(xVel) * max(abs(xVel) - .2, 0);
-    if (onGround &amp;&amp; state != PUSH &amp;&amp; state != DIG)
+    if (onGround &amp;&amp; (state == WALK || state == JUMP || state == IDLE))
         state = IDLE;
     else
         if (state == IDLE || state == WALK) state = JUMP;
 
 }
 
-if (!die &amp;&amp; kJump &amp;&amp; !jumped &amp;&amp; state != PUSH &amp;&amp; state != DIG) //JUMP
+if (kJump &amp;&amp; !jumped &amp;&amp; (state == WALK || state == JUMP || state == IDLE)) //JUMP
 {
     jumped = true;
     state = JUMP;
@@ -331,10 +391,6 @@ with(instance_place(x,y,objCollectable))
     if ((global.collect == global.maxCollect) &amp;&amp; global.maxCollect &gt; 0)
     {
         global.gameState = G.GAMEWIN;
-        //instance_create(view_xview[0],view_yview[0],objWinEffect);
-        /*var txt = instance_create(view_xview[0]+WIDTH/2,view_yview[0]+HEIGHT/2,objText);
-        txt.font = fntBig;
-        txt.text = "Clear!";*/
         with(objPlayer)
         {
             xVel = 0;
@@ -424,8 +480,8 @@ switch(state)
     case IDLE:
         row = 0;
         fSpeed = .1;
-        if (look == UP) fCur = 4;
-        if (look == DOWN) fCur = 5;      
+        //if (look == UP) fCur = 4;
+        //if (look == DOWN) fCur = 5;      
     break;
     case WALK:
         row = 1;
@@ -442,16 +498,20 @@ switch(state)
         fSpeed = .15;
     break;
     case PUSH:
-        row = 4
+        row = 4;
         fSpeed = .1;
     break;
     case DIG:
-        row = 5
+        row = 5;
         fSpeed = .15;
     break;
+    case ATTACK:
+        row = 6;
+        fSpeed = .3;
+    break;    
 }
 frame = floor(fCur);
-
+/*
 if (state != WIN)
 {
     if (state == WALK || state == IDLE)
@@ -464,12 +524,9 @@ if (state != WIN)
         if (block.type == 0 || block.type == 3)
             draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,block.x,block.y,1,1,c_white,.5);
     }
-        
-    /*
-    if (state != PUSH &amp;&amp; state != DIG)
-        draw_sprite_part_ext(sprGfx,-1,0,2*TILE,TILE,TILE,px,py,1,1,c,.5);
-    */
 }
+*/
+
 /*
 if (state != WIN)
 {
@@ -488,10 +545,31 @@ if (state != WIN)
     
 }*/
 
+//++++draw hand++++
+var wwx, wwy;
+weaponFrame = (weaponFrame + .3*(floor(weaponFrame) != 0)) % 4;
+if (!is_array(wx) || weaponFrame &gt;= 1) wwx = 1; else wwx = wx[frame];
+if (!is_array(wy) || weaponFrame &gt;= 1) wwy = 1; else wwy = wy[frame];
+
+if (dir == LEFT)
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*!(alternate == 0))*TILE,0,2*TILE,2*TILE,x+1.5*TILE-wwx-weaponDist,y-TILE+wwy,-1,1,c_white,1);
+if (dir == RIGHT)
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*!(alternate == 0))*TILE,0,2*TILE,2*TILE,x-.5*TILE+wwx+weaponDist,y-TILE+wwy,1,1,c_white,1);
+
+//++++draw player++++
 if (dir == LEFT)
     draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,x+1.5*TILE,y-TILE,-1,1,c_white,1);
 if (dir == RIGHT)
     draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE,row*2*TILE,2*TILE,2*TILE,x-.5*TILE,y-TILE,1,1,c_white,1);
+    
+    
+//++++draw weapon++++
+
+if (dir == LEFT)
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*(alternate == 0))*TILE,0,2*TILE,2*TILE,x+1.5*TILE-wwx,y-TILE+wwy,-1,1,c_white,1);
+if (dir == RIGHT)
+    draw_sprite_part_ext(sprPlayer,-1,(fMax+1)*2*TILE+weapon*TILE+2*floor(weaponFrame*(alternate == 0))*TILE,0,2*TILE,2*TILE,x-.5*TILE+wwx,y-TILE+wwy,1,1,c_white,1);
+
 </string>
           </argument>
         </arguments>

@@ -38,6 +38,7 @@
     <script>scripts\drawText.gml</script>
     <script>scripts\btnStep.gml</script>
     <script>scripts\btnDraw.gml</script>
+    <script>scripts\array.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHud</font>
@@ -73,6 +74,9 @@
       <object>objects\objAny</object>
       <object>objects\objText</object>
     </objects>
+    <objects name="projectiles">
+      <object>objects\objProjectile0</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\INIT</room>
@@ -80,7 +84,7 @@
     <room>rooms\room3</room>
     <room>rooms\TEST</room>
   </rooms>
-  <constants number="15">
+  <constants number="16">
     <constant name="INFINITE">9000000000</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
@@ -91,6 +95,7 @@
     <constant name="PUSH">3</constant>
     <constant name="DIG">4</constant>
     <constant name="WIN">5</constant>
+    <constant name="ATTACK">6</constant>
     <constant name="NONE">0</constant>
     <constant name="UP">-2</constant>
     <constant name="DOWN">2</constant>
