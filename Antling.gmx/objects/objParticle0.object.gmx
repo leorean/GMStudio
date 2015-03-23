@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-10</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>objProjectile</parentName>
+  <parentName>objParticle</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,60 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dmg = .1;
-
-spd = 8;
-xVel = 0;
-yVel = 0;
-angle = 0;
-
-mask_index = mskPixel;
-color = make_color_hsv(20+random(15),230+random(25),255);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>xVel = lengthdir_x(spd,angle);
+            <string>angle = random(360);
+spd = 2;
+xVel = lengthdir_x(spd,angle);
 yVel = lengthdir_y(spd,angle);
-
-x += xVel;
-y += yVel;
-
-target = instance_place(x,y,objSolid);
-if (instance_exists(target))
-{
-    var p = instance_create(x,y,objParticle1);
-    p.angle = ((angle + 180) % 360)-30+random(60);
-    instance_destroy();
-}
-/*
-if (!place_meeting(x+xVel,y,objSolid))
-    x += xVel;
-else
-    xVel = 0;
-if (!place_meeting(x,y+yVel,objSolid))
-    y += yVel;
-else
-    yVel = 0;
-*/
+s = 3;
+color = c_white;
 </string>
           </argument>
         </arguments>
@@ -101,19 +53,18 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_white);
-draw_set_alpha(1);
-draw_line(x-.5*xVel,y-.5*yVel,x,y);
+            <string>x += xVel;
+y += yVel;
 
-draw_set_color(color);
-draw_set_alpha(.5);
-draw_line(x-xVel,y-yVel,x,y);
+xVel *= .95;
+yVel *= .95;
 
-draw_set_color(c_white);
-draw_set_alpha(1);
-draw_line(x-.25*xVel,y-.25*yVel,x,y);
+s = max(s-.03,0);
 
-//draw_sprite_ext(mskPixel,-1,x,y,2,2,0,make_color_hsv(35,200,255),1);
+if (s == 0)
+    instance_destroy();
+
+draw_sprite_ext(sprParticle,-1,x,y,s,s,0,color,1);
 </string>
           </argument>
         </arguments>

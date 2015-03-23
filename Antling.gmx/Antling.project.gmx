@@ -59,7 +59,8 @@
     <objects name="misc">
       <objects name="effects">
         <object>objects\objEffectDust</object>
-        <object>objects\objParticle</object>
+        <object>objects\objParticle0</object>
+        <object>objects\objParticle1</object>
         <object>objects\objWinEffect</object>
       </objects>
       <object>objects\objCamera</object>
@@ -73,6 +74,8 @@
       <object>objects\objLiving</object>
       <object>objects\objAny</object>
       <object>objects\objText</object>
+      <object>objects\objParticle</object>
+      <object>objects\objProjectile</object>
     </objects>
     <objects name="projectiles">
       <object>objects\objProjectile0</object>

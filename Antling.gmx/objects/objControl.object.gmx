@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-1000</depth>
   <persistent>-1</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>self</parentName>
   <maskName>mskPixel</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -81,6 +81,15 @@ spawnY = -1;
             <kind>1</kind>
             <string>//++++instance management++++
 bb = 4*TILE;
+
+//++++remove projectiles and particles++++
+with (objProjectile)
+if (!in(x,view_xview[0]-8*TILE,view_xview[0]+WIDTH+8*TILE) || !in(y,view_yview[0]-8*TILE,view_yview[0]+WIDTH+8*TILE))
+    instance_destroy();
+with (objParticle)
+if (!in(x,view_xview[0]-8*TILE,view_xview[0]+WIDTH+8*TILE) || !in(y,view_yview[0]-8*TILE,view_yview[0]+WIDTH+8*TILE))
+    instance_destroy();
+
 
 instance_deactivate_object(objAny);
 instance_activate_region(view_xview[0]-2*bb,view_yview[0]-2*bb,WIDTH+bb,HEIGHT+bb,true);
