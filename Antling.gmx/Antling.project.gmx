@@ -87,6 +87,7 @@
       <object>objects\objProjectileGatling</object>
       <object>objects\objProjectileLightning</object>
       <object>objects\objProjectileCannon</object>
+      <object>objects\objProjectileFlame</object>
     </objects>
   </objects>
   <rooms name="rooms">
