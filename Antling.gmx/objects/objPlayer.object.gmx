@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-5</depth>
   <persistent>0</persistent>
-  <parentName>objLiving</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -194,12 +194,16 @@ if (!hurtDelay &amp;&amp; instance_exists(enemy))
     
     var t = instance_create(cx,cy,objText);
     if (hp &gt; 0)
+    {
         t.text = "-"+string(enemy.dmg);
+        t.xVel = -1+random(2);
+        t.yVel = -2;
+        t.yGrav = .1;
+    }
     else
-        t.text = "*DEAD*";
-    t.xVel = -1+random(2);
-    t.yVel = -2;
-    t.yGrav = .1;
+    {
+        t.text = "*YOU DIED*";
+    }
     //t.c1 = c_red;
 //    t.c2 = c_none;
 }
@@ -233,36 +237,49 @@ else
     aim = 0 + 180*(dir == LEFT) + sign(dir)*90*(look == UP) - sign(dir)*90*(look == DOWN);
 attackDelay = max(attackDelay - 1, 0);
 rechargeDelay = max(rechargeDelay - 1,0);
-if (!attackDelay &amp;&amp; kAction &amp;&amp; ammo &gt; 0)
+if (!attackDelay &amp;&amp; kAction)
 {
-    rechargeDelay = maxRechargeDelay;
-    weaponFrame = 1;
-    switch(weapon)
+    if (ammo &gt; 0)
     {
-        case 0: //GATLING GUN
-            alternate = (alternate+1) % 2;
-            attackDelay = 8;
-            ammo = max(ammo - 2,0);
-            var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileGatling);
-            p.angle = aim-3+random(6);
-        break;
-        case 1: //LIGHTNING GUN
-            alternate = (alternate+1) % 2;
-            attackDelay = 10;
-            ammo = max(ammo - 3,0);
-            var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileLightning);
-            p.angle = aim;
-            p.timer = attackDelay;
-        break;
-        case 2:
-            attackDelay = 35;
-            alternate = (alternate+1) % 2;
-            ammo = max(ammo - 5,0);
-            var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileCannon);
-            p.angle = aim;
-            p.xVel = lengthdir_x(p.spd,aim);
-            p.yVel = min(lengthdir_y(p.spd,aim),-p.yGrav*10);
-        break;
+        rechargeDelay = maxRechargeDelay;
+        weaponFrame = 1;
+        switch(weapon)
+        {
+            case 0: //GATLING GUN
+                alternate = (alternate+1) % 2;
+                attackDelay = 8;
+                ammo = max(ammo - 2,0);
+                var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileGatling);
+                p.angle = aim-3+random(6);
+            break;
+            case 1: //LIGHTNING GUN
+                alternate = (alternate+1) % 2;
+                attackDelay = 10;
+                ammo = max(ammo - 3,0);
+                var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileLightning);
+                p.angle = aim;
+                p.timer = attackDelay;
+            break;
+            case 2:
+                attackDelay = 15;
+                alternate = (alternate+1) % 2;
+                ammo = max(ammo - 5,0);
+                var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileCannon);
+                p.angle = aim;
+                p.xVel = lengthdir_x(p.spd,aim);
+                p.yVel = min(lengthdir_y(p.spd,aim),-p.yGrav*10);
+            break;
+        }
+    } else
+    {
+        if (!attackDelay)
+        {
+            var t = instance_create(cx,cy,objText);
+            t.text = "&lt;empty&gt;";
+            t.yVel = -1;
+            t.timer = 20;
+            attackDelay = 20;
+        }   
     }
 }
 if (kAction) rechargeDelay = maxRechargeDelay;

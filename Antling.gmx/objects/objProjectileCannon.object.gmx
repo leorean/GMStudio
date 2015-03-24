@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dmg = 6;
+            <string>dmg = 2;
 
 spd = 6;
 xVel = 0;
@@ -61,7 +61,7 @@ mask_index = mskCannon;
 x += xVel;
 y += yVel;
 
-target = instance_place(x,y,objSolid);
+target = instance_place(x-xVel,y-yVel,objAny);
 if (instance_exists(target))
 {
 
@@ -79,8 +79,11 @@ if (instance_exists(target))
         
     }
     //explode
-    var e = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
-    e.type = 1;
+    repeat(3)
+    {
+        var e = instance_create(x-TILE+random(TILE),y-TILE+random(TILE),objEffectDust);
+        e.type = 1;
+    }
     /*repeat(10)
     {
         var i = instance_create(x-4+random(8),y-4+random(8),objProjectileGatling);

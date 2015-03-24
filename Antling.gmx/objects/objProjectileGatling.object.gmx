@@ -67,7 +67,7 @@ y += yVel;
 timer = max(timer-1,0);
 if(!timer) instance_destroy();
 
-target = instance_place(x,y,objSolid);
+target = instance_place(x,y,objAny);
 if (instance_exists(target))
 {
 

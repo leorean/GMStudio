@@ -28,14 +28,14 @@
             <string>xVel = 0;
 yVel = -.5;
 yGrav = 0;
-timer = 1.5*60;
+timer = 60;
 text = "";
 c1 = c_white;
 c2 = c_black;
 font = fntSmall;
 
-xVelMax = 3;
-yVelMax = 3;
+xVelMax = 4;
+yVelMax = 4;
 </string>
           </argument>
         </arguments>
