@@ -98,11 +98,10 @@ for (i = 0; i &lt; WIDTH/TILE; i++)
     }
 
     
-draw_set_font(fntBig);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_alpha(alpha);
-drawText(a+WIDTH/2,b+HEIGHT/2+wy,"Clear!",c_white,c_black);
+drawText(a+WIDTH/2,b+HEIGHT/2+wy,"Clear!",c_white,c_black,fntBig);
 
 </string>
           </argument>

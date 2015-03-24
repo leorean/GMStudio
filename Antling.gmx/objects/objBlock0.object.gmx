@@ -27,17 +27,10 @@
             <kind>1</kind>
             <string>mask_index = mskBlock;
 type = 0;
-
-canBePushed = false;
-canFall = false;
-state = IDLE;
-dir = NONE;
-
-xVel = 0;
-yVel = 0;
-yGrav = .15;
-
-px = x;
+maxHp  = 15;
+hp = maxHp;
+hurt = false;
+hurtDelay = false;
 </string>
           </argument>
         </arguments>
@@ -60,69 +53,17 @@ px = x;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_exists(objPlayer))
+            <string>if (hurt)
 {
-    if (!canFall)
-    {
-        if (!place_meeting(x,y+TILE,objPlayer) &amp;&amp; !place_meeting(x,y+1,objAny))
-            canFall = true;
-    }
-    if ((objPlayer.state == DIG || objPlayer.state == PUSH) &amp;&amp; !objPlayer.die)
-        canFall = false;
-    
-    if (state == IDLE)
-    {
-        canBePushed = place_free(x+sign(dir)*TILE,y);
-        dir = sign(x+TILE/2 - objPlayer.cx);
-        px = x;
-        
-        if (canFall)
-            yVel = min(yVel + yGrav, 3);
-    }
-    if (state == PUSH)
-    {
-        canBePushed = false;
-        canFall = false;
-        yVel = 0;
-        
-        if (abs(px-x)&lt;TILE)
-            x += sign(dir);
-        else
-        {
-            state = IDLE;
-            px = x;
-        }
-    }
+    hurtDelay = 5;
+    hurt = false;
 }
-
-/*if (canFall &amp;&amp; place_meeting(x,y+2*yVel,objPlayer))
+hurtDelay = max(hurtDelay - 1,0);
+if (hp == 0)
 {
-    //with(objPlayer) die = true;  
-    canFall = false;     
-}*/
-
-if (!place_meeting(x,y+yVel,objAny))
-    y += yVel;
-else
-{
-    yVel = 0;
-    x = ((x+TILE/2) div TILE) * TILE;
-    y = ((y+TILE/2) div TILE) * TILE;    
-    canFall = false;
-
+    instance_create(x,y,objEffectDust);
+    instance_destroy();
 }
-/*
-repeat(abs(round(yVel))*5)
-{
-    if (!place_meeting(x,y+sign(yVel)*.05,objAny))
-        y += sign(yVel)*.05;
-    else
-    {
-        yVel = 0;
-        canFall = false;
-
-    }
-}*/
 </string>
           </argument>
         </arguments>
@@ -145,7 +86,13 @@ repeat(abs(round(yVel))*5)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x,y);
+            <string>draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x+(hurtDelay&gt;0)*(-1+random(2)),y);
+
+if (hurtDelay &gt; 0)
+{
+    draw_sprite_part(sprGfx,-1,3*TILE,2*TILE,TILE,TILE/2,x-TILE/2,y);
+    draw_sprite_part(sprGfx,-1,3*TILE,2.5*TILE,(hp/maxHp)*TILE,TILE/2,x-TILE/2,y);
+}
 </string>
           </argument>
         </arguments>

@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-999</depth>
   <persistent>-1</persistent>
-  <parentName>self</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>mskPixel</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -203,12 +203,12 @@ for (j=0; j &lt; room_height;j+= TILE)
                     hudX = i; hudY = j;
                 break;
                 case 1:
-                    instance_create(i,j,objCollectable);
-                    global.maxCollect++;
+                    instance_create(i,j,objBlock0);
                 break;
                 case 2:
                     instance_create(i,j,objSpikeUp);
                 break;
+                /*
                 case 3:
                     instance_create(i,j,objBlock0);
                 break;
@@ -230,7 +230,7 @@ for (j=0; j &lt; room_height;j+= TILE)
                 case 9:
                     instance_create(i,j,objBlock6);
                 break;
-                
+                */
             }
         }
         if (tile_get_top(tile) != 0)
@@ -285,20 +285,32 @@ draw_set_font(fntHud);
 
 if (instance_exists(objPlayer))
 {
-    playerHp = objPlayer.hp/objPlayer.maxHp;
-    playerAmmo = objPlayer.ammo/objPlayer.maxAmmo;   
+    playerHpRatio = objPlayer.hp/objPlayer.maxHp;
+    playerAmmoRatio = objPlayer.ammo/objPlayer.maxAmmo;
+    playerHp = objPlayer.hp;
+    playerMaxHp = objPlayer.maxHp;
+    playerAmmo = objPlayer.ammo;
+    playerMaxAmmo = objPlayer.maxAmmo;    
 } else
 {
     playerHp = 0;
+    playerMaxHp = 0;
     playerAmmo = 0;
+    playerMaxAmmo = 0;
+    playerHpRatio = 0;
+    playerAmmoRatio = 0;
 }
 //draw HP
 draw_sprite_part(sprGfx,-1,0,12*TILE,6*TILE,TILE,a,b);
-draw_sprite_part(sprGfx,-1,1.5*TILE,13*TILE,playerHp*4*TILE,TILE,a+1.5*TILE,b);
+draw_sprite_part(sprGfx,-1,1.5*TILE,13*TILE,playerHpRatio*4*TILE,TILE,a+1.5*TILE,b);
+draw_set_halign(fa_center);draw_set_valign(fa_center);
+drawText(a+3.5*TILE,b+.5*TILE,string(playerHp)+"/"+string(playerMaxHp),c_white,c_black,fntSmall);
 
 //draw ammo
 draw_sprite_part(sprGfx,-1,0,14*TILE,5*TILE,TILE,a,b+TILE);
-draw_sprite_part(sprGfx,-1,.5*TILE,15*TILE,playerAmmo*4*TILE,TILE,a+.5*TILE,b+TILE);
+draw_sprite_part(sprGfx,-1,.5*TILE,15*TILE,playerAmmoRatio*4*TILE,TILE,a+.5*TILE,b+TILE);
+draw_set_halign(fa_center);draw_set_valign(fa_center);
+drawText(a+2.5*TILE,b+1.5*TILE,string(floor(playerAmmoRatio*100))+"%",c_white,c_black,fntSmall);
 
 //draw_sprite_part(sprGfx,-1,0,TILE,TILE,TILE,a,b);
 //drawText(a+TILE,b,": " + string(global.collect)+"/"+string(global.maxCollect),c_white,c_black);

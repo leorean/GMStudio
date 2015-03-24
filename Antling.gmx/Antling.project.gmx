@@ -43,6 +43,7 @@
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHud</font>
+    <font>fonts\fntSmall</font>
     <font>fonts\fntBig</font>
   </fonts>
   <objects name="objects">
@@ -65,7 +66,6 @@
         <object>objects\objWinEffect</object>
       </objects>
       <object>objects\objCamera</object>
-      <object>objects\objSpike</object>
       <object>objects\objBlockTemp</object>
       <object>objects\objBlock</object>
       <object>objects\objDPad</object>
@@ -79,6 +79,7 @@
         <object>objects\objLiving</object>
         <object>objects\objSolid</object>
         <object>objects\objHUD</object>
+        <object>objects\objEnemy</object>
       </objects>
     </objects>
     <objects name="projectiles">
@@ -92,16 +93,17 @@
     <room>rooms\room3</room>
     <room>rooms\TEST</room>
   </rooms>
-  <constants number="16">
+  <constants number="17">
     <constant name="INFINITE">9000000000</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
+    <constant name="c_none">-1</constant>
     <constant name="IDLE">0</constant>
     <constant name="JUMP">1</constant>
     <constant name="WALK">2</constant>
-    <constant name="PUSH">3</constant>
-    <constant name="DIG">4</constant>
+    <constant name="DEAD">3</constant>
+    <constant name="HURT">4</constant>
     <constant name="WIN">5</constant>
     <constant name="ATTACK">6</constant>
     <constant name="NONE">0</constant>

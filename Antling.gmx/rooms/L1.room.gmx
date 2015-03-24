@@ -17,7 +17,7 @@
   <makerSettings>
     <isSet>-1</isSet>
     <w>1024</w>
-    <h>754</h>
+    <h>796</h>
     <showGrid>0</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -27,8 +27,8 @@
     <deleteUnderlyingObj>-1</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
     <page>2</page>
-    <xoffset>1002</xoffset>
-    <yoffset>-40</yoffset>
+    <xoffset>-194</xoffset>
+    <yoffset>-75</yoffset>
   </makerSettings>
   <backgrounds>
     <background visible="0" foreground="0" name="" x="0" y="0" htiled="-1" vtiled="-1" hspeed="0" vspeed="0" stretch="0"/>
@@ -149,35 +149,7 @@
     <tile bgName="sprTiles" x="816" y="208" w="16" h="16" xo="16" yo="32" id="10004565" name="inst_E649A9F1" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="832" y="208" w="16" h="16" xo="16" yo="32" id="10004566" name="inst_3B680244" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="832" y="224" w="16" h="16" xo="16" yo="32" id="10004567" name="inst_7554C854" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="880" y="144" w="16" h="16" xo="96" yo="0" id="10004571" name="inst_5A986B7E" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="880" y="160" w="16" h="16" xo="96" yo="0" id="10004572" name="inst_EB1FDF6B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="864" y="160" w="16" h="16" xo="96" yo="0" id="10004573" name="inst_758B38C6" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="864" y="176" w="16" h="16" xo="96" yo="0" id="10004574" name="inst_A93DD00C" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="880" y="176" w="16" h="16" xo="96" yo="0" id="10004576" name="inst_E5270A10" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="880" y="192" w="16" h="16" xo="96" yo="0" id="10004577" name="inst_A4AD77B9" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="880" y="208" w="16" h="16" xo="96" yo="0" id="10004578" name="inst_E7E28CA0" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="864" y="224" w="16" h="16" xo="96" yo="0" id="10004580" name="inst_CFE03E17" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="864" y="208" w="16" h="16" xo="96" yo="0" id="10004581" name="inst_CAA2002A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="864" y="192" w="16" h="16" xo="96" yo="0" id="10004582" name="inst_2F837CA0" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="896" y="208" w="16" h="16" xo="96" yo="0" id="10004583" name="inst_5EB4D41D" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="912" y="208" w="16" h="16" xo="96" yo="0" id="10004584" name="inst_F58F46FA" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="928" y="208" w="16" h="16" xo="96" yo="0" id="10004585" name="inst_03562B0E" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="944" y="224" w="16" h="16" xo="96" yo="0" id="10004587" name="inst_67748B82" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="928" y="224" w="16" h="16" xo="96" yo="0" id="10004588" name="inst_37E027E9" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="912" y="224" w="16" h="16" xo="96" yo="0" id="10004589" name="inst_41EFBE81" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="896" y="224" w="16" h="16" xo="96" yo="0" id="10004590" name="inst_A01F6205" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="880" y="224" w="16" h="16" xo="96" yo="0" id="10004591" name="inst_4DCCD3F2" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="848" y="240" w="16" h="16" xo="16" yo="32" id="10004603" name="inst_FBB243A8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="960" y="192" w="16" h="16" xo="80" yo="0" id="10004604" name="inst_648B832B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="976" y="192" w="16" h="16" xo="80" yo="0" id="10004605" name="inst_840AF665" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="992" y="192" w="16" h="16" xo="80" yo="0" id="10004606" name="inst_055EEC07" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="960" y="208" w="16" h="16" xo="96" yo="0" id="10004608" name="inst_67A51E3B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="976" y="208" w="16" h="16" xo="96" yo="0" id="10004609" name="inst_AF6E0403" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="992" y="208" w="16" h="16" xo="96" yo="0" id="10004610" name="inst_8F6EE4F2" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="992" y="224" w="16" h="16" xo="96" yo="0" id="10004611" name="inst_008A0438" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="976" y="224" w="16" h="16" xo="96" yo="0" id="10004612" name="inst_C992C95B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="960" y="224" w="16" h="16" xo="96" yo="0" id="10004613" name="inst_F664BE9D" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="944" y="192" w="16" h="16" xo="80" yo="0" id="10004614" name="inst_4C35462D" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="912" y="144" w="16" h="16" xo="16" yo="32" id="10004702" name="inst_768F98A4" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="960" y="144" w="16" h="16" xo="16" yo="32" id="10004705" name="inst_ECC3EB3C" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="976" y="144" w="16" h="16" xo="16" yo="32" id="10004706" name="inst_1901FBFA" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -193,7 +165,6 @@
     <tile bgName="sprTiles" x="912" y="160" w="16" h="16" xo="16" yo="32" id="10004724" name="inst_22A1EF3A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="928" y="176" w="16" h="16" xo="16" yo="32" id="10004730" name="inst_BF3152E2" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="912" y="176" w="16" h="16" xo="16" yo="32" id="10004731" name="inst_F2EE5615" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="944" y="208" w="16" h="16" xo="96" yo="0" id="10004733" name="inst_08202551" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1024" y="176" w="16" h="16" xo="16" yo="32" id="10004736" name="inst_57897BC3" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1024" y="144" w="16" h="16" xo="16" yo="32" id="10004738" name="inst_D4DA3294" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1024" y="160" w="16" h="16" xo="16" yo="32" id="10004739" name="inst_9B7B7859" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -333,13 +304,6 @@
     <tile bgName="sprTiles" x="960" y="96" w="16" h="16" xo="16" yo="32" id="10004932" name="inst_B0F7D4F8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="944" y="80" w="16" h="16" xo="16" yo="32" id="10004933" name="inst_77882456" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="928" y="80" w="16" h="16" xo="16" yo="32" id="10004934" name="inst_CBF0ED70" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="864" y="144" w="16" h="16" xo="96" yo="0" id="10004935" name="inst_793B632B" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="1024" y="208" w="16" h="16" xo="96" yo="0" id="10004941" name="inst_87F261B3" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="1008" y="208" w="16" h="16" xo="96" yo="0" id="10004942" name="inst_BF99F7B6" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="1008" y="224" w="16" h="16" xo="96" yo="0" id="10004943" name="inst_3266817A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="1024" y="224" w="16" h="16" xo="96" yo="0" id="10004944" name="inst_AD933F17" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="1040" y="208" w="16" h="16" xo="48" yo="0" id="10004947" name="inst_F8128639" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="1040" y="224" w="16" h="16" xo="48" yo="0" id="10004948" name="inst_F2DF7872" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="0" y="224" w="16" h="16" xo="16" yo="80" id="10004959" name="inst_BA4114FE" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="16" y="224" w="16" h="16" xo="16" yo="80" id="10004960" name="inst_C9865B9E" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="32" y="224" w="16" h="16" xo="16" yo="80" id="10004961" name="inst_FB793FB1" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -410,7 +374,6 @@
     <tile bgName="sprTiles" x="912" y="192" w="16" h="16" xo="16" yo="48" id="10005054" name="inst_3A4C38B9" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1024" y="192" w="16" h="16" xo="16" yo="48" id="10005055" name="inst_65E39EFC" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1008" y="192" w="16" h="16" xo="0" yo="48" id="10005056" name="inst_D80DD155" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="928" y="192" w="16" h="16" xo="32" yo="48" id="10005057" name="inst_C1A40475" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="1040" y="192" w="16" h="16" xo="32" yo="48" id="10005058" name="inst_A37680E8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="944" y="176" w="16" h="16" xo="16" yo="48" id="10005059" name="inst_4CB23117" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="960" y="176" w="16" h="16" xo="16" yo="48" id="10005060" name="inst_C95CAFC8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
@@ -467,6 +430,16 @@
     <tile bgName="sprTiles" x="16" y="80" w="16" h="16" xo="48" yo="64" id="10005123" name="inst_E01EEC34" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="0" y="80" w="16" h="16" xo="48" yo="64" id="10005124" name="inst_E0846700" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="0" y="96" w="16" h="16" xo="48" yo="64" id="10005125" name="inst_C7639C56" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="112" y="176" w="16" h="16" xo="32" yo="0" id="10005126" name="inst_504D87C8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="128" y="176" w="16" h="16" xo="32" yo="0" id="10005129" name="inst_9D25EB70" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="112" y="208" w="16" h="16" xo="16" yo="0" id="10005130" name="inst_6C79E61A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="128" y="208" w="16" h="16" xo="16" yo="0" id="10005131" name="inst_7CEA4330" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="208" y="192" w="16" h="16" xo="16" yo="0" id="10005132" name="inst_10CFBF49" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="224" y="192" w="16" h="16" xo="16" yo="0" id="10005133" name="inst_B3249574" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="224" y="176" w="16" h="16" xo="16" yo="0" id="10005134" name="inst_8DBD9892" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="80" y="144" w="16" h="16" xo="16" yo="0" id="10005135" name="inst_A5E78038" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="96" y="144" w="16" h="16" xo="16" yo="0" id="10005136" name="inst_05F26900" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="80" y="160" w="16" h="16" xo="16" yo="0" id="10005137" name="inst_CB83D58C" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

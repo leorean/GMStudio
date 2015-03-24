@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1000</depth>
+  <depth>-998</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,13 +27,15 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = -.5;
+yGrav = 0;
 timer = 1.5*60;
 text = "";
 c1 = c_white;
 c2 = c_black;
-font = fntHud;
+font = fntSmall;
 
-alpha = 2;
+xVelMax = 3;
+yVelMax = 3;
 </string>
           </argument>
         </arguments>
@@ -56,22 +58,21 @@ alpha = 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>alpha = max(alpha-.03,0);
-
+            <string>yVel += yGrav;
+xVel = max(min(xVel,xVelMax),-xVelMax)*.99;
+yVel = max(min(yVel,yVelMax),-yVelMax);
 x += xVel;
-y += yVel*min(alpha,1);
-timer = max(timer-1*(alpha==0),0);
+y += yVel;
+
+timer = max(timer-1,0);
 
 if (!timer) instance_destroy();
 
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_alpha(1);
-draw_set_font(font);
+drawText(x,y,text,c1,c2,font);
 
-drawText(x,y,text,c1,c2);
-
-draw_set_alpha(1);
 </string>
           </argument>
         </arguments>
