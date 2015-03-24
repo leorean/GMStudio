@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-1000</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objHUD</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,8 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.alphaHud = 1;
-global.alphaTimer = 60;
+            <string>global.mirrored = false;
 
 w = 5*TILE;
 h = 5*TILE;
@@ -83,6 +82,7 @@ b = view_yview[0];
 diag = false;
 dir = NONE;
 
+
 if (!drag)
 {
     kLeft = false;
@@ -91,7 +91,9 @@ if (!drag)
     kDown = false;
     for (i = 0; i &lt; 5; i++)
     {
-        if (device_mouse_check_button_pressed(i,mb_left) &amp;&amp; in(device_mouse_x(i),a,a + WIDTH/2))
+        if (device_mouse_check_button_pressed(i,mb_left)
+            &amp;&amp; !collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objHUD,true,true))
+            //&amp;&amp; in(device_mouse_x(i),a,a + WIDTH/2))
         {
             cx = device_mouse_x(i);
             cy = device_mouse_y(i);
@@ -102,6 +104,11 @@ if (!drag)
         }
         if (device_mouse_check_button(i,mb_left) &amp;&amp; in(device_mouse_x(i),cx-w/2-2*TILE,cx+w/2+2*TILE) &amp;&amp; in(device_mouse_y(i),cy-h/2-2*TILE,cy+h/2+2*TILE))
         {
+            if (in(device_mouse_x(i),a,a + WIDTH/3))
+                global.mirrored = false;
+            if (in(device_mouse_x(i),a+2*WIDTH/3,a + WIDTH))
+                global.mirrored = true;
+
             dev = i;
             drag = true;
             break;
@@ -190,6 +197,9 @@ forceY = abs(cy - dy) / (h/2 - TILE);
             <kind>1</kind>
             <string>a = view_xview[0];
 b = view_yview[0];
+
+//draw_line(a + WIDTH/3,b,a + WIDTH/3,b+HEIGHT);
+//draw_line(a + 2*WIDTH/3,b,a + 2*WIDTH/3,b+HEIGHT);
 
 if (drag)
     {cx = a + offX; cy = b + offY;}

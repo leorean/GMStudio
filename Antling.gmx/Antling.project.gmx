@@ -65,22 +65,25 @@
         <object>objects\objWinEffect</object>
       </objects>
       <object>objects\objCamera</object>
-      <object>objects\objSolid</object>
       <object>objects\objSpike</object>
       <object>objects\objBlockTemp</object>
       <object>objects\objBlock</object>
       <object>objects\objDPad</object>
       <object>objects\objDPadButton1</object>
       <object>objects\objDPadButton2</object>
-      <object>objects\objLiving</object>
-      <object>objects\objAny</object>
       <object>objects\objText</object>
-      <object>objects\objParticle</object>
-      <object>objects\objProjectile</object>
+      <objects name="hierarchy">
+        <object>objects\objProjectile</object>
+        <object>objects\objParticle</object>
+        <object>objects\objAny</object>
+        <object>objects\objLiving</object>
+        <object>objects\objSolid</object>
+        <object>objects\objHUD</object>
+      </objects>
     </objects>
     <objects name="projectiles">
-      <object>objects\objProjectile0</object>
-      <object>objects\objProjectile1</object>
+      <object>objects\objProjectileGatling</object>
+      <object>objects\objProjectileLightning</object>
     </objects>
   </objects>
   <rooms name="rooms">

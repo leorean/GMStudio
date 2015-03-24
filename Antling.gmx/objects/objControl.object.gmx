@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1000</depth>
+  <depth>-999</depth>
   <persistent>-1</persistent>
   <parentName>self</parentName>
   <maskName>mskPixel</maskName>
@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>window_set_size(2*WIDTH,2*HEIGHT);
 window_center();
+randomize();
 
 enum I
 {
@@ -34,11 +35,11 @@ enum I
     KEYBOARD = 1
 }
 
-//if(os_type == os_android)
-{
-    global.input = I.TOUCH;
-}// else
-//    global.input = I.KEYBOARD;
+
+global.input = I.TOUCH;
+//if(os_type == os_android) global.input = I.TOUCH; else global.input = I.KEYBOARD;
+
+global.mirrored = false;
 
 global.timer = 0;
 deathTimer = 0;
@@ -282,15 +283,26 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(fntHud);
 
-draw_sprite_part(sprGfx,-1,0,TILE,TILE,TILE,a,b);
-
-drawText(a+TILE,b,": " + string(global.collect)+"/"+string(global.maxCollect),c_white,c_black);
-
-if (global.gameState == G.GAMEWIN)
+if (instance_exists(objPlayer))
 {
-    //instance_create(a,b,objWinEffect);
-    
+    playerHp = objPlayer.hp/objPlayer.maxHp;
+    playerAmmo = objPlayer.ammo/objPlayer.maxAmmo;   
+} else
+{
+    playerHp = 0;
+    playerAmmo = 0;
 }
+//draw HP
+draw_sprite_part(sprGfx,-1,0,12*TILE,6*TILE,TILE,a,b);
+draw_sprite_part(sprGfx,-1,1.5*TILE,13*TILE,playerHp*4*TILE,TILE,a+1.5*TILE,b);
+
+//draw ammo
+draw_sprite_part(sprGfx,-1,0,14*TILE,5*TILE,TILE,a,b+TILE);
+draw_sprite_part(sprGfx,-1,.5*TILE,15*TILE,playerAmmo*4*TILE,TILE,a+.5*TILE,b+TILE);
+
+//draw_sprite_part(sprGfx,-1,0,TILE,TILE,TILE,a,b);
+//drawText(a+TILE,b,": " + string(global.collect)+"/"+string(global.maxCollect),c_white,c_black);
+
 </string>
           </argument>
         </arguments>

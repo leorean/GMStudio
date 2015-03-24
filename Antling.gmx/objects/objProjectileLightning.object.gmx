@@ -40,6 +40,8 @@ xO = x;
 yO = y;
 checkX = x;
 checkY = y;
+
+t = 15;
 </string>
           </argument>
         </arguments>
@@ -62,31 +64,32 @@ checkY = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_exists(objPlayer))
+            <string>t = max(t-1,0);
+if (instance_exists(objPlayer) &amp;&amp; t)
 {
-    x = objPlayer.cx;
-    y = objPlayer.cy;
+    x = objPlayer.cx+(objPlayer.weaponDist*(objPlayer.alternate != 0)*sign(objPlayer.dir)) + objPlayer.xVel;
+    y = objPlayer.cy + objPlayer.yVel;
     angle = objPlayer.aim;
-    if (!objPlayer.kAction)
+    if (!objPlayer.kAction || objPlayer.weapon != 1)
         instance_destroy();
 } else
     instance_destroy();
 
 if (global.timer % 2 == 0)
-    color = make_color_hsv(130+random(15),230+random(25),255);
+    color = make_color_hsv(140,155,255);
 else
     color = c_white;
-
     
 checkX = x;
 checkY = y;
-var sample = 8;
+var sample = 5;
 for (var i = 0; i &lt; WIDTH/sample; i++)
 {
-    checkX += lengthdir_x(sample,angle);
-    checkY += lengthdir_y(sample,angle);
-    if (place_meeting(checkX,checkY,objSolid))
+    checkX = min(max(checkX + lengthdir_x(sample,angle),view_xview[0]),view_xview[0]+view_wview[0]);
+    checkY = min(max(checkY + lengthdir_y(sample,angle),view_yview[0]),view_yview[0]+view_hview[0]);
+    if (place_meeting(checkX,checkY,objAny) &amp;&amp; !place_meeting(checkX,checkY,objPlayer))
     {
+        // do stuff with enemies etc
         break;
     }
 } 

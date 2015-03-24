@@ -63,7 +63,7 @@ if (!timer)
     if (fCur == fMax + 1)
         instance_destroy();
     
-    draw_sprite_part(sprGfx,-1,frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
+    draw_sprite_part(sprGfx,-1,9*TILE+frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
 }
 
 if (type == 1 &amp;&amp; !timer) //explosion

@@ -81,9 +81,19 @@ kDown = false;
 kJump = false;
 kAction = false;
 
+//stat variables
+maxHp = 50;
+hp = maxHp;
+
+maxAmmo = 100;
+ammo = maxAmmo;
+
+maxRechargeDelay = 60;
+rechargeDelay = maxRechargeDelay;
+
 //++++weapon stuff
 aim = 0; //the angle
-weapon = 0;
+weapon = 1;
 maxWeapon = 3;
 attackDelay = 0;
 weaponFrame = 0;
@@ -196,28 +206,34 @@ if (objDPad.drag)
 else
     aim = 0 + 180*(dir == LEFT) + sign(dir)*90*(look == UP) - sign(dir)*90*(look == DOWN);
 attackDelay = max(attackDelay - 1, 0);
-if (!attackDelay &amp;&amp; kAction)
+rechargeDelay = max(rechargeDelay - 1,0);
+if (!attackDelay &amp;&amp; kAction &amp;&amp; ammo &gt; 0)
 {
+    rechargeDelay = maxRechargeDelay;
     weaponFrame = 1;
     switch(weapon)
     {
         case 0:
             alternate = (alternate+1) % 2;
-            attackDelay = 5;
-            var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectile0);
-            p.angle = aim;
+            attackDelay = 4;
+            ammo = max(ammo - 1,0);
+            var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileGatling);
+            p.angle = aim-3+random(6);
         break;
         case 1:
-            alternate = 0;
-            attackDelay = 0;
-            if (!instance_exists(objProjectile1))
+            alternate = (alternate+1) % 2;
+            attackDelay = 20;
+            ammo = max(ammo - 5,0);
+            if (!instance_exists(objProjectileLightning))
             {
-                var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectile1);
+                var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileLightning);
                 p.angle = aim;
             }
         break;
     }
 }
+if (kAction) rechargeDelay = maxRechargeDelay;
+if (!rechargeDelay) ammo = min(ammo + 1,maxAmmo);
 
 /*if (state == ATTACK)
 {
@@ -558,7 +574,7 @@ if (state != WIN)
 }*/
 
 //++++prepare weapon draw coordinates++++
-weaponFrame = (weaponFrame + .2*(floor(weaponFrame) != 0)) % 4;
+weaponFrame = (weaponFrame + .3*(floor(weaponFrame) != 0)) % 4;
 var wx = 0, wy = 0;
 if (state == IDLE || state == WALK || JUMP)
     wx = wepx[state];wy = wepy[state];
