@@ -29,9 +29,11 @@
 fMax = 6;
 fSpeed = .25;
 type = 0;
-timer = 0;
+frame = 0;
 
-mask_index = mskBlock;
+mask_index=mskBlock;
+
+targets = ds_list_create();
 </string>
           </argument>
         </arguments>
@@ -54,40 +56,58 @@ mask_index = mskBlock;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>timer = max(timer - 1, 0);
-if (!timer)
-{
-    fCur = min(fCur + fSpeed, fMax + 1);
-    frame = floor(fCur);
-    
-    if (fCur == fMax + 1)
-        instance_destroy();
-    
-    draw_sprite_part(sprGfx,-1,9*TILE+frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
-}
+            <string>fCur = min(fCur + fSpeed, fMax + 1);
+if (floor(frame) != floor(fCur)) ds_list_clear(targets);
+frame = floor(fCur);
 
-if (type == 1 &amp;&amp; !timer) //explosion
-{
+if (fCur == fMax + 1)
+    instance_destroy();
 
-    with (instance_place(x,y,objPlayer))
+draw_sprite_part(sprGfx,-1,9*TILE+frame*TILE,12*TILE+type*TILE,TILE,TILE,floor(x),floor(y));
+
+if (type == 1)//explosive!
+{
+    target = instance_place(x,y,objAny);
+    if (instance_exists(target))
     {
-        objPlayer.die = true;
-    }
-    with (instance_place(x,y,objBlock))
-    {
-        if (type != 5)
+        for (i = 0; i &lt; 10; i++)
         {
-            instance_create(x,y,objEffectDust);
-            instance_destroy();
-        } else
-            explode = true;
+            if (target.object_index == objBlock0 &amp;&amp; ds_list_find_index(targets,target) == -1)
+            {
+                target.hp = max(target.hp-1,0);
+                target.hurt = true;
+                
+                var t = instance_create(x,y,objText);
+                t.text = "-"+string(1);
+                t.xVel = -1+random(2);
+                t.yVel = -2;
+                t.yGrav = .1;
+                ds_list_add(targets,target);
+                instance_deactivate_object(target);
+            }
+        }
     }
-    with (instance_place(x,y,objSpike))
-    {
-        instance_create(x,y,objEffectDust);
-        instance_destroy();
-    }
+    txt = "";
+    for (i = 0; i &lt; ds_list_size(targets); i++)
+        txt += string(ds_list_find_value(targets,i)) + string(":");
+    if (txt != "") show_debug_message(txt);
 }
+
+/*
+if (type == 1) //explosive!
+{
+    with(instance_place(x,y,objBlock0))
+    {
+        hp = max(hp-1,0);
+        hurt = true;
+        
+        var t = instance_create(x,y,objText);
+        t.text = "-"+string(1);
+        t.xVel = -1+random(2);
+        t.yVel = -2;
+        t.yGrav = .1;
+    }
+}*/
 </string>
           </argument>
         </arguments>

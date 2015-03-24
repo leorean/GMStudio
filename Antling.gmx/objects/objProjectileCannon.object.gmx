@@ -25,26 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dmg = 1;
+            <string>dmg = 6;
 
-spd = 8;
+spd = 6;
 xVel = 0;
 yVel = 0;
 angle = 0;
+yGrav = .15;
 
-mask_index = mskPixel;
+mask_index = mskCannon;
 
-color = c_white;
-
-xO = x;
-yO = y;
-checkX = x;
-checkY = y;
-
-timer = 0;
-target = noone;
-targets[0] = ds_list_create(); //list of all targets
-targets[1] = ds_list_create(); //list that holds all targets that are shot
 </string>
           </argument>
         </arguments>
@@ -67,64 +57,41 @@ targets[1] = ds_list_create(); //list that holds all targets that are shot
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>timer = max(timer-1,0);
-if (instance_exists(objPlayer) &amp;&amp; timer)
-{
-    x = objPlayer.cx+(objPlayer.weaponDist*(objPlayer.alternate != 0)*sign(objPlayer.dir)) + objPlayer.xVel;
-    y = objPlayer.cy + objPlayer.yVel;
-    angle = objPlayer.aim;
-    //if (!objPlayer.kAction || objPlayer.weapon != 1)
-    //    instance_destroy();
-} else
-    instance_destroy();
+            <string>yVel += yGrav;
+x += xVel;
+y += yVel;
 
-if (global.timer % 2 == 0)
-    color = make_color_hsv(140,155,255);
-else
-    color = c_white;
-    
-checkX = x;
-checkY = y;
-var sample = 5;
-for (var i = 0; i &lt; WIDTH/sample; i++)
+target = instance_place(x,y,objSolid);
+if (instance_exists(target))
 {
-    checkX = min(max(checkX + lengthdir_x(sample,angle),view_xview[0]),view_xview[0]+view_wview[0]);
-    checkY = min(max(checkY + lengthdir_y(sample,angle),view_yview[0]),view_yview[0]+view_hview[0]);
 
-    target = instance_place(checkX,checkY,objAny);
-    
-    if (instance_exists(target) &amp;&amp; target.object_index != objPlayer)//; &amp;&amp; !place_meeting(checkX,checkY,objPlayer))
+    //destroyable block
+    if (target.object_index == objBlock0)
     {
-        //destroyable block
-        if (target.object_index == objBlock0)
-        {
-            if (ds_list_find_index(targets[0],target) == -1)
-                ds_list_add(targets[0],target);
-        }
-        if (target.object_index == objSolid)
-            break;
+        target.hp = max(target.hp-dmg,0);
+        target.hurt = true;
+        
+        var t = instance_create(x,y,objText);
+        t.text = "-"+string(dmg);
+        t.xVel = -1+random(2);
+        t.yVel = -2;
+        t.yGrav = .1;
+        
     }
+    //explode
+    var e = instance_create(x-TILE/2,y-TILE/2,objEffectDust);
+    e.type = 1;
+    /*repeat(10)
+    {
+        var i = instance_create(x-4+random(8),y-4+random(8),objProjectileGatling);
+        i.angle = point_direction(x,y,i.x,i.y);
+        i.spd = 1;
+        i.timer = 20;
+        //i.color = c_white;
+    }*/
+    instance_destroy();    
 }
 
-for (i = 0; i &lt; ds_list_size(targets[0]); i++)
-{
-    var res = ds_list_find_value(targets[0],i);
-    if (timer % 5 == 0)//ds_list_find_index(targets[1],res) == -1)
-    {
-        if (instance_exists(res))
-        {
-            res.hp = max(res.hp-dmg,0);
-            res.hurt = true;
-            
-            var t = instance_create((res.x+res.w/2),(res.y+res.h/2),objText);
-            t.text = "-"+string(dmg);
-            t.xVel = -1+random(2);
-            t.yVel = -2;
-            t.yGrav = .1;
-        }
-        ds_list_add(targets[1],res);
-    }
-}
 </string>
           </argument>
         </arguments>
@@ -147,11 +114,7 @@ for (i = 0; i &lt; ds_list_size(targets[0]); i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_white);
-draw_set_alpha(1);
-
-drawLightning(x,y,checkX,checkY,color);
-//draw_sprite_ext(mskPixel,-1,x,y,2,2,0,make_color_hsv(35,200,255),1);
+            <string>draw_sprite_part(sprGfx,-1,4*TILE,2*TILE,TILE,TILE,x-TILE/2,y-TILE/2);
 </string>
           </argument>
         </arguments>

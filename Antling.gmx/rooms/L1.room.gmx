@@ -433,13 +433,14 @@
     <tile bgName="sprTiles" x="112" y="176" w="16" h="16" xo="32" yo="0" id="10005126" name="inst_504D87C8" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="128" y="176" w="16" h="16" xo="32" yo="0" id="10005129" name="inst_9D25EB70" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="112" y="208" w="16" h="16" xo="16" yo="0" id="10005130" name="inst_6C79E61A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
-    <tile bgName="sprTiles" x="128" y="208" w="16" h="16" xo="16" yo="0" id="10005131" name="inst_7CEA4330" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="96" y="192" w="16" h="16" xo="16" yo="0" id="10005131" name="inst_7CEA4330" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="208" y="192" w="16" h="16" xo="16" yo="0" id="10005132" name="inst_10CFBF49" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="224" y="192" w="16" h="16" xo="16" yo="0" id="10005133" name="inst_B3249574" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="224" y="176" w="16" h="16" xo="16" yo="0" id="10005134" name="inst_8DBD9892" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="80" y="144" w="16" h="16" xo="16" yo="0" id="10005135" name="inst_A5E78038" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="96" y="144" w="16" h="16" xo="16" yo="0" id="10005136" name="inst_05F26900" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
     <tile bgName="sprTiles" x="80" y="160" w="16" h="16" xo="16" yo="0" id="10005137" name="inst_CB83D58C" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
+    <tile bgName="sprTiles" x="0" y="208" w="16" h="16" xo="16" yo="0" id="10005138" name="inst_B362F79A" depth="10" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>
   </tiles>
   <PhysicsWorld>0</PhysicsWorld>
   <PhysicsWorldTop>0</PhysicsWorldTop>

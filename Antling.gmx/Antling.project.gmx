@@ -27,6 +27,7 @@
     </sprites>
     <sprite>sprites\mskCollectable</sprite>
     <sprite>sprites\sprParticle</sprite>
+    <sprite>sprites\mskCannon</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -85,6 +86,7 @@
     <objects name="projectiles">
       <object>objects\objProjectileGatling</object>
       <object>objects\objProjectileLightning</object>
+      <object>objects\objProjectileCannon</object>
     </objects>
   </objects>
   <rooms name="rooms">
