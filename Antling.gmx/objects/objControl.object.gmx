@@ -85,10 +85,10 @@ bb = 4*TILE;
 
 //++++remove projectiles and particles++++
 with (objProjectile)
-if (!in(x,view_xview[0]-8*TILE,view_xview[0]+WIDTH+8*TILE) || !in(y,view_yview[0]-8*TILE,view_yview[0]+WIDTH+8*TILE))
+if (!in(x,view_xview[0]-4*TILE,view_xview[0]+WIDTH+4*TILE) || !in(y,view_yview[0]-4*TILE,view_yview[0]+WIDTH+4*TILE))
     instance_destroy();
 with (objParticle)
-if (!in(x,view_xview[0]-8*TILE,view_xview[0]+WIDTH+8*TILE) || !in(y,view_yview[0]-8*TILE,view_yview[0]+WIDTH+8*TILE))
+if (!in(x,view_xview[0]-4*TILE,view_xview[0]+WIDTH+4*TILE) || !in(y,view_yview[0]-4*TILE,view_yview[0]+WIDTH+4*TILE))
     instance_destroy();
 
 

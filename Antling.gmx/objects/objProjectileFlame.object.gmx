@@ -43,6 +43,8 @@ target = noone;
 canHurt = true;
     
 z = -1;
+
+visible = false;
 </string>
           </argument>
         </arguments>
@@ -76,6 +78,7 @@ yVel = lengthdir_y(spd,angle);
 
 x += xVel;
 y += yVel;
+visible = true; //don't show the first frame
 
 timer = max(timer-1,0);
 if(!timer) instance_destroy();
@@ -121,7 +124,9 @@ if (instance_exists(target))
           <argument>
             <kind>1</kind>
             <string>var s = max(1+2*timer/maxTimer,1);
+draw_sprite_ext(mskPixel,-1,x-xVel,y-yVel,min(2*s,4),min(2*s,4),0,make_color_hsv(35*timer/maxTimer,255,255),.5);
 draw_sprite_ext(mskPixel,-1,x,y,s,s,0,make_color_hsv(35*timer/maxTimer,255,255),1);
+
 </string>
           </argument>
         </arguments>

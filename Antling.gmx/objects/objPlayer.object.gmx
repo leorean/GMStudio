@@ -247,7 +247,7 @@ if (!attackDelay &amp;&amp; kAction)
         {
             case 0: //GATLING GUN
                 alternate = (alternate+1) % 2;
-                attackDelay = 8;
+                attackDelay = 5;
                 ammo = max(ammo - 2,0);
                 var p = instance_create(cx+(weaponDist*(alternate == 0)*sign(dir)),cy,objProjectileGatling);
                 p.angle = aim-3+random(6);
@@ -260,7 +260,7 @@ if (!attackDelay &amp;&amp; kAction)
                 p.angle = aim;
                 p.timer = attackDelay;
             break;
-            case 2:
+            case 2: //CANNON
                 attackDelay = 15;
                 alternate = (alternate+1) % 2;
                 ammo = max(ammo - 5,0);
@@ -269,16 +269,16 @@ if (!attackDelay &amp;&amp; kAction)
                 p.xVel = lengthdir_x(p.spd,aim);
                 p.yVel = min(lengthdir_y(p.spd,aim),-p.yGrav*10);
             break;
-            case 3:
+            case 3: //FLAMESPITTER
                 attackDelay = 2;
-                alternate = 1;
-                ammo = max(ammo - .1,0);
+                alternate = 0;
+                ammo = max(ammo - .3,0);
                 for (i = 0; i &lt; 10; i++)
                 {
                     var p = instance_create(cx+(weaponDist*(alternate == 1)*sign(dir)),cy,objProjectileFlame);
                     p.angle = aim-10+random(20);
                     p.canHurt = (i % 5 == 0);
-                    p.spd = 4+i;
+                    p.spd = 6+i;
                 }
             break;
         }

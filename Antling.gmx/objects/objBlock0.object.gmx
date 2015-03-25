@@ -89,15 +89,15 @@ if (hp == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,type*TILE,0,TILE,TILE,x,y);
-
-//+(hurtDelay&gt;0)*(-1+random(2))
+            <string>var frame = ceil(3-(hp/maxHp)*3);
+draw_sprite_part(sprGfx,-1,frame*TILE,0,TILE,TILE,x,y);
+/*
 if (hurtDelay &gt; 0)
 {
     draw_sprite_part(sprGfx,-1,3*TILE,2*TILE,TILE,TILE/2,x,y-TILE/2);
     draw_sprite_part(sprGfx,-1,3*TILE,2.5*TILE,(hp/maxHp)*TILE,TILE/2,x,y-TILE/2);
 }
-
+*/
 </string>
           </argument>
         </arguments>
