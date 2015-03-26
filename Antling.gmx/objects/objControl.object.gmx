@@ -251,6 +251,8 @@ if (global.input == I.TOUCH)
         instance_create(-1000,-1000,objDPadButton1);
     if (!instance_exists(objDPadButton2))    
         instance_create(-1000,-1000,objDPadButton2);
+    if (!instance_exists(objDPadButton3))    
+        instance_create(-1000,-1000,objDPadButton3);
 }
 
 

@@ -28,6 +28,7 @@
     <sprite>sprites\mskCollectable</sprite>
     <sprite>sprites\sprParticle</sprite>
     <sprite>sprites\mskCannon</sprite>
+    <sprite>sprites\mskDPadButtonSmall</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -72,6 +73,7 @@
       <object>objects\objDPad</object>
       <object>objects\objDPadButton1</object>
       <object>objects\objDPadButton2</object>
+      <object>objects\objDPadButton3</object>
       <object>objects\objText</object>
       <objects name="hierarchy">
         <object>objects\objProjectile</object>

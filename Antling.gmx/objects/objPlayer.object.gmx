@@ -79,6 +79,7 @@ kUp = false;
 kDown = false;
 kJump = false;
 kAction = false;
+kWeapon = false;
 
 //stat variables
 maxHp = 50;
@@ -150,6 +151,7 @@ kUp = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance
 kDown = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
 kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 kAction = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(ord('S')) || mouse_check_button(mb_right) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressing)) &amp;&amp; (global.gameState == G.PLAY);
+kWeapon = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(ord('D')) || (instance_exists(objDPadButton3) &amp;&amp; objDPadButton3.pressed)) &amp;&amp; (global.gameState == G.PLAY);
 diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
 ddir = NONE;
 with(objDPad) /*if (forceX &gt;= .2)*/ objPlayer.ddir = dir;
@@ -216,7 +218,7 @@ if (!hurtDelay)
 
 //++++ATTACK++++
 //choose weapon:
-if (mouse_wheel_up()) weapon = (weapon + 1) mod (maxWeapon+1);
+if (mouse_wheel_up() || kWeapon) weapon = (weapon + 1) mod (maxWeapon+1);
 if (mouse_wheel_down()) weapon = (weapon + (maxWeapon)) mod (maxWeapon+1);
 //aim angle
 if (objDPad.drag)
