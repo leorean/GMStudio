@@ -37,7 +37,7 @@ cy = (bbox_top+bbox_bottom)/2;
 tx = cx;
 ty = cy;
 
-radius = 3*TILE;
+radius = 4*TILE;
 
 state = IDLE;
 </string>
@@ -80,6 +80,7 @@ state = IDLE;
         ty = cy;
         var e = instance_create(cx,cy,objEffectCall);
         e.rMax = radius;
+        e.type = 0;
         
         bees = find(cx,cy,radius,objBee);
         if (is_array(bees))
@@ -98,6 +99,7 @@ state = IDLE;
         ty = cy;
         var e = instance_create(cx,cy,objEffectCall);
         e.rMax = radius;
+        e.type = 1;
         
         bees = find(cx,cy,radius,objBee);
         if (is_array(bees))

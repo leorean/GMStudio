@@ -28,9 +28,9 @@
             <string>r = 0;
 rMax = 0;
 s = 2;
-a = 1;
 
-c = c_green;
+c = c_white;
+type = 0;
 </string>
           </argument>
         </arguments>
@@ -56,18 +56,23 @@ c = c_green;
             <string>x = objPlayer.cx;
 y = objPlayer.cy;
 
-r = min(r+s,rMax);
+r = min(r+(rMax/20),rMax);
 if (r &gt;= rMax) instance_destroy();
 
-a = 1-r/rMax;
-
-draw_set_color(c);
-draw_set_alpha(a);
-draw_circle(x,y,rMax-r,1);
-draw_set_alpha(1-a);
-draw_circle(x,y,r,1);
+if (type == 0)
+{
+    draw_set_color(c_green);
+    draw_set_alpha(1-r/rMax);
+    draw_circle(x,y,r,0);
+}
+if (type == 1)
+{
+    draw_set_color(c_yellow);
+    draw_set_alpha(r/rMax);
+    draw_circle(x,y,rMax-r,0);
+}
 draw_set_alpha(1);
-
+draw_set_color(c_black);
 </string>
           </argument>
         </arguments>

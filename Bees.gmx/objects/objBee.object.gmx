@@ -37,6 +37,8 @@ free = false; //if free, behave autonomous
 
 dust = 0;
 maxDust = 10;
+
+flower = noone;
 </string>
           </argument>
         </arguments>
@@ -91,6 +93,9 @@ maxDust = 10;
         }
     }
 
+    /*
+        just wait in the air for the next command
+    */
     if (state == IDLE)
     {
         xVel *= .9;
@@ -100,29 +105,45 @@ maxDust = 10;
         if (objPlayer.state == FLY)
             state = FOLLOW;
     }
+    /*
+        select a flower and gather dust, watching out for fellow worker-bees
+    */
     if (state == GATHER)
     {
-        if (flower == noone)
+        if (flower == noone || (instance_exists(flower) &amp;&amp; (dust &gt;= maxDust) || (flower.bee != noone &amp;&amp; flower.bee != id)))
         {
             if (dust &gt;= maxDust)
+            {
+                if (instance_exists(flower) &amp;&amp; (flower.bee == id || dust &gt;= maxDust))
+                    flower.bee = noone;
                 state = TRANSPORT;
+            }
             else
             {
-                repeat(instance_number(objFlower))//find nearest flower that has dust
+                var n = instance_number(objFlower);
+                for(var i = 0; i &lt;= n; i++)//find nearest flower that has dust
                 {
                     flower = instance_nearest(x,y,objFlower);
                     if (instance_exists(flower))
                     {
-                        if(flower.dust&gt;0)
+                        if(flower.dust &gt; 0 &amp;&amp; (flower.bee == noone || flower.bee == id))
+                        {
+                            flower.bee = id;
                             break;
+                        }
                         else
+                        {
                             instance_deactivate_object(flower);
+                            show_debug_message("i:"+string(i)+",n:"+string(n));
+                        }
                     }
                 }
                 instance_activate_object(objFlower);
+                if (instance_exists(flower) &amp;&amp; ((flower.bee != id &amp;&amp; flower.bee != noone) || flower.dust &lt;= 0))
+                    flower = noone;
             }
         }
-        if (instance_exists(flower) &amp;&amp; dust &lt; maxDust)
+        if (instance_exists(flower))
         {
             tx = flower.cx;
             ty = flower.cy;
@@ -137,27 +158,30 @@ maxDust = 10;
                 
                 if (place_meeting(x+xVel,y+yVel,flower))
                 {
-                    if (flower.dust &gt; 0)
+                    if (flower.dust &gt; 0 &amp;&amp; dust &lt; maxDust)
                     {
+                        flower.bee = id;
                         flower.dust = max(flower.dust-1,0);
                         dust = min(dust+1,maxDust);
                     } else
                     {
+                        flower.bee = noone;
                         flower = noone;
-                        /*
-                        if (dust &gt; 0)
-                            state = TRANSPORT;
-                        else
-                            state = FOLLOW;
-                        */
                     }
                 }
             }
         } else
             state = TRANSPORT;
     } else
+    {
+        if (instance_exists(flower) &amp;&amp; flower.bee == id)
+            flower.bee = noone;
         flower = noone;
+    }
         
+    /*
+        bring dust to the hive
+    */
     if (state == TRANSPORT)
     {
         hive = instance_nearest(cx,cy,objHive);
@@ -233,6 +257,9 @@ if (state == ATTACK) c = c_red;
 
 draw_sprite_ext(mskBee,-1,x,y,1,1,0,c,1);
 draw_text(x,y-TILE,dust);
+
+if (instance_exists(flower))
+draw_line(cx,cy,flower.cx,flower.cy);
 </string>
           </argument>
         </arguments>
