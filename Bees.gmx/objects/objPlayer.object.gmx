@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objFriendly</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -37,6 +37,8 @@ cy = (bbox_top+bbox_bottom)/2;
 tx = cx;
 ty = cy;
 
+radius = 3*TILE;
+
 state = IDLE;
 </string>
           </argument>
@@ -65,12 +67,48 @@ state = IDLE;
     cx = (bbox_right+bbox_left)/2;
     cy = (bbox_top+bbox_bottom)/2;
     
-    if (mouse_check_button(mb_left))
+    if (mouse_check_button(mb_left)) //FLY TO POINT
     {
         tx = mouse_x;
         ty = mouse_y;
         angle = point_direction(cx,cy,tx,ty);
         state = FLY;
+    }
+    if (keyboard_check_pressed(ord('A')))//FREE BEES
+    {
+        tx = cx;
+        ty = cy;
+        var e = instance_create(cx,cy,objEffectCall);
+        e.rMax = radius;
+        
+        bees = find(cx,cy,radius,objBee);
+        if (is_array(bees))
+            for (var i = 0; i &lt; array_length_1d(bees); i++)
+            {
+                if (instance_exists(bees[i]))
+                {
+                    bees[i].state = GATHER;
+                    //bees[i].free = true;
+                }
+            }
+    }
+    if (keyboard_check_pressed(ord('S')))//CALL BEES
+    {
+        tx = cx;
+        ty = cy;
+        var e = instance_create(cx,cy,objEffectCall);
+        e.rMax = radius;
+        
+        bees = find(cx,cy,radius,objBee);
+        if (is_array(bees))
+            for (var i = 0; i &lt; array_length_1d(bees); i++)
+            {
+                if (instance_exists(bees[i]))
+                {
+                    bees[i].state = FOLLOW;
+                    //bees[i].free = false;
+                }
+            }
     }
     if (state == FLY)
     {
@@ -135,7 +173,7 @@ state = IDLE;
           <argument>
             <kind>1</kind>
             <string>draw_self();
-draw_line(cx,cy,tx,ty);
+//draw_line(cx,cy,tx,ty);
 </string>
           </argument>
         </arguments>

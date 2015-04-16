@@ -24,14 +24,10 @@ for (i = 0; i < instance_number(t); i++)
     tar = instance_find(t,i);
     if (instance_exists(tar))
     {
-        /*
-            TODO:
-            calculate circular radius.
-            x = length * cos (angle);
-            y = length * sin (angle);
-
-        */
-        if (in(tar.x,a-r/2,a+r/2) && in(tar.y,b-r/2,b+r/2))
+        if (in(tar.cx,a-r,a+r) && in(tar.cy,b-r,b+r))
+        /*var angle = point_direction(tar.cx,tar.cy,a,b);
+        if (abs(tx-cx)<=abs(lengthdir_x(r,angle))
+        && abs(ty-cy)<=abs(lengthdir_y(r,angle)))*/
         {
             found[f] = tar;
             f++;
@@ -43,9 +39,9 @@ if (is_array(found))
 {
     if (array_length_1d(found) > 0)
     {
-        for (i = 0; i < min(array_length_1d(found),d); i++)
+        for (i = 0; i < array_length_1d(found); i++)
             result[i] = found[i];
-        return result;   
+        return result;
     } else
         return -1;
 } else

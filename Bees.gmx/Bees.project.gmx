@@ -11,6 +11,8 @@
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\mskBee</sprite>
+    <sprite>sprites\mskFlower</sprite>
+    <sprite>sprites\mskHive</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -25,11 +27,17 @@
     <object>objects\objEnemy</object>
     <object>objects\objBlock</object>
     <object>objects\objBee</object>
+    <objects name="hierarchy">
+      <object>objects\objFriendly</object>
+    </objects>
+    <object>objects\objFlower</object>
+    <object>objects\objEffectCall</object>
+    <object>objects\objHive</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>
   </rooms>
-  <constants number="12">
+  <constants number="13">
     <constant name="INFINITE">900000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">800</constant>
@@ -41,7 +49,8 @@
     <constant name="FOLLOW">2</constant>
     <constant name="ATTACK">3</constant>
     <constant name="GATHER">4</constant>
-    <constant name="DEAD">5</constant>
+    <constant name="TRANSPORT">5</constant>
+    <constant name="DEAD">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

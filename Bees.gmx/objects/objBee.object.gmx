@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objFriendly</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -27,11 +27,16 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
-velMax = 2;
+velMax = 1.5;
 
 state = FOLLOW;
 
-sinoff = random(1);//offset for sinus motion
+sinoff = random(1); //offset for sinus motion
+
+free = false; //if free, behave autonomous
+
+dust = 0;
+maxDust = 10;
 </string>
           </argument>
         </arguments>
@@ -59,7 +64,7 @@ sinoff = random(1);//offset for sinus motion
     cx = x + TILE/2;
     cy = y + TILE/2;
     
-    bee = instance_place(x+xVel,y+yVel,objBee);
+    bee = instance_place(x+xVel,y+yVel,objFriendly);
     if (instance_exists(bee))
     {
         xVel -= lengthdir_x(.2,point_direction(cx,cy,bee.cx,bee.cy));
@@ -92,13 +97,102 @@ sinoff = random(1);//offset for sinus motion
         yVel = 1*sin(global.timer*.1+sinoff);
         tx = cx;
         ty = cy;
-        if (objPlayer.state == FLY)//if (abs(objPlayer.cx-cx)&gt;6*TILE || abs(objPlayer.cy-cy)&gt;6*TILE)
+        if (objPlayer.state == FLY)
             state = FOLLOW;
     }
+    if (state == GATHER)
+    {
+        if (flower == noone)
+        {
+            if (dust &gt;= maxDust)
+                state = TRANSPORT;
+            else
+            {
+                repeat(instance_number(objFlower))//find nearest flower that has dust
+                {
+                    flower = instance_nearest(x,y,objFlower);
+                    if (instance_exists(flower))
+                    {
+                        if(flower.dust&gt;0)
+                            break;
+                        else
+                            instance_deactivate_object(flower);
+                    }
+                }
+                instance_activate_object(objFlower);
+            }
+        }
+        if (instance_exists(flower) &amp;&amp; dust &lt; maxDust)
+        {
+            tx = flower.cx;
+            ty = flower.cy;
+            if (abs(tx-cx)&gt;TILE || abs(ty-cy)&gt;TILE)
+            {
+                xVel += sign(tx-cx)*.3;
+                yVel += sign(ty-cy)*.3;
+            } else
+            {
+                xVel *= .9;
+                yVel *= .9;
+                
+                if (place_meeting(x+xVel,y+yVel,flower))
+                {
+                    if (flower.dust &gt; 0)
+                    {
+                        flower.dust = max(flower.dust-1,0);
+                        dust = min(dust+1,maxDust);
+                    } else
+                    {
+                        flower = noone;
+                        /*
+                        if (dust &gt; 0)
+                            state = TRANSPORT;
+                        else
+                            state = FOLLOW;
+                        */
+                    }
+                }
+            }
+        } else
+            state = TRANSPORT;
+    } else
+        flower = noone;
         
+    if (state == TRANSPORT)
+    {
+        hive = instance_nearest(cx,cy,objHive);
+        if (instance_exists(hive))
+        {
+            tx = hive.cx;
+            ty = hive.cy;
+            if (abs(tx-cx)&gt;TILE || abs(ty-cy)&gt;TILE)
+            {
+                xVel += sign(tx-cx)*.1;
+                yVel += sign(ty-cy)*.1;
+            } else
+            {
+                xVel *= .9;
+                yVel *= .9;
+            }
+            if (place_meeting(x+xVel,y+yVel,hive) &amp;&amp; dust &gt; 0)
+            {
+                dust = max(dust-1,0);
+                hive.honey += 1;
+            }
+        }
+        if (dust &lt;= 0)
+        {
+            state = FOLLOW;
+        }
+    }
+    
+    if (state == IDLE || state == FOLLOW || state == GATHER)
+        velMax = 2;
+    else
+        velMax = 1;
     xVel = sign(xVel)*min(abs(xVel),velMax);
     yVel = sign(yVel)*min(abs(yVel),velMax);
-    
+
     if (!place_meeting(x+xVel,y,objBlock))
         x += xVel;
     else
@@ -109,6 +203,36 @@ sinoff = random(1);//offset for sinus motion
         yVel = -yVel;
     
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (state == IDLE) c = c_white;
+if (state == FOLLOW) c = c_green;
+if (state == GATHER) c = c_yellow;
+if (state == TRANSPORT) c = c_maroon;
+if (state == ATTACK) c = c_red;
+
+draw_sprite_ext(mskBee,-1,x,y,1,1,0,c,1);
+draw_text(x,y-TILE,dust);
 </string>
           </argument>
         </arguments>
