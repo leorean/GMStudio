@@ -13,6 +13,7 @@
     <sprite>sprites\mskBee</sprite>
     <sprite>sprites\mskFlower</sprite>
     <sprite>sprites\mskHive</sprite>
+    <sprite>sprites\mskSpore</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -33,6 +34,7 @@
     <object>objects\objFlower</object>
     <object>objects\objEffectCall</object>
     <object>objects\objHive</object>
+    <object>objects\objSpore</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MAIN</room>

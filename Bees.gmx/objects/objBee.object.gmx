@@ -39,6 +39,12 @@ dust = 0;
 maxDust = 10;
 
 flower = noone;
+
+cx = x+TILE/2;
+cy = y+TILE/2;
+
+maxDelay = 60; // delay to search for a flower
+delay = maxDelay;
 </string>
           </argument>
         </arguments>
@@ -110,8 +116,11 @@ flower = noone;
     */
     if (state == GATHER)
     {
-        if (flower == noone || (instance_exists(flower) &amp;&amp; (dust &gt;= maxDust) || (flower.bee != noone &amp;&amp; flower.bee != id)))
+        if (!instance_exists(flower) || (instance_exists(flower) &amp;&amp; (dust &gt;= maxDust) || (flower.bee != noone &amp;&amp; flower.bee != id)))
         {
+            xVel *= .9;
+            yVel = 1*sin(global.timer*.1+sinoff);
+            
             if (dust &gt;= maxDust)
             {
                 if (instance_exists(flower) &amp;&amp; (flower.bee == id || dust &gt;= maxDust))
@@ -120,27 +129,32 @@ flower = noone;
             }
             else
             {
-                var n = instance_number(objFlower);
-                for(var i = 0; i &lt;= n; i++)//find nearest flower that has dust
+                delay = max(delay-1,0);
+                if (delay == 0)
                 {
-                    flower = instance_nearest(x,y,objFlower);
-                    if (instance_exists(flower))
+                    var n = instance_number(objFlower);
+                    for(var i = 0; i &lt;= n; i++)//find nearest flower that has dust
                     {
-                        if(flower.dust &gt; 0 &amp;&amp; (flower.bee == noone || flower.bee == id))
+                        flower = instance_nearest(x,y,objFlower);
+                        if (instance_exists(flower))
                         {
-                            flower.bee = id;
-                            break;
-                        }
-                        else
-                        {
-                            instance_deactivate_object(flower);
-                            show_debug_message("i:"+string(i)+",n:"+string(n));
+                            if(flower.dust &gt; 0 &amp;&amp; (flower.bee == noone || flower.bee == id))
+                            {
+                                flower.bee = id;
+                                break;
+                            }
+                            else
+                            {
+                                instance_deactivate_object(flower);
+                                show_debug_message("i:"+string(i)+",n:"+string(n));
+                            }
                         }
                     }
+                    instance_activate_object(objFlower);
+                    if (instance_exists(flower) &amp;&amp; ((flower.bee != id &amp;&amp; flower.bee != noone) || flower.dust &lt;= 0))
+                        flower = noone;
+                    delay = maxDelay;
                 }
-                instance_activate_object(objFlower);
-                if (instance_exists(flower) &amp;&amp; ((flower.bee != id &amp;&amp; flower.bee != noone) || flower.dust &lt;= 0))
-                    flower = noone;
             }
         }
         if (instance_exists(flower))
@@ -206,7 +220,8 @@ flower = noone;
         }
         if (dust &lt;= 0)
         {
-            state = FOLLOW;
+            //state = FOLLOW;
+            state = GATHER;
         }
     }
     

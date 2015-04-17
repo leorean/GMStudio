@@ -64,8 +64,8 @@ state = IDLE;
             <kind>1</kind>
             <string>if (!global.paused)
 {
-    cx = (bbox_right+bbox_left)/2;
-    cy = (bbox_top+bbox_bottom)/2;
+    cx = x+TILE/2;
+    cy = y+TILE/2;
     
     if (mouse_check_button(mb_left)) //FLY TO POINT
     {
