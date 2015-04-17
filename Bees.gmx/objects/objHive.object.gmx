@@ -3,7 +3,7 @@
   <spriteName>mskHive</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>10</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>honey = 0;
 hp = 100;
+
+cost = 100;
 
 cx = x+TILE/2;
 cy = y+TILE/2;
@@ -52,11 +54,11 @@ cy = y+TILE/2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (honey &gt;= 50)
+            <string>if (honey &gt;= cost)
 {
     var bee = instance_create(x,y,objBee);
     bee.state = GATHER;
-    honey = max(honey-50,0);
+    honey = max(honey-cost,0);
 }
 </string>
           </argument>

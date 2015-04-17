@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.paused = false;
+            <string>randomize();
+
+global.paused = false;
 global.timer = 0;
 </string>
           </argument>

@@ -3,7 +3,7 @@
   <spriteName>mskFlower</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>10</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -28,7 +28,7 @@
             <string>cx = x+TILE/2;
 cy = y+TILE/2;
 
-maxDust = 10;
+maxDust = 30;
 dust = 0;
 bee = noone;
 
@@ -89,7 +89,7 @@ yo = y;
         if (dust &lt;= 0)
         {
             bee = noone;
-            repeat(2)
+            repeat(irandom(2))
                 instance_create(cx,cy,objSpore);
             instance_destroy();
         }

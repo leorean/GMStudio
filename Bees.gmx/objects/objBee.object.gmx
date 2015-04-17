@@ -31,7 +31,7 @@ velMax = 1.5;
 
 state = FOLLOW;
 
-sinoff = random(1); //offset for sinus motion
+sinoff = -1+random(2); //offset for sinus motion
 
 free = false; //if free, behave autonomous
 
@@ -75,8 +75,8 @@ delay = maxDelay;
     bee = instance_place(x+xVel,y+yVel,objFriendly);
     if (instance_exists(bee))
     {
-        xVel -= lengthdir_x(.2,point_direction(cx,cy,bee.cx,bee.cy));
-        yVel -= lengthdir_y(.2,point_direction(cx,cy,bee.cx,bee.cy));            
+        xVel -= lengthdir_x(.4,point_direction(cx,cy,bee.cx,bee.cy));
+        yVel -= lengthdir_y(.4,point_direction(cx,cy,bee.cx,bee.cy));            
     }
     
     if (state == FOLLOW)
@@ -95,7 +95,7 @@ delay = maxDelay;
         } else
         {
             state = IDLE;
-            sinoff = random(1);
+            sinoff = -1+random(2);
         }
     }
 
@@ -118,7 +118,7 @@ delay = maxDelay;
     {
         if (!instance_exists(flower) || (instance_exists(flower) &amp;&amp; (dust &gt;= maxDust) || (flower.bee != noone &amp;&amp; flower.bee != id)))
         {
-            xVel *= .9;
+            xVel = 1*cos(global.timer*.1+sinoff)
             yVel = 1*sin(global.timer*.1+sinoff);
             
             if (dust &gt;= maxDust)
@@ -144,10 +144,7 @@ delay = maxDelay;
                                 break;
                             }
                             else
-                            {
                                 instance_deactivate_object(flower);
-                                show_debug_message("i:"+string(i)+",n:"+string(n));
-                            }
                         }
                     }
                     instance_activate_object(objFlower);
