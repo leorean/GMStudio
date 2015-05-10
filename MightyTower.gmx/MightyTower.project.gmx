@@ -14,6 +14,9 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\in.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>

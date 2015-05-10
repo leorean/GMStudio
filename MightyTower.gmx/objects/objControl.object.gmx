@@ -33,6 +33,13 @@ if (keyboard_check_pressed(ord('R')))
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
+    
+//+++++move everything
+with(objBlock)
+    y += global.yVel;
+with(objCannon)
+    y += global.yVel;
+    
 </string>
           </argument>
         </arguments>
@@ -55,7 +62,8 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>global.yVel = 0;
+</string>
           </argument>
         </arguments>
       </action>

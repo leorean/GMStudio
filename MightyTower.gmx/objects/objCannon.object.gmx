@@ -38,7 +38,7 @@ angle = minangle + random(maxangle-minangle);
 minpow = 10;
 maxpow = 25;
 curpow = 0;
-pow = .05; //how fast does the power go up and down
+pow = .07; //how fast does the power go up and down
 sgnpow = 1; //power goes either up or down
 </string>
           </argument>
@@ -82,8 +82,9 @@ sgnpow = 1; //power goes either up or down
         if (mouse_check_button_pressed(mb_any))
         {
             var p = instance_create(x,y,objPlayer);
-            p.angle = angle;
-            p.pow = curpow;
+            p.xVel = lengthdir_x(10*curpow,angle);
+            p.yVel = lengthdir_y(10*curpow,angle);
+
             state = C_IDLE;
         }
         
@@ -120,7 +121,6 @@ if (state == C_POWER)
 
     draw_sprite_part(sprGraphics,-1,0,0,.5*TILE,3*TILE,x+2*TILE,y-1.5*TILE);
     draw_sprite_part(sprGraphics,-1,.5*TILE,3*TILE,.5*TILE,-curpow*3*TILE,x+2*TILE,y-1.5*TILE+3*TILE);
-    show_debug_message(curpow);
 }
 </string>
           </argument>

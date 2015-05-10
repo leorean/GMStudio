@@ -29,10 +29,8 @@
 yVel = 0;
 
 angle = 0;
-pow = 0;
-spd = 4;
 
-view_object[0] = id;
+yGrav = .15;
 </string>
           </argument>
         </arguments>
@@ -55,11 +53,15 @@ view_object[0] = id;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = lengthdir_x(pow*spd,angle);
-yVel = lengthdir_y(pow*spd,angle);
+            <string>yVel += yGrav;
 
-x += xVel;
-//y += yVel;
+if (in(x+xVel,TILE,WIDTH-TILE) &amp;&amp; !place_meeting(x+xVel,y,objBlock))
+    x += xVel;
+else
+    xVel = -xVel;
+y += yVel;
+
+global.yVel = -min(yVel,0);
 </string>
           </argument>
         </arguments>
