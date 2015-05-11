@@ -19,9 +19,9 @@
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
-    <object>objects\objPlayer</object>
-    <object>objects\objCannon</object>
     <object>objects\objFlail</object>
+    <object>objects\objCannon</object>
+    <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
   </objects>
   <rooms name="rooms">

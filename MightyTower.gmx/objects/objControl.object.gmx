@@ -60,14 +60,14 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 //+++++move everything
 with(objBlock)
 {
-    y += global.yVel;
-    if (y &gt; HEIGHT+2*TILE) instance_destroy();
+    y -= global.yVel;
+    if (y &lt; -2*TILE) instance_destroy();
 }
-with(objCannon)
+/*with(objCannon)
 {
     y += global.yVel;
-    if (y &gt; HEIGHT+2*TILE) instance_destroy();
-}
+    if (y &lt; 0) instance_destroy();
+}*/
 
 global.height = max(global.height + global.yVel, global.height);
 //show_debug_message(global.height);
@@ -76,7 +76,7 @@ spawnheight += global.yVel;
 
 
 //++++spawner
-if (instance_exists(objPlayer))
+if (instance_exists(objFlail))
 {
     if (spawnheight div (HEIGHT/2) &gt; 1)
     {
@@ -84,8 +84,11 @@ if (instance_exists(objPlayer))
         repeat(1+irandom(2))
         {
             tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
-            while (place_meeting(tmpx,-TILE,objBlock)) tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
-                instance_create(tmpx,-TILE,objBlock);
+            while (place_meeting(tmpx,HEIGHT,objBlock)) tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
+            {
+                var b = instance_create(tmpx,HEIGHT,objBlock);
+                b.type = choose(0,1);
+            }
         }
         spawnheight = 0;
     }
@@ -121,6 +124,8 @@ spawnheight = 0;
 
 global.fric = 0.005; //air friction
 global.maxPow = 10; //full potential power of the shot
+
+flail = instance_create(WIDTH/2,TILE,objFlail);
 </string>
           </argument>
         </arguments>
@@ -143,7 +148,7 @@ global.maxPow = 10; //full potential power of the shot
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(0,0,global.yVel);
+            <string>draw_text(0,0,global.height);
 </string>
           </argument>
         </arguments>

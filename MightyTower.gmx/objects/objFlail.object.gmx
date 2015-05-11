@@ -27,9 +27,18 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
-angle = 0;
 
-block = noone;
+maxVel = 4; //max velocity
+
+xAcc = .1;
+tx = x;
+ty = y;
+
+angle = 0;
+yGrav = .15;
+
+player = instance_create(x,y,objPlayer);
+player.angle = 0;
 </string>
           </argument>
         </arguments>
@@ -52,34 +61,125 @@ block = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*
-if (!objPlayer.isHooked)
+            <string>//++++FLAIL-PLAYER CONNECTION/INTERACTION
+if (mouse_check_button(mb_left))
+    tx = mouse_x;
+xVel = sign(tx-x)*min(abs(tx-x)/30,3);
+
+player.xVel += (x-player.x)/120;
+player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
+
+player.yVel = (y-player.y)/12 - global.yVel;
+
+with(player)
 {
-    //xVel *= .95;
-    //yVel *= .95;
-    
-    //remove hook if too far away
-    if (!in(y,0,HEIGHT) || !in(x,0,WIDTH))
-    {
-        objPlayer.hook = noone;
-        objPlayer.isHooked = false;
-        instance_destroy();
-    }
-    
-    if (place_meeting(x+xVel,y+yVel,objBlock))
-    {
-        objPlayer.isHooked = true;
-        
-    }
-} else
-{
-    xVel = 0;
-    yVel = 0;
+    x += xVel;
+    y += yVel;
 }
+/*
+xVel = sign(tx-x)*min(abs(tx-x)/30,3);
+radius = 5*TILE;
+
+angle = point_direction(x,y,player.x,player.y);
+rad_angle = ((angle / 180) * pi);
+player.x = min(max(x + (cos(rad_angle)) * radius , TILE), WIDTH-TILE);
+player.y = y - (sin(rad_angle)) * radius;
+player.xVel = player.x-player.xprevious;
+player.yVel = player.y-player.yprevious;
 */
 
-x += xVel;
-y += yVel;
+block = instance_place(x+xVel,y+yVel,objBlock);
+if (instance_exists(block))
+{
+    if (block.type == 1)
+    {
+        yVel *= .5;
+        with(block) instance_destroy();
+    }
+}
+
+//if (ty &lt; y) yVel += abs(ty-y)/4;
+
+/*    
+    flail.xVel += (x-flail.x)/120;
+    flail.yVel += (y-flail.y)/120;
+    flail.yVel += yGrav;
+    
+    flail.xVel = sign(flail.xVel)*min(abs(flail.xVel),5);
+    flail.yVel = sign(flail.yVel)*min(abs(flail.yVel),5);
+*/
+/*
+if (!isHooked)
+{
+
+    if (mouse_check_button(mb_left))
+        tx = mouse_x;
+    
+    xVel = sign(tx-x)*min(abs(tx-x)/24,1);
+    
+    flail.xVel += (x-flail.x)/120;
+    flail.yVel += (y-flail.y)/120;
+    flail.yVel += yGrav;
+    
+    flail.xVel = sign(flail.xVel)*min(abs(flail.xVel),5);
+    flail.yVel = sign(flail.yVel)*min(abs(flail.yVel),5);
+
+    with(flail)
+    {
+        block = instance_place(x+xVel,y+yVel,objBlock);
+        if (instance_exists(block))
+        {
+            objPlayer.isHooked = true;
+        }        
+    }    
+}
+else
+{
+    flail.xVel = 0;
+    flail.yVel = 0;
+    flail.y += global.yVel;
+    //flail.yVel += yVel;
+    
+    xVel += (flail.x-x)/60;
+    yVel += (flail.y-y)/60;
+    
+    if (yVel &lt; 0 &amp;&amp; y &lt; flail.y)
+    {
+        yVel -= 2;
+        with(flail)
+        {
+            if (instance_exists(block))
+                with(block)
+                    instance_destroy();
+        }
+        isHooked = false;
+    }
+}*/
+
+//++++physics
+if (!place_meeting(x+xVel,y,objBlock) &amp;&amp; in(x+xVel,TILE,WIDTH-TILE))
+    x += xVel;
+else
+{
+    xVel = 0;
+}
+
+yVel = min(yVel+yGrav,5);
+
+if (y &gt; HEIGHT/2)
+    y -= (y-HEIGHT/2)/4;
+    
+if (!place_meeting(x,y+yVel,objBlock))
+    y += yVel;
+else
+{
+    player.xVel *= .9;
+    y -= yVel;
+}
+
+global.yVel = max(yVel,0);// + global.ySpeed;
+  
+    
 </string>
           </argument>
         </arguments>
