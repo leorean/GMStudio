@@ -28,9 +28,19 @@
             <string>xVel = 0;
 yVel = 0;
 
+maxVel = 4; //max velocity
+
+xAcc = .1;
+tx = x;
+
 angle = 0;
 
-yGrav = .15;
+yGrav = global.fric;
+
+flail = instance_create(x,y,objFlail);
+flail.angle = 0;
+
+isHooked = false;
 </string>
           </argument>
         </arguments>
@@ -53,15 +63,133 @@ yGrav = .15;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>yVel += yGrav;
+            <string>//++++flail/hook
+/*
+if (!isHooked &amp;&amp; !instance_exists(hook) &amp;&amp; mouse_check_button_pressed(mb_any))
+{
+    hook = instance_create(x,y,objHook);
+    hook.angle = point_direction(hook.x,hook.y,mouse_x,mouse_y);
+    hook.xVel = lengthdir_x(8,hook.angle);// + xVel;
+    hook.yVel = lengthdir_y(8,hook.angle) + (yVel&lt;0)*yVel;
 
-if (in(x+xVel,TILE,WIDTH-TILE) &amp;&amp; !place_meeting(x+xVel,y,objBlock))
+}
+
+if (isHooked &amp;&amp; instance_exists(hook))
+{
+    angle = point_direction(x,y,hook.x,hook.y);
+    xVel += lengthdir_x(1,angle);
+    yVel += lengthdir_y(1,angle);
+    
+    
+    if (yVel &lt; 0 &amp;&amp; y &lt; hook.y)
+    {
+        with(hook) instance_destroy();
+        isHooked = false;
+    }
+    
+    //bulge velocity
+    //xVel = sign(xVel)*min(abs(xVel),maxVel);
+    //yVel = sign(yVel)*min(abs(yVel),maxVel);
+    //angle = point_direction(x,y,hook.x,hook.y);
+    //xVel += lengthdir_x(4,angle);
+    //yVel = min(yVel,0)-4;
+    //yVel = lengthdir_y(4,angle);
+    
+    //with(hook) instance_destroy();
+    //isHooked = false;
+
+}
+*/
+
+//++++FLAIL-PLAYER CONNECTION/INTERACTION
+    if (mouse_check_button(mb_left))
+        tx = mouse_x;
+    
+    xVel = sign(tx-x)*min(abs(tx-x)/60,3);
+    
+    flail.xVel += (x-flail.x)/120;
+    flail.yVel += (y-flail.y)/120;
+    flail.yVel += yGrav;
+    
+    flail.xVel = sign(flail.xVel)*min(abs(flail.xVel),5);
+    flail.yVel = sign(flail.yVel)*min(abs(flail.yVel),5);
+/*
+if (!isHooked)
+{
+
+    if (mouse_check_button(mb_left))
+        tx = mouse_x;
+    
+    xVel = sign(tx-x)*min(abs(tx-x)/24,1);
+    
+    flail.xVel += (x-flail.x)/120;
+    flail.yVel += (y-flail.y)/120;
+    flail.yVel += yGrav;
+    
+    flail.xVel = sign(flail.xVel)*min(abs(flail.xVel),5);
+    flail.yVel = sign(flail.yVel)*min(abs(flail.yVel),5);
+
+    with(flail)
+    {
+        block = instance_place(x+xVel,y+yVel,objBlock);
+        if (instance_exists(block))
+        {
+            objPlayer.isHooked = true;
+        }        
+    }    
+}
+else
+{
+    flail.xVel = 0;
+    flail.yVel = 0;
+    flail.y += global.yVel;
+    //flail.yVel += yVel;
+    
+    xVel += (flail.x-x)/60;
+    yVel += (flail.y-y)/60;
+    
+    if (yVel &lt; 0 &amp;&amp; y &lt; flail.y)
+    {
+        yVel -= 2;
+        with(flail)
+        {
+            if (instance_exists(block))
+                with(block)
+                    instance_destroy();
+        }
+        isHooked = false;
+    }
+}*/
+
+//++++physics
+
+if (in(x+xVel,TILE,WIDTH-TILE))// &amp;&amp; !place_meeting(x+xVel,y,objBlock))
     x += xVel;
 else
-    xVel = -xVel;
+{
+    xVel = -xVel/2;
+}
+
+//yGrav += .0001;
+yVel += yGrav;
+
+yVel = min(yVel,5);
 y += yVel;
 
-global.yVel = -min(yVel,0);
+global.yVel = -min(yVel,0);// + global.ySpeed;
+
+//center the player
+/*if (y &lt; HEIGHT/2)
+{
+    y = HEIGHT/2;
+    y += yVel;
+}*/
+y += (HEIGHT/2-y)/12;
+
+//loose condition
+if (y &gt; HEIGHT+4*TILE) room_restart();
+    
+    
 </string>
           </argument>
         </arguments>

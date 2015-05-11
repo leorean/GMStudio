@@ -17,7 +17,7 @@
   <makerSettings>
     <isSet>-1</isSet>
     <w>988</w>
-    <h>677</h>
+    <h>796</h>
     <showGrid>0</showGrid>
     <showObjects>-1</showObjects>
     <showTiles>-1</showTiles>
@@ -26,7 +26,7 @@
     <showViews>0</showViews>
     <deleteUnderlyingObj>-1</deleteUnderlyingObj>
     <deleteUnderlyingTiles>-1</deleteUnderlyingTiles>
-    <page>4</page>
+    <page>0</page>
     <xoffset>-163</xoffset>
     <yoffset>-119</yoffset>
   </makerSettings>
@@ -53,9 +53,6 @@
   <instances>
     <instance objName="objCannon" x="112" y="336" name="inst_553DC081" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objControl" x="0" y="0" name="inst_9B3B3AE1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="32" y="112" name="inst_79140FC2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="160" y="80" name="inst_5966EF1E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="208" y="160" name="inst_DC5A4764" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>

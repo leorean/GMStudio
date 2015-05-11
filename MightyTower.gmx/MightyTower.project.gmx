@@ -8,7 +8,7 @@
   <sprites name="sprites">
     <sprite>sprites\mskCannon</sprite>
     <sprite>sprites\mskPlayer</sprite>
-    <sprite>sprites\mskHook</sprite>
+    <sprite>sprites\mskFlail</sprite>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\sprGraphics</sprite>
   </sprites>
@@ -21,7 +21,7 @@
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objCannon</object>
-    <object>objects\objHook</object>
+    <object>objects\objFlail</object>
     <object>objects\objBlock</object>
   </objects>
   <rooms name="rooms">

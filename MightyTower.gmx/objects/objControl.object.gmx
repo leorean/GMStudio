@@ -8,6 +8,29 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>randomize();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -36,10 +59,38 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     
 //+++++move everything
 with(objBlock)
+{
     y += global.yVel;
+    if (y &gt; HEIGHT+2*TILE) instance_destroy();
+}
 with(objCannon)
+{
     y += global.yVel;
-    
+    if (y &gt; HEIGHT+2*TILE) instance_destroy();
+}
+
+global.height = max(global.height + global.yVel, global.height);
+//show_debug_message(global.height);
+
+spawnheight += global.yVel;
+
+
+//++++spawner
+if (instance_exists(objPlayer))
+{
+    if (spawnheight div (HEIGHT/2) &gt; 1)
+    {
+        var tmpx = 0;
+        repeat(1+irandom(2))
+        {
+            tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
+            while (place_meeting(tmpx,-TILE,objBlock)) tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
+                instance_create(tmpx,-TILE,objBlock);
+        }
+        spawnheight = 0;
+    }
+        
+}
 </string>
           </argument>
         </arguments>
@@ -63,6 +114,36 @@ with(objCannon)
           <argument>
             <kind>1</kind>
             <string>global.yVel = 0;
+global.ySpeed = .5;
+
+global.height = 0;
+spawnheight = 0;
+
+global.fric = 0.005; //air friction
+global.maxPow = 10; //full potential power of the shot
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_text(0,0,global.yVel);
 </string>
           </argument>
         </arguments>

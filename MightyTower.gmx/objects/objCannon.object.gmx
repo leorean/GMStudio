@@ -27,19 +27,21 @@
             <kind>1</kind>
             <string>x = WIDTH/2;
 
-state = C_ANGLE;
+state = C_POWER;
 shot = false;
 
 rot = 2; //how fast does the cannon rotate
 minangle = 90-33;
 maxangle = 90+33;
-angle = minangle + random(maxangle-minangle);
+angle = 90;//minangle + random(maxangle-minangle);
 
 minpow = 10;
 maxpow = 25;
 curpow = 0;
-pow = .07; //how fast does the power go up and down
+chargepow = .07; //how fast does the power go up and down
 sgnpow = 1; //power goes either up or down
+
+
 </string>
           </argument>
         </arguments>
@@ -74,16 +76,19 @@ sgnpow = 1; //power goes either up or down
             state = C_POWER; //powerlevel state
     break;
     case C_POWER:
-        curpow = max( min(curpow + sgnpow*pow, 1), 0);
+        curpow = max( min(curpow + sgnpow*chargepow, 1), 0);
 
         if (curpow == 0) sgnpow = 1;        
         if (curpow == 1) sgnpow = -1;
 
         if (mouse_check_button_pressed(mb_any))
         {
+            curpow = max(curpow,.3); //lower limit
+            
             var p = instance_create(x,y,objPlayer);
-            p.xVel = lengthdir_x(10*curpow,angle);
-            p.yVel = lengthdir_y(10*curpow,angle);
+            p.yVel = -global.maxPow*curpow;
+            //p.xVel = lengthdir_x(pow*curpow,angle);
+            //p.yVel = lengthdir_y(pow*curpow,angle);
 
             state = C_IDLE;
         }
@@ -122,6 +127,8 @@ if (state == C_POWER)
     draw_sprite_part(sprGraphics,-1,0,0,.5*TILE,3*TILE,x+2*TILE,y-1.5*TILE);
     draw_sprite_part(sprGraphics,-1,.5*TILE,3*TILE,.5*TILE,-curpow*3*TILE,x+2*TILE,y-1.5*TILE+3*TILE);
 }
+
+
 </string>
           </argument>
         </arguments>
