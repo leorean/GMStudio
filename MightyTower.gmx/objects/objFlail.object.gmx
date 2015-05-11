@@ -69,15 +69,36 @@ xVel = sign(tx-x)*min(abs(tx-x)/30,3);
 player.xVel += (x-player.x)/120;
 player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
 
-player.yVel = (y-player.y)/12 - global.yVel;
+//player.yVel = (y-player.y)/12 - global.yVel;
+player.yVel += (y-player.y - 3*TILE)/240;// - global.yVel;
+player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
+
+player.angle = point_direction(x,y,player.x,player.y);
 
 with(player)
 {
-    x += xVel;
+    if (in(x+xVel,TILE,WIDTH-TILE))
+        x += xVel;
+    else
+        xVel = -xVel;
     y += yVel;
+    
+    //OUCH - lose
+    //if (place_meeting(x+xVel,y+yVel,objBlock))
+    {
+    //    room_restart();
+    }
 }
-/*
+
 xVel = sign(tx-x)*min(abs(tx-x)/30,3);
+
+radius = 5*TILE;
+angle = point_direction(x,y,player.x,player.y);
+/*rad_angle = ((angle / 180) * pi);
+player.y = y - (sin(rad_angle)) * radius;
+*/
+
+/*
 radius = 5*TILE;
 
 angle = point_direction(x,y,player.x,player.y);
@@ -88,76 +109,18 @@ player.xVel = player.x-player.xprevious;
 player.yVel = player.y-player.yprevious;
 */
 
-block = instance_place(x+xVel,y+yVel,objBlock);
-if (instance_exists(block))
-{
-    if (block.type == 1)
-    {
-        yVel *= .5;
-        with(block) instance_destroy();
-    }
-}
-
 //if (ty &lt; y) yVel += abs(ty-y)/4;
 
-/*    
-    flail.xVel += (x-flail.x)/120;
-    flail.yVel += (y-flail.y)/120;
-    flail.yVel += yGrav;
-    
-    flail.xVel = sign(flail.xVel)*min(abs(flail.xVel),5);
-    flail.yVel = sign(flail.yVel)*min(abs(flail.yVel),5);
-*/
-/*
-if (!isHooked)
+block = collision_line(bbox_left,bbox_bottom,bbox_right,bbox_bottom,objBlock,true,true);
+
+if (instance_exists(block))
 {
-
-    if (mouse_check_button(mb_left))
-        tx = mouse_x;
-    
-    xVel = sign(tx-x)*min(abs(tx-x)/24,1);
-    
-    flail.xVel += (x-flail.x)/120;
-    flail.yVel += (y-flail.y)/120;
-    flail.yVel += yGrav;
-    
-    flail.xVel = sign(flail.xVel)*min(abs(flail.xVel),5);
-    flail.yVel = sign(flail.yVel)*min(abs(flail.yVel),5);
-
-    with(flail)
-    {
-        block = instance_place(x+xVel,y+yVel,objBlock);
-        if (instance_exists(block))
-        {
-            objPlayer.isHooked = true;
-        }        
-    }    
+    yVel = 0;
+    with(block) instance_destroy();
 }
-else
-{
-    flail.xVel = 0;
-    flail.yVel = 0;
-    flail.y += global.yVel;
-    //flail.yVel += yVel;
-    
-    xVel += (flail.x-x)/60;
-    yVel += (flail.y-y)/60;
-    
-    if (yVel &lt; 0 &amp;&amp; y &lt; flail.y)
-    {
-        yVel -= 2;
-        with(flail)
-        {
-            if (instance_exists(block))
-                with(block)
-                    instance_destroy();
-        }
-        isHooked = false;
-    }
-}*/
 
 //++++physics
-if (!place_meeting(x+xVel,y,objBlock) &amp;&amp; in(x+xVel,TILE,WIDTH-TILE))
+if (!place_meeting(x+xVel,y-yVel,objBlock) &amp;&amp; in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;
 else
 {
@@ -167,19 +130,43 @@ else
 yVel = min(yVel+yGrav,5);
 
 if (y &gt; HEIGHT/2)
-    y -= (y-HEIGHT/2)/4;
-    
+    y -= (y-HEIGHT/2)/8;
+
 if (!place_meeting(x,y+yVel,objBlock))
     y += yVel;
 else
 {
-    player.xVel *= .9;
-    y -= yVel;
+    y -= yVel/2;
+    //player.xVel *= .9;
+    //player.yVel += yVel;
+    //y -= yVel;
+    //yVel = -yVel/2;
 }
 
-global.yVel = max(yVel,0);// + global.ySpeed;
-  
-    
+global.yVel = 5;//max(yVel,0);// + global.ySpeed;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_sprite_ext(sprFlail,-1,x,y,1,1,angle,c_white,1);
 </string>
           </argument>
         </arguments>

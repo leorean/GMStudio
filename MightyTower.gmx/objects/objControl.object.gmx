@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>randomize();
+mask_index = mskBlock;
 </string>
           </argument>
         </arguments>
@@ -81,7 +82,7 @@ if (instance_exists(objFlail))
     if (spawnheight div (HEIGHT/2) &gt; 1)
     {
         var tmpx = 0;
-        repeat(1+irandom(2))
+        repeat(1+irandom(10))
         {
             tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
             while (place_meeting(tmpx,HEIGHT,objBlock)) tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;

@@ -11,6 +11,8 @@
     <sprite>sprites\mskFlail</sprite>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\sprGraphics</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprFlail</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
