@@ -123,8 +123,8 @@ else
 
 yVel = min(yVel+yGrav,5);
 
-if (y &gt; HEIGHT/2)
-    y -= (y-HEIGHT/2)/8;
+if (y &gt; global.line)
+    y -= (y-global.line)/8;
 
 if (!place_meeting(x,y+yVel,objBlock))
     y += yVel;

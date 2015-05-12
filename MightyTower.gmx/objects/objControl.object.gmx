@@ -70,11 +70,17 @@ with(objBlock)
     if (y &lt; 0) instance_destroy();
 }*/
 
-global.height = max(global.height + global.yVel, global.height);
+//++++
+global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
+
+if (keyboard_check_pressed(vk_space))
+global.lifeLine += TILE;
+
+//++++distance measurement
+global.distance = max(global.distance + global.yVel, global.distance);
 //show_debug_message(global.height);
 
 spawnheight += global.yVel;
-
 
 //++++spawner
 if (instance_exists(objFlail))
@@ -120,14 +126,20 @@ if (instance_exists(objFlail))
             <string>global.yVel = 0;
 global.ySpeed = .5;
 
-global.height = 0;
+global.distance = 0;
 spawnheight = 0;
 
 global.fric = 0.005; //air friction
 global.maxPow = 10; //full potential power of the shot
 
-flail = instance_create(WIDTH/2,TILE,objFlail);
+/*
+the horizontal line at which the flail has to be... this line should get higher as penalty,
+and lower as reward, but overall higher and higher so the game finally ends.
+*/
+global.lifeLine = HEIGHT/2;
+global.lineFriction = .01; //the speed at which the lifeline goes up
 
+flail = instance_create(WIDTH/2,TILE,objFlail);
 instance_create(0,0,objBg);
 </string>
           </argument>
@@ -151,7 +163,7 @@ instance_create(0,0,objBg);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(0,0,global.height);
+            <string>draw_text(0,0,global.distance);
 </string>
           </argument>
         </arguments>
