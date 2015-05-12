@@ -123,8 +123,8 @@ else
 
 yVel = min(yVel+yGrav,5);
 
-if (y &gt; global.line)
-    y -= (y-global.line)/8;
+if (y &gt; global.lifeLine)
+    y -= (y-global.lifeLine)/8;
 
 if (!place_meeting(x,y+yVel,objBlock))
     y += yVel;
@@ -136,8 +136,6 @@ else
     //y -= yVel;
     //yVel = -yVel/2;
 }
-
-global.yVel = 5;//max(yVel,0);// + global.ySpeed;
 </string>
           </argument>
         </arguments>
