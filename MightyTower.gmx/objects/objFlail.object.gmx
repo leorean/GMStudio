@@ -166,7 +166,15 @@ global.yVel = 5;//max(yVel,0);// + global.ySpeed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprFlail,-1,x,y,1,1,angle,c_white,1);
+            <string>var n = 6, fx = 0, fy = 0;
+for (var i = 1; i &lt; n; i++)
+{
+    fx = (player.x-x)/n * i + x;
+    fy = (player.y-y)/n * i + y;
+    draw_sprite_part(sprGraphics,-1,0,0,TILE,TILE,fx-TILE/2,fy-TILE/2);
+}
+
+draw_sprite_ext(sprFlail,-1,x,y,1,1,angle,c_white,1);
 </string>
           </argument>
         </arguments>
