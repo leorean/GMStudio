@@ -127,6 +127,8 @@ global.fric = 0.005; //air friction
 global.maxPow = 10; //full potential power of the shot
 
 flail = instance_create(WIDTH/2,TILE,objFlail);
+
+instance_create(0,0,objBg);
 </string>
           </argument>
         </arguments>

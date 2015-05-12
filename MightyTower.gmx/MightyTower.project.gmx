@@ -13,6 +13,7 @@
     <sprite>sprites\sprGraphics</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFlail</sprite>
+    <sprite>sprites\sprBg</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -25,6 +26,7 @@
     <object>objects\objCannon</object>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
+    <object>objects\objBg</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
