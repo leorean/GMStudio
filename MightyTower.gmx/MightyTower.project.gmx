@@ -14,6 +14,9 @@
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFlail</sprite>
     <sprite>sprites\sprBg</sprite>
+    <sprite>sprites\sprBoulder</sprite>
+    <sprite>sprites\mskBoulderBig</sprite>
+    <sprite>sprites\mskBoulderSmall</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -26,6 +29,7 @@
     <object>objects\objCannon</object>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
+    <object>objects\objBoulder</object>
     <object>objects\objBg</object>
   </objects>
   <rooms name="rooms">

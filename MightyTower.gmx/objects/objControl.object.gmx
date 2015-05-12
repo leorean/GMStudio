@@ -58,27 +58,28 @@ if (keyboard_check_pressed(ord('R')))
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
     
-//+++++move everything
+//+++++move everything here:
 with(objBlock)
 {
     y -= global.yVel;
     if (y &lt; -2*TILE) instance_destroy();
 }
-/*with(objCannon)
-{
-    y += global.yVel;
-    if (y &lt; 0) instance_destroy();
-}*/
 
-//++++
-global.yVel = max(8-(global.lifeLine/HEIGHT/2)*4,global.yVel);
-global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
+//++++ velocity management
+if (!started &amp;&amp; instance_exists(objFlail) &amp;&amp; objFlail.y &gt;= global.lifeLine-objFlail.yVel)
+    started = true;
+if (started)
+    global.yVel = floor(max(7-(global.lifeLine/HEIGHT)*7,global.yVel));
+else
+    global.yVel = 4;
+//global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
 
 if (keyboard_check_pressed(ord('1')))
     global.lifeLine += TILE;
 if (keyboard_check_pressed(ord('2')))
     global.lifeLine -= TILE;
 
+global.lifeLine = max(global.lifeLine, 1);
 //++++distance measurement
 global.distance = max(global.distance + global.yVel, global.distance);
 //show_debug_message(global.height);
@@ -90,8 +91,10 @@ if (instance_exists(objFlail))
 {
     if (spawnheight div (HEIGHT/2) &gt; 1)
     {
+        var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+
         var tmpx = 0;
-        repeat(1+irandom(10))
+        repeat(0)//1+irandom(10))
         {
             tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
             while (place_meeting(tmpx,HEIGHT,objBlock)) tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
@@ -139,10 +142,12 @@ global.maxPow = 10; //full potential power of the shot
 the horizontal line at which the flail has to be... this line should get higher as penalty,
 and lower as reward, but overall higher and higher so the game finally ends.
 */
-global.lifeLine = HEIGHT/2;
-global.lineFriction = .01; //the speed at which the lifeline goes up
+global.lifeLine = 1*HEIGHT/2;
+global.lineFriction = .02; //the speed at which the lifeline goes up
 
-flail = instance_create(WIDTH/2,TILE,objFlail);
+started = false; //this will be set true once per run, when the player reaches a certain y-height on screen
+
+flail = instance_create(WIDTH/2,3*TILE,objFlail);
 instance_create(0,0,objBg);
 </string>
           </argument>
@@ -166,7 +171,9 @@ instance_create(0,0,objBg);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_text(0,0,global.distance);
+            <string>draw_set_color(c_white);
+draw_text(0,0,global.distance);
+draw_text(0,TILE,global.yVel);
 </string>
           </argument>
         </arguments>

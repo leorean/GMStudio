@@ -49,10 +49,13 @@ b = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>b = (b-global.yVel * .8) % HEIGHT;
-draw_sprite_part(sprBg,-1,0,0,WIDTH,HEIGHT,a,floor(b));
-draw_sprite_part(sprBg,-1,0,0,WIDTH,HEIGHT,a,floor(b)+HEIGHT);
+            <string>a = (a-global.yVel * .8) % HEIGHT;
+b = (b-global.yVel * 1) % HEIGHT;
+draw_sprite_part(sprBg,-1,0,0,WIDTH,HEIGHT,0,floor(a));
+draw_sprite_part(sprBg,-1,0,0,WIDTH,HEIGHT,0,floor(a)+HEIGHT);
 
+//draw_sprite_part(sprBg,-1,WIDTH,0,WIDTH,HEIGHT,0,floor(b));
+//draw_sprite_part(sprBg,-1,WIDTH,0,WIDTH,HEIGHT,0,floor(b)+HEIGHT);
 
 </string>
           </argument>

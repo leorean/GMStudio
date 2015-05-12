@@ -32,12 +32,12 @@ maxVel = 4; //max velocity
 
 xAcc = .1;
 tx = x;
-ty = y;
+ty = global.lifeLine;
 
 angle = 0;
-yGrav = .15;
+yGrav = .05;
 
-player = instance_create(x,y,objPlayer);
+player = instance_create(x-choose(-6,6),y,objPlayer);//just some blurr so the player flaps funny at first
 player.angle = 0;
 </string>
           </argument>
@@ -63,8 +63,14 @@ player.angle = 0;
             <kind>1</kind>
             <string>//++++FLAIL-PLAYER CONNECTION/INTERACTION
 if (mouse_check_button(mb_left))
+{
     tx = mouse_x;
-xVel = sign(tx-x)*min(abs(tx-x)/30,3);
+    ty = mouse_y;
+}
+//else
+//    ty = global.lifeLine;//(ty-global.lifeLine)/300;
+    
+//xVel += sign(tx-x)*min(abs(tx-x)/30,3);
 
 player.xVel += (x-player.x)/120;
 player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
@@ -74,9 +80,29 @@ player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
 
 player.angle = point_direction(x,y,player.x,player.y);
 
+//flail-boulder-interaction
+var boulder = instance_place(x+xVel,y+yVel,objBoulder);
+    
+    if (instance_exists(boulder))
+    {
+        var kb = point_direction(x,y,boulder.x,boulder.y);
+        boulder.xVel = lengthdir_x(5,kb);
+        boulder.yVel = lengthdir_y(5,kb);
+        //global.lifeLine -= TILE;
+    }
+
 //++++player physics
 with(player)
 {
+    var boulder = instance_place(x+xVel,y+yVel,objBoulder);
+    
+    if (instance_exists(boulder))
+    {
+        var kb = point_direction(x,y,boulder.x,boulder.y);
+        xVel = lengthdir_x(-5,kb);
+        yVel = lengthdir_y(-5,kb);
+        //global.lifeLine -= TILE;
+    }
     if (in(x+xVel,TILE,WIDTH-TILE))
         x += xVel;
     else
@@ -87,7 +113,7 @@ with(player)
 xVel = sign(tx-x)*min(abs(tx-x)/30,3);
 
 radius = 5*TILE;
-angle = point_direction(x,y,player.x,player.y);
+angle = point_direction(x,y,x+xVel,y+global.yVel);//point_direction(x,y,player.x,player.y);
 /*rad_angle = ((angle / 180) * pi);
 player.y = y - (sin(rad_angle)) * radius;
 */
@@ -121,10 +147,20 @@ else
     xVel = 0;
 }
 
-yVel = min(yVel+yGrav,5);
+yVel = (1-max(y/global.lifeLine,1))*5;
+yVel += sign(ty-y)*min(abs(ty-y)/24,2);
 
-if (y &gt; global.lifeLine)
-    y -= (y-global.lifeLine)/8;
+
+//yVel = min(yVel+yGrav,global.yVel);
+
+//yVel = (global.lifeLine-y)/120;
+
+/*if (y &gt; global.lifeLine)
+    yVel += (global.lifeLine-y)/50;
+else
+    yVel = min(yVel+yGrav,global.yVel);*/
+//if (y &gt; global.lifeLine)
+//    y -= (y-global.lifeLine)/12;
 
 if (!place_meeting(x,y+yVel,objBlock))
     y += yVel;
