@@ -68,7 +68,7 @@ if (mouse_check_button(mb_left))
 {
     tx = mouse_x;
     ty = mouse_y;
-    global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/24,3);
+    global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/12,5);
 }
 
 delay = max(delay-1,0);
@@ -76,15 +76,18 @@ delay = max(delay-1,0);
 //player.xVel += (x-player.x)/300;
 //player.yVel += (y-player.y /*- 2*TILE + (y &gt;= ty)*3*TILE*/)/300;
 
-player.xVel += (x-player.x)/240;
-player.yVel += (y-player.y)/240;
+player.xVel += (x-player.x)/60;
+player.yVel += (y-player.y-3*TILE)/120;
+
+//player.xVel = (x-player.x+sign(y-ty)*TILE)/50;
+//player.yVel = (y-player.y-1*TILE)/24;
 
 player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
 player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
 
 player.angle = point_direction(x,y,player.x,player.y);
 
-//flail-boulder-interaction
+//++++flail-boulder-interaction
 var boulder = instance_place(x+xVel,y+yVel,objBoulder);
     
     if (instance_exists(boulder) &amp;&amp; !delay)
@@ -106,6 +109,12 @@ var boulder = instance_place(x+xVel,y+yVel,objBoulder);
         delay = 5;
     }
 
+//++++
+coin = instance_place(x+xVel,y+yVel,objCoin);
+    if (instance_exists(coin))
+        coin.active = true;
+
+    
 //++++player physics
 with(player)
 {
@@ -117,15 +126,16 @@ with(player)
             var kb = point_direction(x,y,boulder.x,boulder.y);
             xVel = lengthdir_x(-5,kb);
             yVel = lengthdir_y(-5,kb);
-            invincible = 30; //half second
+            
+            hp = max(hp-1,0);
+                        
+            invincible = 45;
         }
     }
     
     coin = collision_circle(x+xVel,y+yVel,3*TILE,objCoin,true,true);//instance_place(x+xVel,y+yVel,objCoin);
     if (instance_exists(coin))
-    {
         coin.active = true;
-    }
     
     if (in(x+xVel,TILE,WIDTH-TILE))// &amp;&amp; !place_meeting(x+xVel,y,objFlail))
         x += xVel;
@@ -177,7 +187,7 @@ else
     xVel = 0;
 }
 
-xVel = sign(tx-x)*min(abs(tx-x)/30,3);
+xVel = sign(tx-x)*min(abs(tx-x)/12,3);
 yVel = (global.lifeLine - y)/24 + sign(ty-y)*min(abs(ty-y)/12,1.5);
 
 y += yVel;

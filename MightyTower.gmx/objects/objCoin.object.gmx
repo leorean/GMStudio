@@ -28,8 +28,8 @@
             <string>xVel = 0;
 yVel = 0;
 
-fCur = 0;
 fMax = 4;
+fCur = random(fMax);
 fSpeed = .15;
 
 active = false;

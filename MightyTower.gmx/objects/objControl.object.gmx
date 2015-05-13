@@ -66,15 +66,10 @@ with(objBlock)
 }
 
 //++++ velocity management
-if (!started &amp;&amp; instance_exists(objFlail) &amp;&amp; objFlail.y &gt;= global.lifeLine-objFlail.yVel)
-    started = true;
-/*
-if (started)
-    global.yVel = floor(7-(global.lifeLine/HEIGHT/2)*3);
-else
-    global.yVel = 4;
-*/
-global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
+//global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
+
+global.yVel = min(global.yVel + global.yAcc, global.yVelMax);
+
 //global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
 
 if (keyboard_check(ord('1')))
@@ -84,7 +79,7 @@ if (keyboard_check(ord('2')))
 
 global.lifeLine = min(max(global.lifeLine, 1),HEIGHT);
 //++++distance measurement
-global.distance = max(global.distance + global.yVel, global.distance);
+global.distance = max(global.distance + global.yVel*.1, global.distance);
 //show_debug_message(global.height);
 
 spawnheight += global.yVel;
@@ -96,9 +91,13 @@ if (instance_exists(objFlail))
     {
         var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
 
-        var coin = instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+2*TILE,objCoin);
+        var r = random(3);
+        var tmpx = 1+(random(WIDTH/TILE-2));
         
-        var tmpx = 0;
+        for(var i = 0; i &lt; r; i++)
+            var coin = instance_create(tmpx*TILE,HEIGHT+2*TILE+i*TILE,objCoin);
+        
+        /*var tmpx = 0;
         repeat(0)//1+irandom(10))
         {
             tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
@@ -107,7 +106,7 @@ if (instance_exists(objFlail))
                 var b = instance_create(tmpx,HEIGHT,objBlock);
                 b.type = choose(0,1);
             }
-        }
+        }*/
         spawnheight = 0;
     }
         
@@ -134,14 +133,12 @@ if (instance_exists(objFlail))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.yVel = 0;
-global.ySpeed = .5;
+            <string>global.yVel = 4;
+global.yAcc = .0001;
+global.yVelMax = 8;
 
 global.distance = 0;
 spawnheight = 0;
-
-global.fric = 0.005; //air friction
-global.maxPow = 10; //full potential power of the shot
 
 global.coins = 0;
 
@@ -151,8 +148,6 @@ and lower as reward, but overall higher and higher so the game finally ends.
 */
 global.lifeLine = 1*HEIGHT/2;
 global.lineFriction = .02; //the speed at which the lifeline goes up
-
-started = false; //this will be set true once per run, when the player reaches a certain y-height on screen
 
 flail = instance_create(WIDTH/2,global.lifeLine,objFlail);
 instance_create(0,0,objBg);
@@ -181,8 +176,15 @@ instance_create(0,0,objBg);
             <string>draw_set_color(c_white);
 draw_text(0,0,global.distance);
 draw_text(0,TILE,global.coins);
+draw_text(0,2*TILE,global.yVel);
 
 //draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
+
+if (instance_exists(objPlayer))
+{
+    draw_sprite_part(sprGraphics,-1,14*TILE,0,6*TILE,TILE,WIDTH/2-3*TILE,0);
+    draw_sprite_part(sprGraphics,-1,15*TILE,TILE,4*TILE*(objPlayer.hp/objPlayer.maxHp),TILE,WIDTH/2-2*TILE,0);
+}
 </string>
           </argument>
         </arguments>

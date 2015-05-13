@@ -56,11 +56,11 @@ yVel = 0;
             <string>x += xVel;
 y += yVel;
 
-fCur = min(fCur + fSpeed, fMax+fSpeed);
-if (fCur == fMax+fSpeed)
+fCur = min(fCur + fSpeed, fMax);
+if (fCur == fMax)
     instance_destroy();
     
-var frame = floor(fCur);
+var frame = floor(fCur-fSpeed);
 
 draw_sprite_part(sprGraphics,-1,4*TILE+frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE,y-TILE);
 

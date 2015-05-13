@@ -32,6 +32,9 @@ angle = 0;
 block = noone;
 
 invincible = 0;
+
+maxHp = 3;
+hp = maxHp;
 </string>
           </argument>
         </arguments>
