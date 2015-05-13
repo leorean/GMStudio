@@ -74,7 +74,7 @@ if (started)
 else
     global.yVel = 4;
 */
-global.yVel = 3+6*(global.lifeLine/HEIGHT);
+global.yVel = 2+6*(global.lifeLine/HEIGHT);
 //global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
 
 if (keyboard_check(ord('1')))
@@ -96,6 +96,8 @@ if (instance_exists(objFlail))
     {
         var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
 
+        var coin = instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+2*TILE,objCoin);
+        
         var tmpx = 0;
         repeat(0)//1+irandom(10))
         {
@@ -141,6 +143,8 @@ spawnheight = 0;
 global.fric = 0.005; //air friction
 global.maxPow = 10; //full potential power of the shot
 
+global.coins = 0;
+
 /*
 the horizontal line at which the flail has to be... this line should get higher as penalty,
 and lower as reward, but overall higher and higher so the game finally ends.
@@ -176,9 +180,9 @@ instance_create(0,0,objBg);
             <kind>1</kind>
             <string>draw_set_color(c_white);
 draw_text(0,0,global.distance);
-draw_text(0,TILE,global.yVel);
+draw_text(0,TILE,global.coins);
 
-draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
+//draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
 </string>
           </argument>
         </arguments>

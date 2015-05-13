@@ -30,6 +30,8 @@ yVel = 0;
 angle = 0;
 
 block = noone;
+
+invincible = 0;
 </string>
           </argument>
         </arguments>
@@ -52,34 +54,7 @@ block = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*
-if (!objPlayer.isHooked)
-{
-    //xVel *= .95;
-    //yVel *= .95;
-    
-    //remove hook if too far away
-    if (!in(y,0,HEIGHT) || !in(x,0,WIDTH))
-    {
-        objPlayer.hook = noone;
-        objPlayer.isHooked = false;
-        instance_destroy();
-    }
-    
-    if (place_meeting(x+xVel,y+yVel,objBlock))
-    {
-        objPlayer.isHooked = true;
-        
-    }
-} else
-{
-    xVel = 0;
-    yVel = 0;
-}
-*/
-
-//x += xVel;
-//y += yVel;
+            <string>invincible = max(invincible - 1, 0);
 </string>
           </argument>
         </arguments>
@@ -102,7 +77,8 @@ if (!objPlayer.isHooked)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprPlayer,-1,x,y,1,1,angle,c_white,1);
+            <string>if (invincible % 3 == 0)
+    draw_sprite_ext(sprPlayer,-1,x,y,1,1,angle,c_white,1);
 
 </string>
           </argument>

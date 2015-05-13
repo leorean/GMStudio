@@ -6,11 +6,11 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskCannon</sprite>
+    <sprite>sprites\sprGraphics</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\mskFlail</sprite>
+    <sprite>sprites\mskCoin</sprite>
     <sprite>sprites\mskBlock</sprite>
-    <sprite>sprites\sprGraphics</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFlail</sprite>
     <sprite>sprites\sprBg</sprite>
@@ -26,22 +26,19 @@
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objFlail</object>
-    <object>objects\objCannon</object>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
     <object>objects\objBoulder</object>
     <object>objects\objBg</object>
+    <object>objects\objCoin</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="6">
+  <constants number="3">
     <constant name="TILE">16</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
-    <constant name="C_IDLE">0</constant>
-    <constant name="C_ANGLE">1</constant>
-    <constant name="C_POWER">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -94,15 +94,24 @@ var boulder = instance_place(x+xVel,y+yVel,objBoulder);
 //++++player physics
 with(player)
 {
-    var boulder = instance_place(x+xVel,y+yVel,objBoulder);
-    
-    if (instance_exists(boulder))
+    if (invincible == 0)
     {
-        var kb = point_direction(x,y,boulder.x,boulder.y);
-        xVel = lengthdir_x(-5,kb);
-        yVel = lengthdir_y(-5,kb);
-        //global.lifeLine += TILE;        
+        var boulder = instance_place(x+xVel,y+yVel,objBoulder);
+        if (instance_exists(boulder))
+        {
+            var kb = point_direction(x,y,boulder.x,boulder.y);
+            xVel = lengthdir_x(-5,kb);
+            yVel = lengthdir_y(-5,kb);
+            invincible = 30; //half second
+        }
     }
+    
+    coin = collision_circle(x+xVel,y+yVel,3*TILE,objCoin,true,true);//instance_place(x+xVel,y+yVel,objCoin);
+    if (instance_exists(coin))
+    {
+        coin.active = true;
+    }
+    
     if (in(x+xVel,TILE,WIDTH-TILE))
         x += xVel;
     else
@@ -113,7 +122,7 @@ with(player)
 xVel = sign(tx-x)*min(abs(tx-x)/30,3);
 
 radius = 5*TILE;
-angle = point_direction(x,y,x+xVel,y+global.yVel);//point_direction(x,y,player.x,player.y);
+angle = point_direction(x,y,x+xVel,y+yVel);//point_direction(x,y,player.x,player.y);
 /*rad_angle = ((angle / 180) * pi);
 player.y = y - (sin(rad_angle)) * radius;
 */
