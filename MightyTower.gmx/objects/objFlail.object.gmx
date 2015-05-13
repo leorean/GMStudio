@@ -66,6 +66,7 @@ if (mouse_check_button(mb_left))
 {
     tx = mouse_x;
     ty = mouse_y;
+    global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/24,2);
 }
 //else
 //    ty = global.lifeLine;//(ty-global.lifeLine)/300;
@@ -100,8 +101,7 @@ with(player)
         var kb = point_direction(x,y,boulder.x,boulder.y);
         xVel = lengthdir_x(-5,kb);
         yVel = lengthdir_y(-5,kb);
-        global.lifeLine += TILE;        
-        //global.lifeLine -= TILE;
+        //global.lifeLine += TILE;        
     }
     if (in(x+xVel,TILE,WIDTH-TILE))
         x += xVel;
