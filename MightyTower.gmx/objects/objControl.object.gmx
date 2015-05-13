@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-100</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -74,7 +74,7 @@ if (started)
 else
     global.yVel = 4;
 */
-global.yVel = 2+6*(global.lifeLine/HEIGHT);
+global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
 //global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
 
 if (keyboard_check(ord('1')))

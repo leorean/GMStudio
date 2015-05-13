@@ -31,6 +31,7 @@
     <object>objects\objBoulder</object>
     <object>objects\objBg</object>
     <object>objects\objCoin</object>
+    <object>objects\objEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

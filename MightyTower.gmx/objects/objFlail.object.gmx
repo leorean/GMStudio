@@ -3,7 +3,7 @@
   <spriteName>mskFlail</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>3</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -37,7 +37,9 @@ ty = global.lifeLine;
 angle = 0;
 yGrav = .05;
 
-player = instance_create(x-choose(-6,6),y,objPlayer);//just some blurr so the player flaps funny at first
+delay = 0; //reaction delay
+
+player = instance_create(x-choose(-6,6),y-3*TILE,objPlayer);//just some blurr so the player flaps funny at first
 player.angle = 0;
 </string>
           </argument>
@@ -66,17 +68,18 @@ if (mouse_check_button(mb_left))
 {
     tx = mouse_x;
     ty = mouse_y;
-    global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/24,2);
+    global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/24,3);
 }
-//else
-//    ty = global.lifeLine;//(ty-global.lifeLine)/300;
-    
-//xVel += sign(tx-x)*min(abs(tx-x)/30,3);
 
-player.xVel += (x-player.x)/120;
+delay = max(delay-1,0);
+
+//player.xVel += (x-player.x)/300;
+//player.yVel += (y-player.y /*- 2*TILE + (y &gt;= ty)*3*TILE*/)/300;
+
+player.xVel += (x-player.x)/240;
+player.yVel += (y-player.y)/240;
+
 player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
-
-player.yVel += (y-player.y - 2*TILE)/280;
 player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
 
 player.angle = point_direction(x,y,player.x,player.y);
@@ -84,11 +87,23 @@ player.angle = point_direction(x,y,player.x,player.y);
 //flail-boulder-interaction
 var boulder = instance_place(x+xVel,y+yVel,objBoulder);
     
-    if (instance_exists(boulder))
+    if (instance_exists(boulder) &amp;&amp; !delay)
     {
+        /*
         var kb = point_direction(x,y,boulder.x,boulder.y);
-        boulder.xVel = lengthdir_x(5,kb);
-        boulder.yVel = lengthdir_y(5,kb);
+        boulder.xVel += lengthdir_x(2,kb);
+        boulder.yVel += lengthdir_y(2,kb);
+        boulder.touched = true;
+        */
+        var kb = point_direction(x,y,boulder.x,boulder.y);
+        var e = instance_create(boulder.x,boulder.y,objEffect);
+        e.type = boulder.type;
+        e.xVel = lengthdir_x(2,kb);
+        e.yVel = lengthdir_x(2,kb);
+    
+        with (boulder) instance_destroy();
+        
+        delay = 5;
     }
 
 //++++player physics
@@ -112,14 +127,20 @@ with(player)
         coin.active = true;
     }
     
-    if (in(x+xVel,TILE,WIDTH-TILE))
+    if (in(x+xVel,TILE,WIDTH-TILE))// &amp;&amp; !place_meeting(x+xVel,y,objFlail))
         x += xVel;
     else
-        xVel = -xVel;
-    y += yVel;
-}
+        xVel = 0;
 
-xVel = sign(tx-x)*min(abs(tx-x)/30,3);
+    y += yVel;
+    
+    /*
+    if (!place_meeting(x,y+yVel,objFlail))
+        y += yVel;
+    else
+        yVel = 0;
+    */
+}
 
 radius = 5*TILE;
 angle = point_direction(x,y,x+xVel,y+yVel);//point_direction(x,y,player.x,player.y);
@@ -156,10 +177,9 @@ else
     xVel = 0;
 }
 
-//yVel = (1-max(y/global.lifeLine,1))*5;
-//yVel = /*sign(ty-y)*min(abs(ty-y)/24,2) +*/ (global.lifeLine - HEIGHT/2)/80;// + (global.lifeLine-y)/15;
-
+xVel = sign(tx-x)*min(abs(tx-x)/30,3);
 yVel = (global.lifeLine - y)/24 + sign(ty-y)*min(abs(ty-y)/12,1.5);
+
 y += yVel;
 
 //y += max(yVel,.1);
