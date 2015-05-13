@@ -68,18 +68,21 @@ with(objBlock)
 //++++ velocity management
 if (!started &amp;&amp; instance_exists(objFlail) &amp;&amp; objFlail.y &gt;= global.lifeLine-objFlail.yVel)
     started = true;
+/*
 if (started)
-    global.yVel = floor(max(7-(global.lifeLine/HEIGHT)*7,global.yVel));
+    global.yVel = floor(7-(global.lifeLine/HEIGHT/2)*3);
 else
     global.yVel = 4;
+*/
+global.yVel = 3+6*(global.lifeLine/HEIGHT);
 //global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
 
-if (keyboard_check_pressed(ord('1')))
-    global.lifeLine += TILE;
-if (keyboard_check_pressed(ord('2')))
-    global.lifeLine -= TILE;
+if (keyboard_check(ord('1')))
+    global.lifeLine += 1;
+if (keyboard_check(ord('2')))
+    global.lifeLine -= 1;
 
-global.lifeLine = max(global.lifeLine, 1);
+global.lifeLine = min(max(global.lifeLine, 1),HEIGHT);
 //++++distance measurement
 global.distance = max(global.distance + global.yVel, global.distance);
 //show_debug_message(global.height);
@@ -147,7 +150,7 @@ global.lineFriction = .02; //the speed at which the lifeline goes up
 
 started = false; //this will be set true once per run, when the player reaches a certain y-height on screen
 
-flail = instance_create(WIDTH/2,3*TILE,objFlail);
+flail = instance_create(WIDTH/2,global.lifeLine,objFlail);
 instance_create(0,0,objBg);
 </string>
           </argument>
@@ -174,6 +177,8 @@ instance_create(0,0,objBg);
             <string>draw_set_color(c_white);
 draw_text(0,0,global.distance);
 draw_text(0,TILE,global.yVel);
+
+draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
 </string>
           </argument>
         </arguments>

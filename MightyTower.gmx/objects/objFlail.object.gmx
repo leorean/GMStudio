@@ -88,7 +88,6 @@ var boulder = instance_place(x+xVel,y+yVel,objBoulder);
         var kb = point_direction(x,y,boulder.x,boulder.y);
         boulder.xVel = lengthdir_x(5,kb);
         boulder.yVel = lengthdir_y(5,kb);
-        //global.lifeLine -= TILE;
     }
 
 //++++player physics
@@ -101,6 +100,7 @@ with(player)
         var kb = point_direction(x,y,boulder.x,boulder.y);
         xVel = lengthdir_x(-5,kb);
         yVel = lengthdir_y(-5,kb);
+        global.lifeLine += TILE;        
         //global.lifeLine -= TILE;
     }
     if (in(x+xVel,TILE,WIDTH-TILE))
@@ -147,9 +147,13 @@ else
     xVel = 0;
 }
 
-yVel = (1-max(y/global.lifeLine,1))*5;
-yVel += sign(ty-y)*min(abs(ty-y)/24,2);
+//yVel = (1-max(y/global.lifeLine,1))*5;
+//yVel = /*sign(ty-y)*min(abs(ty-y)/24,2) +*/ (global.lifeLine - HEIGHT/2)/80;// + (global.lifeLine-y)/15;
 
+yVel = (global.lifeLine - y)/24 + sign(ty-y)*min(abs(ty-y)/12,1.5);
+y += yVel;
+
+//y += max(yVel,.1);
 
 //yVel = min(yVel+yGrav,global.yVel);
 
@@ -162,6 +166,7 @@ else
 //if (y &gt; global.lifeLine)
 //    y -= (y-global.lifeLine)/12;
 
+/*
 if (!place_meeting(x,y+yVel,objBlock))
     y += yVel;
 else
@@ -172,6 +177,7 @@ else
     //y -= yVel;
     //yVel = -yVel/2;
 }
+*/
 </string>
           </argument>
         </arguments>
