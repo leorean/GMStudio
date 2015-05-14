@@ -75,14 +75,8 @@ if (mouse_check_button(mb_left))
 
 delay = max(delay-1,0);
 
-//player.xVel += (x-player.x)/300;
-//player.yVel += (y-player.y /*- 2*TILE + (y &gt;= ty)*3*TILE*/)/300;
-
 player.xVel += (x-player.x)/120;
-player.yVel += (y-player.y-3*TILE)/120;
-
-//player.xVel = (x-player.x+sign(y-ty)*TILE)/50;
-//player.yVel = (y-player.y-1*TILE)/24;
+player.yVel = (y-player.y-4*TILE)/16;
 
 player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
 player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
@@ -112,16 +106,14 @@ if (instance_exists(boulder) &amp;&amp; !delay)
 
 //++++enemy-interaction
 var enemy = instance_place(x+xVel,y+yVel,objEnemy);
-if (instance_exists(enemy) &amp;&amp; !delay)
+if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive)
 {
     var kb = point_direction(x,y,enemy.x,enemy.y);
     
-    yVel = -5;
-
     if (!enemy.invincible) enemy.hp = max(enemy.hp-1,0);
     
-    //enemy.xVel = lengthdir_x(2,kb);
-    //enemy.yVel = lengthdir_y(2,kb);
+    enemy.xVel = lengthdir_x(6,kb);
+    enemy.yVel = lengthdir_y(6,kb);
     enemy.invincible = 45;
     
     delay = 5;
@@ -139,10 +131,10 @@ with(player)
 {
     if (invincible == 0)
     {
-        var boulder = instance_place(x+xVel,y+yVel,objBoulder);
-        if (instance_exists(boulder))
+        var enemy = instance_place(x+xVel,y+yVel,objEnemy);
+        if (instance_exists(enemy))
         {
-            var kb = point_direction(x,y,boulder.x,boulder.y);
+            var kb = point_direction(x,y,enemy.x,enemy.y);
             xVel = lengthdir_x(-5,kb);
             yVel = lengthdir_y(-5,kb);
             
@@ -191,11 +183,9 @@ yVel = (global.lifeLine - y)/42 + sign(ty-y)*min(abs(ty-y)/80,2);
 xVel = sign(xVel)*min(abs(xVel),maxVel);
 yVel = sign(yVel)*min(abs(yVel),maxVel);
 
-if (!in(x+sign(xVel)*2,TILE,WIDTH-TILE))
-{
+//create sparkles
+if (!in(x+sign(x-WIDTH/2)*4,TILE,WIDTH-TILE))
     var spark = instance_create(x-sign(WIDTH/2-x)*TILE/2,y-TILE/2+random(TILE),objParticleSpark);
-}
-
 
 if (!place_meeting(x+xVel,y-yVel,objBlock) &amp;&amp; in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;

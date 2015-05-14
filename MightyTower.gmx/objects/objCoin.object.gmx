@@ -73,11 +73,14 @@ fallVel = 1+random(2);
         instance_destroy();
     }
 } else
+{
+    xVel *= .9;
+    
     if (!falling)
-        yVel = -global.yVel;
+        yVel = max(yVel-.05,-global.yVel);
     else
         yVel = fallVel;
-
+}
 
 if (in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;

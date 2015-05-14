@@ -42,13 +42,16 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="6">
+  <constants number="9">
     <constant name="INF">900000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="IDLE">0</constant>
     <constant name="ATTACK">1</constant>
+    <constant name="DEAD">2</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -27,15 +27,26 @@
             <kind>1</kind>
             <string>mask_index = mskBoulderBig;
 
-xVel = 0;
+dir = choose(LEFT,RIGHT);
+spd = 2;
+
+xVel = sign(dir)*spd;
 yVel = 0;
+
+yGrav = .1;
+
 
 maxHp = 3;
 hp = maxHp;
 
 state = IDLE;
 
+alive = true;
+
 invincible = 0;
+
+ty = HEIGHT - 8*TILE;
+
 </string>
           </argument>
         </arguments>
@@ -58,21 +69,49 @@ invincible = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>invincible = max(invincible-1,0);
-
-if (invincible)
+            <string>if (alive)
 {
-    xVel *= .9;
-    yVel *= .9;
+    invincible = max(invincible-1,0);
+    if (invincible)
+    {
+        dir = sign(xVel);
+        xVel *= .99;
+        yVel *= .99;    
+    } else
+    {
+        yVel = (ty-y)/16;
+        xVel = dir*spd;
+    }
+
+    if (hp == 0)
+    {
+        yVel = -2;
+        xVel = 0;
+        alive = false;
+        repeat(3)
+        {
+            var coin = instance_create(x,y,objCoin);
+            coin.xVel = -2+random(4);
+            coin.yVel = 2+random(2);
+        }
+    }
     
+} else
+{
+    yVel += yGrav;
+    if (y &gt; HEIGHT+2*TILE) instance_destroy();
 }
+
 
 //++++
 
 if (in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;
 else
-    xVel = 0;
+{
+    dir = -dir;
+    xVel = -sign(xVel);
+}
     
 y += yVel;
 </string>
@@ -101,6 +140,14 @@ y += yVel;
     draw_sprite(mskBoulderBig,-1,x,y);
 
 draw_text(x,y,hp);
+
+//++++draw health bar
+if (invincible &amp;&amp; alive)
+{
+    draw_sprite_part(sprGraphics,-1,0,4*TILE,2*TILE,TILE/2,x-1.5*TILE,y-3*TILE);
+    draw_sprite_part(sprGraphics,-1,0,4.5*TILE,2*TILE*(hp/maxHp),TILE/2,x-1.5*TILE,y-3*TILE);
+    
+}
 </string>
           </argument>
         </arguments>
