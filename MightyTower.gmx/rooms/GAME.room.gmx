@@ -8,12 +8,12 @@
   <isometric>0</isometric>
   <speed>60</speed>
   <persistent>0</persistent>
-  <colour>12632256</colour>
+  <colour>0</colour>
   <showcolour>-1</showcolour>
   <code></code>
-  <enableViews>0</enableViews>
-  <clearViewBackground>-1</clearViewBackground>
-  <clearDisplayBuffer>-1</clearDisplayBuffer>
+  <enableViews>-1</enableViews>
+  <clearViewBackground>0</clearViewBackground>
+  <clearDisplayBuffer>0</clearDisplayBuffer>
   <makerSettings>
     <isSet>-1</isSet>
     <w>988</w>

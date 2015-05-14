@@ -32,7 +32,11 @@ rot = -10+random(20);
 
 type = choose(0,1);
 
-touched = false;
+alive = true;
+invincible = 0;
+
+maxHp = 1;
+hp = maxHp;
 </string>
           </argument>
         </arguments>
@@ -63,20 +67,37 @@ if (bbox_left+xVel&gt;TILE &amp;&amp; bbox_right+xVel&lt;WIDTH-TILE)
 else
     xVel = -xVel;
 
-if (yVel &lt; 0 &amp;&amp; touched)
-{
-    var boulder = instance_place(x+xVel,y+yVel,objBoulder);
-    if (instance_exists(boulder))
-    {
-        var kb = point_direction(x,y,boulder.x,boulder.y);
-        boulder.xVel = lengthdir_x(5,kb);
-        boulder.yVel = lengthdir_y(5,kb);
-    }
-}
-
 y += yVel;
 
+invincible = max(invincible-1,0);
+if (hp == 0) alive = 0;
+
 angle = (angle + rot) % 360;
+
+if (!alive)
+{
+
+    if (type == 0) //BIG boulder
+    {
+        for (i = -1; i &lt;= 1; i++)
+        {
+            var b = instance_create(x,y,objBoulder);
+            b.type = 1;
+            var kb = point_direction(objFlail.x,objPlayer.y,x,y)+i*60;
+            b.xVel = lengthdir_x(2,kb);
+            b.yVel = lengthdir_y(2,kb);
+            b.invincible = 45;
+        }
+        
+        instance_create(x,y,objCoin);
+    }
+    var e = instance_create(x,y,objEffect);
+    e.type = type;
+    e.xVel = xVel*.2;
+    e.yVel = yVel*.2;
+    
+    instance_destroy();
+}
 
 if (y &gt; HEIGHT+2*TILE)
     instance_destroy();

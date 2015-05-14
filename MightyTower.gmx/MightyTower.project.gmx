@@ -18,6 +18,7 @@
     <sprite>sprites\mskBoulderBig</sprite>
     <sprite>sprites\mskBoulderSmall</sprite>
     <sprite>sprites\sprParticle</sprite>
+    <sprite>sprites\sprEnemy1</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

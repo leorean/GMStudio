@@ -83,25 +83,9 @@ player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
 
 player.angle = point_direction(x,y,player.x,player.y);
 
-//++++boulder-interaction
-//TODO: boulders are now enemies
-var boulder = instance_place(x+xVel,y+yVel,objBoulder);
-if (instance_exists(boulder) &amp;&amp; !delay)
-{
-    var kb = point_direction(x,y,boulder.x,boulder.y);
-    var e = instance_create(boulder.x,boulder.y,objEffect);
-    e.type = boulder.type;
-    e.xVel = lengthdir_x(2,kb);
-    e.yVel = lengthdir_x(2,kb);
-
-    with (boulder) instance_destroy();
-    
-    delay = 5;
-}
-
-//++++enemy-interaction
+//++++ENEMY INTERACTION++++
 var enemy = instance_place(x+xVel,y+yVel,objEnemy);
-if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive)
+if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive &amp;&amp; !enemy.invincible)
 {
     var kb = point_direction(x,y,enemy.x,enemy.y);
     
@@ -111,10 +95,13 @@ if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive)
     enemy.yVel = lengthdir_y(6,kb);
     enemy.invincible = 45;
     
-    xVel = -lengthdir_x(3,kb);
-    yVel = -lengthdir_y(3,kb);
+    if (enemy.hp &gt; 0)
+    {
+        xVel = -lengthdir_x(3,kb);
+        yVel = -lengthdir_y(3,kb);
+        delay = 10;
+    }
     
-    delay = 10;
 }
 
 
@@ -124,9 +111,10 @@ coin = instance_place(x+xVel,y+yVel,objCoin);
         coin.active = true;
 
     
-//++++player physics
+//++++PLAYER PHYSICS
 with(player)
 {
+    //++++HURT++++
     if (invincible == 0)
     {
         var enemy = instance_place(x+xVel,y+yVel,objEnemy);
@@ -137,8 +125,7 @@ with(player)
             yVel = lengthdir_y(-5,kb);
             
             hp = max(hp-1,0);
-                        
-            invincible = 45;
+            invincible = 60;
         }
     }
     
@@ -252,7 +239,9 @@ for (var i = 1; i &lt; n; i++)
     fx = (player.x-x)/n * i + x;
     fy = (player.y-y)/n * i + y;
     if (i == n - 1)
-        draw_sprite_ext(sprFlail,3,fx,fy,1,1,player.angle,c_white,1);    
+        draw_sprite_ext(sprFlail,3,fx,fy,1,1,player.angle,c_white,1);
+    //else if (i == n - 1)
+    //    continue;
     else
         draw_sprite(sprFlail,2,fx,fy);
         //draw_sprite_part(sprGraphics,-1,0,0,TILE,TILE,fx-TILE/2,fy-TILE/2);

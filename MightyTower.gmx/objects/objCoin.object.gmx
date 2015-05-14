@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = 0;
-yVel = 0;
+            <string>xVel = -2+random(4);
+yVel = 2+random(2);
+
 
 fMax = 4;
 fCur = random(fMax);

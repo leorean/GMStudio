@@ -28,24 +28,24 @@
             <string>mask_index = mskBoulderBig;
 
 dir = choose(LEFT,RIGHT);
-spd = 2;
 
-xVel = sign(dir)*spd;
+fCur = 0;
+fMax = 4;
+fSpeed = .2;
+
+spd = 3;
+xVel = sign(dir);
 yVel = 0;
-
 yGrav = .1;
-
 
 maxHp = 3;
 hp = maxHp;
 
 state = IDLE;
-
 alive = true;
-
 invincible = 0;
 
-ty = HEIGHT - 8*TILE;
+ty = HEIGHT - 8*TILE + random(4)*TILE;
 
 </string>
           </argument>
@@ -79,8 +79,13 @@ ty = HEIGHT - 8*TILE;
         yVel *= .99;    
     } else
     {
-        yVel = (ty-y)/16;
-        xVel = dir*spd;
+        if (abs(x - objFlail.x) &lt; 3*TILE &amp;&amp; abs(y - objFlail.y) &lt; 6*TILE)
+            dir = sign(x-objFlail.x);
+            
+        yVel += (ty-y)/120;
+        yVel = sign(yVel)*min(abs(yVel),3);
+        xVel += sign(dir)*.1;
+        xVel = sign(xVel)*min(abs(xVel),spd);
     }
 
     if (hp == 0)
@@ -89,11 +94,7 @@ ty = HEIGHT - 8*TILE;
         xVel = 0;
         alive = false;
         repeat(3)
-        {
-            var coin = instance_create(x,y,objCoin);
-            coin.xVel = -2+random(4);
-            coin.yVel = 2+random(2);
-        }
+            instance_create(x,y,objCoin);
     }
     
 } else
@@ -136,15 +137,21 @@ y += yVel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (invincible % 3 == 0)
-    draw_sprite(mskBoulderBig,-1,x,y);
+            <string>fCur = (fCur+fSpeed)%fMax;
 
+var angle = point_direction(x,y,x+abs(xVel),y+yVel*.1);
+var frame = floor(fCur);
+
+if (invincible % 3 == 0)
+{
+    //draw_sprite(mskBoulderBig,-1,x,y);
+    draw_sprite_ext(sprEnemy1,frame,x,y,sign(xVel),1,angle,c_white,1);
+}
 //++++draw health bar
 if (invincible &amp;&amp; alive)
 {
     draw_sprite_part(sprGraphics,-1,0,4*TILE,2*TILE,TILE/2,x-1.5*TILE,y-3*TILE);
-    draw_sprite_part(sprGraphics,-1,0,4.5*TILE,2*TILE*(hp/maxHp),TILE/2,x-1.5*TILE,y-3*TILE);
-    
+    draw_sprite_part(sprGraphics,-1,0,4.5*TILE,2*TILE*(hp/maxHp),TILE/2,x-1.5*TILE,y-3*TILE);    
 }
 </string>
           </argument>

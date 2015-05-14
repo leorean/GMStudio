@@ -88,26 +88,19 @@ if (spawnWave)
     switch(wave)
     {
         case 1:
-            instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT-4*TILE,objEnemy1);
+            instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
         break;
     }
     
     spawnWave = false;
 }
 
-/*
 if (instance_exists(objFlail))
 {
     if (spawnheight div (HEIGHT/2) &gt; 1)
     {
-        //var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+        var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
 
-        var r = 0;//random(3);
-        var tmpx = 1+(random(WIDTH/TILE-2));
-        
-        for(var i = 0; i &lt; r; i++)
-            var coin = instance_create(tmpx*TILE,HEIGHT+2*TILE+i*TILE,objCoin);
-        
         /*var tmpx = 0;
         repeat(0)//1+irandom(10))
         {
@@ -117,11 +110,10 @@ if (instance_exists(objFlail))
                 var b = instance_create(tmpx,HEIGHT,objBlock);
                 b.type = choose(0,1);
             }
-        }***
+        }*/
         spawnheight = 0;
-    }
-        
-}*/
+    }        
+}
 </string>
           </argument>
         </arguments>
