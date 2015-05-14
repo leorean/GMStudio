@@ -76,7 +76,7 @@ if (mouse_check_button(mb_left))
 delay = max(delay-1,0);
 
 player.xVel += (x-player.x)/120;
-player.yVel = (y-player.y-4*TILE)/16;
+player.yVel = (y-player.y-4*TILE)/8;
 
 player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
 player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
@@ -84,15 +84,10 @@ player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
 player.angle = point_direction(x,y,player.x,player.y);
 
 //++++boulder-interaction
+//TODO: boulders are now enemies
 var boulder = instance_place(x+xVel,y+yVel,objBoulder);
 if (instance_exists(boulder) &amp;&amp; !delay)
 {
-    /*
-    var kb = point_direction(x,y,boulder.x,boulder.y);
-    boulder.xVel += lengthdir_x(2,kb);
-    boulder.yVel += lengthdir_y(2,kb);
-    boulder.touched = true;
-    */
     var kb = point_direction(x,y,boulder.x,boulder.y);
     var e = instance_create(boulder.x,boulder.y,objEffect);
     e.type = boulder.type;
@@ -116,7 +111,10 @@ if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive)
     enemy.yVel = lengthdir_y(6,kb);
     enemy.invincible = 45;
     
-    delay = 5;
+    xVel = -lengthdir_x(3,kb);
+    yVel = -lengthdir_y(3,kb);
+    
+    delay = 10;
 }
 
 
@@ -176,10 +174,15 @@ if (instance_exists(block))
 
 //++++physics
 
-xVel = (tx-x)/24;
-//yVel = (ty-y)/24;
-yVel = (global.lifeLine - y)/42 + sign(ty-y)*min(abs(ty-y)/80,2);
-
+if (!delay)
+{
+    xVel = (tx-x)/24;
+    yVel = (global.lifeLine - y)/42 + sign(ty-y)*min(abs(ty-y)/80,2);
+} else
+{
+    xVel *= .9;
+    yVel *= .9;    
+}
 xVel = sign(xVel)*min(abs(xVel),maxVel);
 yVel = sign(yVel)*min(abs(yVel),maxVel);
 

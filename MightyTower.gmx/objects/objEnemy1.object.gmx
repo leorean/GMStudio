@@ -139,8 +139,6 @@ y += yVel;
             <string>if (invincible % 3 == 0)
     draw_sprite(mskBoulderBig,-1,x,y);
 
-draw_text(x,y,hp);
-
 //++++draw health bar
 if (invincible &amp;&amp; alive)
 {
