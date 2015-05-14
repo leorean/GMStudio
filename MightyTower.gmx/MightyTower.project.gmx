@@ -17,6 +17,7 @@
     <sprite>sprites\sprBoulder</sprite>
     <sprite>sprites\mskBoulderBig</sprite>
     <sprite>sprites\mskBoulderSmall</sprite>
+    <sprite>sprites\sprParticle</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -32,14 +33,22 @@
     <object>objects\objBg</object>
     <object>objects\objCoin</object>
     <object>objects\objEffect</object>
+    <objects name="misc">
+      <object>objects\objEnemy</object>
+      <object>objects\objParticleSpark</object>
+    </objects>
+    <object>objects\objEnemy1</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="3">
+  <constants number="6">
+    <constant name="INF">900000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="ATTACK">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

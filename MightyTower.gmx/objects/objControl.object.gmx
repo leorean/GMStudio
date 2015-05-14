@@ -57,7 +57,9 @@ if (keyboard_check_pressed(ord('R')))
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
-    
+
+global.timer = global.timer+1 % INF;
+
 //+++++move everything here:
 with(objBlock)
 {
@@ -66,16 +68,9 @@ with(objBlock)
 }
 
 //++++ velocity management
-//global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
 
-global.yVel = min(global.yVel + global.yAcc, global.yVelMax);
-
-//global.lifeLine -= global.lineFriction; //the lifeline gets too high in due time
-
-if (keyboard_check(ord('1')))
-    global.lifeLine += 1;
-if (keyboard_check(ord('2')))
-    global.lifeLine -= 1;
+global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
+//global.yVel = min(global.yVel + global.yAcc, global.yVelMax);
 
 global.lifeLine = min(max(global.lifeLine, 1),HEIGHT);
 //++++distance measurement
@@ -85,13 +80,29 @@ global.distance = max(global.distance + global.yVel*.1, global.distance);
 spawnheight += global.yVel;
 
 //++++spawner
+
+if (spawnWave)
+{
+    wave = 1; //choose here, depending on depth/theme, which wave spawns
+    
+    switch(wave)
+    {
+        case 1:
+            instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT-4*TILE,objEnemy1);
+        break;
+    }
+    
+    spawnWave = false;
+}
+
+/*
 if (instance_exists(objFlail))
 {
     if (spawnheight div (HEIGHT/2) &gt; 1)
     {
-        var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+        //var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
 
-        var r = random(3);
+        var r = 0;//random(3);
         var tmpx = 1+(random(WIDTH/TILE-2));
         
         for(var i = 0; i &lt; r; i++)
@@ -106,11 +117,11 @@ if (instance_exists(objFlail))
                 var b = instance_create(tmpx,HEIGHT,objBlock);
                 b.type = choose(0,1);
             }
-        }*/
+        }***
         spawnheight = 0;
     }
         
-}
+}*/
 </string>
           </argument>
         </arguments>
@@ -134,7 +145,7 @@ if (instance_exists(objFlail))
           <argument>
             <kind>1</kind>
             <string>global.yVel = 4;
-global.yAcc = .0001;
+global.yAcc = .0003;
 global.yVelMax = 8;
 
 global.distance = 0;
@@ -142,11 +153,15 @@ spawnheight = 0;
 
 global.coins = 0;
 
+global.timer = 0;
+
+spawnWave = true; //if this is true, spawn a new wave of enemies
+
 /*
 the horizontal line at which the flail has to be... this line should get higher as penalty,
 and lower as reward, but overall higher and higher so the game finally ends.
 */
-global.lifeLine = 1*HEIGHT/2;
+global.lifeLine = 1*HEIGHT/3;
 global.lineFriction = .02; //the speed at which the lifeline goes up
 
 flail = instance_create(WIDTH/2,global.lifeLine,objFlail);

@@ -28,16 +28,18 @@
             <string>xVel = 0;
 yVel = 0;
 
-maxVel = 4; //max velocity
+maxVel = 3; //max velocity
 
 xAcc = .1;
 tx = x;
-ty = global.lifeLine;
+ty = y;
 
 angle = 0;
-yGrav = .05;
+yGrav = .1;
 
 delay = 0; //reaction delay
+
+state = ATTACK;
 
 player = instance_create(x-choose(-6,6),y-3*TILE,objPlayer);//just some blurr so the player flaps funny at first
 player.angle = 0;
@@ -76,7 +78,7 @@ delay = max(delay-1,0);
 //player.xVel += (x-player.x)/300;
 //player.yVel += (y-player.y /*- 2*TILE + (y &gt;= ty)*3*TILE*/)/300;
 
-player.xVel += (x-player.x)/60;
+player.xVel += (x-player.x)/120;
 player.yVel += (y-player.y-3*TILE)/120;
 
 //player.xVel = (x-player.x+sign(y-ty)*TILE)/50;
@@ -87,27 +89,44 @@ player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
 
 player.angle = point_direction(x,y,player.x,player.y);
 
-//++++flail-boulder-interaction
+//++++boulder-interaction
 var boulder = instance_place(x+xVel,y+yVel,objBoulder);
+if (instance_exists(boulder) &amp;&amp; !delay)
+{
+    /*
+    var kb = point_direction(x,y,boulder.x,boulder.y);
+    boulder.xVel += lengthdir_x(2,kb);
+    boulder.yVel += lengthdir_y(2,kb);
+    boulder.touched = true;
+    */
+    var kb = point_direction(x,y,boulder.x,boulder.y);
+    var e = instance_create(boulder.x,boulder.y,objEffect);
+    e.type = boulder.type;
+    e.xVel = lengthdir_x(2,kb);
+    e.yVel = lengthdir_x(2,kb);
+
+    with (boulder) instance_destroy();
     
-    if (instance_exists(boulder) &amp;&amp; !delay)
-    {
-        /*
-        var kb = point_direction(x,y,boulder.x,boulder.y);
-        boulder.xVel += lengthdir_x(2,kb);
-        boulder.yVel += lengthdir_y(2,kb);
-        boulder.touched = true;
-        */
-        var kb = point_direction(x,y,boulder.x,boulder.y);
-        var e = instance_create(boulder.x,boulder.y,objEffect);
-        e.type = boulder.type;
-        e.xVel = lengthdir_x(2,kb);
-        e.yVel = lengthdir_x(2,kb);
+    delay = 5;
+}
+
+//++++enemy-interaction
+var enemy = instance_place(x+xVel,y+yVel,objEnemy);
+if (instance_exists(enemy) &amp;&amp; !delay)
+{
+    var kb = point_direction(x,y,enemy.x,enemy.y);
     
-        with (boulder) instance_destroy();
-        
-        delay = 5;
-    }
+    yVel = -5;
+
+    if (!enemy.invincible) enemy.hp = max(enemy.hp-1,0);
+    
+    //enemy.xVel = lengthdir_x(2,kb);
+    //enemy.yVel = lengthdir_y(2,kb);
+    enemy.invincible = 45;
+    
+    delay = 5;
+}
+
 
 //++++
 coin = instance_place(x+xVel,y+yVel,objCoin);
@@ -153,26 +172,10 @@ with(player)
 }
 
 radius = 5*TILE;
-angle = point_direction(x,y,x+xVel,y+yVel);//point_direction(x,y,player.x,player.y);
-/*rad_angle = ((angle / 180) * pi);
-player.y = y - (sin(rad_angle)) * radius;
-*/
+angle = point_direction(x,y,x+xVel,y+yVel);
 
-/*
-radius = 5*TILE;
-
-angle = point_direction(x,y,player.x,player.y);
-rad_angle = ((angle / 180) * pi);
-player.x = min(max(x + (cos(rad_angle)) * radius , TILE), WIDTH-TILE);
-player.y = y - (sin(rad_angle)) * radius;
-player.xVel = player.x-player.xprevious;
-player.yVel = player.y-player.yprevious;
-*/
-
-//if (ty &lt; y) yVel += abs(ty-y)/4;
 
 block = collision_line(bbox_left,bbox_bottom,bbox_right,bbox_bottom,objBlock,true,true);
-
 if (instance_exists(block))
 {
     yVel = 0;
@@ -180,6 +183,20 @@ if (instance_exists(block))
 }
 
 //++++physics
+
+xVel = (tx-x)/24;
+//yVel = (ty-y)/24;
+yVel = (global.lifeLine - y)/42 + sign(ty-y)*min(abs(ty-y)/80,2);
+
+xVel = sign(xVel)*min(abs(xVel),maxVel);
+yVel = sign(yVel)*min(abs(yVel),maxVel);
+
+if (!in(x+sign(xVel)*2,TILE,WIDTH-TILE))
+{
+    var spark = instance_create(x-sign(WIDTH/2-x)*TILE/2,y-TILE/2+random(TILE),objParticleSpark);
+}
+
+
 if (!place_meeting(x+xVel,y-yVel,objBlock) &amp;&amp; in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;
 else
@@ -187,14 +204,11 @@ else
     xVel = 0;
 }
 
-xVel = sign(tx-x)*min(abs(tx-x)/12,3);
-yVel = (global.lifeLine - y)/24 + sign(ty-y)*min(abs(ty-y)/12,1.5);
-
 y += yVel;
 
-//y += max(yVel,.1);
-
-//yVel = min(yVel+yGrav,global.yVel);
+//xVel = sign(tx-x)*min(abs(tx-x)/24,3);//3);
+//yVel = sign(ty-y)*min(abs(ty-y)/24,3);
+//yVel = (global.lifeLine - y)/42 + sign(ty-y)*min(abs(ty-y)/80,2);
 
 //yVel = (global.lifeLine-y)/120;
 
@@ -245,13 +259,26 @@ for (var i = 1; i &lt; n; i++)
     fx = (player.x-x)/n * i + x;
     fy = (player.y-y)/n * i + y;
     if (i == n - 1)
-        draw_sprite_ext(sprFlail,2,fx,fy,1,1,player.angle,c_white,1);    
+        draw_sprite_ext(sprFlail,3,fx,fy,1,1,player.angle,c_white,1);    
     else
-        draw_sprite(sprFlail,1,fx,fy);
+        draw_sprite(sprFlail,2,fx,fy);
         //draw_sprite_part(sprGraphics,-1,0,0,TILE,TILE,fx-TILE/2,fy-TILE/2);
 }
 
-draw_sprite_ext(sprFlail,0,x,y,1,1,angle,c_white,1);
+
+var ea = max((global.yVel-5)/6,0);
+var tmpea = floor((global.timer / 3) % 6);
+
+draw_sprite_part_ext(sprGraphics,-1,20*TILE,2*TILE,2*TILE,2*TILE,x-TILE,y-TILE,1,1,c_white,ea/4);
+
+draw_sprite_ext(sprFlail,1,x,y,1,1,angle,c_white,1);
+draw_sprite_part_ext(sprGraphics,-1,20*TILE+2*tmpea*TILE,0,2*TILE,2*TILE,x-TILE,y-TILE,1,1,c_white,ea);
+    
+//if (state == ATTACK)
+//    draw_sprite_ext(sprFlail,1,x,y,1,1,angle,c_white,1);
+//else
+//    draw_sprite_ext(sprFlail,0,x,y,1,1,angle,c_white,1);
+
 </string>
           </argument>
         </arguments>
