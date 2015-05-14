@@ -60,6 +60,7 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 
 global.timer = global.timer+1 % INF;
 
+//TODO: REMOVE THIS 
 //+++++move everything here:
 with(objBlock)
 {
@@ -89,30 +90,18 @@ if (spawnWave)
     {
         case 1:
             instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+            
+            repeat(4)
+                var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
         break;
     }
     
     spawnWave = false;
-}
-
-if (instance_exists(objFlail))
+} else
 {
-    if (spawnheight div (HEIGHT/2) &gt; 1)
-    {
-        var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
-
-        /*var tmpx = 0;
-        repeat(0)//1+irandom(10))
-        {
-            tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
-            while (place_meeting(tmpx,HEIGHT,objBlock)) tmpx = TILE+(random(WIDTH-2*TILE)div TILE)*TILE;
-            {
-                var b = instance_create(tmpx,HEIGHT,objBlock);
-                b.type = choose(0,1);
-            }
-        }*/
-        spawnheight = 0;
-    }        
+    //spawn new enemy waves, todo: more wave types/parameters
+    if (!instance_exists(objEnemy))
+        spawnWave = true;
 }
 </string>
           </argument>
