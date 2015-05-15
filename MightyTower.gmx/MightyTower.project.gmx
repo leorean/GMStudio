@@ -19,6 +19,7 @@
     <sprite>sprites\mskBoulderSmall</sprite>
     <sprite>sprites\sprParticle</sprite>
     <sprite>sprites\sprEnemy1</sprite>
+    <sprite>sprites\sprEnemy2</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -39,6 +40,7 @@
       <object>objects\objParticleSpark</object>
     </objects>
     <object>objects\objEnemy1</object>
+    <object>objects\objEnemy2</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

@@ -62,10 +62,6 @@ hp = maxHp;
             <string>if (type == 0) mask_index = mskBoulderBig;
 if (type == 1) mask_index = mskBoulderSmall;
 
-if (y &lt; -3*TILE) y = HEIGHT+2*TILE;
-if (y &gt; HEIGHT+3*TILE) y = -2*TILE;
-
-
 if (bbox_left+xVel&gt;TILE &amp;&amp; bbox_right+xVel&lt;WIDTH-TILE)
     x += xVel;
 else
@@ -103,8 +99,8 @@ if (!alive)
     instance_destroy();
 }
 
-//if (y &gt; HEIGHT+2*TILE)
-//    instance_destroy();
+if (!in(y,-3*TILE,HEIGHT+3*TILE))
+    instance_destroy();
 </string>
           </argument>
         </arguments>

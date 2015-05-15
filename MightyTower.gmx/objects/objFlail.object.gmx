@@ -118,7 +118,7 @@ with(player)
     if (invincible == 0)
     {
         var enemy = instance_place(x+xVel,y+yVel,objEnemy);
-        if (instance_exists(enemy))
+        if (instance_exists(enemy) &amp;&amp; enemy.alive)
         {
             var kb = point_direction(x,y,enemy.x,enemy.y);
             xVel = lengthdir_x(-5,kb);
