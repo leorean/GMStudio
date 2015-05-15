@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>5</depth>
   <persistent>0</persistent>
   <parentName>objEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mask_index = mskBoulderBig;
+            <string>mask_index = mskMedium;
 
 dir = choose(LEFT,RIGHT);
 
@@ -88,7 +88,7 @@ ty = HEIGHT - 8*TILE + random(4)*TILE;
         xVel = sign(xVel)*min(abs(xVel),spd);
     }
 
-    if (hp == 0 || keyboard_check_pressed(ord('K')))
+    if (hp == 0)
     {
         yVel = -2;
         xVel = 0;

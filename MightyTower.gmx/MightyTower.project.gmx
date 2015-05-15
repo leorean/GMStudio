@@ -15,11 +15,13 @@
     <sprite>sprites\sprFlail</sprite>
     <sprite>sprites\sprBg</sprite>
     <sprite>sprites\sprBoulder</sprite>
-    <sprite>sprites\mskBoulderBig</sprite>
-    <sprite>sprites\mskBoulderSmall</sprite>
+    <sprite>sprites\mskMedium</sprite>
+    <sprite>sprites\mskLarge</sprite>
+    <sprite>sprites\mskSmall</sprite>
     <sprite>sprites\sprParticle</sprite>
     <sprite>sprites\sprEnemy1</sprite>
     <sprite>sprites\sprEnemy2</sprite>
+    <sprite>sprites\sprEnemy3</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -41,6 +43,8 @@
     </objects>
     <object>objects\objEnemy1</object>
     <object>objects\objEnemy2</object>
+    <object>objects\objEnemy3</object>
+    <object>objects\objProjectileCannon</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

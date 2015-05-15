@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>5</depth>
   <persistent>0</persistent>
   <parentName>objEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,12 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mask_index = mskBoulderBig;
+            <string>mask_index = mskMedium;
 
 dir = sign(x-WIDTH/2);
 
 tx = WIDTH/2-sign(dir)*(WIDTH/2-1.5*TILE);
 ty = y;
+
+x = tx;
 
 fCur = 0;
 fMax = 4;
@@ -75,16 +77,17 @@ invincible = 0;
     if (invincible)
     {
         xVel *= .99;
-        yVel *= .99;    
+        yVel *= .99;
+
     } else
     {
         if (state == IDLE)
         {
             yVel += (objPlayer.y-y)/280;
             yVel = sign(yVel)*min(abs(yVel),2);
-            x = tx;
+            //x = tx;
             xGrav = -sign(dir)*.1;
-            if (abs(y-objPlayer.y)&lt;3)
+            if (abs(y-objPlayer.y)&lt;3 &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
             {
                 xVel = sign(dir)*4;
                 yVel = 2;
@@ -98,7 +101,7 @@ invincible = 0;
         }
     }
 
-    if (hp == 0 || keyboard_check_pressed(ord('K')))
+    if (hp == 0)
     {
         yVel = -2;
         xVel = 0;
@@ -123,9 +126,10 @@ if (in(x+xVel,1.5*TILE,WIDTH-1.5*TILE))
     x += xVel;
 else
 {
-    if (state == ATTACK)
+    if (state == ATTACK &amp;&amp; abs(x-tx)&lt;TILE)
         state = IDLE;
     xVel = 0;
+    x = tx;
 }
 
 y += yVel;
