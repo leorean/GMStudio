@@ -80,8 +80,9 @@ hp = maxHp;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (invincible % 3 == 0)
-    draw_sprite_ext(sprPlayer,-1,x,y,1,1,angle,c_white,1);
+            <string>/*if (invincible % 3 == 0)
+    draw_sprite_ext(sprFlail,4,x,y,1,1,angle+90,c_white,1);
+*/
 
 </string>
           </argument>

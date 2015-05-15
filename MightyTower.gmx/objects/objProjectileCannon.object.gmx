@@ -63,18 +63,21 @@ invincible = 0;
 
 }
 
-if (in(x+xVel,TILE,WIDTH-TILE))
+if (in(x+xVel,TILE,WIDTH-TILE) &amp;&amp; hp &gt; 0)
     x += xVel;
 else
+{
+    alive = false;
+}
+
+y += yVel;
+
+if (!alive)
 {
     var e = instance_create(x,y,objEffect);
     e.type = 4;
     instance_destroy();
-    
-    xVel = -xVel;
 }
-
-y += yVel;
 
 if (!in(y,-3*TILE,HEIGHT+3*TILE))
     instance_destroy();

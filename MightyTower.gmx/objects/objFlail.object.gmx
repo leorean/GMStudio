@@ -239,7 +239,17 @@ for (var i = 1; i &lt; n; i++)
     fx = (player.x-x)/n * i + x;
     fy = (player.y-y)/n * i + y;
     if (i == n - 1)
-        draw_sprite_ext(sprFlail,3,fx,fy,1,1,player.angle,c_white,1);
+    {
+        if (player.invincible % 3 == 0)
+        {
+            //player
+            with(player)
+                draw_sprite_ext(sprFlail,4,x,y,1,1,angle+90,c_white,1);
+                
+            //hands
+            draw_sprite_ext(sprFlail,3,fx,fy,1,1,player.angle+90,c_white,1);
+        }
+    }
     //else if (i == n - 1)
     //    continue;
     else
