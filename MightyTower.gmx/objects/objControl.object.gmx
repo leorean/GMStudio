@@ -67,55 +67,59 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 global.timer = global.timer+1 % INF;
 
 //++++ velocity management
-
-global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
 global.lifeLine = min(max(global.lifeLine, 1),HEIGHT);
 
-//++++distance measurement
-global.distance = max(global.distance + global.yVel*.1, global.distance);
-
-//++++spawner
-
-time = max(time-1,0);
-
-if (spawnWave)
+if (!global.gameOver)
 {
-    if (!instance_exists(objNextWave))
-    {
-        //time = maxTime;
-        wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
-        
-        switch(wave)
-        {
-            case 1:
-                instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
-                repeat(4)
-                    var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
-            break;
-            case 2:
-                instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
-            break;
-            case 3:
-                //instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
-                instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
-                //instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
-            break;
-        }
-        
-        spawnWave = false;
-    }
-} else
-{
-    //TODO: reward player with something if he finishes before time?
-    if (!instance_exists(objEnemy))
-        time = 0;
+    //++++ global velocity
+    global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
     
-    //if wave is clear, spawn the wave effect, reset timers, hand out goodies (treasure, heart)?
-    if (time == 0)
+    //++++distance measurement
+    global.distance = max(global.distance + global.yVel*.1, global.distance);
+    
+    //++++spawner
+    
+    time = max(time-1,0);
+    
+    if (spawnWave)
     {
-        instance_create(WIDTH/2,HEIGHT+4*TILE,objNextWave);
-        time = maxTime;
-        spawnWave = true;
+        if (!instance_exists(objNextWave))
+        {
+            //time = maxTime;
+            wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
+            
+            switch(wave)
+            {
+                case 1:
+                    instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                    repeat(4)
+                        var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+                break;
+                case 2:
+                    instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
+                break;
+                case 3:
+                    instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                    instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
+                    instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
+                break;
+            }
+            
+            spawnWave = false;
+        }
+    } else
+    {
+        //TODO: reward player with something if he finishes before time?
+        if (!instance_exists(objEnemy))
+            time = 0;
+        
+        //if wave is clear, spawn the wave effect, reset timers, hand out goodies (treasure, heart)?
+        if (time == 0)
+        {
+            instance_create(WIDTH/2,HEIGHT+4*TILE,objNextWave);
+            time = maxTime;
+            spawnWave = true;
+        }
     }
 }
 </string>
@@ -190,6 +194,7 @@ instance_create(0,0,objBg);
           <argument>
             <kind>1</kind>
             <string>draw_set_color(c_white);
+draw_set_alpha(1);
 draw_text(0,0,global.distance);
 draw_text(0,TILE,global.coins);
 draw_text(0,2*TILE,global.yVel);

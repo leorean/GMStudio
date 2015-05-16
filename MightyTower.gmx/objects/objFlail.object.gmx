@@ -76,15 +76,7 @@ if (!global.gameOver)
     }
     
     delay = max(delay-1,0);
-}
-else
-{
-    delay = 0;
-    //global.lifeLine = min(global.lifeLine+2,HEIGHT);
-    //global.lifeLine = max(global.lifeLine-2,0);
-}
-if (player.hp &gt; 0)
-{
+    
     player.xVel += (x-player.x)/120;
     player.yVel = (y-player.y-4*TILE)/8;
     
@@ -92,10 +84,15 @@ if (player.hp &gt; 0)
     player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
     
     player.angle = point_direction(x,y,player.x,player.y);
+    
 }
 else
 {
+    delay = 0;
+    
     player.angle = (player.angle+3) % 360;
+    //global.lifeLine = min(global.lifeLine+2,HEIGHT);
+    //global.lifeLine = max(global.lifeLine-2,0);
 }
 
 //++++ENEMY INTERACTION++++
