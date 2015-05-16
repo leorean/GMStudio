@@ -102,9 +102,9 @@ if (spawnWave)
                 instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
             break;
             case 3:
-                instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                //instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
                 instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
-                instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
+                //instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
             break;
         }
         
@@ -112,7 +112,7 @@ if (spawnWave)
     }
 } else
 {
-    //spawn new enemy waves, todo: more wave types/parameters
+    //if wave is clear, spawn the wave effect, reset timers, hand out goodies (treasure, heart)?
     if (!instance_exists(objEnemy))
     {
         instance_create(WIDTH/2,HEIGHT+4*TILE,objNextWave);

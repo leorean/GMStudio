@@ -74,31 +74,24 @@ invincible = 0;
             <string>if (alive)
 {
     invincible = max(invincible-1,0);
-    if (invincible)
+    
+    if (state == IDLE)
     {
-        xVel *= .99;
-        yVel *= .99;
-
-    } else
+        yVel += (objPlayer.y-y)/280;
+        yVel = sign(yVel)*min(abs(yVel),2);
+        x = tx;
+        xGrav = -sign(dir)*.1;
+        if (abs(y-objPlayer.y)&lt;3 &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
+        {
+            xVel = sign(dir)*4;
+            yVel = 2;
+            state = ATTACK;
+        }
+    }
+    if (state == ATTACK)
     {
-        if (state == IDLE)
-        {
-            yVel += (objPlayer.y-y)/280;
-            yVel = sign(yVel)*min(abs(yVel),2);
-            x = tx;
-            xGrav = -sign(dir)*.1;
-            if (abs(y-objPlayer.y)&lt;3 &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
-            {
-                xVel = sign(dir)*4;
-                yVel = 2;
-                state = ATTACK;
-            }
-        }
-        if (state == ATTACK)
-        {
-            xVel += xGrav;
-            yVel = max(yVel-.1,-global.yVel);
-        }
+        xVel += xGrav;
+        yVel = max(yVel-.1,-global.yVel);
     }
 
     if (hp == 0)
@@ -126,10 +119,14 @@ if (in(x+xVel,1.5*TILE,WIDTH-1.5*TILE))
     x += xVel;
 else
 {
-    if (state == ATTACK &amp;&amp; abs(x-tx)&lt;TILE)
+    if (state == ATTACK &amp;&amp; abs(x-tx)&lt;TILE/2)
+    {
+        x = tx;
         state = IDLE;
+    }
+    x -= xVel;
     xVel = 0;
-    x = tx;
+
 }
 
 y += yVel;
