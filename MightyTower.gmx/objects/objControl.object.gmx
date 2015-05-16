@@ -63,32 +63,23 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 
 global.timer = global.timer+1 % INF;
 
-//TODO: REMOVE THIS 
-//+++++move everything here:
-with(objBlock)
-{
-    y -= global.yVel;
-    if (y &lt; -2*TILE) instance_destroy();
-}
-
 //++++ velocity management
 
 global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
-//global.yVel = min(global.yVel + global.yAcc, global.yVelMax);
-
 global.lifeLine = min(max(global.lifeLine, 1),HEIGHT);
+
 //++++distance measurement
 global.distance = max(global.distance + global.yVel*.1, global.distance);
-//show_debug_message(global.height);
-
-spawnheight += global.yVel;
 
 //++++spawner
+
+time = max(time-1,0);
 
 if (spawnWave)
 {
     if (!instance_exists(objNextWave))
     {
+        //time = maxTime;
         wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
         
         switch(wave)
@@ -112,10 +103,15 @@ if (spawnWave)
     }
 } else
 {
-    //if wave is clear, spawn the wave effect, reset timers, hand out goodies (treasure, heart)?
+    //TODO: reward player with something if he finishes before time?
     if (!instance_exists(objEnemy))
+        time = 0;
+    
+    //if wave is clear, spawn the wave effect, reset timers, hand out goodies (treasure, heart)?
+    if (time == 0)
     {
         instance_create(WIDTH/2,HEIGHT+4*TILE,objNextWave);
+        time = maxTime;
         spawnWave = true;
     }
 }
@@ -146,13 +142,15 @@ global.yAcc = .0003;
 global.yVelMax = 8;
 
 global.distance = 0;
-spawnheight = 0;
 
 global.coins = 0;
 
 global.timer = 0;
 
+//wave stuff
 spawnWave = true; //if this is true, spawn a new wave of enemies
+time = 0;
+maxTime = 15*60; // time until next wave
 
 /*
 the horizontal line at which the flail has to be... this line should get higher as penalty,
@@ -192,10 +190,33 @@ draw_text(0,2*TILE,global.yVel);
 
 //draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
 
+//TODO: other condition than player exists...
 if (instance_exists(objPlayer))
 {
+    //HP
     draw_sprite_part(sprGraphics,-1,14*TILE,0,6*TILE,TILE,WIDTH/2-3*TILE,0);
     draw_sprite_part(sprGraphics,-1,15*TILE,TILE,4*TILE*(objPlayer.hp/objPlayer.maxHp),TILE,WIDTH/2-2*TILE,0);
+    
+    //HOUR GLASS
+    var tf = min(floor(((1-time/maxTime)*13)),12);
+    //sand:
+    if (tf &lt; 12)
+        draw_sprite(sprParticle,-1,WIDTH-1*TILE,TILE+((global.timer*.5) % 12));
+    if (tf &lt; 8)
+        draw_sprite(sprParticle,-1,WIDTH-1*TILE-1,TILE+((global.timer*.5+3) % 12));
+    if (tf &lt; 10)
+        draw_sprite(sprParticle,-1,WIDTH-1*TILE+1,TILE+((global.timer*.5+6) % 12));
+    draw_sprite_part(sprGraphics,-1,19*TILE+tf*2*TILE,2*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
+    
+    //draw_sprite_part(sprGraphics,-1,21*TILE,2*TILE+TILE*(1-time/maxTime),2*TILE,TILE*(time/maxTime),WIDTH-2*TILE,0+TILE*(time/maxTime));
+
+    
+    /*
+    //top:
+    draw_sprite_part(sprGraphics,-1,21*TILE,2*TILE+TILE*(1-time/maxTime),2*TILE,TILE*(time/maxTime),WIDTH-2*TILE,0+TILE*(1-time/maxTime));
+    //bottom:
+    draw_sprite_part(sprGraphics,-1,21*TILE,3*TILE+TILE*(time/maxTime),2*TILE,TILE*(1-time/maxTime),WIDTH-2*TILE,TILE+TILE*(time/maxTime));
+    */
 }
 </string>
           </argument>
