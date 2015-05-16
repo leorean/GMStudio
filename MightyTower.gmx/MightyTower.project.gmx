@@ -39,7 +39,7 @@
     <objects name="misc">
       <object>objects\objEnemy</object>
       <object>objects\objParticleSpark</object>
-      <object>objects\objNextWave</object>
+      <object>objects\objEffectText</object>
     </objects>
     <object>objects\objEnemy1</object>
     <object>objects\objEnemy2</object>

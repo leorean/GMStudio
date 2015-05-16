@@ -64,13 +64,13 @@ if (global.gameOver)
     if (instance_exists(objEnemy))
     objEnemy.hp = 0;
     
-    alpha = min(alpha+.005,1.5);
+    alpha = min(alpha+.01,1.5);
     
     if (alpha == 1.5)
         room_restart();
 } else
 {
-    alpha = max(alpha - .01,0);
+    alpha = max(alpha - .02,0);
 }
 
 //EFFECT

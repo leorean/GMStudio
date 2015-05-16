@@ -79,11 +79,12 @@ if (!global.gameOver)
     
     //++++spawner
     
-    time = max(time-1,0);
+    if (!instance_exists(objEffectText))
+        time = max(time-1,0);
     
     if (spawnWave)
     {
-        if (!instance_exists(objNextWave))
+        if (!instance_exists(objEffectText))
         {
             //time = maxTime;
             wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
@@ -116,7 +117,8 @@ if (!global.gameOver)
         //if wave is clear, spawn the wave effect, reset timers, hand out goodies (treasure, heart)?
         if (time == 0)
         {
-            instance_create(WIDTH/2,HEIGHT+4*TILE,objNextWave);
+            var et = instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
+            et.type = 0;
             time = maxTime;
             spawnWave = true;
         }
@@ -162,6 +164,10 @@ spawnWave = true; //if this is true, spawn a new wave of enemies
 maxTime = 15*60; // time until next wave
 time = maxTime;
 
+//start signal
+var et = instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
+et.type = 1;
+
 /*
 the horizontal line at which the flail has to be... this line should get higher as penalty,
 and lower as reward, but overall higher and higher so the game finally ends.
@@ -193,11 +199,12 @@ instance_create(0,0,objBg);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_white);
+            <string>draw_set_color(c_black);
 draw_set_alpha(1);
 draw_text(0,0,global.distance);
 draw_text(0,TILE,global.coins);
 draw_text(0,2*TILE,global.yVel);
+draw_text(0,3*TILE,time);
 
 //draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
 

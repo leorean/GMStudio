@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>yVel = -2;
 ty = HEIGHT/2;
+
+type = 0;
 </string>
           </argument>
         </arguments>
@@ -49,7 +51,9 @@ ty = HEIGHT/2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>yVel = (ty-y)/24;
+            <string>draw_set_alpha(1);
+
+yVel = (ty-y)/24;
 
 if (abs(y-ty)&lt;4) ty = -4*TILE;
 
@@ -57,7 +61,7 @@ if (y &lt; -2*TILE) instance_destroy();
 
 y += yVel;
 
-draw_sprite_part(sprGraphics,-1,14*TILE,2*TILE,5*TILE,3*TILE,x-2.5*TILE,y-1.5*TILE);
+draw_sprite_part(sprGraphics,-1,14*TILE,2*TILE+3*type*TILE,5*TILE,3*TILE,x-2.5*TILE,y-1.5*TILE);
 </string>
           </argument>
         </arguments>
