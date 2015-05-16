@@ -33,7 +33,7 @@ block = noone;
 
 invincible = 0;
 
-maxHp = 5;
+maxHp = 3;
 hp = maxHp;
 </string>
           </argument>

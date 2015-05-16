@@ -58,6 +58,9 @@ if (keyboard_check_pressed(ord('R')))
 if (keyboard_check_pressed(ord('K')))
     with(objEnemy) hp = 0;
 
+if (keyboard_check_pressed(ord('D')))
+    with(objPlayer) hp = 1;
+
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
 
@@ -137,7 +140,10 @@ if (spawnWave)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>global.yVel = 4;
+            <string>global.paused = false;
+global.gameOver = false;
+
+global.yVel = 4;
 global.yAcc = .0003;
 global.yVelMax = 8;
 
@@ -149,8 +155,8 @@ global.timer = 0;
 
 //wave stuff
 spawnWave = true; //if this is true, spawn a new wave of enemies
-time = 0;
 maxTime = 15*60; // time until next wave
+time = maxTime;
 
 /*
 the horizontal line at which the flail has to be... this line should get higher as penalty,
