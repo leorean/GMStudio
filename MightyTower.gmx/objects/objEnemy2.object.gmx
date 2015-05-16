@@ -85,7 +85,7 @@ invincible = 0;
         {
             yVel += (objPlayer.y-y)/280;
             yVel = sign(yVel)*min(abs(yVel),2);
-            //x = tx;
+            x = tx;
             xGrav = -sign(dir)*.1;
             if (abs(y-objPlayer.y)&lt;3 &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
             {

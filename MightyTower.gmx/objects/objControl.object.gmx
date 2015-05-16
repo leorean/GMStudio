@@ -87,31 +87,37 @@ spawnheight += global.yVel;
 
 if (spawnWave)
 {
-    wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
-    
-    switch(wave)
+    if (!instance_exists(objNextWave))
     {
-        case 1:
-            instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
-            repeat(4)
-                var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
-        break;
-        case 2:
-            instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
-        break;
-        case 3:
-            instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
-            instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
-            instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
-        break;
+        wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
+        
+        switch(wave)
+        {
+            case 1:
+                instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                repeat(4)
+                    var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+            break;
+            case 2:
+                instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
+            break;
+            case 3:
+                instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
+                instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
+            break;
+        }
+        
+        spawnWave = false;
     }
-    
-    spawnWave = false;
 } else
 {
     //spawn new enemy waves, todo: more wave types/parameters
     if (!instance_exists(objEnemy))
+    {
+        instance_create(WIDTH/2,HEIGHT+4*TILE,objNextWave);
         spawnWave = true;
+    }
 }
 </string>
           </argument>
