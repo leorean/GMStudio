@@ -35,7 +35,6 @@
     <object>objects\objFlail</object>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
-    <object>objects\objBoulder</object>
     <object>objects\objBg</object>
     <object>objects\objCoin</object>
     <object>objects\objEffect</object>
@@ -44,11 +43,15 @@
       <object>objects\objParticleSpark</object>
       <object>objects\objEffectText</object>
     </objects>
-    <object>objects\objEnemy1</object>
-    <object>objects\objEnemy2</object>
-    <object>objects\objEnemy3</object>
-    <object>objects\objEnemy4</object>
-    <object>objects\objProjectileCannon</object>
+    <objects name="enemies">
+      <object>objects\objBoulder</object>
+      <object>objects\objMine</object>
+      <object>objects\objProjectileCannon</object>
+      <object>objects\objEnemy1</object>
+      <object>objects\objEnemy2</object>
+      <object>objects\objEnemy3</object>
+      <object>objects\objEnemy4</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

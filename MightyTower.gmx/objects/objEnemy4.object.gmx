@@ -33,12 +33,12 @@ fCur = 0;
 fMax = 4;
 fSpeed = .15;
 
-xVel = 0;
+xVel = -2+random(4);
 yVel = 0;
 
 yGrav = .05;
 
-maxHp = 2;
+maxHp = 1;
 hp = maxHp;
 
 state = IDLE;
@@ -84,7 +84,6 @@ invincible = 0;
     if (y &gt; HEIGHT+TILE &amp;&amp; yVel &gt; 0)
     {
         yVel = -4-random(3);
-        xVel = -2+random(4);
     }
     
     yVel = min(yVel+yGrav,5);

@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>5</depth>
+  <depth>2</depth>
   <persistent>0</persistent>
   <parentName>objEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,30 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mask_index = mskMedium;
-
-dir = sign(x-WIDTH/2);
-
-tx = WIDTH/2-sign(dir)*(WIDTH/2-1.5*TILE);
-ty = y;
-
-x = tx;
-
-fCur = 0;
-fMax = 4;
-fSpeed = .2;
+            <string>mask_index = mskBlock;
 
 xVel = 0;
 yVel = 0;
 
-maxHp = 3;
-hp = maxHp;
+spd = -1.5;
 
-state = IDLE;
 alive = true;
 invincible = 0;
 
-
+maxHp = 2;
+hp = maxHp;
 </string>
           </argument>
         </arguments>
@@ -71,65 +59,40 @@ invincible = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (alive)
-{
-    invincible = max(invincible-1,0);
-    
-    if (state == IDLE)
-    {
-        yVel += (objPlayer.y-y)/280;
-        yVel = sign(yVel)*min(abs(yVel),2);
-        x = tx;
-        xGrav = -sign(dir)*.1;
-        if (distance_to_point(objFlail.x,objFlail.y)&lt;5*TILE)//abs(y-objPlayer.y)&lt;TILE &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
-        {
-            xVel = sign(dir)*4;
-            yVel = 2;
-            state = ATTACK;
-        }
-    }
-    if (state == ATTACK)
-    {
-        xVel += xGrav;
-        yVel = max(yVel-.1,-global.yVel);
-    }
+            <string>invincible = max(invincible-1,0);
+if (hp == 0) alive = false;
 
-    if (hp == 0)
-    {
-        yVel = -2;
-        xVel = 0;
-        alive = false;
-        
-        var e = instance_create(x,y,objEffect);
-        e.type = 2;
-        
-        repeat(3)
-            instance_create(x,y,objCoin);
-    }
+if (invincible)
+{
+    xVel *= .9;
+    yVel *= .9;
     
 } else
 {
+    xVel = 0;
+    yVel = spd;
+}
+
+if (!alive)
+{
+    var e = instance_create(x,y,objEffect);
+    e.type = 4;
     instance_destroy();
 }
 
-
-//++++
-
-if (in(x+xVel,1.5*TILE,WIDTH-1.5*TILE))
+if (!in(y,-3*TILE,HEIGHT+3*TILE) || global.gameOver)
+    instance_destroy();
+    
+if (in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;
 else
 {
-    if (state == ATTACK &amp;&amp; abs(x-tx)&lt;TILE/2)
-    {
-        x = tx;
-        state = IDLE;
-    }
-    x -= xVel;
-    xVel = 0;
-
+    xVel = -xVel;
 }
 
-y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
+//if (!place_meeting(x,y+yVel,objFlail))
+y += yVel;
+
 </string>
           </argument>
         </arguments>
@@ -152,28 +115,8 @@ y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur+fSpeed)%fMax;
-
-var frame;
-
-switch(state)
-{
-    case IDLE:
-        angle = 90;
-        frame = floor(fCur);
-        break;
-    case ATTACK:
-        angle = point_direction(x,y,x+xVel,y+yVel)-90;
-        frame = 4;
-    break;
-}
-
-if (invincible % 3 == 0)
-{
-    draw_sprite_ext(sprEnemy2,frame,x,y,1,-sign(dir),angle,c_white,1);
-}
-//++++draw health bar
-drawHealthBar(x-1.5*TILE,y-2*TILE);
+            <string>//draw_sprite_part(sprGraphics,-1,TILE,5*TILE,TILE,TILE,x,y);
+draw_sprite_part(sprGraphics,-1,TILE,5*TILE+(floor(global.timer*(.1+(hp&lt;=1)*.1))%4)*TILE,TILE,TILE,x,y);
 </string>
           </argument>
         </arguments>

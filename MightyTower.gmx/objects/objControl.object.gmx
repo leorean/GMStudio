@@ -96,26 +96,44 @@ if (!global.gameOver)
     {
         if (!instance_exists(objEffectText))
         {
-            wave = 4;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
+            wave++;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
+            
+            repeat(random(2))
+                instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+random(2)*TILE,objMine);
             
             switch(wave)
             {
                 case 1:
-                    instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
-                    repeat(4)
-                        var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+                    repeat(2)
+                        instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
+                    //repeat(4)
+                    //    var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
                 break;
                 case 2:
-                    instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
+                    repeat(2)
+                        instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
+                    instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                    //instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
                 break;
                 case 3:
-                    instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
+                    //instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
                     instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
-                    instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
+                    //instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
                 break;
                 case 4:
                     repeat(3)
                         instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
+                break;
+                case 5:
+                    instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
+                    repeat(2)
+                        instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
+                break;
+                default: //infinity and beyond
+                    repeat(wave div 3)
+                        instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
+                    repeat(wave div 5)
+                        instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
                 break;
             }
             
@@ -181,6 +199,7 @@ global.timer = 0;
 
 //wave stuff
 spawnWave = true; //if this is true, spawn a new wave of enemies
+wave = 0; //the current wave
 maxTime = 15*60; // time until next wave
 time = maxTime;
 

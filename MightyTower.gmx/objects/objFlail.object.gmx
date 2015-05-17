@@ -98,6 +98,7 @@ else
 //++++ENEMY INTERACTION++++
 if (!global.gameOver)
 {
+    //++++ENEMY INTERACTION++++
     var enemy = instance_place(x+xVel,y+yVel,objEnemy);
     if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive &amp;&amp; !enemy.invincible)
     {
@@ -115,11 +116,22 @@ if (!global.gameOver)
             yVel = -lengthdir_y(3,kb);
         }
         delay = 5;
-        
     }
     
+    //++++MINE INTERACTION++++
+    /*
+    var mine = instance_place(x+xVel,y+yVel,objMine);
+    if (instance_exists(mine))
+    {
+        var kb = point_direction(mine.x,mine.y,x,y);
+        mine.x -= lengthdir_x(1,kb);
+        mine.y += abs(lengthdir_y(1,kb));
+        x += lengthdir_x(1,kb);
+        y += lengthdir_y(1,kb);
+        delay = 0;
+    }*/
     
-    //++++
+    //++++COIN-FLAIL-INTERACTION++++
     coin = instance_place(x+xVel,y+yVel,objCoin);
         if (instance_exists(coin))
             coin.active = true;
