@@ -113,8 +113,8 @@ if (!global.gameOver)
         {
             xVel = -lengthdir_x(3,kb);
             yVel = -lengthdir_y(3,kb);
-            delay = 10;
         }
+        delay = 5;
         
     }
     
@@ -266,7 +266,7 @@ y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
     with(player)
         draw_sprite_ext(sprFlail,5,x,y,1,1,angle+90,c_white,1);
 
-var ea = max((global.yVel-5)/6,0);
+var ea = min(max((global.yVel-5)/6,0),.5);
 var tmpea = floor((global.timer / 3) % 6);
 
 draw_sprite_part_ext(sprGraphics,-1,32*TILE,0,2*TILE,2*TILE,x-TILE,y-TILE,1,1,c_white,ea/4);

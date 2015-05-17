@@ -72,7 +72,17 @@ global.lifeLine = min(max(global.lifeLine, 1),HEIGHT);
 if (!global.gameOver)
 {
     //++++ global velocity
-    global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
+    //gain speed between waves
+    if (!spawnWave)
+    {
+        //global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
+        if (global.yVel &lt; 2+6*(global.lifeLine/HEIGHT))
+            global.yVel = 2+6*(global.lifeLine/HEIGHT);
+        else
+            global.yVel -= .1;
+    }
+    else
+        global.yVel = min(global.yVel+.1,12);
     
     //++++distance measurement
     global.distance = max(global.distance + global.yVel*.05, global.distance);
@@ -119,6 +129,13 @@ if (!global.gameOver)
         {
             var et = instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
             et.type = 0;
+            
+            /*for (i = TILE; i &lt; WIDTH-TILE; i+= TILE)
+                for (j = HEIGHT; j &lt; HEIGHT+3*TILE; j+= TILE)
+                {
+                    instance_create(i,j,objBlock);
+                }
+            */
             time = maxTime;
             spawnWave = true;
         }
