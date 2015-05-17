@@ -21,12 +21,14 @@
     <sprite>sprites\sprEnemy1</sprite>
     <sprite>sprites\sprEnemy2</sprite>
     <sprite>sprites\sprEnemy3</sprite>
+    <sprite>sprites\sprEnemy4</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
     <script>scripts\drawNumber.gml</script>
+    <script>scripts\drawHealthBar.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -45,6 +47,7 @@
     <object>objects\objEnemy1</object>
     <object>objects\objEnemy2</object>
     <object>objects\objEnemy3</object>
+    <object>objects\objEnemy4</object>
     <object>objects\objProjectileCannon</object>
   </objects>
   <rooms name="rooms">

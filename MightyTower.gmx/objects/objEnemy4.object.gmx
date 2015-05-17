@@ -27,27 +27,23 @@
             <kind>1</kind>
             <string>mask_index = mskMedium;
 
-dir = sign(x-WIDTH/2);
-
-tx = WIDTH/2-sign(dir)*(WIDTH/2-1.5*TILE);
-ty = y;
-
-x = tx;
+dir = choose(LEFT,RIGHT);
 
 fCur = 0;
 fMax = 4;
-fSpeed = .2;
+fSpeed = .15;
 
 xVel = 0;
 yVel = 0;
 
-maxHp = 3;
+yGrav = .05;
+
+maxHp = 2;
 hp = maxHp;
 
 state = IDLE;
 alive = true;
 invincible = 0;
-
 
 </string>
           </argument>
@@ -74,61 +70,47 @@ invincible = 0;
             <string>if (alive)
 {
     invincible = max(invincible-1,0);
-    
-    if (state == IDLE)
+    if (invincible)
     {
-        yVel += (objPlayer.y-y)/280;
-        yVel = sign(yVel)*min(abs(yVel),2);
-        x = tx;
-        xGrav = -sign(dir)*.1;
-        if (distance_to_point(objFlail.x,objFlail.y)&lt;5*TILE)//abs(y-objPlayer.y)&lt;TILE &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
-        {
-            xVel = sign(dir)*4;
-            yVel = 2;
-            state = ATTACK;
-        }
-    }
-    if (state == ATTACK)
+        xVel *= .99;
+        yVel *= .99;    
+    } else
     {
-        xVel += xGrav;
-        yVel = max(yVel-.1,-global.yVel);
     }
 
+    if (abs(xVel)&gt;0)
+        dir = sign(xVel);
+    
+    if (y &gt; HEIGHT+TILE &amp;&amp; yVel &gt; 0)
+    {
+        yVel = -4-random(3);
+        xVel = -2+random(4);
+    }
+    
+    yVel = min(yVel+yGrav,5);
+    
     if (hp == 0)
     {
-        yVel = -2;
-        xVel = 0;
         alive = false;
         
         var e = instance_create(x,y,objEffect);
         e.type = 2;
         
-        repeat(3)
+        repeat(1)
             instance_create(x,y,objCoin);
-    }
-    
+    }   
 } else
-{
     instance_destroy();
-}
-
 
 //++++
 
-if (in(x+xVel,1.5*TILE,WIDTH-1.5*TILE))
+if (in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;
 else
 {
-    if (state == ATTACK &amp;&amp; abs(x-tx)&lt;TILE/2)
-    {
-        x = tx;
-        state = IDLE;
-    }
-    x -= xVel;
-    xVel = 0;
-
+    xVel = -xVel;
 }
-
+    
 y += yVel;
 </string>
           </argument>
@@ -154,23 +136,18 @@ y += yVel;
             <kind>1</kind>
             <string>fCur = (fCur+fSpeed)%fMax;
 
-var frame;
+/*if (yVel &lt; 0) fCur = min(fCur+fSpeed,4);
+else fCur = max(fCur-fSpeed,1);*/
+//fCur = max(min(abs(yVel-1),4),1);
 
-switch(state)
-{
-    case IDLE:
-        angle = 90;
-        frame = floor(fCur);
-        break;
-    case ATTACK:
-        angle = point_direction(x,y,x+xVel,y+yVel)-90;
-        frame = 4;
-    break;
-}
+var angle = point_direction(x,y,x+abs(xVel),y+yVel+5)+90;
+//angle = (angle+rot)%360;
+var frame = floor(fCur);
 
 if (invincible % 3 == 0)
 {
-    draw_sprite_ext(sprEnemy2,frame,x,y,1,-sign(dir),angle,c_white,1);
+    //draw_sprite(mskBoulderBig,-1,x,y);
+    draw_sprite_ext(sprEnemy4,frame,x,y,sign(dir),1,angle,c_white,1);
 }
 //++++draw health bar
 drawHealthBar(x-1.5*TILE,y-2*TILE);

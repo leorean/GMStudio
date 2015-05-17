@@ -96,8 +96,7 @@ if (!global.gameOver)
     {
         if (!instance_exists(objEffectText))
         {
-            //time = maxTime;
-            wave = 3;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
+            wave = 4;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
             
             switch(wave)
             {
@@ -113,6 +112,10 @@ if (!global.gameOver)
                     instance_create(1*WIDTH/3+random(1*WIDTH/3),HEIGHT+2*TILE,objEnemy1);
                     instance_create(WIDTH/2+choose(-TILE,TILE),-2*TILE,objEnemy2);
                     instance_create(1*WIDTH/3+random(1*WIDTH/3),-3*TILE,objEnemy3);
+                break;
+                case 4:
+                    repeat(3)
+                        instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
                 break;
             }
             
