@@ -53,7 +53,9 @@ yVel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x += xVel;
+            <string>draw_set_alpha(1);
+
+x += xVel;
 y += yVel;
 
 fCur = min(fCur + fSpeed, fMax);

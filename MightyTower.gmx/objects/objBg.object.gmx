@@ -62,11 +62,13 @@ draw_sprite_part(sprBg,-1,WIDTH,0,WIDTH,HEIGHT,0,floor(b)+HEIGHT);
 if (global.gameOver)
 {
     if (instance_exists(objEnemy))
-    objEnemy.hp = 0;
-    
+        objEnemy.hp = 0;
+    if (instance_exists(objCoin))
+        with(objCoin) draw_set_alpha(objBg.alpha);
+        
     alpha = min(alpha+.01,1.5);
     
-    if (alpha == 1.5)
+    if (alpha == 1.5 &amp;&amp; mouse_check_button_pressed(mb_any))
         room_restart();
 } else
 {

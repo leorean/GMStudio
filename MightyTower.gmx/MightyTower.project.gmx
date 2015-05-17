@@ -26,6 +26,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
+    <script>scripts\drawNumber.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -49,7 +50,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="9">
+  <constants number="11">
     <constant name="INF">900000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">240</constant>
@@ -59,6 +60,8 @@
     <constant name="DEAD">2</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
+    <constant name="fnt_big">0</constant>
+    <constant name="fnt_small">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

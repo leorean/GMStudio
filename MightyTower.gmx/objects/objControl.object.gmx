@@ -201,16 +201,22 @@ instance_create(0,0,objBg);
             <kind>1</kind>
             <string>draw_set_color(c_black);
 draw_set_alpha(1);
+/*
 draw_text(0,0,global.distance);
 draw_text(0,TILE,global.coins);
 draw_text(0,2*TILE,global.yVel);
 draw_text(0,3*TILE,time);
+*/
 
 //draw_line(0,global.lifeLine,WIDTH,global.lifeLine);
 
 //TODO: other condition than player exists...
 if (instance_exists(objPlayer))
 {
+
+    //DISTANCE
+    drawNumber(string(floor(global.distance))+"m",0,0,fa_left,fnt_big);
+
     //HP
     draw_sprite_part(sprGraphics,-1,14*TILE,0,6*TILE,TILE,WIDTH/2-3*TILE,0);
     draw_sprite_part(sprGraphics,-1,15*TILE,TILE,4*TILE*(objPlayer.hp/objPlayer.maxHp),TILE,WIDTH/2-2*TILE,0);
@@ -225,6 +231,9 @@ if (instance_exists(objPlayer))
     if (tf &lt; 10)
         draw_sprite(sprParticle,-1,WIDTH-1*TILE+1,TILE+((global.timer*.5+6) % 12));
     draw_sprite_part(sprGraphics,-1,19*TILE+tf*2*TILE,2*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
+    
+    //TIME
+    drawNumber(string(time div 60)+"s",WIDTH-TILE,2*TILE,fa_middle,fnt_small);
     
     //draw_sprite_part(sprGraphics,-1,21*TILE,2*TILE+TILE*(1-time/maxTime),2*TILE,TILE*(time/maxTime),WIDTH-2*TILE,0+TILE*(time/maxTime));
 
