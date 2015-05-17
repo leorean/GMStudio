@@ -75,7 +75,7 @@ if (!global.gameOver)
     global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
     
     //++++distance measurement
-    global.distance = max(global.distance + global.yVel*.1, global.distance);
+    global.distance = max(global.distance + global.yVel*.05, global.distance);
     
     //++++spawner
     
@@ -215,7 +215,7 @@ if (instance_exists(objPlayer))
 {
 
     //DISTANCE
-    drawNumber(string(floor(global.distance))+"m",0,0,fa_left,fnt_big);
+    drawNumber(string(floor(global.distance))+"m",1,1,fa_left,fnt_small);
 
     //HP
     draw_sprite_part(sprGraphics,-1,14*TILE,0,6*TILE,TILE,WIDTH/2-3*TILE,0);

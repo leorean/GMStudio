@@ -6,7 +6,7 @@ var fnt_size = argument4; //fnt_big, fnt_small
 
 var fnt_nx = fnt_x;//x for each char
 
-var fnt_w,fnt_h,fnt_o;
+var fnt_w,fnt_h,fnt_o,fnt_d;
 var fnt_length = string_length(fnt_text);
 
 if (fnt_size == fnt_big)
@@ -24,14 +24,23 @@ if (fnt_size == fnt_small)
 
 for (i = 0; i < fnt_length; i++)
 {
-    dg = real(string_char_at(fnt_text,i+1));
-    if (string_char_at(fnt_text,i+1) == "s" || string_char_at(fnt_text,i+1) == "m")
-        dg = 10;
-    
+    switch (string_char_at(fnt_text,i+1))
+    {
+        case "m":
+            fnt_d = 10;
+        break;
+        case "s":
+            fnt_d = 11;
+        break;
+        default:
+            fnt_d = real(string_char_at(fnt_text,i+1));
+        break;
+    }
+        
     switch(fnt_align)
     {
         case fa_left:
-            fnt_nx = i*fnt_w;
+            fnt_nx = fnt_x + i*fnt_w;
         break;
         case fa_middle:
             fnt_nx = fnt_x + (i-fnt_length/2)*fnt_w;
@@ -40,5 +49,5 @@ for (i = 0; i < fnt_length; i++)
             fnt_nx = fnt_x + (i-fnt_length)*fnt_w;
         break;
     }
-    draw_sprite_part(sprGraphics,-1,19*TILE+dg*fnt_w,fnt_o,fnt_w,fnt_h,fnt_nx,fnt_y);
+    draw_sprite_part(sprGraphics,-1,19*TILE+fnt_d*fnt_w,fnt_o,fnt_w,fnt_h,fnt_nx,fnt_y);
 }
