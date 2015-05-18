@@ -133,7 +133,9 @@ y += yVel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur+fSpeed)%fMax;
+            <string>draw_set_alpha(1);
+
+fCur = (fCur+fSpeed)%fMax;
 
 /*if (yVel &lt; 0) fCur = min(fCur+fSpeed,4);
 else fCur = max(fCur-fSpeed,1);*/

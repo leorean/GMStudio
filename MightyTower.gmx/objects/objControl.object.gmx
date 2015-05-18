@@ -82,7 +82,7 @@ if (!global.gameOver)
             global.yVel -= .1;
     }
     else
-        global.yVel = min(global.yVel+.1,12);
+        global.yVel = min(global.yVel+.1,8);
     
     //++++distance measurement
     global.distance = max(global.distance + global.yVel*.05, global.distance);
@@ -157,6 +157,7 @@ if (!global.gameOver)
                     instance_create(i,j,objBlock);
                 }
             */
+            if (global.theme == 0) global.theme = 1 else global.theme = 0;
             time = maxTime;
             spawnWave = true;
         }
@@ -192,10 +193,10 @@ global.yAcc = .0003;
 global.yVelMax = 8;
 
 global.distance = 0;
-
 global.coins = 0;
-
 global.timer = 0;
+
+global.theme = 0; //bg
 
 //wave stuff
 spawnWave = true; //if this is true, spawn a new wave of enemies

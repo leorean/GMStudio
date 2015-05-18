@@ -77,11 +77,15 @@ if (!global.gameOver)
     
     delay = max(delay-1,0);
     
-    player.xVel += (x-player.x)/120;
-    player.yVel = (y-player.y-4*TILE)/8;
+    player.xVel += (x-player.x)/220;
+    player.yVel += (y-player.y)/220;
+    /*other physics:
+    //player.xVel += (x-player.x)/120;
+    //player.yVel = (y-player.y-4*TILE)/8;
+    */
     
-    player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
-    player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
+    player.xVel = sign(player.xVel)*min(abs(player.xVel),4);
+    player.yVel = sign(player.yVel)*min(abs(player.yVel),4);
     
     player.angle = point_direction(x,y,player.x,player.y);
     
@@ -252,7 +256,9 @@ y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.gameOver)
+            <string>draw_set_alpha(1);
+
+if (!global.gameOver)
 {
     var n = 6, fx = 0, fy = 0;
     for (var i = 1; i &lt; n; i++)

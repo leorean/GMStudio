@@ -123,7 +123,8 @@ if (!in(y,-3*TILE,HEIGHT+3*TILE))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprBoulder,type,x,y,1,1,angle,c_white,1);
+            <string>draw_set_alpha(1);
+draw_sprite_ext(sprBoulder,type,x,y,1,1,angle,c_white,1);
 </string>
           </argument>
         </arguments>

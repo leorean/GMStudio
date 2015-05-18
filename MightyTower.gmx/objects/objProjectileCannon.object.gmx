@@ -103,7 +103,8 @@ if (!in(y,-3*TILE,HEIGHT+3*TILE))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGraphics,-1,0,5*TILE,TILE,TILE,x-TILE/2,y-TILE/2);
+            <string>draw_set_alpha(1);
+draw_sprite_part(sprGraphics,-1,0,5*TILE,TILE,TILE,x-TILE/2,y-TILE/2);
 </string>
           </argument>
         </arguments>

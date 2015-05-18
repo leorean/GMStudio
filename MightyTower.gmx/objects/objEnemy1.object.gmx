@@ -141,7 +141,8 @@ y += yVel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur+fSpeed)%fMax;
+            <string>draw_set_alpha(1);
+fCur = (fCur+fSpeed)%fMax;
 
 var angle = point_direction(x,y,x+abs(xVel),y+yVel*.1);
 var frame = floor(fCur);

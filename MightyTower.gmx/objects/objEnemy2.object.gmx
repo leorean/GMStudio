@@ -152,7 +152,9 @@ y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur+fSpeed)%fMax;
+            <string>draw_set_alpha(1);
+
+fCur = (fCur+fSpeed)%fMax;
 
 var frame;
 

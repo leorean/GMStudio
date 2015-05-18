@@ -115,7 +115,8 @@ y += yVel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw_sprite_part(sprGraphics,-1,TILE,5*TILE,TILE,TILE,x,y);
+            <string>draw_set_alpha(1);
+//draw_sprite_part(sprGraphics,-1,TILE,5*TILE,TILE,TILE,x,y);
 draw_sprite_part(sprGraphics,-1,TILE,5*TILE+(floor(global.timer*.2)%4)*TILE,TILE,TILE,x,y);
 
 if (alive &amp;&amp; invincible)
