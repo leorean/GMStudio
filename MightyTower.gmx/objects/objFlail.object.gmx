@@ -77,15 +77,15 @@ if (!global.gameOver)
     
     delay = max(delay-1,0);
     
-    player.xVel += (x-player.x)/220;
-    player.yVel += (y-player.y)/220;
+    player.xVel += (x-player.x)/180;
+    player.yVel += (y-player.y)/180;
     /*other physics:
     //player.xVel += (x-player.x)/120;
     //player.yVel = (y-player.y-4*TILE)/8;
     */
     
-    player.xVel = sign(player.xVel)*min(abs(player.xVel),4);
-    player.yVel = sign(player.yVel)*min(abs(player.yVel),4);
+    player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
+    player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
     
     player.angle = point_direction(x,y,player.x,player.y);
     
@@ -121,19 +121,6 @@ if (!global.gameOver)
         }
         delay = 5;
     }
-    
-    //++++MINE INTERACTION++++
-    /*
-    var mine = instance_place(x+xVel,y+yVel,objMine);
-    if (instance_exists(mine))
-    {
-        var kb = point_direction(mine.x,mine.y,x,y);
-        mine.x -= lengthdir_x(1,kb);
-        mine.y += abs(lengthdir_y(1,kb));
-        x += lengthdir_x(1,kb);
-        y += lengthdir_y(1,kb);
-        delay = 0;
-    }*/
     
     //++++COIN-FLAIL-INTERACTION++++
     coin = instance_place(x+xVel,y+yVel,objCoin);
