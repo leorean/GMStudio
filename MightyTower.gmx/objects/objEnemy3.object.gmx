@@ -84,7 +84,7 @@ invincible = 0;
         if (state == IDLE)
         {
             
-            if (y &gt; objPlayer.y-1*TILE &amp;&amp; yVel &gt;= 0 &amp;&amp; y &gt; 1*HEIGHT/3) 
+            if (y &gt; objPlayer.y+1*TILE &amp;&amp; yVel &gt;= 2 &amp;&amp; y &gt; 1*HEIGHT/3) 
             {
                 xVel = sign(objPlayer.x-x)*.5;
                 yVel = -3;
@@ -101,8 +101,6 @@ invincible = 0;
 
     if (hp == 0)
     {
-        yVel = -2;
-        xVel = 0;
         alive = false;
         
         var e = instance_create(x,y,objEffect);

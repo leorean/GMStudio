@@ -116,7 +116,10 @@ y += yVel;
           <argument>
             <kind>1</kind>
             <string>//draw_sprite_part(sprGraphics,-1,TILE,5*TILE,TILE,TILE,x,y);
-draw_sprite_part(sprGraphics,-1,TILE,5*TILE+(floor(global.timer*(.1+(hp&lt;=1)*.1))%4)*TILE,TILE,TILE,x,y);
+draw_sprite_part(sprGraphics,-1,TILE,5*TILE+(floor(global.timer*.2)%4)*TILE,TILE,TILE,x,y);
+
+if (alive &amp;&amp; invincible)
+    drawHealthBar(x-.5*TILE,y-TILE);
 </string>
           </argument>
         </arguments>

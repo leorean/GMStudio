@@ -46,7 +46,7 @@
     <option_android_orient_portrait_flipped>True</option_android_orient_portrait_flipped>
     <option_android_orientation>2</option_android_orientation>
     <option_android_ouya_icon>Configs\Default\android\icons\ouyaIcon.png</option_android_ouya_icon>
-    <option_android_package_company>companyname</option_android_package_company>
+    <option_android_package_company>spg</option_android_package_company>
     <option_android_package_domain>com</option_android_package_domain>
     <option_android_package_product>MightyTower</option_android_package_product>
     <option_android_permission_flags>8</option_android_permission_flags>
@@ -78,8 +78,8 @@
     <option_frequency>0</option_frequency>
     <option_frontimage>nil</option_frontimage>
     <option_fullscreen>False</option_fullscreen>
-    <option_gameguid>{6A8A7B7C-7418-4322-9A52-DEBD97574AA8}</option_gameguid>
-    <option_gameid>977987235</option_gameid>
+    <option_gameguid>{147DF13B-5126-4F78-95BC-6FC53F2BFFC6}</option_gameguid>
+    <option_gameid>425205110</option_gameid>
     <option_haptic_effects>0</option_haptic_effects>
     <option_hasloadimage>false</option_hasloadimage>
     <option_helpkey>true</option_helpkey>
@@ -260,9 +260,9 @@
     <option_stayontop>false</option_stayontop>
     <option_sync_vertex>0</option_sync_vertex>
     <option_textureGroup0_border>2</option_textureGroup0_border>
-    <option_textureGroup0_nocropping>0</option_textureGroup0_nocropping>
+    <option_textureGroup0_nocropping>-1</option_textureGroup0_nocropping>
     <option_textureGroup0_parent>&lt;none&gt;</option_textureGroup0_parent>
-    <option_textureGroup0_scaled>0</option_textureGroup0_scaled>
+    <option_textureGroup0_scaled>-1</option_textureGroup0_scaled>
     <option_textureGroup0_targets>9223372036854775807</option_textureGroup0_targets>
     <option_textureGroup_count>1</option_textureGroup_count>
     <option_textureGroups0>Default</option_textureGroups0>

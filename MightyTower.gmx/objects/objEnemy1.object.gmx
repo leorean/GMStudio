@@ -152,7 +152,7 @@ if (invincible % 3 == 0)
     draw_sprite_ext(sprEnemy1,frame,x,y,sign(xVel),1,angle,c_white,1);
 }
 //++++draw health bar
-drawHealthBar(x-1.5*TILE,y-2*TILE);
+drawHealthBar(x-1*TILE,y-2*TILE);
 </string>
           </argument>
         </arguments>
