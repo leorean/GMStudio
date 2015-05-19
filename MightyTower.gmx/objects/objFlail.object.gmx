@@ -76,9 +76,20 @@ if (!global.gameOver)
     }
     
     delay = max(delay-1,0);
+
+    with(player)    
+    if (distance_to_point(objFlail.x,objFlail.y)&gt;2*TILE)
+    {
+        xVel += (objFlail.x-x)/220;
+        yVel += (objFlail.y-y)/220;
+    } else
+    {
+        xVel *= .95;
+        yVel *= .95;        
+    }
+    //player.xVel += (x-player.x)/180;
+    //player.yVel += (y-player.y)/180;
     
-    player.xVel += (x-player.x)/180;
-    player.yVel += (y-player.y)/180;
     /*other physics:
     //player.xVel += (x-player.x)/120;
     //player.yVel = (y-player.y-4*TILE)/8;
@@ -169,6 +180,19 @@ with(player)
         if (instance_exists(coin))
             coin.active = true;
     }
+    
+    /*if (place_meeting(x+xVel,y,objFlail))
+    {
+        //x -= xVel;
+        xVel = 0;    
+    }
+    if (place_meeting(x,y+yVel,objFlail))
+    {
+        //y -= yVel;
+        yVel = 0;
+        
+    }*/
+    
     if (in(x+xVel,TILE,WIDTH-TILE))
         x += xVel;
     else
