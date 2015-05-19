@@ -111,12 +111,12 @@ if (global.gameOver)
     
     if (theme != global.theme)
     {
-        themeAlpha = min(themeAlpha+.01,1);
+        themeAlpha = min(themeAlpha+.005,1);
         if (themeAlpha == 1)
             theme = global.theme;
     } else
     {
-        themeAlpha = max(themeAlpha-.01,0);
+        themeAlpha = max(themeAlpha-.005,0);
     }
     
 }

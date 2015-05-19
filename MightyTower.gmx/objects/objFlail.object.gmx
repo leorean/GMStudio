@@ -119,7 +119,8 @@ if (!global.gameOver)
     if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive &amp;&amp; !enemy.invincible)
     {
         var kb = point_direction(x,y,enemy.x,enemy.y);
-        
+        global.shake = true; //shake screen
+
         if (!enemy.invincible) enemy.hp = max(enemy.hp-1,0);
         
         enemy.xVel = lengthdir_x(6,kb);
@@ -152,6 +153,7 @@ with(player)
             if (instance_exists(enemy) &amp;&amp; enemy.alive)
             {
                 var kb = point_direction(x,y,enemy.x,enemy.y);
+                global.shake = true; //shake screen
                 xVel = lengthdir_x(-5,kb);
                 yVel = lengthdir_y(-5,kb);
                 

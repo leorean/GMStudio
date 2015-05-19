@@ -197,7 +197,10 @@ global.distance = 0;
 global.coins = 0;
 global.timer = 0;
 
-global.theme = 0; //bg
+global.theme = 1; //bg
+
+global.shake = false;
+shakeTimer = 0;
 
 //wave stuff
 spawnWave = true; //if this is true, spawn a new wave of enemies
@@ -242,6 +245,7 @@ instance_create(0,0,objBg);
             <kind>1</kind>
             <string>draw_set_color(c_black);
 draw_set_alpha(1);
+view_angle[0] = 0;
 /*
 draw_text(0,0,global.distance);
 draw_text(0,TILE,global.coins);
@@ -285,6 +289,22 @@ if (instance_exists(objPlayer))
     //bottom:
     draw_sprite_part(sprGraphics,-1,21*TILE,3*TILE+TILE*(time/maxTime),2*TILE,TILE*(1-time/maxTime),WIDTH-2*TILE,TILE+TILE*(time/maxTime));
     */
+    
+    //++++SHAKE SCREEN++++
+    if (global.shake)
+    {
+        shakeTimer = 5;
+        global.shake = false;
+    }
+    if (shakeTimer)
+    {
+        shakeTimer = max(shakeTimer-1,0);
+        view_angle[0] = -2+random(4);
+    } else
+    {
+        view_angle[0] = 0;
+    }
+
 }
 </string>
           </argument>
