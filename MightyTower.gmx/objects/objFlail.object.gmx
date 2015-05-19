@@ -76,6 +76,8 @@ if (!global.gameOver)
         global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/12,5);
     }
     
+    global.lifeLine = min(max(global.lifeLine,2*TILE),HEIGHT);
+    
     delay = max(delay-1,0);
 
     with(player)    

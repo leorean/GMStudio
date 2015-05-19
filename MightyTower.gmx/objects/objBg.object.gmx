@@ -57,36 +57,25 @@ themeAlpha = 0;
             <string>a = (a-global.yVel * .8) % HEIGHT;
 b = (b-global.yVel * 1) % HEIGHT;
 
-if (themeAlpha == 0)
+draw_sprite_part(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a));
+draw_sprite_part(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a)+HEIGHT);
+
+draw_sprite_part(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b));
+draw_sprite_part(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT);
+
+if (themeAlpha != 0)
 {
-    draw_sprite_part(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a));
-    draw_sprite_part(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a)+HEIGHT);
+    //draw_set_color(c_black);
+    //draw_set_alpha(.2);
+    //draw_rectangle(0,0,WIDTH,HEIGHT,0);
     
-    draw_sprite_part(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b));
-    draw_sprite_part(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT);
-} else
-{
-    draw_set_color(c_black);
-    draw_set_alpha(.2);
-    draw_rectangle(0,0,WIDTH,HEIGHT,0);
+    //new theme
+    draw_sprite_part_ext(sprBg,-1,0,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(a),1,1,c_white,themeAlpha);
+    draw_sprite_part_ext(sprBg,-1,0,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(a)+HEIGHT,1,1,c_white,themeAlpha);
     
-    //old theme
-    if (theme != global.theme)
-    {
-        draw_sprite_part_ext(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a),1,1,c_white,1-themeAlpha);
-        draw_sprite_part_ext(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a)+HEIGHT,1,1,c_white,1-themeAlpha);
-        
-        draw_sprite_part_ext(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b),1,1,c_white,1-themeAlpha);
-        draw_sprite_part_ext(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT,1,1,c_white,1-themeAlpha);
-    } else
-    {
-        //new theme
-        draw_sprite_part_ext(sprBg,-1,0,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(a),1,1,c_white,1-themeAlpha);
-        draw_sprite_part_ext(sprBg,-1,0,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(a)+HEIGHT,1,1,c_white,1-themeAlpha);
-        
-        draw_sprite_part_ext(sprBg,-1,WIDTH,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(b),1,1,c_white,1-themeAlpha);
-        draw_sprite_part_ext(sprBg,-1,WIDTH,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT,1,1,c_white,1-themeAlpha);
-    }
+    draw_sprite_part_ext(sprBg,-1,WIDTH,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(b),1,1,c_white,themeAlpha);
+    draw_sprite_part_ext(sprBg,-1,WIDTH,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT,1,1,c_white,themeAlpha);
+
     /*
     draw_set_color(c_white);
     draw_set_alpha(themeAlpha);
@@ -105,7 +94,7 @@ if (global.gameOver)
     
     if (alpha == 1.5 &amp;&amp; mouse_check_button_pressed(mb_any))
         room_restart();
-} else
+} else //NOT gameover
 {
     alpha = max(alpha - .02,0);
     
@@ -116,7 +105,7 @@ if (global.gameOver)
             theme = global.theme;
     } else
     {
-        themeAlpha = max(themeAlpha-.005,0);
+        themeAlpha = 0;//max(themeAlpha-.005,0);
     }
     
 }

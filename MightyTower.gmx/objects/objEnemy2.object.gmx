@@ -81,7 +81,7 @@ invincible = 0;
         yVel = sign(yVel)*min(abs(yVel),2);
         x = tx;
         xGrav = -sign(dir)*.1;
-        if (distance_to_point(objFlail.x,objFlail.y)&lt;5*TILE)//abs(y-objPlayer.y)&lt;TILE &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
+        if (distance_to_point(objFlail.x,objFlail.y)&lt;5*TILE &amp;&amp; y &gt; 3*TILE)//abs(y-objPlayer.y)&lt;TILE &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
         {
             xVel = sign(dir)*4;
             yVel = 2;

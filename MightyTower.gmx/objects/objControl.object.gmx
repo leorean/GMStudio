@@ -58,9 +58,6 @@ if (keyboard_check_pressed(ord('R')))
 if (keyboard_check_pressed(ord('K')))
     with(objEnemy) hp = 0;
 
-if (keyboard_check_pressed(ord('D')))
-    with(objPlayer) hp = 1;
-
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
 
@@ -76,19 +73,23 @@ if (!global.gameOver)
     if (!spawnWave)
     {
         //global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
-        if (global.yVel &lt; 2+6*(global.lifeLine/HEIGHT))
-            global.yVel = 2+6*(global.lifeLine/HEIGHT);
+        if (global.yVel &lt; 3+5*(global.lifeLine/HEIGHT))
+            global.yVel = 3+5*(global.lifeLine/HEIGHT);
         else
             global.yVel -= .1;
     }
     else
         global.yVel = min(global.yVel+.1,8);
     
-    //++++distance measurement
+    //++++distance measurement &amp; management
     global.distance = max(global.distance + global.yVel*.05, global.distance);
     
-    if (global.distance div 90 &gt; 0) global.theme = 2;
-    
+    //if (global.distance &gt; 500) global.theme = 1;
+    //if (global.distance &gt; 1000) global.theme = 2;
+    //if (global.distance &gt; 2000) global.theme = 3;
+    if (keyboard_check_pressed(ord('D')))
+        global.theme = (global.theme+1)%4;
+
     //++++SPAWNING ALGORITHM ETC++++
     if (!instance_exists(objEffectText))
         time = max(time-1,0);
@@ -197,7 +198,7 @@ global.distance = 0;
 global.coins = 0;
 global.timer = 0;
 
-global.theme = 1; //bg
+global.theme = 0; //bg
 
 global.shake = false;
 shakeTimer = 0;
