@@ -66,6 +66,10 @@ if (themeAlpha == 0)
     draw_sprite_part(sprBg,-1,WIDTH,theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT);
 } else
 {
+    draw_set_color(c_black);
+    draw_set_alpha(.2);
+    draw_rectangle(0,0,WIDTH,HEIGHT,0);
+    
     //old theme
     if (theme != global.theme)
     {
@@ -83,10 +87,11 @@ if (themeAlpha == 0)
         draw_sprite_part_ext(sprBg,-1,WIDTH,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(b),1,1,c_white,1-themeAlpha);
         draw_sprite_part_ext(sprBg,-1,WIDTH,global.theme*HEIGHT,WIDTH,HEIGHT,0,floor(b)+HEIGHT,1,1,c_white,1-themeAlpha);
     }
+    /*
     draw_set_color(c_white);
     draw_set_alpha(themeAlpha);
     draw_rectangle(0,0,WIDTH,HEIGHT,0);
-        
+    */  
 }
 
 if (global.gameOver)

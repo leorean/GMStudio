@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>xVel = 0;
-yVel = 0;
+yVel = 3;
 
 maxVel = 3; //max velocity
 
@@ -41,7 +41,8 @@ delay = 0; //reaction delay
 
 state = ATTACK;
 
-player = instance_create(x-choose(-6,6),y-3*TILE,objPlayer);//just some blurr so the player flaps funny at first
+player = instance_create(x-choose(-6,6),y+5*TILE,objPlayer);//just some blurr
+player.yVel = 2;
 player.angle = 0;
 </string>
           </argument>

@@ -87,8 +87,9 @@ if (!global.gameOver)
     //++++distance measurement
     global.distance = max(global.distance + global.yVel*.05, global.distance);
     
-    //++++spawner
+    if (global.distance div 90 &gt; 0) global.theme = 2;
     
+    //++++SPAWNING ALGORITHM ETC++++
     if (!instance_exists(objEffectText))
         time = max(time-1,0);
     
@@ -157,7 +158,7 @@ if (!global.gameOver)
                     instance_create(i,j,objBlock);
                 }
             */
-            if (global.theme == 0) global.theme = 1 else global.theme = 0;
+            //if (global.theme == 0) global.theme = 1 else global.theme = 0;
             time = maxTime;
             spawnWave = true;
         }
