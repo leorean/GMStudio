@@ -118,6 +118,8 @@ if (!global.gameOver)
                         instance_create(choose(-TILE,WIDTH+TILE),HEIGHT+i*(5+random(5)*TILE),objCrystal);
                 break;
                 case 3:
+                    repeat(3)
+                        instance_create(0,0,objSoul);
                 break;
                 case 4:
                 break;
@@ -216,7 +218,7 @@ global.distance = 0;
 global.coins = 0;
 global.timer = 0;
 
-global.theme = 0; //theme
+global.theme = 3; //theme
 
 global.shake = false;
 shakeTimer = 0;
@@ -281,6 +283,11 @@ if (instance_exists(objPlayer))
     //DISTANCE
     drawNumber(string(floor(global.distance))+"m",1,1,fa_left,fnt_small);
 
+    //COINS
+    draw_sprite_part(sprGraphics,-1,(floor(global.timer*.1)%4)*TILE,0,TILE,TILE,0,TILE);
+    drawNumber(global.coins,TILE+1,TILE+3,fa_left,fnt_small);
+    
+    
     //HP
     draw_sprite_part(sprGraphics,-1,14*TILE,0,6*TILE,TILE,WIDTH/2-3*TILE,0);
     draw_sprite_part(sprGraphics,-1,15*TILE,TILE,4*TILE*(objPlayer.hp/objPlayer.maxHp),TILE,WIDTH/2-2*TILE,0);

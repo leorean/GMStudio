@@ -48,6 +48,7 @@
       <object>objects\objBoulder</object>
       <object>objects\objCrystal</object>
       <object>objects\objMine</object>
+      <object>objects\objSoul</object>
       <object>objects\objProjectileCannon</object>
       <object>objects\objEnemy1</object>
       <object>objects\objEnemy2</object>
