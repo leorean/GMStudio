@@ -73,7 +73,7 @@ if (!global.gameOver)
     {
         tx = mouse_x;
         ty = mouse_y;
-        global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/12,5);
+        global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,6);
     }
     
     global.lifeLine = min(max(global.lifeLine,2*TILE),HEIGHT);

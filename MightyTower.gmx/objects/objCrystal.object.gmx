@@ -58,7 +58,7 @@ hp = maxHp;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>y-= global.yVel;
+            <string>y-= global.yVel*.8;
 y += yVel;
 x += xVel;
 
