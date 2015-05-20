@@ -186,29 +186,28 @@ with(player)
             coin.active = true;
     }
     
-    /*if (place_meeting(x+xVel,y,objFlail))
-    {
-        //x -= xVel;
-        xVel = 0;    
-    }
-    if (place_meeting(x,y+yVel,objFlail))
-    {
-        //y -= yVel;
-        yVel = 0;
-        
-    }*/
-    
     if (in(x+xVel,TILE,WIDTH-TILE))
-        x += xVel;
+    {
+        if (!place_meeting(x+xVel,y,objFlail))
+            x += xVel;
+        else
+        {
+            xVel = 0;
+            x -= lengthdir_x(1,point_direction(x,y,objFlail.x,objFlail.y));            
+        }
+    }
     else
     {
+            
         if (!global.gameOver)
             xVel = 0;
         else
             xVel = -xVel;
     }
-
-    y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
+    if (!place_meeting(x,y+yVel,objFlail))
+        y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
+    else
+        y -= lengthdir_y(1,point_direction(x,y,objFlail.x,objFlail.y));
 }
 
 //++++physics

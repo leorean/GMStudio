@@ -22,6 +22,7 @@
     <sprite>sprites\sprEnemy2</sprite>
     <sprite>sprites\sprEnemy3</sprite>
     <sprite>sprites\sprEnemy4</sprite>
+    <sprite>sprites\sprCrystal</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -45,6 +46,7 @@
     </objects>
     <objects name="enemies">
       <object>objects\objBoulder</object>
+      <object>objects\objCrystal</object>
       <object>objects\objMine</object>
       <object>objects\objProjectileCannon</object>
       <object>objects\objEnemy1</object>

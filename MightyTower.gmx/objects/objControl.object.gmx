@@ -73,20 +73,17 @@ if (!global.gameOver)
     if (!spawnWave)
     {
         //global.yVel = max(2+6*(global.lifeLine/HEIGHT),4);
-        if (global.yVel &lt; 3+5*(global.lifeLine/HEIGHT))
-            global.yVel = 3+5*(global.lifeLine/HEIGHT);
+        if (global.yVel &lt; 4+4*(global.lifeLine/HEIGHT))
+            global.yVel = 4+4*(global.lifeLine/HEIGHT);
         else
             global.yVel -= .1;
     }
     else
         global.yVel = min(global.yVel+.1,8);
     
-    //++++distance measurement &amp; management
+    //++++distance measurement
     global.distance = max(global.distance + global.yVel*.05, global.distance);
     
-    //if (global.distance &gt; 500) global.theme = 1;
-    //if (global.distance &gt; 1000) global.theme = 2;
-    //if (global.distance &gt; 2000) global.theme = 3;
     if (keyboard_check_pressed(ord('D')))
         global.theme = (global.theme+1)%4;
 
@@ -99,9 +96,32 @@ if (!global.gameOver)
         if (!instance_exists(objEffectText))
         {
             wave++;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
-            
-            repeat(random(2))
-                instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+random(2)*TILE,objMine);
+
+            //++++theme-depth-change:            
+            if (global.distance &gt; 500 &amp;&amp; global.theme == 0) global.theme = 1;
+            if (global.distance &gt; 1000 &amp;&amp; global.theme == 1) global.theme = 2;
+            if (global.distance &gt; 2000 &amp;&amp; global.theme == 2) global.theme = 3;
+
+            //++++theme dependant obstacles:
+            switch(global.theme)
+            {
+                case 0: //tower: mines from below
+                    repeat(1+random(2))
+                        instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+random(2)*TILE,objMine);                                
+                break;
+                case 1: //cave: boulders from above
+                    repeat(1+random(2))
+                        instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
+                break;
+                case 2: //crystal cave: crystals from aside
+                    for (i = 0; i &lt; 20; i++)
+                        instance_create(choose(-TILE,WIDTH+TILE),HEIGHT+i*(5+random(5)*TILE),objCrystal);
+                break;
+                case 3:
+                break;
+                case 4:
+                break;
+            }
             
             switch(wave)
             {
@@ -134,8 +154,6 @@ if (!global.gameOver)
                 default: //infinity and beyond
                     repeat(wave div 3)
                         instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
-                    repeat(wave div 5)
-                        instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
                 break;
             }
             
@@ -198,7 +216,7 @@ global.distance = 0;
 global.coins = 0;
 global.timer = 0;
 
-global.theme = 0; //bg
+global.theme = 0; //theme
 
 global.shake = false;
 shakeTimer = 0;

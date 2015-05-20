@@ -54,8 +54,8 @@ themeAlpha = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = (a-global.yVel * .8) % HEIGHT;
-b = (b-global.yVel * 1) % HEIGHT;
+            <string>a = (a-global.yVel * .7) % HEIGHT;
+b = (b-global.yVel * .9) % HEIGHT;
 
 draw_sprite_part(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a));
 draw_sprite_part(sprBg,-1,0,theme*HEIGHT,WIDTH,HEIGHT,0,floor(a)+HEIGHT);
