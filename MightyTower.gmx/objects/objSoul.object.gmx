@@ -143,7 +143,7 @@ draw_sprite_part_ext(sprGraphics,-1,21*TILE+frame*2*TILE,9*TILE,2*TILE,2*TILE,x-
 draw_sprite_part_ext(sprGraphics,-1,19*TILE,7*TILE,2*TILE,2*TILE,x-TILE+2*TILE*(dir==LEFT),y-TILE,sign(dir),1,c_white,alpha);
 
 if (alive &amp;&amp; invincible)
-    drawHealthBar(x-.5*TILE,y-TILE);
+    drawHealthBar(x-1*TILE,y-TILE);
 </string>
           </argument>
         </arguments>
