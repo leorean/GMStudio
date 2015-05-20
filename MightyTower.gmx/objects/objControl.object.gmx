@@ -107,12 +107,11 @@ if (!global.gameOver)
             switch(global.theme)
             {
                 case 0: //tower: mines from below??
-                    repeat(1+random(2))
-                        instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+random(2)*TILE,objMine);                                
+                    //repeat(1+random(2))
+                    //    instance_create(1.5*TILE+random(WIDTH-3*TILE),HEIGHT+random(2)*TILE,objMine);                                
                 break;
                 case 1: //ancient tower
                 break;
-
                 case 2: //cave: boulders from above
                     repeat(1+random(2))
                         instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
@@ -121,7 +120,7 @@ if (!global.gameOver)
                     for (i = 0; i &lt; 20; i++)
                         instance_create(choose(-TILE,WIDTH+TILE),HEIGHT+i*(5+random(5)*TILE),objCrystal);
                 break;
-                case 4:
+                case 4: //soul skulls that follow the player
                     repeat(3)
                         instance_create(0,0,objSoul);
                 break;

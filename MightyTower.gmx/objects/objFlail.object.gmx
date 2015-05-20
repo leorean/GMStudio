@@ -28,7 +28,7 @@
             <string>xVel = 0;
 yVel = 3;
 
-maxVel = 3; //max velocity
+maxVel = 5; //max velocity
 
 xAcc = .1;
 tx = x;
@@ -69,22 +69,23 @@ player.angle = 0;
             <string>//++++FLAIL-PLAYER CONNECTION/INTERACTION
 if (!global.gameOver)
 {
-    if (mouse_check_button(mb_left))
-    {
-        tx = mouse_x;
-        ty = mouse_y;
-        global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,6);
-    }
+    for (i = 0; i &lt; 5; i++)
+        if (device_mouse_check_button(i,mb_any))
+        {
+            tx = device_mouse_x(i);
+            ty = device_mouse_y(i);
+            global.lifeLine = ty;//+= sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,14);
+        }
     
     global.lifeLine = min(max(global.lifeLine,2*TILE),HEIGHT);
     
     delay = max(delay-1,0);
 
     with(player)    
-    if (distance_to_point(objFlail.x,objFlail.y)&gt;2*TILE)
+    if (distance_to_point(objFlail.x,objFlail.y)&gt;3*TILE)
     {
-        xVel += (objFlail.x-x)/220;
-        yVel += (objFlail.y-y)/220;
+        xVel += (objFlail.x-x)/120;
+        yVel += (objFlail.y-y)/120;
     } else
     {
         xVel *= .95;
@@ -98,8 +99,8 @@ if (!global.gameOver)
     //player.yVel = (y-player.y-4*TILE)/8;
     */
     
-    player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
-    player.yVel = sign(player.yVel)*min(abs(player.yVel),3);
+    player.xVel = sign(player.xVel)*min(abs(player.xVel),5);
+    player.yVel = sign(player.yVel)*min(abs(player.yVel),5);
     
     player.angle = point_direction(x,y,player.x,player.y);
     
@@ -200,7 +201,7 @@ with(player)
     {
             
         if (!global.gameOver)
-            xVel = 0;
+            {}//xVel = 0;
         else
             xVel = -xVel;
     }
