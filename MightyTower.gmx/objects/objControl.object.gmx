@@ -85,7 +85,7 @@ if (!global.gameOver)
     global.distance = max(global.distance + global.yVel*.05, global.distance);
     
     if (keyboard_check_pressed(ord('D')))
-        global.theme = (global.theme+1) % 5;
+        global.theme = (global.theme+1) % 6;
 
     //++++SPAWNING ALGORITHM ETC++++
     if (!instance_exists(objEffectText))
@@ -98,10 +98,11 @@ if (!global.gameOver)
             wave++;//choose(1,2); //choose here, depending on depth/theme, which wave spawns
 
             //++++theme-depth-change:            
-            if (global.distance &gt; 1500 &amp;&amp; global.theme == 0) global.theme = 1;
-            if (global.distance &gt; 3000 &amp;&amp; global.theme == 1) global.theme = 2;
-            if (global.distance &gt; 6000 &amp;&amp; global.theme == 2) global.theme = 3;
-            if (global.distance &gt; 9000 &amp;&amp; global.theme == 3) global.theme = 4;
+            if (global.distance &gt; 1000 &amp;&amp; global.theme == 0) global.theme = 1;
+            if (global.distance &gt; 2500 &amp;&amp; global.theme == 1) global.theme = 2;
+            if (global.distance &gt; 4000 &amp;&amp; global.theme == 2) global.theme = 3;
+            if (global.distance &gt; 7000 &amp;&amp; global.theme == 3) global.theme = 4;
+            if (global.distance &gt; 9000 &amp;&amp; global.theme == 4) global.theme = 5;
 
             //++++theme dependant obstacles:
             switch(global.theme)
@@ -113,16 +114,18 @@ if (!global.gameOver)
                 case 1: //ancient tower
                 break;
                 case 2: //cave: boulders from above
-                    repeat(1+random(2))
+                    repeat(2+random(2))
                         instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
                 break;
                 case 3: //crystal cave: crystals from aside
                     for (i = 0; i &lt; 20; i++)
                         instance_create(choose(-TILE,WIDTH+TILE),HEIGHT+i*(5+random(5)*TILE),objCrystal);
                 break;
-                case 4: //soul skulls that follow the player
-                    repeat(3)
+                case 4: //undead tomb: soul skulls that follow the player
+                    repeat(2+random(2))
                         instance_create(0,0,objSoul);
+                break;
+                case 5: //hell.
                 break;
             }
             
@@ -219,7 +222,7 @@ global.distance = 0;
 global.coins = 0;
 global.timer = 0;
 
-global.theme = 0; //theme
+global.theme = 5; //theme
 
 global.shake = false;
 shakeTimer = 0;
