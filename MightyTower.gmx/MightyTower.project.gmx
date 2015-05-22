@@ -53,13 +53,13 @@
       <object>objects\objMine</object>
       <object>objects\objSoul</object>
       <object>objects\objProjectileCannon</object>
+      <object>objects\objEnemySoldier</object>
+      <object>objects\objEnemyDwarf</object>
       <object>objects\objEnemyPotato</object>
       <object>objects\objEnemyKnightRunner</object>
       <object>objects\objEnemyBlackKnight</object>
       <object>objects\objEnemySquid</object>
-      <object>objects\objEnemySoldier</object>
       <object>objects\objEnemyBigSquid</object>
-      <object>objects\objEnemyDwarf</object>
     </objects>
   </objects>
   <rooms name="rooms">

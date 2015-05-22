@@ -37,9 +37,11 @@ fMax = 4;
 fSpeed = .1;
 
 rot = -1+random(2);
+xVel = 0;
 yVel = 2+random(1);
 
-ty = 4*TILE+random(HEIGHT-6*TILE);
+tx = x;
+ty = HEIGHT/2+random(6*TILE);
 
 maxHp = 2;
 hp = maxHp;
@@ -76,14 +78,16 @@ invincible = 0;
     if (invincible)
     {
         xVel *= .95;
-        yVel *= .95;    
+        yVel *= .95;
     } else
     {
+        xVel = (tx-x)/80;
+        xVel = sign(xVel)*min(abs(xVel),3);
+        yVel = (ty-y)/80;
+        yVel = sign(yVel)*min(abs(yVel),3);
     }
 
     angle = (angle+rot)%360;
-    
-    yVel = (ty-y)/80;
     
     if (hp == 0)
     {
@@ -99,6 +103,10 @@ invincible = 0;
     instance_destroy();
 
 //++++
+if (in(x+xVel,TILE,WIDTH-TILE))
+    x += xVel;
+else
+    xVel = -xVel;
 
 y += yVel;
 </string>
