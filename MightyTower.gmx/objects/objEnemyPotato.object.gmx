@@ -96,9 +96,6 @@ ty = HEIGHT - 8*TILE + random(4)*TILE;
         
         var e = instance_create(x,y,objEffect);
         e.type = 2;
-        
-        repeat(3)
-            instance_create(x,y,objCoin);
     }
     
 } else

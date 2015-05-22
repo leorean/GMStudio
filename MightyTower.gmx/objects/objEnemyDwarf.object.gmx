@@ -27,10 +27,10 @@
             <kind>1</kind>
             <string>mask_index = mskMedium;
 
-x = 2*TILE+random(WIDTH-4*TILE);
-y = -2*TILE;
+x = TILE+random((WIDTH-2*TILE)/TILE)*TILE;
+tx = x-TILE+random(2*TILE); ty = HEIGHT/2+(instance_number(objEnemySoldier)%5)*TILE;
 
-angle = -20+random(40);
+angle = 0;
 
 fCur = 0;
 fMax = 4;
@@ -39,9 +39,6 @@ fSpeed = .1;
 rot = -1+random(2);
 xVel = 0;
 yVel = 2+random(1);
-
-tx = x;
-ty = HEIGHT/2+random(6*TILE);
 
 maxHp = 2;
 hp = maxHp;
@@ -81,10 +78,10 @@ invincible = 0;
         yVel *= .95;
     } else
     {
-        xVel = (tx-x)/80;
-        xVel = sign(xVel)*min(abs(xVel),3);
-        yVel = (ty-y)/80;
-        yVel = sign(yVel)*min(abs(yVel),3);
+        xVel += (tx-x)/400;
+        xVel = sign(xVel)*min(abs(xVel),1);
+        yVel += (ty-y)/400;
+        yVel = sign(yVel)*min(abs(yVel),1);
     }
 
     angle = (angle+rot)%360;
@@ -96,8 +93,6 @@ invincible = 0;
         var e = instance_create(x,y,objEffect);
         e.type = 2;
         
-        repeat(1)
-            instance_create(x,y,objCoin);
     }   
 } else
     instance_destroy();
@@ -132,6 +127,8 @@ y += yVel;
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
+
+angle = point_direction(x,y,x+xVel,y+yVel+TILE)+90;
 
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);

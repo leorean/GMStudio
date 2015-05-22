@@ -135,11 +135,11 @@ if (!global.gameOver)
             switch(wave)
             {
                 case 1:
-                    repeat(2) instance_create(0,0,objEnemySoldier);
+                    repeat(3) instance_create(0,0,objEnemySoldier);
+                    repeat(2) instance_create(0,0,objEnemyDwarf);
                 break;
                 case 2:
-                    repeat(3) instance_create(0,0,objEnemySoldier);
-                    repeat(1) instance_create(0,0,objEnemyDwarf);
+                    repeat(2) instance_create(0,0,objEnemyDwarf);
                 break;
                 case 3:
                     repeat(2) instance_create(0,0,objEnemyDwarf);

@@ -27,10 +27,10 @@
             <kind>1</kind>
             <string>mask_index = mskMedium;
 
-x = 2*TILE+random(WIDTH-4*TILE);
-y = -2*TILE;
+x = TILE+random((WIDTH-2*TILE)/TILE)*TILE;
+tx = x-TILE+random(2*TILE); ty = HEIGHT/2+(instance_number(objEnemySoldier)%5)*TILE;
 
-angle = -20+random(40);
+angle = 0;
 
 fCur = 0;
 fMax = 4;
@@ -39,9 +39,6 @@ fSpeed = .1;
 rot = -1+random(2);
 xVel = 0;
 yVel = 2+random(1);
-
-tx = x;
-ty = HEIGHT/2+random(6*TILE);
 
 maxHp = 1;
 hp = maxHp;
@@ -81,8 +78,8 @@ invincible = 0;
         yVel *= .95;
     } else
     {
-        xVel = (tx-x)/80;
-        xVel = sign(xVel)*min(abs(xVel),3);
+        xVel += (tx-x)/400;
+        xVel = sign(xVel)*min(abs(xVel),2);
         yVel = (ty-y)/80;
         yVel = sign(yVel)*min(abs(yVel),3);
     }
@@ -96,9 +93,7 @@ invincible = 0;
         
         var e = instance_create(x,y,objEffect);
         e.type = 2;
-        
-        repeat(1)
-            instance_create(x,y,objCoin);
+
     }   
 } else
     instance_destroy();
@@ -136,6 +131,8 @@ y += yVel;
 
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
+
+angle = point_direction(x,y,x+xVel,y+yVel+3)-90;
 
 if (invincible % 3 == 0)
 {

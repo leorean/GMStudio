@@ -33,6 +33,7 @@
     <script>scripts\in.gml</script>
     <script>scripts\drawNumber.gml</script>
     <script>scripts\drawHealthBar.gml</script>
+    <script>scripts\spawnEnemy.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>

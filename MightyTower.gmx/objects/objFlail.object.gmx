@@ -133,6 +133,16 @@ if (!global.gameOver)
         {
             xVel = -lengthdir_x(3,kb);
             yVel = -lengthdir_y(3,kb);
+        } else
+        {
+            //hp is dead, check rewards regarding enemy type
+            switch(enemy.object_index)
+            {
+                case objEnemySoldier:
+                    repeat(10)
+                        instance_create(x,y,objCoin);
+                break;
+            }
         }
         delay = 5;
     }

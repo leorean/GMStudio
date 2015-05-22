@@ -97,9 +97,6 @@ invincible = 0;
         
         var e = instance_create(x,y,objEffect);
         e.type = 2;
-        
-        repeat(5)
-            instance_create(x,y,objCoin);
     }   
 } else
     instance_destroy();
