@@ -27,6 +27,9 @@
             <kind>1</kind>
             <string>mask_index = mskMedium;
 
+x = 2*TILE+random(WIDTH-4*TILE);
+y = HEIGHT+2*TILE;
+
 dir = choose(LEFT,RIGHT);
 
 fCur = 0;
@@ -137,19 +140,14 @@ y += yVel;
 
 fCur = (fCur+fSpeed)%fMax;
 
-/*if (yVel &lt; 0) fCur = min(fCur+fSpeed,4);
-else fCur = max(fCur-fSpeed,1);*/
-//fCur = max(min(abs(yVel-1),4),1);
-
 var angle = point_direction(x,y,x+abs(xVel),y+yVel+5)+90;
-//angle = (angle+rot)%360;
 var frame = floor(fCur);
 
 if (invincible % 3 == 0)
 {
-    //draw_sprite(mskBoulderBig,-1,x,y);
-    draw_sprite_ext(sprEnemy4,frame,x,y,sign(dir),1,angle,c_white,1);
+    draw_sprite_ext(sprEnemySquid,frame,x,y,sign(dir),1,angle,c_white,1);
 }
+
 //++++draw health bar
 drawHealthBar(x-1.5*TILE,y-2*TILE);
 </string>

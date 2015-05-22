@@ -25,23 +25,24 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mask_index = mskLarge;
+            <string>mask_index = mskMedium;
 
-ty = 0;
+dir = choose(LEFT,RIGHT);
+y = -2*TILE;
+
+tx = WIDTH/2-sign(dir)*(WIDTH/2-1.5*TILE);
+ty = y;
+
+x = tx;
 
 fCur = 0;
 fMax = 4;
-fSpeed = .1;
+fSpeed = .2;
 
 xVel = 0;
 yVel = 0;
 
-yGrav = .05;
-
-maxDelay = 60;
-delay = maxDelay;
-
-maxHp = 4;
+maxHp = 3;
 hp = maxHp;
 
 state = IDLE;
@@ -74,39 +75,36 @@ invincible = 0;
             <string>if (alive)
 {
     invincible = max(invincible-1,0);
-    if (invincible)
+    
+    if (state == IDLE)
     {
-        xVel *= .99;
-        yVel *= .99;
-        
-    } else
-    {
-        if (state == IDLE)
+        yVel += (objPlayer.y-y)/280;
+        yVel = sign(yVel)*min(abs(yVel),2);
+        x = tx;
+        xGrav = -sign(dir)*.1;
+        if (distance_to_point(objFlail.x,objFlail.y)&lt;5*TILE &amp;&amp; y &gt; 3*TILE)//abs(y-objPlayer.y)&lt;TILE &amp;&amp; abs(x-objPlayer.x)&lt;WIDTH/2)
         {
-            
-            if (y &gt; objPlayer.y+1*TILE &amp;&amp; yVel &gt;= 2 &amp;&amp; y &gt; 1*HEIGHT/3) 
-            {
-                xVel = sign(objPlayer.x-x)*.5;
-                yVel = -3;
-                
-                var e = instance_create(x,y+1.5*TILE,objEffect);
-                e.type = 3;
-                
-                var c = instance_create(x,y+1.5*TILE,objProjectileCannon);
-                //c.xVel = xVel;
-                c.yVel = 3;
-            }
+            xVel = sign(dir)*4;
+            yVel = 2;
+            state = ATTACK;
         }
+    }
+    if (state == ATTACK)
+    {
+        xVel += xGrav;
+        yVel = max(yVel-.1,-global.yVel);
     }
 
     if (hp == 0)
     {
+        yVel = -2;
+        xVel = 0;
         alive = false;
         
         var e = instance_create(x,y,objEffect);
         e.type = 2;
         
-        repeat(5)
+        repeat(3)
             instance_create(x,y,objCoin);
     }
     
@@ -118,17 +116,21 @@ invincible = 0;
 
 //++++
 
-xVel = sign(xVel)*min(abs(xVel),2);
-
-if (in(x+xVel,2*TILE,WIDTH-2*TILE))
+if (in(x+xVel,1.5*TILE,WIDTH-1.5*TILE))
     x += xVel;
 else
 {
-    xVel = -xVel;
+    if (state == ATTACK &amp;&amp; abs(x-tx)&lt;TILE/2)
+    {
+        x = tx;
+        state = IDLE;
+    }
+    x -= xVel;
+    xVel = 0;
+
 }
-yVel = min(yVel+yGrav,3);
-//yVel = sign(yVel)*min(abs(yVel),3);
-y += yVel;
+
+y = max(min(y+yVel,HEIGHT+2*TILE),-2*TILE);
 </string>
           </argument>
         </arguments>
@@ -155,17 +157,26 @@ y += yVel;
 
 fCur = (fCur+fSpeed)%fMax;
 
-var frame = floor(fCur);
+var frame;
 
-var angle = point_direction(x,y,x+xVel,y+2*TILE+yVel)+90;
-
+switch(state)
+{
+    case IDLE:
+        angle = 90;
+        frame = floor(fCur);
+        break;
+    case ATTACK:
+        angle = point_direction(x,y,x+xVel,y+yVel)-90;
+        frame = 4;
+    break;
+}
 
 if (invincible % 3 == 0)
 {
-    draw_sprite_ext(sprEnemy3,frame,x,y,1,1,angle,c_white,1);
+    draw_sprite_ext(sprEnemyKnightRunner,frame,x,y,1,-sign(dir),angle,c_white,1);
 }
 //++++draw health bar
-drawHealthBar(x-1.5*TILE,y-2*TILE);
+drawHealthBar(x-1*TILE,y-2*TILE);
 </string>
           </argument>
         </arguments>

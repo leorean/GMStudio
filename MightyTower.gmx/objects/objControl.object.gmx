@@ -136,7 +136,7 @@ if (!global.gameOver)
             {
                 case 1:
                     repeat(2)
-                        instance_create(2*TILE+random(WIDTH-4*TILE),-2*TILE,objEnemy5);
+                        instance_create(0,0,objEnemyDwarf);
                     repeat(2)
                         instance_create(3*TILE+random(WIDTH-6*TILE),HEIGHT+2*TILE,objEnemy6);
                     //repeat(4)

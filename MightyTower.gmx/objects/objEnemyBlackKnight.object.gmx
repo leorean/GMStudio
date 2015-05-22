@@ -27,16 +27,22 @@
             <kind>1</kind>
             <string>mask_index = mskLarge;
 
-dir = choose(LEFT,RIGHT);
+x = 1*WIDTH/3+random(1*WIDTH/3);
+y = -3*TILE;
+
+ty = 0;
 
 fCur = 0;
 fMax = 4;
-fSpeed = .15;
+fSpeed = .1;
 
-xVel = -2+random(4);
+xVel = 0;
 yVel = 0;
 
 yGrav = .05;
+
+maxDelay = 60;
+delay = maxDelay;
 
 maxHp = 4;
 hp = maxHp;
@@ -44,6 +50,7 @@ hp = maxHp;
 state = IDLE;
 alive = true;
 invincible = 0;
+
 
 </string>
           </argument>
@@ -73,21 +80,28 @@ invincible = 0;
     if (invincible)
     {
         xVel *= .99;
-        yVel *= .99;    
+        yVel *= .99;
+        
     } else
     {
+        if (state == IDLE)
+        {
+            
+            if (y &gt; objPlayer.y+1*TILE &amp;&amp; yVel &gt;= 2 &amp;&amp; y &gt; 1*HEIGHT/3) 
+            {
+                xVel = sign(objPlayer.x-x)*.5;
+                yVel = -3;
+                
+                var e = instance_create(x,y+1.5*TILE,objEffect);
+                e.type = 3;
+                
+                var c = instance_create(x,y+1.5*TILE,objProjectileCannon);
+                //c.xVel = xVel;
+                c.yVel = 3;
+            }
+        }
     }
 
-    if (abs(xVel)&gt;0)
-        dir = sign(xVel);
-    
-    if (y &gt; HEIGHT+TILE &amp;&amp; yVel &gt; 0)
-    {
-        yVel = -4-random(3);
-    }
-    
-    yVel = min(yVel+yGrav,5);
-    
     if (hp == 0)
     {
         alive = false;
@@ -97,19 +111,26 @@ invincible = 0;
         
         repeat(5)
             instance_create(x,y,objCoin);
-    }   
+    }
+    
 } else
+{
     instance_destroy();
+}
+
 
 //++++
 
-if (in(x+xVel,TILE,WIDTH-TILE))
+xVel = sign(xVel)*min(abs(xVel),2);
+
+if (in(x+xVel,2*TILE,WIDTH-2*TILE))
     x += xVel;
 else
 {
     xVel = -xVel;
 }
-    
+yVel = min(yVel+yGrav,3);
+//yVel = sign(yVel)*min(abs(yVel),3);
 y += yVel;
 </string>
           </argument>
@@ -137,14 +158,14 @@ y += yVel;
 
 fCur = (fCur+fSpeed)%fMax;
 
-
-var angle = point_direction(x,y,x+abs(xVel),y+TILE+2*yVel)+90;
 var frame = floor(fCur);
+
+var angle = point_direction(x,y,x+xVel,y+2*TILE+yVel)+90;
+
 
 if (invincible % 3 == 0)
 {
-    //draw_sprite(mskBoulderBig,-1,x,y);
-    draw_sprite_ext(sprEnemy6,frame,x,y,sign(dir),1,angle,c_white,1);
+    draw_sprite_ext(sprEnemyBlackKnight,frame,x,y,1,1,angle,c_white,1);
 }
 //++++draw health bar
 drawHealthBar(x-1.5*TILE,y-2*TILE);

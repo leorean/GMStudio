@@ -18,12 +18,13 @@
     <sprite>sprites\mskLarge</sprite>
     <sprite>sprites\mskSmall</sprite>
     <sprite>sprites\sprParticle</sprite>
-    <sprite>sprites\sprEnemy1</sprite>
-    <sprite>sprites\sprEnemy2</sprite>
-    <sprite>sprites\sprEnemy3</sprite>
-    <sprite>sprites\sprEnemy4</sprite>
-    <sprite>sprites\sprEnemy5</sprite>
-    <sprite>sprites\sprEnemy6</sprite>
+    <sprite>sprites\sprEnemyPotato</sprite>
+    <sprite>sprites\sprEnemyKnightRunner</sprite>
+    <sprite>sprites\sprEnemyBlackKnight</sprite>
+    <sprite>sprites\sprEnemySquid</sprite>
+    <sprite>sprites\sprEnemySoldier</sprite>
+    <sprite>sprites\sprEnemyBigSquid</sprite>
+    <sprite>sprites\sprEnemyDwarf</sprite>
     <sprite>sprites\sprCrystal</sprite>
   </sprites>
   <backgrounds name="background"/>
@@ -52,12 +53,13 @@
       <object>objects\objMine</object>
       <object>objects\objSoul</object>
       <object>objects\objProjectileCannon</object>
-      <object>objects\objEnemy1</object>
-      <object>objects\objEnemy2</object>
-      <object>objects\objEnemy3</object>
-      <object>objects\objEnemy4</object>
-      <object>objects\objEnemy5</object>
-      <object>objects\objEnemy6</object>
+      <object>objects\objEnemyPotato</object>
+      <object>objects\objEnemyKnightRunner</object>
+      <object>objects\objEnemyBlackKnight</object>
+      <object>objects\objEnemySquid</object>
+      <object>objects\objEnemySoldier</object>
+      <object>objects\objEnemyBigSquid</object>
+      <object>objects\objEnemyDwarf</object>
     </objects>
   </objects>
   <rooms name="rooms">

@@ -25,24 +25,23 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>mask_index = mskMedium;
+            <string>mask_index = mskLarge;
 
-angle = -20+random(40);
+x = 3*TILE+random(WIDTH-6*TILE);
+y = HEIGHT+2*TILE;
+
+dir = choose(LEFT,RIGHT);
 
 fCur = 0;
 fMax = 4;
-fSpeed = .1;
+fSpeed = .15;
 
-//xVel = -2+random(4);
-//yVel = 3+random(1);
+xVel = -2+random(4);
+yVel = 0;
 
-rot = -1+random(2);
+yGrav = .05;
 
-yVel = 2+random(1);
-
-ty = 4*TILE+random(HEIGHT-6*TILE);
-
-maxHp = 1;
+maxHp = 4;
 hp = maxHp;
 
 state = IDLE;
@@ -76,15 +75,21 @@ invincible = 0;
     invincible = max(invincible-1,0);
     if (invincible)
     {
-        xVel *= .99;
-        yVel *= .99;    
+        xVel *= .95;
+        yVel *= .95;    
     } else
     {
     }
 
-    angle = (angle+rot)%360;
+    if (abs(xVel)&gt;0)
+        dir = sign(xVel);
     
-    yVel = (ty-y)/80;
+    if (y &gt; HEIGHT+TILE &amp;&amp; yVel &gt; 0)
+    {
+        yVel = -4-random(3);
+    }
+    
+    yVel = min(yVel+yGrav,5);
     
     if (hp == 0)
     {
@@ -93,7 +98,7 @@ invincible = 0;
         var e = instance_create(x,y,objEffect);
         e.type = 2;
         
-        repeat(1)
+        repeat(5)
             instance_create(x,y,objCoin);
     }   
 } else
@@ -101,6 +106,13 @@ invincible = 0;
 
 //++++
 
+if (in(x+xVel,TILE,WIDTH-TILE))
+    x += xVel;
+else
+{
+    xVel = -xVel;
+}
+    
 y += yVel;
 </string>
           </argument>
@@ -126,12 +138,16 @@ y += yVel;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
-fCur = (fCur + fSpeed) % fMax;
-frame = floor(fCur);
+fCur = (fCur+fSpeed)%fMax;
+
+
+var angle = point_direction(x,y,x+abs(xVel),y+TILE+2*yVel)+90;
+var frame = floor(fCur);
 
 if (invincible % 3 == 0)
 {
-    draw_sprite_ext(sprEnemy5,frame,x,y,1,1,angle,c_white,1);
+    //draw_sprite(mskBoulderBig,-1,x,y);
+    draw_sprite_ext(sprEnemyBigSquid,frame,x,y,sign(dir),1,angle,c_white,1);
 }
 //++++draw health bar
 drawHealthBar(x-1.5*TILE,y-2*TILE);
