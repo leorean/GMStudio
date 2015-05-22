@@ -136,13 +136,26 @@ if (!global.gameOver)
         } else
         {
             //hp is dead, check rewards regarding enemy type
+            var value = 0;
             switch(enemy.object_index)
             {
                 case objEnemySoldier:
-                    repeat(10)
-                        instance_create(x,y,objCoin);
+                case objEnemyDwarf:
+                case objEnemySquid:
+                    value = 3;
                 break;
+                case objEnemyPotato:
+                case objEnemyKnightRunner:
+                case objEnemyBigSquid:
+                    value = 5;
+                break;
+                case objEnemyBlackKnight:
+                    value = 7;
+                break;
+                
             }
+            repeat(value)
+                instance_create(enemy.x,enemy.y,objCoin);
         }
         delay = 5;
     }
@@ -190,10 +203,12 @@ with(player)
                 }
             }
         }
-        
-        coin = collision_circle(x+xVel,y+yVel,3*TILE,objCoin,true,true);
-        if (instance_exists(coin))
-            coin.active = true;
+        repeat(instance_number(objCoin))
+        {
+            coin = collision_circle(x+xVel,y+yVel,3*TILE,objCoin,true,true);
+            if (instance_exists(coin))
+                coin.active = true;
+        }
     }
     
     if (in(x+xVel,TILE,WIDTH-TILE))

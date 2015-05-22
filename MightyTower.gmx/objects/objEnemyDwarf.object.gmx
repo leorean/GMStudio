@@ -32,6 +32,9 @@ tx = x-TILE+random(2*TILE); ty = HEIGHT/2+(instance_number(objEnemySoldier)%5)*T
 
 angle = 0;
 
+
+rot = -2+random(4);
+
 fCur = 0;
 fMax = 4;
 fSpeed = .1;
@@ -128,7 +131,7 @@ y += yVel;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
-angle = point_direction(x,y,x+xVel,y+yVel+TILE)+90;
+angle = point_direction(x,y,x+xVel,y+yVel+4)+90;
 
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);

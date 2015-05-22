@@ -132,7 +132,7 @@ y += yVel;
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 
-angle = point_direction(x,y,x+xVel,y+yVel+3)-90;
+angle = point_direction(x,y,x+xVel,y+yVel+3)+90;
 
 if (invincible % 3 == 0)
 {
