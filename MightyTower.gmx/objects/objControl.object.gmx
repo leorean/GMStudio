@@ -85,7 +85,7 @@ if (!global.gameOver)
     global.distance = max(global.distance + global.yVel*.05, global.distance);
     
     if (keyboard_check_pressed(ord('D')))
-        global.theme = (global.theme+1) % 6;
+        global.theme = (global.theme+1) % 7;
 
     //++++SPAWNING ALGORITHM ETC++++
     if (!instance_exists(objEffectText))
@@ -103,6 +103,7 @@ if (!global.gameOver)
             if (global.distance &gt; 4000 &amp;&amp; global.theme == 2) global.theme = 3;
             if (global.distance &gt; 7000 &amp;&amp; global.theme == 3) global.theme = 4;
             if (global.distance &gt; 9000 &amp;&amp; global.theme == 4) global.theme = 5;
+            if (global.distance &gt; 12000 &amp;&amp; global.theme == 5) global.theme = 6;
 
             //++++theme dependant obstacles:
             switch(global.theme)
@@ -127,13 +128,17 @@ if (!global.gameOver)
                 break;
                 case 5: //hell.
                 break;
+                case 6: //the void. endless
+                break;
             }
             
             switch(wave)
             {
                 case 1:
                     repeat(2)
-                        instance_create(2*TILE+random(WIDTH-4*TILE),HEIGHT+2*TILE,objEnemy4);
+                        instance_create(2*TILE+random(WIDTH-4*TILE),-2*TILE,objEnemy5);
+                    repeat(2)
+                        instance_create(3*TILE+random(WIDTH-6*TILE),HEIGHT+2*TILE,objEnemy6);
                     //repeat(4)
                     //    var boulder = instance_create(1.5*TILE+random(WIDTH-3*TILE),-2*TILE,objBoulder);
                 break;
@@ -222,7 +227,7 @@ global.distance = 0;
 global.coins = 0;
 global.timer = 0;
 
-global.theme = 5; //theme
+global.theme = 0; //theme
 
 global.shake = false;
 shakeTimer = 0;

@@ -22,6 +22,8 @@
     <sprite>sprites\sprEnemy2</sprite>
     <sprite>sprites\sprEnemy3</sprite>
     <sprite>sprites\sprEnemy4</sprite>
+    <sprite>sprites\sprEnemy5</sprite>
+    <sprite>sprites\sprEnemy6</sprite>
     <sprite>sprites\sprCrystal</sprite>
   </sprites>
   <backgrounds name="background"/>
@@ -54,6 +56,8 @@
       <object>objects\objEnemy2</object>
       <object>objects\objEnemy3</object>
       <object>objects\objEnemy4</object>
+      <object>objects\objEnemy5</object>
+      <object>objects\objEnemy6</object>
     </objects>
   </objects>
   <rooms name="rooms">
