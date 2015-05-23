@@ -9,7 +9,7 @@
     <sprite>sprites\sprGraphics</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\mskFlail</sprite>
-    <sprite>sprites\mskCoin</sprite>
+    <sprite>sprites\mskCollectable</sprite>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\sprFlail</sprite>
     <sprite>sprites\sprBg</sprite>
@@ -41,7 +41,7 @@
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
     <object>objects\objBg</object>
-    <object>objects\objCoin</object>
+    <object>objects\objCollectable</object>
     <object>objects\objEffect</object>
     <objects name="misc">
       <object>objects\objEnemy</object>
@@ -66,7 +66,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="11">
+  <constants number="13">
     <constant name="INF">900000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">240</constant>
@@ -78,6 +78,8 @@
     <constant name="RIGHT">1</constant>
     <constant name="fnt_big">0</constant>
     <constant name="fnt_small">1</constant>
+    <constant name="T_COIN">0</constant>
+    <constant name="T_HP">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

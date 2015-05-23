@@ -155,13 +155,23 @@ if (!global.gameOver)
                 
             }
             repeat(value)
-                instance_create(enemy.x,enemy.y,objCoin);
+            {
+                var coll = instance_create(enemy.x,enemy.y,objCollectable);
+                coll.type = T_COIN;
+            }
+            
+            if (irandom(10) == 9)
+            {
+                var coll = instance_create(enemy.x,enemy.y,objCollectable);
+                coll.type = T_HP;
+            }
+            
         }
         delay = 5;
     }
     
-    //++++COIN-FLAIL-INTERACTION++++
-    coin = instance_place(x+xVel,y+yVel,objCoin);
+    //++++COIN/HP/ETC-FLAIL-INTERACTION++++
+    coin = instance_place(x+xVel,y+yVel,objCollectable);
         if (instance_exists(coin))
             coin.active = true;
 }
@@ -203,11 +213,11 @@ with(player)
                 }
             }
         }
-        repeat(instance_number(objCoin))
+        repeat(instance_number(objCollectable))
         {
-            coin = collision_circle(x+xVel,y+yVel,3*TILE,objCoin,true,true);
-            if (instance_exists(coin))
-                coin.active = true;
+            var coll = collision_circle(x+xVel,y+yVel,3*TILE,objCollectable,true,true);
+            if (instance_exists(coll))
+                coll.active = true;
         }
     }
     

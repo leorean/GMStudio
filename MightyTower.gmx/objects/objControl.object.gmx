@@ -132,18 +132,26 @@ if (!global.gameOver)
                 break;
             }
             
+            repeat(wave div 1) instance_create(0,0,objEnemySoldier);
+            repeat(wave div 2) instance_create(0,0,objEnemyDwarf);
+            repeat(wave div 4) instance_create(0,0,objEnemySquid);
+            repeat(wave div 8) instance_create(0,0,objEnemyKnightRunner);
+            repeat(wave div 12) instance_create(0,0,objEnemyPotato);
+            repeat(wave div 15) instance_create(0,0,objEnemyBigSquid);
+            repeat(wave div 20) instance_create(0,0,objEnemyBlackKnight);
+                        
             switch(wave)
             {
                 case 1:
-                    repeat(3) instance_create(0,0,objEnemySoldier);
-                    repeat(2) instance_create(0,0,objEnemyDwarf);
+                    //repeat(3) instance_create(0,0,objEnemySoldier);
+                    //repeat(2) instance_create(0,0,objEnemyDwarf);
                 break;
                 case 2:
-                    repeat(2) instance_create(0,0,objEnemyDwarf);
+                    //repeat(2) instance_create(0,0,objEnemyDwarf);
                 break;
                 case 3:
-                    repeat(2) instance_create(0,0,objEnemyDwarf);
-                    repeat(1) instance_create(0,0,objEnemySquid);
+                    //repeat(2) instance_create(0,0,objEnemyDwarf);
+                    //repeat(1) instance_create(0,0,objEnemySquid);
                 break;
                 case 4:
                 break;
