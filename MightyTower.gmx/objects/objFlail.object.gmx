@@ -45,6 +45,10 @@ player = instance_create(x-6+random(12),y-2*TILE,objPlayer);//just some blurr
 player.yVel = -1;
 
 dmg = 1;
+
+powerup = POW_NONE;
+pTimer = 0;
+pTimerMax = 5*60;
 </string>
           </argument>
         </arguments>
@@ -118,6 +122,18 @@ else
 //++++ENEMY INTERACTION++++
 if (!global.gameOver)
 {
+    pTimer = max(pTimer-1,0);
+    if (pTimer == 0) powerup = POW_NONE;
+    
+    //++++POWER UP INTERACTION++++
+    var pu = instance_place(x+xVel,y+yVel,objPowerUp);
+    if (instance_exists(pu) &amp;&amp; pu.alive)
+    {
+        powerup = pu.type;
+        pTimer = pTimerMax;
+        pu.alive = false;
+    }
+    
     //++++ENEMY INTERACTION++++
     var enemy = instance_place(x+xVel,y+yVel,objEnemy);
     if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive &amp;&amp; !enemy.invincible)
@@ -172,6 +188,9 @@ if (!global.gameOver)
                 var coll = instance_create(enemy.x,enemy.y,objCollectable);
                 coll.type = T_COIN;
             }
+            
+            //spawn powerup
+            instance_create(TILE+random(WIDTH-2*TILE),-2*TILE,objPowerUp);
             
             if (irandom(10) == 9)
             {

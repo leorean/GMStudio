@@ -25,6 +25,7 @@
     <sprite>sprites\sprEnemySoldier</sprite>
     <sprite>sprites\sprEnemyBigSquid</sprite>
     <sprite>sprites\sprEnemyDwarf</sprite>
+    <sprite>sprites\sprPowerUp</sprite>
     <sprite>sprites\sprCrystal</sprite>
   </sprites>
   <backgrounds name="background"/>
@@ -33,6 +34,7 @@
     <script>scripts\in.gml</script>
     <script>scripts\drawNumber.gml</script>
     <script>scripts\drawHealthBar.gml</script>
+    <script>scripts\drawLightning.gml</script>
     <script>scripts\spawnEnemy.gml</script>
   </scripts>
   <objects name="objects">
@@ -43,6 +45,7 @@
     <object>objects\objBg</object>
     <object>objects\objCollectable</object>
     <object>objects\objDamageText</object>
+    <object>objects\objPowerUp</object>
     <object>objects\objEffect</object>
     <objects name="misc">
       <object>objects\objEnemy</object>
@@ -67,7 +70,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="13">
+  <constants number="15">
     <constant name="INF">900000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">240</constant>
@@ -81,6 +84,8 @@
     <constant name="fnt_small">1</constant>
     <constant name="T_COIN">0</constant>
     <constant name="T_HP">1</constant>
+    <constant name="POW_NONE">0</constant>
+    <constant name="POW_THUNDER">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
