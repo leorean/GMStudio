@@ -43,6 +43,7 @@ yGrav = .05;
 
 maxHp = 1;
 hp = maxHp;
+dmg = 1;
 
 state = IDLE;
 alive = true;

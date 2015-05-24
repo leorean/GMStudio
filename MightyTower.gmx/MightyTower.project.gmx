@@ -42,6 +42,7 @@
     <object>objects\objBlock</object>
     <object>objects\objBg</object>
     <object>objects\objCollectable</object>
+    <object>objects\objDamageText</object>
     <object>objects\objEffect</object>
     <objects name="misc">
       <object>objects\objEnemy</object>

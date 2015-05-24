@@ -132,8 +132,8 @@ if (!global.gameOver)
                 break;
             }
             
-            repeat(wave div 1) instance_create(0,0,objEnemySoldier);
-            repeat(wave div 2) instance_create(0,0,objEnemyDwarf);
+            repeat(min((wave) div 1,3)) instance_create(0,0,objEnemySoldier);
+            repeat(min((wave-2) div 2,3)) instance_create(0,0,objEnemyDwarf);
             repeat(wave div 4) instance_create(0,0,objEnemySquid);
             repeat(wave div 8) instance_create(0,0,objEnemyKnightRunner);
             repeat(wave div 12) instance_create(0,0,objEnemyPotato);
@@ -283,11 +283,11 @@ if (instance_exists(objPlayer))
 {
 
     //DISTANCE
-    drawNumber(string(floor(global.distance))+"m",1,1,fa_left,fnt_small);
+    drawNumber(string(floor(global.distance))+"m",1,1,fa_left,fnt_small,c_white,1);
 
     //COINS
     draw_sprite_part(sprGraphics,-1,(floor(global.timer*.1)%4)*TILE,0,TILE,TILE,0,TILE);
-    drawNumber(global.coins,TILE+1,TILE+3,fa_left,fnt_small);
+    drawNumber(global.coins,TILE+1,TILE+3,fa_left,fnt_small,c_white,1);
     
     
     //HP
@@ -306,7 +306,7 @@ if (instance_exists(objPlayer))
     draw_sprite_part(sprGraphics,-1,19*TILE+tf*2*TILE,2*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
     
     //TIME
-    drawNumber(string(time div 60)+"s",WIDTH-TILE,2*TILE,fa_middle,fnt_small);
+    drawNumber(string(time div 60)+"s",WIDTH-TILE,2*TILE,fa_middle,fnt_small,c_white,1);
     
     //draw_sprite_part(sprGraphics,-1,21*TILE,2*TILE+TILE*(1-time/maxTime),2*TILE,TILE*(time/maxTime),WIDTH-2*TILE,0+TILE*(time/maxTime));
 

@@ -37,6 +37,7 @@ invincible = 0;
 
 maxHp = 2;
 hp = maxHp;
+dmg = 1;
 </string>
           </argument>
         </arguments>

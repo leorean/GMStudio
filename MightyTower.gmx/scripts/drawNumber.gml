@@ -4,6 +4,15 @@ var fnt_y = argument2;
 var fnt_align = argument3; //align text left, right, centered
 var fnt_size = argument4; //fnt_big, fnt_small
 
+var fnt_color = c_white;
+var fnt_alpha = 1;
+
+if (argument_count==7)
+{
+    fnt_color = argument5;
+    fnt_alpha = argument6;
+}
+
 var fnt_nx = fnt_x;//x for each char
 
 var fnt_w,fnt_h,fnt_o,fnt_d;
@@ -32,6 +41,12 @@ for (i = 0; i < fnt_length; i++)
         case "s":
             fnt_d = 11;
         break;
+        case "-":
+            fnt_d = 12;
+        break;
+        case "+":
+            fnt_d = 13;
+        break;
         default:
             fnt_d = real(string_char_at(fnt_text,i+1));
         break;
@@ -49,5 +64,5 @@ for (i = 0; i < fnt_length; i++)
             fnt_nx = fnt_x + (i-fnt_length)*fnt_w;
         break;
     }
-    draw_sprite_part(sprGraphics,-1,19*TILE+fnt_d*fnt_w,fnt_o,fnt_w,fnt_h,fnt_nx,fnt_y);
+    draw_sprite_part_ext(sprGraphics,-1,19*TILE+fnt_d*fnt_w,fnt_o,fnt_w,fnt_h,fnt_nx,fnt_y,1,1,fnt_color,fnt_alpha);
 }

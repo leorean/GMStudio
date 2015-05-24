@@ -32,6 +32,8 @@ yVel = 0;
 
 maxHp = 1;
 hp = maxHp;
+dmg = 1;
+
 alive = true;
 invincible = 0;
 </string>

@@ -41,6 +41,7 @@ invincible = 0;
 
 maxHp = 2;
 hp = maxHp;
+dmg = 2;
 
 //++++
 alpha = 0;

@@ -44,6 +44,7 @@ yVel = 0;
 
 maxHp = 3;
 hp = maxHp;
+dmg = 2;
 
 state = IDLE;
 alive = true;

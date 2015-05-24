@@ -43,6 +43,8 @@ state = ATTACK;
 
 player = instance_create(x-6+random(12),y-2*TILE,objPlayer);//just some blurr
 player.yVel = -1;
+
+dmg = 1;
 </string>
           </argument>
         </arguments>
@@ -123,7 +125,18 @@ if (!global.gameOver)
         var kb = point_direction(x,y,enemy.x,enemy.y);
         global.shake = true; //shake screen
 
-        if (!enemy.invincible) enemy.hp = max(enemy.hp-1,0);
+        if (!enemy.invincible)
+        {
+            enemy.hp = max(enemy.hp-dmg,0);
+            /*var t = instance_create(enemy.x,enemy.y,objDamageText);
+            t.text = ""+string(dmg);
+            t.xVel = lengthdir_x(.5,kb);
+            t.yVel = lengthdir_y(.5,kb);
+            t.yGrav = -.1;
+            //t.timer = 30;
+            t.color = c_white;//make_color_hsv(0,0,200);
+            */
+        }
         
         enemy.xVel = lengthdir_x(6,kb);
         enemy.yVel = lengthdir_y(6,kb);
@@ -192,7 +205,12 @@ with(player)
                 xVel = lengthdir_x(-5,kb);
                 yVel = lengthdir_y(-5,kb);
                 
-                hp = max(hp-1,0);
+                hp = max(hp-enemy.dmg,0);
+                
+                var t = instance_create(x,y,objDamageText);
+                t.text = "-"+string(enemy.dmg);
+                t.color = make_color_hsv(0,202,255);
+                
                 invincible = 60;
                 
                 if (hp == 0)
