@@ -101,7 +101,7 @@ type = 0;
 if (in(x+xVel,TILE,WIDTH-TILE))
     x += xVel;
 else
-    xVel = -xVel;
+    xVel = sign(WIDTH/2-x);
     
 y += yVel;
 
@@ -127,7 +127,10 @@ y += yVel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>if (!global.gameOver)
+    draw_set_alpha(1);
+else
+    draw_set_alpha(objBg.alpha);
 
 fCur = (fCur + fSpeed) % fMax;
 

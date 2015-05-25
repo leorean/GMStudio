@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>mask_index = mskMedium;
 
+x = 2*TILE+random((WIDTH-4*TILE)/TILE)*TILE;
+
 dir = choose(LEFT,RIGHT);
 
 fCur = 0;

@@ -66,7 +66,7 @@ yVel = sign(yVel)*min(abs(yVel),1);
 x += xVel;
 y += yVel;
 
-if (!alive)
+if (!alive || global.gameOver)
 {
     var eff = instance_create(x,y,objEffect);
     eff.type = 5;
@@ -94,7 +94,12 @@ if (!alive)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>angle = point_direction(x,y,x+xVel,y+yVel+4)+90;
+            <string>/*if (!global.gameOver)
+    draw_set_alpha(1);
+else
+    draw_set_alpha(1-objBg.alpha);
+*/
+angle = point_direction(x,y,x+xVel,y+yVel+4)+90;
 draw_sprite_ext(sprPowerUp,type,x,y,1,1,angle,c_white,1);
 </string>
           </argument>

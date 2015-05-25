@@ -1,7 +1,7 @@
 var a,b,n,r, color;
 
-r = 3;
-w = choose(1,2);
+r = 6;
+w = choose(2,3);
 n = max(
     max(abs(argument0-argument2),abs(argument1-argument3)) div 4
     , 3);

@@ -35,7 +35,7 @@
     <script>scripts\drawNumber.gml</script>
     <script>scripts\drawHealthBar.gml</script>
     <script>scripts\drawLightning.gml</script>
-    <script>scripts\spawnEnemy.gml</script>
+    <script>scripts\spawnRewards.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
