@@ -28,6 +28,7 @@
             <string>mask_index = mskMedium;
 
 x = TILE+random((WIDTH-2*TILE)/TILE)*TILE;
+y = HEIGHT+2*TILE;
 tx = x-TILE+random(2*TILE); ty = HEIGHT/2+(instance_number(objEnemySoldier)%5)*TILE;
 
 angle = 0;

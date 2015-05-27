@@ -40,6 +40,8 @@ falling = false; //if true, coin falls from above
 fallVel = 1+random(2);
 
 type = 0;
+
+delay = 15;
 </string>
           </argument>
         </arguments>
@@ -62,13 +64,15 @@ type = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (active)
+            <string>delay = max(delay-1,0);
+
+if (active)
 {
     angle = point_direction(x,y,objPlayer.x,objPlayer.y);
     xVel = lengthdir_x(t,angle);
     yVel = lengthdir_y(t,angle);
     
-    t = min(t+1,4);
+    t = min(t+1,5);
     
     if (place_meeting(x+xVel,y+yVel,objPlayer))
     {
@@ -96,6 +100,11 @@ type = 0;
         yVel = max(yVel-.05,-global.yVel);
     else
         yVel = fallVel;
+    
+    if (delay == 0)
+        if (collision_circle(x+xVel,y+yVel,global.magnetDistance,objPlayer,true,true)
+        || collision_circle(x+xVel,y+yVel,global.magnetDistance,objFlail,true,true))
+            active = true;
 }
 
 if (in(x+xVel,TILE,WIDTH-TILE))

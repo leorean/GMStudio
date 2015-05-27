@@ -79,7 +79,8 @@ if (!global.gameOver)
         {
             tx = device_mouse_x(i);
             ty = device_mouse_y(i);
-            global.lifeLine = ty;//+= sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,14);
+            //global.lifeLine = ty;
+            global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,14);
         }
     
     global.lifeLine = min(max(global.lifeLine,2*TILE),HEIGHT);
@@ -96,15 +97,15 @@ if (!global.gameOver)
         xVel *= .95;
         yVel *= .95;        
     }
+    //other physics
     //player.xVel += (x-player.x)/180;
     //player.yVel += (y-player.y)/180;
     
-    /*other physics:
-    //player.xVel += (x-player.x)/120;
-    //player.yVel = (y-player.y-4*TILE)/8;
-    */
+    //up physics:
+    player.xVel += (x-player.x)/120;
+    player.yVel = (y-player.y-4*TILE)/8;
     
-    player.xVel = sign(player.xVel)*min(abs(player.xVel),5);
+    player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
     player.yVel = sign(player.yVel)*min(abs(player.yVel),5);
     
     player.angle = point_direction(x,y,player.x,player.y);
@@ -126,14 +127,17 @@ if (!global.gameOver)
     if (pTimer == 0) powerup = POW_NONE;
     
     //++++POWER UP INTERACTION++++
-    var pu = instance_place(x+xVel,y+yVel,objPowerUp);
-    if (instance_exists(pu) &amp;&amp; pu.alive)
+    with(objPowerUp)
     {
-        powerup = pu.type;
-        pTimer = pTimerMax;
-        pu.alive = false;
+        if ((place_meeting(x+xVel,y+yVel,objPlayer)
+        || place_meeting(x+xVel,y+yVel,objFlail))
+        &amp;&amp; alive)
+        {
+            objFlail.powerup = type;
+            objFlail.pTimer = objFlail.pTimerMax;
+            alive = false;
+        }
     }
-    
     //++++ENEMY INTERACTION++++
     var enemy = instance_place(x+xVel,y+yVel,objEnemy);
     if (instance_exists(enemy) &amp;&amp; !delay &amp;&amp; enemy.alive &amp;&amp; !enemy.invincible)
@@ -163,13 +167,14 @@ if (!global.gameOver)
     }
     
     //++++COIN/ETC++++
+    /*
     repeat(instance_number(objCollectable))
     {
         var coll = collision_circle(x+xVel,y+yVel,global.magnetDistance,objCollectable,true,true);
             if (instance_exists(coll))
                 coll.active = true;
     }
-
+    */
 }
     
 //++++PLAYER PHYSICS
@@ -216,12 +221,14 @@ with(player)
         }
 
         //++++COIN/HP/ETC-INTERACTION++++
+        /*
         repeat(instance_number(objCollectable))
         {
             var coll = collision_circle(x+xVel,y+yVel,global.magnetDistance,objCollectable,true,true);
             if (instance_exists(coll))
                 coll.active = true;
         }
+        */
     }
     
     if (in(x+xVel,TILE,WIDTH-TILE))
