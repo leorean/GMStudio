@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>100</depth>
+  <depth>5</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,13 +25,93 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = 0;
-b = 0;
+            <string>mask_index = mskMedium;
 
-alpha = 1.5;
+x = 2*TILE+random(WIDTH-4*TILE);
+y = HEIGHT+2*TILE;
 
-theme = global.theme;
-themeAlpha = 0;
+dir = choose(LEFT,RIGHT);
+
+fCur = 0;
+fMax = 4;
+fSpeed = .15;
+
+xVel = -2+random(4);
+yVel = 0;
+
+yGrav = .05;
+
+maxHp = 1;
+hp = maxHp;
+dmg = 1;
+
+state = IDLE;
+alive = true;
+invincible = 0;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (alive)
+{
+    invincible = max(invincible-1,0);
+    if (invincible)
+    {
+        xVel *= .99;
+        yVel *= .99;    
+    } else
+    {
+    }
+
+    if (abs(xVel)&gt;0)
+        dir = sign(xVel);
+    
+    if (y &gt; HEIGHT+TILE &amp;&amp; yVel &gt; 0)
+    {
+        yVel = -4-random(3);
+    }
+    
+    yVel = min(yVel+yGrav,5);
+    
+    if (hp == 0)
+    {
+        alive = false;
+        
+        var e = instance_create(x,y,objEffect);
+        e.type = 2;
+    }   
+} else
+    instance_destroy();
+
+//++++
+
+if (in(x+xVel,TILE,WIDTH-TILE))
+    x += xVel;
+else
+{
+    xVel = -xVel;
+}
+    
+y += yVel;
 </string>
           </argument>
         </arguments>
@@ -54,58 +134,20 @@ themeAlpha = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = (a+global.yVel * .7) % HEIGHT;
-b = (b+global.yVel * .9) % HEIGHT;
+            <string>draw_set_alpha(1);
 
-draw_sprite_part(sprBg,-1,theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a));
-draw_sprite_part(sprBg,-1,theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a)-HEIGHT);
+fCur = (fCur+fSpeed)%fMax;
 
-draw_sprite_part(sprBg,-1,theme*WIDTH,HEIGHT,WIDTH,HEIGHT,0,floor(b));
-draw_sprite_part(sprBg,-1,theme*WIDTH,HEIGHT,WIDTH,HEIGHT,0,floor(b)-HEIGHT);
+var angle = point_direction(x,y,x+abs(xVel),y+yVel+5)+90;
+var frame = floor(fCur);
 
-if (themeAlpha != 0)
+if (invincible % 3 == 0)
 {
-    //new theme
-    draw_sprite_part_ext(sprBg,-1,global.theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a),1,1,c_white,themeAlpha);
-    draw_sprite_part_ext(sprBg,-1,global.theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a)-HEIGHT,1,1,c_white,themeAlpha);
-    
-    draw_sprite_part_ext(sprBg,-1,global.theme*WIDTH,HEIGHT,WIDTH,HEIGHT,0,floor(b),1,1,c_white,themeAlpha);
-    draw_sprite_part_ext(sprBg,-1,global.theme*WIDTH,HEIGHT,WIDTH,HEIGHT,0,floor(b)-HEIGHT,1,1,c_white,themeAlpha);
-
+    draw_sprite_ext(sprEnemySquid,frame,x,y,sign(dir),1,angle,c_white,1);
 }
 
-if (global.gameOver)
-{
-    if (instance_exists(objEnemy))
-        objEnemy.hp = 0;
-        
-    alpha = min(alpha+.01,1.5);
-    
-    if (alpha == 1.5 &amp;&amp; mouse_check_button_pressed(mb_any))
-        room_restart();
-} else //NOT gameover
-{
-    alpha = max(alpha - .02,0);
-    
-    if (theme != global.theme)
-    {
-        themeAlpha = min(themeAlpha+.005,1);
-        if (themeAlpha == 1)
-            theme = global.theme;
-    } else
-    {
-        themeAlpha = 0;//max(themeAlpha-.005,0);
-    }
-    
-}
-
-//EFFECT
-if (alpha &gt; 0)
-{
-    draw_set_color(c_white);
-    draw_set_alpha(alpha);
-    draw_rectangle(0,0,WIDTH,HEIGHT,0);
-}
+//++++draw health bar
+drawHealthBar(x-1.5*TILE,y-2*TILE);
 </string>
           </argument>
         </arguments>

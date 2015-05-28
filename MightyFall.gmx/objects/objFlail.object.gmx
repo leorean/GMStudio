@@ -41,7 +41,7 @@ delay = 0; //reaction delay
 
 state = ATTACK;
 
-player = instance_create(x-6+random(12),y+2*TILE,objPlayer);//just some blurr
+player = instance_create(x-6+random(12),y-2*TILE,objPlayer);//just some blurr
 player.yVel = -1;
 
 dmg = 1;
@@ -78,9 +78,9 @@ if (!global.gameOver)
         if (device_mouse_check_button(i,mb_any))
         {
             tx = device_mouse_x(i);
-            //ty = device_mouse_y(i);
+            ty = device_mouse_y(i);
             //global.lifeLine = ty;
-            //global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,14);
+            global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,14);
         }
     
     global.lifeLine = min(max(global.lifeLine,2*TILE),HEIGHT);
@@ -103,7 +103,7 @@ if (!global.gameOver)
     
     //up physics:
     player.xVel += (x-player.x)/120;
-    player.yVel = (y-player.y+3*TILE)/8;
+    player.yVel = (y-player.y-4*TILE)/8;
     
     player.xVel = sign(player.xVel)*min(abs(player.xVel),3);
     player.yVel = sign(player.yVel)*min(abs(player.yVel),5);
