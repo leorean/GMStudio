@@ -17,10 +17,13 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="3">
+  <constants number="6">
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="TILE">16</constant>
+    <constant name="NONE">0</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

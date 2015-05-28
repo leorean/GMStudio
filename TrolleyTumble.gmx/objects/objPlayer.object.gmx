@@ -27,6 +27,12 @@
             <kind>1</kind>
             <string>balance = 0;
 maxBalance = 4;
+
+fCur = 0;
+fMax = 2;
+fSpeed = .3;
+
+dir = NONE;
 </string>
           </argument>
         </arguments>
@@ -49,8 +55,17 @@ maxBalance = 4;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check(vk_left)) balance = max(balance - .4, -maxBalance);
-if (keyboard_check(vk_right)) balance = min(balance + .4, maxBalance);
+            <string>if (keyboard_check(vk_left)) dir = LEFT;
+else if (keyboard_check(vk_right)) dir = RIGHT;
+else dir = NONE;
+
+
+
+
+if (dir == LEFT) balance = max(balance - .4, -maxBalance);
+else if (dir == RIGHT) balance = min(balance + .4, maxBalance);
+else if (dir == NONE) balance = sign(balance) * max(abs(balance) - .4, 0);
+
 </string>
           </argument>
         </arguments>
@@ -74,13 +89,21 @@ if (keyboard_check(vk_right)) balance = min(balance + .4, maxBalance);
           <argument>
             <kind>1</kind>
             <string>
-var frame = round(abs(balance/maxBalance) * 3);
-show_debug_message(frame);
+var row = round(abs(balance/maxBalance) * 3);
+
+fCur = (fCur + fSpeed) % fMax;
+var frame = floor(fCur);
 
 if (balance &lt; 0)
-    draw_sprite_part_ext(sprAssets,-1,frame*3*TILE,0,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,1);
+{
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,.5);
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,1);
+}
 else
-    draw_sprite_part_ext(sprAssets,-1,frame*3*TILE,0,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,1);
+{
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,.5);
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,1);
+}
 </string>
           </argument>
         </arguments>
