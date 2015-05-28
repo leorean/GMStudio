@@ -33,6 +33,13 @@ fMax = 2;
 fSpeed = .3;
 
 dir = NONE;
+
+xVel = 0;
+yVel = 0;
+
+z = 0;
+zVel = 0;
+zGrav = .12;
 </string>
           </argument>
         </arguments>
@@ -55,16 +62,32 @@ dir = NONE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check(vk_left)) dir = LEFT;
+            <string>//++++steer++++
+if (keyboard_check(vk_left)) dir = LEFT;
 else if (keyboard_check(vk_right)) dir = RIGHT;
 else dir = NONE;
-
-
-
+//++++jump++++
+if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -2;
 
 if (dir == LEFT) balance = max(balance - .4, -maxBalance);
 else if (dir == RIGHT) balance = min(balance + .4, maxBalance);
 else if (dir == NONE) balance = sign(balance) * max(abs(balance) - .4, 0);
+
+//x
+xVel = 1*balance/maxBalance;
+if (in(x+xVel,TILE,WIDTH-TILE))
+{
+    x += xVel;
+}
+else
+{
+    xVel = 0;
+}
+
+//z
+zVel += zGrav;
+z = min(max(z + zVel, -TILE), 0);
+if (z &gt;= 0) z = 0;
 
 </string>
           </argument>
@@ -97,12 +120,12 @@ var frame = floor(fCur);
 if (balance &lt; 0)
 {
     draw_sprite_part_ext(sprAssets,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,.5);
-    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,1);
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE+z,1,1,c_white,1);
 }
 else
 {
     draw_sprite_part_ext(sprAssets,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,.5);
-    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,1);
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE+z,-1,1,c_white,1);
 }
 </string>
           </argument>
