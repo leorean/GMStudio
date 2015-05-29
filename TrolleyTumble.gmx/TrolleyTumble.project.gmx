@@ -7,6 +7,9 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sprAssets</sprite>
+    <sprite>sprites\mskRail</sprite>
+    <sprite>sprites\mskcontrol</sprite>
+    <sprite>sprites\mskPlayer</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -16,6 +19,7 @@
   <objects name="objects">
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
+    <object>objects\objRail</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
