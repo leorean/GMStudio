@@ -69,12 +69,21 @@ else dir = NONE;
 //++++jump++++
 if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -2;
 
+//dir = sign(xVel);
+
 if (dir == LEFT) balance = max(balance - .4, -maxBalance);
 else if (dir == RIGHT) balance = min(balance + .4, maxBalance);
 else if (dir == NONE) balance = sign(balance) * max(abs(balance) - .4, 0);
 
+//var rail = collision_point(x,y,objRail,true,true);//instance_place(x,y,objRail);
+/*if (instance_exists(rail))
+    xVel = (rail.x-x)/6;
+else
+    xVel *= .9;
+*/
+    
 //x
-xVel = 1*balance/maxBalance;
+//xVel = 1*balance/maxBalance;
 if (in(x+xVel,TILE,WIDTH-TILE))
 {
     x += xVel;

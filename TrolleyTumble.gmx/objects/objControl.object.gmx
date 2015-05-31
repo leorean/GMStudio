@@ -54,14 +54,14 @@ if (keyboard_check_pressed(ord('R')))
     room_restart();
 
 global.spawnTrack = true;
-with(objRail)
-    if (y &lt;= 0) global.spawnTrack = false;
+if (place_meeting(WIDTH/2,0,objRail))
+    global.spawnTrack = false;
 
 if (global.spawnTrack)
 {
-    global.line = global.line - 4+random(8);
-    global.line = max(min(global.line,2*WIDTH/3),1*WIDTH/3);
-    instance_create(global.line,-TILE,objRail);
+    //global.line = global.line - 8+random(16);
+    //global.line = max(min(global.line,2*WIDTH/3),1*WIDTH/3);
+    //var rail = instance_create(global.line,-3*TILE,objRail);
     global.spawnTrack = false;
 }
 </string>
@@ -92,7 +92,7 @@ window_set_size(2*WIDTH,2*HEIGHT);
 
 instance_create(WIDTH/2,HEIGHT/2,objPlayer);
 
-global.yVel = 2;
+global.yVel = 5;
 
 global.line = WIDTH/2;
 global.spawnTrack = true;
