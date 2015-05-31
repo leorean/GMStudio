@@ -63,17 +63,45 @@ zGrav = .12;
           <argument>
             <kind>1</kind>
             <string>//++++steer++++
+var left = keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right);
+var right = keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left);
+var none = !left &amp;&amp; !right;
 if (keyboard_check(vk_left)) dir = LEFT;
 else if (keyboard_check(vk_right)) dir = RIGHT;
 else dir = NONE;
 //++++jump++++
-if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -2;
+//if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -2;
 
 //dir = sign(xVel);
 
 if (dir == LEFT) balance = max(balance - .4, -maxBalance);
 else if (dir == RIGHT) balance = min(balance + .4, maxBalance);
 else if (dir == NONE) balance = sign(balance) * max(abs(balance) - .4, 0);
+
+if (abs(balance) &gt; 0)
+    xVel = xVel + .04 * balance/maxBalance;
+else
+    xVel *= .9;
+xVel = sign(xVel) * min(abs(xVel), 2);
+
+/* trace shit
+if (abs(balance/maxBalance) &gt; .3 &amp;&amp; !place_meeting(x,y,objTrace))
+{
+    var trace = instance_create(x,bbox_bottom,objTrace);
+    trace.alpha = abs(xVel)/2;
+}*/
+/*
+if (left) balance = max(balance - .4, -maxBalance);
+if (right) balance = min(balance + .4, maxBalance);
+
+if (balance &lt; -.1*maxBalance)
+    xVel = max(xVel - .1, - max(0,2*(abs(balance)+1)/maxBalance));
+else if (balance &gt; .1*maxBalance)
+    xVel = min(xVel + .1, max(0,2*(abs(balance)+1)/maxBalance));
+else
+    xVel *= .9;
+*/
+//xVel = 1 * balance/maxBalance;
 
 //var rail = collision_point(x,y,objRail,true,true);//instance_place(x,y,objRail);
 /*if (instance_exists(rail))
