@@ -10,6 +10,8 @@
     <sprite>sprites\mskTrace</sprite>
     <sprite>sprites\mskcontrol</sprite>
     <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\sprLever</sprite>
+    <sprite>sprites\mskLever</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -20,6 +22,7 @@
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
     <object>objects\objTrace</object>
+    <object>objects\objLever</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

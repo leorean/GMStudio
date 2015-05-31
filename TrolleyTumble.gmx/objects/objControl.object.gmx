@@ -78,11 +78,14 @@ if (keyboard_check_pressed(ord('R')))
 
 window_set_size(2*WIDTH,2*HEIGHT);
 
-instance_create(WIDTH/2,HEIGHT/2,objPlayer);
+global.lever = instance_create(WIDTH/2,HEIGHT, objLever);
+instance_create(WIDTH/2,HEIGHT/2+2*TILE,objPlayer);
 
 global.yVel = 5;
 
 global.line = WIDTH/2;
+
+
 </string>
           </argument>
         </arguments>
