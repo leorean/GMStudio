@@ -44,6 +44,11 @@ hp = 1;
 value = 1;
 
 dir = NONE;
+
+text = 0;
+
+if (irandom(20) == 0)
+    text = irandom(5);
 </string>
           </argument>
         </arguments>
@@ -81,6 +86,9 @@ dir = NONE;
         yVel = lengthdir_y(-7,point_direction(x,y,objPlayer.x,objPlayer.y));
         rot = sign(x-objPlayer.x)*(3+random(4));
         zVel = -3;
+        
+        instance_create(x,y,objCollectable);
+        
         alive = false;
     }
 } else
@@ -152,6 +160,19 @@ if (alive)
 
 draw_sprite_part_ext(sprAssets,-1,4*TILE,0,2*TILE,2*TILE,x-TILE,y-TILE,1,1,c_white,.5);
 draw_sprite_ext(sprVictim1,frame,x,y+z,sign(dir)*sc,sc,angle,c_white,1);
+
+if (text != 0 &amp;&amp; (alive || z&lt;0))
+{
+    draw_sprite_part_ext(sprSpeech,-1,0,text*3*TILE,8*TILE,3*TILE,x-4*TILE,y-4*TILE+z,1,1,c_white,.8);
+    /*
+    draw_set_font(fntTiny);
+    draw_set_color(c_black);
+    draw_set_alpha(1);
+    draw_sprite_part_ext(sprAssets,-1,6*TILE,0,6*TILE,4*TILE,x-3*TILE,y-5*TILE+z,1,1,c_white,.8);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_text_ext(x,y-3.5*TILE+z,text,12,5*TILE);*/
+}
 </string>
           </argument>
         </arguments>

@@ -65,10 +65,11 @@ if (global.speedTimer &gt; 0)
 else
 {
     yVelMax = max(yVelMax - .005,0);
-    if (global.yVel &gt; yVelMax) global.yVel -= .03;
+    if (global.yVel &gt; yVelMax) global.yVel -= .02;
     global.yVel = max(global.yVel - .01,0);
 }
 
+global.distance += global.yVel;
     
 if (global.timer % 60 == 0 || instance_number(objVictim) &lt; 3)
 {
@@ -125,6 +126,9 @@ global.line = WIDTH/2;
 global.timer = 0;
 delay = 0;
 
+global.magnetDistance = 2*TILE;
+global.coins = 0;
+global.distance = 0;
 //rail = noone;
 //tmpRail = noone;
 </string>
@@ -153,6 +157,8 @@ delay = 0;
 draw_set_color(c_white);
 draw_text(0,0,global.yVel);
 draw_text(0,TILE,global.speedTimer);
+draw_text(0,2*TILE,global.distance);
+
 </string>
           </argument>
         </arguments>

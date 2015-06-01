@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = 0;
-yVel = 0;
+            <string>xVel = -2+random(4);
+yVel = -2-random(2);
 
 fMax = 4;
 fCur = random(fMax);
@@ -34,6 +34,9 @@ fSpeed = .15;
 
 active = false;
 type = 0;
+
+delay = 15;
+t = 0;
 </string>
           </argument>
         </arguments>
@@ -56,25 +59,37 @@ type = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (active)
+            <string>delay = max(delay-1,0);
+
+if (active)
 {
-        /*switch(type)
+    angle = point_direction(x,y,objPlayer.x,objPlayer.y);
+    xVel = lengthdir_x(t,angle);
+    yVel = lengthdir_y(t,angle);
+    
+    t = min(t+1,5);
+    if (place_meeting(x+xVel,y+yVel,objPlayer))
+    {
+        switch(type)
         {
-            case T_COIN:
+            case 0:
                 global.coins++;
             break;
-            case T_HP:
-                objPlayer.hp = min(objPlayer.hp+1,objPlayer.maxHp);
+            case 1:
+                //objPlayer.hp = min(objPlayer.hp+1,objPlayer.maxHp);
             break;
-        }*/
+        }
         instance_destroy();
+    }
+
 } else
 {
-    xVel *= .9;
-    yVel = global.yVel;
+    xVel *= .99;
+    yVel = min(yVel+.1,global.yVel);
     
-    if (place_meeting(x+xVel,y+yVel,objPlayer))
-        active = true;
+    if (delay == 0)
+        if (collision_circle(x+xVel,y+yVel,global.magnetDistance,objPlayer,true,true))
+            active = true;
 }
 
 if (in(x+xVel,TILE,WIDTH-TILE))
@@ -85,6 +100,8 @@ else
 y += yVel;
 
 if (y &gt; HEIGHT) instance_destroy();
+
+depth = ((HEIGHT-y)div TILE) - 30;
 
 </string>
           </argument>
