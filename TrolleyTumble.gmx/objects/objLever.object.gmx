@@ -33,7 +33,7 @@ h = 144;
 angle = 0;
 spd = 0; //angular speed
 
-dir = NONE;
+dragged = false;
 </string>
           </argument>
         </arguments>
@@ -57,14 +57,20 @@ dir = NONE;
           <argument>
             <kind>1</kind>
             <string>var ang_dist = angle - (point_direction(x,y,mouse_x,mouse_y)-90);
-if (mouse_check_button(mb_any)
-    &amp;&amp; collision_circle(mouse_x,mouse_y,2*TILE,objLever,true,false))
+
+//dragged = false;
+
+for (i = 0; i &lt; 5; i++)
+    if (!dragged)
+        dragged = device_mouse_check_button(i,mb_any)
+            &amp;&amp; in(device_mouse_x(i),2*TILE,WIDTH-2*TILE)
+            &amp;&amp; in(device_mouse_y(i),HEIGHT-6*TILE,HEIGHT);
+
+if (!mouse_check_button(mb_any)) dragged = false;
+        
+if (dragged)
 {
-    //angle = point_direction(x,y,mouse_x,mouse_y) - 90;
-    //if (abs(ang_dist) &gt; abs(spd*3))
     spd = -.5 * ang_dist;
-    /*else
-        spd *= .5;*/
 } else
 {
     angle *= .9;
@@ -77,7 +83,7 @@ angle += spd;
 
 dir = -sign(angle) * (abs(angle) &gt; 8);
 
-angle = max(min(angle,60),-60);
+angle = max(min(angle,50),-50);
 
 </string>
           </argument>

@@ -40,6 +40,7 @@ yVel = 0;
 z = 0;
 zVel = 0;
 zGrav = .12;
+zMax = TILE;
 </string>
           </argument>
         </arguments>
@@ -65,18 +66,20 @@ zGrav = .12;
             <string>//++++steer++++
 /*var left = keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right);
 var right = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left));*/
-var left = global.lever.dir == LEFT;
+/*var left = global.lever.dir == LEFT;
 var right = global.lever.dir == RIGHT;
 
 var none = !left &amp;&amp; !right;
 if (left) dir = LEFT;
 else if (right) dir = RIGHT;
 else dir = NONE;
+*/
 //++++jump++++
-//if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -2;
+if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -3;
 
 dir = sign(xVel);
-balance = -global.lever.angle/15;
+balance = -global.lever.angle/12;
+balance = sign(balance)*min(abs(balance),4);
 xVel = sign(balance)*(abs(balance/maxBalance) * 3);
 /*if (dir == LEFT) balance = max(balance - .4, -maxBalance);
 else if (dir == RIGHT) balance = min(balance + .4, maxBalance);
@@ -88,7 +91,7 @@ if (abs(balance) &gt; 0)
 else
     xVel *= .9;
 */
-xVel = sign(xVel) * min(abs(xVel), 2);
+xVel = sign(xVel) * min(abs(xVel), 3);
 
 /* trace shit
 if (abs(balance/maxBalance) &gt; .3 &amp;&amp; !place_meeting(x,y,objTrace))
@@ -129,7 +132,7 @@ else
 
 //z
 zVel += zGrav;
-z = min(max(z + zVel, -TILE), 0);
+z = min(max(z + zVel, -zMax), 0);
 if (z &gt;= 0) z = 0;
 
 </string>
@@ -155,19 +158,23 @@ if (z &gt;= 0) z = 0;
           <argument>
             <kind>1</kind>
             <string>var row = round(abs(balance/maxBalance) * 3);
-
-fCur = (fCur + fSpeed) % fMax;
+if (abs(global.yVel) &gt; 0)
+    fCur = (fCur + fSpeed) % fMax;
+else
+    fCur = 0;
 var frame = floor(fCur);
+
+var sc = 1-z/zMax;
 
 if (balance &lt; 0)
 {
     draw_sprite_part_ext(sprAssets,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,.5);
-    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE+z,1,1,c_white,1);
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE*sc,y-2*TILE*sc+z*sc,sc,sc,c_white,1);
 }
 else
 {
     draw_sprite_part_ext(sprAssets,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,.5);
-    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE+z,-1,1,c_white,1);
+    draw_sprite_part_ext(sprAssets,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x+(1.5*TILE)*sc,y-2*TILE*sc+z*sc,-sc,sc,c_white,1);
 }
 </string>
           </argument>

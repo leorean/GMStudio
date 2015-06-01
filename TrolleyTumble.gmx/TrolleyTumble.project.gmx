@@ -7,11 +7,12 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sprAssets</sprite>
-    <sprite>sprites\mskTrace</sprite>
     <sprite>sprites\mskcontrol</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprLever</sprite>
     <sprite>sprites\mskLever</sprite>
+    <sprite>sprites\mskCollectable</sprite>
+    <sprite>sprites\sprRail</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -21,13 +22,15 @@
   <objects name="objects">
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
-    <object>objects\objTrace</object>
     <object>objects\objLever</object>
+    <object>objects\objCollectable</object>
+    <object>objects\objRail</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="6">
+  <constants number="7">
+    <constant name="INF">900000000000</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="TILE">16</constant>
