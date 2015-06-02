@@ -6,14 +6,13 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprAssets</sprite>
+    <sprite>sprites\sprGraphics</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskcontrol</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprLever</sprite>
     <sprite>sprites\mskLever</sprite>
     <sprite>sprites\mskCollectable</sprite>
-    <sprite>sprites\sprRail</sprite>
     <sprite>sprites\sprVictim1</sprite>
     <sprite>sprites\mskVictim</sprite>
     <sprite>sprites\sprBg</sprite>
@@ -34,7 +33,6 @@
     <object>objects\objControl</object>
     <object>objects\objLever</object>
     <object>objects\objCollectable</object>
-    <object>objects\objRail</object>
     <object>objects\objVictim1</object>
     <objects name="misc">
       <object>objects\objVictim</object>

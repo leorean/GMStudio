@@ -56,7 +56,8 @@ depth = HEIGHT + 10;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = (a+global.yVel * 1) % HEIGHT;
+            <string>if (!global.paused)
+    a = (a+global.yVel * 1) % HEIGHT;
 
 draw_sprite_part(sprBg,-1,theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a));
 draw_sprite_part(sprBg,-1,theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a)-HEIGHT);
@@ -71,16 +72,19 @@ if (themeAlpha != 0)
 
 if (!global.gameOver)
 {
-    alpha = max(alpha - .02,0);
-    
-    if (theme != global.theme)
+    if (!global.paused)
     {
-        themeAlpha = min(themeAlpha+.005,1);
-        if (themeAlpha == 1)
-            theme = global.theme;
-    } else
-    {
-        themeAlpha = 0;//max(themeAlpha-.005,0);
+        alpha = max(alpha - .02,0);
+        
+        if (theme != global.theme)
+        {
+            themeAlpha = min(themeAlpha+.005,1);
+            if (themeAlpha == 1)
+                theme = global.theme;
+        } else
+        {
+            themeAlpha = 0;//max(themeAlpha-.005,0);
+        }
     }
 }
 else

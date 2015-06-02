@@ -59,49 +59,52 @@ t = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>delay = max(delay-1,0);
-
-if (active)
+            <string>if (!global.paused)
 {
-    angle = point_direction(x,y,objPlayer.x,objPlayer.y);
-    xVel = lengthdir_x(t,angle);
-    yVel = lengthdir_y(t,angle);
+    delay = max(delay-1,0);
     
-    t = min(t+1,5);
-    if (place_meeting(x+xVel,y+yVel,objPlayer))
+    if (active)
     {
-        switch(type)
+        angle = point_direction(x,y,objPlayer.x,objPlayer.y);
+        xVel = lengthdir_x(t,angle);
+        yVel = lengthdir_y(t,angle);
+        
+        t = min(t+1,5);
+        if (place_meeting(x+xVel,y+yVel,objPlayer))
         {
-            case 0:
-                global.coins++;
-            break;
-            case 1:
-                //objPlayer.hp = min(objPlayer.hp+1,objPlayer.maxHp);
-            break;
+            switch(type)
+            {
+                case 0:
+                    global.coins++;
+                break;
+                case 1:
+                    //objPlayer.hp = min(objPlayer.hp+1,objPlayer.maxHp);
+                break;
+            }
+            instance_destroy();
         }
-        instance_destroy();
+    
+    } else
+    {
+        xVel *= .99;
+        yVel = min(yVel+.1,global.yVel);
+        
+        if (delay == 0)
+            if (collision_circle(x+xVel,y+yVel,global.magnetDistance,objPlayer,true,true))
+                active = true;
     }
-
-} else
-{
-    xVel *= .99;
-    yVel = min(yVel+.1,global.yVel);
     
-    if (delay == 0)
-        if (collision_circle(x+xVel,y+yVel,global.magnetDistance,objPlayer,true,true))
-            active = true;
-}
-
-if (in(x+xVel,TILE,WIDTH-TILE))
-    x += xVel;
-else
-    xVel = sign(WIDTH/2-x);
+    if (in(x+xVel,TILE,WIDTH-TILE))
+        x += xVel;
+    else
+        xVel = sign(WIDTH/2-x);
+        
+    y += yVel;
     
-y += yVel;
-
-if (y &gt; HEIGHT) instance_destroy();
-
+    if (y &gt; HEIGHT) instance_destroy();
+    
 depth = ((HEIGHT-y)div TILE) - 30;
+}
 
 </string>
           </argument>
@@ -127,10 +130,11 @@ depth = ((HEIGHT-y)div TILE) - 30;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
-fCur = (fCur + fSpeed) % fMax;
+if (!global.paused)
+    fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 
-draw_sprite_part(sprAssets,-1,frame*TILE,type*TILE,TILE,TILE,x-TILE/2,y-TILE/2);
+draw_sprite_part(sprGraphics,-1,frame*TILE,type*TILE,TILE,TILE,x-TILE/2,y-TILE/2);
 
 </string>
           </argument>

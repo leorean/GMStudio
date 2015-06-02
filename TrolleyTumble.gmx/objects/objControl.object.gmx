@@ -55,43 +55,48 @@ global.timer = (global.timer + 1) % INF;
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
-if (keyboard_check_pressed(vk_add))
-    global.yVel++;
-if (keyboard_check_pressed(vk_subtract))
-    global.yVel--;
+if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
+    game_end();
 
-global.speedTimer = max(global.speedTimer-1,0);
+if (keyboard_check_pressed(ord('P')))
+    global.paused = !global.paused;
+if (global.gameOver) global.paused = false;
 
-if (global.startTimer == 0)
+
+if (!global.paused)
 {
-    if (global.speedTimer &gt; 0)
-        global.yVel = min(global.yVel + .1, yVelMaxPower);
-    else
-    {
-        yVelMax = max(yVelMax - .005,0);
-        if (global.yVel &gt; yVelMax) global.yVel -= .02;
-        global.yVel = max(global.yVel - .01,0);
-    }
-    global.distance += (global.yVel*.05);
-        
-    if (global.timer % 60 == 0 || instance_number(objVictim) &lt; 3)
-    {
-        repeat(1 + random(5))
-            instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objVictim1);
-    }
-} else //not yet started
-{
-    global.startTimer = max(global.startTimer-1,0);
-    global.yVel = 10;
+    
+    global.speedTimer = max(global.speedTimer-1,0);
+    
     if (global.startTimer == 0)
     {
-        instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
-        //global.yVel = yVelMax;
+        if (global.speedTimer &gt; 0)
+            global.yVel = min(global.yVel + .1, yVelMaxPower);
+        else
+        {
+            yVelMax = max(yVelMax - .005,0);
+            if (global.yVel &gt; yVelMax) global.yVel -= .02;
+            global.yVel = max(global.yVel - .01,0);
+        }
+        global.distance += (global.yVel*.05);
+            
+        if (global.timer % 60 == 0 || instance_number(objVictim) &lt; 3)
+        {
+            repeat(1 + random(5))
+                instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objVictim1);
+        }
+    } else //not yet started
+    {
+        global.startTimer = max(global.startTimer-1,0);
+        global.yVel = 10;
+        if (global.startTimer == 0)
+        {
+            instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
+            //global.yVel = yVelMax;
+        }
     }
 }
 
-if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
-    game_end();
 
 </string>
           </argument>

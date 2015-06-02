@@ -71,50 +71,53 @@ if (irandom(20) == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (alive)
+            <string>if (!global.paused)
 {
-    if (in(x+xVel,TILE,WIDTH-TILE))
-        x += xVel;
-    else
-        xVel = -xVel;        
-    
-    y += yVel + global.yVel;
-    
-    if (hp == 0)
+    if (alive)
     {
-        xVel = lengthdir_x(-5,point_direction(x,y,objPlayer.x,objPlayer.y));
-        yVel = lengthdir_y(-7,point_direction(x,y,objPlayer.x,objPlayer.y));
-        rot = sign(x-objPlayer.x)*(3+random(4));
-        zVel = -3;
+        if (in(x+xVel,TILE,WIDTH-TILE))
+            x += xVel;
+        else
+            xVel = -xVel;        
         
-        instance_create(x,y,objCollectable);
+        y += yVel + global.yVel;
         
-        alive = false;
+        if (hp == 0)
+        {
+            xVel = lengthdir_x(-5,point_direction(x,y,objPlayer.x,objPlayer.y));
+            yVel = lengthdir_y(-7,point_direction(x,y,objPlayer.x,objPlayer.y));
+            rot = sign(x-objPlayer.x)*(3+random(4));
+            zVel = -3;
+            
+            instance_create(x,y,objCollectable);
+            
+            alive = false;
+        }
+    } else
+    {
+        x += xVel;
+        y += yVel;
+        xVel *= .9;
+        yVel *= .9;
+        if (z &gt;= 0)
+        
+        y += global.yVel;
+        
+        if (y &gt; HEIGHT+TILE)
+            instance_destroy();
+        
     }
-} else
-{
-    x += xVel;
-    y += yVel;
-    xVel *= .9;
-    yVel *= .9;
-    if (z &gt;= 0)
     
-    y += global.yVel;
-    
-    if (y &gt; HEIGHT+TILE)
+    if (global.gameOver &amp;&amp; !in(y,-TILE,HEIGHT+TILE))
         instance_destroy();
     
+    //z
+    zVel += zGrav;
+    z = min(z + zVel, 0);
+    if (z &gt;= 0) z = 0;
+    
+depth = ((HEIGHT-y)div TILE) + z - 20*(z &lt; 0) + 20*(!alive &amp;&amp; z &gt;= 0);
 }
-
-if (global.gameOver &amp;&amp; !in(y,-TILE,HEIGHT+TILE))
-    instance_destroy();
-
-//z
-zVel += zGrav;
-z = min(z + zVel, 0);
-if (z &gt;= 0) z = 0;
-
-depth = ((HEIGHT-y)div TILE) - 20*(z &lt; 0) + 20*(!alive &amp;&amp; z &gt;= 0);
 </string>
           </argument>
         </arguments>
@@ -137,19 +140,22 @@ depth = ((HEIGHT-y)div TILE) - 20*(z &lt; 0) + 20*(!alive &amp;&amp; z &gt;= 0);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (alive)
+            <string>if (!global.paused)
 {
-    fCur = (fCur + fSpeed) % fMax;
-    angle = 0;
-}
-else
-{
-    if (z &lt; 0)
+    if (alive)
     {
-        fCur = 4;
-        angle = (angle + rot) % 360;
-    } else
-        fCur = 5;
+        fCur = (fCur + fSpeed) % fMax;
+        angle = 0;
+    }
+    else
+    {
+        if (z &lt; 0)
+        {
+            fCur = 4;
+            angle = (angle + rot) % 360;
+        } else
+            fCur = 5;
+    }
 }
 frame = floor(fCur);
 
@@ -157,20 +163,12 @@ var sc = min(1-z/TILE, 5);
 if (alive)
     dir = sign(objPlayer.x-x);
 
-draw_sprite_part_ext(sprAssets,-1,4*TILE,0,2*TILE,2*TILE,x-TILE,y-TILE,1,1,c_white,.5);
+draw_sprite_part_ext(sprGraphics,-1,4*TILE,0,2*TILE,2*TILE,x-TILE,y-TILE,1,1,c_white,.5);
 draw_sprite_ext(sprVictim1,frame,x,y+z,sign(dir)*sc,sc,angle,c_white,1);
 
 if (text != 0 &amp;&amp; (alive || z&lt;0))
 {
     draw_sprite_part_ext(sprSpeech,-1,0,text*3*TILE,8*TILE,3*TILE,x-4*TILE,y-4*TILE+z,1,1,c_white,.8);
-    /*
-    draw_set_font(fntTiny);
-    draw_set_color(c_black);
-    draw_set_alpha(1);
-    draw_sprite_part_ext(sprAssets,-1,6*TILE,0,6*TILE,4*TILE,x-3*TILE,y-5*TILE+z,1,1,c_white,.8);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
-    draw_text_ext(x,y-3.5*TILE+z,text,12,5*TILE);*/
 }
 </string>
           </argument>

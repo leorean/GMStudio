@@ -56,35 +56,37 @@ dragged = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var ang_dist = angle - (point_direction(x,y,mouse_x,mouse_y)-90);
-
-//dragged = false;
-
-for (i = 0; i &lt; 5; i++)
-    if (!dragged)
-        dragged = device_mouse_check_button(i,mb_any)
-            &amp;&amp; in(device_mouse_x(i),2*TILE,WIDTH-2*TILE)
-            &amp;&amp; in(device_mouse_y(i),HEIGHT-6*TILE,HEIGHT);
-
-if (!mouse_check_button(mb_any) || global.gameOver) dragged = false;
-        
-if (dragged)
+            <string>if (!global.paused)
 {
-    spd = -.5 * ang_dist;
-} else
-{
-    angle *= .9;
-    spd *= .9;
-}
-
-spd = sign(spd)*min(abs(spd),5);
+    var ang_dist = angle - (point_direction(x,y,mouse_x,mouse_y)-90);
     
-angle += spd;
-
-dir = -sign(angle) * (abs(angle) &gt; 8);
-
-angle = max(min(angle,50),-50);
-
+    //dragged = false;
+    
+    for (i = 0; i &lt; 5; i++)
+        if (!dragged)
+            dragged = device_mouse_check_button(i,mb_any)
+                &amp;&amp; in(device_mouse_x(i),2*TILE,WIDTH-2*TILE)
+                &amp;&amp; in(device_mouse_y(i),HEIGHT-6*TILE,HEIGHT);
+    
+    if (!mouse_check_button(mb_any) || global.gameOver) dragged = false;
+            
+    if (dragged)
+    {
+        spd = -.5 * ang_dist;
+    } else
+    {
+        angle *= .9;
+        spd *= .9;
+    }
+    
+    spd = sign(spd)*min(abs(spd),5);
+        
+    angle += spd;
+    
+    dir = -sign(angle) * (abs(angle) &gt; 8);
+    
+    angle = max(min(angle,50),-50);
+}
 </string>
           </argument>
         </arguments>

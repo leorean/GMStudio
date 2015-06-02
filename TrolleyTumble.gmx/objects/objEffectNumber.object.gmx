@@ -61,24 +61,26 @@ yVelMax = 4;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>yVel += yGrav;
-xVel = max(min(xVel,xVelMax),-xVelMax)*.99;
-yVel = max(min(yVel,yVelMax),-yVelMax);
-x += xVel;
-y += yVel;
-
-timer = max(timer-1,0);
-maxTimer = max(timer,maxTimer);
-
-alpha = timer/maxTimer;
-
-if (timer == 0) instance_destroy();
-
-draw_set_halign(fa_center);
-draw_set_valign(fa_center);
-draw_set_alpha(1);
-//drawText(x,y,text,c1,c2,font);
-
+            <string>if (!global.paused)
+{
+    yVel += yGrav;
+    xVel = max(min(xVel,xVelMax),-xVelMax)*.99;
+    yVel = max(min(yVel,yVelMax),-yVelMax);
+    x += xVel;
+    y += yVel;
+    
+    timer = max(timer-1,0);
+    maxTimer = max(timer,maxTimer);
+    
+    alpha = timer/maxTimer;
+    
+    if (timer == 0) instance_destroy();
+    
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_set_alpha(1);
+    //drawText(x,y,text,c1,c2,font);
+}
 drawNumber(text,x,y,fa_center,size,color,alpha);
 
 </string>

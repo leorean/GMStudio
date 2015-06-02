@@ -53,15 +53,17 @@ type = 0;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
-yVel = (ty-y)/24;
-
-if (abs(y-ty)&lt;4) ty = -4*TILE;
-
-if (y &lt; -2*TILE) instance_destroy();
-
-y += yVel;
-
-draw_sprite_part(sprAssets,-1,6*TILE,3*type*TILE,5*TILE,3*TILE,x-2.5*TILE,y-1.5*TILE);
+if (!global.paused)
+{    
+    yVel = (ty-y)/24;
+    
+    if (abs(y-ty)&lt;4) ty = -4*TILE;
+    
+    if (y &lt; -2*TILE) instance_destroy();
+    
+    y += yVel;
+}
+draw_sprite_part(sprGraphics,-1,6*TILE,3*type*TILE,5*TILE,3*TILE,x-2.5*TILE,y-1.5*TILE);
 </string>
           </argument>
         </arguments>
