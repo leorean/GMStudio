@@ -74,7 +74,7 @@ if (!global.paused)
     if (global.startTimer == 0)
     {
         if (global.speedTimer &gt; 0)
-            global.yVel = min(global.yVel + .1*((yVelMax+.5)/yVelMaxStart), yVelMaxPower);
+            global.yVel = min(global.yVel + .1, yVelMaxPower *min((yVelMax+1)/yVelMaxStart,1));
         else
         {
             if (global.yVel &gt; yVelMax)
@@ -97,8 +97,8 @@ if (!global.paused)
         global.yVel = 10;
         if (global.startTimer == 0)
         {
-            instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
-            //global.yVel = yVelMax;
+            var et = instance_create(0,0,objEffectText);
+            et.type = 0;
         }
     }
     
@@ -113,6 +113,8 @@ if (!global.paused)
     
     if (global.distance &gt;= global.maxDistance)
     {
+        var et = instance_create(0,0,objEffectText);
+        et.type = 1;
         global.minDistance = global.maxDistance;
         global.maxDistance += 1.5*(global.maxDistance);
     }
@@ -212,8 +214,8 @@ draw_sprite_part(sprHud,-1,0,TILE,WIDTH,4*TILE,0,HEIGHT-4*TILE);
 //DISTANCE:
 draw_sprite_part(sprHud,-1,2*TILE,0,11*TILE,TILE,WIDTH/2-5.5*TILE,TILE);
 var dst = (global.distance-global.minDistance)/(global.maxDistance-global.minDistance);
-draw_sprite_part(sprHud,-1,TILE,0,TILE,TILE,2*TILE+dst*11*TILE,TILE);
-drawNumber(string(floor(global.distance+global.minDistance))+"m",2.5*TILE+dst*11*TILE,2*TILE,fa_center,1,c_white,1);
+draw_sprite_part(sprHud,-1,TILE,0,TILE,TILE,1.5*TILE+dst*11*TILE,TILE);
+drawNumber(string(floor(global.distance))+"m",2*TILE+dst*11*TILE,2*TILE,fa_center,1,c_white,1);
 
 //HEALTH:
 if (instance_exists(objPlayer))
