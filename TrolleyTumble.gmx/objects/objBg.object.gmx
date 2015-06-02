@@ -28,7 +28,7 @@
             <string>a = 0;
 b = 0;
 
-alpha = 1.5;
+alpha = 0;//1.5;
 
 theme = global.theme;
 themeAlpha = 0;

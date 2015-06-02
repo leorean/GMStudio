@@ -83,8 +83,7 @@ if (!global.gameOver)
     
     //++++distance measurement
     global.distance = max(global.distance + global.yVel*.05, global.distance);
-    
-    if (keyboard_check_pressed(ord('D')))
+       if (keyboard_check_pressed(ord('D')))
         global.theme = (global.theme+1) % 7;
 
     //++++SPAWNING ALGORITHM ETC++++

@@ -50,6 +50,8 @@
             <kind>1</kind>
             <string>window_center();
 
+global.timer = (global.timer + 1) % INF;
+
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
@@ -60,27 +62,37 @@ if (keyboard_check_pressed(vk_subtract))
 
 global.speedTimer = max(global.speedTimer-1,0);
 
-if (global.speedTimer &gt; 0)
-    global.yVel = min(global.yVel + .1, yVelMaxPower);
-else
+if (global.startTimer == 0)
 {
-    yVelMax = max(yVelMax - .005,0);
-    if (global.yVel &gt; yVelMax) global.yVel -= .02;
-    global.yVel = max(global.yVel - .01,0);
-}
-
-global.distance += global.yVel;
-    
-if (global.timer % 60 == 0 || instance_number(objVictim) &lt; 3)
+    if (global.speedTimer &gt; 0)
+        global.yVel = min(global.yVel + .1, yVelMaxPower);
+    else
+    {
+        yVelMax = max(yVelMax - .005,0);
+        if (global.yVel &gt; yVelMax) global.yVel -= .02;
+        global.yVel = max(global.yVel - .01,0);
+    }
+    global.distance += (global.yVel*.05);
+        
+    if (global.timer % 60 == 0 || instance_number(objVictim) &lt; 3)
+    {
+        repeat(1 + random(5))
+            instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objVictim1);
+    }
+} else //not yet started
 {
-    repeat(1 + random(5))
-        instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objVictim1);
+    global.startTimer = max(global.startTimer-1,0);
+    global.yVel = 10;
+    if (global.startTimer == 0)
+    {
+        instance_create(WIDTH/2,HEIGHT+4*TILE,objEffectText);
+        //global.yVel = yVelMax;
+    }
 }
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
 
-global.timer = (global.timer + 1) % INF;
 </string>
           </argument>
         </arguments>
@@ -105,28 +117,31 @@ global.timer = (global.timer + 1) % INF;
             <kind>1</kind>
             <string>global.paused = false;
 
+global.maxHp = 10; //upgradeable
+global.combo = 0;
+
 window_set_size(2*WIDTH,2*HEIGHT);
 
 global.gameOver = false;
+global.startTimer = 1*60;
 
 global.theme = 0;
 instance_create(0,0,objBg);
 
 global.lever = instance_create(WIDTH/2,HEIGHT, objLever);
-instance_create(WIDTH/2,HEIGHT/2+3*TILE,objPlayer);
+instance_create(WIDTH/2,HEIGHT+4*TILE,objPlayer);
 
 yVelMax = 4;
 global.yVel = yVelMax;
-yVelMaxPower = 8;
+yVelMaxPower = 8; //upgradeable
 
 global.speedTimer = 0;
-
-global.line = WIDTH/2;
+global.speedUp = 30; //upgradeable
 
 global.timer = 0;
 delay = 0;
 
-global.magnetDistance = 2*TILE;
+global.magnetDistance = 2*TILE; //upgradeable
 global.coins = 0;
 global.distance = 0;
 //rail = noone;
@@ -155,6 +170,8 @@ global.distance = 0;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 draw_set_color(c_white);
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 draw_text(0,0,global.yVel);
 draw_text(0,TILE,global.speedTimer);
 draw_text(0,2*TILE,global.distance);

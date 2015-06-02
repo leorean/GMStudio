@@ -114,8 +114,7 @@ zVel += zGrav;
 z = min(z + zVel, 0);
 if (z &gt;= 0) z = 0;
 
-depth = ((HEIGHT-y)div TILE) - 20*(z &lt; 0);
-//if (!alive &amp;&amp; z &gt;= 0)
+depth = ((HEIGHT-y)div TILE) - 20*(z &lt; 0) + 20*(!alive &amp;&amp; z &gt;= 0);
 </string>
           </argument>
         </arguments>

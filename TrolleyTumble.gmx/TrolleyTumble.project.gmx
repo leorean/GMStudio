@@ -18,11 +18,13 @@
     <sprite>sprites\mskVictim</sprite>
     <sprite>sprites\sprBg</sprite>
     <sprite>sprites\sprSpeech</sprite>
+    <sprite>sprites\sprFontNumbers</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
+    <script>scripts\drawNumber.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntTiny</font>
@@ -34,8 +36,10 @@
     <object>objects\objCollectable</object>
     <object>objects\objRail</object>
     <object>objects\objVictim1</object>
-    <objects name="hierarchy">
+    <objects name="misc">
       <object>objects\objVictim</object>
+      <object>objects\objEffectText</object>
+      <object>objects\objEffectNumber</object>
     </objects>
     <object>objects\objBg</object>
   </objects>

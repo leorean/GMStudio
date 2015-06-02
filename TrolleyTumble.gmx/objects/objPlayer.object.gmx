@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>balance = 0;
+            <string>hp = global.maxHp;
+
+balance = 0;
 maxBalance = 4;
 
 fCur = 0;
@@ -41,6 +43,7 @@ dir = NONE;
 
 xVel = 0;
 yVel = 0;
+ty = HEIGHT/2+3*TILE;
 
 z = 0;
 zVel = 0;
@@ -79,32 +82,54 @@ if (left) dir = LEFT;
 else if (right) dir = RIGHT;
 else dir = NONE;
 */
-
-if (abs(global.yVel) &gt; 0 &amp;&amp; !global.gameOver)
+if (global.startTimer == 0)
 {
-    //++++victims++++
-    var victim = instance_place(x+xVel,y+yVel,objVictim);
-    if (instance_exists(victim) &amp;&amp; victim.alive)
+    if (abs(global.yVel) &gt; 0 &amp;&amp; !global.gameOver)
     {
-        global.speedTimer = min(global.speedTimer + 30,90);
-        victim.hp = 0;
+        //++++victims++++
+        var victim = instance_place(x+xVel,y+yVel,objVictim);
+        if (instance_exists(victim) &amp;&amp; victim.alive)
+        {
+            global.speedTimer = min(global.speedTimer + global.speedUp,4*global.speedUp);
+            victim.hp = 0;
+            
+            if (global.speedTimer &gt; 0) global.combo++;
+            
+            if (global.combo &gt; 0)
+            {
+                var t = instance_create(x,y,objEffectNumber);
+                t.text = "x"+string(global.combo);
+                t.color = make_color_hsv(45-min(global.combo/30,1)*45,min(global.combo/10,1)*255,255);
+                //if (global.combo &gt;= 10) t.size = fnt_big;
+                t.size = 1+min(global.combo/20,1)*2;
+                
+                repeat (global.combo div 3)
+                    instance_create(victim.x,victim.y,objCollectable);
+            }
+        }
+        if (global.speedTimer == 0)
+            global.combo = 0;
+        
+        //++++jump++++
+        if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -3;
+        
+        dir = sign(xVel);
+        balance = -global.lever.angle/12;
+        balance = sign(balance)*min(abs(balance),4);
+        xVel = sign(balance)*(abs(balance/maxBalance) * 3);
+        xVel = sign(xVel) * min(abs(xVel), 3);
+        
+    } else
+    {
+        global.gameOver = true;
+        balance *= .9;
+        xVel *= .9;
     }
-    
-    //++++jump++++
-    if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -3;
-    
-    dir = sign(xVel);
-    balance = -global.lever.angle/12;
-    balance = sign(balance)*min(abs(balance),4);
-    xVel = sign(balance)*(abs(balance/maxBalance) * 3);
-    xVel = sign(xVel) * min(abs(xVel), 3);
-    
-} else
-{
-    global.gameOver = true;
-    balance *= .9;
-    xVel *= .9;
 }
+//y
+yVel = (ty - y)/24;
+y += yVel;
+
 //x
 if (in(x+xVel,TILE,WIDTH-TILE))
 {
@@ -120,8 +145,7 @@ zVel += zGrav;
 z = min(max(z + zVel, -zMax), 0);
 if (z &gt;= 0) z = 0;
 
-depth = -(z&lt;0)*20;
-
+depth = ((HEIGHT-y)div TILE) - 20*(z &lt; 0);
 </string>
           </argument>
         </arguments>
