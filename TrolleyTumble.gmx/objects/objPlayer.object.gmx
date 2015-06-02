@@ -81,7 +81,8 @@ zMax = TILE;
             var victim = instance_place(x+xVel,y+yVel,objVictim);
             if (instance_exists(victim) &amp;&amp; victim.alive)
             {
-                global.speedTimer = min(global.speedTimer + global.speedUp,4*global.speedUp);
+                //global.speedTimer = min(global.speedTimer + global.speedUp,4*global.speedUp);
+                global.speedTimer = global.maxSpeedTimer;
                 victim.hp = 0;
                 
                 if (global.speedTimer &gt; 0) global.combo++;
@@ -188,7 +189,7 @@ if (!global.paused)
     sfCur = abs(sfCur + global.yVel*.05) % sfMax;
 var sframe = floor(sfCur);
 
-draw_sprite_part_ext(sprPlayer,-1,sframe*3*TILE,12*TILE,3*TILE,TILE,x+(1.5*TILE)*sc-3*TILE*sc*(global.speedTimer &gt;0),y+1*TILE*sc+z*sc-2*row*sc,-sc+2*sc*(global.speedTimer &gt;0),sc,c_white,1);
+draw_sprite_part_ext(sprPlayer,-1,sframe*3*TILE,12*TILE,3*TILE,TILE,x+(1.5*TILE)*sc,y+1*TILE*sc+z*sc-2*row*sc,-sc,sc,c_white,1);
 
 </string>
           </argument>

@@ -113,6 +113,7 @@ if (!global.paused)
     
     if (global.distance &gt;= global.maxDistance)
     {
+        global.minDistance = global.maxDistance;
         global.maxDistance += 1.5*(global.maxDistance);
     }
 }
@@ -162,7 +163,7 @@ global.yVel = yVelMax;
 yVelMaxPower = 8; //upgradeable
 
 global.speedTimer = 0;
-global.speedUp = 30; //upgradeable
+global.maxSpeedTimer = 60; //upgradeable
 
 global.timer = 0;
 delay = 0;
@@ -171,7 +172,8 @@ global.magnetDistance = 2*TILE; //upgradeable
 global.coins = 0;
 
 global.distance = 0;
-global.maxDistance = 1000;
+global.minDistance = 0;
+global.maxDistance = 100;
 //rail = noone;
 //tmpRail = noone;
 </string>
@@ -209,9 +211,9 @@ draw_sprite_part(sprHud,-1,0,TILE,WIDTH,4*TILE,0,HEIGHT-4*TILE);
 
 //DISTANCE:
 draw_sprite_part(sprHud,-1,2*TILE,0,11*TILE,TILE,WIDTH/2-5.5*TILE,TILE);
-var dst = global.distance/global.maxDistance;
+var dst = (global.distance-global.minDistance)/(global.maxDistance-global.minDistance);
 draw_sprite_part(sprHud,-1,TILE,0,TILE,TILE,2*TILE+dst*11*TILE,TILE);
-drawNumber(string(floor(global.distance))+"m",2.5*TILE+dst*11*TILE,2*TILE,fa_center,1,c_white,1);
+drawNumber(string(floor(global.distance+global.minDistance))+"m",2.5*TILE+dst*11*TILE,2*TILE,fa_center,1,c_white,1);
 
 //HEALTH:
 if (instance_exists(objPlayer))
@@ -221,7 +223,7 @@ if (instance_exists(objPlayer))
 }
 
 //SPEEDBOOST:
-draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(global.speedTimer/(4*global.speedUp))),169,HEIGHT-37);
+draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(global.speedTimer/global.maxSpeedTimer)),169,HEIGHT-37);
 
 //STAMINA:
 var sangle = -90+180*((1-(yVelMax/yVelMaxStart)));
