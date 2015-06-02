@@ -18,6 +18,8 @@
     <sprite>sprites\sprBg</sprite>
     <sprite>sprites\sprSpeech</sprite>
     <sprite>sprites\sprFontNumbers</sprite>
+    <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\sprSpeedhand</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

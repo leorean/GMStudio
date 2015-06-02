@@ -37,6 +37,9 @@ for (i = 0; i < fnt_length; i++)
         case "+":
             fnt_d = 13;
         break;
+        case "%":
+            fnt_d = 14;
+        break;
         default:
             fnt_d = real(string_char_at(fnt_text,i+1));
         break;

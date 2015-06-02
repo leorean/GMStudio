@@ -50,14 +50,15 @@
             <kind>1</kind>
             <string>window_center();
 
-global.timer = (global.timer + 1) % INF;
-
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
 
+if (keyboard_check_pressed(ord('D')))
+    objPlayer.hp--;
+    
 if (keyboard_check_pressed(ord('P')))
     global.paused = !global.paused;
 if (global.gameOver) global.paused = false;
@@ -65,18 +66,23 @@ if (global.gameOver) global.paused = false;
 
 if (!global.paused)
 {
-    
+
+    global.timer = (global.timer + 1) % INF;
+
     global.speedTimer = max(global.speedTimer-1,0);
     
     if (global.startTimer == 0)
     {
         if (global.speedTimer &gt; 0)
-            global.yVel = min(global.yVel + .1, yVelMaxPower);
+            global.yVel = min(global.yVel + .1*((yVelMax+1)/yVelMaxStart), yVelMaxPower);
         else
         {
+            if (global.yVel &gt; yVelMax)
+                global.yVel -= .03;
+            
             yVelMax = max(yVelMax - .005,0);
-            if (global.yVel &gt; yVelMax) global.yVel -= .02;
-            global.yVel = max(global.yVel - .01,0);
+            
+            global.yVel = max(global.yVel - .001,0);
         }
         global.distance += (global.yVel*.05);
             
@@ -95,6 +101,9 @@ if (!global.paused)
             //global.yVel = yVelMax;
         }
     }
+    
+    if (instance_exists(objPlayer) &amp;&amp; objPlayer.hp == 0)
+        global.gameOver = true;
 }
 
 
@@ -122,7 +131,7 @@ if (!global.paused)
             <kind>1</kind>
             <string>global.paused = false;
 
-global.maxHp = 10; //upgradeable
+global.maxHp = 25; //upgradeable
 global.combo = 0;
 
 window_set_size(2*WIDTH,2*HEIGHT);
@@ -136,7 +145,8 @@ instance_create(0,0,objBg);
 global.lever = instance_create(WIDTH/2,HEIGHT, objLever);
 instance_create(WIDTH/2,HEIGHT+4*TILE,objPlayer);
 
-yVelMax = 4;
+yVelMaxStart = 4;
+yVelMax = yVelMaxStart;
 global.yVel = yVelMax;
 yVelMaxPower = 8; //upgradeable
 
@@ -177,10 +187,36 @@ global.distance = 0;
 draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-draw_text(0,0,global.yVel);
-draw_text(0,TILE,global.speedTimer);
-draw_text(0,2*TILE,global.distance);
+//draw_text(0,0,global.yVel);
+//draw_text(0,TILE,global.speedTimer);
+//draw_text(0,2*TILE,global.distance);
 
+//HUD BG:
+draw_sprite_part(sprHud,-1,0,0,WIDTH,5*TILE,0,HEIGHT-5*TILE);
+
+//HEALTH:
+if (instance_exists(objPlayer))
+{
+    draw_sprite_part(sprHud,-1,2*TILE,5*TILE,objPlayer.hp/global.maxHp*3*TILE,TILE,8,HEIGHT-28);
+    drawNumber(string(ceil(objPlayer.hp/global.maxHp*100))+"%",8+1.5*TILE,HEIGHT-28+1,fa_center,1,c_white,1);
+}
+
+//STAMINA:
+draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(yVelMax/yVelMaxStart)),192,HEIGHT-66);
+
+//SPEEDBOOST:
+var sangle = -90+180*(1-(global.speedTimer/(4*global.speedUp)));
+draw_sprite_ext(sprSpeedhand,-1,2*TILE,HEIGHT-36,1,1,sangle,c_white,1);
+
+//COINS:
+draw_sprite_part(sprGraphics,-1,(floor(global.timer*.1)%4)*TILE,0,TILE,TILE,0,0);
+drawNumber(global.coins,TILE+1,3,fa_left,1,c_white,1);
+
+//PAUSED:
+draw_sprite_part(sprHud,-1,5*TILE+2*global.paused*TILE,5*TILE,2*TILE,2*TILE,WIDTH-2*TILE,0);
+if (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,0,2*TILE) &amp;&amp; mouse_check_button_pressed(mb_any))
+    global.paused = !global.paused;
+//drawNumber(global.coins,2*TILE,HEIGHT-28+1,fa_center,1,c_white,1);
 </string>
           </argument>
         </arguments>

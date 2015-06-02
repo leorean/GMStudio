@@ -3,7 +3,7 @@
   <spriteName>mskLever</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-100</depth>
+  <depth>-101</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -111,9 +111,9 @@ dragged = false;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 draw_set_color(c_white);
-draw_sprite(sprLever,0,x,y);
-draw_sprite_ext(sprLever,1,x,y,1,1,angle,c_white,1);
-draw_sprite(sprLever,2,x,y);
+//draw_sprite(sprLever,0,x,y);
+draw_sprite_ext(sprLever,0,x,y,1,1,angle,c_white,1);
+draw_sprite(sprLever,1,x,y);
 
 </string>
           </argument>
