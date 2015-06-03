@@ -94,6 +94,10 @@ if (!global.paused)
             repeat(1 + random(5))
                 instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objVictim1);
         }
+        if ((global.timer+30) % 120 == 0)
+            repeat(1+random(2))
+                instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objObstacle);
+    
     } else //not yet started
     {
         global.startTimer = max(global.startTimer-1,0);
@@ -212,6 +216,15 @@ draw_set_valign(fa_top);
 //draw_text(0,0,global.yVel);
 draw_text(0,TILE,global.speedTimer);
 //draw_text(0,2*TILE,global.distance);
+
+//INDICATORS
+with(objVictim)
+    if (y &lt; 0)
+        draw_sprite_part(sprHud,-1,2*TILE,6*TILE,TILE,TILE,x-.5*TILE,0);
+
+with(objObstacle)
+    if (y &lt; 0)
+        draw_sprite_part(sprHud,-1,3*TILE,6*TILE,TILE,TILE,x-.5*TILE,0);
 
 //HUD BG:
 draw_sprite_part(sprHud,-1,0,TILE,WIDTH,4*TILE,0,HEIGHT-4*TILE);

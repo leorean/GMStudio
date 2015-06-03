@@ -78,6 +78,18 @@ zMax = TILE;
     {
         if (abs(global.yVel) &gt; 0 &amp;&amp; !global.gameOver)
         {
+            //++++obstacles++++
+            var obstacle = instance_place(x+xVel,y+yVel,objObstacle);
+            if (instance_exists(obstacle) &amp;&amp; !invincible)
+            {
+                hp = max(hp-1,0);
+                
+                invincible = 20;
+                xVel = lengthdir_x(-2,point_direction(x,y,obstacle.x,obstacle.y));
+                yVel = lengthdir_y(-2,point_direction(x,y,obstacle.x,obstacle.y));
+                global.shake = true;
+                
+            }
             //++++victims++++
             var victim = instance_place(x+xVel,y+yVel,objVictim);
             if (instance_exists(victim) &amp;&amp; victim.alive)
@@ -88,12 +100,6 @@ zMax = TILE;
                 
                 var eff = instance_create(victim.x,victim.y,objEffect);
                 eff.type = 0;
-                
-                //Test only:
-                invincible = 20;
-                xVel = lengthdir_x(-2,point_direction(x,y,victim.x,victim.y));
-                yVel = lengthdir_y(-2,point_direction(x,y,victim.x,victim.y));
-                global.shake = true;
                 
                 if (global.speedTimer &gt; 0) global.combo++;
                 
@@ -120,7 +126,7 @@ zMax = TILE;
             dir = sign(xVel);
             balance = -global.lever.angle/12;
             balance = sign(balance)*min(abs(balance),4);
-            if (!invincible)
+            //if (!invincible)
                 xVel = sign(balance)*(abs(balance/maxBalance) * 3);
             xVel = sign(xVel) * min(abs(xVel), 3);
             

@@ -75,12 +75,7 @@ if (irandom(20) == 0)
 {
     if (alive)
     {
-        if (in(x+xVel,TILE,WIDTH-TILE))
-            x += xVel;
-        else
-            xVel = -xVel;        
-        
-        y += yVel + global.yVel;
+        //y += yVel + global.yVel;
         
         if (hp == 0)
         {
@@ -95,13 +90,10 @@ if (irandom(20) == 0)
         }
     } else
     {
-        x += xVel;
-        y += yVel;
         xVel *= .9;
         yVel *= .9;
         if (z &gt;= 0)
-        
-        y += global.yVel;
+            yVel = 0;
         
         if (y &gt; HEIGHT+TILE)
             instance_destroy();
@@ -110,13 +102,30 @@ if (irandom(20) == 0)
     
     if (global.gameOver &amp;&amp; !in(y,-TILE,HEIGHT+TILE))
         instance_destroy();
-    
+
+    //x
+    if (in(x+xVel,TILE,WIDTH-TILE))
+        x += xVel;
+    else
+        xVel = -xVel; 
+
+    //y
+    y += yVel;
+    if (z &gt;= 0)
+        y += global.yVel;
+    /*if (!alive || (!place_meeting(x,y+yVel+global.yVel,objObstacle)))
+        y += yVel;
+    else
+    {
+        yVel = -yVel;
+        //yVel = 0;
+    }*/
     //z
     zVel += zGrav;
     z = min(z + zVel, 0);
     if (z &gt;= 0) z = 0;
     
-depth = ((HEIGHT-y)div TILE) + z - 20*(z &lt; 0) + 20*(!alive &amp;&amp; z &gt;= 0);
+    depth = ((HEIGHT-y)div TILE) + z - 20*(z &lt; 0) + 20*(!alive &amp;&amp; z &gt;= 0);
 }
 </string>
           </argument>
