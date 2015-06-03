@@ -74,7 +74,10 @@ if (!global.paused)
     if (global.startTimer == 0)
     {
         if (global.speedTimer &gt; 0)
-            global.yVel = min(global.yVel + .1, yVelMaxPower *min((yVelMax+1)/yVelMaxStart,1));
+        {
+            //global.yVel = min(global.yVel + .1*min((yVelMax+1)/yVelMaxStart,1), yVelMaxPower);
+            global.yVel = yVelMaxPower;
+        }
         else
         {
             if (global.yVel &gt; yVelMax)
@@ -149,6 +152,8 @@ global.maxHp = 25; //upgradeable
 global.combo = 0;
 
 window_set_size(2*WIDTH,2*HEIGHT);
+global.shake = false;
+shakeTimer = 0;
 
 global.gameOver = false;
 global.startTimer = 1*60;
@@ -241,8 +246,24 @@ if (in(mouse_x,WIDTH-2*TILE,WIDTH) &amp;&amp; in(mouse_y,HEIGHT-2*TILE,HEIGHT) &
     global.paused = !global.paused;
 //drawNumber(global.coins,2*TILE,HEIGHT-28+1,fa_center,1,c_white,1);
 
-//DISTANCE:
-//drawNumber(string(floor(global.distance))+"m",184+1.5*TILE,HEIGHT-28+1,fa_center,1,c_white,1);
+//++++SHAKE SCREEN++++
+if (global.shake)
+{
+    shakeTimer = 5;
+    global.shake = false;
+}
+if (!global.paused &amp;&amp; shakeTimer)
+{
+    shakeTimer = max(shakeTimer-1,0);
+    view_xview[0] = -2+random(4);
+    view_yview[0] = -2+random(4);
+    //view_angle[0] = -2+random(4);
+} else
+{
+    view_xview[0] = 0;
+    view_yview[0] = 0;
+    //view_angle[0] = 0;
+}
 
 </string>
           </argument>

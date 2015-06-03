@@ -20,6 +20,7 @@
     <sprite>sprites\sprFontNumbers</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprSpeedhand</sprite>
+    <sprite>sprites\mskObstacle</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -40,6 +41,8 @@
       <object>objects\objVictim</object>
       <object>objects\objEffectText</object>
       <object>objects\objEffectNumber</object>
+      <object>objects\objEffect</object>
+      <object>objects\objObstacle</object>
     </objects>
     <object>objects\objBg</object>
   </objects>

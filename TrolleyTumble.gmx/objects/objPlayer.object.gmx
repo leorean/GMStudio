@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>hp = global.maxHp;
+invincible = 0;
 
 balance = 0;
 maxBalance = 4;
@@ -85,6 +86,15 @@ zMax = TILE;
                 global.speedTimer = global.maxSpeedTimer;
                 victim.hp = 0;
                 
+                var eff = instance_create(victim.x,victim.y,objEffect);
+                eff.type = 0;
+                
+                //Test only:
+                invincible = 20;
+                xVel = lengthdir_x(-2,point_direction(x,y,victim.x,victim.y));
+                yVel = lengthdir_y(-2,point_direction(x,y,victim.x,victim.y));
+                global.shake = true;
+                
                 if (global.speedTimer &gt; 0) global.combo++;
                 
                 if (global.combo &gt; 0)
@@ -102,13 +112,16 @@ zMax = TILE;
             if (global.speedTimer == 0)
                 global.combo = 0;
             
+            invincible = max(invincible-1,0);
+            
             //++++jump++++
             if (keyboard_check(vk_up) &amp;&amp; z == 0) zVel = -3;
             
             dir = sign(xVel);
             balance = -global.lever.angle/12;
             balance = sign(balance)*min(abs(balance),4);
-            xVel = sign(balance)*(abs(balance/maxBalance) * 3);
+            if (!invincible)
+                xVel = sign(balance)*(abs(balance/maxBalance) * 3);
             xVel = sign(xVel) * min(abs(xVel), 3);
             
         } else
@@ -119,7 +132,8 @@ zMax = TILE;
         }
     }
     //y
-    yVel = (ty - y)/24;
+    if (!invincible)
+        yVel = (ty - y)/24;
     y += yVel;
     
     //x
@@ -174,22 +188,26 @@ var row = round(abs(balance/maxBalance) * 3);
 var frame = floor(fCur);
 var sc = 1-z/zMax;
 
-if (balance &lt; 0)
+if (invincible % 3 == 0)
 {
-    draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,.5);
-    draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE*sc,y-2*TILE*sc+z*sc,sc,sc,c_white,1);
-}
-else
-{
-    draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,.5);
-    draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x+(1.5*TILE)*sc,y-2*TILE*sc+z*sc,-sc,sc,c_white,1);
+    if (balance &lt; 0)
+    {
+        draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE,y-2*TILE,1,1,c_white,.5);
+        draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x-1.5*TILE*sc,y-2*TILE*sc+z*sc,sc,sc,c_white,1);
+    }
+    else
+    {
+        draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,fMax*4*TILE,3*TILE,4*TILE,x-1.5*TILE+3*TILE,y-2*TILE,-1,1,c_white,.5);
+        draw_sprite_part_ext(sprPlayer,-1,row*3*TILE,frame*4*TILE,3*TILE,4*TILE,x+(1.5*TILE)*sc,y-2*TILE*sc+z*sc,-sc,sc,c_white,1);
+    }
+    
+    if (!global.paused)
+        sfCur = abs(sfCur + global.yVel*.05) % sfMax;
+    var sframe = floor(sfCur);
+    
+    draw_sprite_part_ext(sprPlayer,-1,sframe*3*TILE,12*TILE,3*TILE,TILE,x+(1.5*TILE)*sc,y+1*TILE*sc+z*sc-2*row*sc,-sc,sc,c_white,1);
 }
 
-if (!global.paused)
-    sfCur = abs(sfCur + global.yVel*.05) % sfMax;
-var sframe = floor(sfCur);
-
-draw_sprite_part_ext(sprPlayer,-1,sframe*3*TILE,12*TILE,3*TILE,TILE,x+(1.5*TILE)*sc,y+1*TILE*sc+z*sc-2*row*sc,-sc,sc,c_white,1);
 
 </string>
           </argument>

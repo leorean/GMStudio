@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-90</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,15 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = 0;
-b = 0;
-
-alpha = 0;//1.5;
-
-theme = global.theme;
-themeAlpha = 0;
-
-depth = HEIGHT + 10;
+            <string>type = 0;
+fCur = 0;
+fMax = 5;
+fSpeed = .4;
+xVel = 0;
+yVel = 0;
 </string>
           </argument>
         </arguments>
@@ -56,52 +53,21 @@ depth = HEIGHT + 10;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!global.paused &amp;&amp; global.startTimer == 0)
-    a = (a+global.yVel * 1) % HEIGHT;
+            <string>draw_set_alpha(1);
 
-draw_sprite_part(sprBg,-1,theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a));
-draw_sprite_part(sprBg,-1,theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a)-HEIGHT);
+x += xVel;
+y += yVel;
 
-if (themeAlpha != 0)
+if (!global.paused)
 {
-    //new theme
-    draw_sprite_part_ext(sprBg,-1,global.theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a),1,1,c_white,themeAlpha);
-    draw_sprite_part_ext(sprBg,-1,global.theme*WIDTH,0,WIDTH,HEIGHT,0,floor(a)-HEIGHT,1,1,c_white,themeAlpha);
+    fCur = min(fCur + fSpeed, fMax);
+    if (fCur == fMax)
+        instance_destroy();
+}    
+var frame = max(floor(fCur-fSpeed),0);
 
-}
+draw_sprite_part(sprGraphics,-1,12*TILE+frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE,y-TILE);
 
-if (!global.gameOver)
-{
-    if (!global.paused)
-    {
-        alpha = max(alpha - .02,0);
-        
-        if (theme != global.theme)
-        {
-            themeAlpha = min(themeAlpha+.005,1);
-            if (themeAlpha == 1)
-                theme = global.theme;
-        } else
-        {
-            themeAlpha = 0;//max(themeAlpha-.005,0);
-        }
-    }
-}
-else
-{
-    alpha = min(alpha+.01,1.5);
-    
-    if (alpha == 1.5 &amp;&amp; mouse_check_button_pressed(mb_any))
-        room_restart();
-}
-
-//EFFECT
-if (alpha &gt; 0)
-{
-    draw_set_color(c_white);
-    draw_set_alpha(alpha);
-    draw_rectangle(0,0,WIDTH,HEIGHT,0);
-}
 </string>
           </argument>
         </arguments>
