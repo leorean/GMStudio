@@ -100,7 +100,7 @@ if (irandom(20) == 0)
         
     }
     
-    if (global.gameOver &amp;&amp; !in(y,-TILE,HEIGHT+TILE))
+    if ((global.gameOver &amp;&amp; !in(y,-TILE,HEIGHT+TILE)) || y &gt; HEIGHT+TILE)
         instance_destroy();
 
     //x

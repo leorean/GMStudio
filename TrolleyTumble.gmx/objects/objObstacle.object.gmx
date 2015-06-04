@@ -51,7 +51,8 @@
 {
     y += global.yVel;
     
-    if (y &gt; HEIGHT+2*TILE) instance_destroy();
+    if ((global.gameOver &amp;&amp; !in(y,-TILE,HEIGHT+TILE)) || y &gt; HEIGHT+TILE)
+        instance_destroy();
 
     depth = ((HEIGHT-y)div TILE);
     

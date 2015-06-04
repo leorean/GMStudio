@@ -73,35 +73,42 @@ if (!global.paused)
     
     if (global.startTimer == 0)
     {
-        if (global.speedTimer &gt; 0)
+        if (!global.gameOver)
         {
-            //global.yVel = min(global.yVel + .1*min((yVelMax+1)/yVelMaxStart,1), yVelMaxPower);
-            global.yVel = yVelMaxPower;
-        }
-        else
-        {
-            if (global.yVel &gt; yVelMax)
-                global.yVel -= .03;
+            if (global.speedTimer &gt; 0)
+            {
+                //global.yVel = min(global.yVel + .1*min((yVelMax)/yVelMaxStart,1), yVelMaxPower);
+                //global.yVel = yVelMaxPower;
+                //yVelMax = min(yVelMax + .01, yVelMaxPower);
+                global.yVel = min(global.yVel+.1,yVelMaxPower);
+            }
+            else
+            {
+                global.yVel = max(global.yVel-.1,yVelMax);
+            }
+            //global.yVel = max(global.yVel - .02*(1-(yVelMax/yVelMaxStart)),0);
+            //global.yVel = max(global.yVel - .01*(1-min((yVelMax)/yVelMaxStart,1)),0);
+                
+            yVelMax = max(yVelMax - .001,0);
             
-            yVelMax = max(yVelMax - .005,0);
+            global.distance += (global.yVel*.05);
             
-            global.yVel = max(global.yVel - .001,0);
-        }
-        global.distance += (global.yVel*.05);
-            
-        if (global.timer % 60 == 0 || instance_number(objVictim) &lt; 3)
-        {
-            repeat(1 + random(5))
+            if (global.speedTimer == 0 &amp;&amp; global.yVel &lt;= yVelMax)
+                global.combo = 0;
+
+            victimCount = 0;
+            with(objVictim)
+                if (alive) objControl.victimCount++;
+            repeat(5-victimCount)
                 instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objVictim1);
+                
+            //if (floor(global.distance) % 100 == 0)
+            //    instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objObstacle);
         }
-        if ((global.timer+30) % 120 == 0)
-            repeat(1+random(2))
-                instance_create(TILE+random(WIDTH-2*TILE),-TILE-random(HEIGHT-TILE),objObstacle);
-    
     } else //not yet started
     {
         global.startTimer = max(global.startTimer-1,0);
-        global.yVel = 10;
+        global.yVel = yVelMaxStart;
         if (global.startTimer == 0)
         {
             var et = instance_create(0,0,objEffectText);
@@ -168,7 +175,7 @@ instance_create(0,0,objBg);
 global.lever = instance_create(WIDTH/2,HEIGHT, objLever);
 instance_create(WIDTH/2,HEIGHT+4*TILE,objPlayer);
 
-yVelMaxStart = 4;
+yVelMaxStart = 6;
 yVelMax = yVelMaxStart;
 global.yVel = yVelMax;
 yVelMaxPower = 8; //upgradeable
@@ -214,7 +221,7 @@ draw_set_color(c_white);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 //draw_text(0,0,global.yVel);
-draw_text(0,TILE,global.speedTimer);
+draw_text(0,TILE,global.yVel);
 //draw_text(0,2*TILE,global.distance);
 
 //INDICATORS
@@ -243,7 +250,9 @@ if (instance_exists(objPlayer))
 }
 
 //SPEEDBOOST:
-draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(global.speedTimer/global.maxSpeedTimer)),169,HEIGHT-37);
+//draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(global.speedTimer/global.maxSpeedTimer)),169,HEIGHT-37);
+//BOOST:
+draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(global.yVel/yVelMaxPower),169,HEIGHT-37);
 
 //STAMINA:
 var sangle = -90+180*((1-(yVelMax/yVelMaxStart)));

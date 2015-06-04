@@ -96,6 +96,7 @@ zMax = TILE;
             {
                 //global.speedTimer = min(global.speedTimer + global.speedUp,4*global.speedUp);
                 global.speedTimer = global.maxSpeedTimer;
+                //global.yVel = min(global.yVel+2*min((objControl.yVelMax+1)/objControl.yVelMaxStart,1),objControl.yVelMaxPower);
                 victim.hp = 0;
                 
                 var eff = instance_create(victim.x,victim.y,objEffect);
@@ -115,8 +116,6 @@ zMax = TILE;
                         instance_create(victim.x,victim.y,objCollectable);
                 }
             }
-            if (global.speedTimer == 0)
-                global.combo = 0;
             
             invincible = max(invincible-1,0);
             
