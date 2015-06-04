@@ -93,7 +93,7 @@ if (!global.paused)
             
             global.distance += (global.yVel*.05);
             
-            if (global.speedTimer == 0 &amp;&amp; global.yVel &lt;= yVelMax)
+            if (((global.yVel-yVelMax)/(yVelMaxPower-yVelMax)) &lt;= 0.01)
                 global.combo = 0;
 
             victimCount = 0;
@@ -252,7 +252,8 @@ if (instance_exists(objPlayer))
 //SPEEDBOOST:
 //draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(global.speedTimer/global.maxSpeedTimer)),169,HEIGHT-37);
 //BOOST:
-draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(global.yVel/yVelMaxPower),169,HEIGHT-37);
+draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-min((global.yVel-yVelMax)/(yVelMaxPower-yVelMax),1)),169,HEIGHT-37);
+drawNumber(global.combo,184,HEIGHT-28+1,fa_center,1,c_white,1);
 
 //STAMINA:
 var sangle = -90+180*((1-(yVelMax/yVelMaxStart)));
