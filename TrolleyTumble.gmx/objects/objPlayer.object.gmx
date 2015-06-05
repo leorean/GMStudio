@@ -84,6 +84,8 @@ zMax = TILE;
             {
                 hp = max(hp-1,0);
                 
+                global.combo = 0;
+                
                 invincible = 20;
                 xVel = lengthdir_x(-2,point_direction(x,y,obstacle.x,obstacle.y));
                 yVel = lengthdir_y(-2,point_direction(x,y,obstacle.x,obstacle.y));

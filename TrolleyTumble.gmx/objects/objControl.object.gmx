@@ -84,7 +84,11 @@ if (!global.paused)
             }
             else
             {
-                global.yVel = max(global.yVel-.1,yVelMax);
+                //global.combo = 0;
+                if (global.yVel &gt; yVelMax)
+                    global.yVel -= .05;
+                else
+                    global.yVel = max(global.yVel-.05*(1-(yVelMax/yVelMaxStart)),0);
             }
             //global.yVel = max(global.yVel - .02*(1-(yVelMax/yVelMaxStart)),0);
             //global.yVel = max(global.yVel - .01*(1-min((yVelMax)/yVelMaxStart,1)),0);
@@ -93,8 +97,18 @@ if (!global.paused)
             
             global.distance += (global.yVel*.05);
             
-            if (((global.yVel-yVelMax)/(yVelMaxPower-yVelMax)) &lt;= 0.01)
+            if keyboard_check_pressed(ord('C')) || (global.speedTimer == 0 &amp;&amp; ((global.yVel-yVelMax)/(yVelMaxPower-yVelMax)) &lt;= 0.00)
+            {
+                if (global.combo&gt;0)
+                {
+                    var eff = instance_create(objPlayer.x,objPlayer.y-1.5*TILE,objEffect);
+                    eff.type = 1;
+                    eff.fCur = -5;
+                    eff.yVel = -.5;
+                    
+                }
                 global.combo = 0;
+            }
 
             victimCount = 0;
             with(objVictim)
@@ -251,9 +265,8 @@ if (instance_exists(objPlayer))
 
 //SPEEDBOOST:
 //draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-(global.speedTimer/global.maxSpeedTimer)),169,HEIGHT-37);
-//BOOST:
 draw_sprite_part(sprHud,-1,0,5*TILE,2*TILE,2*TILE*(1-min((global.yVel-yVelMax)/(yVelMaxPower-yVelMax),1)),169,HEIGHT-37);
-drawNumber(global.combo,184,HEIGHT-28+1,fa_center,1,c_white,1);
+drawNumber(global.combo,185,HEIGHT-28+1,fa_center,1,c_white,1);
 
 //STAMINA:
 var sangle = -90+180*((1-(yVelMax/yVelMaxStart)));

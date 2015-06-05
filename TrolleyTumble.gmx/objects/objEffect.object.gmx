@@ -55,16 +55,16 @@ yVel = 0;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
+if (!global.paused)
+{
 x += xVel;
 y += yVel;
 
-if (!global.paused)
-{
     fCur = min(fCur + fSpeed, fMax);
     if (fCur == fMax)
         instance_destroy();
 }    
-var frame = max(floor(fCur-fSpeed),0);
+var frame = clamp(floor(fCur-fSpeed),0,fMax);
 
 draw_sprite_part(sprGraphics,-1,12*TILE+frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE,y-TILE);
 
