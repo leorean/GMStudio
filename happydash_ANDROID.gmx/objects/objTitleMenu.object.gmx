@@ -45,22 +45,14 @@ initAD();
 with(objButton)
     instance_destroy();
 
-if (global.useFb &amp;&amp; !instance_exists(objFacebook))
-    instance_create(0,0,objFacebook);
+//if (global.useFb &amp;&amp; !instance_exists(objFacebook))
+//    instance_create(0,0,objFacebook);
     
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;
-/*
-pme = noone; hme = noone;
-if (!instance_exists(objPremiumMe))
-    pme = instance_create(.5*TILE,HEIGHT-8*TILE,objPremiumMe);
-
-if (global.mode != M.TUTORIALMODE)
-    if (!instance_exists(objHelpMe))
-        hme = instance_create(WIDTH-6.5*TILE,HEIGHT-8*TILE,objHelpMe);
-*/        
+     
 index = 0;
-maxIndex = 4;
+maxIndex = 3;
 playerSelection = false;
 
 row = 8.5 * TILE - 4;
@@ -70,6 +62,9 @@ bw = 8*TILE;
 bx = WIDTH/2-.5*bw;
 bh = 3*TILE + ceil(maxIndex*1.5)*TILE;
 */
+
+//OLD MENU:
+/*
 btn[0] = instance_create(WIDTH/2,row,objButton);
 btn[0].text = " Play";
 btn[0].index = 0;
@@ -109,6 +104,32 @@ btn[4].index = 4;
 btn[4].parent = id;
 btn[4].drawBg = true;
 btn[4].img = 4;
+*/
+
+//++++NEW BUTTONS++++
+
+var brd = 6*TILE;
+var bre = 3.5*TILE;
+
+//play
+btn[0] = instance_create(bre+3*brd,9*TILE,objButtonNew);
+btn[0].img = 0; btn[0].parent = id; btn[0].index = 0;
+
+//premium
+btn[1] = instance_create(bre+1*brd,9*TILE,objButtonNew);
+btn[1].img = 1; btn[1].parent = id; btn[1].index = 1;
+
+//score
+btn[2] = instance_create(bre+0*brd,9*TILE,objButtonNew);
+btn[2].img = 2; btn[2].parent = id; btn[2].index = 2;
+
+//achievements
+btn[3] = instance_create(bre+2*brd,9*TILE,objButtonNew);
+btn[3].img = 3; btn[3].parent = id; btn[3].index = 3;
+
+//btn[4] = instance_create(WIDTH-6*TILE,5*TILE,objButtonNew);
+//btn[4].img = 4; btn[4].parent = id; btn[4].index = 4;
+
 
 t = pi/2;
 z = 0;
@@ -163,7 +184,13 @@ yy = 0;
             <kind>1</kind>
             <string>if (!playerSelection)
 {
-    handleButtons();
+    //handleButtons();
+    
+    for(i=0;i&lt;=maxIndex;i++)
+    {
+        btn[i].enabled = true;
+        btn[i].visible = true;
+    }
     
     if (btn[0].pressed)
     {
@@ -180,23 +207,31 @@ yy = 0;
     if (btn[1].pressed)
         room_goto(PREMIUM);
     
-    if (btn[2].pressed)
+    /*if (btn[2].pressed)
         room_goto(SHOP);
-    
-    /*
-    if (instance_exists(pme))
-        pme.visible = true;
-    if (instance_exists(hme))
-        hme.visible = true;
     */
+    if (btn[2].pressed)
+    {
+        if (os_is_network_connected())
+        {
+            
+            if(!achievement_login_status())
+            {
+                achievement_login();
+            }
+            else
+            {
+                achievement_show_leaderboards();
+            }
+        }
+    }
     
     for(i=0;i&lt;=maxIndex;i++)
     {
-        btn[i].enabled = true;
         btn[i].visible = true;
     }
-
-    if (!os_is_network_connected())
+    /*
+        if (!os_is_network_connected())
     {
         btn[3].enabled = false;
         btn[4].enabled = false;
@@ -205,8 +240,9 @@ yy = 0;
     {
         btn[3].enabled = true;    
         btn[4].enabled = true;
-    }
+    }*/
 
+    /*
     if (btn[3].pressed)//achievements
     {
         if(!achievement_login_status())
@@ -230,7 +266,7 @@ yy = 0;
             }
         }
     }
-    
+    */
 } else
 {
     /*
@@ -239,6 +275,7 @@ yy = 0;
     if (instance_exists(hme))
         hme.visible = false;
     */
+    
     for(i=0;i&lt;=maxIndex;i++)
     {
         btn[i].enabled = false;

@@ -296,6 +296,7 @@
       <object>objects\objPremiumMe</object>
       <objects name="sub">
         <object>objects\objButton</object>
+        <object>objects\objButtonNew</object>
         <object>objects\objTutorial</object>
         <object>objects\objPremiumItem</object>
         <object>objects\objShopItem</object>

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>//this is the "real" version (the internal version is only to delete everyones savestates)
-global.ver = "v1.1.6";
+global.ver = "v1.1.7";
 global.loggedIn = false;
 
 global.fbAuth = false;
@@ -898,7 +898,8 @@ if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
                 //show_message("Unlinked Facebook.");
             }
         }        
-    } else
+    }
+    /* else
     {
         draw_sprite_part(spriteHud,-1,11*TILE,15*TILE,2*TILE,2*TILE,WIDTH-2*TILE,HEIGHT-2*TILE);
         
@@ -913,11 +914,11 @@ if (room == MAIN &amp;&amp; global.gameOver || room == INIT)
                         instance_create(0,0,objFacebook);
                     
                     show_debug_message("starting fb auth...");
-                }
-                
+                }                
             }
         }
     }
+    */
 }
 
 /*if(room == MAIN &amp;&amp; global.mode != M.TUTORIALMODE &amp;&amp; !global.pause)
