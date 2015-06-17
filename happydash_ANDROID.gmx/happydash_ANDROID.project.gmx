@@ -122,6 +122,8 @@
     <sound>sound\sfxTutorial</sound>
     <sound>sound\sfxBuy</sound>
     <sound>sound\sfxStart2</sound>
+    <sound>sound\sfxLogo1</sound>
+    <sound>sound\sfxLogo2</sound>
   </sounds>
   <sprites name="sprites">
     <sprites name="masks">
@@ -150,6 +152,7 @@
       <sprite>sprites\sprExplosionMask</sprite>
       <sprite>sprites\sprEnemyBigMask</sprite>
       <sprite>sprites\sprShopItemMask</sprite>
+      <sprite>sprites\sprPremiumItemMask</sprite>
     </sprites>
     <sprite>sprites\spriteTitleMenu</sprite>
     <sprite>sprites\spriteBg</sprite>
@@ -166,9 +169,7 @@
     <sprite>sprites\spriteConfetti</sprite>
     <sprite>sprites\spriteShop</sprite>
     <sprite>sprites\spritePremium</sprite>
-    <sprite>sprites\spriteLevelUp</sprite>
-    <sprite>sprites\spriteHelp</sprite>
-    <sprite>sprites\sprPremiumItemMask</sprite>
+    <sprite>sprites\sprLogo</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -302,6 +303,8 @@
         <object>objects\objTouchButton</object>
         <object>objects\objTab</object>
       </objects>
+      <object>objects\objLogoSparkle</object>
+      <object>objects\objSPGLogo</object>
     </objects>
   </objects>
   <rooms name="rooms">

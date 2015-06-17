@@ -25,13 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//this is the "real" version (the internal version is only to delete everyones savestates)
+            <string>global.logo = true;
+//if (!instance_exists(objSPGLogo) &amp;&amp; global.logo)
+instance_create(0,0,objSPGLogo);
+
+//this is the "real" version (the internal version is only to delete everyones savestates)
 global.ver = "v1.1.7";
 global.loggedIn = false;
 
 global.fbAuth = false;
 global.useFb = false;
-global.gift = 0; //used to gift coins
+global.gift = 0; //used to gift coins - obsolete
 global.returnMap[0] = ds_map_create(); //fb post return map
 global.returnCur = 0;
 
@@ -42,7 +46,7 @@ depth = HUDDEPTH;
 randomize();
 
 //SL
-if (os_type != os_android &amp;&amp; os_type != os_windows)
+if (os_type != os_android &amp;&amp; os_type != os_windows &amp;&amp; os_type != os_ios)
 {
     fm = "This game has been stolen!";
     if (string(url_get_domain()) != "shinypixelgames.com")
@@ -85,12 +89,14 @@ global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
 global.playerSelected = 0;
-global.maxPlayerSelected = 3;
+global.maxPlayerSelected = 5;
 
 global.playerName[0] = "Happy";
 global.playerName[1] = "Tammy";
 global.playerName[2] = "Pipes";
-global.playerName[3] = "Blue Guy";
+global.playerName[3] = "!";
+global.playerName[4] = "Derpoo";
+global.playerName[5] = "Bananana";
 
 for (i = 0; i &lt;= global.maxPlayerSelected; i++)
     global.playerLocked[i] = true;
@@ -608,7 +614,10 @@ if (!is_undefined(global.returnMap[global.returnCur]))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//DEACTIVATE SELF IF IN SHOP
+            <string>//KILL THE LOGO
+//with (objSPGLogo) instance_destroy();
+
+//DEACTIVATE SELF IF IN SHOP
 if (room == SHOP) instance_deactivate_object(objControl);
 if (room == SCORE) instance_deactivate_object(objControl);
 if (room == HELP) instance_deactivate_object(objControl);
@@ -619,14 +628,17 @@ global.gameOver = false;
 
 mouse_clear(mb_left);
 
-if (room == INIT)
+if (room == INIT &amp;&amp; !global.logo)
 {
+    audio_stop_sound(sfxLogo2);
     loadProgress();
-    instance_create(0,0,objTitleMenu);
+    if (!instance_exists(objTitleMenu))
+        instance_create(0,0,objTitleMenu);
 }
 if (room == MAIN)
 {
-    instance_create(0,0,objCamera);
+    if (!instance_exists(objCamera))
+        instance_create(0,0,objCamera);
     
     if (global.mode != M.TUTORIALMODE)
     {

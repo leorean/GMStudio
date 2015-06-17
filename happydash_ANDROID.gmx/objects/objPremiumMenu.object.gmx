@@ -67,6 +67,14 @@ item[5] = instance_create(2*TILE,5*TILE,objPremiumItem);
 item[5].p_id = "player1";
 item[5].tab = 2;
 
+item[6] = instance_create(6*TILE,5*TILE,objPremiumItem);
+item[6].p_id = "player2";
+item[6].tab = 2;
+
+item[7] = instance_create(10*TILE,5*TILE,objPremiumItem);
+item[7].p_id = "player3";
+item[7].tab = 2;
+
 //createItem(x, y, index, name, description, pricearray, locked, tier);
 
 //TABS

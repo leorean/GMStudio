@@ -71,13 +71,14 @@ timer = 4*60;
     {
         if (target.x &lt; WIDTH+TILE)
         {
-            xVel += lengthdir_x(.15,point_direction(x,y,target.x,target.y));
-            yVel += lengthdir_y(.15,point_direction(x,y,target.x,target.y));
+            xVel += lengthdir_x(.2,point_direction(x,y,target.x,target.y));
+            yVel += lengthdir_y(.2,point_direction(x,y,target.x,target.y));
         }
         
-        if (place_meeting(x+xVel,y+yVel,target))
+        var e = instance_place(x+xVel,y+yVel,objEnemy);
+        if (instance_exists(e))
         {
-            killEnemy(target);
+            killEnemy(e);
             alive = false;
         }
     }

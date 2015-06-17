@@ -92,6 +92,15 @@ switch(val)
                     global.playerLocked[1] = false;
                     saveProgress(); loadProgress();
                 break;
+                case "player2":
+                    global.playerLocked[5] = false;
+                    saveProgress(); loadProgress();
+                break;
+                case "player3":
+                    global.playerLocked[4] = false;
+                    saveProgress(); loadProgress();
+                break;
+                
                 case "coinpack1":
                 case "coinpack2":
                 case "coinpack3":

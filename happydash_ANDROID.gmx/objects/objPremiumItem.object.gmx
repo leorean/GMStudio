@@ -97,9 +97,20 @@ tab = 0;
             p_type = "Consumable";
         break;
         case "player1":
-        p_type = "Durable";
-        if (!global.playerLocked[1])
-            p_purchased = true;
+            p_type = "Durable";
+            if (!global.playerLocked[1])
+                p_purchased = true;
+        break;
+        case "player2":
+            p_type = "Durable";
+            if (!global.playerLocked[5])
+                p_purchased = true;
+        break;            
+        case "player3":
+            p_type = "Durable";
+            if (!global.playerLocked[4])
+                p_purchased = true;
+        break;            
     }
     //p_type = global.p_type[index];
 }
@@ -154,6 +165,8 @@ switch(p_id)
     case "noads":col = 4;break;
     case "unlockupgrades":col = 5;break;
     case "player1":col = 6;break;
+    case "player2":col = 7;break;
+    case "player3":col = 8;break;
     default:
         col = 0;
     break;

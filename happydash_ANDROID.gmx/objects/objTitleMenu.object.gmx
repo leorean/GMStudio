@@ -211,6 +211,8 @@ yy = 0;
     /*if (btn[2].pressed)
         room_goto(SHOP);
     */
+    
+    //score
     if (btn[2].pressed)
     {
         if (os_is_network_connected())
@@ -243,7 +245,7 @@ yy = 0;
         btn[4].enabled = true;
     }*/
 
-    /*
+    
     if (btn[3].pressed)//achievements
     {
         if(!achievement_login_status())
@@ -252,7 +254,7 @@ yy = 0;
         if (achievement_available())
             achievement_show_achievements();
     }
-    
+    /*
     if (btn[4].pressed)//leaderboard
     {
         if (os_is_network_connected())

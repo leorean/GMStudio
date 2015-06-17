@@ -41,6 +41,7 @@ maxIndex = 2;
 //with(objEnemy) x += global.xSpeed;
 
 row = 4;
+/*
 btn[0] = instance_create(WIDTH/2,row*TILE,objButton);
 btn[0].text = "Continue";
 btn[0].index = 0;
@@ -59,6 +60,20 @@ btn[2].index = 2;
 btn[2].parent = id;
 btn[2].drawBg = true;
 btn[2].w = 3*TILE;
+*/
+
+//continue
+btn[0] = instance_create(WIDTH/2,5*TILE,objButtonNew);
+btn[0].img = 0; btn[0].parent = id; btn[0].index = 0;
+
+//restart
+btn[1] = instance_create(WIDTH-8*TILE,8*TILE,objButtonNew);
+btn[1].img = 6; btn[1].parent = id; btn[1].index = 1;
+
+//quit
+btn[2] = instance_create(8*TILE,8*TILE,objButtonNew);
+btn[2].img = 4; btn[2].parent = id; btn[2].index = 2;
+
 </string>
           </argument>
         </arguments>
@@ -127,9 +142,12 @@ btn[2].w = 3*TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>handleButtons();
+            <string>//handleButtons();
 
 //objText.depth = depth+1;
+btn[0].visible = true;
+btn[1].visible = true;
+btn[2].visible = true;
 
 if (!alarm[0])
 {

@@ -33,7 +33,9 @@ cursor = global.playerSelected;
 maxCursor = global.maxPlayerSelected;
 
 global.playerLocked[0] = false; //happy - default
-global.playerLocked[3] = false; //horse - free gift
+global.playerLocked[3] = false; //free gift
+//global.playerLocked[4] = false; //derpoo
+//global.playerLocked[5] = false; //bananana
 
 locked0 = true;
 locked1 = true;
@@ -65,29 +67,6 @@ btn[1].parent = id;
 btn[1].fnt = fntMenu;
 btn[1].w = 3*TILE;
 btn[1].h = 3*TILE;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//instance_activate_object(objControl);
 </string>
           </argument>
         </arguments>
@@ -184,7 +163,7 @@ draw_set_valign(fa_top);
 
 var txtName;
 if (!locked1)
-    txtName = "Play as " + '"' + global.playerName[cursor] + '"!';
+    txtName = global.playerName[cursor];//;"Play as " + '"' + global.playerName[cursor] + '"!';
 else
     txtName = "&lt;locked&gt;";
 drawText(WIDTH/2,3*TILE,txtName,c_white,c_black,fntButton);
