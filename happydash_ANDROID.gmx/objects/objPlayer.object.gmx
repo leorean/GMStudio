@@ -58,7 +58,7 @@ alive = true;
 
 //combo timebuffer
 alarm[1] = 0;
-alarm1 = 3*FPS + .5*FPS*global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER];
+alarm1 = 3*FPS + .47*FPS*global.upgrade[UPGRADE.upComboCooldown,UPGRADE.TIER];
 
 //alarm[2] = 0;
 //alarm2 = 25; //superdash cooldown

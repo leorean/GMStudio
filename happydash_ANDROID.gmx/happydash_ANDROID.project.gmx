@@ -269,6 +269,7 @@
       <object>objects\objProjectilePlayer1</object>
       <object>objects\objProjectilePlayer2</object>
       <object>objects\objProjectilePlayer3</object>
+      <object>objects\objProjectilePlayer4</object>
       <object>objects\objExplosion</object>
       <object>objects\objProjectileSuperDash</object>
     </objects>
@@ -292,8 +293,6 @@
       <object>objects\objPremiumMenu</object>
       <object>objects\objPlayerMenu</object>
       <object>objects\objHelpMenu</object>
-      <object>objects\objHelpMe</object>
-      <object>objects\objPremiumMe</object>
       <objects name="sub">
         <object>objects\objButton</object>
         <object>objects\objButtonNew</object>

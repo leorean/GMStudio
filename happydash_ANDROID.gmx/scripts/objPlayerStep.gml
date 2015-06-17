@@ -160,6 +160,11 @@ else //IF NOT DEAD
             instance_create(cx,cy,objProjectilePlayer1);
     }
     
+    //POWER UP no. 7 (BEES)
+    if (global.powerUp[POW_7])
+        if (global.timer mod 15 == 0)
+                instance_create(cx,cy,objProjectilePlayer4);
+
     //ATTACKING
     if (state == ATTACK)
     {

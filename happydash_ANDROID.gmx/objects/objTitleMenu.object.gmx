@@ -108,23 +108,24 @@ btn[4].img = 4;
 
 //++++NEW BUTTONS++++
 
-var brd = 6*TILE;
-var bre = 3.5*TILE;
+//var brd = 6*TILE;
+//var bre = 3.5*TILE;
+var brd = 9*TILE;
 
 //play
-btn[0] = instance_create(bre+3*brd,9*TILE,objButtonNew);
+btn[0] = instance_create(WIDTH-brd,8*TILE,objButtonNew);
 btn[0].img = 0; btn[0].parent = id; btn[0].index = 0;
 
 //premium
-btn[1] = instance_create(bre+1*brd,9*TILE,objButtonNew);
+btn[1] = instance_create(brd,8*TILE,objButtonNew);
 btn[1].img = 1; btn[1].parent = id; btn[1].index = 1;
 
 //score
-btn[2] = instance_create(bre+0*brd,9*TILE,objButtonNew);
+btn[2] = instance_create(brd/2,11*TILE,objButtonNew);
 btn[2].img = 2; btn[2].parent = id; btn[2].index = 2;
 
 //achievements
-btn[3] = instance_create(bre+2*brd,9*TILE,objButtonNew);
+btn[3] = instance_create(WIDTH-brd/2,11*TILE,objButtonNew);
 btn[3].img = 3; btn[3].parent = id; btn[3].index = 3;
 
 //btn[4] = instance_create(WIDTH-6*TILE,5*TILE,objButtonNew);

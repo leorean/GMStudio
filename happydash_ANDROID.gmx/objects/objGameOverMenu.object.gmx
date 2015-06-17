@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>depth = HUDDEPTH+1;//+2;
 index = 0;
-maxIndex = 5;
+maxIndex = 3;
 
 canProceed = false;
 shared = false;
@@ -89,6 +89,7 @@ if (global.input != INPUT_TOUCH)
 
 finalScore = global.curScore;
 submitted = false;
+/*
 var r;
 r = 2.5*TILE;
 btn[0] = instance_create(WIDTH/2-4.5*TILE,r+1.5*TILE,objButton);
@@ -155,7 +156,26 @@ btn[5].drawBg = true;
 btn[5].w = 1*TILE;
 btn[5].img = 8;
 btn[5].cBg = 1;
+*/
 
+var brd = 9*TILE;
+
+//play
+btn[0] = instance_create(WIDTH-brd,6*TILE,objButtonNew);
+btn[0].img = 0; btn[0].parent = id; btn[0].index = 0;
+
+//upgrade
+btn[1] = instance_create(brd,6*TILE,objButtonNew);
+btn[1].img = 5; btn[1].parent = id; btn[1].index = 1;
+if (canBuySomething) btn[1].new = true;
+
+//submit score
+btn[2] = instance_create(brd/2,9*TILE,objButtonNew);
+btn[2].img = 2; btn[2].parent = id; btn[2].index = 2;
+
+//quit
+btn[3] = instance_create(WIDTH-brd/2,9*TILE,objButtonNew);
+btn[3].img = 4; btn[3].parent = id; btn[3].index = 3;
 
 for (i = 0; i &lt;= maxIndex; i++)
 {
@@ -233,15 +253,16 @@ if (canProceed)
     btn[1].visible = true;
     btn[2].visible = true;
     btn[3].visible = true;
-    btn[4].visible = true;
-    btn[5].visible = true;
+    //btn[4].visible = true;
+    //btn[5].visible = true;
     
-    handleButtons();
+    //handleButtons();
     
-    if (btn[0].pressed)
-        room_goto(SHOP);
     if (btn[1].pressed)
+        room_goto(SHOP);
+    if (btn[0].pressed)
         room_restart();
+    /*
     if (!os_is_network_connected())
     {
         btn[2].enabled = false;
@@ -255,7 +276,7 @@ if (canProceed)
         btn[3].enabled = true;
         btn[5].enabled = true;
     
-    }
+    }*/
     
     if (btn[2].pressed)
     {
@@ -275,6 +296,7 @@ if (canProceed)
             achievement_show_leaderboards();
         }
     }
+    /*
     if (btn[3].pressed)
     {
         if(!achievement_login_status())
@@ -282,11 +304,11 @@ if (canProceed)
                 
         if (achievement_available())
             achievement_show_achievements();        
-    }
+    }*/
     
-    if (btn[4].pressed)
+    if (btn[3].pressed)
         room_goto(INIT);
-    
+    /*
     if (btn[5].pressed)
     {
         if (!global.fbAuth)
@@ -321,14 +343,14 @@ if (canProceed)
                 show_message_async("You already shared your score.");
         }        
     }
-        
+    */   
 } else
 {
     btn[0].visible = false;
     btn[1].visible = false;
     btn[2].visible = false;
     btn[3].visible = false;
-    btn[4].visible = false;
+    //btn[4].visible = false;
     //btn[5].visible = false;
     
 }

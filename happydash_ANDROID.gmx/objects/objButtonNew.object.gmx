@@ -72,7 +72,7 @@ else
 {
     depth = parent.depth-1-(active);
     
-    if (enabled)
+    if (enabled &amp;&amp; visible)
     {
         
         a = x-w/2;
@@ -211,7 +211,7 @@ if (img &gt; -1)
 if (new)
 {
     zz = 2*sin(((.02*global.timer) mod 2*pi));
-    draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,x+w-.5*TILE,y-TILE+zz);
+    draw_sprite_part(spriteHud,-1,3*TILE,6*TILE,2*TILE,2*TILE,x+.5*TILE,y-2.5*TILE+zz);
 }
 
 prevIndex = parent.index;

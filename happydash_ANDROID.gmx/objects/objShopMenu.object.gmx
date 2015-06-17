@@ -120,6 +120,7 @@ btn[2].w = 1*TILE;
 btn[2].h = 2*TILE;
 
 //premium menu
+/*
 btn[3] = instance_create(22.5*TILE,5*TILE,objButton);
 btn[3].text = "";
 btn[3].tooltip = "Goodies";
@@ -128,6 +129,12 @@ btn[3].parent = id;
 btn[3].w = 1*TILE;
 btn[3].drawBg = true;
 btn[3].img = 1;
+*/
+btn[3] = instance_create(22*TILE,6*TILE,objButtonNew);
+btn[3].img = 1; btn[3].parent = id; btn[3].index = 3;
+btn[3].visible = true;
+
+
 
 if (global.input != INPUT_TOUCH)
     global.mouseVisible = true;

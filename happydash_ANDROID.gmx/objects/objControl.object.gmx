@@ -57,7 +57,7 @@ GoogleMobileAds_Init("ca-app-pub-3438177514702788/3422770352");//ca-app-pub-3438
 //GoogleMobileAds_UseTestAds (true, "73D7B39415A51B45B5C3E6E1A8B6C60E");
 
 //GOOGLE PLAY SERVICES
-if (os_type == os_android &amp;&amp; os_is_network_connected())
+if ((os_type == os_android || os_type == os_ios) &amp;&amp; os_is_network_connected())
 {
     if (!achievement_login_status())
         achievement_login();
@@ -367,6 +367,10 @@ if (room == MAIN &amp;&amp; !global.gameOver)
     //global routines here
     if (!global.pause)
     {
+    
+        //new block type speed
+        global.blockSpeed = max(global.blockSpeed - .01,0);
+    
         //COUNT SCORE
         //*0.0625 = 1 / TILE
         if (global.mode != M.TUTORIALMODE)
@@ -418,7 +422,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
                     global.startSignal = true;
             }
             //if player dashes, speed is higher.
-            global.xSpeed = global.xSpeedDefault*.5+((1+global.player.dashSpeed));
+            global.xSpeed = global.xSpeedDefault*.5+((1+global.player.dashSpeed))+min(global.blockSpeed,2);
         }
         if (objPlayer.state != DEAD)
         {
@@ -682,6 +686,8 @@ if (room == MAIN)
     global.xSpeed = 0;
     global.xSpeedDefault = global.xSpeedMin;
     
+    global.blockSpeed = 0;
+    
     //load first segment
     constructSegment(segment[0], 0, 0);    
 }
@@ -769,7 +775,7 @@ if (room == MAIN &amp;&amp; !global.gameOver)
         
         if (global.powerUp[POW_1]) //MONEY POWER UP
         {
-            draw_sprite_part(spriteGfx,-1,4*TILE,3*TILE,2*TILE,2*TILE,(1-global.powDuration[POW_1]/global.maxPowDuration[POW_1])*WIDTH,0);
+            draw_sprite_part(spriteGfx,-1,5*TILE,3*TILE,2*TILE,2*TILE,(1-global.powDuration[POW_1]/global.maxPowDuration[POW_1])*WIDTH,0);
             if (global.timer mod 4 == 0)
             {
                 var c;

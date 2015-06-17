@@ -6,8 +6,8 @@ var t,s,w,h;
 w = WIDTH/TILE;
 h = HEIGHT/TILE;
 
-var powSpawned,itemSpawned;
-powSpawned = false; itemSpawned = false;
+var powSpawned,itemSpawned, speedSpawned;
+powSpawned = false; itemSpawned = false; speedSpawned = false;
 
 for (i = 0; i<w; i += 1)
 {
@@ -50,22 +50,27 @@ for (i = 0; i<w; i += 1)
             c = irandom(2500-200*u);
             if (choose(false,false,true)) //chance to spawn no block
                 continue;
-            if (c < 50 && bfree >= 3)
-                ct = 3; //POW BLOCK
-            else if (c < 100 && bfree >= 2)
-                ct = 2; //ITEM BLOCK
-            else if (c < 200 && bfree >= 1)
-                ct = 1; //COIN BLOCK
+            if (c < 50)
+                ct = min(4,bfree); //SPEED BLOCK
+            else if (c < 100)
+                ct = min(2,bfree); //POW BLOCK
+            else if (c < 150)
+                ct = min(3,bfree); //ITEM BLOCK
+            else if (c < 250)
+                ct = min(1,bfree); //COIN BLOCK
             else
-                ct = choose(-1,0); //NORMAL BLOCK                
-
-            if (ct == 2 && itemSpawned) ct = -1;
-            if (ct == 3 && powSpawned) ct = -1;
-            if (ct == 2)
-                    itemSpawned = true;
+                ct = choose(-1,0); //NORMAL BLOCK
+            
+            if (ct == 4 && speedSpawned) ct = -1;
+            if (ct == 3 && itemSpawned) ct = -1;
+            if (ct == 2 && powSpawned) ct = -1;
+            if (ct == 4)
+                    speedSpawned = true;
             if (ct == 3)
+                    itemSpawned = true;
+            if (ct == 2)
                     powSpawned = true;
-
+            
             
             if (ct == -1)
                 instance_create(a+i*TILE,b+j*TILE,objCoin);

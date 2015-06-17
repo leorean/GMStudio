@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAll</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,11 +25,81 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = HUDDEPTH+1;
-image_speed = 0;
+            <string>depth = PLAYERDEPTH-1;
+mask_index = sprProjectileMask;
+xVel = -2+random(4);
+yVel = -2+random(4);
+
+state = IDLE;
+alive = true;
+
+xO = x;
 yO = y;
 
-timer = 0;
+target = noone;
+
+timer = 4*60;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!global.pause)
+{
+    timer = max(timer-1,0);
+    if (!instance_exists(target))
+    {
+        target = instance_nearest(x,y,objEnemy);
+    } else
+    {
+        if (target.x &lt; WIDTH+TILE)
+        {
+            xVel += lengthdir_x(.15,point_direction(x,y,target.x,target.y));
+            yVel += lengthdir_y(.15,point_direction(x,y,target.x,target.y));
+        }
+        
+        if (place_meeting(x+xVel,y+yVel,target))
+        {
+            killEnemy(target);
+            alive = false;
+        }
+    }
+    if (timer == 0) alive = false;
+    
+    if (!alive)
+    {
+        var eff = instance_create(x-.5*TILE,y-.5*TILE,objEffectDust);
+        eff.type = 5;
+        
+        instance_destroy();
+
+    }
+    
+    xVel = sign(xVel)*min(abs(xVel),5);
+    yVel = sign(yVel)*min(abs(yVel),5);
+    x += xVel;
+    y += yVel;
+
+}
+
+
 </string>
           </argument>
         </arguments>
@@ -52,42 +122,11 @@ timer = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part_ext(spriteHud,-1,10*TILE,5*TILE,7*TILE,4*TILE,x,y,1,1,c_white,1);
+            <string>image_speed = 0;
+//frame = floor(fCur);
+//draw_sprite_part(spriteGfx,-1,frame*TILE+4*!alive*TILE,18*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 
-draw_set_alpha(1);
-draw_set_color(c_white);
-draw_set_halign(fa_center);
-draw_set_valign(fa_center);
-
-timer = (timer + 1) mod INFINITE;
-
-y = floor(yO + 1.5*sin(timer*.03));
-
-var t;
-
-if ((timer mod (2*FPS)) &lt; FPS)
-    t = "PREMIUM#SHOP"
-else
-    t = "CLICK#HERE!";
-var c1,c2;
-c1 = floor(abs(30 - sin(timer*.1) * 15));
-drawText(x+3.5*TILE,y+2*TILE,t,make_color_hsv(c1,255,255),c_none,fntButton);
-
-//GLITTER
-if (random(30) &gt; 28)
-{
-    var d;
-    d = instance_create(x-.5*TILE+random(7*TILE),y-.5*TILE+random(4*TILE),objEffectDust);
-    d.depth = depth-1;
-    d.type = 7;
-}
-
-if (in(mouse_x,x,x+7*TILE) &amp;&amp; in(mouse_y,y,y+4*TILE) &amp;&amp; mouse_check_button_released(mb_left))
-{
-    //global.mode = M.TUTORIALMODE;
-    room_goto(PREMIUM);
-}
-
+draw_sprite_part(spriteGfx,-1,7*TILE,3*TILE+(global.timer % 2 == 0)*TILE,TILE,TILE,x-TILE*.5,y-TILE*.5);
 </string>
           </argument>
         </arguments>

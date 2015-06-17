@@ -104,6 +104,14 @@ if (state == DEAD)
         playSound(sfxPowBlock,1);
     } else
         playSound(sfxDestroyBlock,1);
+    
+    if (type == 4)
+    {
+        repeat(5)
+            spawnParticle(x+TILE*.5,y+TILE*.5,COLOR_RANDOM);
+        
+        global.blockSpeed = 2;        
+    }
         
     instance_create(x,y,objEffectDust);
     instance_destroy();
