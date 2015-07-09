@@ -43,7 +43,10 @@ if (!global.noads)
     GoogleMobileAds_AddBannerAt("ca-app-pub-3438177514702788/3814879955", GoogleMobileAds_Banner,
         px, py);
 } else
-    instance_destroy();
+{
+    GoogleMobileAds_RemoveBanner();
+    //instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -94,10 +97,12 @@ showinterstitial = (os_type == os_android &amp;&amp; !global.noads
     &amp;&amp; room == MAIN &amp;&amp; !global.pause &amp;&amp; global.gameOver
     &amp;&amp; ((global.playthrough % 5) == 0) &amp;&amp; global.playthrough &gt; 0); //every n-th run
 
-showbanner = !showinterstitial &amp;&amp; (os_type == os_android &amp;&amp; !global.noads
-    &amp;&amp; ((room == INIT) || ((room == MAIN) &amp;&amp; (global.pause || global.gameOver))));
+showbanner = !showinterstitial &amp;&amp; ((os_type == os_android || os_type == os_ios)
+    &amp;&amp; !global.noads
+    &amp;&amp; (room == INIT || (room == MAIN &amp;&amp; (global.pause || global.gameOver))));
 
-
+//show_debug_message("showbanner: "+string(showbanner));
+    
 if (showinterstitial)
 {
     if (GoogleMobileAds_InterstitialStatus() == "Ready")
@@ -107,7 +112,7 @@ if (showinterstitial)
 if (global.noads)
 {
     GoogleMobileAds_RemoveBanner();
-    instance_destroy();
+    //instance_destroy();
 } else
 {
     if (!showbanner)
@@ -162,9 +167,12 @@ if (ident == "banner_load")
         py = display_get_height() - bh;
         GoogleMobileAds_MoveBanner(px,py);
         adLoaded = true;
-    }
+        if (global.noads)
+            GoogleMobileAds_RemoveBanner();
+        }
+
 }
-else if ident == "interstitial_load"
+else if (ident == "interstitial_load")
 {
     //?
     //global.interLoading = false; 

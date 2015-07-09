@@ -34,6 +34,9 @@ shared = false;
 
 initAD();
 
+if (os_is_network_connected() &amp;&amp; (os_type == os_android || os_type = os_ios) )
+    if(!achievement_login_status())
+        achievement_login();
 
 //"I'm Rich Achievement (incremental)
 postAchievement("CgkIsq60qNAMEAIQCA",global.coinsCollected,true);
@@ -291,9 +294,10 @@ if (canProceed)
                 
                 //Look at my Swag Achievement
                 postAchievement("CgkIsq60qNAMEAIQCg",100,false);
-                submitted = true;
+                //submitted = true;
+                achievement_show_leaderboards();
             }            
-            achievement_show_leaderboards();
+            
         }
     }
     /*

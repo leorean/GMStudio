@@ -40,7 +40,7 @@ if (!global.loggedIn &amp;&amp; os_is_network_connected())
         global.loggedIn = true;
 }
 
-initAD();
+//initAD();
 
 with(objButton)
     instance_destroy();

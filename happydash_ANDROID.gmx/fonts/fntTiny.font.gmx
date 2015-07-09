@@ -3,6 +3,7 @@
   <name>News Gothic</name>
   <size>8</size>
   <bold>0</bold>
+  <renderhq>0</renderhq>
   <italic>0</italic>
   <charset>1</charset>
   <aa>0</aa>
@@ -15,16 +16,16 @@
     <range0>32,255</range0>
   </ranges>
   <glyphs>
-    <glyph character="215" x="114" y="49" w="5" h="6" shift="7" offset="1"/>
-    <glyph character="174" x="100" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="145" x="107" y="49" w="5" h="6" shift="7" offset="1"/>
+    <glyph character="174" x="100" y="49" w="5" h="6" shift="7" offset="1"/>
+    <glyph character="215" x="114" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="108" x="10" y="70" w="1" h="9" shift="3" offset="1"/>
-    <glyph character="179" x="128" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="122" x="202" y="15" w="4" h="9" shift="6" offset="1"/>
-    <glyph character="166" x="121" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="207" x="79" y="49" w="5" h="6" shift="7" offset="1"/>
-    <glyph character="142" x="65" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="170" x="72" y="49" w="5" h="6" shift="7" offset="1"/>
+    <glyph character="179" x="128" y="49" w="5" h="6" shift="7" offset="1"/>
+    <glyph character="142" x="65" y="49" w="5" h="6" shift="7" offset="1"/>
+    <glyph character="166" x="121" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="197" x="93" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="154" x="86" y="49" w="5" h="6" shift="7" offset="1"/>
     <glyph character="246" x="177" y="49" w="5" h="6" shift="7" offset="1"/>

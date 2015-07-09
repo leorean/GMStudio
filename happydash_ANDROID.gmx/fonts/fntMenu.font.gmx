@@ -3,6 +3,7 @@
   <name>OCR A Extended</name>
   <size>12</size>
   <bold>-1</bold>
+  <renderhq>0</renderhq>
   <italic>0</italic>
   <charset>1</charset>
   <aa>2</aa>
@@ -15,16 +16,16 @@
     <range0>32,255</range0>
   </ranges>
   <glyphs>
-    <glyph character="215" x="22" y="100" w="8" h="8" shift="11" offset="2"/>
-    <glyph character="174" x="212" y="90" w="8" h="8" shift="11" offset="2"/>
     <glyph character="145" x="102" y="90" w="8" h="8" shift="11" offset="2"/>
+    <glyph character="174" x="212" y="90" w="8" h="8" shift="11" offset="2"/>
+    <glyph character="215" x="22" y="100" w="8" h="8" shift="11" offset="2"/>
     <glyph character="108" x="218" y="36" w="6" h="12" shift="11" offset="2"/>
-    <glyph character="179" x="182" y="90" w="8" h="8" shift="11" offset="2"/>
     <glyph character="122" x="236" y="19" w="7" h="12" shift="11" offset="2"/>
-    <glyph character="166" x="172" y="90" w="8" h="8" shift="11" offset="2"/>
     <glyph character="207" x="82" y="80" w="8" h="8" shift="11" offset="2"/>
-    <glyph character="142" x="192" y="70" w="8" h="8" shift="11" offset="2"/>
     <glyph character="170" x="152" y="70" w="8" h="8" shift="11" offset="2"/>
+    <glyph character="179" x="182" y="90" w="8" h="8" shift="11" offset="2"/>
+    <glyph character="142" x="192" y="70" w="8" h="8" shift="11" offset="2"/>
+    <glyph character="166" x="172" y="90" w="8" h="8" shift="11" offset="2"/>
     <glyph character="197" x="22" y="80" w="8" h="8" shift="11" offset="2"/>
     <glyph character="154" x="12" y="80" w="8" h="8" shift="11" offset="2"/>
     <glyph character="246" x="32" y="80" w="8" h="8" shift="11" offset="2"/>

@@ -84,7 +84,7 @@ initAD();
 global.playthrough = 0; //for ads, etc
 
 //this is just an INTERNAL version
-global.version = 115; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE
+global.version = 115; //IF THIS IS CHANGED, IT DELETES THE SAVESTATE - 115 is online now.
 global.saveVersion = 0;
 global.saveFile = 'sv.ini';
 
@@ -561,7 +561,7 @@ if (debug_mode)
 }
 
 //++++facebook gift stuff++++
-
+/*
 if (!is_undefined(global.returnMap[global.returnCur]))
 {
     var count,ri;
@@ -591,7 +591,7 @@ if (!is_undefined(global.returnMap[global.returnCur]))
         global.returnCur += 1;
         global.returnMap[global.returnCur] = ds_map_create(); //create next segment
     }
-}
+}*/
 </string>
           </argument>
         </arguments>
@@ -615,6 +615,7 @@ if (!is_undefined(global.returnMap[global.returnCur]))
           <argument>
             <kind>1</kind>
             <string>//KILL THE LOGO
+if (global.logo) exit;
 //with (objSPGLogo) instance_destroy();
 
 //DEACTIVATE SELF IF IN SHOP
@@ -623,20 +624,24 @@ if (room == SCORE) instance_deactivate_object(objControl);
 if (room == HELP) instance_deactivate_object(objControl);
 if (room == PREMIUM) instance_deactivate_object(objControl);
 
-global.pause = false;    
+global.pause = false;
 global.gameOver = false;
 
 mouse_clear(mb_left);
 
-if (room == INIT &amp;&amp; !global.logo)
+if (room == INIT)
 {
     audio_stop_sound(sfxLogo2);
     loadProgress();
+    initAD();
+
     if (!instance_exists(objTitleMenu))
         instance_create(0,0,objTitleMenu);
 }
 if (room == MAIN)
 {
+    with(objAD) instance_destroy();
+
     if (!instance_exists(objCamera))
         instance_create(0,0,objCamera);
     

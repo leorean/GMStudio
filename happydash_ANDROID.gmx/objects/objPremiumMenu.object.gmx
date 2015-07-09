@@ -200,6 +200,8 @@ if (true)//instance_exists(product))
                 {
                     with(objIAP)
                         buyIAP(objPremiumMenu.product.p_id);
+                        
+                    //saveProgress();
                 } else
                     show_message("You already own this!");
                 

@@ -89,7 +89,8 @@ if (!animFinished)
         case 2:// case 4: case 6: case 8: case 10: case 12:
             //if (!audio_is_playing(sfxLogo1))
             //    audio_play_sound(sfxLogo1,0,0);
-            playSound(sfxLogo1,1);
+            if (!audio_is_playing(sfxLogo1))
+                playSound(sfxLogo1,1);
             fSpeed = .4;                
         break;
         case 13: //chest wait
@@ -98,7 +99,8 @@ if (!animFinished)
         break;
         case 14:
             fSpeed = .4;
-            playSound(sfxLogo2,1);
+            if (!audio_is_playing(sfxLogo2))
+                playSound(sfxLogo2,1);
             //if (!audio_is_playing(sfxLogo2))
             //    audio_play_sound(sfxLogo2,0,0);
         break;

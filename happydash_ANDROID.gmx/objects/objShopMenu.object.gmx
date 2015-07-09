@@ -299,6 +299,9 @@ if (btn[2].pressed || keyboard_check_pressed(vk_escape))
 
 if (btn[3].pressed)
 {
+    saveProgress();
+    loadProgress();
+
     instance_activate_object(objControl);
     room_goto(PREMIUM);
 }

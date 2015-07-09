@@ -71,8 +71,8 @@ timer = 4*60;
     {
         if (target.x &lt; WIDTH+TILE)
         {
-            xVel += lengthdir_x(.2,point_direction(x,y,target.x,target.y));
-            yVel += lengthdir_y(.2,point_direction(x,y,target.x,target.y));
+            xVel += lengthdir_x(.3,point_direction(x,y,target.x,target.y));
+            yVel += lengthdir_y(.3,point_direction(x,y,target.x,target.y));
         }
         
         var e = instance_place(x+xVel,y+yVel,objEnemy);
