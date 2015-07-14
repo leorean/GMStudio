@@ -6,29 +6,38 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprTentacleSegment</sprite>
-    <sprite>sprites\sprTentacle</sprite>
-    <sprite>sprites\sprTentacleAnchor</sprite>
-    <sprite>sprites\sprWaterSegment</sprite>
-    <sprite>sprites\sprControl</sprite>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprPlayerProjectile</sprite>
+    <sprite>sprites\bg0</sprite>
   </sprites>
   <backgrounds name="background"/>
-  <paths name="paths"/>
+  <paths name="paths">
+    <path>paths\p0</path>
+  </paths>
+  <scripts name="scripts">
+    <script>scripts\in.gml</script>
+  </scripts>
   <objects name="objects">
-    <object>objects\objTentacleSegment</object>
-    <object>objects\objTentacle</object>
-    <object>objects\objTentacleAnchor</object>
-    <object>objects\objWaterSegment</object>
+    <object>objects\objPlayer</object>
+    <object>objects\objPlayerProjectile</object>
     <object>objects\objControl</object>
+    <object>objects\objBackground</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="4">
+  <constants number="11">
     <constant name="TILE">16</constant>
     <constant name="INFINITE">900000000</constant>
     <constant name="WIDTH">640</constant>
     <constant name="HEIGHT">360</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
+    <constant name="STATE_PAUSED">0</constant>
+    <constant name="STATE_PLAY">1</constant>
+    <constant name="STATE_START">2</constant>
+    <constant name="STATE_GAMEOVER">3</constant>
+    <constant name="GROUND">288</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
