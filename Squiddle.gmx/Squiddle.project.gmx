@@ -6,10 +6,13 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\sprPlayerProjectile</sprite>
+    <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\bg0</sprite>
+    <sprite>sprites\mskPlayerArm</sprite>
+    <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprPlayerArm</sprite>
+    <sprite>sprites\sprGround</sprite>
+    <sprite>sprites\sprBackground</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -20,6 +23,8 @@
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
     <object>objects\objPlayerArm</object>
+    <object>objects\objGround</object>
+    <object>objects\objBackground</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

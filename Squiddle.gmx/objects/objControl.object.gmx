@@ -25,7 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state == STATE_START)
+            <string>if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
+    game_end();
+
+if (keyboard_check_pressed(ord('R')))
+    room_restart();
+
+if (global.state == STATE_START)
 {
     //if (mouse_check_button_pressed(mb_left))
         global.state = STATE_PLAY;
@@ -54,7 +60,9 @@
             <kind>1</kind>
             <string>global.state = STATE_START;
 
-//background = instance_create(0,0,objBackground);
+background = instance_create(0,0,objBackground);
+ground = instance_create(0,0,objGround);
+
 player = instance_create(WIDTH/2,HEIGHT/2,objPlayer);
 
 </string>

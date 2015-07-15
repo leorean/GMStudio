@@ -3,14 +3,14 @@
   <type>0</type>
   <xorig>32</xorig>
   <yorigin>32</yorigin>
-  <colkind>1</colkind>
+  <colkind>2</colkind>
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>4</bbox_left>
-  <bbox_right>59</bbox_right>
-  <bbox_top>4</bbox_top>
-  <bbox_bottom>59</bbox_bottom>
+  <bbox_left>6</bbox_left>
+  <bbox_right>57</bbox_right>
+  <bbox_top>6</bbox_top>
+  <bbox_bottom>57</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -20,8 +20,6 @@
   <width>64</width>
   <height>64</height>
   <frames>
-    <frame index="0">images\sprPlayerArm_0.png</frame>
-    <frame index="1">images\sprPlayerArm_1.png</frame>
-    <frame index="2">images\sprPlayerArm_2.png</frame>
+    <frame index="0">images\mskPlayerArm_0.png</frame>
   </frames>
 </sprite>
