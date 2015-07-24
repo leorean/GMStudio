@@ -79,8 +79,8 @@ if (global.state == STATE_PLAY)
     //angle = point_direction(x,y,xprev,yprev);
     angle = 90 + point_direction(x,y,cx,cy);
     
-    if (y-yprev &gt;  0) spd = min(spd+.05,2.5);
-    if (y-yprev &lt;  0) spd = max(spd-.02,.7);
+    if (y-yprev &gt;  0) spd = min(spd+.05,2);
+    if (y-yprev &lt;  0) spd = max(spd-.02,1);
     
     path_speed = - spd;
     
@@ -94,7 +94,7 @@ if (global.state == STATE_PLAY)
         //var length_x = abs(px-mouse_x);
         
         var bulX = cx + sign(dir)*6 + xVel;
-        var bulY = cy + 3 + yVel;
+        var bulY = cy + 8 + yVel;
         var bulletSpeed = 4;
         var bulletGrav = .08;
         var proj = instance_create(bulX,bulY,objPlayerProjectile);
