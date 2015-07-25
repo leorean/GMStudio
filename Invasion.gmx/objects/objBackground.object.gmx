@@ -57,30 +57,34 @@ daytime = 0; //0 ... 100;
             <kind>1</kind>
             <string>//colors
 
-daytime = (daytime + .01) % 100;
-
-/*
-(morning,midday,afternoon,evening,night)
-r:244,166,75,234,67,74
-g:194,232,218,108,46,106
-b:164,244,235,185,94,138
-
-(0,244) (1,166) (2,75) (3,234) (4,67) (5, 74) (6, 244)
-(0,194) (1,232) (2,218) (3,108) (4,46) (5, 106) (6, 194)
-(0,164) (1,244) (2,235) (3,185) (4,94) (5, 138) (6, 164)
-
-*/
-
-d = daytime/100 * 6;
-    
-r = 5.03788 * power(d,4) - 57.6768 * power(d,3) + 211.659 * power(d,2)-283.074 * d + 251.695;
-g = -1.09848 * power(d,4) + 21.4596 * power(d,3) - 114.78 * power(d,2) + 154.822 * d + 189.589;
-b = -0.950758 * power(d,4) + 18.2702 * power(d,3) - 105.027 * power(d,2) + 178.911 *d + 161.444;
-//h = 0.0004 * power(daytime,2) + 0.32 * daytime - 8.3;
-color = make_color_rgb(r,g,b);
-
 if (global.state &gt; STATE_PAUSED)
-show_debug_message(string(daytime));
+    daytime = (daytime + .03) % 100;
+
+r = array(244,187,187,219,246,51,172,244);
+g = array(194,246,246,175,66,71,50,194);
+b = array(164,255,255,69,113,89,50,164);
+
+/*r[0] = 244; g[0] = 194; b[0] = 164;
+r[1] = 166; g[1] = 232; b[1] = 244;
+r[2] = 75; g[2] = 218; b[2] = 235;
+r[3] = 234; g[3] = 108; b[3] = 185;
+r[4] = 67; g[4] = 46; b[4] = 94;
+r[5] = 74; g[5] = 106; b[5] = 138;
+r[6] = 244; g[6] = 194; b[6] = 164;
+*/
+//r = 5.03788 * power(d,4) - 57.6768 * power(d,3) + 211.659 * power(d,2)-283.074 * d + 251.695;
+//g = -1.09848 * power(d,4) + 21.4596 * power(d,3) - 114.78 * power(d,2) + 154.822 * d + 189.589;
+//b = -0.950758 * power(d,4) + 18.2702 * power(d,3) - 105.027 * power(d,2) + 178.911 *d + 161.444;
+
+//color = make_color_rgb(r,g,b);
+
+color = make_color_rgb(
+    bspline3(daytime/100,array_length_1d(r),r),
+    bspline3(daytime/100,array_length_1d(g),g),
+    bspline3(daytime/100,array_length_1d(b),b));
+    
+if (global.state &gt; STATE_PAUSED)
+    show_debug_message(string(daytime));
 
 //bg sky
 draw_sprite_part_ext(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);

@@ -21,6 +21,8 @@
   </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
+    <script>scripts\bspline3.gml</script>
+    <script>scripts\array.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fntHUD</font>
