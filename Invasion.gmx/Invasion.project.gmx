@@ -24,6 +24,9 @@
     <script>scripts\bspline3.gml</script>
     <script>scripts\array.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\shader0.shader</shader>
+  </shaders>
   <fonts name="fonts">
     <font>fonts\fntHUD</font>
   </fonts>

@@ -33,6 +33,9 @@ b = 255;
 color = c_white;
 
 daytime = 0; //0 ... 100;
+
+
+surf = -1;
 </string>
           </argument>
         </arguments>
@@ -55,7 +58,10 @@ daytime = 0; //0 ... 100;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//colors
+            <string>//++++SHADER++++
+shader_set(shader0);
+
+//colors
 
 if (global.state &gt; STATE_PAUSED)
     daytime = (daytime + .03) % 100;
@@ -105,13 +111,16 @@ switch(global.path)
 {
     case p0:
     draw_sprite(track0,-1,0,0);
-    //draw_set_color(c_black);
-    //draw_path(p0,0,0,true);
+    draw_sprite_ext(track0,-1,0,0,1,1,0,color,.6);
     break;
 }
 
+//draw_set_blend_mode(bm_normal);
+
+
 //fg floor
 draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 30 &gt; 15),WIDTH,HEIGHT,0,0);
+
 
 </string>
           </argument>
