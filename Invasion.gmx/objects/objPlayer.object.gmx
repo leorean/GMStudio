@@ -69,7 +69,7 @@ delay = attackSpeed;
 yVel = (y-yprev);
 
 cx = x - 3*xVel;
-cy = y + 1*TILE;
+cy = y + .5*TILE;
 
 if (global.state == STATE_PLAY)
 {
@@ -159,7 +159,7 @@ if (global.state == STATE_PLAY)
 //draw_set_alpha(1);
 //draw_line_width(cx,cy,x,y,2);
 
-draw_sprite_part_ext(sprAssets,-1,0,0,2*TILE,2*TILE,cx+TILE-2*(dir==RIGHT)*TILE,y,-1+2*(dir==RIGHT),1,c_white,1);
+draw_sprite_part_ext(sprAssets,-1,0,0,2*TILE,2*TILE,cx+TILE-2*(dir==RIGHT)*TILE,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,1);
 
 //show_debug_message(string(cx)+":"+string(cy));
 //show_debug_message(string(fps)+":"+string(fps_real));

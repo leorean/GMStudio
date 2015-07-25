@@ -38,6 +38,11 @@ if (global.state == STATE_START)
     if (mouse_check_button_pressed(mb_left))
         global.state = STATE_PLAY;
 }
+
+if (global.state == STATE_PLAY)
+{
+    global.timer = (global.timer+1) % INFINITE;
+}
 </string>
           </argument>
         </arguments>
@@ -61,6 +66,7 @@ if (global.state == STATE_START)
           <argument>
             <kind>1</kind>
             <string>window_set_size(3*WIDTH,3*HEIGHT);
+global.timer = 0;
 
 global.state = STATE_START;
 global.path = p0;

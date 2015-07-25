@@ -25,10 +25,21 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>switch(global.path)
+            <string>//bg sky
+draw_sprite_part(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0);
+
+//bg scenery
+draw_sprite_part(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0);
+
+//fg floor
+draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 30 &gt; 15),WIDTH,HEIGHT,0,0);
+
+//rails/tracks
+switch(global.path)
 {
     case p0:
-    draw_sprite(bg0,-1,0,0);
+    //draw_sprite(track0,-1,0,0);
+    draw_path(p0,0,0,true);
     break;
 }
 </string>

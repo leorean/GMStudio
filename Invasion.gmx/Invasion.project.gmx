@@ -9,13 +9,13 @@
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprGear</sprite>
     <sprite>sprites\mskPlayerProjectile</sprite>
-    <sprite>sprites\bg0</sprite>
+    <sprite>sprites\track0</sprite>
     <sprite>sprites\sprAssets</sprite>
+    <sprite>sprites\sprBackground</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
     <path>paths\p0</path>
-    <path>paths\path1</path>
   </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
