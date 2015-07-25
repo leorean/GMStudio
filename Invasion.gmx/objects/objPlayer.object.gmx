@@ -43,6 +43,14 @@ path_start(global.path,0,path_action_restart,true);
 
 attackSpeed = 40;
 delay = attackSpeed;
+
+//draw variables
+state = IDLE;
+statePrev = state;
+fCur = 0;
+fMin = 0;
+fMax = 0;
+fSpeed = 0;
 </string>
           </argument>
         </arguments>
@@ -65,24 +73,43 @@ delay = attackSpeed;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = (x-xprev);
-yVel = (y-yprev);
+            <string>if (global.state == STATE_START)
+{
+    x = path_get_point_x(0,global.path);
+    y = path_get_point_y(0,global.path);
+    angle = 0;
+    xVel = 0;
+    yVel = 0;
+    dir = sign(WIDTH/2-x);
+}
 
-cx = x - 3*xVel;
-cy = y + .5*TILE;
+if (global.state == STATE_PAUSED)
+{
+    //spd = 0;
+    //path_start(global.path,spd,
+    //path_end();
+    //path_start(global.path,0,path_action_restart,true);
+    path_speed = 0;
+}
 
 if (global.state == STATE_PLAY)
 {
+    xVel = (x-xprev);
+    yVel = (y-yprev);
+
+    //cx = x - 3*xVel;
+    //cy = y + .5*TILE;
 
     //dir = sign(x-xprev);
     
     //angle = point_direction(x,y,xprev,yprev);
-    angle = 90 + point_direction(x,y,cx,cy);
+    //angle = 90 + point_direction(x,y,cx,cy);
+    angle = 90 + point_direction(x,y,x+xVel,y+TILE);
+
+    if (y-yprev &gt;  0) spd = min(spd+.04,2.5);
+    if (y-yprev &lt;  0) spd = max(spd-.01,1);
     
-    if (y-yprev &gt;  0) spd = min(spd+.05,2);
-    if (y-yprev &lt;  0) spd = max(spd-.02,1);
-    
-    path_speed = - spd;
+    path_speed = -spd;
     
     delay = max(delay-1,0);
     
@@ -93,8 +120,8 @@ if (global.state == STATE_PLAY)
         //var ix = px; var iy = py;
         //var length_x = abs(px-mouse_x);
         
-        var bulX = cx + sign(dir)*6 + xVel;
-        var bulY = cy + 8 + yVel;
+        var bulX = x + sign(dir)*6 + xVel;
+        var bulY = y + 8 + yVel;
         var bulletSpeed = 4;
         var bulletGrav = .08;
         var proj = instance_create(bulX,bulY,objPlayerProjectile);
@@ -103,6 +130,7 @@ if (global.state == STATE_PLAY)
         proj.xVel = lengthdir_x(bulletSpeed,shootAngle);
         proj.yVel = lengthdir_y(bulletSpeed,shootAngle);
         
+        state = ATTACK;
         /*
         var shootAngle = point_direction(px,py,mouse_x,mouse_y);
         
@@ -126,9 +154,11 @@ if (global.state == STATE_PLAY)
         */
     }
     
-    //++++end
+    //++++end variables
     xprev = x;
     yprev = y;
+    if (statePrev != state) fCur = fMin;
+    statePrev = state;
 
 }
 </string>
@@ -153,18 +183,33 @@ if (global.state == STATE_PLAY)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprGear,-1,x,y,1,1,angle,c_white,1);
+            <string>//draw_sprite_ext(sprGear,-1,x,y,1,1,angle,c_white,1);
 
 //draw_set_color(c_white);
 //draw_set_alpha(1);
 //draw_line_width(cx,cy,x,y,2);
 
-draw_sprite_part_ext(sprAssets,-1,0,0,2*TILE,2*TILE,cx+TILE-2*(dir==RIGHT)*TILE,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,1);
+//draw_sprite_part_ext(sprAssets,-1,0,0,2*TILE,2*TILE,cx+TILE-2*(dir==RIGHT)*TILE,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,1);
 
-//show_debug_message(string(cx)+":"+string(cy));
-//show_debug_message(string(fps)+":"+string(fps_real));
+switch(state)
+{
+    case IDLE:
+        fMin = 0;
+        fMax = 1;
+        fSpeed = .1;
+    break;
+    case ATTACK:
+        fMin = 2;
+        fMax = 3;
+        fSpeed = .2;
+        if (fCur &gt; fMax-fSpeed) state = IDLE;
+    break;
+}
 
+fCur = (fCur + (global.state != STATE_PAUSED)*fSpeed) % (fMax + 1);
+frame = floor(fMin + fCur);
 
+draw_sprite_ext(sprPlayer,frame,x,y,-1+2*(dir==RIGHT),1,angle,c_white,1);
 </string>
           </argument>
         </arguments>

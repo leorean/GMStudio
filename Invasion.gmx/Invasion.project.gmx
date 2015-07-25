@@ -12,6 +12,7 @@
     <sprite>sprites\track0</sprite>
     <sprite>sprites\sprAssets</sprite>
     <sprite>sprites\sprBackground</sprite>
+    <sprite>sprites\sprPlayer</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
@@ -29,18 +30,22 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="11">
+  <constants number="15">
     <constant name="TILE">16</constant>
     <constant name="INFINITE">900000000</constant>
     <constant name="WIDTH">320</constant>
     <constant name="HEIGHT">180</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
-    <constant name="STATE_PAUSED">0</constant>
+    <constant name="STATE_PAUSED">-1</constant>
     <constant name="STATE_PLAY">1</constant>
     <constant name="STATE_START">2</constant>
     <constant name="STATE_GAMEOVER">3</constant>
     <constant name="GROUND">160</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="ATTACK">1</constant>
+    <constant name="HURT">2</constant>
+    <constant name="DEAD">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -52,20 +52,22 @@ velMax = 100;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>yVel += yGrav;
-
-xVel = sign(xVel)*min(abs(xVel),velMax);
-yVel = sign(yVel)*min(abs(yVel),velMax);
-
-x += xVel;
-y += yVel;
-
-if (y &gt; GROUND)
-    instance_destroy();//yVel = -yVel*2/3;
+            <string>if (global.state &gt; STATE_PAUSED)
+{
+    yVel += yGrav;
     
-if (!in(x,-bbox_left,WIDTH+bbox_right))
-    instance_destroy();
-
+    xVel = sign(xVel)*min(abs(xVel),velMax);
+    yVel = sign(yVel)*min(abs(yVel),velMax);
+    
+    x += xVel;
+    y += yVel;
+    
+    if (y &gt; GROUND)
+        instance_destroy();//yVel = -yVel*2/3;
+        
+    if (!in(x,-bbox_left,WIDTH+bbox_right))
+        instance_destroy();
+}
 </string>
           </argument>
         </arguments>
