@@ -26,6 +26,13 @@
           <argument>
             <kind>1</kind>
             <string>dx = 0;
+
+h = 255;
+s = 255;
+v = 255;
+color = c_white;
+
+daytime = 0; //0 ... 100;
 </string>
           </argument>
         </arguments>
@@ -48,8 +55,28 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//bg sky
-draw_sprite_part(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0);
+            <string>//colors
+
+daytime = (daytime + .5) % 100;
+
+/*
+(morning,midday,afternoon,evening,night)
+r:
+g:
+b:
+*/
+    
+    
+
+
+//h = 0.0004 * power(daytime,2) + 0.32 * daytime - 8.3;
+color = make_color_rgb(r,g,b);
+
+if (global.state &gt; STATE_PAUSED)
+show_debug_message(string(daytime)+":"+string(h));
+
+//bg sky
+draw_sprite_part_ext(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
 
 if (global.state &gt; STATE_PAUSED)
 {
