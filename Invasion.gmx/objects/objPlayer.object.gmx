@@ -25,11 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>cx = x;
-cy = y;
-
-xVel = 0;
+            <string>xVel = 0;
 yVel = 0;
+yGrav = .05;
 
 dir = RIGHT;
 
@@ -37,11 +35,14 @@ xprev = x;
 yprev = y;
 
 angle = 0;
-
 spd = 0;
+
 path_start(global.path,0,path_action_restart,true);
 
-attackSpeed = 40;
+hp = global.hp;
+invincible = 0;
+
+attackSpeed = global.attackSpeed;
 delay = attackSpeed;
 
 //draw variables
@@ -83,6 +84,19 @@ fSpeed = 0;
     dir = sign(WIDTH/2-x);
 }
 
+if (global.state == STATE_GAMEOVER)
+{
+    fCur = 0;
+    state = DEAD;
+    angle = (angle+6) % 360;
+    yVel += yGrav;
+    x += xVel;
+    y += yVel;
+    
+    if (y &gt; HEIGHT+2*TILE)
+        instance_destroy();
+}
+
 if (global.state == STATE_PAUSED)
 {
     //spd = 0;
@@ -97,13 +111,21 @@ if (global.state == STATE_PLAY)
     xVel = (x-xprev);
     yVel = (y-yprev);
 
+    invincible = max(invincible - 1, 0);
+    if (hp &lt;= 0)
+    {
+        path_end();
+        xVel = 0;//-2+random(4);
+        yVel = -1;
+        global.state = STATE_GAMEOVER;
+    }
+    
     //cx = x - 3*xVel;
     //cy = y + .5*TILE;
-
     //dir = sign(x-xprev);
-    
     //angle = point_direction(x,y,xprev,yprev);
     //angle = 90 + point_direction(x,y,cx,cy);
+
     angle = 90 + point_direction(x,y,x+xVel,y+TILE);
 
     if (y-yprev &gt;  0) spd = min(spd+.04,2.5);
@@ -125,6 +147,9 @@ if (global.state == STATE_PLAY)
         var bulletSpeed = 4;
         var bulletGrav = .08;
         var proj = instance_create(bulX,bulY,objPlayerProjectile);
+        
+        instance_create(bulX,bulY,objEffect);
+        
         var shootAngle = point_direction(bulX,bulY,mouse_x,mouse_y);
         proj.yGrav = bulletGrav;
         proj.xVel = lengthdir_x(bulletSpeed,shootAngle);
@@ -200,9 +225,15 @@ switch(state)
     break;
     case ATTACK:
         fMin = 2;
-        fMax = 3;
+        fMax = 4;
         fSpeed = .2;
-        if (fCur &gt; fMax-fSpeed) state = IDLE;
+        if (frame &gt;= fMax-1) state = IDLE;
+    break;
+    case DEAD:
+        fCur = 4;
+        fMin = 0;
+        fMax = 4;
+        fSpeed = 0;
     break;
 }
 

@@ -13,6 +13,7 @@
     <sprite>sprites\sprAssets</sprite>
     <sprite>sprites\sprBackground</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprGfx</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
@@ -21,11 +22,15 @@
   <scripts name="scripts">
     <script>scripts\in.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fntHUD</font>
+  </fonts>
   <objects name="objects">
     <object>objects\objPlayer</object>
     <object>objects\objPlayerProjectile</object>
     <object>objects\objControl</object>
     <object>objects\objBackground</object>
+    <object>objects\objEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

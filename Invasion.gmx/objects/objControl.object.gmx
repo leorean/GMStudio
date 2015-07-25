@@ -8,6 +8,35 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//++++global variables (upgradeable etc.)++++
+global.hp = 5;
+global.dmg = 10;
+global.chain = 3;
+global.knockback = 2;
+global.magnet = 2*TILE;
+global.attackSpeed = 40;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -33,10 +62,9 @@ if (keyboard_check_pressed(ord('Q')))
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
-if (keyboard_check_pressed(ord('G')))
-    global.state = STATE_GAMEOVER;
-    
-show_debug_message(global.state);
+if (keyboard_check_pressed(ord('G')) &amp;&amp; !player.invincible)
+    player.hp = max(player.hp-1,0);
+    //global.state = STATE_GAMEOVER;
 
 if (keyboard_check_pressed(ord('P')))
 {
@@ -61,7 +89,7 @@ if (global.state == STATE_START)
         global.state = STATE_PLAY;
 }
 
-if (global.state == STATE_PLAY)
+if (global.state &gt; STATE_PAUSED)
 {
     global.timer = (global.timer+1) % INFINITE;
 }
@@ -121,14 +149,15 @@ player = instance_create(
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//draw_path(global.path,0,0,true);
+            <string>draw_set_color(c_black);
+draw_set_alpha(1);
+draw_set_font(fntHUD);
 
-/*for(i = 0; i &lt; path_get_length(global.path); i++)
-{
-    var px = path_get_point_x(global.path,i);
-    var py = path_get_point_y(global.path,i);
-    draw_sprite(sprPlayerProjectile,-1,px,py);
-}*/
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+
+if (instance_exists(player))
+    draw_text(0,0,string(player.hp)+"/"+string(global.hp));
 </string>
           </argument>
         </arguments>

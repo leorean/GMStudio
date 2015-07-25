@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>100</depth>
+  <depth>-50</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dx = 0;
+            <string>fCur = 0;
+fSpeed = .4;
+fMax = 5;
+frame = 0;
+type = 0;
 </string>
           </argument>
         </arguments>
@@ -48,32 +52,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//bg sky
-draw_sprite_part(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0);
-
-if (global.state &gt; STATE_PAUSED)
+            <string>if (global.state &gt; STATE_PAUSED)
 {
-    dx = (dx - .25) % WIDTH;
+    fCur += fSpeed;
+    frame = floor(fCur);
+    if (fCur &gt; fMax)
+        instance_destroy();
 }
-//bg moving clouds
-draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0);
-draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0);
-
-//bg scenery
-draw_sprite_part(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0);
-
-//rails/tracks
-switch(global.path)
-{
-    case p0:
-    draw_sprite(track0,-1,0,0);
-    //draw_set_color(c_black);
-    //draw_path(p0,0,0,true);
-    break;
-}
-
-//fg floor
-draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 30 &gt; 15),WIDTH,HEIGHT,0,0);
+    draw_sprite_part(sprGfx,-1,frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE,y-TILE);
 
 </string>
           </argument>
