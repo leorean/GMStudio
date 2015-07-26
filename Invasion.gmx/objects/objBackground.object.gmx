@@ -31,9 +31,9 @@
 //g = array(194,246,246,175,66,71,50,194);
 //b = array(164,255,255,69,113,89,50,164);
 
-r = array(244,173,173,187,187,151,151,246,051,059,172,244);
-g = array(194,215,215,246,246,185,185,066,071,051,050,194);
-b = array(164,255,255,255,255,253,253,113,089,089,050,164);
+r = array(244,173,173,187,187,151,151,246,051,051,059,059,172,244);
+g = array(194,215,215,246,246,185,185,066,071,071,051,051,050,194);
+b = array(164,255,255,255,255,253,253,113,089,089,089,089,050,164);
 
 color = c_white;
 
@@ -87,6 +87,30 @@ color = make_color_rgb(
 //bg sky
 draw_sprite_part_ext(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
 
+//++++sun and moon++++
+if (keyboard_check(ord('1'))) daytime=(daytime+1)%100;
+if (keyboard_check(ord('2'))) daytime=abs((daytime+100-1)%100);
+
+day_angle = 180 - 35 - clamp(daytime/200,0,1)*360;
+night_angle = - clamp((-30+daytime)/60,0,1)*360;
+
+var rad_day_angle = (day_angle/180)*pi;
+var rad_night_angle = (night_angle/180)*pi;
+
+sun_x = offx + (cos(rad_day_angle) * radius);
+sun_y = offy + (-sin(rad_day_angle) * radius);
+
+moon_x = offx + (cos(rad_night_angle) * radius);
+moon_y = offy + (-sin(rad_night_angle) * radius);
+
+drawShine(sun_x,sun_y,1);
+draw_sprite_part(sprGfx,-1,12*TILE,TILE,3*TILE,3*TILE,sun_x-1.5*TILE,sun_y-1.5*TILE);
+
+drawShine(moon_x,moon_y,.8);
+draw_sprite_part(sprGfx,-1,12*TILE,4*TILE,3*TILE,3*TILE,moon_x-1.5*TILE,moon_y-1.5*TILE);
+
+//++++
+
 if (global.state &gt; STATE_PAUSED)
 {
     dx = (dx - .25) % WIDTH;
@@ -116,24 +140,7 @@ switch(global.path)
 //fg floor
 draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 30 &gt; 15),WIDTH,HEIGHT,0,0);
 
-if (keyboard_check(vk_up)) daytime=(daytime+1)%100;
-if (keyboard_check(vk_down)) daytime=abs((daytime-1)%100);
-//++++sun and moon++++
-day_angle = 180 - 35 - clamp(daytime/220,0,1)*360;
-night_angle = - clamp((-50+daytime)/40,0,1)*360;
 
-var rad_day_angle = (day_angle/180)*pi;
-var rad_night_angle = (night_angle/180)*pi;
-
-sun_x = offx + (cos(rad_day_angle) * radius);
-sun_y = offy + (-sin(rad_day_angle) * radius);
-
-moon_x = offx + (cos(rad_night_angle) * radius);
-moon_y = offy + (-sin(rad_night_angle) * radius);
-
-draw_sprite_part(sprGfx,-1,12*TILE,TILE,3*TILE,3*TILE,sun_x-1.5*TILE,sun_y-1.5*TILE);
-draw_sprite_part(sprGfx,-1,12*TILE,4*TILE,3*TILE,3*TILE,moon_x-1.5*TILE,moon_y-1.5*TILE);
-//++++
 
 draw_text(0,TILE,daytime);
 

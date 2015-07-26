@@ -20,7 +20,7 @@
     <option_android_arch_mipsr2sf>false</option_android_arch_mipsr2sf>
     <option_android_arch_x86>True</option_android_arch_x86>
     <option_android_build_version>0</option_android_build_version>
-    <option_android_color_depth>0</option_android_color_depth>
+    <option_android_color_depth>1</option_android_color_depth>
     <option_android_display_name>Kraken</option_android_display_name>
     <option_android_google_analytics_enable>false</option_android_google_analytics_enable>
     <option_android_google_play>0</option_android_google_play>
