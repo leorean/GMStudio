@@ -33,7 +33,7 @@ global.knockback = 2;
 global.magnet = 2*TILE;
 global.attackSpeed = 40;
 
-surf = -1;
+surf = -1; //drawing surface
 </string>
           </argument>
         </arguments>
@@ -100,6 +100,31 @@ if (global.state &gt; STATE_PAUSED)
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Free Surface
+if (surface_exists(surf))
+    surface_free(surf);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="4">
       <action>
         <libid>1</libid>
@@ -151,17 +176,8 @@ player = instance_create(
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//++++SURFACE++++
-/*
-texture_set_interpolation(false);
-draw_set_alpha_test(false);
-//draw_surface_stretched(application_surface, 0, 0, display_get_width(), display_get_height());
-draw_set_alpha_test(true);
-*/
-
-//++++SHADER++++
+            <string>//++++SHADER++++
 shader_set(shader0);
-
 draw_clear(c_black);
 
 //++++SURFACE++++

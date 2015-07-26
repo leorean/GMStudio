@@ -27,12 +27,24 @@
             <kind>1</kind>
             <string>dx = 0;
 
-r = 255;
-g = 255;
-b = 255;
+//r = array(244,187,187,219,246,51,172,244);
+//g = array(194,246,246,175,66,71,50,194);
+//b = array(164,255,255,69,113,89,50,164);
+
+r = array(244,173,173,187,187,151,151,246,051,059,172,244);
+g = array(194,215,215,246,246,185,185,066,071,051,050,194);
+b = array(164,255,255,255,255,253,253,113,089,089,050,164);
+
 color = c_white;
 
 daytime = 0; //0 ... 100;
+day_angle = 0;
+night_angle = 0;
+radius = HEIGHT+4*TILE;
+sun_x = 0; sun_y = 0;
+moon_x = 0; moon_y = 0;
+offx = WIDTH/2;
+offy = HEIGHT + 4*TILE;
 
 
 surf = -1;
@@ -60,38 +72,18 @@ surf = -1;
             <kind>1</kind>
             <string>//++++SHADER++++
 shader_set(shader0);
-
 draw_clear(c_white);
 
-if (global.state &gt; STATE_PAUSED)
-    daytime = (daytime + .03) % 100;
+//++++DAYTIME EFFECTS++++
 
-r = array(244,187,187,219,246,51,172,244);
-g = array(194,246,246,175,66,71,50,194);
-b = array(164,255,255,69,113,89,50,164);
-
-/*r[0] = 244; g[0] = 194; b[0] = 164;
-r[1] = 166; g[1] = 232; b[1] = 244;
-r[2] = 75; g[2] = 218; b[2] = 235;
-r[3] = 234; g[3] = 108; b[3] = 185;
-r[4] = 67; g[4] = 46; b[4] = 94;
-r[5] = 74; g[5] = 106; b[5] = 138;
-r[6] = 244; g[6] = 194; b[6] = 164;
-*/
-//r = 5.03788 * power(d,4) - 57.6768 * power(d,3) + 211.659 * power(d,2)-283.074 * d + 251.695;
-//g = -1.09848 * power(d,4) + 21.4596 * power(d,3) - 114.78 * power(d,2) + 154.822 * d + 189.589;
-//b = -0.950758 * power(d,4) + 18.2702 * power(d,3) - 105.027 * power(d,2) + 178.911 *d + 161.444;
-
-//color = make_color_rgb(r,g,b);
+if (global.state == STATE_PLAY)
+    daytime = (daytime + .05) % 100;
 
 color = make_color_rgb(
     bspline3(daytime/100,array_length_1d(r),r),
     bspline3(daytime/100,array_length_1d(g),g),
     bspline3(daytime/100,array_length_1d(b),b));
     
-if (global.state &gt; STATE_PAUSED)
-    show_debug_message(string(daytime));
-
 //bg sky
 draw_sprite_part_ext(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
 
@@ -121,10 +113,29 @@ switch(global.path)
 
 //draw_set_blend_mode(bm_normal);
 
-
 //fg floor
 draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 30 &gt; 15),WIDTH,HEIGHT,0,0);
 
+if (keyboard_check(vk_up)) daytime=(daytime+1)%100;
+if (keyboard_check(vk_down)) daytime=abs((daytime-1)%100);
+//++++sun and moon++++
+day_angle = 180 - 35 - clamp(daytime/220,0,1)*360;
+night_angle = - clamp((-50+daytime)/40,0,1)*360;
+
+var rad_day_angle = (day_angle/180)*pi;
+var rad_night_angle = (night_angle/180)*pi;
+
+sun_x = offx + (cos(rad_day_angle) * radius);
+sun_y = offy + (-sin(rad_day_angle) * radius);
+
+moon_x = offx + (cos(rad_night_angle) * radius);
+moon_y = offy + (-sin(rad_night_angle) * radius);
+
+draw_sprite_part(sprGfx,-1,12*TILE,TILE,3*TILE,3*TILE,sun_x-1.5*TILE,sun_y-1.5*TILE);
+draw_sprite_part(sprGfx,-1,12*TILE,4*TILE,3*TILE,3*TILE,moon_x-1.5*TILE,moon_y-1.5*TILE);
+//++++
+
+draw_text(0,TILE,daytime);
 
 </string>
           </argument>

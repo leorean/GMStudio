@@ -78,7 +78,6 @@ fSpeed = 0;
 {
     x = path_get_point_x(0,global.path);
     y = path_get_point_y(0,global.path);
-    angle = 0;
     xVel = 0;
     yVel = 0;
     dir = sign(WIDTH/2-x);
@@ -99,10 +98,6 @@ if (global.state == STATE_GAMEOVER)
 
 if (global.state == STATE_PAUSED)
 {
-    //spd = 0;
-    //path_start(global.path,spd,
-    //path_end();
-    //path_start(global.path,0,path_action_restart,true);
     path_speed = 0;
 }
 
@@ -125,7 +120,6 @@ if (global.state == STATE_PLAY)
     //dir = sign(x-xprev);
     //angle = point_direction(x,y,xprev,yprev);
     //angle = 90 + point_direction(x,y,cx,cy);
-
     angle = 90 + point_direction(x,y,x+xVel,y+TILE);
 
     if (y-yprev &gt;  0) spd = min(spd+.04,2.5);
