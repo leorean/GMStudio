@@ -40,7 +40,7 @@ varying vec4 v_vColour;
 void main()
 {
     vec4 col = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
-    if (col.a < 0.5) discard;
+    //if (col.a < 0.5) discard;
     gl_FragColor = col;
 }
 

@@ -61,7 +61,7 @@ surf = -1;
             <string>//++++SHADER++++
 shader_set(shader0);
 
-//colors
+draw_clear(c_white);
 
 if (global.state &gt; STATE_PAUSED)
     daytime = (daytime + .03) % 100;
@@ -100,8 +100,12 @@ if (global.state &gt; STATE_PAUSED)
     dx = (dx - .25) % WIDTH;
 }
 //bg moving clouds
-draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0,1,1,color,1);
-draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0,1,1,color,1);
+
+draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0);
+draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0);
+
+draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0,1,1,color,.7);
+draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0,1,1,color,.7);
 
 //bg scenery
 draw_sprite_part_ext(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
