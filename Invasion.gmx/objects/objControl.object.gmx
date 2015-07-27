@@ -34,6 +34,14 @@ global.magnet = 2*TILE;
 global.attackSpeed = 40;
 
 surf = -1; //drawing surface
+
+global.shake = false;
+
+//++++private variables (routine etc.)++++
+spawnTimer = 0;
+maxSpawnTimer = 2*FPS;
+
+shakeTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -71,15 +79,7 @@ if (keyboard_check_pressed(ord('G')) &amp;&amp; !player.invincible)
 if (keyboard_check_pressed(ord('P')))
 {
     if (global.state == STATE_PLAY || global.state == STATE_PAUSED)
-    {
         global.state = -global.state;
-    }
-    /*
-    if (global.state == STATE_PAUSED)
-        global.state = STATE_PLAY;
-    if (global.state == STATE_PLAY)
-        global.state = STATE_PAUSED;
-    */
 }
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
@@ -94,6 +94,16 @@ if (global.state == STATE_START)
 if (global.state &gt; STATE_PAUSED)
 {
     global.timer = (global.timer+1) % INFINITE;
+}
+
+if (global.state == STATE_PLAY)
+{
+    spawnTimer = max(spawnTimer-1,0);
+    if (!spawnTimer)
+    {
+        instance_create(2*TILE,HEIGHT-20-2*TILE,objEnemy);
+        spawnTimer = maxSpawnTimer;
+    }
 }
 </string>
           </argument>
@@ -150,6 +160,10 @@ global.path = p0;
 
 background = instance_create(0,0,objBackground);
 
+instance_create(0,HEIGHT-20,objGround);
+instance_create(-WIDTH,HEIGHT-20,objGround);
+instance_create(WIDTH,HEIGHT-20,objGround);
+
 player = instance_create(
     path_get_point_x(0,global.path), path_get_point_y(0,global.path),
     objPlayer);
@@ -201,8 +215,10 @@ else
     //Disable alpha blending (not needed since we are drawing the whole view)
     draw_enable_alphablend(false);
     //Draw the surface stretched to the GUI layer
-    draw_surface_stretched(surf, d_offx, d_offy, display_get_gui_width(), display_get_gui_height());
-    //draw_surface_stretched(surf, 0, 0, display_get_width(), display_get_height());
+    if (os_type == os_windows)
+        draw_surface_stretched(surf, d_offx, d_offy, display_get_gui_width(), display_get_gui_height());
+    if (os_type == os_android)
+        draw_surface_stretched(surf, 0, 0, display_get_width(), display_get_height());
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);
 }
@@ -240,6 +256,25 @@ if (instance_exists(player))
     draw_text(0,0,string(player.hp)+"/"+string(global.hp));
     
 draw_text(0,HEIGHT-TILE,fps);
+
+
+//++++SHAKE SCREEN++++
+if (global.shake)
+{
+    immersion_play_effect(2);
+    shakeTimer = 5;
+    global.shake = false;
+}
+if (shakeTimer)
+{
+    shakeTimer = max(shakeTimer-1,0);
+    view_xview[0] = -1+random(2);
+    view_yview[0] = -1+random(2);
+} else
+{
+    view_xview[0] = 0;
+    view_yview[0] = 0;
+}
 </string>
           </argument>
         </arguments>

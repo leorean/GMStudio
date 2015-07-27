@@ -46,7 +46,7 @@ radius = HEIGHT+TILE;
 sun_x = 0; sun_y = 0;
 moon_x = 0; moon_y = 0;
 offx = WIDTH/2;
-offy = HEIGHT + 4*TILE;
+offy = HEIGHT + 3*TILE;
 
 
 surf = -1;

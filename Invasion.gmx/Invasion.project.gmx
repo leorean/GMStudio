@@ -14,6 +14,8 @@
     <sprite>sprites\sprBackground</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprGfx</sprite>
+    <sprite>sprites\mskEnemy</sprite>
+    <sprite>sprites\mskGround</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
@@ -32,16 +34,19 @@
     <font>fonts\fntHUD</font>
   </fonts>
   <objects name="objects">
+    <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objPlayerProjectile</object>
-    <object>objects\objControl</object>
     <object>objects\objBackground</object>
     <object>objects\objEffect</object>
+    <object>objects\objEnemy</object>
+    <object>objects\objGround</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="15">
+  <constants number="20">
+    <constant name="FPS">60</constant>
     <constant name="TILE">16</constant>
     <constant name="INFINITE">900000000</constant>
     <constant name="WIDTH">320</constant>
@@ -52,11 +57,15 @@
     <constant name="STATE_PLAY">1</constant>
     <constant name="STATE_START">2</constant>
     <constant name="STATE_GAMEOVER">3</constant>
-    <constant name="GROUND">160</constant>
     <constant name="IDLE">0</constant>
     <constant name="ATTACK">1</constant>
     <constant name="HURT">2</constant>
     <constant name="DEAD">3</constant>
+    <constant name="P_WALK">0</constant>
+    <constant name="P_JUMP">1</constant>
+    <constant name="P_FLYSIN">2</constant>
+    <constant name="P_FLYCIRCLE">3</constant>
+    <constant name="P_BOUNCE">4</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -30,6 +30,9 @@ yVel = 0;
 yGrav = .15;
 velMax = 100;
 
+dead = false;
+
+chain = 3;
 </string>
           </argument>
         </arguments>
@@ -62,7 +65,7 @@ velMax = 100;
     x += xVel;
     y += yVel;
     
-    if (y + yVel &gt; GROUND)
+    if (place_meeting(x,y,objGround) || dead)
     {
         var eff = instance_create(x,y,objEffect);
         eff.type = 1;
