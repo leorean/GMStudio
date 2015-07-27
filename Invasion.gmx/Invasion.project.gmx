@@ -45,7 +45,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="20">
+  <constants number="21">
     <constant name="FPS">60</constant>
     <constant name="TILE">16</constant>
     <constant name="INFINITE">900000000</constant>
@@ -61,6 +61,7 @@
     <constant name="ATTACK">1</constant>
     <constant name="HURT">2</constant>
     <constant name="DEAD">3</constant>
+    <constant name="WIN">4</constant>
     <constant name="P_WALK">0</constant>
     <constant name="P_JUMP">1</constant>
     <constant name="P_FLYSIN">2</constant>

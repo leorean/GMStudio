@@ -73,6 +73,14 @@ maxInvincible = 75;
             <kind>1</kind>
             <string>if (global.state &gt; STATE_PAUSED)
 {
+
+    if (global.state == STATE_GAMEOVER)
+    {
+        invincible = 0;
+        state = WIN;
+        xVel *= .9;
+    }
+    
     invincible = max(invincible-1,0);
 
     var onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
@@ -142,7 +150,7 @@ maxInvincible = 75;
         }
     }
     
-    if (state == HURT)
+    if (state == HURT || (state == DEAD &amp;&amp; !onGround))
     {
         if (chain&gt;0)
         {
@@ -158,7 +166,7 @@ maxInvincible = 75;
                 e.invincible = e.maxInvincible;
                 e.state = HURT;
 
-                e.chain = chain-1;
+                e.chain = max(chain-1,0);
                 chain = 0;
                 
 
