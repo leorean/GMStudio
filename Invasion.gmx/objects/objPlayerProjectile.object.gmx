@@ -32,7 +32,7 @@ velMax = 100;
 
 dead = false;
 
-chain = 2;
+chain = 3;
 </string>
           </argument>
         </arguments>

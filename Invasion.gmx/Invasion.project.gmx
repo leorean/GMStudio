@@ -16,6 +16,7 @@
     <sprite>sprites\sprGfx</sprite>
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskGround</sprite>
+    <sprite>sprites\sprEnemies</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">

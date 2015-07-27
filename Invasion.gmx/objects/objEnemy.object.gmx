@@ -26,7 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>spd = .2;
-hp = 16;
+maxHp = 16;
+hp = maxHp;
 lvl = 1;
 kb = 1.5;
 
@@ -34,6 +35,8 @@ proj = noone;
 
 chain = 0;
 hurt = false;
+
+onGround = false;
 
 xVel = 0;
 yVel = 0;
@@ -43,12 +46,15 @@ dir = RIGHT;
 state = IDLE;
 statePrev = state;
 
-pattern = P_WALK;
+pattern = P_WALK; //behaviour
+type = 0; //looks
 
 loot = 1; //amount of coins
 
 invincible = 0;
 maxInvincible = 75;
+
+frame = 0;
 </string>
           </argument>
         </arguments>
@@ -83,10 +89,10 @@ maxInvincible = 75;
     
     invincible = max(invincible-1,0);
 
-    var onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
+    onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
     var proj = instance_place(x,y,objPlayerProjectile);
     
-    if (hp &lt;= 0)
+    if (hp &lt;= 0 &amp;&amp; !invincible)
         state = DEAD;
 
     if (state == DEAD)
@@ -117,7 +123,7 @@ maxInvincible = 75;
             //hurt self
             var angle = point_direction(proj.x,proj.y,x,y);
             xVel = lengthdir_x(kb,angle);
-            yVel = lengthdir_y(kb,angle);
+            yVel = -kb;//lengthdir_y(kb,angle)-kb-1;
             hp = max(hp-global.dmg,0);
             invincible = maxInvincible;
             state = HURT;
@@ -152,7 +158,7 @@ maxInvincible = 75;
     
     if (state == HURT || (state == DEAD &amp;&amp; !onGround))
     {
-        if (chain&gt;0)
+        if (max(abs(xVel),abs(yVel))&gt;1 &amp;&amp; chain&gt;0)
         {
             var e = instance_place(x,y,objEnemy);
             if (instance_exists(e) &amp;&amp; !e.invincible &amp;&amp; e.state != DEAD)
@@ -160,9 +166,11 @@ maxInvincible = 75;
                 //hurt others
                 
                 var angle = point_direction(x,y,e.x,e.y);
-                e.xVel = lengthdir_x(kb,angle);
-                e.yVel = lengthdir_y(kb,angle);
-                e.hp = max(e.hp-global.dmg,0);
+                var pow = .9*max(abs(xVel),abs(yVel));
+                
+                e.xVel = lengthdir_x(pow,angle);
+                e.yVel = lengthdir_y(pow,angle);
+                e.hp = max(e.hp-floor(global.dmg*.3),0);
                 e.invincible = e.maxInvincible;
                 e.state = HURT;
 
@@ -219,8 +227,30 @@ maxInvincible = 75;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (invincible%3==0)
-    draw_self();
+            <string>//if (invincible%3==0)
+//    draw_self();
+switch(state)
+{
+    case IDLE:
+        frame = (global.timer % 30 &gt; 15);
+    break;
+    case HURT:
+        frame = 2;
+    break;
+    case DEAD:
+        frame = 2+onGround;
+    break;
+    case WIN:
+        frame = 4;
+    break;
+}
+
+if (invincible)
+{
+    draw_text(x,y-TILE,string(hp)+"/"+string(maxHp));
+    
+}
+draw_sprite_part_ext(sprEnemies,-1,frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE+2*(dir==LEFT)*TILE,y-TILE,-1+2*(dir==RIGHT),1,c_white,1);
 </string>
           </argument>
         </arguments>
