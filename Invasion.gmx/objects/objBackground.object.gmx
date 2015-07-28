@@ -53,6 +53,30 @@ surf = -1;
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (sprite_exists(sprTrack))
+    sprite_delete(sprTrack);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
@@ -97,24 +121,69 @@ shader_set(shader0);
 draw_clear(c_black);
 
 //++++TRACK GENERATION++++
+//generate tracks from path points, once per level, and save it to a sprite
 if (sprTrack == -1)
 {
-    var tmpSurf;
+    var tmpSurf,p;
+    p = global.path;
     tmpSurf = surface_create(view_wview[0], view_hview[0]);
     surface_set_target(tmpSurf);
     view_surface_id[0] = tmpSurf;
     draw_clear_alpha(c_black, 0);
+    
+    
+    var minPx = WIDTH; var maxPx = 0;
+    var minPxh = 0; var maxPxh = 0;
+    
+    var px = WIDTH/2;
+    var py = HEIGHT/2;
+    
     var prec = 200;
+    
+    //calculate features
     for(i = 0;i&lt;prec;i++)
     {
-        var segAng = point_direction(
-            path_get_x(p0,i/prec),path_get_y(p0,i/prec),
-            path_get_x(p0,max(i-1,0)/prec),path_get_y(p0,max(i-1,0)/prec));
-        draw_sprite_ext(sprSeg,-1,path_get_x(p0,i/prec),path_get_y(p0,i/prec),1,1,segAng,c_white,1);
-        //draw_point_color(path_get_x(p0,i/prec),path_get_y(p0,i/prec),c_white);
+        px = path_get_x(p,i/prec);
+        py = path_get_y(p,i/prec);
+        
+        if (path_get_x(p,i/prec) &lt; minPx) minPx = path_get_x(p,i/prec);
+        if (minPx == path_get_x(p,i/prec)) minPxh = path_get_y(p,i/prec);
+    
+        if (path_get_x(p,i/prec) &gt; maxPx) maxPx = path_get_x(p,i/prec);
+        if (maxPx == path_get_x(p,i/prec)) maxPxh = path_get_y(p,i/prec);
+        
     }
     
-    //draw_surface_stretched(tmpSurf, 0,0, display_get_gui_width(), display_get_gui_height());
+    //draw pillars
+    var j = minPxh;
+    while (j &lt; HEIGHT)
+    {
+        draw_sprite_ext(sprSeg,1,minPx,j,1,1,0,c_white,1);
+        j += 5;
+    }
+    var k = maxPxh;    
+    while (k &lt; HEIGHT)
+    {
+        draw_sprite_ext(sprSeg,1,maxPx,k,1,1,0,c_white,1);
+        k += 5;
+    }
+    
+    //draw rails
+    for(i = 0;i&lt;prec;i++)
+    {
+        px = path_get_x(p,i/prec);
+        py = path_get_y(p,i/prec);
+        var segAng = point_direction(
+            px,py,
+            path_get_x(p,max(i-1,0)/prec),path_get_y(p,max(i-1,0)/prec));
+        
+        draw_sprite_ext(sprSeg,0,px,py,1,1,segAng,c_white,1);
+
+        //draw_point_color(path_get_x(p0,i/prec),path_get_y(p0,i/prec),c_white);
+    }
+            
+    //++++generate image++++
+    
     draw_surface(tmpSurf,0,0);
     sprTrack = sprite_create_from_surface(tmpSurf,0,0,view_wview[0],view_hview[0],true,false,0,0);
     
