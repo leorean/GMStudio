@@ -26,6 +26,7 @@
     <script>scripts\bspline3.gml</script>
     <script>scripts\array.gml</script>
     <script>scripts\drawShine.gml</script>
+    <script>scripts\shootBullet.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -37,6 +38,7 @@
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objPlayerProjectile</object>
+    <object>objects\objAnchorProjectile</object>
     <object>objects\objBackground</object>
     <object>objects\objEffect</object>
     <object>objects\objEnemy</object>

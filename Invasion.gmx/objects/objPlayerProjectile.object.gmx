@@ -29,12 +29,17 @@
 ty = 0;
 xVel = 0;
 yVel = 0;
-yGrav = .15;
+yGrav = .08;
 velMax = 100;
 
 dead = false;
 
 chain = 3;
+
+//WURZEL(-B1*(B4-B2)^2/(2*(B5-B3)*COS(B7)^2-SIN(2*B7)*(B4-B2)))
+//b1 =g, b2 = x, b3 = y, b4 = tx, b5 = ty, b6 = angle, b7 = rad_angle, b8 = v0
+//v0 = sqrt (-yGrav*power(tx - x,2)/(2*(ty-y)*power(cos(degtorad(angle)),2)-sin(2*degtorad(angle))*(tx-x)));
+v0 = -9999;
 </string>
           </argument>
         </arguments>
@@ -59,11 +64,18 @@ chain = 3;
             <kind>1</kind>
             <string>if (global.state &gt; STATE_PAUSED)
 {
+    if (v0 == -9999)
+    {
+        //angle = point_direction(x,y,tx,ty);
+        //v0 = sqrt(abs(-yGrav*power(tx - x,2)/(2*(ty-y)*power(cos(degtorad(angle)),2)-sin(2*degtorad(angle))*(tx-x))));
+        //xVel = lengthdir_x(v0,angle);
+        //yVel = lengthdir_y(v0,angle);        
+    }
+        
     yVel += yGrav;
     
     xVel = sign(xVel)*min(abs(xVel),velMax);
     yVel = sign(yVel)*min(abs(yVel),velMax);
-    
     x += xVel;
     y += yVel;
     

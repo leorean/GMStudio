@@ -211,12 +211,16 @@ else
     var d_offx = 0; var d_offy = 0;
     //d_offx = -abs(display_get_gui_width() - view_wport[0]);
     //d_offy = -abs(display_get_gui_height() - view_hport[0]);
-    
+    d_offx = surface_get_width(surf) / 2;
+    d_offy = surface_get_height(surf) / 2;
     //Disable alpha blending (not needed since we are drawing the whole view)
     draw_enable_alphablend(false);
     //Draw the surface stretched to the GUI layer
-    draw_surface_stretched(surf, d_offx, d_offy, display_get_gui_width(), display_get_gui_height());
-    //draw_surface_stretched(surf, 0, 0, display_get_width(), display_get_height());
+    //if (os_type == os_windows)
+    //    draw_surface_stretched(surf, d_offx, d_offy, display_get_gui_width(), display_get_gui_height());
+    //if (os_type == os_android)
+    draw_surface_stretched(surf, 0, 0, window_get_width(),window_get_height());
+
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);
 }
