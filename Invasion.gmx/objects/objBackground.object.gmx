@@ -27,9 +27,7 @@
             <kind>1</kind>
             <string>dx = 0;
 
-//r = array(244,187,187,219,246,51,172,244);
-//g = array(194,246,246,175,66,71,50,194);
-//b = array(164,255,255,69,113,89,50,164);
+sprTrack = -1;
 
 r = array(244,173,173,187,187,151,151,246,051,051,059,059,172,244);
 g = array(194,215,215,246,246,185,185,066,071,071,051,051,050,194);
@@ -55,6 +53,28 @@ surf = -1;
         </arguments>
       </action>
     </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -74,7 +94,33 @@ surf = -1;
             <kind>1</kind>
             <string>//++++SHADER++++
 shader_set(shader0);
-draw_clear(c_white);
+draw_clear(c_black);
+
+//++++TRACK GENERATION++++
+if (sprTrack == -1)
+{
+    var tmpSurf;
+    tmpSurf = surface_create(view_wview[0], view_hview[0]);
+    surface_set_target(tmpSurf);
+    view_surface_id[0] = tmpSurf;
+    draw_clear_alpha(c_black, 0);
+    var prec = 200;
+    for(i = 0;i&lt;prec;i++)
+    {
+        var segAng = point_direction(
+            path_get_x(p0,i/prec),path_get_y(p0,i/prec),
+            path_get_x(p0,max(i-1,0)/prec),path_get_y(p0,max(i-1,0)/prec));
+        draw_sprite_ext(sprSeg,-1,path_get_x(p0,i/prec),path_get_y(p0,i/prec),1,1,segAng,c_white,1);
+        //draw_point_color(path_get_x(p0,i/prec),path_get_y(p0,i/prec),c_white);
+    }
+    
+    //draw_surface_stretched(tmpSurf, 0,0, display_get_gui_width(), display_get_gui_height());
+    draw_surface(tmpSurf,0,0);
+    sprTrack = sprite_create_from_surface(tmpSurf,0,0,view_wview[0],view_hview[0],true,false,0,0);
+    
+    surface_reset_target();
+    surface_free(tmpSurf);
+}
 
 //++++DAYTIME EFFECTS++++
 
@@ -84,7 +130,8 @@ if (global.state == STATE_PLAY)
 color = make_color_rgb(
     bspline3(daytime/100,array_length_1d(r),r),
     bspline3(daytime/100,array_length_1d(g),g),
-    bspline3(daytime/100,array_length_1d(b),b));
+    bspline3(daytime/100,array_length_1d(b),b)
+);
     
 //bg sky
 draw_sprite_part_ext(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
@@ -129,18 +176,25 @@ draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0,1,1,colo
 draw_sprite_part_ext(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
 
 //rails/tracks
+
+if (sprite_exists(sprTrack))
+    draw_sprite(sprTrack,-1,0,0);
+
 switch(global.path)
 {
     case p0:
+    /*
     draw_sprite(track0,-1,0,0);
     draw_sprite_ext(track0,-1,0,0,1,1,0,color,.6);
+    */
+        //draw_path(p0,0,0,true);
     break;
 }
 
 //draw_set_blend_mode(bm_normal);
 
 //fg floor
-draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 30 &gt; 15),WIDTH,HEIGHT,0,0);
+draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 40 &gt; 20),WIDTH,HEIGHT,0,0);
 
 
 

@@ -34,7 +34,7 @@ dir = RIGHT;
 xprev = x;
 yprev = y;
 
-angle = 0;
+angle = 360;
 spd = 0;
 
 path_start(global.path,0,path_action_restart,true);
@@ -81,6 +81,8 @@ fSpeed = 0;
     y = path_get_point_y(0,global.path);
     xVel = 0;
     yVel = 0;
+    xprev = x;
+    yprev = y;
     dir = sign(WIDTH/2-x);
 }
 
@@ -120,9 +122,15 @@ if (global.state == STATE_PLAY)
     //cy = y + .5*TILE;
     //dir = sign(x-xprev);
     //angle = point_direction(x,y,xprev,yprev);
-    //angle = 90 + point_direction(x,y,cx,cy);
-    angle = 90 + point_direction(x,y,x+xVel,y+TILE);
+    var pa = point_direction(x,y,x-xVel,y+.5*TILE);
+    if (in(pa,250,290))
+        angle = 90 + pa;
+    //angle = clamp(360 + ((90 + point_direction(x,y,x+xVel,y+.5*TILE)) % 360),330,390);
 
+    //angle = angleGoal;
+    //angle = clamp(90 + point_direction(x,y,x+xVel,y+TILE),340,370);
+    show_debug_message(point_direction(x,y,x-xVel,y+.5*TILE));
+    
     if (y-yprev &gt;  0) spd = min(spd+.04,2.5);
     if (y-yprev &lt;  0) spd = max(spd-.01,1);
     
@@ -145,11 +153,14 @@ if (global.state == STATE_PLAY)
         
         instance_create(bulX,bulY,objEffect);
         
-        var shootAngle = point_direction(bulX,bulY,mouse_x,mouse_y);
+        //var shootAngle = point_direction(bulX,bulY,mouse_x,mouse_y);
+        proj.tx = mouse_x;
+        proj.ty = mouse_y;
+        /*
         proj.yGrav = bulletGrav;
         proj.xVel = lengthdir_x(bulletSpeed,shootAngle);
         proj.yVel = lengthdir_y(bulletSpeed,shootAngle);
-        
+        */
         state = ATTACK;
         /*
         var shootAngle = point_direction(px,py,mouse_x,mouse_y);

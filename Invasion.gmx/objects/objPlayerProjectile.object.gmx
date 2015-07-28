@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = 0;
+            <string>tx = 0;
+ty = 0;
+xVel = 0;
 yVel = 0;
 yGrav = .15;
 velMax = 100;

@@ -10,17 +10,18 @@
     <sprite>sprites\sprGear</sprite>
     <sprite>sprites\mskPlayerProjectile</sprite>
     <sprite>sprites\track0</sprite>
-    <sprite>sprites\sprAssets</sprite>
     <sprite>sprites\sprBackground</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprGfx</sprite>
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskGround</sprite>
-    <sprite>sprites\sprEnemies</sprite>
+    <sprite>sprites\sprEnemy</sprite>
+    <sprite>sprites\sprSeg</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
     <path>paths\p0</path>
+    <path>paths\path1</path>
   </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>

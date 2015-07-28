@@ -86,13 +86,13 @@ frame = 0;
         state = WIN;
         xVel *= .9;
     }
-    
+
     invincible = max(invincible-1,0);
 
     onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
     var proj = instance_place(x,y,objPlayerProjectile);
     
-    if (hp &lt;= 0 &amp;&amp; !invincible)
+    if (hp &lt;= 0 &amp;&amp; onGround)
         state = DEAD;
 
     if (state == DEAD)
@@ -113,7 +113,7 @@ frame = 0;
         
     }
         
-    if (!invincible)
+    if (hp &gt; 0)
     {
         if (instance_exists(proj) &amp;&amp; !proj.dead)
         {
@@ -241,16 +241,19 @@ switch(state)
         frame = 2+onGround;
     break;
     case WIN:
-        frame = 4;
+        frame = 4 + (global.timer % 30 &gt; 15);
     break;
 }
 
 if (invincible)
 {
-    draw_text(x,y-TILE,string(hp)+"/"+string(maxHp));
+    draw_sprite_part(sprGfx,-1,13*TILE,0,TILE,4,x-.5*TILE,y-TILE);
+    draw_sprite_part(sprGfx,-1,13*TILE,4,TILE*(hp/maxHp),4,x-.5*TILE,y-TILE);
+    
+    //draw_text(x,y-TILE,string(hp)+"/"+string(maxHp));
     
 }
-draw_sprite_part_ext(sprEnemies,-1,frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE+2*(dir==LEFT)*TILE,y-TILE,-1+2*(dir==RIGHT),1,c_white,1);
+draw_sprite_part_ext(sprEnemy,-1,frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-TILE+2*(dir==LEFT)*TILE,y-TILE,-1+2*(dir==RIGHT),1,c_white,1);
 </string>
           </argument>
         </arguments>

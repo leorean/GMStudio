@@ -69,7 +69,7 @@ shakeTimer = 0;
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
 
-if (keyboard_check_pressed(ord('R')))
+if (keyboard_check_pressed(ord('R'))|| (global.state == STATE_GAMEOVER &amp;&amp; mouse_check_button_pressed(mb_left)))
     room_restart();
 
 if (keyboard_check_pressed(ord('G')) &amp;&amp; !player.invincible)
@@ -215,10 +215,8 @@ else
     //Disable alpha blending (not needed since we are drawing the whole view)
     draw_enable_alphablend(false);
     //Draw the surface stretched to the GUI layer
-    if (os_type == os_windows)
-        draw_surface_stretched(surf, d_offx, d_offy, display_get_gui_width(), display_get_gui_height());
-    if (os_type == os_android)
-        draw_surface_stretched(surf, 0, 0, display_get_width(), display_get_height());
+    draw_surface_stretched(surf, d_offx, d_offy, display_get_gui_width(), display_get_gui_height());
+    //draw_surface_stretched(surf, 0, 0, display_get_width(), display_get_height());
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);
 }
