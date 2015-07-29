@@ -18,6 +18,8 @@
     <sprite>sprites\sprSeg</sprite>
     <sprite>sprites\mskPillar</sprite>
     <sprite>sprites\mskPixel</sprite>
+    <sprite>sprites\sprConstruct</sprite>
+    <sprite>sprites\sprConstructDelete</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
