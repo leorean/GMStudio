@@ -122,8 +122,8 @@ if (global.state == STATE_PLAY)
     if (in(pa,250,290))
         angle = 90 + pa;
     
-    if (y-yprev &gt;  0) spd = min(spd+.04,2.5);
-    if (y-yprev &lt;  0) spd = max(spd-.01,1);
+    if (y-yprev &gt;  0) spd = min(spd+.05,3);
+    if (y-yprev &lt;  0) spd = max(spd-.02,1);
     
     path_speed = -spd;
     

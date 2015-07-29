@@ -16,6 +16,8 @@
     <sprite>sprites\mskGround</sprite>
     <sprite>sprites\sprEnemy</sprite>
     <sprite>sprites\sprSeg</sprite>
+    <sprite>sprites\mskPillar</sprite>
+    <sprite>sprites\mskPixel</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
@@ -43,6 +45,7 @@
     <object>objects\objEffect</object>
     <object>objects\objEnemy</object>
     <object>objects\objGround</object>
+    <object>objects\objPillar</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
