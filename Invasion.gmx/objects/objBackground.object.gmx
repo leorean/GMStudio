@@ -106,14 +106,10 @@ if (sprTrack == -1)
     
     var tmpSurf,p;
     p = global.path;
-    tmpSurf = surface_create(view_wview[0], view_hview[0]);
+    tmpSurf = surface_create(global.w,global.h);
     surface_set_target(tmpSurf);
     view_surface_id[0] = tmpSurf;
     draw_clear_alpha(c_black, 0);
-    
-    
-    var minPx = WIDTH; var maxPx = 0;
-    var minPxh = 0; var maxPxh = 0;
     
     var px = WIDTH/2;
     var py = HEIGHT/2;
@@ -121,7 +117,8 @@ if (sprTrack == -1)
     var prec = 200; var spread = 5;
 
     var prevPillarX = 0;
-    //calculate features
+    
+    //draw pillars
     for(i = 0;i&lt;prec;i++)
     {
         px = path_get_x(p,i/prec);
@@ -130,46 +127,47 @@ if (sprTrack == -1)
         var segAng = point_direction(
             px,py,
             path_get_x(p,max(i-1,0)/prec),path_get_y(p,max(i-1,0)/prec));
-        
-        if (path_get_x(p,i/prec) &lt; minPx) minPx = path_get_x(p,i/prec);
-        if (minPx == path_get_x(p,i/prec)) minPxh = path_get_y(p,i/prec);
-    
-        if (path_get_x(p,i/prec) &gt; maxPx) maxPx = path_get_x(p,i/prec);
-        if (maxPx == path_get_x(p,i/prec)) maxPxh = path_get_y(p,i/prec);
 
         if (i &gt; 0 &amp;&amp; i &lt; prec
             &amp;&amp; (!instance_exists(instance_place(px,py,objPillar)))
         )
         {
-            instance_create(px,0,objPillar);
+            //for (var k = px-2*size;k&lt;=px+2*size;k+=size)
+                //instance_create(k,0+py/3,objPillar);
+            var pillar = instance_create(px,0+py/3,objPillar);
+            pillar.py = py;
             prevPillarX = px;
-            var j = py;
+            
+            //T-top bar
+            draw_sprite_ext(sprSeg,1,px-size,py,1,1,0,c_white,1);
+            draw_sprite_ext(sprSeg,2,px,py,1,1,0,c_white,1);
+            draw_sprite_ext(sprSeg,3,px+size,py,1,1,0,c_white,1);
+            
+            //T-Top bar shadow
+            draw_sprite_ext(sprSeg,4,px,py+size,1,1,0,c_white,1);
+        
+            var j = py+2*size;
+            var hor = py + ((i % 15)+4)*size;
             while (j &lt; HEIGHT)
             {
-                draw_sprite_ext(sprSeg,2,px,j,1,1,0,c_white,1);
+                //vertical bar
+                draw_sprite_ext(sprSeg,5,px,j,1,1,0,c_white,1);
+
+                //horizontal bar
+                if (j % (8*size) &lt; size)
+                {
+                    for (var k = px-1*size;k&lt;=px+1*size;k+=size)
+                    {
+                        draw_sprite_ext(sprSeg,6,k,(j div size)*size,1,1,0,c_white,1);
+                    }
+                    //cross-section
+                    draw_sprite_ext(sprSeg,7,px,(j div size)*size,1,1,0,c_white,1);
+                }
                 j += size;        
             }
         }
-        
-        //draw_sprite_ext(sprSeg,0,px,py,1,1,segAng,c_white,1);
-
     }
     with(objPillar) instance_destroy();
-    
-    //draw pillars
-    
-    var j = minPxh+size/2;
-    while (j &lt; HEIGHT)
-    {
-        draw_sprite_ext(sprSeg,1,minPx,j,1,1,0,c_white,1);
-        j += size;
-    }
-    var k = maxPxh+size/2;    
-    while (k &lt; HEIGHT)
-    {
-        draw_sprite_ext(sprSeg,1,maxPx,k,1,1,0,c_white,1);
-        k += size;
-    }
     
     //draw rails
     for(i = 0;i&lt;prec;i++)
@@ -181,7 +179,7 @@ if (sprTrack == -1)
             path_get_x(p,max(i-1,0)/prec),path_get_y(p,max(i-1,0)/prec));
         
         draw_sprite_ext(sprSeg,0,px,py,1,1,segAng,c_white,1);
-        draw_sprite_ext(sprSeg,3,px,py,1,1,0,c_white,1);
+        //draw_sprite_ext(sprSeg,3,px,py,1,1,0,c_white,1);
 
         //draw_point_color(path_get_x(p0,i/prec),path_get_y(p0,i/prec),c_white);
     }
@@ -189,7 +187,7 @@ if (sprTrack == -1)
     //++++generate image++++
     
     draw_surface(tmpSurf,0,0);
-    sprTrack = sprite_create_from_surface(tmpSurf,0,0,view_wview[0],view_hview[0],true,false,0,0);
+    sprTrack = sprite_create_from_surface(tmpSurf,0,0,global.w,global.h,true,false,0,0);
     
     surface_reset_target();
     surface_free(tmpSurf);
