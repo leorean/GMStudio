@@ -117,7 +117,7 @@ if (sprTrack == -1)
     var px = WIDTH/2;
     var py = HEIGHT/2;
     
-    var prec = 200;
+    var prec = 300;
     var dPrec = 1000;
     
     var prevPillarX = 0;
@@ -155,7 +155,16 @@ if (sprTrack == -1)
         {
             for (k = mpy[i];k&lt;HEIGHT;k+=s)
             {
-                draw_sprite_ext(sprSeg,5,i,k,1,1,0,c_white,1);  
+                if (k == mpy[i])
+                {
+                    draw_sprite_ext(sprSeg,1,i-s,k,1,1,0,c_white,1);        
+                    draw_sprite_ext(sprSeg,2,i,k,1,1,0,c_white,1);        
+                    draw_sprite_ext(sprSeg,3,i+s,k,1,1,0,c_white,1);        
+                }
+                else if (k == mpy[i]+s)
+                    draw_sprite_ext(sprSeg,4,i,k,1,1,0,c_white,1);
+                else
+                    draw_sprite_ext(sprSeg,5,i,k,1,1,0,c_white,1);  
             }
         }
     }
