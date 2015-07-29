@@ -111,9 +111,6 @@ if (sprTrack == -1)
     view_surface_id[0] = tmpSurf;
     draw_clear_alpha(c_black, 0);
     
-    draw_set_alpha(1);
-    draw_set_color(c_white);
-    
     var px = WIDTH/2;
     var py = HEIGHT/2;
     
@@ -131,6 +128,7 @@ if (sprTrack == -1)
             
             px = floor(path_get_x(p,i/dPrec));
             py = floor(path_get_y(p,i/dPrec));
+            
             if (j == 0)
             {
                 mpy[i] = HEIGHT;
@@ -150,75 +148,18 @@ if (sprTrack == -1)
     }
     for (i = 1; i &lt; WIDTH-1;i++)
     {
-        if ((abs(mpy[i-1] - mpy[i]) &gt; 1*s)
-        || (abs(mpy[i+1] - mpy[i]) &gt; 1*s))
+        if ((abs(mpy[i-1] - mpy[i]) &gt; 5*s)
+        || (abs(mpy[i+1] - mpy[i]) &gt; 5*s))
         {
             for (k = mpy[i];k&lt;HEIGHT;k+=s)
             {
                 if (k == mpy[i])
-                {
-                    draw_sprite_ext(sprSeg,1,i-s,k,1,1,0,c_white,1);        
                     draw_sprite_ext(sprSeg,2,i,k,1,1,0,c_white,1);        
-                    draw_sprite_ext(sprSeg,3,i+s,k,1,1,0,c_white,1);        
-                }
-                else if (k == mpy[i]+s)
-                    draw_sprite_ext(sprSeg,4,i,k,1,1,0,c_white,1);
                 else
-                    draw_sprite_ext(sprSeg,5,i,k,1,1,0,c_white,1);  
+                    draw_sprite_ext(sprSeg,3,i,k,1,1,0,c_white,1);  
             }
         }
     }
-    
-    /*for (i = 0; i &lt; dPrec;i++)
-    {
-        px = path_get_x(p,i/dPrec);
-        py = path_get_y(p,i/dPrec);
-        draw_sprite(sprConstructDelete,0,px,py);
-    }*/
-    /*
-    for (i = 0; i &lt; dPrec;i++)
-    {
-        px = (path_get_x(p,i/dPrec) div size * size);
-        py = floor(path_get_y(p,i/dPrec));
-        mpy[px] = HEIGHT;
-    }
-    for (i = 0; i &lt; dPrec;i++)
-    {
-        px = (path_get_x(p,i/dPrec) div size * size);
-        py = floor(path_get_y(p,i/dPrec));
-        mpy[px] = min(py,mpy[px]);
-    }
-    
-    for(i = 0;i&lt;dPrec;i++)
-    {
-        px = (path_get_x(p,i/dPrec) div size * size);
-        py = floor(path_get_y(p,i/dPrec));
-        
-        if (px % (5*size) == 0 &amp;&amp; py == mpy[px])//!instance_exists(instance_place(px,py,objPillar)))
-        {
-            //mpy[px] = min(py,mpy[px]);
-
-            //instance_create(px,0,objPillar);
-            
-            for (j = py; j &lt; HEIGHT; j+=size)
-            {
-            
-                if (j == py)
-                {
-                    draw_sprite_ext(sprSeg,1,px-size,j,1,1,0,c_white,1);        
-                    draw_sprite_ext(sprSeg,2,px,j,1,1,0,c_white,1);        
-                    draw_sprite_ext(sprSeg,3,px+size,j,1,1,0,c_white,1);        
-                }
-                else if (j == py+size)
-                    draw_sprite_ext(sprSeg,4,px,j,1,1,0,c_white,1);        
-                else
-                    draw_sprite_ext(sprSeg,5,px,j,1,1,0,c_white,1);  
-        
-                if (j % (6*size) &lt; size)
-                    draw_sprite_ext(sprSeg,7,px,(j div size)*size,1,1,0,c_white,1);  
-            }
-        }
-    }*/
     
     //draw rails
     for(i = 0;i&lt;prec;i++)
@@ -230,9 +171,12 @@ if (sprTrack == -1)
             path_get_x(p,max(i-1,0)/prec),path_get_y(p,max(i-1,0)/prec));
         
         draw_sprite_ext(sprSeg,0,px,py,1,1,segAng,c_white,1);
+
+        if (i % 5  == 0)
+            draw_sprite_ext(sprSeg,1,px,py,1,1,segAng,c_white,1);
     }
             
-    //++++generate image++++
+    //++++generate final image++++
     
     draw_surface(tmpSurf,0,0);
     sprTrack = sprite_create_from_surface(tmpSurf,0,0,global.w,global.h,true,false,0,0);
@@ -297,8 +241,12 @@ draw_sprite_part_ext(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
 //track
 if (sprite_exists(sprTrack))
 {
-    //draw_sprite_ext(sprTrack,-1,0,0,1,1,0,c_white,1);
-    draw_sprite_ext(sprTrack,-1,0,0,1,1,0,c_white,1);
+    //could also use bm_zero
+    draw_sprite_ext(sprTrack,-1,0,.5*TILE,1,1,0,color,1);
+    draw_set_blend_mode(bm_add);
+    draw_sprite_ext(sprTrack,-1,0,.5*TILE,1,1,0,c_white,.3);
+    draw_set_blend_mode(bm_normal);
+    
 }
 
 switch(global.path)
