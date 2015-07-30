@@ -7,18 +7,18 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>3</bbox_left>
-  <bbox_right>14</bbox_right>
+  <bbox_left>1</bbox_left>
+  <bbox_right>16</bbox_right>
   <bbox_top>2</bbox_top>
-  <bbox_bottom>18</bbox_bottom>
+  <bbox_bottom>17</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>2</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>17</width>
-  <height>19</height>
+  <width>18</width>
+  <height>18</height>
   <frames>
     <frame index="0">images\sprFntHud_0.png</frame>
     <frame index="1">images\sprFntHud_1.png</frame>

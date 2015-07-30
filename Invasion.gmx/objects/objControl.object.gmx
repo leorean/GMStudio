@@ -42,8 +42,8 @@ surf = -1; //drawing surface
 global.shake = false;
 
 //global.fntSPG = font_add_sprite_ext(sprFntSpg, "abcdefghijklmnopqrstuvwxyz!?:;.,$ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-/",true, -1);
-global.fntHUDsmall = font_add_sprite(sprFntHudSmall,ord('!'),true,0);
-global.fntHUD = font_add_sprite(sprFntHud,ord('!'),true,0);
+global.fntHudTiny = font_add_sprite(sprFntHudTiny,ord('!'),true,1);
+global.fntHudSmall = font_add_sprite(sprFntHudSmall,ord(' '),true,1);
 
 
 //++++private variables (routine etc.)++++

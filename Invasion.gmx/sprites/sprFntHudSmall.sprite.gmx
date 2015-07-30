@@ -7,18 +7,18 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>3</bbox_left>
-  <bbox_right>8</bbox_right>
+  <bbox_left>1</bbox_left>
+  <bbox_right>16</bbox_right>
   <bbox_top>2</bbox_top>
-  <bbox_bottom>14</bbox_bottom>
+  <bbox_bottom>17</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>2</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>10</width>
-  <height>15</height>
+  <width>18</width>
+  <height>18</height>
   <frames>
     <frame index="0">images\sprFntHudSmall_0.png</frame>
     <frame index="1">images\sprFntHudSmall_1.png</frame>
@@ -114,5 +114,6 @@
     <frame index="91">images\sprFntHudSmall_91.png</frame>
     <frame index="92">images\sprFntHudSmall_92.png</frame>
     <frame index="93">images\sprFntHudSmall_93.png</frame>
+    <frame index="94">images\sprFntHudSmall_94.png</frame>
   </frames>
 </sprite>

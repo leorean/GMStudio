@@ -20,8 +20,8 @@
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\sprConstruct</sprite>
     <sprite>sprites\sprConstructDelete</sprite>
+    <sprite>sprites\sprFntHudTiny</sprite>
     <sprite>sprites\sprFntHudSmall</sprite>
-    <sprite>sprites\sprFntHud</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
