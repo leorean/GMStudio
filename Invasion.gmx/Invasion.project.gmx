@@ -20,7 +20,8 @@
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\sprConstruct</sprite>
     <sprite>sprites\sprConstructDelete</sprite>
-    <sprite>sprites\sprFntSpg</sprite>
+    <sprite>sprites\sprFntHudSmall</sprite>
+    <sprite>sprites\sprFntHud</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
@@ -36,12 +37,12 @@
     <script>scripts\nullstellensucher.gml</script>
     <script>scripts\funktion.gml</script>
     <script>scripts\drawGUI.gml</script>
+    <script>scripts\drawText.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
   </shaders>
   <fonts name="fonts">
-    <font>fonts\fntHUD</font>
     <font>fonts\fntSmall</font>
   </fonts>
   <objects name="objects">

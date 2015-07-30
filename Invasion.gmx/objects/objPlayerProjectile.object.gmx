@@ -64,7 +64,7 @@ hold = true;
     if (!hold)
     {
         t++;
-        x = x0 + vx0 * t;// + 0.5*g * t*t;
+        x = x0 + vx0 * t;
         y = y0 + vy0 * t + 0.5*g * t*t;
     }
 

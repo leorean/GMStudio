@@ -41,7 +41,9 @@ surf = -1; //drawing surface
 
 global.shake = false;
 
-global.fntSPG = font_add_sprite_ext(sprFntSpg, "abcdefghijklmnopqrstuvwxyz!?:;.,$ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-/",false, 1);
+//global.fntSPG = font_add_sprite_ext(sprFntSpg, "abcdefghijklmnopqrstuvwxyz!?:;.,$ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-/",true, -1);
+global.fntHUDsmall = font_add_sprite(sprFntHudSmall,ord('!'),true,0);
+global.fntHUD = font_add_sprite(sprFntHud,ord('!'),true,0);
 
 
 //++++private variables (routine etc.)++++
@@ -171,6 +173,8 @@ if (surface_exists(surf))
             <string>window_set_size(3*WIDTH,3*HEIGHT);
 global.timer = 0;
 
+global.coins = 120398;
+
 global.state = STATE_START;
 global.path = p0;
 
@@ -259,7 +263,7 @@ else
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);
     
-    drawGUI();
+    //drawGUI();
     
 }
 </string>
@@ -285,18 +289,8 @@ else
           <argument>
             <kind>1</kind>
             <string>//++++
-draw_set_color(c_black);
-draw_set_alpha(1);
-draw_set_font(fntSmall);
 
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-
-//if (instance_exists(player))
-//    draw_text(0,0,string(player.hp)+"/"+string(global.hp));
-    
-draw_text(0,HEIGHT-TILE,fps);
-
+drawGUI();
 
 //++++SHAKE SCREEN++++
 if (global.shake)

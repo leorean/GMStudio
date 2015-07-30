@@ -1,10 +1,15 @@
 //++++GUI++++
-display_set_gui_size(.5*window_get_width(),.5*window_get_height());
+
 draw_set_alpha(1);
 draw_set_color(c_white);
 
-draw_set_font(fntHUD);
+draw_set_font(global.fntHUDsmall);
 draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+draw_text(0,HEIGHT,fps);
+
+
+draw_set_font(global.fntHUD);
 draw_set_valign(fa_top);
 
 if (instance_exists(player))
@@ -13,9 +18,13 @@ if (instance_exists(player))
     {
         draw_sprite_part(sprGfx,-1,15*TILE,0,TILE,TILE,i*TILE,0);
     }
-    draw_set_font(global.fntSPG);
-    draw_text(0,TILE,string(player.hp)+"/"+string(global.hp));
 }
 
-display_set_gui_size(surface_get_width(surf),surface_get_height(surf));
+draw_set_font(global.fntHUD);
+draw_set_halign(fa_right);
+draw_set_valign(fa_bottom);
+draw_text(WIDTH,HEIGHT,"$"+string(global.coins));
+
+//+++++
+//display_set_gui_size(surface_get_width(surf),surface_get_height(surf));
     

@@ -156,7 +156,7 @@ if (global.state == STATE_PLAY)
     
             var dX = mouse_x-px;
             var dY = mouse_y-py;
-            var rad_ang = (arctan2(-dY,dX)+degtorad(90))/2;
+            var rad_ang = (arctan2(-dY,dX)+pi/2)/2;
             if (rad_ang != pi/2)
             {
                 clc = (cos(rad_ang)*sqrt(2*(dY+tan(rad_ang)*dX)/g));
