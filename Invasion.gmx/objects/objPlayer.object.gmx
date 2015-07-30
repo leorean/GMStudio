@@ -134,10 +134,10 @@ if (global.state == STATE_PLAY)
         dir = sign(mouse_x-x);
         delay = attackSpeed;
 
-        //shootBullet();
+        shootBullet(x,y,mouse_x,mouse_y,4,.1);
         
-        var bulX = x; var bulY = y;
-        var proj = instance_create(bulX,bulY,objAnchorProjectile);
+        //var bulX = x; var bulY = y;
+        //var proj = instance_create(bulX,bulY,objAnchorProjectile);
         //instance_create(bulX,bulY,objEffect);
         
         state = ATTACK;

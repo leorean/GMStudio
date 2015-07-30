@@ -64,14 +64,6 @@ v0 = -9999;
             <kind>1</kind>
             <string>if (global.state &gt; STATE_PAUSED)
 {
-    if (v0 == -9999)
-    {
-        //angle = point_direction(x,y,tx,ty);
-        //v0 = sqrt(abs(-yGrav*power(tx - x,2)/(2*(ty-y)*power(cos(degtorad(angle)),2)-sin(2*degtorad(angle))*(tx-x))));
-        //xVel = lengthdir_x(v0,angle);
-        //yVel = lengthdir_y(v0,angle);        
-    }
-        
     yVel += yGrav;
     
     xVel = sign(xVel)*min(abs(xVel),velMax);

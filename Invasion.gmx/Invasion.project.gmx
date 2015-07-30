@@ -32,6 +32,8 @@
     <script>scripts\drawShine.gml</script>
     <script>scripts\shootBullet.gml</script>
     <script>scripts\drawSurface.gml</script>
+    <script>scripts\nullstellensucher.gml</script>
+    <script>scripts\funktion.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
