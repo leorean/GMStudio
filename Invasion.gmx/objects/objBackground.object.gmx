@@ -235,9 +235,6 @@ if (global.state &gt; STATE_PAUSED)
     dx = (dx - .25) % WIDTH;
 }
 
-//draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0);
-//draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0);
-
 //bg moving clouds
 draw_set_blend_mode(bm_add);
 
@@ -247,7 +244,11 @@ draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0,1,1,c_wh
 draw_set_blend_mode(bm_normal);
 //bg scenery
 draw_sprite_part_ext(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
+
+draw_set_blend_mode(bm_add);
 //draw_sprite_part_ext(sprBackground,-1,2*WIDTH,192,WIDTH,HEIGHT,0,0,1,1,c_white,sa);
+//draw_sprite_part_ext(sprBackground,-1,2*WIDTH,192,WIDTH,HEIGHT,0,0,1,1,c_white,min(sa,.3));
+draw_set_blend_mode(bm_normal);
 
 //track
 if (sprite_exists(sprTrack))
@@ -260,25 +261,10 @@ if (sprite_exists(sprTrack))
     
 }
 
-switch(global.path)
-{
-    case p0:
-    /*
-    draw_sprite(track0,-1,0,0);
-    draw_sprite_ext(track0,-1,0,0,1,1,0,color,.6);
-    */
-        //draw_path(p0,0,0,true);
-    break;
-}
-
-//draw_set_blend_mode(bm_normal);
-
 //fg floor
 draw_sprite_part(sprBackground,-1,0,192 * (global.timer % 40 &gt; 20),WIDTH,HEIGHT,0,0);
 
-
-
-draw_text(0,TILE,daytime);
+//draw_text(0,TILE,daytime);
 
 </string>
           </argument>

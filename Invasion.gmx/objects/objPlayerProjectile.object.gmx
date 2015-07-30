@@ -31,13 +31,11 @@ x0 = x;
 y0 = y;
 vx0 = 0;
 vy0 = 0;
+g = 0;
 
 dead = false;
 chain = 3;
-
-//WURZEL(-B1*(B4-B2)^2/(2*(B5-B3)*COS(B7)^2-SIN(2*B7)*(B4-B2)))
-//b1 =g, b2 = x, b3 = y, b4 = tx, b5 = ty, b6 = angle, b7 = rad_angle, b8 = v0
-//v0 = sqrt (-yGrav*power(tx - x,2)/(2*(ty-y)*power(cos(degtorad(angle)),2)-sin(2*degtorad(angle))*(tx-x)));
+hold = true;
 </string>
           </argument>
         </arguments>
@@ -63,10 +61,12 @@ chain = 3;
             <string>if (global.state &gt; STATE_PAUSED)
 {
 
-    t++;
-    x = x0 + vx0 * t;// + 0.5*g * t*t;
-    y = y0 + vy0 * t + 0.5*g * t*t;
-    
+    if (!hold)
+    {
+        t++;
+        x = x0 + vx0 * t;// + 0.5*g * t*t;
+        y = y0 + vy0 * t + 0.5*g * t*t;
+    }
 
     /*if (abs(x-ox)&lt;abs(tx-ox) &amp;&amp; t &lt; 2*pi)
     {
@@ -123,7 +123,21 @@ chain = 3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,12*TILE,0,TILE,TILE,x-.5*TILE,y-.5*TILE);
+            <string>if (!hold)
+    draw_sprite_part(sprGfx,-1,12*TILE,0,TILE,TILE,x-.5*TILE,y-.5*TILE);
+
+for (var tt = 0; tt &lt; 100;tt += 5)
+{
+    xx = x0 + vx0 * tt;
+    yy = y0 + vy0 * tt + 0.5*g * tt*tt;
+    if (tt &gt; t)
+    {
+        draw_set_blend_mode(bm_add);
+        draw_sprite_part_ext(sprGfx,-1,14*TILE,0,TILE,TILE,xx-.5*TILE,yy-.5*TILE,1,1,c_white,.2);
+        draw_set_blend_mode(bm_normal);        
+    }
+    
+}
 </string>
           </argument>
         </arguments>

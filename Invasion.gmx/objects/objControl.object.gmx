@@ -41,6 +41,9 @@ surf = -1; //drawing surface
 
 global.shake = false;
 
+global.fntSPG = font_add_sprite_ext(sprFntSpg, "abcdefghijklmnopqrstuvwxyz!?:;.,$ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-/",false, 1);
+
+
 //++++private variables (routine etc.)++++
 spawnTimer = 0;
 maxSpawnTimer = 2*FPS;
@@ -207,6 +210,8 @@ player = instance_create(
 shader_set(shader0);
 draw_clear(c_black);
 
+//--------------------------------------------------
+
 //++++SURFACE++++
 if (!surface_exists(surf))
 {
@@ -227,23 +232,16 @@ if (!surface_exists(surf))
     }
     surf = surface_create(global.w,global.h);
     surface_set_target(surf);
+    
     draw_clear(c_black);
     surface_reset_target();
     //Set the view that you want to draw to the surface
     view_surface_id[0] = surf;
+        
 }
 else
 {
-    //TODO: CALCULATE OFFSET
-    /*
-    var d_offx = 0; var d_offy = 0;
-    //d_offx = -abs(display_get_gui_width() - view_wport[0]);
-    //d_offy = -abs(display_get_gui_height() - view_hport[0]);
-    d_offx = window_get_width() - surface_get_width(surf);
-    d_offy = window_get_height() - surface_get_height(surf);
-    d_offx = 0;
-    d_offy = 0;
-    */
+
     //Disable alpha blending (not needed since we are drawing the whole view)
     draw_enable_alphablend(false);
     //Draw the surface stretched to the GUI layer
@@ -252,12 +250,17 @@ else
     var aspect_y = display_get_gui_height() / surface_get_height(surf);
     
     display_set_gui_size(surface_get_width(surf),surface_get_height(surf));
-    //draw_surface_ext(surf,0,0,aspect_x,aspect_y,0,c_white,1); //works!!
     
-    draw_surface_stretched(surf,0,0,surface_get_width(surf),surface_get_height(surf));
- 
+    //draw_surface_ext(surf,0,0,aspect_x,aspect_y,0,c_white,1); //works!!
+    var aspect = min(aspect_x,aspect_y);
+    draw_surface_ext(surf,0,0,aspect,aspect,0,c_white,1); //works!!
+    //draw_surface_stretched(surf,0,0,surface_get_width(surf),surface_get_height(surf));
+    
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);
+    
+    drawGUI();
+    
 }
 </string>
           </argument>
@@ -284,13 +287,13 @@ else
             <string>//++++
 draw_set_color(c_black);
 draw_set_alpha(1);
-draw_set_font(fntHUD);
+draw_set_font(fntSmall);
 
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-if (instance_exists(player))
-    draw_text(0,0,string(player.hp)+"/"+string(global.hp));
+//if (instance_exists(player))
+//    draw_text(0,0,string(player.hp)+"/"+string(global.hp));
     
 draw_text(0,HEIGHT-TILE,fps);
 

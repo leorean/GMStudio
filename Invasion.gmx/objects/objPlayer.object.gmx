@@ -46,6 +46,8 @@ maxInvincible = 60;
 attackSpeed = global.attackSpeed;
 delay = attackSpeed;
 
+proj = noone;
+
 //draw variables
 state = IDLE;
 statePrev = state;
@@ -94,7 +96,9 @@ if (global.state == STATE_GAMEOVER)
     yVel += yGrav;
     x += xVel;
     y += yVel;
-    
+
+    with(proj) hold = false; //let go of all the projectiles
+       
     if (y &gt; HEIGHT+2*TILE)
         instance_destroy();
 }
@@ -123,56 +127,59 @@ if (global.state == STATE_PLAY)
         angle = 90 + pa;
     
     if (y-yprev &gt;  0) spd = min(spd+.05,3);
-    if (y-yprev &lt;  0) spd = max(spd-.02,1);
+    if (y-yprev &lt;  0) spd = max(spd-.02,.5);
     
     path_speed = -spd;
     
     delay = max(delay-1,0);
     
-    if (mouse_check_button(mb_left) &amp;&amp; !delay)
+    //++++ATTACKING++++
+    if (mouse_check_button(mb_left))
     {
         dir = sign(mouse_x-x);
-        delay = attackSpeed;
+        px = x+sign(dir)*6; py = y+8;
 
-        //shootBullet(x,y,mouse_x,mouse_y,4,.1);
-        
-        var px = x+sign(dir)*6; var py = y+8;
-        instance_create(px,py,objEffect);
-        
-        proj = instance_create(px,py,objPlayerProjectile);
-
-        var v = 0; var g = .12;
-
-        var dX = mouse_x-px;
-        var dY = mouse_y-py;
-        var rad_ang = (arctan2(-dY,dX)+degtorad(90))/2;
-        if (rad_ang != pi/2)
+        if (!delay &amp;&amp; !instance_exists(proj))
         {
-            clc = (cos(rad_ang)*sqrt(2*(dY+tan(rad_ang)*dX)/g));
-            if (clc != 0)
-                v = dX / clc;
-            else
-                v = 0;
-          ;
-          proj.vx0 = lengthdir_x(v,radtodeg(rad_ang));
-          proj.vy0 = lengthdir_y(v,radtodeg(rad_ang));
-          proj.g = g;
-          //proj.ang = radtodeg(ang);
+            proj = instance_create(px,py,objPlayerProjectile);
         }
+    }
+    
+    if (instance_exists(proj))
+    {
+        if (!mouse_check_button_released(mb_left))
+        {
+            proj.x0 = px; proj.y0 = py;
+            proj.x = px; proj.y = py;
+            
+            var v = 0; var g = .12;
+    
+            var dX = mouse_x-px;
+            var dY = mouse_y-py;
+            var rad_ang = (arctan2(-dY,dX)+degtorad(90))/2;
+            if (rad_ang != pi/2)
+            {
+                clc = (cos(rad_ang)*sqrt(2*(dY+tan(rad_ang)*dX)/g));
+                if (clc != 0)
+                    v = dX / clc;
+                else
+                    v = 0;
+              ;
+              proj.vx0 = lengthdir_x(v,radtodeg(rad_ang));
+              proj.vy0 = lengthdir_y(v,radtodeg(rad_ang));
+              proj.g = g;
+            }
+            
+        }
+        else
+        {
+            delay = attackSpeed;
+            instance_create(px,py,objEffect);
+            proj.hold = false;
+            proj = noone;
 
-        
-        //phi = arctan( (v*v) + sqrt((v*v*v*v) - g*(g*mx*mx - 2*my*v*v)) / g*mx);
-        
-        //proj.x0 = px;
-        //proj.y0 = py;
-        //proj.vx0 = lengthdir_x(4,phi);
-        //proj.vy0 = lengthdir_y(4,phi);
-        //proj.g = .1;
-        
-        //proj.angle = arctan( (v*v) + sqrt(abs((v*v*v*v) - g*(g*mouse_x*mouse_x + 2*mouse_y*v*v))) / g*mouse_x);
-
-        
-        state = ATTACK;
+            state = ATTACK;
+        }
     }
     
     //++++end variables
