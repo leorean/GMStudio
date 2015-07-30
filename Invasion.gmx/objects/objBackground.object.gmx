@@ -38,8 +38,8 @@ color = c_white;
 daytime = 0; //0 ... 100;
 
 day_angle = 0;
-
 night_angle = 0;
+
 radius = HEIGHT+TILE;
 sun_x = 0; sun_y = 0;
 moon_x = 0; moon_y = 0;
@@ -96,7 +96,7 @@ surf = -1;
             <kind>1</kind>
             <string>//++++SHADER++++
 shader_set(shader0);
-draw_clear(c_black);
+draw_clear_alpha(c_black,0);
 
 //++++TRACK GENERATION++++
 //generate tracks from path points, once per level, and save it to a sprite
@@ -172,7 +172,7 @@ if (sprTrack == -1)
         
         draw_sprite_ext(sprSeg,0,px,py,1,1,segAng,c_white,1);
 
-        if (i % 5  == 0)
+        if (i % 5  &lt; 2)
             draw_sprite_ext(sprSeg,1,px,py,1,1,segAng,c_white,1);
     }
             
@@ -188,7 +188,7 @@ if (sprTrack == -1)
 //++++DAYTIME EFFECTS++++
 
 if (global.state == STATE_PLAY)
-    daytime = (daytime + .01) % 100;
+    daytime = (daytime + .006) % 100;
 
 color = make_color_rgb(
     bspline3(daytime/100,array_length_1d(r),r),
@@ -198,6 +198,13 @@ color = make_color_rgb(
     
 //bg sky
 draw_sprite_part_ext(sprBackground,-1,WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
+
+//stars
+var sa = .6*max(sin(2*pi*(daytime+50)/100),0);
+draw_set_blend_mode(bm_add);
+draw_sprite_part_ext(sprBackground,-1,3*WIDTH,192,WIDTH,HEIGHT,0,0,1,1,color,sa);
+draw_set_blend_mode(bm_normal);
+
 
 //++++sun and moon++++
 if (keyboard_check(ord('1'))) daytime=(daytime+1)%100;
@@ -227,16 +234,20 @@ if (global.state &gt; STATE_PAUSED)
 {
     dx = (dx - .25) % WIDTH;
 }
+
+//draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0);
+//draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0);
+
 //bg moving clouds
+draw_set_blend_mode(bm_add);
 
-draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0);
-draw_sprite_part(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0);
+draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0,1,1,c_white,.1);
+draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0,1,1,c_white,.1);
 
-draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx,0,1,1,color,.7);
-draw_sprite_part_ext(sprBackground,-1,3*WIDTH,0,WIDTH,HEIGHT,dx+WIDTH,0,1,1,color,.7);
-
+draw_set_blend_mode(bm_normal);
 //bg scenery
 draw_sprite_part_ext(sprBackground,-1,2*WIDTH,0,WIDTH,HEIGHT,0,0,1,1,color,1);
+//draw_sprite_part_ext(sprBackground,-1,2*WIDTH,192,WIDTH,HEIGHT,0,0,1,1,c_white,sa);
 
 //track
 if (sprite_exists(sprTrack))
