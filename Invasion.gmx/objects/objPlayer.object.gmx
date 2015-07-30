@@ -125,7 +125,7 @@ if (global.state == STATE_PLAY)
     if (y-yprev &gt;  0) spd = min(spd+.05,3);
     if (y-yprev &lt;  0) spd = max(spd-.02,1);
     
-    //path_speed = -spd;
+    path_speed = -spd;
     
     delay = max(delay-1,0);
     
@@ -141,11 +141,33 @@ if (global.state == STATE_PLAY)
         
         proj = instance_create(px,py,objPlayerProjectile);
 
-        proj.x0 = x;
-        proj.y0 = y;
-        proj.vx0 = lengthdir_x(4,point_direction(px,py,mouse_x,mouse_y));
-        proj.vy0 = lengthdir_y(4,point_direction(px,py,mouse_x,mouse_y));
-        proj.g = .1;
+        var v = 0; var g = .12;
+
+        var dX = mouse_x-px;
+        var dY = mouse_y-py;
+        var rad_ang = (arctan2(-dY,dX)+degtorad(90))/2;
+        if (rad_ang != pi/2)
+        {
+            clc = (cos(rad_ang)*sqrt(2*(dY+tan(rad_ang)*dX)/g));
+            if (clc != 0)
+                v = dX / clc;
+            else
+                v = 0;
+          ;
+          proj.vx0 = lengthdir_x(v,radtodeg(rad_ang));
+          proj.vy0 = lengthdir_y(v,radtodeg(rad_ang));
+          proj.g = g;
+          //proj.ang = radtodeg(ang);
+        }
+
+        
+        //phi = arctan( (v*v) + sqrt((v*v*v*v) - g*(g*mx*mx - 2*my*v*v)) / g*mx);
+        
+        //proj.x0 = px;
+        //proj.y0 = py;
+        //proj.vx0 = lengthdir_x(4,phi);
+        //proj.vy0 = lengthdir_y(4,phi);
+        //proj.g = .1;
         
         //proj.angle = arctan( (v*v) + sqrt(abs((v*v*v*v) - g*(g*mouse_x*mouse_x + 2*mouse_y*v*v))) / g*mouse_x);
 

@@ -26,13 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>//x(t) = x0 + v0 * t + 0.5g * t^2
-
 t = 0;
-
-xVel = 0;
-yVel = 0;
-yGrav = .08;
-velMax = 100;
+x0 = x;
+y0 = y;
+vx0 = 0;
+vy0 = 0;
 
 dead = false;
 chain = 3;
@@ -99,7 +97,7 @@ chain = 3;
         instance_destroy();
     }
         
-    if (!in(x,-2*TILE,WIDTH+2*TILE))
+    if (!in(x,-2*TILE,WIDTH+2*TILE) || y &gt; HEIGHT)
         instance_destroy();
         
 }
