@@ -55,12 +55,13 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="21">
+  <constants number="22">
     <constant name="FPS">60</constant>
     <constant name="TILE">16</constant>
     <constant name="INFINITE">900000000</constant>
     <constant name="WIDTH">320</constant>
     <constant name="HEIGHT">180</constant>
+    <constant name="NONE">0</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="STATE_PAUSED">-1</constant>

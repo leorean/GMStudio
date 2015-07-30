@@ -125,7 +125,7 @@ if (global.state == STATE_PLAY)
     if (y-yprev &gt;  0) spd = min(spd+.05,3);
     if (y-yprev &lt;  0) spd = max(spd-.02,1);
     
-    path_speed = -spd;
+    //path_speed = -spd;
     
     delay = max(delay-1,0);
     
@@ -134,11 +134,21 @@ if (global.state == STATE_PLAY)
         dir = sign(mouse_x-x);
         delay = attackSpeed;
 
-        shootBullet(x,y,mouse_x,mouse_y,4,.1);
+        //shootBullet(x,y,mouse_x,mouse_y,4,.1);
         
-        //var bulX = x; var bulY = y;
-        //var proj = instance_create(bulX,bulY,objAnchorProjectile);
-        //instance_create(bulX,bulY,objEffect);
+        var px = x+sign(dir)*6; var py = y+8;
+        instance_create(px,py,objEffect);
+        
+        proj = instance_create(px,py,objPlayerProjectile);
+
+        proj.x0 = x;
+        proj.y0 = y;
+        proj.vx0 = lengthdir_x(4,point_direction(px,py,mouse_x,mouse_y));
+        proj.vy0 = lengthdir_y(4,point_direction(px,py,mouse_x,mouse_y));
+        proj.g = .1;
+        
+        //proj.angle = arctan( (v*v) + sqrt(abs((v*v*v*v) - g*(g*mouse_x*mouse_x + 2*mouse_y*v*v))) / g*mouse_x);
+
         
         state = ATTACK;
     }

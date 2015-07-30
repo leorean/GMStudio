@@ -25,21 +25,21 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>tx = 0;
-ty = 0;
+            <string>//x(t) = x0 + v0 * t + 0.5g * t^2
+
+t = 0;
+
 xVel = 0;
 yVel = 0;
 yGrav = .08;
 velMax = 100;
 
 dead = false;
-
 chain = 3;
 
 //WURZEL(-B1*(B4-B2)^2/(2*(B5-B3)*COS(B7)^2-SIN(2*B7)*(B4-B2)))
 //b1 =g, b2 = x, b3 = y, b4 = tx, b5 = ty, b6 = angle, b7 = rad_angle, b8 = v0
 //v0 = sqrt (-yGrav*power(tx - x,2)/(2*(ty-y)*power(cos(degtorad(angle)),2)-sin(2*degtorad(angle))*(tx-x)));
-v0 = -9999;
 </string>
           </argument>
         </arguments>
@@ -64,12 +64,33 @@ v0 = -9999;
             <kind>1</kind>
             <string>if (global.state &gt; STATE_PAUSED)
 {
+
+    t++;
+    x = x0 + vx0 * t;// + 0.5*g * t*t;
+    y = y0 + vy0 * t + 0.5*g * t*t;
+    
+
+    /*if (abs(x-ox)&lt;abs(tx-ox) &amp;&amp; t &lt; 2*pi)
+    {
+        t = abs((x-ox)/(tx-ox))*2*pi;
+        y = (y + yVel) - 3*sin(t);
+        show_debug_message(string(sin(t))+":"+string(t));
+        //yGrav = -(y-yprevious);
+    }
+    else
+    {
+        yVel += yGrav;
+        y += yVel;
+    }*/
+    /*
     yVel += yGrav;
     
     xVel = sign(xVel)*min(abs(xVel),velMax);
     yVel = sign(yVel)*min(abs(yVel),velMax);
+
     x += xVel;
     y += yVel;
+    */
     
     if (place_meeting(x,y,objGround) || dead)
     {
@@ -80,6 +101,7 @@ v0 = -9999;
         
     if (!in(x,-2*TILE,WIDTH+2*TILE))
         instance_destroy();
+        
 }
 </string>
           </argument>

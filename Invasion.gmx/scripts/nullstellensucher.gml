@@ -21,7 +21,7 @@ for(i=0; i<maxi; i++)
     f2=funktion(v0,g,alpha_2,x1,y1,x0,y0);
     alpha = alpha_1 - ((alpha_2 - alpha_1)/(f2 - f1)) * f1;
     f=funktion(v0,g,alpha,x1,y1,x0,y0);
-    if((power(f,2)) < 0.000000000001) break;  //abbruchkriterium
+    if((power(f,2)) < 0.001) break;  //abbruchkriterium
     else{
         if(((f1<0)&&(f2<0))||((f1>0)&&(f2<0))){     //neuen punkt waehlen
             alpha_1 = alpha;
