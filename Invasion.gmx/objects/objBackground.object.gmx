@@ -46,6 +46,8 @@ moon_x = 0; moon_y = 0;
 offx = WIDTH/2;
 offy = HEIGHT + 3*TILE;
 
+track_yoff = .5*TILE;
+
 
 surf = -1;
 </string>
@@ -119,7 +121,7 @@ if (sprTrack == -1)
     
     var prevPillarX = 0;
     
-    draw_sprite(sprConstruct,-1,0,0);
+    draw_sprite(sprConstruct,-1,0,-track_yoff);
     var j = 0; var s = 6;
     repeat(4)
     {
@@ -254,9 +256,9 @@ draw_set_blend_mode(bm_normal);
 if (sprite_exists(sprTrack))
 {
     //could also use bm_zero
-    draw_sprite_ext(sprTrack,-1,0,.5*TILE,1,1,0,color,1);
+    draw_sprite_ext(sprTrack,-1,0,track_yoff,1,1,0,color,1);
     draw_set_blend_mode(bm_add);
-    draw_sprite_ext(sprTrack,-1,0,.5*TILE,1,1,0,c_white,.3);
+    draw_sprite_ext(sprTrack,-1,0,track_yoff,1,1,0,c_white,.3);
     draw_set_blend_mode(bm_normal);
     
 }

@@ -39,7 +39,6 @@ spd = 0;
 
 path_start(global.path,0,path_action_restart,true);
 
-hp = global.hp;
 invincible = 0;
 maxInvincible = 60;
 
@@ -114,7 +113,7 @@ if (global.state == STATE_PLAY)
     yVel = (y-yprev);
 
     invincible = max(invincible - 1, 0);
-    if (hp &lt;= 0)
+    if (global.hp &lt;= 0)
     {
         path_end();
         xVel = 0;//-2+random(4);

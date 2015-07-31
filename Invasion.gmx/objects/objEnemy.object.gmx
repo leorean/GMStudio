@@ -135,7 +135,7 @@ frame = 0;
         {
             if (instance_exists(objPlayer) &amp;&amp; !objPlayer.invincible)
             {
-                objPlayer.hp = max(objPlayer.hp-1,0);
+                global.hp = max(global.hp-1,0);
                 objPlayer.invincible = objPlayer.maxInvincible;
                 
                 global.shake = true;

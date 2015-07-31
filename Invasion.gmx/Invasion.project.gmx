@@ -7,7 +7,6 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\mskPlayer</sprite>
-    <sprite>sprites\sprGear</sprite>
     <sprite>sprites\mskPlayerProjectile</sprite>
     <sprite>sprites\sprBackground</sprite>
     <sprite>sprites\sprPlayer</sprite>
@@ -15,15 +14,16 @@
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskGround</sprite>
     <sprite>sprites\sprEnemy</sprite>
-    <sprite>sprites\sprSeg</sprite>
-    <sprite>sprites\mskPillar</sprite>
     <sprite>sprites\mskPixel</sprite>
-    <sprite>sprites\sprConstruct</sprite>
-    <sprite>sprites\sprConstructDelete</sprite>
     <sprites name="font">
       <sprite>sprites\sprFntHudSmall</sprite>
       <sprite>sprites\sprFntHudTiny</sprite>
       <sprite>sprites\sprFntHudNormal</sprite>
+    </sprites>
+    <sprites name="trackGeneration">
+      <sprite>sprites\sprConstructDelete</sprite>
+      <sprite>sprites\sprConstruct</sprite>
+      <sprite>sprites\sprSeg</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background"/>
@@ -57,7 +57,6 @@
     <object>objects\objEffect</object>
     <object>objects\objEnemy</object>
     <object>objects\objGround</object>
-    <object>objects\objPillar</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
