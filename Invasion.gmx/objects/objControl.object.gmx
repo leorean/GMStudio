@@ -259,14 +259,19 @@ else
     display_set_gui_size(surface_get_width(surf),surface_get_height(surf));
     
     //draw_surface_ext(surf,0,0,aspect_x,aspect_y,0,c_white,1); //works!!
-    var aspect = min(aspect_x,aspect_y);
-    draw_surface_ext(surf,0,0,aspect,aspect,0,c_white,1); //works!!
+    //var aspect = min(aspect_x,aspect_y,display_get_width()/display_get_height());
+    //draw_surface_ext(surf,0,0,aspect_x,aspect_y,0,c_white,1); //works!!
     //draw_surface_stretched(surf,0,0,surface_get_width(surf),surface_get_height(surf));
+    
+    //drawSurface(display_get_gui_width()/2,display_get_gui_height()/2,surf,aspect_x,aspect_y);
+    var xoffset = (surface_get_width(surf)*aspect_x)/2;
+    var yoffset = (surface_get_height(surf)*aspect_y)/2;
+    draw_surface_ext(surf,display_get_gui_width()/2-xoffset,display_get_gui_height()/2-yoffset,aspect_x,aspect_y,0,c_white,1);
+    
+    //draw_text(2*TILE,2*TILE,"ax:"+string(aspect_x)+",ay:"+string(aspect_y)+",a:"+string(aspect));
     
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);
-    
-    //drawGUI();
     
 }
 </string>
