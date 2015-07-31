@@ -30,7 +30,7 @@ global.maxHp = 5;
 global.dmg = 10;
 global.chain = 3;
 global.knockback = 2;
-global.magnet = 2*TILE;
+global.magnet = 1*TILE;
 global.attackSpeed = 40;
 
 //++++global drawing variables++++
@@ -51,6 +51,18 @@ spawnTimer = 0;
 maxSpawnTimer = 2*FPS;
 
 shakeTimer = 0;
+
+//++++coin enum++++
+enum coin
+{
+    V1 = 1,
+    V2 = 5,
+    V3 = 20,
+    V4 = 50,
+    V5 = 100,
+    V6 = 500,
+    V7 = 2000    
+}
 </string>
           </argument>
         </arguments>
@@ -81,6 +93,9 @@ if (keyboard_check_pressed(ord('Q')))
         surface_free(surf);
     //room_restart();
 }
+
+if (keyboard_check_pressed(ord('D')))
+    with(objPlayer) spawnCoins(x,y,15);
 
 if (keyboard_check_pressed(ord('R'))|| (global.state == STATE_GAMEOVER &amp;&amp; mouse_check_button_pressed(mb_left)))
     room_restart();

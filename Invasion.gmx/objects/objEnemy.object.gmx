@@ -30,6 +30,7 @@ maxHp = 16;
 hp = maxHp;
 lvl = 1;
 kb = 1.5;
+loot = 3; //amount of coins
 
 proj = noone;
 
@@ -48,8 +49,6 @@ statePrev = state;
 
 pattern = P_WALK; //behaviour
 type = 0; //looks
-
-loot = 1; //amount of coins
 
 invincible = 0;
 maxInvincible = 75;
@@ -92,14 +91,15 @@ frame = 0;
     onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
     var proj = instance_place(x,y,objPlayerProjectile);
     
-    if (hp &lt;= 0 &amp;&amp; onGround)
+    if (hp &lt;= 0)
         state = DEAD;
 
     if (state == DEAD)
     {
-        //death-impulse, drop loot etc
+        //death-impulse
         if (statePrev != DEAD)
         {
+            spawnCoins(x,y,loot);
             deathTimer = 60;
         }
         

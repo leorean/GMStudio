@@ -257,8 +257,10 @@ if (sprite_exists(sprTrack))
 {
     //could also use bm_zero
     draw_sprite_ext(sprTrack,-1,0,track_yoff,1,1,0,color,1);
+    draw_set_blend_mode(bm_zero);
+    draw_sprite_ext(sprTrack,-1,0,track_yoff,1,1,0,c_white,.4);
     draw_set_blend_mode(bm_add);
-    draw_sprite_ext(sprTrack,-1,0,track_yoff,1,1,0,c_white,.3);
+    //draw_sprite_ext(sprTrack,-1,0,track_yoff,1,1,0,color,.3);
     draw_set_blend_mode(bm_normal);
     
 }

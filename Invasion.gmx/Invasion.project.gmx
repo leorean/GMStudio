@@ -25,6 +25,7 @@
       <sprite>sprites\sprConstruct</sprite>
       <sprite>sprites\sprSeg</sprite>
     </sprites>
+    <sprite>sprites\mskCoin</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths">
@@ -41,6 +42,7 @@
     <script>scripts\funktion.gml</script>
     <script>scripts\drawHUD.gml</script>
     <script>scripts\drawText.gml</script>
+    <script>scripts\spawnCoins.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -57,6 +59,7 @@
     <object>objects\objEffect</object>
     <object>objects\objEnemy</object>
     <object>objects\objGround</object>
+    <object>objects\objCoin</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
