@@ -18,9 +18,8 @@ if (instance_exists(player))
 }
 
 draw_set_font(global.fntHudSmall);
-draw_set_halign(fa_right);
-draw_set_valign(fa_bottom);
-draw_text(WIDTH,HEIGHT,"$: "+string(global.coins));
+draw_set_halign(fa_right);draw_set_valign(fa_top);
+draw_text(WIDTH,0,"$: "+string(global.coins));
 
 //+++++
 //display_set_gui_size(surface_get_width(surf),surface_get_height(surf));

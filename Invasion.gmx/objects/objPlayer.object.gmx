@@ -173,12 +173,14 @@ if (global.state == STATE_PLAY)
         }
         else
         {
+
+            state = ATTACK;
+
             delay = attackSpeed;
             instance_create(px,py,objEffect);
             proj.hold = false;
             proj = noone;
 
-            state = ATTACK;
         }
     }
     
@@ -229,7 +231,7 @@ switch(state)
     case ATTACK:
         fMin = 2;
         fMax = 4;
-        fSpeed = .2;
+        fSpeed = .1;
         if (frame &gt;= fMax-1) state = IDLE;
     break;
     case DEAD:

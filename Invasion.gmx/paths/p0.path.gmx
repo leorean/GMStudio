@@ -6,28 +6,29 @@
   <hsnap>8</hsnap>
   <vsnap>8</vsnap>
   <points>
-    <point>208,120,100</point>
-    <point>112,120,100</point>
-    <point>72,40,100</point>
-    <point>40,32,100</point>
+    <point>208,128,100</point>
+    <point>112,128,100</point>
+    <point>72,48,100</point>
+    <point>40,40,100</point>
     <point>24,56,100</point>
-    <point>40,88,100</point>
-    <point>64,88,100</point>
-    <point>80,80,100</point>
-    <point>88,64,100</point>
-    <point>80,24,100</point>
-    <point>40,16,100</point>
-    <point>8,32,100</point>
-    <point>8,72,100</point>
-    <point>32,104,100</point>
-    <point>88,120,100</point>
-    <point>152,104,100</point>
-    <point>176,88,100</point>
-    <point>208,16,100</point>
-    <point>288,8,100</point>
-    <point>312,32,100</point>
-    <point>312,56,100</point>
-    <point>256,64,100</point>
-    <point>232,104,100</point>
+    <point>24,80,100</point>
+    <point>40,96,100</point>
+    <point>64,96,100</point>
+    <point>80,88,100</point>
+    <point>88,72,100</point>
+    <point>80,32,100</point>
+    <point>40,24,100</point>
+    <point>8,40,100</point>
+    <point>8,80,100</point>
+    <point>32,112,100</point>
+    <point>88,128,100</point>
+    <point>152,112,100</point>
+    <point>176,96,100</point>
+    <point>208,24,100</point>
+    <point>288,16,100</point>
+    <point>312,40,100</point>
+    <point>312,64,100</point>
+    <point>256,72,100</point>
+    <point>232,112,100</point>
   </points>
 </path>
