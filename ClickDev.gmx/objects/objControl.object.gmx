@@ -29,7 +29,7 @@
 surf = -1;
 
 global.c = 0; //codes, currency, whatever
-global.cps = 1; //currency per sec
+global.cps = 0.01; //currency per sec
 global.cpc = 1; //currency per click
 
 global.timer = 0;
@@ -84,7 +84,9 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 global.timer = (global.timer + 1) % INFINITE;
 
 //if (global.timer % SEC == 0)
-global.c += (global.cps / SEC);
+global.c += ((global.cps) / SEC);
+
+show_debug_message(global.c);
 
 global.c = min(global.c,999.999*power(1000,4));
 
