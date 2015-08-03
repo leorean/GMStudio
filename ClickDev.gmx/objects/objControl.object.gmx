@@ -29,13 +29,16 @@
 surf = -1;
 
 global.c = 0; //codes, currency, whatever
-global.cps = 252; //currency per sec
-global.cpm = 1; //currency per mouseclick
+global.cps = 1; //currency per sec
+global.cpc = 1; //currency per click
 
 global.timer = 0;
 
 global.fntDefault = font_add_sprite(sprFntDefault,ord('!'),true,1);
-//global.fntBig = font_add_sprite(sprFntBig,ord('!'),true,1);
+global.fntBig = font_add_sprite(sprFntBig,ord(' '),true,1);
+global.fntNormal = font_add_sprite(sprFntNormal,ord(' '),true,1);
+
+//font_replace_sprite_ext(global.fntBig, sprFntBigSpace, " ", true, 1);
 
 instance_create(0,0,objBackground);
 </string>
@@ -65,7 +68,11 @@ if (keyboard_check_pressed(ord('R')))
     game_restart();
 
 if (keyboard_check(ord('E')))
-    global.c*=2;
+    global.c+=(global.c*.1);
+if (keyboard_check(ord('1')))
+    global.cps *= 1.1;
+if (keyboard_check(ord('2')))
+    global.cps = max(global.cps-1,0);
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
@@ -83,7 +90,7 @@ global.c = min(global.c,999.999*power(1000,4));
 
 for (i = 0; i &lt; 5; i++)
 if (device_mouse_check_button_pressed(i,mb_any))
-        global.c += global.cpm;
+        global.c += global.cpc;
 </string>
           </argument>
         </arguments>
