@@ -28,11 +28,62 @@
             <string>//
 surf = -1;
 
-global.c = 0;
+global.c = 0; //codes, currency, whatever
+global.cps = 252; //currency per sec
+global.cpm = 1; //currency per mouseclick
+
+global.timer = 0;
 
 global.fntDefault = font_add_sprite(sprFntDefault,ord('!'),true,1);
+//global.fntBig = font_add_sprite(sprFntBig,ord('!'),true,1);
 
 instance_create(0,0,objBackground);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//++++debug keys++++
+if (keyboard_check_pressed(ord('R')))
+    game_restart();
+
+if (keyboard_check(ord('E')))
+    global.c*=2;
+
+if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
+{
+    game_end();
+}
+
+//++++game routine++++
+
+global.timer = (global.timer + 1) % INFINITE;
+
+//if (global.timer % SEC == 0)
+global.c += (global.cps / SEC);
+
+global.c = min(global.c,999.999*power(1000,4));
+
+for (i = 0; i &lt; 5; i++)
+if (device_mouse_check_button_pressed(i,mb_any))
+        global.c += global.cpm;
 </string>
           </argument>
         </arguments>
@@ -67,7 +118,8 @@ if (!surface_exists(surf))
     //Create (or recreate) the surface when needed
     //QUALITY:
     var w,h;
-    w = view_wport[0]/2; h = view_hport[0]/2;
+    //w = view_wport[0]/2; h = view_hport[0]/2;
+    w = view_wview[0]; h = view_hview[0];
     surf = surface_create(w,h);
     surface_set_target(surf);
     

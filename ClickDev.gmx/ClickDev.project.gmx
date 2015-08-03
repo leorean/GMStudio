@@ -7,10 +7,17 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sprBackground</sprite>
+    <sprite>sprites\sprFntBig</sprite>
     <sprite>sprites\sprFntDefault</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\bigNumber.gml</script>
+  </scripts>
+  <fonts name="fonts">
+    <font>fonts\fntBig</font>
+  </fonts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objBackground</object>

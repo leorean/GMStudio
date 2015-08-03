@@ -27,12 +27,33 @@
             <kind>1</kind>
             <string>draw_sprite_part(sprBackground,-1,0,0,WIDTH,HEIGHT,0,0);
 
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
 draw_set_color(c_white);
 draw_set_font(global.fntDefault);
 
-draw_text(0,0,"Hallo Welt 012345!");
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+
+draw_text(WIDTH,0,string(global.cps)+ " per sec.");
+
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+
+
+
+strc = bigNumber(global.c);
+
+
+draw_set_font(fntBig);
+
+draw_set_color(c_black);
+draw_text_ext(WIDTH/2+1,3*TILE+1,strc,-1, WIDTH-TILE);
+draw_set_color(c_white);
+draw_text_ext(WIDTH/2,3*TILE,strc,-1, WIDTH-TILE);
+
+draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+
+draw_text(0,HEIGHT,fps);
 </string>
           </argument>
         </arguments>
