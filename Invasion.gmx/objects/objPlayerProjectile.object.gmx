@@ -133,7 +133,7 @@ for (var tt = 0; tt &lt; 100;tt += 5)
     if (tt &gt; t)
     {
         draw_set_blend_mode(bm_add);
-        draw_sprite_part_ext(sprGfx,-1,14*TILE,0,TILE,TILE,xx-.5*TILE,yy-.5*TILE,1,1,c_white,.2);
+        draw_sprite_part_ext(sprGfx,-1,14*TILE,0,TILE,TILE,xx-.5*TILE,yy-.5*TILE,1,1,c_white,1);
         draw_set_blend_mode(bm_normal);        
     }
     

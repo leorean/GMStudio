@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = -1+random(1);
+            <string>xVel = .5+random(2);
 yVel = -1.5-random(1);
 yGrav = .1;
 
@@ -82,12 +82,12 @@ value = coin.V1;
         else
         {
             hitGround = true;
-            yVel = -yVel/2;
-            xVel *= .9;
+            yVel = min(-yVel/2, -1.5);
+            //xVel *= .9;
         }
         
-        aliveTimer = max(aliveTimer-1,0);
-        
+        //aliveTimer = max(aliveTimer-1,0);
+        /*
         if (hitGround
         &amp;&amp; in(mouse_x,x-global.magnet,x+global.magnet)
         &amp;&amp; in(mouse_y,y-global.magnet,y+global.magnet)
@@ -96,6 +96,12 @@ value = coin.V1;
         {
             global.coins += value;
             taken = true;
+        }
+        */
+        if (bbox_right+xVel &gt;=WIDTH)
+        {
+            global.coins += value;
+            instance_destroy();        
         }
     }
     else

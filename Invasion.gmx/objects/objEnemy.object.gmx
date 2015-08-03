@@ -53,6 +53,8 @@ type = 0; //looks
 invincible = 0;
 maxInvincible = 75;
 
+deathTimer = 0;
+
 frame = 0;
 </string>
           </argument>
@@ -91,7 +93,7 @@ frame = 0;
     onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
     var proj = instance_place(x,y,objPlayerProjectile);
     
-    if (hp &lt;= 0)
+    if (hp &lt;= 0 &amp;&amp; global.state != STATE_GAMEOVER)
         state = DEAD;
 
     if (state == DEAD)
