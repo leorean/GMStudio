@@ -12,6 +12,7 @@
     <sprite>sprites\sprFntNormal</sprite>
     <sprite>sprites\mskGround</sprite>
     <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\sprPlayer</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,7 +31,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="8">
+  <constants number="10">
     <constant name="INFINITE">90000000000</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
@@ -39,6 +40,8 @@
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="IDLE">0</constant>
+    <constant name="JUMP">1</constant>
+    <constant name="SLEEP">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

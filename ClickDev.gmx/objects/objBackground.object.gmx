@@ -49,7 +49,7 @@ draw_set_font(global.fntBig);
 draw_text(WIDTH/2,3*TILE+4,strc);
 
 draw_set_font(global.fntNormal);
-draw_text(WIDTH/2,3*TILE+30,"Belly Rubs");
+draw_text(WIDTH/2,3*TILE+30,"Smoochies");
 
 //level progress
 draw_set_halign(fa_left);

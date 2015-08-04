@@ -106,7 +106,7 @@ if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
     
     if (global.level &gt; 1)
     {
-        var txt = instance_create(WIDTH/2,7*TILE,objText);
+        var txt = instance_create(clamp(player.x,5.5*TILE,WIDTH-5.5*TILE),player.y,objText);
         txt.fnt = global.fntBig;
         txt.text = "Level Up!";
     }
@@ -141,9 +141,9 @@ global.c = min(global.c,999.999*power(1000,4));
             <kind>1</kind>
             <string>//
 
-instance_create(0,272,objGround);
+instance_create(0,17*TILE,objGround);
 
-player = instance_create(WIDTH/2,HEIGHT/2,objPlayer);
+player = instance_create(WIDTH/2,15*TILE,objPlayer);
 </string>
           </argument>
         </arguments>

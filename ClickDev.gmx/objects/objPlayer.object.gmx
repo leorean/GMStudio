@@ -32,9 +32,13 @@ yGrav = .1;
 dir = RIGHT;
 
 state = IDLE;
+stateTimer = 0;
 
 w = abs(bbox_left-bbox_right);
 h = abs(bbox_top-bbox_bottom);
+
+fCur = 0;
+frame = 0;
 </string>
           </argument>
         </arguments>
@@ -61,11 +65,13 @@ h = abs(bbox_top-bbox_bottom);
 
 for (i = 0; i &lt; 5; i++)
 if (device_mouse_check_button_pressed(i,mb_any))
-    if (collision_point(device_mouse_x(i),device_mouse_y(i),objPlayer,true,false)
+    //if (collision_point(device_mouse_x(i),device_mouse_y(i),objPlayer,true,false)
+    if (in(device_mouse_y(i),7*TILE,18*TILE)
+        //&amp;&amp; in(device_mouse_x(i),bbox_left,bbox_right)
         &amp;&amp; y &gt; 11*TILE)
     {
-        xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-        yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+        //xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+        //yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
         
         global.c += global.cpc;
         global.combo++;
@@ -74,25 +80,79 @@ if (device_mouse_check_button_pressed(i,mb_any))
         
         var txt = instance_create(device_mouse_x(i),device_mouse_y(i),objText);
         txt.text = "+"+string(global.cpc);
+        
+        stateTimer = 120;
+
+        if (xVel&lt;0)dir = LEFT;
+        if (xVel&gt;0)dir = RIGHT;
+                
+        state = JUMP;
     }
 
+stateTimer = max(stateTimer-1,0);
+//++++physics++++
 
 yVel += yGrav;
 
-if (in(x+xVel,w/2,WIDTH-w/2))
+if (bbox_left+xVel&gt;0 &amp;&amp; bbox_right+xVel &lt; WIDTH)
     x += xVel;
 else
+{
     xVel = -xVel;
+}
 
 if (!place_meeting(x,y+yVel,objGround))
     y += yVel;
 else
 {
+
+    if (state == JUMP &amp;&amp; !stateTimer) state = IDLE;
+
     global.combo = 0;
-    yVel = min(-2*yVel/3,-2);
+    yVel = 0;//min(yVel/2,0);
+    xVel *= .7;
 }
 
 //++++physics++++
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//var row = 0;
+switch(state)
+{
+    case IDLE:
+        row = 1;
+        fSpeed = .05;
+    break;
+    case JUMP:
+        row = 0;
+        fSpeed = .1;
+    break;
+}
+
+fCur = (fCur + fSpeed) % 2;
+frame = floor(fCur);
+
+draw_sprite_part_ext(sprPlayer,-1,frame*3*TILE,row*3*TILE,3*TILE,3*TILE,x+1.5*TILE-3*TILE*(dir==RIGHT),y-1.5*TILE,sign(dir),1,c_white,1);
 </string>
           </argument>
         </arguments>
