@@ -62,10 +62,10 @@ h = abs(bbox_top-bbox_bottom);
 for (i = 0; i &lt; 5; i++)
 if (device_mouse_check_button_pressed(i,mb_any))
     if (collision_point(device_mouse_x(i),device_mouse_y(i),objPlayer,true,false)
-        &amp;&amp; y &gt; 7*TILE)
+        &amp;&amp; y &gt; 11*TILE)
     {
         xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-        yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+        yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
         
         global.c += global.cpc;
         global.combo++;

@@ -28,6 +28,8 @@
             <string>yVel = -1;
 alpha = 1.5;
 text = "";
+
+fnt = global.fntNormal;
 </string>
           </argument>
         </arguments>
@@ -57,7 +59,7 @@ alpha = max(alpha-.03,0);
 if (alpha == 0)
     instance_destroy();
 
-draw_set_font(global.fntNormal);
+draw_set_font(fnt);
 draw_set_color(c_white);
 draw_set_alpha(alpha);
 draw_set_halign(fa_center);

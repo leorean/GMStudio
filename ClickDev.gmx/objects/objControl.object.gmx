@@ -39,7 +39,7 @@ global.xpMax = 0;
 
 global.timer = 0;
 
-global.fntDefault = font_add_sprite(sprFntDefault,ord('!'),true,1);
+global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 global.fntBig = font_add_sprite(sprFntBig,ord(' '),true,1);
 global.fntNormal = font_add_sprite(sprFntNormal,ord(' '),true,1);
 
@@ -73,7 +73,10 @@ if (keyboard_check_pressed(ord('R')))
     game_restart();
 
 if (keyboard_check(ord('E')))
-    global.c+=(global.c*.1);
+{
+    global.xp += min(global.c*.1,10000);
+    global.c += min(global.c*.1,10000);
+}
 if (keyboard_check(ord('1')))
     global.cps *= 1.1;
 if (keyboard_check(ord('2')))
@@ -98,9 +101,15 @@ if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
     global.level++;
 
     var a = global.level+1;
-    //return 25 + ceil(30 * (1 + ((a div 10) + 2*(a div 15))) + 10*a);
 
     global.xpMax = 10*((global.xpMax + 300+(30 * (a div 3) + 2*(a div 15) + 10*power((a+1) div 3,2) + 150*(a-1))) div 10);
+    
+    if (global.level &gt; 1)
+    {
+        var txt = instance_create(WIDTH/2,7*TILE,objText);
+        txt.fnt = global.fntBig;
+        txt.text = "Level Up!";
+    }
 }
 
 show_debug_message(global.c);
