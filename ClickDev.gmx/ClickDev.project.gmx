@@ -40,7 +40,7 @@
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="IDLE">0</constant>
-    <constant name="JUMP">1</constant>
+    <constant name="HAPPY">1</constant>
     <constant name="SLEEP">2</constant>
   </constants>
   <help>

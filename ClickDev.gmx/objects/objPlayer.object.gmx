@@ -86,34 +86,12 @@ if (device_mouse_check_button_pressed(i,mb_any))
         if (xVel&lt;0)dir = LEFT;
         if (xVel&gt;0)dir = RIGHT;
                 
-        state = JUMP;
+        state = HAPPY;
     }
 
 stateTimer = max(stateTimer-1,0);
-//++++physics++++
 
-yVel += yGrav;
-
-if (bbox_left+xVel&gt;0 &amp;&amp; bbox_right+xVel &lt; WIDTH)
-    x += xVel;
-else
-{
-    xVel = -xVel;
-}
-
-if (!place_meeting(x,y+yVel,objGround))
-    y += yVel;
-else
-{
-
-    if (state == JUMP &amp;&amp; !stateTimer) state = IDLE;
-
-    global.combo = 0;
-    yVel = 0;//min(yVel/2,0);
-    xVel *= .7;
-}
-
-//++++physics++++
+if(!stateTimer) global.combo = 0;
 </string>
           </argument>
         </arguments>
@@ -143,7 +121,7 @@ switch(state)
         row = 1;
         fSpeed = .05;
     break;
-    case JUMP:
+    case HAPPY:
         row = 0;
         fSpeed = .1;
     break;

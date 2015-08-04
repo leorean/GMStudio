@@ -45,11 +45,11 @@ draw_set_valign(fa_center);
 
 strc = bigNumber(global.c);
 
-draw_set_font(global.fntBig);
-draw_text(WIDTH/2,3*TILE+4,strc);
+draw_set_font(global.fntNormal);
+draw_text(WIDTH/2,3*TILE+4,strc+" $");
 
 draw_set_font(global.fntNormal);
-draw_text(WIDTH/2,3*TILE+30,"Smoochies");
+//draw_text(WIDTH/2,3*TILE+30,"Coffees");
 
 //level progress
 draw_set_halign(fa_left);
