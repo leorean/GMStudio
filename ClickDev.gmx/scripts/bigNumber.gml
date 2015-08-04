@@ -12,13 +12,13 @@ var ret = "";
 if (arg < power(1000,1))
     ret = string_format(floor(arg),0,0)+"";
 else if (arg < power(1000,2))
-    ret = string_format(arg/power(1000,1),0,3)+"k";
+    ret = string_format(arg/power(1000,1),0,3)+" k";
 else if (arg < power(1000,3))
-    ret = string_format(arg/power(1000,2),0,3)+"m";
+    ret = string_format(arg/power(1000,2),0,3)+" m";
 else if (arg < power(1000,4))
-    ret = string_format(arg/power(1000,3),0,3)+"b";
+    ret = string_format(arg/power(1000,3),0,3)+" b";
 else if (arg < power(1000,5))
-    ret = string_format(arg/power(1000,4),0,3)+"t";
+    ret = string_format(arg/power(1000,4),0,3)+" t";
     
 ret = string_replace(ret,".",",");
 

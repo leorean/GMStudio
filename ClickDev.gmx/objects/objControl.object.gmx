@@ -29,8 +29,13 @@
 surf = -1;
 
 global.c = 0; //codes, currency, whatever
-global.cps = 0.01; //currency per sec
+global.cps = 0.00; //currency per sec
 global.cpc = 1; //currency per click
+global.combo = 0; //currency per click
+
+global.level = 0;
+global.xp = 0;
+global.xpMax = 0;
 
 global.timer = 0;
 
@@ -83,25 +88,26 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 
 global.timer = (global.timer + 1) % INFINITE;
 
-//if (global.timer % SEC == 0)
 global.c += ((global.cps) / SEC);
+
+global.cpc = 1+(global.combo div 10);
+
+if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
+{
+    global.xp = 0;
+    global.level++;
+
+    var a = global.level+1;
+    //return 25 + ceil(30 * (1 + ((a div 10) + 2*(a div 15))) + 10*a);
+
+    global.xpMax = 10*((global.xpMax + 300+(30 * (a div 3) + 2*(a div 15) + 10*power((a+1) div 3,2) + 150*(a-1))) div 10);
+}
 
 show_debug_message(global.c);
 
 global.c = min(global.c,999.999*power(1000,4));
 
-for (i = 0; i &lt; 5; i++)
-if (device_mouse_check_button_pressed(i,mb_any))
-    if (in(device_mouse_x(i),player.x-player.w/2,player.x+player.w/2)
-    &amp;&amp; in(device_mouse_y(i),player.y-player.h/2,player.y+player.h/2))
-    {
-        player.xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y));
-        player.yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y)));
-        global.c += global.cpc;
-        
-        var txt = instance_create(device_mouse_x(i),device_mouse_y(i),objText);
-        txt.text = "+"+string(global.cpc);
-    }
+
 </string>
           </argument>
         </arguments>

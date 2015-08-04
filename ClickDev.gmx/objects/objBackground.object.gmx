@@ -35,7 +35,8 @@ draw_set_font(global.fntDefault);
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
-draw_text(WIDTH,0,string(global.cps)+ " per sec. ");
+draw_text(WIDTH,0,string(global.combo)+ "x Combo ");
+//draw_text(0,0," Combo x "+ string(global.combo));
 
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
@@ -45,15 +46,19 @@ draw_set_valign(fa_center);
 strc = bigNumber(global.c);
 
 draw_set_font(global.fntBig);
-draw_text(WIDTH/2,3*TILE,strc);
+draw_text(WIDTH/2,2*TILE+4,strc);
 
 draw_set_font(global.fntNormal);
-draw_text(WIDTH/2,3*TILE+30,"Meows");
+draw_text(WIDTH/2,2*TILE+30,"Belly Rubs");
 
 draw_set_halign(fa_left);
-draw_set_valign(fa_bottom);
+draw_set_valign(fa_center);
+draw_set_font(global.fntDefault);
 
-draw_text(0,HEIGHT,fps);
+draw_text(0,18*TILE,string(global.xp)+"/"+string(global.xpMax)+" ("+string(global.level)+")");
+
+//TODO
+draw_sprite_part(sprGfx,-1,0,0,WIDTH,TILE,0,18*TILE);
 
 //++++images++++
 
