@@ -6,7 +6,7 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprBackground</sprite>
+    <sprite>sprites\sprGfx</sprite>
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprFntBig</sprite>
     <sprite>sprites\sprFntNormal</sprite>
