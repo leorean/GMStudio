@@ -10,26 +10,35 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprFntBig</sprite>
     <sprite>sprites\sprFntNormal</sprite>
+    <sprite>sprites\mskGround</sprite>
+    <sprite>sprites\mskPlayer</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\bigNumber.gml</script>
+    <script>scripts\in.gml</script>
   </scripts>
   <fonts name="fonts"/>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objBackground</object>
+    <object>objects\objGround</object>
+    <object>objects\objPlayer</object>
+    <object>objects\objText</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="5">
+  <constants number="8">
     <constant name="INFINITE">90000000000</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="TILE">16</constant>
     <constant name="SEC">60</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
+    <constant name="IDLE">0</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

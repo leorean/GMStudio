@@ -3,11 +3,36 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>100</depth>
+  <depth>-50</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>yVel = -1;
+alpha = 1.5;
+text = "";
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -25,39 +50,20 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>y += yVel;
 
-draw_sprite_part(sprGfx,-1,0,0,WIDTH,HEIGHT,0,0);
+alpha = max(alpha-.03,0);
 
+if (alpha == 0)
+    instance_destroy();
+
+draw_set_font(global.fntNormal);
 draw_set_color(c_white);
-draw_set_font(global.fntDefault);
-
-draw_set_halign(fa_right);
-draw_set_valign(fa_top);
-
-draw_text(WIDTH,0,string(global.cps)+ " per sec. ");
-
+draw_set_alpha(alpha);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
-
-
-strc = bigNumber(global.c);
-
-draw_set_font(global.fntBig);
-draw_text(WIDTH/2,3*TILE,strc);
-
-draw_set_font(global.fntNormal);
-draw_text(WIDTH/2,3*TILE+30,"Meows");
-
-draw_set_halign(fa_left);
-draw_set_valign(fa_bottom);
-
-draw_text(0,HEIGHT,fps);
-
-//++++images++++
-
-//draw_sprite_part(sprGfx,-1,WIDTH+(global.timer % 20 &gt; 10)*5*TILE,0,5*TILE,5*TILE,WIDTH/2-2.5*TILE,12*TILE);
+draw_text(x,y,text);
 </string>
           </argument>
         </arguments>
