@@ -28,6 +28,8 @@
             <string>//
 surf = -1;
 
+mask_index = mskPixel;
+
 global.c = 0; //codes, currency, whatever
 global.cps = 0.00; //currency per sec
 global.cpc = 1; //currency per click
@@ -80,7 +82,7 @@ if (keyboard_check(ord('E')))
 if (keyboard_check(ord('1')))
     global.cps *= 1.1;
 if (keyboard_check(ord('2')))
-    global.cps = max(global.cps-1,0);
+    global.cps = max(global.cps-1,1);
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
@@ -93,8 +95,33 @@ global.timer = (global.timer + 1) % INFINITE;
 
 global.c += ((global.cps) / SEC);
 
-global.cpc = 1+(global.combo div 10);
+global.cpc = 1+(global.combo div 15);
+//global.cpc = global.level;
 
+for (i = 0; i &lt; 5; i++)
+if (device_mouse_check_button_pressed(i,mb_any))
+    if (collision_point(device_mouse_x(i),device_mouse_y(i),player,true,true)
+        //&amp;&amp; in(device_mouse_x(i),bbox_left,bbox_right)
+        &amp;&amp; player.y &gt; 11*TILE)
+    {
+        player.xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y));
+        player.yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y)));
+        
+        global.xp += global.cpc;
+        global.combo++;
+        
+        //global.xp += global.cpc;
+        
+        var txt = instance_create(device_mouse_x(i),device_mouse_y(i),objText);
+        txt.text = "+"+string(global.cpc)+"";
+        //if (xVel&lt;0)dir = LEFT;
+        //if (xVel&gt;0)dir = RIGHT;
+        
+        player.stateTimer = 60;
+        player.state = HAPPY;
+    }
+
+//++++level up++++
 if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
 {
     global.xp = 0;
@@ -109,10 +136,10 @@ if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
         var txt = instance_create(clamp(player.x,5.5*TILE,WIDTH-5.5*TILE),player.y,objText);
         txt.fnt = global.fntBig;
         txt.text = "Level Up!";
+        txt.yVel = -.5;
+        txt.alpha = 2;
     }
 }
-
-show_debug_message(global.c);
 
 global.c = min(global.c,999.999*power(1000,4));
 
@@ -141,9 +168,9 @@ global.c = min(global.c,999.999*power(1000,4));
             <kind>1</kind>
             <string>//
 
-instance_create(0,17*TILE,objGround);
+instance_create(0,17*TILE-1,objGround);
 
-player = instance_create(WIDTH/2,15.5*TILE,objPlayer);
+player = instance_create(WIDTH/2,12*TILE,objPlayer);
 </string>
           </argument>
         </arguments>

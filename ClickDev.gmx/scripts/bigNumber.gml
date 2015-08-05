@@ -12,7 +12,7 @@ var ret = "";
 if (arg < power(1000,1))
     ret = string_format(floor(arg),0,0)+"";
 else if (arg < power(1000,2))
-    ret = string_format(arg/power(1000,0),0,0)+"";
+    ret = string_format(arg/power(1000,1),0,3)+"k";
 else if (arg < power(1000,3))
     ret = string_format(arg/power(1000,2),0,3)+"mil.";
 else if (arg < power(1000,4))
@@ -23,5 +23,4 @@ else if (arg < power(1000,5))
 ret = string_replace(ret,".",",");
 
 return ret;
-
 

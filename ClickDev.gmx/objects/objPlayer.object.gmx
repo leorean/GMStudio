@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-25</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -39,6 +39,8 @@ h = abs(bbox_top-bbox_bottom);
 
 fCur = 0;
 frame = 0;
+
+stateTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -63,35 +65,36 @@ frame = 0;
             <kind>1</kind>
             <string>//
 
-for (i = 0; i &lt; 5; i++)
-if (device_mouse_check_button_pressed(i,mb_any))
-    //if (collision_point(device_mouse_x(i),device_mouse_y(i),objPlayer,true,false)
-    if (in(device_mouse_y(i),7*TILE,18*TILE)
-        //&amp;&amp; in(device_mouse_x(i),bbox_left,bbox_right)
-        &amp;&amp; y &gt; 11*TILE)
+yVel += yGrav;
+
+if (!place_meeting(x,y+yVel,objGround))
+    y += yVel;
+else
+{
+    yVel = (-yVel/2);
+    xVel *= .9;
+    
+    if (global.cpc &gt; 1)
     {
-        //xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-        //yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-        
-        global.c += global.cpc;
-        global.combo++;
-        
-        global.xp += global.cpc;
-        
-        var txt = instance_create(device_mouse_x(i),device_mouse_y(i),objText);
-        txt.text = "+"+string(global.cpc);
-        
-        stateTimer = 120;
-
-        if (xVel&lt;0)dir = LEFT;
-        if (xVel&gt;0)dir = RIGHT;
-                
-        state = HAPPY;
+        var txt = instance_create(WIDTH/2,y,objText);
+        txt.text = "Combo Break";
     }
+    
+    global.combo = 0;
+}
 
-stateTimer = max(stateTimer-1,0);
+if (bbox_left + xVel &gt; 0 &amp;&amp; bbox_right + xVel &lt; WIDTH)
+    x += xVel;
+else
+    xVel = -xVel;
 
-if(!stateTimer) global.combo = 0;
+stateTimer = max(stateTimer - 1, 0);
+if (!stateTimer)
+{
+    if(state == HAPPY)
+        state = IDLE;
+}
+
 </string>
           </argument>
         </arguments>
@@ -129,6 +132,8 @@ switch(state)
 
 fCur = (fCur + fSpeed) % 2;
 frame = floor(fCur);
+
+draw_self();
 
 draw_sprite_part_ext(sprPlayer,-1,frame*3*TILE,row*3*TILE,3*TILE,3*TILE,x+1.5*TILE-3*TILE*(dir==RIGHT),y-1.5*TILE,sign(dir),1,c_white,1);
 </string>
