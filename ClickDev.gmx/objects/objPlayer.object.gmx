@@ -32,12 +32,14 @@ yGrav = .07;
 dir = RIGHT;
 
 state = IDLE;
-stateTimer = 0;
+stateTimer = 3*SEC;
+statePrev = state;
 
 w = abs(bbox_left-bbox_right);
 h = abs(bbox_top-bbox_bottom);
 
 fCur = 0;
+fMax = 2;
 frame = 0;
 
 stateTimer = 0;
@@ -81,6 +83,21 @@ if (!stateTimer)
     {
         immersion_play_effect(2);
         state = IDLE;
+    } else if (state == IDLE || state == WALK)
+    {
+        state = choose(WALK,IDLE);
+    }
+    stateTimer = choose(1,2,3)*SEC;
+}
+
+if (state == WALK)
+{
+    xVel = sign(dir)*.5;
+    if (bbox_left + xVel &lt;= 0 || bbox_right + xVel &gt;= WIDTH)
+    {
+        xVel = 0;
+        dir = -dir;
+        state = choose(IDLE,WALK);
     }
 }
 
@@ -108,8 +125,9 @@ if (bbox_left + xVel &gt; 0 &amp;&amp; bbox_right + xVel &lt; WIDTH)
     x += xVel;
 else
     xVel = -xVel;
-
-
+    
+//++++end variables++++
+statePrev = state;
 
 
 </string>
@@ -140,19 +158,26 @@ switch(state)
     case IDLE:
         row = 1;
         fSpeed = .05;
+        fMax = 2;        
     break;
     case HAPPY:
         row = 0;
         fSpeed = .1;
+        fMax = 2;
+    break;
+    case WALK:
+        row = 2;
+        fSpeed = .15;
+        fMax = 4;
     break;
 }
-if (onGround) col = 2;
+if (!onGround &amp;&amp; (state == HAPPY || state == IDLE)) col = 2;
 else col = 0;
 
-fCur = (fCur + fSpeed) % 2;
+fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 
-draw_sprite_part_ext(sprPlayer,-1,frame*3*TILE+col*3*TILE,row*3*TILE,3*TILE,3*TILE,x+1.5*TILE-3*TILE*(dir==RIGHT),y-1.5*TILE,sign(dir),1,c_white,1);
+draw_sprite_part_ext(sprPlayer,-1,frame*3*TILE+col*3*TILE,row*3*TILE,3*TILE,3*TILE,floor(x)+1.5*TILE-3*TILE*(dir==RIGHT),floor(y)-1.5*TILE,sign(dir),1,c_white,1);
 </string>
           </argument>
         </arguments>
