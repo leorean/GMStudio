@@ -35,6 +35,11 @@ state = IDLE;
 stateTimer = 3*SEC;
 statePrev = state;
 
+happiness = 50;
+tidiness = 50;
+sleepiness = 50;
+hungriness = 100;
+
 w = abs(bbox_left-bbox_right);
 h = abs(bbox_top-bbox_bottom);
 
@@ -72,31 +77,115 @@ onGround = false;
 
 //++++state stuff++++
 
-if (state != HAPPY)
-    global.combo = 0;
+if (state != HAPPY || hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
+    happiness = max(happiness - .005,0);
+
+if (state == SLEEP)
+{
+    sleepiness = min(sleepiness + .01,100);
+} else
+{
+    sleepiness = max(sleepiness - .01,0);
+    if (sleepiness &lt;= 20)
+        happiness = max(happiness -.02,0);
+}
+
+if (state == EAT)
+{
+    hungriness = min(hungriness+.3,100);
+} else
+    hungriness = max(hungriness-.008,0);
+
+if (state == CLEAN)
+{
+    tidiness = min(tidiness+.2,100);
+}
+
+if (true)
+{
+
+    for (i = 0; i &lt; 5; i++)
+    if (device_mouse_check_button_pressed(i,mb_any))
+        if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
+        {
+            if (happiness &lt; 100 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
+            {
+                xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+                yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+                
+                global.xp += global.cpc;
+                
+                global.c += global.cpc;
+                
+                var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
+                txt.text = "+"+string(global.cpc)+"";
+            
+                happiness = min(happiness+1,100);
+                
+                state = HAPPY;
+                                                
+            } else
+            {
+                if (onGround)
+                    yVel = -1;
+                    
+                state = IDLE;
+            }
+            
+            tidiness = max(tidiness-.5,0);
+            hungriness = max(hungriness-.1,0);
+            
+            stateTimer = 2*SEC;            
+            
+        }
+    
+}
     
 stateTimer = max(stateTimer - 1, 0);
 
 if (!stateTimer)
 {
+    stateTimer = choose(1,2,3)*SEC;
+    
     switch(state)
     {
         case HAPPY:
-            immersion_play_effect(2);
-            state = IDLE;
+            //all needs satisfied
+            if (happiness &gt; 90 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
+                state = HAPPY;
+            else
+                state = IDLE;         
         break;
         case IDLE:
-            state = choose(WALK,IDLE,SLEEP);
+            state = choose(WALK,IDLE);
+            
             dir = choose(LEFT,RIGHT);
+            
+            if (tidiness &lt; 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == tidiness)
+                state = choose(IDLE,CLEAN);
+            if (sleepiness &lt;= 30 &amp;&amp; min(hungriness,sleepiness,tidiness) == sleepiness)
+                state = SLEEP;
+            if (hungriness &lt; 30 &amp;&amp; min(hungriness,sleepiness,tidiness) == hungriness)
+                state = EAT; //TODO: if food is here
+            
         break;
         case WALK:
             state = choose(WALK,IDLE);
         break;
         case SLEEP:
-            //state = choose(SLEEP,SLEEP,SLEEP,IDLE);
+            if (sleepiness &gt;= 80)
+                state = choose(SLEEP,IDLE);
+        break;
+        case CLEAN:
+            if (tidiness &gt;= 80)
+                state = choose(CLEAN,IDLE);
+        break;
+        case EAT:
+            if (hungriness == 100)
+                state = IDLE;
         break;
     }
-    stateTimer = choose(1,2,3)*SEC;
+
 }
 
 if (state == WALK)
@@ -122,7 +211,7 @@ onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
 
 yVel += yGrav;
 
-if (y +yVel &lt; 8.5*TILE)
+if (y +yVel &lt; 10.5*TILE)
     yVel = -yVel/4;
 
 if (!place_meeting(x,y+yVel,objGround))
@@ -190,9 +279,20 @@ switch(state)
         fSpeed = .05;
         fMax = 4;
     break;
+    case CLEAN:
+        row = 4;
+        fSpeed = .05;
+        fMax = 2;
+    break;
+    case EAT:
+        row = 5;
+        fSpeed = .1;
+        fMax = 2;
+    break;
 }
+
 if (!onGround &amp;&amp; (state == HAPPY || state == IDLE)) col = 2;
-else col = 0;
+    else col = 0;
 
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);

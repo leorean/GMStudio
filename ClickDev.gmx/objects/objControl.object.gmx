@@ -98,27 +98,6 @@ global.c += ((global.cps) / SEC);
 global.cpc = 1+(global.combo div 30);
 //global.cpc = global.level;
 
-for (i = 0; i &lt; 5; i++)
-if (device_mouse_check_button_pressed(i,mb_any))
-    if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,player,true,true))
-    {
-        player.xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y));
-        player.yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y)));
-        
-        global.xp += global.cpc;
-        global.combo++;
-        
-        global.c += global.cpc;
-        
-        var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
-        txt.text = "+"+string(global.cpc)+"";
-        //if (xVel&lt;0)dir = LEFT;
-        //if (xVel&gt;0)dir = RIGHT;
-        
-        player.stateTimer = 2*SEC;
-        player.state = HAPPY;
-    }
-
 //++++level up++++
 if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
 {
@@ -171,7 +150,7 @@ global.c = min(global.c,999.999*power(1000,4));
 
 instance_create(0,15*TILE,objGround);
 
-player = instance_create(WIDTH/2,10*TILE,objPlayer);
+player = instance_create(WIDTH/2,13.5*TILE,objPlayer);
 </string>
           </argument>
         </arguments>
