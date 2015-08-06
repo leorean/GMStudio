@@ -79,13 +79,22 @@ stateTimer = max(stateTimer - 1, 0);
 
 if (!stateTimer)
 {
-    if(state == HAPPY)
+    switch(state)
     {
-        immersion_play_effect(2);
-        state = IDLE;
-    } else if (state == IDLE || state == WALK)
-    {
-        state = choose(WALK,IDLE);
+        case HAPPY:
+            immersion_play_effect(2);
+            state = IDLE;
+        break;
+        case IDLE:
+            state = choose(WALK,IDLE,SLEEP);
+            dir = choose(LEFT,RIGHT);
+        break;
+        case WALK:
+            state = choose(WALK,IDLE);
+        break;
+        case SLEEP:
+            //state = choose(SLEEP,SLEEP,SLEEP,IDLE);
+        break;
     }
     stateTimer = choose(1,2,3)*SEC;
 }
@@ -97,8 +106,14 @@ if (state == WALK)
     {
         xVel = 0;
         dir = -dir;
-        state = choose(IDLE,WALK);
     }
+}
+
+if (state == SLEEP)
+{
+    //purrr
+    if (global.timer % (1.5*SEC) == 0)
+        immersion_play_effect(41);
 }
 
 //++++physics+++++
@@ -168,6 +183,11 @@ switch(state)
     case WALK:
         row = 2;
         fSpeed = .15;
+        fMax = 4;
+    break;    
+    case SLEEP:
+        row = 3;
+        fSpeed = .05;
         fMax = 4;
     break;
 }
