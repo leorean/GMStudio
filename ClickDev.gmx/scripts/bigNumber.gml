@@ -23,4 +23,3 @@ else if (arg < power(1000,5))
 ret = string_replace(ret,".",",");
 
 return ret;
-

@@ -46,20 +46,20 @@ draw_set_valign(fa_center);
 strc = bigNumber(global.c);
 
 draw_set_font(global.fntNormal);
-draw_text(WIDTH/2,3*TILE+4,"$"+strc+"");
+draw_text(WIDTH/2,1*TILE+4,""+strc+" @");
 
 draw_set_font(global.fntDefault);
-draw_text(WIDTH/2,3*TILE+30,"$"+string(global.cps)+" per sec.");
+draw_text(WIDTH/2,1*TILE+30,""+string(global.cps)+"@ per sec.");
 
 //level progress
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(global.fntDefault);
-draw_sprite_part(sprGfx,-1,WIDTH,0,WIDTH-TILE,.5*TILE,.5*TILE,6.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,.5*TILE,(WIDTH-TILE)*(global.xp/global.xpMax),.5*TILE,.5*TILE,6.5*TILE);
-draw_text(0,7*TILE," "+string(global.xp)+"/"+string(global.xpMax));
+draw_sprite_part(sprGfx,-1,WIDTH,0,WIDTH-TILE,.5*TILE,.5*TILE,4.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,.5*TILE,(WIDTH-TILE)*(global.xp/global.xpMax),.5*TILE,.5*TILE,4.5*TILE);
+draw_text(0,5*TILE," "+string(global.xp)+"/"+string(global.xpMax));
 draw_set_halign(fa_right);
-draw_text(WIDTH,7*TILE,"Lv."+string(global.level)+" ");
+draw_text(WIDTH,5*TILE,"Lv."+string(global.level)+" ");
 
 //++++images++++
 

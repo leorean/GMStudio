@@ -95,14 +95,12 @@ global.timer = (global.timer + 1) % INFINITE;
 
 global.c += ((global.cps) / SEC);
 
-global.cpc = 1+(global.combo div 15);
+global.cpc = 1+(global.combo div 30);
 //global.cpc = global.level;
 
 for (i = 0; i &lt; 5; i++)
 if (device_mouse_check_button_pressed(i,mb_any))
-    if (collision_point(device_mouse_x(i),device_mouse_y(i),player,true,true)
-        //&amp;&amp; in(device_mouse_x(i),bbox_left,bbox_right)
-        &amp;&amp; player.y &gt; 11*TILE)
+    if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,player,true,true))
     {
         player.xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y));
         player.yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),player.x,player.y)));
@@ -110,14 +108,14 @@ if (device_mouse_check_button_pressed(i,mb_any))
         global.xp += global.cpc;
         global.combo++;
         
-        //global.xp += global.cpc;
+        global.c += global.cpc;
         
-        var txt = instance_create(device_mouse_x(i),device_mouse_y(i),objText);
+        var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
         txt.text = "+"+string(global.cpc)+"";
         //if (xVel&lt;0)dir = LEFT;
         //if (xVel&gt;0)dir = RIGHT;
         
-        player.stateTimer = 60;
+        player.stateTimer = 120;
         player.state = HAPPY;
     }
 
@@ -128,16 +126,18 @@ if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
     global.level++;
 
     var a = global.level+1;
-
     global.xpMax = 10*((global.xpMax + 300+(30 * (a div 3) + 2*(a div 15) + 10*power((a+1) div 3,2) + 150*(a-1))) div 10);
     
     if (global.level &gt; 1)
     {
-        var txt = instance_create(clamp(player.x,5.5*TILE,WIDTH-5.5*TILE),player.y,objText);
+        var txt = instance_create(WIDTH/2,player.y,objText);
         txt.fnt = global.fntBig;
         txt.text = "Level Up!";
         txt.yVel = -.5;
         txt.alpha = 2;
+        
+        immersion_play_effect(30);
+        
     }
 }
 
@@ -168,9 +168,9 @@ global.c = min(global.c,999.999*power(1000,4));
             <kind>1</kind>
             <string>//
 
-instance_create(0,17*TILE-1,objGround);
+instance_create(0,15*TILE-1,objGround);
 
-player = instance_create(WIDTH/2,12*TILE,objPlayer);
+player = instance_create(WIDTH/2,10*TILE,objPlayer);
 </string>
           </argument>
         </arguments>

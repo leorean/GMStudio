@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
-yGrav = .1;
+yGrav = .07;
 
 dir = RIGHT;
 
@@ -41,6 +41,8 @@ fCur = 0;
 frame = 0;
 
 stateTimer = 0;
+
+onGround = false;
 </string>
           </argument>
         </arguments>
@@ -65,22 +67,41 @@ stateTimer = 0;
             <kind>1</kind>
             <string>//
 
+
+//++++state stuff++++
+
+if (state != HAPPY)
+    global.combo = 0;
+    
+stateTimer = max(stateTimer - 1, 0);
+
+if (!stateTimer)
+{
+    if(state == HAPPY)
+    {
+        immersion_play_effect(2);
+        state = IDLE;
+    }
+}
+
+//++++physics+++++
+
+onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
+
 yVel += yGrav;
+
+if (y +yVel &lt; 8.5*TILE)
+    yVel = -yVel/4;
 
 if (!place_meeting(x,y+yVel,objGround))
     y += yVel;
 else
 {
-    yVel = (-yVel/2);
-    xVel *= .9;
+    yVel = 0;
     
-    if (global.cpc &gt; 1)
-    {
-        var txt = instance_create(WIDTH/2,y,objText);
-        txt.text = "Combo Break";
-    }
-    
-    global.combo = 0;
+    if(state == IDLE || state == HAPPY)
+        xVel *= .9;
+   
 }
 
 if (bbox_left + xVel &gt; 0 &amp;&amp; bbox_right + xVel &lt; WIDTH)
@@ -88,12 +109,8 @@ if (bbox_left + xVel &gt; 0 &amp;&amp; bbox_right + xVel &lt; WIDTH)
 else
     xVel = -xVel;
 
-stateTimer = max(stateTimer - 1, 0);
-if (!stateTimer)
-{
-    if(state == HAPPY)
-        state = IDLE;
-}
+
+
 
 </string>
           </argument>
@@ -129,13 +146,13 @@ switch(state)
         fSpeed = .1;
     break;
 }
+if (onGround) col = 2;
+else col = 0;
 
 fCur = (fCur + fSpeed) % 2;
 frame = floor(fCur);
 
-draw_self();
-
-draw_sprite_part_ext(sprPlayer,-1,frame*3*TILE,row*3*TILE,3*TILE,3*TILE,x+1.5*TILE-3*TILE*(dir==RIGHT),y-1.5*TILE,sign(dir),1,c_white,1);
+draw_sprite_part_ext(sprPlayer,-1,frame*3*TILE+col*3*TILE,row*3*TILE,3*TILE,3*TILE,x+1.5*TILE-3*TILE*(dir==RIGHT),y-1.5*TILE,sign(dir),1,c_white,1);
 </string>
           </argument>
         </arguments>
