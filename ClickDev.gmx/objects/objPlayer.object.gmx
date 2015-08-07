@@ -77,7 +77,7 @@ if (statePrev != state) fCur = 0;
 
 //++++state stuff++++
 
-if (state != HAPPY || hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
+if (hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
     happiness = max(happiness - .005,0);
     
 if (state == WALK)
@@ -106,19 +106,19 @@ if (state == SLEEP)
 
 if (state == EAT)
 {
-    hungriness = min(hungriness+.3,100);
+    hungriness = min(hungriness+.1,100);
 } else
     hungriness = max(hungriness-.008,0);
 
 if (state == CLEAN)
 {
-    tidiness = min(tidiness+.2,100);
+    tidiness = min(tidiness+.05,100);
 }
 
 if (state == YAWN)
 {
     //after animation, immediately go to state change
-    if (fCur-fSpeed &gt;= fMax)
+    if (fCur &gt;= fMax-fSpeed)
         stateTimer = 0;
 }
 
@@ -151,8 +151,11 @@ if (true)
                                                     
                 } else
                 {
-                    if (onGround)
-                        yVel = -1;
+                    happiness = max(happiness-1,0);
+                    
+                    //if (onGround)
+                    //    yVel = -0;
+                    //xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
                         
                     state = IDLE;
                 }
@@ -180,7 +183,7 @@ if (!stateTimer)
     {
         case HAPPY:
             //all needs satisfied
-            if (happiness &gt; 90 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
+            if (happiness &gt; 60 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
                 state = HAPPY;
             else
                 state = IDLE;         
@@ -193,11 +196,16 @@ if (!stateTimer)
             
             if (tidiness &lt; 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == tidiness)
                 state = choose(IDLE,CLEAN);
-            if (sleepiness &lt;= 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == sleepiness)
-                state = YAWN;
+                
+            if (state != WALK &amp;&amp; min(hungriness,sleepiness,tidiness) == sleepiness)
+            {
+                if (sleepiness &lt; 50)
+                    state = choose(IDLE,YAWN);
+                if (sleepiness &lt; 25)
+                    state = SLEEP;              
+            }
             if (hungriness &lt; 30 &amp;&amp; min(hungriness,sleepiness,tidiness) == hungriness)
                 state = EAT; //TODO: if food is here
-            
         break;
         case WALK:
             state = choose(WALK,IDLE);
@@ -218,8 +226,9 @@ if (!stateTimer)
         break;
         case YAWN:
                 state = IDLE;
-            if (sleepiness &lt;= 20)
-                state = SLEEP;
+                stateTimer = 1*SEC;
+            //if (sleepiness &lt;= 20)
+            //    state = choose(YAWN,IDLE);
         break;
         
     }
@@ -314,7 +323,10 @@ switch(state)
     break;
     case YAWN:
         row = 6;
-        fSpeed = .15;
+        if (frame == 2)
+            fSpeed = .03;
+        else
+            fSpeed = .1;
         fMax = 4;
     break;    
 }
