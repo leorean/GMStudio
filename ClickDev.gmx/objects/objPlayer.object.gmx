@@ -72,16 +72,30 @@ onGround = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//
-
+            <string>//++++begin variables++++
+if (statePrev != state) fCur = 0;
 
 //++++state stuff++++
 
 if (state != HAPPY || hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
     happiness = max(happiness - .005,0);
+    
+if (state == WALK)
+{
+    xVel = sign(dir)*.5;
+    if (bbox_left + xVel &lt;= 0 || bbox_right + xVel &gt;= WIDTH)
+    {
+        xVel = 0;
+        dir = -dir;
+    }
+}
 
 if (state == SLEEP)
 {
+    //purrr
+    //if (global.timer % (1.5*SEC) == 0)
+    //    immersion_play_effect(41);
+    
     sleepiness = min(sleepiness + .01,100);
 } else
 {
@@ -101,6 +115,13 @@ if (state == CLEAN)
     tidiness = min(tidiness+.2,100);
 }
 
+if (state == YAWN)
+{
+    //after animation, immediately go to state change
+    if (fCur-fSpeed &gt;= fMax)
+        stateTimer = 0;
+}
+
 if (true)
 {
 
@@ -108,39 +129,47 @@ if (true)
     if (device_mouse_check_button_pressed(i,mb_any))
         if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
         {
-            if (happiness &lt; 100 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
+            if (state != SLEEP)
             {
-                xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-                yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-                
-                global.xp += global.cpc;
-                
-                global.c += global.cpc;
-                
-                var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
-                txt.text = "+"+string(global.cpc)+"";
-            
-                happiness = min(happiness+1,100);
-                
-                state = HAPPY;
-                                                
-            } else
-            {
-                if (onGround)
-                    yVel = -1;
+                if (happiness &lt; 100 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
+                {
+                    xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+                    yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
                     
-                state = IDLE;
-            }
+                    global.xp += global.cpc;
+                    
+                    global.c += global.cpc;
+                    
+                    var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
+                    txt.text = "+"+string(global.cpc)+"";
+                
+                    happiness = min(happiness+1,100);
+                    hungriness = max(hungriness-.1,0);
+                                
+                    
+                    state = HAPPY;
+                                                    
+                } else
+                {
+                    if (onGround)
+                        yVel = -1;
+                        
+                    state = IDLE;
+                }
+                
+                tidiness = max(tidiness-.5,0);
             
-            tidiness = max(tidiness-.5,0);
-            hungriness = max(hungriness-.1,0);
+            } else //wake up
+                state = IDLE;
             
             stateTimer = 2*SEC;            
             
         }
     
 }
-    
+
+//++++state transitions++++
+
 stateTimer = max(stateTimer - 1, 0);
 
 if (!stateTimer)
@@ -159,12 +188,13 @@ if (!stateTimer)
         case IDLE:
             state = choose(WALK,IDLE);
             
-            dir = choose(LEFT,RIGHT);
+            if (state == WALK)
+                dir = choose(LEFT,RIGHT);
             
             if (tidiness &lt; 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == tidiness)
                 state = choose(IDLE,CLEAN);
-            if (sleepiness &lt;= 30 &amp;&amp; min(hungriness,sleepiness,tidiness) == sleepiness)
-                state = SLEEP;
+            if (sleepiness &lt;= 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == sleepiness)
+                state = YAWN;
             if (hungriness &lt; 30 &amp;&amp; min(hungriness,sleepiness,tidiness) == hungriness)
                 state = EAT; //TODO: if food is here
             
@@ -173,8 +203,10 @@ if (!stateTimer)
             state = choose(WALK,IDLE);
         break;
         case SLEEP:
-            if (sleepiness &gt;= 80)
+            if (sleepiness == 100)
                 state = choose(SLEEP,IDLE);
+            else if (hungriness &lt;= 30 || tidiness &lt;= 30)
+                state = IDLE;
         break;
         case CLEAN:
             if (tidiness &gt;= 80)
@@ -184,26 +216,17 @@ if (!stateTimer)
             if (hungriness == 100)
                 state = IDLE;
         break;
+        case YAWN:
+                state = IDLE;
+            if (sleepiness &lt;= 20)
+                state = SLEEP;
+        break;
+        
     }
 
 }
 
-if (state == WALK)
-{
-    xVel = sign(dir)*.5;
-    if (bbox_left + xVel &lt;= 0 || bbox_right + xVel &gt;= WIDTH)
-    {
-        xVel = 0;
-        dir = -dir;
-    }
-}
 
-if (state == SLEEP)
-{
-    //purrr
-    if (global.timer % (1.5*SEC) == 0)
-        immersion_play_effect(41);
-}
 
 //++++physics+++++
 
@@ -281,14 +304,19 @@ switch(state)
     break;
     case CLEAN:
         row = 4;
-        fSpeed = .05;
-        fMax = 2;
+        fSpeed = .1;
+        fMax = 4;
     break;
     case EAT:
         row = 5;
         fSpeed = .1;
         fMax = 2;
     break;
+    case YAWN:
+        row = 6;
+        fSpeed = .15;
+        fMax = 4;
+    break;    
 }
 
 if (!onGround &amp;&amp; (state == HAPPY || state == IDLE)) col = 2;

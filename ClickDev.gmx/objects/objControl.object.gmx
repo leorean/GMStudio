@@ -45,7 +45,8 @@ global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 global.fntBig = font_add_sprite(sprFntBig,ord(' '),true,1);
 global.fntNormal = font_add_sprite(sprFntNormal,ord(' '),true,1);
 
-//font_replace_sprite_ext(global.fntBig, sprFntBigSpace, " ", true, 1);
+global.creationDate = date_current_datetime();
+global.age = 0; //in days
 
 instance_create(0,0,objBackground);
 </string>
@@ -90,6 +91,8 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 }
 
 //++++game routine++++
+
+global.age = floor(date_day_span(global.creationDate, date_current_datetime()));
 
 global.timer = (global.timer + 1) % INFINITE;
 

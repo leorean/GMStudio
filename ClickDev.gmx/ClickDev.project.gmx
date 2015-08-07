@@ -31,7 +31,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="14">
+  <constants number="15">
     <constant name="INFINITE">90000000000</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
@@ -46,6 +46,7 @@
     <constant name="CLEAN">4</constant>
     <constant name="EAT">5</constant>
     <constant name="PLAY">6</constant>
+    <constant name="YAWN">7</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
