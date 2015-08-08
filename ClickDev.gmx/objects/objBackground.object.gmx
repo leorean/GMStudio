@@ -61,7 +61,21 @@ draw_text(0,5*TILE," "+string(global.xp)+"/"+string(global.xpMax));
 draw_set_halign(fa_right);
 draw_text(WIDTH,5*TILE,"Lv."+string(global.level)+" ");
 
-//
+//++++STAT BARS++++
+
+//happiness
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.happiness/100)*3*TILE,TILE,2*TILE,17.5*TILE);
+
+//sleepiness
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.sleepiness/100)*3*TILE,TILE,2*TILE,19*TILE);
+
+//tidiness
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.tidiness/100)*3*TILE,TILE,WIDTH-5*TILE,17.5*TILE);
+
+//hungriness
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.hungriness/100)*3*TILE,TILE,WIDTH-5*TILE,19*TILE);
+
+/*
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(global.fntDefault);
@@ -69,6 +83,7 @@ draw_text(0,16*TILE," Happy: "+string(objPlayer.happiness));
 draw_text(0,17*TILE," Tidy: "+string(objPlayer.tidiness));
 draw_text(0,18*TILE," Sleep: "+string(objPlayer.sleepiness));
 draw_text(0,19*TILE," Hungry: "+string(objPlayer.hungriness));
+*/
 
 
 
