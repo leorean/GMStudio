@@ -77,9 +77,13 @@ if (statePrev != state) fCur = 0;
 
 //++++state stuff++++
 
+/*
 if (hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
     happiness = max(happiness - .005,0);
-    
+*/
+
+happiness = (tidiness + sleepiness + hungriness) / 3;
+
 if (state == WALK)
 {
     xVel = sign(dir)*.5;
@@ -100,8 +104,6 @@ if (state == SLEEP)
 } else
 {
     sleepiness = max(sleepiness - .01,0);
-    if (sleepiness &lt;= 20)
-        happiness = max(happiness -.02,0);
 }
 
 if (state == EAT)
@@ -126,48 +128,54 @@ if (state == YAWN)
         stateTimer = 1*SEC;
 }
 
-if (true)
+for (i = 0; i &lt; 5; i++)
 {
-
-    for (i = 0; i &lt; 5; i++)
-    if (device_mouse_check_button_pressed(i,mb_any))
-        if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
+    if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
+    {
+        if (device_mouse_check_button(i,mb_any))
         {
-            if (state != SLEEP)
-            {
+            x = device_mouse_x(i);
+            y = device_mouse_y(i);
+            xVel = 0;
+            yVel = 0;
+            
+            xVel = lengthdir_x(-min(4,abs(device_mouse_x(i)-x)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+            yVel = lengthdir_y(-min(4,abs(device_mouse_y(i)-y)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+            //yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+        } 
+        if (device_mouse_check_button_pressed(i,mb_any))
+        {
+            
                 //if (happiness &lt; 100 &amp;&amp; (sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30))
                 //|| (happiness == min(happiness,hungriness,tidiness,sleepiness)))
-                {
-                    if (onGround &amp;&amp; ceil(happiness) == 100)
-                    {
-                        xVel = lengthdir_x(.2,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-                        yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-                    }
-                    
-                    state = HAPPY;
-
-                }
-                tidiness = max(tidiness-.1,0);
-            
-            } else
-            { //wake up
-            
-                state = IDLE;
                 
-            }
+            /*if (onGround &amp;&amp; ceil(happiness) == 100)
+            {
+                xVel = lengthdir_x(.2,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+                yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+            }*/
+            
+            state = HAPPY;
+
+            if (tidiness == min(tidiness,hungriness,sleepiness))
+                {tidiness += .5;show_debug_message("tidiniess:"+string(tidiness));}
+            if (hungriness == min(tidiness,hungriness,sleepiness))
+                {hungriness += .5;show_debug_message("hungriness:"+string(hungriness));}
+            if (sleepiness == min(tidiness,hungriness,sleepiness))
+                {sleepiness += .5;show_debug_message("sleepiness:"+string(sleepiness));}
+                
+            //tidiness = max(tidiness-.1,0);
+            
             
             global.xp += global.cpc;
             global.c += global.cpc;
             
             var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
             txt.text = "+"+string(global.cpc)+"";
-
-            happiness = min(happiness+1,100);
             
             stateTimer = 1*SEC;            
-            
-        }
-    
+        }                
+    }
 }
 
 //++++state transitions++++
@@ -181,11 +189,7 @@ if (!stateTimer)
     switch(state)
     {
         case HAPPY:
-            //all needs satisfied
-            if (happiness &gt; 60 &amp;&amp; sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30)
-                state = HAPPY;
-            else
-                state = IDLE;         
+            state = IDLE;         
         break;
         case IDLE:
             state = choose(WALK,IDLE);
@@ -230,7 +234,7 @@ if (!stateTimer)
                 state = IDLE;
         break;
         case YAWN:
-            state = choose(IDLE,WALK);
+            state = choose(IDLE,WALK,SLEEP);
             stateTimer = 2*SEC;
             //if (sleepiness &lt;= 20)
             //    state = choose(YAWN,IDLE);
@@ -244,14 +248,16 @@ if (!stateTimer)
 
 //++++physics+++++
 
-onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
+//onGround = place_meeting(x,y+1,objGround)&amp;&amp;yVel&gt;=0;
+onGround = (y &gt;= GROUND &amp;&amp; yVel &gt;= 0);
 
 yVel += yGrav;
 
-if (y +yVel &lt; 10.5*TILE)
-    yVel = -yVel/4;
+//if (y +yVel &lt; 10.5*TILE)
+//    yVel = -yVel/4;
 
-if (!place_meeting(x,y+yVel,objGround))
+y = clamp(y,8*TILE,GROUND);
+if (!onGround)//place_meeting(x,y+yVel,objGround))
     y += yVel;
 else
 {
@@ -263,7 +269,7 @@ else
 }
 
 if (bbox_left + xVel &gt; 0 &amp;&amp; bbox_right + xVel &lt; WIDTH)
-    x += xVel;
+    x = clamp(x+xVel,0,WIDTH);
 else
     xVel = -xVel;
     

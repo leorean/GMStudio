@@ -31,11 +31,12 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="15">
+  <constants number="16">
     <constant name="INFINITE">90000000000</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="TILE">16</constant>
+    <constant name="GROUND">13.5*TILE</constant>
     <constant name="SEC">60</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>

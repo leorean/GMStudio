@@ -151,7 +151,7 @@ global.c = min(global.c,999.999*power(1000,4));
             <kind>1</kind>
             <string>//
 
-instance_create(0,15*TILE,objGround);
+//instance_create(0,15*TILE,objGround);
 
 player = instance_create(WIDTH/2,13.5*TILE,objPlayer);
 </string>
