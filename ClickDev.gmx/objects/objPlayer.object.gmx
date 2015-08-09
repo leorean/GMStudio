@@ -135,42 +135,36 @@ if (true)
         {
             if (state != SLEEP)
             {
-                if (happiness &lt; 100 &amp;&amp; (sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30))
+                //if (happiness &lt; 100 &amp;&amp; (sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30))
                 //|| (happiness == min(happiness,hungriness,tidiness,sleepiness)))
                 {
-                    xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-                    yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-                    
-                    global.xp += global.cpc;
-                    
-                    global.c += global.cpc;
-                    
-                    var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
-                    txt.text = "+"+string(global.cpc)+"";
-                
-                    happiness = min(happiness+1,100);
-                    hungriness = max(hungriness-.1,0);
-                                
+                    if (onGround &amp;&amp; ceil(happiness) == 100)
+                    {
+                        xVel = lengthdir_x(.2,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
+                        yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+                    }
                     
                     state = HAPPY;
-                                                    
-                } else
-                {
-                    happiness = max(happiness-1,0);
-                    
-                    if (onGround)
-                        yVel = -1;
-                    //xVel = lengthdir_x(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-                        
-                    state = IDLE;
+
                 }
-                
                 tidiness = max(tidiness-.1,0);
             
-            } else //wake up
-                state = IDLE;
+            } else
+            { //wake up
             
-            stateTimer = 2*SEC;            
+                state = IDLE;
+                
+            }
+            
+            global.xp += global.cpc;
+            global.c += global.cpc;
+            
+            var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
+            txt.text = "+"+string(global.cpc)+"";
+
+            happiness = min(happiness+1,100);
+            
+            stateTimer = 1*SEC;            
             
         }
     
@@ -220,9 +214,12 @@ if (!stateTimer)
         break;
         case SLEEP:
             if (sleepiness == 100)
+                state = IDLE;
+            /*
                 state = choose(SLEEP,IDLE);
             else if (sleepiness &gt; 60 &amp;&amp; (hungriness &lt;= 30 || tidiness &lt;= 30))
                 state = IDLE;
+            */
         break;
         case CLEAN:
             if (tidiness &gt;= 80)
@@ -260,7 +257,7 @@ else
 {
     yVel = 0;
     
-    if(state == IDLE || state == HAPPY)
+    if(state != WALK)
         xVel *= .9;
    
 }
