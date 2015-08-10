@@ -21,6 +21,9 @@
     <script>scripts\bigNumber.gml</script>
     <script>scripts\in.gml</script>
   </scripts>
+  <fonts name="fonts">
+    <font>fonts\fntLevel</font>
+  </fonts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objBackground</object>

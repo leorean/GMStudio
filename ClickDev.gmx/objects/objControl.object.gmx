@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>//
+randomize();
+
 surf = -1;
 
 mask_index = mskPixel;
@@ -52,13 +54,38 @@ instance_create(0,0,objBackground);
 
 //++++UPGRADE STUFF++++
 global.u = 0;
+global.uMax = 5; //maximal upgrades (all)
+global.ulMax = 0; //maximal viewable upgrades
 
-upgrade[0] = instance_create(0,0,objUpgrade);
-upgrade[0].index = 0;
-upgrade[1] = instance_create(0,0,objUpgrade);
-upgrade[1].index = 1;
-upgrade[2] = instance_create(0,0,objUpgrade);
-upgrade[2].index = 2;
+global.upgrade[0] = instance_create(0,0,objUpgrade);
+global.upgrade[0].index = 0; global.upgrade[0].name = "Paw";
+global.upgrade[0].description = "even cuter paws. ^-^";
+global.upgrade[0].price = 35; global.upgrade[0].cps = 0.02;
+
+global.upgrade[1] = instance_create(0,0,objUpgrade);
+global.upgrade[1].index = 1; global.upgrade[1].name = "Whiskers";
+global.upgrade[1].description = "long, brisky whiskers!";
+global.upgrade[1].price = 100; global.upgrade[1].cps = 1;
+
+global.upgrade[2] = instance_create(0,0,objUpgrade);
+global.upgrade[2].index = 2; global.upgrade[2].name = "Fluff";
+global.upgrade[2].description = "fluff. fluffy fluff. ^-^";
+global.upgrade[2].price = 700; global.upgrade[2].cps = 10;
+
+global.upgrade[3] = instance_create(0,0,objUpgrade);
+global.upgrade[3].index = 3; global.upgrade[3].name = "Fluff";
+global.upgrade[3].description = "fluff. fluffy fluff. ^-^";
+global.upgrade[3].price = 700; global.upgrade[3].cps = 10;
+
+global.upgrade[4] = instance_create(0,0,objUpgrade);
+global.upgrade[4].index = 4; global.upgrade[4].name = "Fluff";
+global.upgrade[4].description = "fluff. fluffy fluff. ^-^";
+global.upgrade[4].price = 700; global.upgrade[4].cps = 10;
+
+global.upgrade[5] = instance_create(0,0,objUpgrade);
+global.upgrade[5].index = 5; global.upgrade[5].name = "Fluff";
+global.upgrade[5].description = "fluff. fluffy fluff. ^-^";
+global.upgrade[5].price = 700; global.upgrade[5].cps = 10;
 
 </string>
           </argument>
@@ -100,6 +127,25 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
     game_end();
 }
+
+///*
+
+global.upgrade[0].level = 16;
+global.upgrade[1].level = 12;
+
+//*/
+if (mouse_wheel_up())
+    global.u = min(global.u+1,global.ulMax);
+if (mouse_wheel_down())
+    global.u = max(global.u-1,0);
+
+for (var i = 0;i&lt;=global.u;i++)
+{
+    if (!global.upgrade[i].locked)
+        global.ulMax = max(i,global.ulMax);
+        
+}
+show_debug_message(global.ulMax);
 
 //++++game routine++++
 
@@ -322,19 +368,19 @@ draw_set_valign(fa_top);
 
 //happiness
 //draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,16.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.happiness/100)*2*TILE,TILE,1.75*TILE,16.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.happiness/100)*2*TILE,TILE,1.5*TILE+1,16.5*TILE);
 
 //sleepiness
 //draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,18.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.sleepiness/100)*2*TILE,TILE,1.75*TILE,18*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.sleepiness/100)*2*TILE,TILE,1.5*TILE+1,18*TILE);
 
 //tidiness
 //draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,20.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.tidiness/100)*2*TILE,TILE,1.75*TILE,19.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.tidiness/100)*2*TILE,TILE,1.5*TILE+1,19.5*TILE);
 
 //hungriness
 //draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,22.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*2*TILE,TILE,1.75*TILE,21*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*2*TILE,TILE,1.5*TILE+1,21*TILE);
 
 //age
 //draw_set_halign(fa_left);
