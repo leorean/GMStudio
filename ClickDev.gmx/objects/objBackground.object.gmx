@@ -26,9 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-
 draw_sprite_part(sprGfx,-1,0,0,WIDTH,HEIGHT,0,0);
-
+/*
 draw_set_color(c_white);
 draw_set_font(global.fntDefault);
 
@@ -74,18 +73,7 @@ draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.tidiness/100)*3*TILE,TILE,WIDTH
 
 //hungriness
 draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.hungriness/100)*3*TILE,TILE,WIDTH-5*TILE,19*TILE);
-
-/*
-draw_set_halign(fa_left);
-draw_set_valign(fa_top);
-draw_set_font(global.fntDefault);
-draw_text(0,16*TILE," Happy: "+string(objPlayer.happiness));
-draw_text(0,17*TILE," Tidy: "+string(objPlayer.tidiness));
-draw_text(0,18*TILE," Sleep: "+string(objPlayer.sleepiness));
-draw_text(0,19*TILE," Hungry: "+string(objPlayer.hungriness));
 */
-
-
 
 </string>
           </argument>

@@ -87,7 +87,7 @@ happiness = (tidiness + sleepiness + hungriness) / 3;
 if (state == WALK)
 {
     xVel = sign(dir)*.5;
-    if (bbox_left + xVel &lt;= 0 || bbox_right + xVel &gt;= WIDTH)
+    if (x + xVel &lt;= TILE || x + xVel &gt;= (WIDTH-TILE))
     {
         xVel = 0;
         dir = -dir;
@@ -178,6 +178,12 @@ for (i = 0; i &lt; 5; i++)
     }
 }
 
+if (keyboard_check_pressed(ord('E')))
+{
+    state = EAT;
+    stateTimer = 5*SEC;
+}
+
 //++++state transitions++++
 
 stateTimer = max(stateTimer - 1, 0);
@@ -192,7 +198,7 @@ if (!stateTimer)
             state = IDLE;         
         break;
         case IDLE:
-            state = choose(WALK,IDLE);
+            state = choose(WALK,IDLE,CLEAN);
             
             if (state == WALK)
                 dir = choose(LEFT,RIGHT);
@@ -210,11 +216,11 @@ if (!stateTimer)
                     state = SLEEP;
                     
             }
-            if (hungriness &lt; 30 &amp;&amp; min(hungriness,sleepiness,tidiness) == hungriness)
+            if (hungriness &lt; 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == hungriness)
                 state = EAT; //TODO: if food is here
         break;
         case WALK:
-            state = choose(WALK,IDLE);
+            state = choose(WALK,IDLE,CLEAN);
         break;
         case SLEEP:
             if (sleepiness == 100)
@@ -268,10 +274,14 @@ else
    
 }
 
-if (bbox_left + xVel &gt; 0 &amp;&amp; bbox_right + xVel &lt; WIDTH)
-    x = clamp(x+xVel,0,WIDTH);
+x = clamp(x,TILE,WIDTH-TILE);
+if (x + xVel &gt;= TILE &amp;&amp; x + xVel &lt;= WIDTH-TILE)
+    x += xVel;
 else
+{
+    x -= 3*sign(xVel);
     xVel = -xVel;
+}
     
 //++++end variables++++
 statePrev = state;
@@ -330,7 +340,7 @@ switch(state)
     case EAT:
         row = 5;
         fSpeed = .1;
-        fMax = 2;
+        fMax = 4;
     break;
     case YAWN:
         row = 6;

@@ -10,7 +10,6 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprFntBig</sprite>
     <sprite>sprites\sprFntNormal</sprite>
-    <sprite>sprites\mskGround</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskPixel</sprite>
@@ -24,7 +23,6 @@
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objBackground</object>
-    <object>objects\objGround</object>
     <object>objects\objPlayer</object>
     <object>objects\objText</object>
   </objects>
