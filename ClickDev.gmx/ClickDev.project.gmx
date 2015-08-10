@@ -14,6 +14,7 @@
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\mskUpgrade</sprite>
+    <sprite>sprites\mskScrollBar</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,6 +31,7 @@
     <object>objects\objPlayer</object>
     <object>objects\objText</object>
     <object>objects\objUpgrade</object>
+    <object>objects\objScrollBar</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
