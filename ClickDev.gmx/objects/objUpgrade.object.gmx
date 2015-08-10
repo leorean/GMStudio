@@ -39,6 +39,42 @@ locked = true;
         </arguments>
       </action>
     </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//
+depth = -101-index;
+
+x = 4*TILE;
+y = GROUND+3.5*TILE+index*3*TILE-global.u*3*TILE;
+
+//todo: resource-dependant, not upgrade dependant?
+if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 5*index+power(index,2)))
+    locked = false;
+
+if (index &gt;= global.u &amp;&amp; index &lt;= global.u+2)
+    visible = true;
+else
+    visible = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -56,53 +92,43 @@ locked = true;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = 4*TILE;
-y = GROUND+3.5*TILE+index*3*TILE-global.u*3*TILE;
+            <string>draw_self();//todo:replace
 
-//todo: resource-dependant, not upgrade dependant?
-if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 5*index+power(index,2)))
-    locked = false;
+draw_set_alpha(1);
+if (!locked)
+    draw_set_color(c_white);
+else
+    draw_set_color(c_black);
 
-if (index &gt;= global.u &amp;&amp; index &lt;= global.u+2)
-{
-    
-    draw_self();//todo:replace
-    
-    draw_set_alpha(1);
-    if (!locked)
-        draw_set_color(c_white);
-    else
-        draw_set_color(c_black);
-    
-    //++++draw icon+++
-    draw_sprite_part(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y);
-    
-    draw_set_font(fntLevel);
-    
-    //++++draw level++++
-    draw_set_valign(fa_top);
-    draw_set_halign(fa_right);
-    
-    draw_text(x+10*TILE,y,string(level)+" ");
-    
-    draw_set_font(global.fntDefault);
-    
-    //++++name++++
-    draw_set_halign(fa_left);
-    draw_text(x+2*TILE,y," " + string(name));
-    
-    //++++price++++
-    
-    levelPrice = price * power(1.2,(0.2)*(level+1))*(level+1);    //1.2^​(0.2*​x)*​x
-    
-    draw_set_halign(fa_left);
-    draw_text(x+2*TILE,y+TILE," @ " + string(bigNumber(levelPrice)));
-    //+++cps+++++
-    draw_set_halign(fa_right);
-    var cpsl = cps*(level+1);
-    if (cpsl&gt;1000) cpsl = bigNumber(cpsl);
-    draw_text(x+10*TILE,y+2*TILE," @ " + string(cpsl) + " / sec.");
-}
+//++++draw icon+++
+draw_sprite_part(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y);
+
+draw_set_font(fntLevel);
+
+//++++draw level++++
+draw_set_valign(fa_top);
+draw_set_halign(fa_right);
+
+draw_text(x+10*TILE,y,string(level)+" ");
+
+draw_set_font(global.fntDefault);
+
+//++++name++++
+draw_set_halign(fa_left);
+draw_text(x+2*TILE,y," " + string(name));
+
+//++++price++++
+
+levelPrice = price * power(1.2,(0.2)*(level+1))*(level+1);    //1.2^​(0.2*​x)*​x
+
+draw_set_halign(fa_left);
+draw_text(x+2*TILE,y+TILE," @ " + string(bigNumber(levelPrice)));
+//+++cps+++++
+draw_set_halign(fa_right);
+var cpsl = cps*(level+1);
+if (cpsl&gt;1000) cpsl = bigNumber(cpsl);
+draw_text(x+10*TILE,y+2*TILE," @ " + string(cpsl) + " / sec.");
+
 </string>
           </argument>
         </arguments>

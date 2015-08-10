@@ -214,6 +214,11 @@ mouse_yprev = mouse_y;
 player = instance_create(WIDTH/2,13.5*TILE,objPlayer);
 
 scrollbar = instance_create(0,0,objScrollBar);
+
+global.upgrade[0].level = 24;
+global.upgrade[1].level = 33;
+global.upgrade[2].level = 68;
+
 </string>
           </argument>
         </arguments>

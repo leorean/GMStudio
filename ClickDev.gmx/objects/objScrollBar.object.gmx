@@ -69,9 +69,12 @@ if (global.ulMax &gt; 0)
         
     if (dragged)
     {
-        y = (mouse_y-1.5*TILE);
-        global.u = ((GROUND+3.5*TILE + y) / (HEIGHT-6*TILE));
-        show_debug_message("u:"+string(global.u));
+        y = clamp(mouse_y-1.5*TILE,GROUND+3.5*TILE,HEIGHT-3*TILE);
+        var ind = floor(((y - (GROUND+3.5*TILE)) / ((HEIGHT-3*TILE)-(GROUND+3.5*TILE)))
+            * global.ulMax);
+            
+        global. u = ind;
+        show_debug_message("u:"+string(ind));
     }
     else
         y = GROUND+3.5*TILE + 6*TILE*global.u/global.ulMax;
@@ -80,7 +83,7 @@ if (global.ulMax &gt; 0)
     y = GROUND+3.5*TILE;
 
 //++++end++++
-y = clamp(y,GROUND+3.5*TILE, HEIGHT-3*TILE);
+//y = clamp(y,GROUND+3.5*TILE, HEIGHT-3*TILE);
 
 </string>
           </argument>
