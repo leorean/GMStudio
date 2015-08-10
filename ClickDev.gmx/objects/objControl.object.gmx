@@ -49,6 +49,17 @@ global.creationDate = date_current_datetime();
 global.age = 0; //in days
 
 instance_create(0,0,objBackground);
+
+//++++UPGRADE STUFF++++
+global.u = 0;
+
+upgrade[0] = instance_create(0,0,objUpgrade);
+upgrade[0].index = 0;
+upgrade[1] = instance_create(0,0,objUpgrade);
+upgrade[1].index = 1;
+upgrade[2] = instance_create(0,0,objUpgrade);
+upgrade[2].index = 2;
+
 </string>
           </argument>
         </arguments>
@@ -293,9 +304,9 @@ draw_set_valign(fa_top);
 draw_set_font(global.fntDefault);
 draw_sprite_part(sprGfx,-1,WIDTH,0,WIDTH-TILE,.5*TILE,.5*TILE,4.5*TILE);
 draw_sprite_part(sprGfx,-1,WIDTH,.5*TILE,(WIDTH-TILE)*(global.xp/global.xpMax),.5*TILE,.5*TILE,4.5*TILE);
-draw_text(0,5*TILE," "+string(global.xp)+"/"+string(global.xpMax));
+draw_text(0,5*TILE,"  "+string(global.xp)+"/"+string(global.xpMax));
 draw_set_halign(fa_right);
-draw_text(WIDTH,5*TILE,"Lv."+string(global.level)+" ");
+draw_text(WIDTH,5*TILE,"Lv."+string(global.level)+"  ");
 
 //++++STATS++++
 
@@ -310,24 +321,24 @@ draw_set_valign(fa_top);
 //draw_text(13.25*TILE,17.5*TILE,string(round(player.hungriness))+"%");
 
 //happiness
-draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,17.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.happiness/100)*2*TILE,TILE,1.75*TILE,17.5*TILE);
+//draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,16.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.happiness/100)*2*TILE,TILE,1.75*TILE,16.5*TILE);
 
 //sleepiness
-draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,5.25*TILE,17.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.sleepiness/100)*2*TILE,TILE,5.25*TILE,17.5*TILE);
+//draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,18.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.sleepiness/100)*2*TILE,TILE,1.75*TILE,18*TILE);
 
 //tidiness
-draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,8.75*TILE,17.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.tidiness/100)*2*TILE,TILE,8.75*TILE,17.5*TILE);
+//draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,20.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.tidiness/100)*2*TILE,TILE,1.75*TILE,19.5*TILE);
 
 //hungriness
-draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,12.25*TILE,17.5*TILE);
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*2*TILE,TILE,12.25*TILE,17.5*TILE);
+//draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,22.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*2*TILE,TILE,1.75*TILE,21*TILE);
 
 //age
-draw_set_halign(fa_right);
-draw_text(WIDTH-TILE,19*TILE,"Age: "+string(global.age)+" Days");
+//draw_set_halign(fa_left);
+//draw_text(0,HEIGHT-TILE-1," Age: "+string(global.age)+" Days");
 
 </string>
           </argument>

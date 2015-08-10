@@ -13,6 +13,7 @@
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskPixel</sprite>
+    <sprite>sprites\mskUpgrade</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -25,6 +26,7 @@
     <object>objects\objBackground</object>
     <object>objects\objPlayer</object>
     <object>objects\objText</object>
+    <object>objects\objUpgrade</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
@@ -34,7 +36,7 @@
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="TILE">16</constant>
-    <constant name="GROUND">13.5*TILE</constant>
+    <constant name="GROUND">12.5*TILE</constant>
     <constant name="SEC">60</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>

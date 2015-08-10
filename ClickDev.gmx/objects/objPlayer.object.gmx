@@ -144,7 +144,7 @@ for (i = 0; i &lt; 5; i++)
             //yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
         }
     }
-    if (in(device_mouse_y(i),7*TILE,16*TILE))
+    if (in(device_mouse_y(i),7*TILE,14*TILE))
         if (device_mouse_check_button_pressed(i,mb_any))
         {
             
