@@ -93,8 +93,8 @@ else
           <argument>
             <kind>1</kind>
             <string>draw_self();//todo:replace
-
 draw_set_alpha(1);
+
 if (!locked)
     draw_set_color(c_white);
 else

@@ -56,7 +56,7 @@ if (global.ulMax &gt; 0)
 
     draw_sprite_part(sprGfx,-1,WIDTH,2*TILE,TILE,3*TILE,x,y);
     
-    if (in(mouse_x,x,x+TILE) &amp;&amp; in(mouse_y,y,y+3*TILE))
+    if (in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y,y+3*TILE))
     {
         if (mouse_check_button(mb_left))
         {
