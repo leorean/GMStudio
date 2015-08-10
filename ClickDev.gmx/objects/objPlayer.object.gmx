@@ -142,7 +142,9 @@ for (i = 0; i &lt; 5; i++)
             xVel = lengthdir_x(-min(4,abs(device_mouse_x(i)-x)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             yVel = lengthdir_y(-min(4,abs(device_mouse_y(i)-y)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             //yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-        } 
+        }
+    }
+    if (in(device_mouse_y(i),7*TILE,16*TILE))
         if (device_mouse_check_button_pressed(i,mb_any))
         {
             
@@ -158,11 +160,11 @@ for (i = 0; i &lt; 5; i++)
             state = HAPPY;
 
             if (tidiness == min(tidiness,hungriness,sleepiness))
-                {tidiness += .5;show_debug_message("tidiniess:"+string(tidiness));}
+                {tidiness = min(tidiness+.5,100);show_debug_message("tidiniess:"+string(tidiness));}
             if (hungriness == min(tidiness,hungriness,sleepiness))
-                {hungriness += .5;show_debug_message("hungriness:"+string(hungriness));}
+                {hungriness = min(hungriness+.5,100);show_debug_message("hungriness:"+string(hungriness));}
             if (sleepiness == min(tidiness,hungriness,sleepiness))
-                {sleepiness += .5;show_debug_message("sleepiness:"+string(sleepiness));}
+                {sleepiness = min(sleepiness+.5,100);show_debug_message("sleepiness:"+string(sleepiness));}
                 
             //tidiness = max(tidiness-.1,0);
             
@@ -170,12 +172,12 @@ for (i = 0; i &lt; 5; i++)
             global.xp += global.cpc;
             global.c += global.cpc;
             
-            var txt = instance_create(device_mouse_x(i)-2+random(4),device_mouse_y(i)-2+random(4)-TILE,objText);
+            var txt = instance_create(x-2+random(4),y-2+random(4)-TILE,objText);
             txt.text = "+"+string(global.cpc)+"";
             
             stateTimer = 1*SEC;            
         }                
-    }
+    
 }
 
 if (keyboard_check_pressed(ord('E')))

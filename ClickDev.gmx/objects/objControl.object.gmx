@@ -92,7 +92,9 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 
 //++++game routine++++
 
-global.age = floor(date_day_span(global.creationDate, date_current_datetime()));
+//global.age = floor(date_day_span(global.creationDate, date_current_datetime()));
+if (keyboard_check_pressed(ord('F')))
+global.age++;
 
 global.timer = (global.timer + 1) % INFINITE;
 
@@ -258,7 +260,9 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>//HUD
+
+draw_set_alpha(1);
 draw_sprite_part(sprGfx,-1,0,0,WIDTH,101,0,0);
 
 draw_set_color(c_white);
@@ -293,20 +297,37 @@ draw_text(0,5*TILE," "+string(global.xp)+"/"+string(global.xpMax));
 draw_set_halign(fa_right);
 draw_text(WIDTH,5*TILE,"Lv."+string(global.level)+" ");
 
-//++++STAT BARS++++
+//++++STATS++++
+
+draw_set_font(global.fntDefault);
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+
+//icon %
+//draw_text(2.75*TILE,17.5*TILE,string(round(player.happiness))+"%");
+//draw_text(6.25*TILE,17.5*TILE,string(round(player.sleepiness))+"%");
+//draw_text(9.75*TILE,17.5*TILE,string(round(player.tidiness))+"%");
+//draw_text(13.25*TILE,17.5*TILE,string(round(player.hungriness))+"%");
 
 //happiness
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.happiness/100)*3*TILE,TILE,2*TILE,17.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,1.75*TILE,17.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.happiness/100)*2*TILE,TILE,1.75*TILE,17.5*TILE);
 
 //sleepiness
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.sleepiness/100)*3*TILE,TILE,2*TILE,19*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,5.25*TILE,17.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.sleepiness/100)*2*TILE,TILE,5.25*TILE,17.5*TILE);
 
 //tidiness
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.tidiness/100)*3*TILE,TILE,WIDTH-5*TILE,17.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,8.75*TILE,17.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.tidiness/100)*2*TILE,TILE,8.75*TILE,17.5*TILE);
 
 //hungriness
-draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*3*TILE,TILE,WIDTH-5*TILE,19*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,TILE,2*TILE,TILE,12.25*TILE,17.5*TILE);
+draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*2*TILE,TILE,12.25*TILE,17.5*TILE);
 
+//age
+draw_set_halign(fa_right);
+draw_text(WIDTH-TILE,19*TILE,"Age: "+string(global.age)+" Days");
 
 </string>
           </argument>
