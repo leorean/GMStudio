@@ -142,6 +142,12 @@ for (i = 0; i &lt; 5; i++)
             xVel = lengthdir_x(-min(4,abs(device_mouse_x(i)-x)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             yVel = lengthdir_y(-min(4,abs(device_mouse_y(i)-y)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             //yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+            
+            if (state != HAPPY)
+            {
+                state = IDLE;
+                stateTimer = 1*SEC;
+            }
         }
     }
     if (in(device_mouse_y(i),7*TILE,14*TILE))

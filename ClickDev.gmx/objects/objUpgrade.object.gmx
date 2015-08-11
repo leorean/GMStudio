@@ -29,9 +29,9 @@
 name = "&lt;name&gt;";
 desc = "&lt;description&gt;";
 level = 0;
-cps = 1;
-price = 1;
-levelPrice = 1; //calculated price for a certain level
+cps = 0;
+price = 0;
+levelPrice = 0; //calculated price for a certain level
 
 locked = true;
 canBuy = false;
@@ -162,8 +162,8 @@ draw_set_font(global.fntDefault);
 
 //++++name++++
 draw_set_halign(fa_left);
-//draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
-draw_text(x+2*TILE+2,y+1,string(name));
+draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
+//draw_text(x+2*TILE+2,y+1,string(name));
 
 //++++price++++
 
@@ -179,14 +179,34 @@ if (cpsl&gt;1000) cpsl = bigNumber(cpsl);
 draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 */
 
-//++++TODO:tooltip++++
+//++++tooltip++++
 
 if (pressed) pressTimer = max(pressTimer-1,0);
 else pressTimer = maxPressTimer;
 
 if (!pressTimer)
 {
-    draw_sprite_part(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE),clamp(mouse_y-8.5*TILE,y-7*TILE,y));
+    var wx = clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
+    var wy = clamp(mouse_y-8*TILE,y-7*TILE,y);
+    
+    draw_sprite_part(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy);
+
+    draw_set_font(global.fntDefault);
+    
+    if (!canBuy) draw_set_color(cNormal0) else draw_set_color(cNormal1);
+    draw_set_halign(fa_right);
+    draw_text(wx+13*TILE-4,wy+4,string(bigNumber(levelPrice))+"@");
+    
+    
+    draw_set_color(make_color_rgb(137,174,193));
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+    
+    draw_text(wx+4,wy+4,name);
+    
+    draw_set_halign(fa_left);
+    draw_text_ext(wx+4,wy+2*TILE+4,desc,TILE,12*TILE);
+    
 }
 /*
 if (in(mouse_x,x,x+2*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE))

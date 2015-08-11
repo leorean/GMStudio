@@ -60,32 +60,32 @@ global.ulMax = 0; //maximal viewable upgrades
 
 global.upgrade[0] = instance_create(0,0,objUpgrade);
 global.upgrade[0].index = 0; global.upgrade[0].name = "Cuter Paws";
-global.upgrade[0].description = "Even cuter paws. ^-^";
+global.upgrade[0].desc = "Even cuter paws. ^-^";
 global.upgrade[0].price = 15; global.upgrade[0].cps = 0.02;
 
 global.upgrade[1] = instance_create(0,0,objUpgrade);
 global.upgrade[1].index = 1; global.upgrade[1].name = "Whiskers";
-global.upgrade[1].description = "Long, brisky whiskers!";
+global.upgrade[1].desc = "Long, brisky whiskers!";
 global.upgrade[1].price = 105; global.upgrade[1].cps = 1;
 
 global.upgrade[2] = instance_create(0,0,objUpgrade);
 global.upgrade[2].index = 2; global.upgrade[2].name = "Fluff";
-global.upgrade[2].description = "Fluff. Fluffy fluff. ^-^";
+global.upgrade[2].desc = "Fluff. Fluffy fluff. ^-^";
 global.upgrade[2].price = 700; global.upgrade[2].cps = 5;
 
 global.upgrade[3] = instance_create(0,0,objUpgrade);
-global.upgrade[3].index = 3; global.upgrade[3].name = "Better#  Snacks!";
-global.upgrade[3].description = "Keep that tummy happy!";
+global.upgrade[3].index = 3; global.upgrade[3].name = "Better Snacks!";
+global.upgrade[3].desc = "Keep that tummy happy!";
 global.upgrade[3].price = 1520; global.upgrade[3].cps = 50;
 
 global.upgrade[4] = instance_create(0,0,objUpgrade);
 global.upgrade[4].index = 4; global.upgrade[4].name = "Purrificator";
-global.upgrade[4].description = "Purr as loud as a firetruck. :)";
+global.upgrade[4].desc = "Purr as loud as a firetruck. :)";
 global.upgrade[4].price = 9400; global.upgrade[4].cps = 90;
 
 global.upgrade[5] = instance_create(0,0,objUpgrade);
 global.upgrade[5].index = 5; global.upgrade[5].name = "Rubber ducky.";
-global.upgrade[5].description = "For the best bath time ever!";
+global.upgrade[5].desc = "For the best bath time ever!";
 global.upgrade[5].price = 150000; global.upgrade[5].cps = 200;
 
 </string>
@@ -120,10 +120,6 @@ if (keyboard_check(ord('E')))
     global.c += min(global.c*.1,10000);
     global.cmax += min(global.cmax*.1,10000);
 }
-if (keyboard_check(ord('1')))
-    global.cps *= 1.1;
-if (keyboard_check(ord('2')))
-    global.cps = max(global.cps/2,1);
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
@@ -158,6 +154,13 @@ if (keyboard_check_pressed(ord('F')))
 global.age++;
 
 global.timer = (global.timer + 1) % INFINITE;
+
+var cpsi = 0;
+for(var i = 0; i &lt;= global.ulMax; i++)
+{
+    cpsi += global.upgrade[i].level*global.upgrade[i].cps;
+}
+global.cps = cpsi;
 
 global.c += ((global.cps) / SEC);
 global.cmax += ((global.cps) / SEC);
