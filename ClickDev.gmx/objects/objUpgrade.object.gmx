@@ -43,6 +43,10 @@ cHighlight1 = make_color_rgb(211,251,255);
 
 dy = 0;
 dragged = false;
+
+maxPressTimer = .25*SEC;
+pressTimer = maxPressTimer;
+
 </string>
           </argument>
         </arguments>
@@ -108,38 +112,15 @@ draw_set_alpha(1);
 
 //set properties
 
-levelPrice = floor(price * power(1.2,(0.2)*(level))*(level));    //1.2^​(0.2*​x)*​x
+//levelPrice = floor(price * power(1.2,(0.2)*(level))*(level));    //1.2^​(0.2*​x)*​x
+levelPrice = floor(price + price * exp(level/5)*level);
 
 if (global.c &lt; levelPrice)
     canBuy = false;
 else
     canBuy = true;
 
-pressed = in(mouse_x,x,x+9*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button(mb_left);
-
-//++++drag &amp; change index++++
-if (!dragged)
-    dy = mouse_y;
-
-if (pressed)
-    dragged = true;
-
-if (mouse_check_button_released(mb_any))
-    dragged = false;
-
-if (dragged)
-{
-    if (mouse_y &gt; dy + 1.5*TILE)
-    {
-        global.u = max(global.u-1,0);
-        dragged = false;
-    }
-    if (mouse_y &lt; dy - 1.5*TILE)
-    {
-        global.u = min(global.u+1,global.ulMax);
-        dragged = false;
-    }
-}
+pressed = in(mouse_x,x,x+8*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)//&amp;&amp;mouse_check_button(mb_left);
 
 var color;
 if (!canBuy)
@@ -175,7 +156,7 @@ draw_set_font(fntUpgrade);
 draw_set_valign(fa_top);
 draw_set_halign(fa_right);
 
-draw_text(x+10*TILE,y,string(level)+" ");
+draw_text(x+10*TILE,y+.3*TILE,string(level)+" ");
 
 draw_set_font(global.fntDefault);
 
@@ -199,6 +180,14 @@ draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 */
 
 //++++TODO:tooltip++++
+
+if (pressed) pressTimer = max(pressTimer-1,0);
+else pressTimer = maxPressTimer;
+
+if (!pressTimer)
+{
+    draw_sprite_part(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE),clamp(mouse_y-8.5*TILE,y-7*TILE,y));
+}
 /*
 if (in(mouse_x,x,x+2*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE))
 {

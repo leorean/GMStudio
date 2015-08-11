@@ -25,7 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>dragged = false;
+            <string>global.scrolling = false;
+dy = 0;
+
+dragged = false;
 yVel = 0;
 </string>
           </argument>
@@ -56,6 +59,38 @@ yVel = 0;
 if (global.ulMax &gt; 0)
 {
 
+    //++++drag &amp; change index++++
+    if (!dragged) //only drag if not using the slider to the right
+    {
+        if (!global.scrolling)
+        {
+            dy = mouse_y;
+        
+            if (in(mouse_x,0,WIDTH-3*TILE)&amp;&amp;in(mouse_y,GROUND+3.5*TILE,HEIGHT)
+                &amp;&amp; mouse_check_button(mb_left))
+                global.scrolling = true;
+        }
+        
+        if (mouse_check_button_released(mb_any))
+            global.scrolling = false;
+        
+        if (global.scrolling)
+        {
+            if (mouse_y &gt; dy + 1*TILE)
+            {
+                global.u = max(global.u-1,0);
+                with(objUpgrade)pressTimer = maxPressTimer;
+            }
+            if (mouse_y &lt; dy - 1*TILE)
+            {
+                global.u = min(global.u+1,global.ulMax);
+                with(objUpgrade)pressTimer = maxPressTimer;
+            }
+        }
+    }
+
+    //++++scrollbar stuff++++
+    
     draw_sprite_part(sprGfx,-1,WIDTH,2*TILE,TILE,3*TILE,x,y);
     
     if (in(mouse_x,x-TILE,x+TILE) &amp;&amp; mouse_y &gt; GROUND+3.5*TILE)// &amp;&amp; in(mouse_y,y,y+3*TILE))
