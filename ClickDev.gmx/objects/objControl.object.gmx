@@ -58,7 +58,7 @@ global.uMax = 5; //maximal upgrades (all)
 global.ulMax = 0; //maximal viewable upgrades
 
 global.upgrade[0] = instance_create(0,0,objUpgrade);
-global.upgrade[0].index = 0; global.upgrade[0].name = "Paw";
+global.upgrade[0].index = 0; global.upgrade[0].name = "a a a a #    a a a a a a";
 global.upgrade[0].description = "even cuter paws. ^-^";
 global.upgrade[0].price = 35; global.upgrade[0].cps = 0.02;
 
@@ -214,11 +214,6 @@ mouse_yprev = mouse_y;
 player = instance_create(WIDTH/2,13.5*TILE,objPlayer);
 
 scrollbar = instance_create(0,0,objScrollBar);
-
-global.upgrade[0].level = 3;
-global.upgrade[1].level = 1;
-global.upgrade[2].level = 0;
-
 </string>
           </argument>
         </arguments>

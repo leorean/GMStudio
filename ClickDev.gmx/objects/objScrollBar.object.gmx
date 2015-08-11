@@ -71,7 +71,7 @@ if (global.ulMax &gt; 0)
         
     if (dragged)
     {
-        yVel = (mouse_y - (y+1.5*TILE))/10;
+        yVel = (mouse_y - (y+1.5*TILE))/5;
         y = clamp(y+yVel,GROUND+3.5*TILE,HEIGHT-3*TILE);
         global.u = floor(((y - (GROUND+3.5*TILE)) / ((HEIGHT-3*TILE)-(GROUND+3.5*TILE)))
             * global.ulMax);

@@ -36,11 +36,13 @@ levelPrice = 1; //calculated price for a certain level
 locked = true;
 canBuy = false;
 
-cNormal0 = make_color_rgb(29,67,81);
-cNormal1 = make_color_rgb(29,67,81);
-cHighlight0 = make_color_rgb(37,96,121);
-cHighlight1 = c_white;
+cNormal0 = make_color_rgb(135,19,41);//make_color_rgb(29,67,81);
+cNormal1 = make_color_rgb(183,245,49);//make_color_rgb(184,235,239);
+cHighlight0 = make_color_rgb(199,61,61);//make_color_rgb(37,96,121);
+cHighlight1 = make_color_rgb(211,251,255);
 
+dy = 0;
+dragged = false;
 </string>
           </argument>
         </arguments>
@@ -70,7 +72,7 @@ x = 4*TILE;
 y = GROUND+3.5*TILE+index*3*TILE-global.u*3*TILE;
 
 //todo: resource-dependant, not upgrade dependant?
-if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 5*index+power(index,2)))
+if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 0))
     locked = false;
 
 if (index &gt;= global.u &amp;&amp; index &lt;= global.u+2)
@@ -103,14 +105,41 @@ else
 if (locked) exit;
 draw_set_alpha(1);
 
-//set color 
-if (global.c &lt; price)
+
+//set properties
+
+levelPrice = floor(price * power(1.2,(0.2)*(level))*(level));    //1.2^​(0.2*​x)*​x
+
+if (global.c &lt; levelPrice)
     canBuy = false;
 else
     canBuy = true;
 
 pressed = in(mouse_x,x,x+9*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button(mb_left);
 
+//++++drag &amp; change index++++
+if (!dragged)
+    dy = mouse_y;
+
+if (pressed)
+    dragged = true;
+
+if (mouse_check_button_released(mb_any))
+    dragged = false;
+
+if (dragged)
+{
+    if (mouse_y &gt; dy + 1.5*TILE)
+    {
+        global.u = max(global.u-1,0);
+        dragged = false;
+    }
+    if (mouse_y &lt; dy - 1.5*TILE)
+    {
+        global.u = min(global.u+1,global.ulMax);
+        dragged = false;
+    }
+}
 
 var color;
 if (!canBuy)
@@ -120,6 +149,17 @@ if (!canBuy)
 else
 {
     if (!pressed) color = cNormal1 else color = cHighlight1;
+    
+    /*
+    TODO: buy here
+    */
+    if (in(mouse_x,x,x+9*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button_released(mb_right))
+    {
+        global.c -= levelPrice;
+        level++;
+        var txt = instance_create(x+5*TILE,y,objText);
+        txt.text = "Upgrade!";
+    }
 }
 draw_set_color(color);
 
@@ -129,7 +169,7 @@ draw_sprite_part_ext(sprGfx,-1,WIDTH+TILE,2*TILE,10*TILE,3*TILE,x,y,1,1,c_white,
 //++++draw icon+++
 draw_sprite_part(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y);
 
-draw_set_font(fntLevel);
+draw_set_font(fntUpgrade);
 
 //++++draw level++++
 draw_set_valign(fa_top);
@@ -141,20 +181,22 @@ draw_set_font(global.fntDefault);
 
 //++++name++++
 draw_set_halign(fa_left);
-draw_text(x+2*TILE,y+1," " + string(name));
+//draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
+draw_text(x+2*TILE+2,y+1,string(name));
 
 //++++price++++
 
-levelPrice = price * power(1.2,(0.2)*(level+1))*(level+1);    //1.2^​(0.2*​x)*​x
-
-draw_set_halign(fa_left);
-draw_text(x+2*TILE,y+TILE," @ " + string(bigNumber(levelPrice)));
+draw_set_font(global.fntDefault);
+draw_set_halign(fa_right);
+draw_text(x+10*TILE-2,y+2*TILE-1,"@ " + string(bigNumber(levelPrice))+" ");
 
 //+++cps+++++
+/*
 draw_set_halign(fa_right);
 var cpsl = cps*(level+1);
 if (cpsl&gt;1000) cpsl = bigNumber(cpsl);
 draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
+*/
 
 //++++TODO:tooltip++++
 /*
