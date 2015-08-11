@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>dragged = false;
+yVel = 0;
 </string>
           </argument>
         </arguments>
@@ -50,13 +51,14 @@
             <kind>1</kind>
             <string>draw_set_alpha(1);
 x = WIDTH-TILE;
+yVel = 0;
 
 if (global.ulMax &gt; 0)
 {
 
     draw_sprite_part(sprGfx,-1,WIDTH,2*TILE,TILE,3*TILE,x,y);
     
-    if (in(mouse_x,x-TILE,x+TILE) &amp;&amp; in(mouse_y,y,y+3*TILE))
+    if (in(mouse_x,x-TILE,x+TILE) &amp;&amp; mouse_y &gt; GROUND+3.5*TILE)// &amp;&amp; in(mouse_y,y,y+3*TILE))
     {
         if (mouse_check_button(mb_left))
         {
@@ -69,15 +71,17 @@ if (global.ulMax &gt; 0)
         
     if (dragged)
     {
-        y = clamp(mouse_y-1.5*TILE,GROUND+3.5*TILE,HEIGHT-3*TILE);
-        var ind = floor(((y - (GROUND+3.5*TILE)) / ((HEIGHT-3*TILE)-(GROUND+3.5*TILE)))
+        yVel = (mouse_y - (y+1.5*TILE))/10;
+        y = clamp(y+yVel,GROUND+3.5*TILE,HEIGHT-3*TILE);
+        global.u = floor(((y - (GROUND+3.5*TILE)) / ((HEIGHT-3*TILE)-(GROUND+3.5*TILE)))
             * global.ulMax);
             
-        global. u = ind;
-        show_debug_message("u:"+string(ind));
+        //show_debug_message("u:"+string(ind));
     }
     else
+    {
         y = GROUND+3.5*TILE + 6*TILE*global.u/global.ulMax;
+    }
 
 } else
     y = GROUND+3.5*TILE;

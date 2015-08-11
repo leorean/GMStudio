@@ -34,6 +34,13 @@ price = 1;
 levelPrice = 1; //calculated price for a certain level
 
 locked = true;
+canBuy = false;
+
+cNormal0 = make_color_rgb(29,67,81);
+cNormal1 = make_color_rgb(29,67,81);
+cHighlight0 = make_color_rgb(37,96,121);
+cHighlight1 = c_white;
+
 </string>
           </argument>
         </arguments>
@@ -92,13 +99,32 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();//todo:replace
+            <string>//++++begin++++
+if (locked) exit;
 draw_set_alpha(1);
 
-if (!locked)
-    draw_set_color(c_white);
+//set color 
+if (global.c &lt; price)
+    canBuy = false;
 else
-    draw_set_color(c_black);
+    canBuy = true;
+
+pressed = in(mouse_x,x,x+9*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button(mb_left);
+
+
+var color;
+if (!canBuy)
+{
+    if (!pressed) color = cNormal0 else color = cHighlight0;
+}
+else
+{
+    if (!pressed) color = cNormal1 else color = cHighlight1;
+}
+draw_set_color(color);
+
+    
+draw_sprite_part_ext(sprGfx,-1,WIDTH+TILE,2*TILE,10*TILE,3*TILE,x,y,1,1,c_white,.6+pressed*.4);
 
 //++++draw icon+++
 draw_sprite_part(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y);
@@ -115,7 +141,7 @@ draw_set_font(global.fntDefault);
 
 //++++name++++
 draw_set_halign(fa_left);
-draw_text(x+2*TILE,y," " + string(name));
+draw_text(x+2*TILE,y+1," " + string(name));
 
 //++++price++++
 
@@ -123,12 +149,20 @@ levelPrice = price * power(1.2,(0.2)*(level+1))*(level+1);    //1.2^​(0.2*​x
 
 draw_set_halign(fa_left);
 draw_text(x+2*TILE,y+TILE," @ " + string(bigNumber(levelPrice)));
+
 //+++cps+++++
 draw_set_halign(fa_right);
 var cpsl = cps*(level+1);
 if (cpsl&gt;1000) cpsl = bigNumber(cpsl);
-draw_text(x+10*TILE,y+2*TILE," @ " + string(cpsl) + " / sec.");
+draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 
+//++++TODO:tooltip++++
+/*
+if (in(mouse_x,x,x+2*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE))
+{
+    pressed = true;
+    
+}*/
 </string>
           </argument>
         </arguments>
