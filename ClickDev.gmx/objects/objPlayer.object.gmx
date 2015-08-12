@@ -180,7 +180,7 @@ for (i = 0; i &lt; 5; i++)
             global.cmax += global.cpc;
             
             var txt = instance_create(x-2+random(4),y-2+random(4)-TILE,objText);
-            txt.text = "+"+string(global.cpc)+"";
+            txt.text = "+"+string(bigNumber(global.cpc))+"";
             
             stateTimer = 1*SEC;            
         }                

@@ -46,6 +46,7 @@ dragged = false;
 
 maxPressTimer = .25*SEC;
 pressTimer = maxPressTimer;
+ttAlpha = 0; //tooltip alpha
 
 </string>
           </argument>
@@ -113,14 +114,15 @@ draw_set_alpha(1);
 //set properties
 
 //levelPrice = floor(price * power(1.2,(0.2)*(level))*(level));    //1.2^​(0.2*​x)*​x
-levelPrice = floor(price + price * exp(level/5)*level);
+//levelPrice = floor(price + price * exp(level/5)*level);
+levelPrice = price * power(1.15,level);
 
 if (global.c &lt; levelPrice)
     canBuy = false;
 else
     canBuy = true;
 
-pressed = in(mouse_x,x,x+8*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)//&amp;&amp;mouse_check_button(mb_left);
+pressed = in(mouse_x,x,x+8*TILE)&amp;&amp;in(mouse_y,y+1,y+3*TILE-1)&amp;&amp;mouse_check_button(mb_left);
 
 var color;
 if (!canBuy)
@@ -196,13 +198,15 @@ draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 if (pressed) pressTimer = max(pressTimer-1,0);
 else pressTimer = maxPressTimer;
 
-if (!pressTimer &amp;&amp; level &gt; 0)
+if (!pressTimer)// &amp;&amp; mouse_check_button(mb_left))
 {
+    ttAlpha = min(ttAlpha+.03,1);
     var wx = clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
     var wy = clamp(mouse_y-8*TILE,y-7*TILE,y);
     
-    draw_sprite_part(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy);
-
+    draw_sprite_part_ext(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy,1,1,c_white,ttAlpha);
+    draw_set_alpha(ttAlpha);
+    
     draw_set_font(global.fntDefault);
     
     if (!canBuy) draw_set_color(cNormal0) else draw_set_color(cNormal1);
@@ -215,21 +219,31 @@ if (!pressTimer &amp;&amp; level &gt; 0)
     draw_set_valign(fa_top);
     
     //++++name++++
-    draw_text(wx+4,wy+4,name);
+    var n = "???";
+    if (level &gt; 0) n = name;
+    draw_text(wx+4,wy+4," "+string(n));
     
     //++++description++++
+    var d = "Double tap to buy.";
+    if (level &gt; 0) d = desc;
     draw_set_halign(fa_left);
-    draw_text_ext(wx+4,wy+2*TILE+4,desc,TILE,12*TILE);
+    draw_text_ext(wx+4,wy+2*TILE+4," "+string(d),TILE,12*TILE);
     
     draw_set_halign(fa_right);
+    //++++lv++++
+    draw_text(wx+13*TILE,wy+TILE+4," Lv. "+string(level)+" ");
     
-    //++++single cps++++
-    draw_text(wx+13*TILE,wy+3.5*TILE,string(bigNumber(cps))+"@ p.s. each ");
-    
-    //++++overall cps++++
-    draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(level*cps))+"@ p.s. total ");
-    
-}
+    if (level &gt; 0)
+    {
+        //++++single cps++++
+        draw_text(wx+13*TILE,wy+3.5*TILE,string(bigNumber(cps))+"@ p.s. each ");
+        
+        //++++overall cps++++
+        draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(level*cps))+"@ p.s. total ");
+    } 
+} else
+    ttAlpha = 0;
+
 /*
 if (in(mouse_x,x,x+2*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE))
 {
