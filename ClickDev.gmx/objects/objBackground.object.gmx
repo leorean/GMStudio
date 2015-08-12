@@ -75,6 +75,12 @@ draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.tidiness/100)*3*TILE,TILE,WIDTH
 draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.hungriness/100)*3*TILE,TILE,WIDTH-5*TILE,19*TILE);
 */
 
+//++++DRAW UPGRADE VISUALS++++
+if (global.upgrade[0].level&gt;0)
+{
+    draw_sprite_part(sprGfx,-1,WIDTH,12*TILE,2*TILE,2*TILE,0,12*TILE);
+}
+
 </string>
           </argument>
         </arguments>

@@ -148,8 +148,11 @@ else
 draw_set_color(color);
 
 
-    
-draw_sprite_part(sprGfx,-1,WIDTH+TILE+pressed*10*TILE,2*TILE,10*TILE,3*TILE,x,y);
+if (level &gt; 0)
+    draw_sprite_part(sprGfx,-1,WIDTH+TILE+pressed*10*TILE,2*TILE,10*TILE,3*TILE,x,y);
+else
+    draw_sprite_part(sprGfx,-1,WIDTH+21*TILE,2*TILE,10*TILE,3*TILE,x,y);
+//    draw_sprite_part_ext(sprGfx,-1,WIDTH+TILE+pressed*10*TILE,2*TILE,10*TILE,3*TILE,x,y,1,1,c_white,.5);
 
 //++++draw icon+++
 if (level &gt; 0)
@@ -200,7 +203,7 @@ else pressTimer = maxPressTimer;
 
 if (!pressTimer)// &amp;&amp; mouse_check_button(mb_left))
 {
-    ttAlpha = min(ttAlpha+.03,1);
+    ttAlpha = min(ttAlpha+.04,1);
     var wx = clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
     var wy = clamp(mouse_y-8*TILE,y-7*TILE,y);
     

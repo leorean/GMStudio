@@ -132,7 +132,7 @@ for (i = 0; i &lt; 5; i++)
 {
     if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
     {
-        if (device_mouse_check_button(i,mb_any))
+        if (device_mouse_check_button(i,mb_left))
         {
             x = device_mouse_x(i);
             y = device_mouse_y(i);
