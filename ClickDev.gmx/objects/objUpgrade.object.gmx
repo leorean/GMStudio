@@ -175,7 +175,7 @@ if (level &gt; 0)
     draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
 else
 {
-    draw_text_color(x+2*TILE+2,y+1,"???",c_black,c_black,c_black,c_black,.5);
+    draw_text_color(x+2*TILE+2,y+1,string(name),c_black,c_black,c_black,c_black,.5);
 }
 //draw_text(x+2*TILE+2,y+1,string(name));
 
