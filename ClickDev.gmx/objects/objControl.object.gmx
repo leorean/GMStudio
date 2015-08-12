@@ -53,7 +53,10 @@ global.age = 0; //in days
 
 instance_create(0,0,objBackground);
 
+//+++++++++++++++++++++
 //++++UPGRADE STUFF++++
+//+++++++++++++++++++++
+
 global.u = 0;
 global.uMax = 5; //maximum upgrades (all)
 global.ulMax = 0; //maximum viewable/unlocked upgrades
@@ -195,7 +198,7 @@ if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
         txt.yVel = -.5;
         txt.alpha = 2;
         
-        immersion_play_effect(30);
+        //immersion_play_effect(30);
         
     }
 }

@@ -149,7 +149,7 @@ draw_set_color(color);
 
 
     
-draw_sprite_part_ext(sprGfx,-1,WIDTH+TILE,2*TILE,10*TILE,3*TILE,x,y,1,1,c_white,.6+pressed*.4);
+draw_sprite_part(sprGfx,-1,WIDTH+TILE+pressed*10*TILE,2*TILE,10*TILE,3*TILE,x,y);
 
 //++++draw icon+++
 if (level &gt; 0)
@@ -219,12 +219,12 @@ if (!pressTimer)// &amp;&amp; mouse_check_button(mb_left))
     draw_set_valign(fa_top);
     
     //++++name++++
-    var n = "???";
-    if (level &gt; 0) n = name;
-    draw_text(wx+4,wy+4," "+string(n));
+    //var n = "???";
+    //if (level &gt; 0) n = name;
+    draw_text(wx+4,wy+4," "+string(name));
     
     //++++description++++
-    var d = "Double tap to buy.";
+    var d = "Double-tap to buy.";
     if (level &gt; 0) d = desc;
     draw_set_halign(fa_left);
     draw_text_ext(wx+4,wy+2*TILE+4," "+string(d),TILE,12*TILE);
