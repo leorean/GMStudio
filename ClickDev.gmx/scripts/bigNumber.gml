@@ -10,7 +10,7 @@ var ret = "";
 //if (arg div 1000 < 1)
 //    ret = string(floor(arg));
 if (arg < power(1000,1))
-    ret = string_format(floor(arg),0,0)+"";
+    ret = string(arg);//string_format(arg,0,3)+"";
 else if (arg < power(1000,2))
     ret = string_format(arg/power(1000,1),0,3)+"k";
 else if (arg < power(1000,3))

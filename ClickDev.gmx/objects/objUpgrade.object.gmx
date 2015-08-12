@@ -142,13 +142,19 @@ else
         txt.text = "Upgrade!";
     }
 }
+
 draw_set_color(color);
+
 
     
 draw_sprite_part_ext(sprGfx,-1,WIDTH+TILE,2*TILE,10*TILE,3*TILE,x,y,1,1,c_white,.6+pressed*.4);
 
 //++++draw icon+++
-draw_sprite_part(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y);
+if (level &gt; 0)
+    draw_sprite_part(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y);
+else
+    draw_sprite_part_ext(sprGfx,-1,index*2*TILE,HEIGHT,2*TILE,2*TILE,x,y,1,1,c_black,.5);
+
 
 draw_set_font(fntUpgrade);
 
@@ -156,20 +162,26 @@ draw_set_font(fntUpgrade);
 draw_set_valign(fa_top);
 draw_set_halign(fa_right);
 
-draw_text(x+10*TILE,y+.3*TILE,string(level)+" ");
+if (level &gt; 0)
+    draw_text(x+10*TILE,y+.3*TILE,string(level)+" ");
 
 draw_set_font(global.fntDefault);
 
 //++++name++++
 draw_set_halign(fa_left);
-draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
+if (level &gt; 0)
+    draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
+else
+{
+    draw_text_color(x+2*TILE+2,y+1,"???",c_black,c_black,c_black,c_black,.5);
+}
 //draw_text(x+2*TILE+2,y+1,string(name));
 
 //++++price++++
 
 draw_set_font(global.fntDefault);
 draw_set_halign(fa_right);
-draw_text(x+10*TILE-2,y+2*TILE-1,"@ " + string(bigNumber(levelPrice))+" ");
+draw_text(x+10*TILE-2,y+2*TILE-1,"" + string(bigNumber(levelPrice))+"@ ");
 
 //+++cps+++++
 /*
@@ -179,12 +191,12 @@ if (cpsl&gt;1000) cpsl = bigNumber(cpsl);
 draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 */
 
-//++++tooltip++++
+//++++TOOLTIP++++
 
 if (pressed) pressTimer = max(pressTimer-1,0);
 else pressTimer = maxPressTimer;
 
-if (!pressTimer)
+if (!pressTimer &amp;&amp; level &gt; 0)
 {
     var wx = clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
     var wy = clamp(mouse_y-8*TILE,y-7*TILE,y);
@@ -202,10 +214,20 @@ if (!pressTimer)
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     
+    //++++name++++
     draw_text(wx+4,wy+4,name);
     
+    //++++description++++
     draw_set_halign(fa_left);
     draw_text_ext(wx+4,wy+2*TILE+4,desc,TILE,12*TILE);
+    
+    draw_set_halign(fa_right);
+    
+    //++++single cps++++
+    draw_text(wx+13*TILE,wy+3.5*TILE,string(bigNumber(cps))+"@ p.s. each ");
+    
+    //++++overall cps++++
+    draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(level*cps))+"@ p.s. total ");
     
 }
 /*

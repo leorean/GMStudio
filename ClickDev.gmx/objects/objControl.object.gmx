@@ -80,7 +80,7 @@ global.upgrade[3].price = 1520; global.upgrade[3].cps = 50;
 
 global.upgrade[4] = instance_create(0,0,objUpgrade);
 global.upgrade[4].index = 4; global.upgrade[4].name = "Purrificator";
-global.upgrade[4].desc = "Purr as loud as a firetruck. :)";
+global.upgrade[4].desc = "Purr louder than a firetruck. :)";
 global.upgrade[4].price = 9400; global.upgrade[4].cps = 90;
 
 global.upgrade[5] = instance_create(0,0,objUpgrade);
@@ -340,7 +340,7 @@ draw_set_valign(fa_top);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
-strc = bigNumber(global.c);
+strc = bigNumber(floor(global.c));
 
 draw_set_font(global.fntNormal);
 draw_text(WIDTH/2,1*TILE+4,""+strc+" @");
