@@ -139,9 +139,9 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
 }
 
-if (mouse_wheel_up())
-    global.u = min(global.u+1,global.ulMax);
 if (mouse_wheel_down())
+    global.u = min(global.u+1,global.ulMax);
+if (mouse_wheel_up())
     global.u = max(global.u-1,0);
     
 if (keyboard_check_pressed(ord('J')))

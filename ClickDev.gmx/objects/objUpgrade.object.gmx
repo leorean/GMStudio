@@ -144,13 +144,14 @@ else
     if (pressed)
     {
         var slidex = clamp((mx-mouse_x)/(3*TILE),0,1);
-        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,6*TILE,9*TILE,3*TILE,3*TILE,y-9.5*TILE);
-        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,9*TILE,9*TILE,TILE,3*TILE,y-8*TILE);
-        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,5*TILE,3*TILE,TILE,9*TILE-slidex*6*TILE,y-8*TILE);
+        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,6*TILE,9*TILE,3*TILE,3*TILE,y-10.5*TILE);
+        //draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,9*TILE,9*TILE,TILE,3*TILE,y-8*TILE);
+        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,5*TILE,3*TILE,TILE,9*TILE-slidex*6*TILE,y-9*TILE);
         
         draw_set_halign(fa_center);
         draw_set_color(c_black);
-        draw_text(WIDTH/2,y-9*TILE,"&lt; Slide to buy!");
+        draw_text(WIDTH/2,y-10*TILE,"&lt; Slide to buy! ");
+        
     }
     //++++BUY GESTURE++++
     if (mouse_x &lt; mx - 3*TILE &amp;&amp; in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button(mb_left))
@@ -220,7 +221,7 @@ draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 if (pressed)// &amp;&amp; mouse_check_button(mb_left))
 {
     var wx = TILE;//clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
-    var wy = y-6.5*TILE;//clamp(mouse_y-8*TILE,y-7*TILE,y);
+    var wy = y-7.5*TILE;//clamp(mouse_y-8*TILE,y-7*TILE,y);
     
     draw_sprite_part_ext(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy,1,1,c_white,1);
     draw_set_alpha(1);
@@ -247,17 +248,14 @@ if (pressed)// &amp;&amp; mouse_check_button(mb_left))
     
     draw_set_halign(fa_right);
     //++++lv++++
-    draw_text(wx+13*TILE,wy+TILE+4," Lv. "+string(level)+" ");
+    //draw_text(wx+13*TILE,wy+TILE+4," Lv. "+string(level)+" ");
     
+    //++++single cps++++
+    draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(cps))+"@ p.s. each ");
+    
+    //++++overall cps++++
     if (level &gt; 0)
-    {
-        //++++single cps++++
-        draw_text(wx+13*TILE,wy+3.5*TILE,string(bigNumber(cps))+"@ p.s. each ");
-        
-        //++++overall cps++++
-        draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(level*cps))+"@ p.s. total ");
-    } else
-        draw_text(wx+13*TILE,wy+4.5*TILE,"Double-tap to unlock. ");
+        draw_text(wx+13*TILE,wy+5.5*TILE,string(bigNumber(level*cps))+"@ p.s. (Lvl. "+string(level)+") ");
     
     
     //if (/*!in(mouse_x,x,x+10*TILE)||!in(mouse_y,y,y+3*TILE)&amp;&amp;*/mouse_check_button_pressed(mb_any))
