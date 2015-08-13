@@ -197,15 +197,15 @@ for (i = 0; i &lt; 5; i++)
                 
             //tidiness = max(tidiness-.1,0);
             */
-            if (global.cursor != C_GRAB)
-            {
-                global.xp += global.cpc;
-                global.c += global.cpc;
-                global.cmax += global.cpc;
+            var cpc = .5*global.cpc+.5*global.cpc*(happiness/100);
+            
+            global.xp += cpc;
+            global.c += cpc;
+            global.cmax += cpc;
                 
-                var txt = instance_create(x-2+random(4),y-2+random(4)-TILE,objText);
-                txt.text = "+"+string(bigNumber(global.cpc))+"";
-            }
+            var txt = instance_create(x-2+random(4),y-2+random(4)-TILE,objText);
+            txt.text = "+"+string(bigNumber(cpc))+"";
+            
             stateTimer = 1*SEC;         
         }                
     

@@ -55,7 +55,7 @@ type = 0;
 x += xVel;
 y += yVel;
 
-if (y &gt; GROUND || y &gt; objPlayer.y-TILE)
+if (y &gt; GROUND || y &gt; objPlayer.y)
     instance_destroy();
 </string>
           </argument>
