@@ -77,7 +77,8 @@ x = 4*TILE;
 y = GROUND+3.5*TILE+index*3*TILE-global.u*3*TILE;
 
 //todo: resource-dependant, not upgrade dependant?
-if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 0))
+//if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 0))
+if (index == 0 || (index &gt; 0 &amp;&amp; global.cmax &gt;= 0.5*price))
     locked = false;
 
 if (index &gt;= global.u &amp;&amp; index &lt;= global.u+2)

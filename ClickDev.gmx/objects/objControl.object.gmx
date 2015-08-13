@@ -67,8 +67,8 @@ global.upgrade[0].desc = "The more wool, the better!";
 global.upgrade[0].price = 1.5; global.upgrade[0].cps = 0.01;
 
 global.upgrade[1] = instance_create(0,0,objUpgrade);
-global.upgrade[1].index = 1; global.upgrade[1].name = "Whiskers";
-global.upgrade[1].desc = "Long, brisky whiskers!";
+global.upgrade[1].index = 1; global.upgrade[1].name = "Catnip";
+global.upgrade[1].desc = "Can't spell cat without catnip!";
 global.upgrade[1].price = 10; global.upgrade[1].cps = 0.05;
 
 global.upgrade[2] = instance_create(0,0,objUpgrade);
@@ -123,6 +123,9 @@ if (keyboard_check(ord('E')))
     global.c += min(global.c*.1,10000);
     global.cmax += min(global.cmax*.1,10000);
 }
+
+if (keyboard_check(ord('I')))
+    show_debug_message(global.cmax);
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
