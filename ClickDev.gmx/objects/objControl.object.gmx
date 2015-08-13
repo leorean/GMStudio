@@ -117,16 +117,23 @@ global.upgrade[5].price = 4500; global.upgrade[5].cps = 10;
 if (keyboard_check_pressed(ord('R')))
     game_restart();
 
-if (keyboard_check(ord('E')))
+/*if (keyboard_check(ord('E')))
 {
     global.xp += min(global.c*.1,10000);
     global.c += min(global.c*.1,10000);
     global.cmax += min(global.cmax*.1,10000);
+}*/
+
+if (keyboard_check(ord('E')))
+{
+    global.c *= 2;
 }
 
-if (keyboard_check(ord('I')))
-    show_debug_message(global.cmax);
-
+if (keyboard_check_pressed(ord('I')))
+    global.level++;
+    
+show_debug_message(global.c);
+    
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 {
     game_end();
@@ -183,15 +190,14 @@ for(var i = 0; i &lt;= global.ulMax-1; i++)
 global.cpc = cpci;*/
 
 //++++level up++++
+global.xpMax = 25*power(1.9,global.level-1);
+
 if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
 {
     global.xp = 0;
     global.level++;
 
     var a = global.level+1;
-    //1.2^​(0.2*​x)*​x
-    //global.xpMax = 10*((global.xpMax + 300+(30 * (a div 3) + 2*(a div 15) + 10*power((a+1) div 3,2) + 150*(a-1))) div 10);
-    global.xpMax = 25*power(1.9,global.level-1);
     
     if (global.level &gt; 1)
     {
@@ -207,8 +213,8 @@ if (global.xp &gt;= global.xpMax || keyboard_check_pressed(ord('T')))
 }
 
 //++++end variables++++
-global.c = min(global.c,999.999*power(1000,4));
-global.cmax = min(global.cmax,999.999*power(1000,4));
+global.c = min(global.c,999.999*power(1000,9));
+global.cmax = min(global.cmax,999.999*power(1000,9));
 mouse_yprev = mouse_y;
 
 </string>
@@ -372,7 +378,7 @@ draw_set_valign(fa_top);
 draw_set_font(global.fntDefault);
 draw_sprite_part(sprGfx,-1,WIDTH,0,WIDTH-TILE,.5*TILE,.5*TILE,4.5*TILE);
 draw_sprite_part(sprGfx,-1,WIDTH,.5*TILE,(WIDTH-TILE)*(global.xp/global.xpMax),.5*TILE,.5*TILE,4.5*TILE);
-draw_text(0,5*TILE,"  "+string(global.xp)+"/"+string(global.xpMax));
+draw_text(0,5*TILE,"  "+string(bigNumber(global.xp))+"/"+string(bigNumber(global.xpMax)));
 draw_set_halign(fa_right);
 draw_text(WIDTH,5*TILE,"Lv."+string(global.level)+"  ");
 

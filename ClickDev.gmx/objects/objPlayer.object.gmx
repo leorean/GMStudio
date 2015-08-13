@@ -166,11 +166,11 @@ for (i = 0; i &lt; 5; i++)
             state = HAPPY;
 
             if (tidiness == min(tidiness,hungriness,sleepiness))
-                {tidiness = min(tidiness+.5,100);show_debug_message("tidiniess:"+string(tidiness));}
+                tidiness = min(tidiness+.5,100);//show_debug_message("tidiniess:"+string(tidiness));}
             if (hungriness == min(tidiness,hungriness,sleepiness))
-                {hungriness = min(hungriness+.5,100);show_debug_message("hungriness:"+string(hungriness));}
+                hungriness = min(hungriness+.5,100);//show_debug_message("hungriness:"+string(hungriness));}
             if (sleepiness == min(tidiness,hungriness,sleepiness))
-                {sleepiness = min(sleepiness+.5,100);show_debug_message("sleepiness:"+string(sleepiness));}
+                sleepiness = min(sleepiness+.5,100);//show_debug_message("sleepiness:"+string(sleepiness));}
                 
             //tidiness = max(tidiness-.1,0);
             

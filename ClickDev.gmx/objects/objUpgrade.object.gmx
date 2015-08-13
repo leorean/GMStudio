@@ -41,13 +41,11 @@ cNormal1 = make_color_rgb(183,245,49);//make_color_rgb(184,235,239);
 cHighlight0 = make_color_rgb(199,61,61);//make_color_rgb(37,96,121);
 cHighlight1 = make_color_rgb(211,251,255);
 
-dy = 0;
-dragged = false;
+pressed = false;
 
-maxPressTimer = .25*SEC;
-pressTimer = maxPressTimer;
-ttAlpha = 0; //tooltip alpha
+mx = 0; //for swipe gesture
 
+showTooltip = false;
 </string>
           </argument>
         </arguments>
@@ -123,26 +121,47 @@ if (global.c &lt; levelPrice)
 else
     canBuy = true;
 
-pressed = in(mouse_x,x,x+8*TILE)&amp;&amp;in(mouse_y,y+1,y+3*TILE-1)&amp;&amp;mouse_check_button(mb_left);
+if (!pressed)
+    pressed = in(mouse_x,x,x+8*TILE)&amp;&amp;in(mouse_y,y+1,y+3*TILE-1)&amp;&amp;mouse_check_button(mb_left);
+if (!in(mouse_y,y+1,y+3*TILE-1)||!mouse_check_button(mb_left))
+    pressed = false;
+
+//++++BUY SLIDER++++
+if (!pressed) mx = mouse_x;
 
 var color;
 if (!canBuy)
 {
+    //mx = mouse_x;
     if (!pressed) color = cNormal0 else color = cHighlight0;
 }
 else
 {
     if (!pressed) color = cNormal1 else color = cHighlight1;
     
-    /*
-    TODO: buy here
-    */
-    if (in(mouse_x,x,x+9*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button_released(mb_right))
+
+    //++++SLIDER++++    
+    if (pressed)
+    {
+        var slidex = clamp((mx-mouse_x)/(3*TILE),0,1);
+        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,6*TILE,9*TILE,3*TILE,3*TILE,y-9.5*TILE);
+        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,9*TILE,9*TILE,TILE,3*TILE,y-8*TILE);
+        draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,5*TILE,3*TILE,TILE,9*TILE-slidex*6*TILE,y-8*TILE);
+        
+        draw_set_halign(fa_center);
+        draw_set_color(c_black);
+        draw_text(WIDTH/2,y-9*TILE,"&lt; Slide to buy!");
+    }
+    //++++BUY GESTURE++++
+    if (mouse_x &lt; mx - 3*TILE &amp;&amp; in(mouse_y,y,y+3*TILE)&amp;&amp;mouse_check_button(mb_left))
     {
         global.c -= levelPrice;
         level++;
         var txt = instance_create(x+5*TILE,y,objText);
         txt.text = "Upgrade!";
+        
+        mx = mouse_x;
+        mouse_clear(mb_left);
     }
 }
 
@@ -198,18 +217,13 @@ draw_text(x+10*TILE,y+2*TILE-1," @ " + string(cpsl) + "/sec. ");
 */
 
 //++++TOOLTIP++++
-
-if (pressed) pressTimer = max(pressTimer-1,0);
-else pressTimer = maxPressTimer;
-
-if (!pressTimer)// &amp;&amp; mouse_check_button(mb_left))
+if (pressed)// &amp;&amp; mouse_check_button(mb_left))
 {
-    ttAlpha = min(ttAlpha+.04,1);
-    var wx = clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
-    var wy = clamp(mouse_y-8*TILE,y-7*TILE,y);
+    var wx = TILE;//clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
+    var wy = y-6.5*TILE;//clamp(mouse_y-8*TILE,y-7*TILE,y);
     
-    draw_sprite_part_ext(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy,1,1,c_white,ttAlpha);
-    draw_set_alpha(ttAlpha);
+    draw_sprite_part_ext(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy,1,1,c_white,1);
+    draw_set_alpha(1);
     
     draw_set_font(global.fntDefault);
     
@@ -228,10 +242,8 @@ if (!pressTimer)// &amp;&amp; mouse_check_button(mb_left))
     draw_text(wx+4,wy+4," "+string(name));
     
     //++++description++++
-    var d = "Double-tap to buy.";
-    if (level &gt; 0) d = desc;
     draw_set_halign(fa_left);
-    draw_text_ext(wx+4,wy+2*TILE+4," "+string(d),TILE,12*TILE);
+    draw_text_ext(wx+4,wy+2*TILE+4," "+string(desc),TILE,12*TILE);
     
     draw_set_halign(fa_right);
     //++++lv++++
@@ -244,10 +256,13 @@ if (!pressTimer)// &amp;&amp; mouse_check_button(mb_left))
         
         //++++overall cps++++
         draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(level*cps))+"@ p.s. total ");
-    } 
-} else
-    ttAlpha = 0;
-
+    } else
+        draw_text(wx+13*TILE,wy+4.5*TILE,"Double-tap to unlock. ");
+    
+    
+    //if (/*!in(mouse_x,x,x+10*TILE)||!in(mouse_y,y,y+3*TILE)&amp;&amp;*/mouse_check_button_pressed(mb_any))
+    //    showTooltip = false;
+}
 /*
 if (in(mouse_x,x,x+2*TILE)&amp;&amp;in(mouse_y,y,y+3*TILE))
 {
