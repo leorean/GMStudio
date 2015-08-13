@@ -96,10 +96,6 @@ if (state == WALK)
 
 if (state == SLEEP)
 {
-    //purrr
-    //if (global.timer % (1.5*SEC) == 0)
-    //    immersion_play_effect(41);
-    
     sleepiness = min(sleepiness + .01,100);
 } else
 {
@@ -121,6 +117,7 @@ if (state == CLEAN)
 
 if (state == YAWN)
 {
+    xVel = 0;
     //after animation, immediately go to state change
     if (fCur &gt;= fMax-fSpeed)
         stateTimer = 0;
@@ -130,7 +127,7 @@ if (state == YAWN)
 
 for (i = 0; i &lt; 5; i++)
 {
-    if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
+    if (global.cursor == C_GRAB &amp;&amp; collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,objPlayer,true,false))
     {
         if (device_mouse_check_button(i,mb_left))
         {
@@ -142,6 +139,7 @@ for (i = 0; i &lt; 5; i++)
             xVel = lengthdir_x(-min(4,abs(device_mouse_x(i)-x)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             yVel = lengthdir_y(-min(4,abs(device_mouse_y(i)-y)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             //yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
+            
             
             if (state != HAPPY)
             {
@@ -162,9 +160,34 @@ for (i = 0; i &lt; 5; i++)
                 xVel = lengthdir_x(.2,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
                 yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
             }*/
-            
-            state = HAPPY;
+            switch(global.cursor)
+            {
+                case C_GRAB:
+                    state = HAPPY;
+                    //var sym = instance_create(x,5*TILE,objSymbol);
+                    //sym.type = C_GRAB;
+                break;
+                case C_SLEEP:
+                    state = YAWN;
+                    sleepiness = min(sleepiness+1,100);
 
+                    var sym = instance_create(x,5*TILE,objSymbol);
+                    sym.type = C_SLEEP;
+                break;
+                case C_CLEAN:
+                    state = CLEAN;
+                    tidiness = min(tidiness+1,100);
+                    var sym = instance_create(x,5*TILE,objSymbol);
+                    sym.type = C_CLEAN;
+                break;
+                case C_FEED:
+                    state = EAT;
+                    hungriness = min(hungriness+1,100);
+                    var sym = instance_create(x,5*TILE,objSymbol);
+                    sym.type = C_FEED;
+                break;
+            }
+            /*
             if (tidiness == min(tidiness,hungriness,sleepiness))
                 tidiness = min(tidiness+.5,100);//show_debug_message("tidiniess:"+string(tidiness));}
             if (hungriness == min(tidiness,hungriness,sleepiness))
@@ -173,16 +196,17 @@ for (i = 0; i &lt; 5; i++)
                 sleepiness = min(sleepiness+.5,100);//show_debug_message("sleepiness:"+string(sleepiness));}
                 
             //tidiness = max(tidiness-.1,0);
-            
-            
-            global.xp += global.cpc;
-            global.c += global.cpc;
-            global.cmax += global.cpc;
-            
-            var txt = instance_create(x-2+random(4),y-2+random(4)-TILE,objText);
-            txt.text = "+"+string(bigNumber(global.cpc))+"";
-            
-            stateTimer = 1*SEC;            
+            */
+            if (global.cursor != C_GRAB)
+            {
+                global.xp += global.cpc;
+                global.c += global.cpc;
+                global.cmax += global.cpc;
+                
+                var txt = instance_create(x-2+random(4),y-2+random(4)-TILE,objText);
+                txt.text = "+"+string(bigNumber(global.cpc))+"";
+            }
+            stateTimer = 1*SEC;         
         }                
     
 }

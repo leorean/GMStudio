@@ -15,6 +15,7 @@
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\mskUpgrade</sprite>
     <sprite>sprites\mskScrollBar</sprite>
+    <sprite>sprites\mskSymbol</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -32,11 +33,12 @@
     <object>objects\objText</object>
     <object>objects\objUpgrade</object>
     <object>objects\objScrollBar</object>
+    <object>objects\objSymbol</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="16">
+  <constants number="20">
     <constant name="INFINITE">90000000000</constant>
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
@@ -53,6 +55,10 @@
     <constant name="EAT">5</constant>
     <constant name="PLAY">6</constant>
     <constant name="YAWN">7</constant>
+    <constant name="C_GRAB">0</constant>
+    <constant name="C_SLEEP">1</constant>
+    <constant name="C_CLEAN">2</constant>
+    <constant name="C_FEED">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

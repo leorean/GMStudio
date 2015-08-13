@@ -149,8 +149,8 @@ else
         draw_sprite_part(sprGfx,-1,WIDTH+13*TILE,5*TILE,3*TILE,TILE,9*TILE-slidex*6*TILE,y-9*TILE);
         
         draw_set_halign(fa_center);
-        draw_set_color(c_black);
-        draw_text(WIDTH/2,y-10*TILE,"&lt; Slide to buy! ");
+        draw_set_color(make_color_rgb(96,22,57));
+        draw_text(WIDTH/2,y-10*TILE,"&lt;&lt; Slide to buy &lt;&lt;");
         
     }
     //++++BUY GESTURE++++
@@ -223,39 +223,39 @@ if (pressed)// &amp;&amp; mouse_check_button(mb_left))
     var wx = TILE;//clamp(mouse_x-6.5*TILE,0,WIDTH-13*TILE);
     var wy = y-7.5*TILE;//clamp(mouse_y-8*TILE,y-7*TILE,y);
     
-    draw_sprite_part_ext(sprGfx,-1,WIDTH,5*TILE,13*TILE,7*TILE,wx,wy,1,1,c_white,1);
+    draw_sprite_part_ext(sprGfx,-1,WIDTH,5*TILE,13*TILE,8*TILE,wx,wy,1,1,c_white,1);
     draw_set_alpha(1);
     
     draw_set_font(global.fntDefault);
+    draw_set_color(make_color_rgb(115,131,168));
     
-    if (!canBuy) draw_set_color(cNormal0) else draw_set_color(cNormal1);
+    //if (!canBuy) draw_set_color(cNormal0) else draw_set_color(cNormal1);
     draw_set_halign(fa_right);
-    draw_text(wx+13*TILE-4,wy+4,string(bigNumber(levelPrice))+"@");
+    draw_text(wx+13*TILE-8,wy+4,string(bigNumber(levelPrice))+"@");
     
     
-    draw_set_color(make_color_rgb(137,174,193));
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     
     //++++name++++
     //var n = "???";
     //if (level &gt; 0) n = name;
-    draw_text(wx+4,wy+4," "+string(name));
+    draw_text(wx+8,wy+4,""+string(name));
     
     //++++description++++
     draw_set_halign(fa_left);
-    draw_text_ext(wx+4,wy+2*TILE+4," "+string(desc),TILE,12*TILE);
+    draw_text_ext(wx+8,wy+2*TILE+4,""+string(desc),TILE,12*TILE);
     
     draw_set_halign(fa_right);
     //++++lv++++
     //draw_text(wx+13*TILE,wy+TILE+4," Lv. "+string(level)+" ");
     
     //++++single cps++++
-    draw_text(wx+13*TILE,wy+4.5*TILE,string(bigNumber(cps))+"@ p.s. each ");
+    draw_text(wx+13*TILE-8,wy+4.5*TILE,string(bigNumber(cps))+"@ p.s. each");
     
     //++++overall cps++++
     if (level &gt; 0)
-        draw_text(wx+13*TILE,wy+5.5*TILE,string(bigNumber(level*cps))+"@ p.s. (Lvl. "+string(level)+") ");
+        draw_text(wx+13*TILE-8,wy+5.5*TILE,string(bigNumber(level*cps))+"@ p.s. (Lvl. "+string(level)+")");
     
     
     //if (/*!in(mouse_x,x,x+10*TILE)||!in(mouse_y,y,y+3*TILE)&amp;&amp;*/mouse_check_button_pressed(mb_any))

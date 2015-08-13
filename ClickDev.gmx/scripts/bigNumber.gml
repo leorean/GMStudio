@@ -26,7 +26,7 @@ else if (arg < power(1000,7))
 else if (arg < power(1000,8))
     ret = string_format(arg/power(1000,7),0,2)+"quint.";
 else if (arg < power(1000,9))
-    ret = string_format(arg/power(1000,8),0,2)+"sext.";
+    ret = string_format(arg/power(1000,8),0,2)+"sxt.";
 else if (arg < power(1000,10))
     ret = string_format(arg/power(1000,9),0,2)+"sept.";
 else if (arg < power(1000,11))
