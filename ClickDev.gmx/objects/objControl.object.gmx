@@ -417,7 +417,7 @@ draw_sprite_part(sprGfx,-1,WIDTH,TILE,(player.hungriness/100)*2*TILE,TILE,1.5*TI
 //draw_text(0,HEIGHT-TILE-1," Age: "+string(global.age)+" Days");
 
 //++++action cursor++++
-draw_sprite_part(sprGfx,-1,2*TILE*global.cursor,HEIGHT+2*TILE,2*TILE,2*TILE,TILE,HEIGHT-2.5*TILE);
+//draw_sprite_part(sprGfx,-1,2*TILE*global.cursor,HEIGHT+2*TILE,2*TILE,2*TILE,TILE,HEIGHT-2.5*TILE);
 </string>
           </argument>
         </arguments>

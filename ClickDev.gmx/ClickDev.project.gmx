@@ -16,6 +16,7 @@
     <sprite>sprites\mskUpgrade</sprite>
     <sprite>sprites\mskScrollBar</sprite>
     <sprite>sprites\mskSymbol</sprite>
+    <sprite>sprites\mskPoo</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -34,6 +35,8 @@
     <object>objects\objUpgrade</object>
     <object>objects\objScrollBar</object>
     <object>objects\objSymbol</object>
+    <object>objects\objPoo</object>
+    <object>objects\objEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
