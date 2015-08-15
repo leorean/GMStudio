@@ -51,6 +51,8 @@ fMax = 2;
 frame = 0;
 
 stateTimer = 0;
+maxPoopTimer = 60*SEC;
+poopTimer = maxPoopTimer;
 
 onGround = false;
 </string>
@@ -236,15 +238,18 @@ if (keyboard_check_pressed(ord('E')))
 }
 
 //++++state transitions++++
-
+poopTimer = max(poopTimer - 1,0);
 stateTimer = max(stateTimer - 1, 0);
 
 if (!stateTimer)
 {
     stateTimer = choose(1,2,3)*SEC;
     
-    if (/*irandom(5) == 1 &amp;&amp;*/ onGround &amp;&amp; !place_meeting(x,y,objPoo))
+    if (!poopTimer &amp;&amp; onGround &amp;&amp; !place_meeting(x,y,objPoo))
+    {
         instance_create(x,y+TILE,objPoo);
+        poopTimer = maxPoopTimer;
+    }
     
     switch(state)
     {
@@ -286,8 +291,7 @@ if (!stateTimer)
             */
         break;
         case CLEAN:
-            if (tidiness &gt;= 80)
-                state = choose(CLEAN,IDLE);
+            state = choose(CLEAN,IDLE);
         break;
         case EAT:
             if (hungriness == 100 || (hungriness &gt; 60 &amp;&amp; (sleepiness &lt;= 30 || tidiness &lt;= 30)))
