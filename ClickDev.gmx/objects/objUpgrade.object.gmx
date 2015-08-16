@@ -199,7 +199,7 @@ if (level &gt; 0)
     draw_text_ext(x+2*TILE+2,y+1,string(name),TILE,5*TILE);
 else
 {
-    draw_text_color(x+2*TILE+2,y+1,string(name),c_black,c_black,c_black,c_black,.5);
+    draw_text_ext_color(x+2*TILE+2,y+1,string(name),TILE,5*TILE,c_black,c_black,c_black,c_black,.5);
 }
 //draw_text(x+2*TILE+2,y+1,string(name));
 
@@ -240,7 +240,9 @@ if (pressed)// &amp;&amp; mouse_check_button(mb_left))
     //++++name++++
     //var n = "???";
     //if (level &gt; 0) n = name;
-    draw_text(wx+8,wy+4,""+string(name));
+    draw_set_color(make_color_rgb(96,22,57));    
+    draw_text_ext(wx+8,wy+4,""+string(name),TILE,5*TILE);
+    draw_set_color(make_color_rgb(115,131,168));
     
     //++++description++++
     draw_set_halign(fa_left);

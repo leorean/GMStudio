@@ -76,11 +76,18 @@ draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.hungriness/100)*3*TILE,TILE,WID
 */
 
 //++++DRAW UPGRADE VISUALS++++
-if (global.upgrade[0].level&gt;0)
+if (global.upgrade[0].level&gt;0)//box
     draw_sprite_part(sprGfx,-1,WIDTH,13*TILE,2*TILE,2*TILE,0,11*TILE);
 
-if (global.upgrade[1].level&gt;0)
+if (global.upgrade[1].level&gt;0)//catnip
     draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,13*TILE,2*TILE,2*TILE,0,7*TILE);
+
+if (global.upgrade[2].level&gt;0)//teapot
+    draw_sprite_part(sprGfx,-1,WIDTH+4*TILE,13*TILE,2*TILE,2*TILE,2*TILE,7*TILE);
+
+if (global.upgrade[3].level&gt;0)//paw machine
+    draw_sprite_part(sprGfx,-1,240,240,3*TILE,3*TILE,WIDTH-3*TILE,9.25*TILE);
+    
 
 </string>
           </argument>

@@ -84,7 +84,7 @@ if (statePrev != state) fCur = 0;
 
 //++++state stuff++++
 
-global.percent = ((happiness+tidiness+hungriness+sleepiness)/4/100);
+global.percent = round(100*((happiness+tidiness+hungriness+sleepiness)/4/100))/100;
 
 if (state != PLAY)
 {
@@ -172,8 +172,6 @@ for (i = 0; i &lt; fingerCount+1; i++)
             
             //xVel = lengthdir_x(-min(4,abs(device_mouse_x(i)-x)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
             //yVel = lengthdir_y(-min(4,abs(device_mouse_y(i)-y)),point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-            //yVel = min(1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-            
             
             if (state != HAPPY)
             {

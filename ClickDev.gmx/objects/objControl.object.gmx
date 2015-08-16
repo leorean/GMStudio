@@ -62,7 +62,7 @@ global.cursor = C_GRAB;
 //+++++++++++++++++++++
 
 global.u = 0;
-global.uMax = 5; //maximum upgrades (all)
+global.uMax = 10; //maximum upgrades (all)
 global.ulMax = 0; //maximum viewable/unlocked upgrades
 
 global.upgrade[0] = instance_create(0,0,objUpgrade);
@@ -81,8 +81,8 @@ global.upgrade[2].desc = "Tea equals happiness ^-^";
 global.upgrade[2].price = 60; global.upgrade[2].cps = 0.3;
 
 global.upgrade[3] = instance_create(0,0,objUpgrade);
-global.upgrade[3].index = 3; global.upgrade[3].name = "Better Snacks!";
-global.upgrade[3].desc = "Keep that tummy happy!";
+global.upgrade[3].index = 3; global.upgrade[3].name = "Paw Machine";
+global.upgrade[3].desc = "What do you think it does?";
 global.upgrade[3].price = 350; global.upgrade[3].cps = 1;
 
 global.upgrade[4] = instance_create(0,0,objUpgrade);
@@ -94,6 +94,34 @@ global.upgrade[5] = instance_create(0,0,objUpgrade);
 global.upgrade[5].index = 5; global.upgrade[5].name = "Rubber ducky.";
 global.upgrade[5].desc = "For the best bath time ever!";
 global.upgrade[5].price = 4500; global.upgrade[5].cps = 10;
+
+global.upgrade[6] = instance_create(0,0,objUpgrade);
+global.upgrade[6].index = 6; global.upgrade[6].name = "Happy Place";
+global.upgrade[6].desc = "Soft, warm, cuddly.";
+global.upgrade[6].price = 23000; global.upgrade[6].cps = 40;
+
+global.upgrade[7] = instance_create(0,0,objUpgrade);
+global.upgrade[7].index = 7; global.upgrade[7].name = "Carl";
+global.upgrade[7].desc = "Chirp Chirp - you've got company.";
+global.upgrade[7].price = 185000; global.upgrade[7].cps = 777;
+
+global.upgrade[8] = instance_create(0,0,objUpgrade);
+global.upgrade[8].index = 8; global.upgrade[8].name = "Laser";
+global.upgrade[8].desc = "HA! Got ya. Finally!";
+global.upgrade[8].price = 133337*100; global.upgrade[8].cps = 9999;
+
+global.upgrade[9] = instance_create(0,0,objUpgrade);
+global.upgrade[9].index = 9; global.upgrade[9].name = "XXXL Cat Tree";
+global.upgrade[9].desc = "Sent directly from cat heaven.";
+global.upgrade[9].price = 400000*10000; global.upgrade[9].cps = 100000;
+
+global.upgrade[10] = instance_create(0,0,objUpgrade);
+global.upgrade[10].index = 10; global.upgrade[10].name = "Golden Paper Roll";
+global.upgrade[10].desc = "It's endless.. woah!";
+global.upgrade[10].price = 85000000*100000; global.upgrade[10].cps = 100000*10;
+
+
+
 
 </string>
           </argument>
@@ -124,6 +152,8 @@ if (keyboard_check_pressed(ord('R')))
 if (keyboard_check(ord('E')))
 {
     global.c *= 2;
+    global.cmax *= 2;
+    
 }
 
 if (keyboard_check_pressed(ord('I')))
