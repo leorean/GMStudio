@@ -10,6 +10,7 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprFntBig</sprite>
     <sprite>sprites\sprFntNormal</sprite>
+    <sprite>sprites\sprFntSmall</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskPixel</sprite>
@@ -17,6 +18,7 @@
     <sprite>sprites\mskScrollBar</sprite>
     <sprite>sprites\mskSymbol</sprite>
     <sprite>sprites\mskPoo</sprite>
+    <sprite>sprites\mskCursor</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -37,6 +39,7 @@
     <object>objects\objSymbol</object>
     <object>objects\objPoo</object>
     <object>objects\objEffect</object>
+    <object>objects\objCursor</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
@@ -46,7 +49,7 @@
     <constant name="WIDTH">240</constant>
     <constant name="HEIGHT">400</constant>
     <constant name="TILE">16</constant>
-    <constant name="GROUND">12.5*TILE</constant>
+    <constant name="GROUND">11.5*TILE</constant>
     <constant name="SEC">60</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
@@ -60,7 +63,7 @@
     <constant name="YAWN">7</constant>
     <constant name="C_GRAB">0</constant>
     <constant name="C_SLEEP">1</constant>
-    <constant name="C_CLEAN">2</constant>
+    <constant name="C_PLAY">2</constant>
     <constant name="C_FEED">3</constant>
   </constants>
   <help>

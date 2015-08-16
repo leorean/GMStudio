@@ -139,8 +139,8 @@ for (i = 0; i &lt; 5; i++)
         
 for (i = 0; i &lt; fingerCount+1; i++)
 {
-    if (collision_circle(device_mouse_x(i),device_mouse_y(i),TILE,id,true,false)
-    &amp;&amp; !place_meeting(x,y,objPoo))
+    if (collision_point(device_mouse_x(i),device_mouse_y(i),id,true,false)
+    &amp;&amp; !place_meeting(x,y,objPoo) &amp;&amp; global.cursor == C_GRAB)
     {
         if (device_mouse_check_button(i,mb_left))
         {
@@ -245,7 +245,8 @@ if (!stateTimer)
 {
     stateTimer = choose(1,2,3)*SEC;
     
-    if (!poopTimer &amp;&amp; onGround &amp;&amp; !place_meeting(x,y,objPoo))
+    //TODO: poop push notification
+    if (!poopTimer &amp;&amp; onGround &amp;&amp; state == IDLE &amp;&amp; !place_meeting(x,y,objPoo))
     {
         instance_create(x,y+TILE,objPoo);
         poopTimer = maxPoopTimer;
@@ -320,7 +321,7 @@ yVel += yGrav;
 //if (y +yVel &lt; 10.5*TILE)
 //    yVel = -yVel/4;
 
-y = clamp(y,8*TILE,GROUND);
+y = clamp(y,7*TILE,GROUND);
 if (!onGround)//place_meeting(x,y+yVel,objGround))
     y += yVel;
 else

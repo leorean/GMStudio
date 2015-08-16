@@ -72,7 +72,7 @@ showTooltip = false;
 depth = -101-index;
 
 x = 4*TILE;
-y = GROUND+3.5*TILE+index*3*TILE-global.u*3*TILE;
+y = 16*TILE+index*3*TILE-global.u*3*TILE;
 
 //todo: resource-dependant, not upgrade dependant?
 //if (index == 0 || (index &gt; 0 &amp;&amp; global.upgrade[index-1].level &gt; 0))

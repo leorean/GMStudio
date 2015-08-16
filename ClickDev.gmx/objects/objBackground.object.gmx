@@ -77,10 +77,10 @@ draw_sprite_part(sprGfx,-1,WIDTH,TILE,(objPlayer.hungriness/100)*3*TILE,TILE,WID
 
 //++++DRAW UPGRADE VISUALS++++
 if (global.upgrade[0].level&gt;0)
-    draw_sprite_part(sprGfx,-1,WIDTH,13*TILE,2*TILE,2*TILE,0,12*TILE);
+    draw_sprite_part(sprGfx,-1,WIDTH,13*TILE,2*TILE,2*TILE,0,11*TILE);
 
 if (global.upgrade[1].level&gt;0)
-    draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,13*TILE,2*TILE,2*TILE,0,8*TILE);
+    draw_sprite_part(sprGfx,-1,WIDTH+2*TILE,13*TILE,2*TILE,2*TILE,0,7*TILE);
 
 </string>
           </argument>

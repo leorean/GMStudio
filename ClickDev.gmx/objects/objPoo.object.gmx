@@ -39,7 +39,7 @@ if (mouse_check_button_pressed(mb_left)
     var eff = instance_create(x,y,objEffect);
     
     var txt = instance_create(x,y-TILE,objText);
-    txt.fnt = global.fntDefault;
+    txt.fnt = global.fntSmall;
     txt.text = "+"+string(bigNumber(xp))+" EXP";
     
     mouse_clear(mb_left);
