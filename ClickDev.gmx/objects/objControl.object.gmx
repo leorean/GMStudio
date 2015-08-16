@@ -66,8 +66,8 @@ global.uMax = 5; //maximum upgrades (all)
 global.ulMax = 0; //maximum viewable/unlocked upgrades
 
 global.upgrade[0] = instance_create(0,0,objUpgrade);
-global.upgrade[0].index = 0; global.upgrade[0].name = "Wool Ball";
-global.upgrade[0].desc = "The more wool, the better!";
+global.upgrade[0].index = 0; global.upgrade[0].name = "Box";
+global.upgrade[0].desc = "Cats love boxes.";
 global.upgrade[0].price = 1.5; global.upgrade[0].cps = 0.01;
 
 global.upgrade[1] = instance_create(0,0,objUpgrade);
@@ -76,8 +76,8 @@ global.upgrade[1].desc = "Can't spell cat without catnip!";
 global.upgrade[1].price = 10; global.upgrade[1].cps = 0.05;
 
 global.upgrade[2] = instance_create(0,0,objUpgrade);
-global.upgrade[2].index = 2; global.upgrade[2].name = "Fluff";
-global.upgrade[2].desc = "Fluff. Fluffy fluff. ^-^";
+global.upgrade[2].index = 2; global.upgrade[2].name = "Teapot";
+global.upgrade[2].desc = "Tea equals happiness ^-^";
 global.upgrade[2].price = 60; global.upgrade[2].cps = 0.3;
 
 global.upgrade[3] = instance_create(0,0,objUpgrade);
