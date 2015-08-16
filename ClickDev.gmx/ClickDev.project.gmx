@@ -7,12 +7,12 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\sprGfx</sprite>
+    <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprFntBig</sprite>
     <sprite>sprites\sprFntNormal</sprite>
     <sprite>sprites\sprFntSmall</sprite>
     <sprite>sprites\mskPlayer</sprite>
-    <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskPixel</sprite>
     <sprite>sprites\mskUpgrade</sprite>
     <sprite>sprites\mskScrollBar</sprite>

@@ -87,7 +87,13 @@ if (hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
     happiness = max(happiness - .005,0);
 */
 
-happiness = (tidiness + sleepiness + hungriness) / 3;
+//happiness = (tidiness + sleepiness + hungriness) / 3;
+
+if (state != PLAY)
+{
+    if (global.timer % (20*SEC) == 0)
+        happiness = max(happiness - 15,0);
+}
 
 if (state == WALK)
 {
@@ -104,7 +110,8 @@ if (state == SLEEP)
     sleepiness = min(sleepiness + .01,100);
 } else
 {
-    sleepiness = max(sleepiness - .01,0);
+    if (global.timer % (10*SEC) == 0)
+        sleepiness = max(sleepiness - 10,0);
 }
 
 if (state == EAT)
@@ -304,6 +311,12 @@ if (!stateTimer)
             //if (sleepiness &lt;= 20)
             //    state = choose(YAWN,IDLE);
         break;
+        case PLAY:
+            if (happiness &gt; 50)
+                state = HAPPY;
+            else
+                state = IDLE;
+        break;
         
     }
     if (state == YAWN) fCur = 0; //make sure the animation starts properly
@@ -408,7 +421,12 @@ switch(state)
         else
             fSpeed = .1;
         fMax = 4;
-    break;    
+    break;
+    case PLAY:
+        row = 7;
+        fSpeed = .1;
+        fMax = 2;
+    break;
 }
 
 if (!onGround &amp;&amp; (state == HAPPY || state == IDLE)) col = 2;

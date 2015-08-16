@@ -68,6 +68,59 @@ if (global.cursor != type)
     
     x = mouse_x-TILE;
     y = min(mouse_y-TILE,yo);
+    
+    if (place_meeting(x,y,objPlayer))
+    {
+        if (type == C_PLAY)
+        {
+            if (objPlayer.happiness &lt; 99)
+            {
+                objPlayer.state = PLAY;
+                objPlayer.stateTimer = 10;
+                
+                draw_set_color(make_color_rgb(194,0,0));
+                
+                draw_line_width(mouse_x,mouse_y,objPlayer.x+objPlayer.dir*4,objPlayer.y+3,1);
+                
+                objPlayer.happiness = min(objPlayer.happiness+.1,100);
+                
+                var xp = 0.01*(global.level+1);
+                global.xp += xp;
+                
+                if (global.timer % 30 == 0)
+                {
+                    var eff = instance_create(mouse_x,mouse_y,objSymbol);
+                    eff.type = 1;
+                }
+            }
+            
+        }
+        if (type == C_SLEEP)
+        {
+            if (objPlayer.sleepiness &lt; 99)
+            {
+                var xp = 0.01*(global.level+1);
+                global.xp += xp;
+                
+                objPlayer.sleepiness = min(objPlayer.sleepiness+.1,100);
+                
+                if (global.timer % 30 == 0)
+                {
+                    var eff = instance_create(mouse_x,mouse_y,objSymbol);
+                    eff.type = 0;
+                }
+                /*
+                var txt = instance_create(mouse_x,mouse_y-TILE,objText);
+                txt.fnt = global.fntSmall;
+                txt.text = "+"+string(bigNumber(xp))+" EXP";
+                txt.yVel = -.0;
+                */
+                
+                objPlayer.state = SLEEP;
+                objPlayer.stateTimer = 3*SEC;
+            }
+        }
+    }
 }
 
 </string>

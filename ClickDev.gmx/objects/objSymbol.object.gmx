@@ -26,8 +26,10 @@
           <argument>
             <kind>1</kind>
             <string>xVel = 0;
-yVel = 2;
+yVel = -.5;
 type = 0;
+
+timer = SEC;
 </string>
           </argument>
         </arguments>
@@ -55,7 +57,9 @@ type = 0;
 x += xVel;
 y += yVel;
 
-if (y &gt; GROUND || y &gt; objPlayer.y)
+timer = max(timer-1,0);
+
+if (!timer)
     instance_destroy();
 </string>
           </argument>
@@ -80,7 +84,7 @@ if (y &gt; GROUND || y &gt; objPlayer.y)
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-draw_sprite_part(sprGfx,-1,type*2*TILE,HEIGHT+2*TILE,2*TILE,2*TILE,x-TILE,y-TILE);
+draw_sprite_part(sprGfx,-1,448+type*2*TILE,160,2*TILE,2*TILE,x-TILE,y-TILE);
 </string>
           </argument>
         </arguments>
