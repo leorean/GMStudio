@@ -41,7 +41,9 @@ statePrev = state;
 happiness = 50;
 tidiness = 50;
 sleepiness = 50;
-hungriness = 100;
+hungriness = 50;
+
+food = noone;
 
 w = abs(bbox_left-bbox_right);
 h = abs(bbox_top-bbox_bottom);
@@ -114,21 +116,36 @@ if (state == SLEEP)
         sleepiness = max(sleepiness - 10,0);
 }
 
-if (state == EAT)
-{
-    hungriness = min(hungriness+.1,100);
-} else
-    hungriness = max(hungriness-.008,0);
+if (state != EAT)
+    if (global.timer % (25*SEC) == 0)
+        hungriness = max(hungriness-20,0);
 
   
 tidiness = clamp(100-35*instance_number(objPoo),0,100);
-/*
-if (state == CLEAN)
+
+if (!instance_exists(food))
 {
-    tidiness = min(tidiness+.05,100);
-} else
-    tidiness = max(tidiness-.001,0);
-*/
+    if (state == EAT) state = IDLE;
+    if (hungriness &lt; 99 &amp;&amp; !place_meeting(x,y,objPoo))
+        food = collision_line(x,y-TILE,x,y+TILE,objFood,false,true);
+}
+else
+{
+    if (state == WALK || state == IDLE)
+    {
+        state = EAT;
+        stateTimer = 10;
+    }
+    if (state == EAT)
+    {
+        food.food = max(food.food-1,0);
+        hungriness = min(hungriness+.2,100);
+        
+        var xp = .02*(global.level+1);
+        global.xp += xp;
+    }
+
+}
 
 if (state == YAWN)
 {
@@ -151,6 +168,8 @@ for (i = 0; i &lt; fingerCount+1; i++)
     {
         if (device_mouse_check_button(i,mb_left))
         {
+            food = noone;
+            
             x = device_mouse_x(i)+offx;
             y = device_mouse_y(i)+offy;
             xVel = 0;
@@ -283,8 +302,6 @@ if (!stateTimer)
                     state = SLEEP;
                     
             }
-            if (hungriness &lt; 50 &amp;&amp; min(hungriness,sleepiness,tidiness) == hungriness)
-                state = EAT; //TODO: if food is here
         break;
         case WALK:
             state = choose(WALK,IDLE,CLEAN);
@@ -302,7 +319,7 @@ if (!stateTimer)
             state = choose(CLEAN,IDLE);
         break;
         case EAT:
-            if (hungriness == 100 || (hungriness &gt; 60 &amp;&amp; (sleepiness &lt;= 30 || tidiness &lt;= 30)))
+            if (!instance_exists(food))
                 state = IDLE;
         break;
         case YAWN:

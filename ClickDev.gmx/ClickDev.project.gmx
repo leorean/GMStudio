@@ -19,6 +19,7 @@
     <sprite>sprites\mskSymbol</sprite>
     <sprite>sprites\mskPoo</sprite>
     <sprite>sprites\mskCursor</sprite>
+    <sprite>sprites\mskFood</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -40,6 +41,7 @@
     <object>objects\objPoo</object>
     <object>objects\objEffect</object>
     <object>objects\objCursor</object>
+    <object>objects\objFood</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

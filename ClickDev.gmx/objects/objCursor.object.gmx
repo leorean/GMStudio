@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>xo = x;
 yo = y;
+
+foodType = 0;
 </string>
           </argument>
         </arguments>
@@ -49,8 +51,10 @@ yo = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,x,y);
-
+            <string>if (type != C_FEED)
+    draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,x,y);
+else
+    draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,xo,yo);
 
 if (global.cursor != type)
 {
@@ -60,7 +64,8 @@ if (global.cursor != type)
     if (collision_point(mouse_x,mouse_y,id,false,false)
     &amp;&amp; mouse_check_button_pressed(mb_left))
         global.cursor = type;
-    
+            foodType = irandom(3);
+
 } else
 {
     if (!mouse_check_button(mb_left) || mouse_y &gt; 256)
@@ -87,7 +92,7 @@ if (global.cursor != type)
                 var xp = 0.01*(global.level+1);
                 global.xp += xp;
                 
-                if (global.timer % 30 == 0)
+                if (global.timer % 15 == 0)
                 {
                     var eff = instance_create(mouse_x,mouse_y,objSymbol);
                     eff.type = 1;
@@ -119,6 +124,16 @@ if (global.cursor != type)
                 objPlayer.state = SLEEP;
                 objPlayer.stateTimer = 3*SEC;
             }
+        }        
+    }
+    if (type == C_FEED)
+    {
+        draw_sprite_part(sprGfx,-1,448+foodType*TILE,192,TILE,TILE,x+.5*TILE,y+.5*TILE);
+        if (mouse_check_button_released(mb_left) &amp;&amp; in(mouse_y,6.5*TILE,GROUND+3*TILE))
+        {
+            var food = instance_create(mouse_x,mouse_y,objFood);
+            food.type = foodType;
+            //draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,x,y);
         }
     }
 }
