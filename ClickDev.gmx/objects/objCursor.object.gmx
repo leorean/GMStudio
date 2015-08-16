@@ -74,7 +74,7 @@ if (global.cursor != type)
     x = mouse_x-TILE;
     y = min(mouse_y-TILE,yo);
     
-    if (place_meeting(x,y,objPlayer))
+    if (true)//place_meeting(x,y,objPlayer))
     {
         if (type == C_PLAY)
         {
@@ -94,7 +94,7 @@ if (global.cursor != type)
                 
                 if (global.timer % 15 == 0)
                 {
-                    var eff = instance_create(mouse_x,mouse_y,objSymbol);
+                    var eff = instance_create(objPlayer.x-TILE+random(2*TILE),objPlayer.y,objSymbol);
                     eff.type = 1;
                 }
             }
@@ -111,7 +111,7 @@ if (global.cursor != type)
                 
                 if (global.timer % 30 == 0)
                 {
-                    var eff = instance_create(mouse_x,mouse_y,objSymbol);
+                    var eff = instance_create(objPlayer.x-TILE+random(2*TILE),objPlayer.y,objSymbol);
                     eff.type = 0;
                 }
                 /*
@@ -129,9 +129,9 @@ if (global.cursor != type)
     if (type == C_FEED)
     {
         draw_sprite_part(sprGfx,-1,448+foodType*TILE,192,TILE,TILE,x+.5*TILE,y+.5*TILE);
-        if (mouse_check_button_released(mb_left) &amp;&amp; in(mouse_y,6.5*TILE,GROUND+3*TILE))
+        if (mouse_check_button_released(mb_left) &amp;&amp; in(mouse_y,6.5*TILE,16*TILE))
         {
-            var food = instance_create(mouse_x,mouse_y,objFood);
+            var food = instance_create(objPlayer.x-TILE+random(2*TILE),6.5*TILE,objFood);
             food.type = foodType;
             //draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,x,y);
         }

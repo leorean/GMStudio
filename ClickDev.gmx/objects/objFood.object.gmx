@@ -30,6 +30,8 @@ yGrav = .1;
 
 food = 100;
 type = 0;
+
+foodTimer = 60*SEC;
 </string>
           </argument>
         </arguments>
@@ -66,7 +68,9 @@ var row = clamp(3-floor((food/100) * 4),0,3);
 
 draw_sprite_part(sprGfx,-1,448+type*TILE,192+TILE*row,TILE,TILE,x,y);
 
-if (!food)
+foodTimer = max(foodTimer-1,0);
+
+if (!food || ! foodTimer)
     instance_destroy();
 </string>
           </argument>

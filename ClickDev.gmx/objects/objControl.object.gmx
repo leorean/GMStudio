@@ -36,7 +36,7 @@ global.c = 0; //codes, currency, whatever
 global.cps = 0.00; //currency per sec
 global.cpc = 0.1; //currency per click
 global.cmax = 0; //maximum currency obtained, ever
-global.combo = 0; //currency per click
+global.percent = 1;
 
 global.level = 0;
 global.xp = 0;
@@ -146,10 +146,6 @@ if (keyboard_check_pressed(ord('J')))
         global.upgrade[up.index].level++;
 }
 
-//global.age = floor(date_day_span(global.creationDate, date_current_datetime()));
-//if (keyboard_check_pressed(ord('F')))
-//    global.age++;
-
 //++++++++++++++++++++
 //++++game routine++++
 //++++++++++++++++++++
@@ -162,13 +158,6 @@ for (var i = 0;i&lt;=global.uMax;i++)
         
 }
 
-//CURSOR ACTION CHANGE
-if (in(mouse_x,0,4*TILE)&amp;&amp;in(mouse_y,HEIGHT-2.5*TILE,HEIGHT)&amp;&amp;mouse_check_button_pressed(mb_left))
-{
-    global.cursor++;
-    if (global.cursor&gt;C_FEED) global.cursor = C_GRAB;
-}
-
 global.timer = (global.timer + 1) % INFINITE;
 
 //calculate total clicks per second
@@ -177,7 +166,7 @@ for(var i = 0; i &lt;= global.ulMax; i++)
 {
     cpsi += global.upgrade[i].level*global.upgrade[i].cps;
 }
-global.cps = cpsi;
+global.cps = cpsi * global.percent;
 
 global.c += ((global.cps) / SEC);
 global.cmax += ((global.cps) / SEC);
@@ -381,7 +370,7 @@ draw_set_font(global.fntNormal);
 draw_text(WIDTH/2,1*TILE+4,""+strc+" @");
 
 draw_set_font(global.fntDefault);
-draw_text(WIDTH/2,1*TILE+30,""+string(global.cps)+"@ per sec.");
+draw_text(WIDTH/2,1*TILE+30,""+string(global.cps)+"@ per sec. ("+string(round(global.percent*100))+"%)");
 
 //++++level progress++++
 draw_set_halign(fa_left);

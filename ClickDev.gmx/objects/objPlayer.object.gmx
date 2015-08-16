@@ -84,16 +84,11 @@ if (statePrev != state) fCur = 0;
 
 //++++state stuff++++
 
-/*
-if (hungriness &lt; 30 || tidiness &lt; 30 || sleepiness &lt; 30)
-    happiness = max(happiness - .005,0);
-*/
-
-//happiness = (tidiness + sleepiness + hungriness) / 3;
+global.percent = ((happiness+tidiness+hungriness+sleepiness)/4/100);
 
 if (state != PLAY)
 {
-    if (global.timer % (20*SEC) == 0)
+    if (global.timer % (45*SEC) == 0)
         happiness = max(happiness - 15,0);
 }
 
@@ -112,15 +107,14 @@ if (state == SLEEP)
     sleepiness = min(sleepiness + .01,100);
 } else
 {
-    if (global.timer % (10*SEC) == 0)
+    if (global.timer % (25*SEC) == 0)
         sleepiness = max(sleepiness - 10,0);
 }
 
 if (state != EAT)
-    if (global.timer % (25*SEC) == 0)
+    if (global.timer % (60*SEC) == 0)
         hungriness = max(hungriness-20,0);
 
-  
 tidiness = clamp(100-35*instance_number(objPoo),0,100);
 
 if (!instance_exists(food))
@@ -134,7 +128,7 @@ else
     if (state == WALK || state == IDLE)
     {
         state = EAT;
-        stateTimer = 10;
+        stateTimer = .5*SEC;
     }
     if (state == EAT)
     {
@@ -163,15 +157,16 @@ for (i = 0; i &lt; 5; i++)
         
 for (i = 0; i &lt; fingerCount+1; i++)
 {
-    if (collision_point(device_mouse_x(i),device_mouse_y(i),id,true,false)
-    &amp;&amp; !place_meeting(x,y,objPoo) &amp;&amp; global.cursor == C_GRAB)
+    //if (collision_point(device_mouse_x(i),device_mouse_y(i),id,true,false)
+    if (!place_meeting(x,y,objPoo) &amp;&amp; global.cursor == C_GRAB)
     {
-        if (device_mouse_check_button(i,mb_left))
+        if (device_mouse_check_button(i,mb_left)
+         &amp;&amp; (collision_point(device_mouse_x(i),device_mouse_y(i),id,true,false)))
         {
             food = noone;
             
-            x = device_mouse_x(i)+offx;
-            y = device_mouse_y(i)+offy;
+            x = device_mouse_x(i);//+offx;
+            y = device_mouse_y(i)-1*TILE;//+offy;
             xVel = 0;
             yVel = 0;
             
@@ -185,65 +180,13 @@ for (i = 0; i &lt; fingerCount+1; i++)
                 state = IDLE;
                 stateTimer = 1*SEC;
             }
-        } else
-        {
-            offx = x-device_mouse_x(i);
-            offy = y-device_mouse_y(i);
         }
     //if (in(device_mouse_y(i),7*TILE,14*TILE))
-        if (device_mouse_check_button_pressed(i,mb_any))
+        if (device_mouse_check_button_pressed(i,mb_any) &amp;&amp; in(device_mouse_y(i),6.5*TILE,14*TILE))
         {
-            
-                //if (happiness &lt; 100 &amp;&amp; (sleepiness &gt; 30 &amp;&amp; tidiness &gt; 30 &amp;&amp; hungriness &gt; 30))
-                //|| (happiness == min(happiness,hungriness,tidiness,sleepiness)))
-                
-            /*if (onGround &amp;&amp; ceil(happiness) == 100)
-            {
-                xVel = lengthdir_x(.2,point_direction(device_mouse_x(i),device_mouse_y(i),x,y));
-                yVel = min(-1,lengthdir_y(1,point_direction(device_mouse_x(i),device_mouse_y(i),x,y)));
-            }*/
-            /*
-            switch(global.cursor)
-            {
-                case C_GRAB:
-                    state = HAPPY;
-                    //var sym = instance_create(x,5*TILE,objSymbol);
-                    //sym.type = C_GRAB;
-                break;
-                case C_SLEEP:
-                    state = YAWN;
-                    sleepiness = min(sleepiness+1,100);
-
-                    var sym = instance_create(x,5*TILE,objSymbol);
-                    sym.type = C_SLEEP;
-                break;
-                case C_CLEAN:
-                    state = CLEAN;
-                    tidiness = min(tidiness+1,100);
-                    var sym = instance_create(x,5*TILE,objSymbol);
-                    sym.type = C_CLEAN;
-                break;
-                case C_FEED:
-                    state = EAT;
-                    hungriness = min(hungriness+1,100);
-                    var sym = instance_create(x,5*TILE,objSymbol);
-                    sym.type = C_FEED;
-                break;
-            }*/
-            /*
-            if (tidiness == min(tidiness,hungriness,sleepiness))
-                tidiness = min(tidiness+.5,100);//show_debug_message("tidiniess:"+string(tidiness));}
-            if (hungriness == min(tidiness,hungriness,sleepiness))
-                hungriness = min(hungriness+.5,100);//show_debug_message("hungriness:"+string(hungriness));}
-            if (sleepiness == min(tidiness,hungriness,sleepiness))
-                sleepiness = min(sleepiness+.5,100);//show_debug_message("sleepiness:"+string(sleepiness));}
-                
-            //tidiness = max(tidiness-.1,0);
-            */
-            
             state = HAPPY;
             
-            var cpc = .5*global.cpc+.5*global.cpc*(happiness/100);
+            var cpc = .5*global.cpc+.5*global.cpc*global.percent;
             
             global.xp += cpc;
             global.c += cpc;
@@ -253,7 +196,7 @@ for (i = 0; i &lt; fingerCount+1; i++)
             txt.text = "+"+string(bigNumber(cpc))+"";
             
             stateTimer = 1*SEC;         
-        }                
+        }
     }
 }
 

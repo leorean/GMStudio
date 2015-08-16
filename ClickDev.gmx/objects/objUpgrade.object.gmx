@@ -161,8 +161,8 @@ else
         var txt = instance_create(x+5*TILE,y,objText);
         txt.text = "Upgrade!";
         
-        mx = mouse_x;
-        mouse_clear(mb_left);
+        mx = mouse_x-5*TILE;
+        mouse_clear(mb_any);
     }
 }
 
