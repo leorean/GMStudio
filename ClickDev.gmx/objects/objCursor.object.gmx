@@ -29,6 +29,8 @@
 yo = y;
 
 foodType = 0;
+
+global.light = true;
 </string>
           </argument>
         </arguments>
@@ -51,10 +53,12 @@ foodType = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (type != C_FEED)
+            <string>if (type == C_PLAY)
     draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,x,y);
-else
+if (type == C_FEED)
     draw_sprite_part(sprGfx,-1,2*type*TILE,432,2*TILE,2*TILE,xo,yo);
+if (type == C_SLEEP)
+    draw_sprite_part(sprGfx,-1,2*type*TILE,432/*+2*TILE*(!global.light)*/,2*TILE,2*TILE,x,y);
 
 if (global.cursor != type)
 {
@@ -63,23 +67,33 @@ if (global.cursor != type)
     
     if (collision_point(mouse_x,mouse_y,id,false,false)
     &amp;&amp; mouse_check_button_pressed(mb_left))
+    {
         global.cursor = type;
-            foodType = irandom(3);
+        foodType = irandom(3);
+        if (type == C_SLEEP)
+        {
+            global.light = !global.light;
+        }
+    }
 
 } else
 {
     if (!mouse_check_button(mb_left) || mouse_y &gt; 256)
         global.cursor = C_GRAB;
     
-    x = mouse_x-TILE;
-    y = min(mouse_y-TILE,yo);
-    
+    if (type != C_SLEEP)
+    {
+        x = mouse_x-TILE;
+        y = min(mouse_y-TILE,yo);
+    }
     if (true)//place_meeting(x,y,objPlayer))
     {
         if (type == C_PLAY)
         {
             if (objPlayer.happiness &lt; 99)
             {
+                global.light = true;
+        
                 objPlayer.state = PLAY;
                 objPlayer.stateTimer = 10;
                 
@@ -100,34 +114,12 @@ if (global.cursor != type)
             }
             
         }
-        if (type == C_SLEEP)
-        {
-            if (objPlayer.sleepiness &lt; 99)
-            {
-                var xp = 0.01*(global.level+1);
-                global.xp += xp;
-                
-                objPlayer.sleepiness = min(objPlayer.sleepiness+.1,100);
-                
-                if (global.timer % 30 == 0)
-                {
-                    var eff = instance_create(objPlayer.x-TILE+random(2*TILE),objPlayer.y,objSymbol);
-                    eff.type = 0;
-                }
-                /*
-                var txt = instance_create(mouse_x,mouse_y-TILE,objText);
-                txt.fnt = global.fntSmall;
-                txt.text = "+"+string(bigNumber(xp))+" EXP";
-                txt.yVel = -.0;
-                */
-                
-                objPlayer.state = SLEEP;
-                objPlayer.stateTimer = 3*SEC;
-            }
-        }        
+               
     }
     if (type == C_FEED)
     {
+        global.light = true;
+        
         draw_sprite_part(sprGfx,-1,448+foodType*TILE,192,TILE,TILE,x+.5*TILE,y+.5*TILE);
         if (mouse_check_button_released(mb_left) &amp;&amp; in(mouse_y,6.5*TILE,16*TILE))
         {
@@ -138,6 +130,37 @@ if (global.cursor != type)
     }
 }
 
+if (!global.light &amp;&amp; type == C_SLEEP)
+{
+    if (objPlayer.sleepiness &lt; 99)
+    {
+        draw_set_alpha(.5);
+        draw_set_color(c_black);
+        draw_rectangle(0,0,WIDTH,16*TILE,0);
+        
+        draw_set_alpha(1);
+        var xp = 0.01*(global.level+1);
+        global.xp += xp;
+        
+        objPlayer.sleepiness = min(objPlayer.sleepiness+.1,100);
+        
+        if (global.timer % 30 == 0)
+        {
+            var eff = instance_create(objPlayer.x-TILE+random(2*TILE),objPlayer.y,objSymbol);
+            eff.type = 0;
+        }
+        /*
+        var txt = instance_create(mouse_x,mouse_y-TILE,objText);
+        txt.fnt = global.fntSmall;
+        txt.text = "+"+string(bigNumber(xp))+" EXP";
+        txt.yVel = -.0;
+        */
+        
+        objPlayer.state = SLEEP;
+        objPlayer.stateTimer = 3*SEC;
+    } else
+        global.light = true;
+}
 </string>
           </argument>
         </arguments>

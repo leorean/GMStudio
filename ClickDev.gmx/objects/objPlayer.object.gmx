@@ -128,7 +128,7 @@ else
     if (state == WALK || state == IDLE)
     {
         state = EAT;
-        stateTimer = .5*SEC;
+        stateTimer = 1*SEC;
     }
     if (state == EAT)
     {
