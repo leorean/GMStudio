@@ -118,7 +118,8 @@ if (onGround || onLadder)
 {
     jumped = false;
     jumpDist = 0;
-    yVel = 0;
+    if (!invincible)
+        yVel = 0;
     if (onGround)
     {
         state = IDLE;
