@@ -42,6 +42,8 @@ onLadder = false;
 attacking = false;
 jumped = false;
 jumpDist = false;
+
+invincible = 0;
 </string>
           </argument>
         </arguments>
@@ -82,9 +84,25 @@ else
     onLadder = noone;
 //onLadder = place_meeting(x,y,objLadder) &amp;&amp; (kUp || kDown || state == LADDER);
 
+enemy = instance_place(x,y,objEnemy);
+
+if (instance_exists(enemy) &amp;&amp; !invincible)
+{
+    xVel = -2*sign(dir);
+    yVel = -3;
+    invincible = 60;
+    enemy = noone;
+}
+
+invincible = max(invincible - 1, 0);
+if (invincible &gt; 30)
+{
+    kLeft = false; kRight = false; kUp = false; kDown = false; kJump = false; kAttack = false;
+}
+
+
 if (!onLadder)
     yVel += yGrav;
-
 
 if (kAttack)
     attacking = true;
@@ -94,7 +112,7 @@ else
 if (kLeft) {dir = LEFT; xVel = -2}
 if (kRight) {dir = RIGHT; xVel = 2}
 
-if (!kLeft &amp;&amp; !kRight) xVel = 0;
+if (!kLeft &amp;&amp; !kRight &amp;&amp; (invincible &lt; 30 || onGround)) xVel = 0;
 
 if (onGround || onLadder)
 {
@@ -206,7 +224,8 @@ switch (state)
 fCur = (fCur + fSpeed) % (fMax);
 
 draw_self();
-draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,x-TILE+2*TILE*(dir == LEFT),y,sign(dir),1,c_white,1);
+if (invincible % 3 == 0)
+    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,x-TILE+2*TILE*(dir == LEFT),y,sign(dir),1,c_white,1);
 </string>
           </argument>
         </arguments>
