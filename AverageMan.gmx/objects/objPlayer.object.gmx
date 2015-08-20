@@ -67,18 +67,16 @@ invincible = 0;
           <argument>
             <kind>1</kind>
             <string>//++++input++++
-var kLeft = (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right));
-var kRight = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left));
-var kUp = keyboard_check(vk_up);
-var kDown = keyboard_check(vk_down);
-var kJump = keyboard_check(ord('A'));
-var kJumpPressed = keyboard_check_pressed(ord('A'));
-var kJumpReleased = keyboard_check_released(ord('A'));
-var kAttack = keyboard_check(ord('S'));
+var kLeft = ((keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right))) || global.kLeft;
+var kRight = ((keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left))) || global.kRight;
+var kUp = keyboard_check(vk_up) || global.kUp;
+var kDown = keyboard_check(vk_down) || global.kDown;
+var kJump = keyboard_check(ord('A')) || global.kJump;
+var kAttack = keyboard_check(ord('S')) || global.kAttack;
 
 //++++routine++++
 onGround = place_meeting(x,y+1,objSolid) &amp;&amp; yVel &gt;= 0;
-if (kUp || kDown || state == LADDER)
+if (!kJump &amp;&amp; (kUp || kDown || state == LADDER))
     onLadder = instance_place(x,y,objLadder);
 else
     onLadder = noone;
@@ -116,7 +114,8 @@ if (!kLeft &amp;&amp; !kRight &amp;&amp; (invincible &lt; 30 || onGround)) xVel 
 
 if (onGround || onLadder)
 {
-    jumped = false;
+    if (!kJump)
+        jumped = false;
     jumpDist = 0;
     if (!invincible)
         yVel = 0;
@@ -152,8 +151,10 @@ if (kJump &amp;&amp; !jumped)
     if (jumpDist &lt; 3*TILE) //max jump height
         yVel = -jspd;
 }
-if (kJumpReleased)
+if (!kJump)
+/*if (kJumpReleased)
     jumped = true;
+*/
 
 //++++physics++++
 

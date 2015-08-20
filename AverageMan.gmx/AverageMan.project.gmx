@@ -11,14 +11,22 @@
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskLadder</sprite>
     <sprite>sprites\mskEnemy</sprite>
+    <sprite>sprites\mskButton</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\in.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\objSolid</object>
     <object>objects\objPlayer</object>
     <object>objects\objLadder</object>
     <object>objects\objEnemy</object>
+    <objects name="INPUT">
+      <object>objects\objController</object>
+      <object>objects\objButton</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\TEST</room>
