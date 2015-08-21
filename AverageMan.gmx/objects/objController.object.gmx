@@ -75,7 +75,6 @@ y = cy;
 global.kJump = btnJump.pressing;
 global.kAttack = btnAttack.pressing;
 
-drag = -1;
 for (var i = 0; i &lt; 5; i++)
 if (in(device_mouse_x(i),bbox_left,bbox_right)&amp;&amp;in(device_mouse_y(i),bbox_top,bbox_bottom))
     if(device_mouse_check_button(i,mb_left))
@@ -89,17 +88,19 @@ if (!device_mouse_check_button(drag,mb_left))
 if (drag&gt;-1)
 {
     var angle = point_direction(cx,cy,device_mouse_x(drag),device_mouse_y(drag));
-    var rad_angle = ((angle / 180) * pi);
+    //var rad_angle = ((angle / 180) * pi);
     
     sx = clamp(device_mouse_x(drag)
-        ,cx - lengthdir_x(2*TILE,angle)
-        ,cx + lengthdir_x(2*TILE,angle));
+        ,cx - lengthdir_x(3*TILE,angle)
+        ,cx + lengthdir_x(3*TILE,angle));
     sy = clamp(device_mouse_y(drag)
-        ,cy - lengthdir_y(2*TILE,angle)
-        ,cy + lengthdir_y(2*TILE,angle));
+        ,cy - lengthdir_y(3*TILE,angle)
+        ,cy + lengthdir_y(3*TILE,angle));
     
-    //dx = xo + (cos(rad_angle)) * 3;
-    //dy = yo -(sin(rad_angle)) * 3;
+    //sx = device_mouse_x(drag);
+    //sy = device_mouse_y(drag);
+    
+    
 } else //feather back
 {
     sx -= (sx - cx) / 4;
@@ -131,7 +132,6 @@ if (drag&gt;-1)
             <string>draw_self();
 
 draw_line(x,y,cx,cy);
-
 draw_circle(sx,sy,TILE,1);
 </string>
           </argument>
