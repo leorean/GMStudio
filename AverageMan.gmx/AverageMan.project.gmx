@@ -12,6 +12,7 @@
     <sprite>sprites\mskLadder</sprite>
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskButton</sprite>
+    <sprite>sprites\mskController</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -31,12 +32,15 @@
   <rooms name="rooms">
     <room>rooms\TEST</room>
   </rooms>
-  <constants number="9">
+  <constants number="12">
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
+    <constant name="NONE">0</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
+    <constant name="UP">-2</constant>
+    <constant name="DOWN">2</constant>
     <constant name="IDLE">0</constant>
     <constant name="WALK">1</constant>
     <constant name="JUMP">2</constant>
