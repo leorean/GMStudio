@@ -67,12 +67,25 @@ invincible = 0;
           <argument>
             <kind>1</kind>
             <string>//++++input++++
-var kLeft = ((keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right))) || global.kLeft;
-var kRight = ((keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left))) || global.kRight;
-var kUp = keyboard_check(vk_up) || global.kUp;
-var kDown = keyboard_check(vk_down) || global.kDown;
+var kLeft = ((keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right))) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft &amp;&amp; objDPad.forceX &gt;= .6);
+var kRight = ((keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left))) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight &amp;&amp; objDPad.forceX &gt;= .6);
+var kUp = keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35);
+var kDown = keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35);
 var kJump = keyboard_check(ord('A')) || global.kJump;
 var kAttack = keyboard_check(ord('S')) || global.kAttack;
+
+var spd = 2;
+if (instance_exists(objDPad)) spd = 2*objDPad.forceX;
+/*
+kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft &amp;&amp; objDPad.forceX &gt;= .6)) &amp;&amp; (global.gameState == G.PLAY);
+kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight &amp;&amp; objDPad.forceX &gt;= .6)) &amp;&amp; (global.gameState == G.PLAY);
+kUp = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kDown = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
+kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
+kAction = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(ord('S')) || mouse_check_button(mb_right) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressing)) &amp;&amp; (global.gameState == G.PLAY);
+kWeapon = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(ord('D')) || (instance_exists(objDPadButton3) &amp;&amp; objDPadButton3.pressed)) &amp;&amp; (global.gameState == G.PLAY);
+diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
+*/
 
 //++++routine++++
 onGround = (place_meeting(x,y+1,objSolid)||(place_meeting(x,y+1,objLadder)&amp;&amp;!place_meeting(x,y,objLadder))) &amp;&amp; yVel &gt;= 0;
@@ -107,8 +120,8 @@ if (kAttack)
 else
     attacking = false;
 
-if (kLeft) {dir = LEFT; xVel = -2}
-if (kRight) {dir = RIGHT; xVel = 2}
+if (kLeft) {dir = LEFT; xVel = -spd}
+if (kRight) {dir = RIGHT; xVel = spd}
 
 if (!kLeft &amp;&amp; !kRight &amp;&amp; (invincible &lt; 30 || onGround)) xVel = 0;
 

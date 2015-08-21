@@ -20,6 +20,6 @@
   <width>80</width>
   <height>80</height>
   <frames>
-    <frame index="0">images\mskController_0.png</frame>
+    <frame index="0">images\mskDPad_0.png</frame>
   </frames>
 </sprite>

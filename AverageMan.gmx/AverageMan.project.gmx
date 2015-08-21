@@ -12,7 +12,7 @@
     <sprite>sprites\mskLadder</sprite>
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskButton</sprite>
-    <sprite>sprites\mskController</sprite>
+    <sprite>sprites\mskDPad</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -25,7 +25,7 @@
     <object>objects\objLadder</object>
     <object>objects\objEnemy</object>
     <objects name="INPUT">
-      <object>objects\objController</object>
+      <object>objects\objDPad</object>
       <object>objects\objButton</object>
     </objects>
   </objects>
