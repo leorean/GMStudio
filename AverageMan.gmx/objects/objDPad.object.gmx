@@ -31,11 +31,9 @@ kUp = false;
 kDown = false;
 
 dev = -1;
-offx = 3*TILE;
-offy = HEIGHT - 3*TILE;
 
-cx = view_xview[0] + offx;
-cy = view_yview[0] + offy;
+cx = x;
+cy = y;
 
 sx = cx;
 sy = cy;
@@ -45,12 +43,14 @@ h = 5*TILE;
 radius = w/2-TILE;
 forceX = 0;
 forceY = 0;
+
+offx = -100; offy = -100;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="72">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -67,13 +67,8 @@ forceY = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>cx = view_xview[0] + offx;
-cy = view_yview[0] + offy;
-x = cx;
-y = cy;
-
-for (var i = 0; i &lt; 5; i++)
-    if(in(device_mouse_x(i)/objControl.aspect_x+view_xview[0],0,WIDTH/2+view_xview[0]))//if (in(device_mouse_x(i),bbox_left,bbox_right)&amp;&amp;in(device_mouse_y(i),bbox_top,bbox_bottom))
+            <string>for (var i = 0; i &lt; 5; i++)
+    if(in(device_mouse_x_to_gui(i),0,0+WIDTH/2))//if (in(device_mouse_x(i),bbox_left,bbox_right)&amp;&amp;in(device_mouse_y(i),bbox_top,bbox_bottom))
         if(device_mouse_check_button(i,mb_left))
         {
             dev = i;
@@ -90,16 +85,20 @@ kDown = false;
     
 if (dev&gt;-1)
 {
-    if (offx == -1000 &amp;&amp; offy == -1000)
+    if (offx == -100 &amp;&amp; offy == -100)
     {
-        offx = device_mouse_x(dev)/objControl.aspect_x;//-view_xview[0];
-        offy = device_mouse_y(dev)/objControl.aspect_y;//-view_yview[0];
+        offx = device_mouse_x_to_gui(dev);//+view_xview[0];
+        offy = device_mouse_y_to_gui(dev);//+view_yview[0];
     }
-    var angle = point_direction(cx,cy,device_mouse_x(dev)/objControl.aspect_x+view_xview[0],device_mouse_y(dev)/objControl.aspect_y+view_yview[0]);
+    
+    //cx = device_mouse_x_to_gui(dev)+view_xview[0] + offx;
+    //cy = device_mouse_y_to_gui(dev)+view_yview[0] + offy;
+    
+    var angle = point_direction(offx,offy,device_mouse_x_to_gui(dev),device_mouse_y_to_gui(dev));
     var rad_angle = ((angle / 180) * pi);
         
-    sx = cx + (cos(rad_angle)) * min(abs(cx-device_mouse_x(dev)/objControl.aspect_x-view_xview[0]),radius);
-    sy = cy -(sin(rad_angle)) * min(abs(cy-device_mouse_y(dev)/objControl.aspect_y-view_yview[0]),radius);
+    sx = x + (cos(rad_angle)) * min(abs(offx-device_mouse_x_to_gui(dev)),radius);
+    sy = y -(sin(rad_angle)) * min(abs(offy-device_mouse_y_to_gui(dev)),radius);
     
     if (in(angle,315,360) || in(angle,0,45))
         kRight = true;
@@ -126,16 +125,18 @@ if (dev&gt;-1)
         {kRight = true;kDown = true}
 
     
-} else //feather back
+} else
 {
-    offx = -1000;
-    offy = -1000;
-    sx -= (sx - cx) / 4;
-    sy -= (sy - cy) / 4;
+    offx = -100;
+    offy = -100;
+    sx = x;
+    sy = y;
+//    sx -= (sx - cx) / 4;
+//    sy -= (sy - cy) / 4;
 }
 
-forceX = min(abs(cx - sx) / (radius-.5*TILE),1);
-forceY = min(abs(cy - sy) / (radius-.5*TILE),1);
+forceX = min(abs(x - sx) / (radius-.5*TILE),1);
+forceY = min(abs(y - sy) / (radius-.5*TILE),1);
 
 
 </string>
@@ -160,12 +161,16 @@ forceY = min(abs(cy - sy) / (radius-.5*TILE),1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>x = view_xview[0]+offx;
+y = view_yview[0]+offy;
 
-draw_line(x,y,cx,cy);
+draw_set_color(c_black);
+draw_set_alpha(1);
+
+draw_sprite(mskDPad,-1,x,y);
 draw_circle(sx,sy,TILE,1);
 
-//draw_text(x,y,forceX);
+//draw_circle(device_mouse_x_to_gui(0)+view_xview[0],device_mouse_y_to_gui(0)+view_yview[0],TILE,1);
 </string>
           </argument>
         </arguments>

@@ -135,7 +135,7 @@ if (global.state == STATE_PLAY)
     //++++ATTACKING++++
     if (mouse_check_button(mb_left))
     {
-        dir = sign(mouse_x-x);
+        dir = sign(device_mouse_x(0)-x);
         px = x+sign(dir)*6; py = y+8;
 
         if (!delay &amp;&amp; !instance_exists(proj))
@@ -153,8 +153,8 @@ if (global.state == STATE_PLAY)
             
             var v = 0; var g = .12;
     
-            var dX = mouse_x-px;
-            var dY = mouse_y-py;
+            var dX = device_mouse_x(0)-px;
+            var dY = device_mouse_y(0)-py;
             var rad_ang = (arctan2(-dY,dX)+pi/2)/2;
             if (rad_ang != pi/2)
             {
