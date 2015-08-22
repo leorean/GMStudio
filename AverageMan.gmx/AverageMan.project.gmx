@@ -20,19 +20,25 @@
     <script>scripts\in.gml</script>
   </scripts>
   <objects name="objects">
-    <object>objects\objSolid</object>
+    <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objLadder</object>
-    <object>objects\objEnemy</object>
     <objects name="INPUT">
       <object>objects\objDPad</object>
       <object>objects\objButton</object>
     </objects>
+    <objects name="hierarchy">
+      <object>objects\objEnemy</object>
+      <object>objects\objSolid</object>
+      <object>objects\objLiving</object>
+      <object>objects\objStatic</object>
+    </objects>
+    <object>objects\objCamera</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\TEST</room>
   </rooms>
-  <constants number="12">
+  <constants number="16">
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
@@ -45,6 +51,10 @@
     <constant name="WALK">1</constant>
     <constant name="JUMP">2</constant>
     <constant name="LADDER">3</constant>
+    <constant name="G_PAUSED">-1</constant>
+    <constant name="G_START">0</constant>
+    <constant name="G_PLAY">1</constant>
+    <constant name="G_WIN">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
