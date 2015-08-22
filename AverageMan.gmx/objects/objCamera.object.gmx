@@ -27,7 +27,119 @@
             <kind>1</kind>
             <string>dir = NONE;
 state = IDLE;
-spd = 4;
+spd = 8;
+
+xo = x;
+yo = y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>view_xview[0] = x;
+view_yview[0] = y;
+
+if (state == IDLE)
+{
+    xo = x;
+    yo = y;
+    var colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
+    var colL = collision_line(x,y+.5*TILE,x,y+HEIGHT-.5*TILE,objCamStop,false,true);
+    
+    var colU = collision_line(x+.5*TILE,y,x+WIDTH-.5*TILE,y,objCamStop,false,true);
+    var colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
+    
+    if (objPlayer.cx &gt; x+WIDTH/2 &amp;&amp; !colR) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
+    if (objPlayer.cx &lt; x+WIDTH/2 &amp;&amp; !colL) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
+    if (objPlayer.cy &gt; y+HEIGHT/2 &amp;&amp; !colD) y = clamp(objPlayer.cy-HEIGHT/2,0,room_height-HEIGHT)
+    if (objPlayer.cy &lt; y+HEIGHT/2 &amp;&amp; !colU) y = clamp(objPlayer.cy-HEIGHT/2,0,room_height-HEIGHT);
+        
+    if (global.state == G_CAMMOVE)
+        global.state = G_PLAY;
+    
+    if (objPlayer.bbox_left &gt; x+WIDTH &amp;&amp; x &lt; room_width-WIDTH)
+    {
+        dir = RIGHT;
+        state = WALK;
+    } else if (objPlayer.bbox_right &lt; x &amp;&amp; x &gt; 0)
+    {
+        dir = LEFT;
+        state = WALK;
+    } else if (objPlayer.bbox_top &gt; y+HEIGHT &amp;&amp; y &lt; room_height-HEIGHT)
+    {
+        dir = DOWN;
+        state = WALK;
+    } else if (objPlayer.bbox_bottom &lt; y &amp;&amp; y &gt; 0)
+    {
+        dir = UP;
+        state = WALK;
+    }
+}
+if (state == WALK)
+{
+    if (global.state == G_PLAY)
+        global.state = G_CAMMOVE;
+
+    switch (dir)
+    {
+        case LEFT:
+            objPlayer.x -= .5*TILE/WIDTH*spd;
+            x -= spd;
+            if (x &lt; xo - WIDTH)
+            {
+                x = xo - WIDTH;
+                state = IDLE;
+            }
+        break;
+        case RIGHT:
+            objPlayer.x += .5*TILE/WIDTH*spd;
+            x += spd;
+            if (x &gt; xo + WIDTH)
+            {
+                x = xo + WIDTH;
+                state = IDLE;
+            }
+        break;
+        case UP:
+            objPlayer.y -= .5*TILE/HEIGHT*spd;
+            y -= spd;
+            if (y &lt; yo -HEIGHT)
+            {
+                y = yo - HEIGHT;
+                state = IDLE;
+            }
+        break;
+        case DOWN:
+            objPlayer.y += .5*TILE/HEIGHT*spd;
+            y += spd;
+            if (y &gt; yo + HEIGHT)
+            {
+                y = yo + HEIGHT;
+                state = IDLE;
+            }
+        break;
+        
+        
+    }
+}
+
 </string>
           </argument>
         </arguments>
@@ -50,49 +162,10 @@ spd = 4;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
-draw_set_color(make_color_rgb(39,151,255));
-draw_rectangle(x,y,x+WIDTH,y+HEIGHT,0);
-
-
-view_xview[0] = x;
-view_yview[0] = y;
-
-if (state == IDLE)
-{
-    if (global.state == G_CAMMOVE)
-        global.state = G_PLAY;
-    
-    if (objPlayer.x &gt; x+WIDTH &amp;&amp; x &lt; room_width-WIDTH)
-    {
-        dir = RIGHT;
-        state = WALK;
-    } else if (objPlayer.x &lt; x &amp;&amp; x &gt; 0)
-    {
-        dir = LEFT;
-        state = WALK;
-    } else if (objPlayer.y &gt; y+HEIGHT &amp;&amp; y &lt; room_height-HEIGHT)
-    {
-        dir = DOWN;
-        state = WALK;
-    } else if (objPlayer.y &lt; y &amp;&amp; y &gt; 0)
-    {
-        dir = UP;
-        state = WALK;
-    }
-}
-if (state == WALK)
-{
-    if (global.state == G_PLAY)
-        global.state = G_CAMMOVE;
-
-    switch (dir)
-    {
-        case RIGHT:
-        
-        break;
-    }
-}
+            <string>//draw_set_alpha(1);
+//draw_set_color(make_color_rgb(39,151,255));
+//draw_rectangle(x,y,x+WIDTH,y+HEIGHT,0);
+draw_clear(c_white);
 
 </string>
           </argument>

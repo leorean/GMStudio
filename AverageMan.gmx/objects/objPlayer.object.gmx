@@ -29,6 +29,8 @@
 starty = y;
 y = view_yview[0]-2*TILE;
 
+cx = x;
+cy = y;
 
 dir = RIGHT;
 state = SPAWN;
@@ -90,6 +92,8 @@ invincible = 0;
 }
 if (global.state == G_PLAY)
 {
+    cx = x;
+    cy = y-TILE;
     //++++input++++
     var kLeft = ((keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right))) || (instance_exists(global.dPad) &amp;&amp; global.dPad.kLeft &amp;&amp; global.dPad.forceX &gt;= .3);
     var kRight = ((keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left))) || (instance_exists(global.dPad) &amp;&amp; global.dPad.kRight &amp;&amp; global.dPad.forceX &gt;= .3);
