@@ -182,6 +182,9 @@ invincible = 0;
             y += .1*yVel;
         else
             yVel = 0;
+            
+    x = clamp(x,0,room_width);
+    y = clamp(y,0,room_height+2*TILE);
 }//end paused
 </string>
           </argument>

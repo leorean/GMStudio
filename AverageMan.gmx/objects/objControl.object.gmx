@@ -28,6 +28,9 @@
             <string>//global loading stuff
 
 surf = -1;
+aspect_x = 1;
+aspect_y = 1;
+
 
 global.state = G_START;
 
@@ -62,12 +65,15 @@ global.camera = noone;
 
 if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
     game_end();
+
+if (keyboard_check_pressed(ord('R')))
+    room_restart();
     
 if (keyboard_check_pressed(ord('P')))
-if (global.state == G_PLAY)
-    global.state = G_PAUSED;
-else if (global.state == G_PAUSED)
-    global.state = G_PLAY;
+    if (global.state == G_PLAY)
+        global.state = G_PAUSED;
+    else if (global.state == G_PAUSED)
+        global.state = G_PLAY;
 
 //++++instance management++++
 var off = 3*TILE;
@@ -134,7 +140,7 @@ global.camera = instance_create(0,0,objCamera);
           <argument>
             <kind>1</kind>
             <string>draw_clear(c_black);
-window_set_size(2*WIDTH,2*HEIGHT);
+//window_set_size(2*WIDTH,2*HEIGHT);
 //--------------------------------------------------
 
 //++++SURFACE++++
@@ -161,7 +167,6 @@ else
     draw_enable_alphablend(false);
     //Draw the surface stretched to the GUI layer
 
-    var aspect_x, aspect_y;
     var xoffset, yoffset;
     
     if(os_type == os_windows)
