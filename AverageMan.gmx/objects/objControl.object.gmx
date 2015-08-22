@@ -134,6 +134,7 @@ global.camera = instance_create(0,0,objCamera);
           <argument>
             <kind>1</kind>
             <string>draw_clear(c_black);
+window_set_size(2*WIDTH,2*HEIGHT);
 //--------------------------------------------------
 
 //++++SURFACE++++
