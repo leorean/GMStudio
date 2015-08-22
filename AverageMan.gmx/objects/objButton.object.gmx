@@ -30,15 +30,15 @@ pressing = false;
 w = 3*TILE;
 h = 3*TILE;
 
-xo = -1;
-yo = -1;
+offx = -1;
+offy = -1;
 dev = -1;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="72">
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -55,9 +55,38 @@ dev = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>if (offx == -1 &amp;&amp; offy == -1)
+{
+    offx = x-view_xview[0];
+    offy = y-view_yview[0];    
+}
 
-//draw_self();
+for (var i = 0; i &lt; 5; i++)
+{
+    //draw_set_color(c_black);
+    //draw_circle(device_mouse_x(i)/objControl.aspect_x,device_mouse_y(i)/objControl.aspect_y,TILE,1);
+
+    if (in(device_mouse_x_to_gui(i),offx-w/2,offx+w/2)
+     &amp;&amp; in(device_mouse_y_to_gui(i),offy-h/2,offy+h/2))
+        if (device_mouse_check_button(i,mb_left))
+            dev = i;
+}
+
+if (!device_mouse_check_button(dev,mb_left))
+    dev = -1;
+
+pressing = false;
+pressed = false;
+
+if (dev &gt; -1)
+{
+    if (device_mouse_check_button_pressed(dev,mb_left))
+        pressed = true;
+    if (device_mouse_check_button(dev,mb_left))
+        pressing = true;
+
+}
+
 
 
 </string>
@@ -82,48 +111,14 @@ dev = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (xo == -1 &amp;&amp; yo == -1)
-{
-    xo = x;//x-view_xview[0];
-    yo = y;//y-view_yview[0];    
-} else
-{
-    x = view_xview[0]+xo;
-    y = view_yview[0]+yo;
-}
+            <string>x = view_xview[0]+offx;
+y = view_yview[0]+offy;
 
-for (var i = 0; i &lt; 5; i++)
-{
-    //draw_set_color(c_black);
-    //draw_circle(device_mouse_x(i)/objControl.aspect_x,device_mouse_y(i)/objControl.aspect_y,TILE,1);
+draw_set_alpha(1);
+draw_set_color(c_black);
 
-    if (in(device_mouse_x(i)/objControl.aspect_x+view_xview[0],bbox_left,bbox_right)
-     &amp;&amp; in(device_mouse_y(i)/objControl.aspect_y+view_yview[0],bbox_top,bbox_bottom))
-        if (device_mouse_check_button(i,mb_left))
-            dev = i;
-}
-
-if (!device_mouse_check_button(dev,mb_left))
-    dev = -1;
-
-pressing = false;
-pressed = false;
-
-if (dev &gt; -1)
-{
-    if (device_mouse_check_button_pressed(dev,mb_left))
-        pressed = true;
-    if (device_mouse_check_button(dev,mb_left))
-        pressing = true;
-
-}
-
-
-//++++draw++++
 draw_self();
 draw_text(x,y,dev);
-
-
 </string>
           </argument>
         </arguments>

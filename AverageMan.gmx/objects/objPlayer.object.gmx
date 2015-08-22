@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>objLiving</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -26,8 +26,12 @@
           <argument>
             <kind>1</kind>
             <string>//
+starty = y;
+y = view_yview[0]-2*TILE;
+
+
 dir = RIGHT;
-state = IDLE;
+state = SPAWN;
 xVel = 0;
 yVel = 0;
 yGrav = .3;
@@ -66,7 +70,25 @@ invincible = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state &gt; G_PAUSED)
+            <string>if (global.state == G_START)
+{
+    if (y &lt; starty)
+    {
+        state = SPAWN;
+        y = min(y+8,starty);
+        fCur = 0;
+    }
+    if (starty == y)
+    {
+        if (fCur &gt;= (fMax-fSpeed))
+        {
+            global.state = G_PLAY;
+            state = IDLE;
+        }
+    }
+    
+}
+if (global.state == G_PLAY)
 {
     //++++input++++
     var kLeft = ((keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right))) || (instance_exists(global.dPad) &amp;&amp; global.dPad.kLeft &amp;&amp; global.dPad.forceX &gt;= .3);
@@ -212,6 +234,11 @@ invincible = 0;
 
 switch (state)
 {
+    case SPAWN:
+        fMax = 3;
+        fSpeed = .2;
+        row = 4;
+    break;
     case IDLE:
         fMax = 2;
         if (frame == 0)
@@ -241,7 +268,8 @@ fCur = (fCur + fSpeed) % (fMax);
 
 //draw_self();
 if (invincible % 3 == 0)
-    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,floor(x)-TILE+2*TILE*(dir == LEFT),floor(y),sign(dir),1,c_white,1);
+    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,
+    floor(x)-TILE+2*TILE*(dir == LEFT),floor(y),sign(dir),1,c_white,1);
 </string>
           </argument>
         </arguments>

@@ -6,13 +6,16 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskSolid</sprite>
-    <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\mskLadder</sprite>
-    <sprite>sprites\mskEnemy</sprite>
-    <sprite>sprites\mskButton</sprite>
-    <sprite>sprites\mskDPad</sprite>
+    <sprites name="masks">
+      <sprite>sprites\mskEnemy</sprite>
+      <sprite>sprites\mskSolid</sprite>
+      <sprite>sprites\mskPlayer</sprite>
+      <sprite>sprites\mskLadder</sprite>
+      <sprite>sprites\mskButton</sprite>
+      <sprite>sprites\mskDPad</sprite>
+      <sprite>sprites\mskCamStop</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -34,12 +37,13 @@
       <object>objects\objLiving</object>
       <object>objects\objStatic</object>
     </objects>
+    <object>objects\objCamStop</object>
     <object>objects\objCamera</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\TEST</room>
   </rooms>
-  <constants number="16">
+  <constants number="18">
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
@@ -48,6 +52,7 @@
     <constant name="RIGHT">1</constant>
     <constant name="UP">-2</constant>
     <constant name="DOWN">2</constant>
+    <constant name="SPAWN">-1</constant>
     <constant name="IDLE">0</constant>
     <constant name="WALK">1</constant>
     <constant name="JUMP">2</constant>
@@ -55,7 +60,8 @@
     <constant name="G_PAUSED">-1</constant>
     <constant name="G_START">0</constant>
     <constant name="G_PLAY">1</constant>
-    <constant name="G_WIN">2</constant>
+    <constant name="G_CAMMOVE">2</constant>
+    <constant name="G_WIN">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -86,6 +86,7 @@ instance_activate_region(view_xview[0]-off,view_yview[0]-off,view_wview[0]+2*off
 instance_deactivate_object(objLiving);
 
 instance_activate_region(view_xview[0],view_yview[0],view_wview[0],view_hview[0],true);
+
 //++++
 </string>
           </argument>
@@ -144,7 +145,10 @@ if (!instance_exists(global.camera))
 global.camera = instance_create(0,0,objCamera);
 
 window_set_size(2*WIDTH,2*HEIGHT);
+
 global.timer = 0;
+global.state = G_START;
+
 </string>
           </argument>
         </arguments>
