@@ -6,8 +6,8 @@ var t = 0;
 
 if (room_width!=w*TILE || room_height!=h*TILE)
 {
-    room_set_width(TEST,w*TILE);
-    room_set_height(TEST,h*TILE);
+    room_set_width(room,w*TILE);
+    room_set_height(room,h*TILE);
     room_restart();
     exit;
 }
@@ -21,21 +21,28 @@ for (var i = 0; i<w; i ++)
         switch(t)
         {
             case 1: //camStop
+                //if (place_free(i*TILE,j*TILE))
                 instance_create(i*TILE,j*TILE,objCamStop);
             break;
             case 2: //player
                 var p = instance_create(i*TILE,j*TILE-TILE,objPlayer);
                 view_xview[0] = (p.x div (WIDTH+TILE)) * (WIDTH+TILE);
                 view_yview[0] = (p.y div (HEIGHT+TILE)) * (HEIGHT+TILE);
-                p.starty = y;
-                p.y = view_yview[0]-2*TILE;
                 
                 with(global.camera) instance_destroy();
                 global.camera = instance_create(view_xview[0],view_yview[0],objCamera);
-                
             break;
-            case 48: //1st tile
-                instance_create(i*TILE,j*TILE,objSolid);
+            case 3: //ladder
+                instance_create(i*TILE,j*TILE,objLadder);
+            break;
+            default: //tiles
+                if (in(t,48,658))
+                {
+                    tile_add(sprTiles,((t+1) mod 47)*TILE/* + (t div 48))*TILE*/
+                        ,((t+1) div 47)*TILE
+                        ,TILE,TILE,i*TILE,j*TILE,50);
+                    instance_create(i*TILE,j*TILE,objSolid);
+                }    
             break;
         }
     }

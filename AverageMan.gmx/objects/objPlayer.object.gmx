@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-10</depth>
   <persistent>0</persistent>
   <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>//
-//starty = y;
+starty = view_yview[0];
 //y = view_yview[0]-2*TILE;
 
 cx = x;
@@ -74,10 +74,10 @@ invincible = 0;
             <kind>1</kind>
             <string>if (global.state == G_START)
 {
-    if (y &lt; starty)
+    if (starty &lt; y)
     {
         state = SPAWN;
-        y = min(y+8,starty);
+        starty = clamp(starty+8,view_yview[0]-2*TILE,y);
         fCur = 0;
     }
     if (starty == y)
@@ -118,10 +118,15 @@ if (global.state == G_PLAY)
     //++++routine++++
     onGround = (place_meeting(x,y+1,objSolid)||(place_meeting(x,y+1,objLadder)&amp;&amp;!place_meeting(x,y,objLadder))) &amp;&amp; yVel &gt;= 0;
     if ((kUp || kDown || state == LADDER) &amp;&amp; !kJump &amp;&amp; !invincible)
-        onLadder = instance_place(x,y+1,objLadder);
+        &amp;&amp; !(kDown &amp;&amp;collision_point(x,bbox_bottom+1,objSolid,false,true))
+            onLadder = collision_point(cx,bbox_bottom-1,objLadder,false,true);
     else
         onLadder = noone;
-    //onLadder = place_meeting(x,y,objLadder) &amp;&amp; (kUp || kDown || state == LADDER);
+    //catch the ladder on ground
+    if (collision_point(x,bbox_bottom+2,objLadder,false,true)
+    &amp;&amp; !collision_point(x,bbox_bottom-1,objLadder,false,true)
+    &amp;&amp; kDown)
+        y++;
     
     enemy = instance_place(x,y,objEnemy);
     
@@ -172,8 +177,17 @@ if (global.state == G_PLAY)
             xVel = 0;
             state = LADDER;
             if (kUp || kDown) fCur = (fCur+.1)%2;
-            if (kUp) yVel = -1;
-            else if (kDown) yVel = 1;
+            if (kUp)
+                yVel = -1;
+            else if (kDown)
+            {
+                yVel = 1;
+                /*if (collision_point(x,bbox_bottom+1,objSolid,false,true))
+                {
+                    onLadder = noone;
+                    state = IDLE;
+                }*/
+            }
             else if (!kJump) yVel = 0;
         }
     
@@ -192,6 +206,7 @@ if (global.state == G_PLAY)
         if (jumpDist &lt; 3*TILE) //max jump height
             yVel = -jspd;
     }
+    if (!kJump) jumpDist = 3*TILE;
     
     //++++physics++++
     
@@ -270,10 +285,15 @@ switch (state)
 
 fCur = (fCur + fSpeed) % (fMax);
 
+var drawy;
+if (state == SPAWN) drawy = starty;
+else
+    drawy = y;
+
 //draw_self();
 if (invincible % 3 == 0)
     draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,
-    floor(x)-TILE+2*TILE*(dir == LEFT),floor(y),sign(dir),1,c_white,1);
+    floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
 </string>
           </argument>
         </arguments>

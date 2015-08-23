@@ -112,7 +112,7 @@ if (state == WALK &amp;&amp; global.state != G_START)
     switch (dir)
     {
         case LEFT:
-            objPlayer.x -= 1.5*TILE/WIDTH*spd;
+            objPlayer.x -= 1*TILE/(WIDTH+TILE)*spd;
             x -= spd;
             if (x &lt; xo - WIDTH-TILE)
             {
@@ -121,7 +121,7 @@ if (state == WALK &amp;&amp; global.state != G_START)
             }
         break;
         case RIGHT:
-            objPlayer.x += 1.5*TILE/WIDTH*spd;
+            objPlayer.x += 1*TILE/(WIDTH+TILE)*spd;
             x += spd;
             if (x &gt; xo + WIDTH+TILE)
             {
@@ -130,7 +130,7 @@ if (state == WALK &amp;&amp; global.state != G_START)
             }
         break;
         case UP:
-            objPlayer.y -= 1.5*TILE/HEIGHT*spd;
+            objPlayer.y = floor(objPlayer.y-.5*TILE/(HEIGHT+TILE)*spd);
             y -= spd;
             if (y &lt; yo -HEIGHT-TILE)
             {
@@ -139,7 +139,7 @@ if (state == WALK &amp;&amp; global.state != G_START)
             }
         break;
         case DOWN:
-            objPlayer.y += 1.5*TILE/HEIGHT*spd;
+            objPlayer.y = floor(objPlayer.y+.5*TILE/(HEIGHT+TILE)*spd);
             y += spd;
             if (y &gt; yo + HEIGHT+TILE)
             {

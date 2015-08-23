@@ -57,10 +57,9 @@ dev = -1;
             <kind>1</kind>
             <string>if (offx == -1 &amp;&amp; offy == -1)
 {
-    offx = x-view_xview[0];
-    offy = y-view_yview[0];    
+offx = x;
+offy = y;
 }
-
 for (var i = 0; i &lt; 5; i++)
 {
     //draw_set_color(c_black);
