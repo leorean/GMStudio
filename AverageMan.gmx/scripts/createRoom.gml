@@ -20,11 +20,11 @@ for (var i = 0; i<w; i ++)
         
         switch(t)
         {
-            case 1: //camStop
+            case 0: //camStop
                 //if (place_free(i*TILE,j*TILE))
                 instance_create(i*TILE,j*TILE,objCamStop);
             break;
-            case 2: //player
+            case 1: //player
                 var p = instance_create(i*TILE,j*TILE-TILE,objPlayer);
                 view_xview[0] = (p.x div (WIDTH+TILE)) * (WIDTH+TILE);
                 view_yview[0] = (p.y div (HEIGHT+TILE)) * (HEIGHT+TILE);
@@ -32,17 +32,21 @@ for (var i = 0; i<w; i ++)
                 with(global.camera) instance_destroy();
                 global.camera = instance_create(view_xview[0],view_yview[0],objCamera);
             break;
-            case 3: //ladder
-                instance_create(i*TILE,j*TILE,objLadder);
-            break;
-            default: //tiles
-                if (in(t,48,658))
+            default:
+                if (in(t,47,93)) //ladders
                 {
-                    tile_add(sprTiles,((t+1) mod 47)*TILE/* + (t div 48))*TILE*/
-                        ,((t+1) div 47)*TILE
+                    instance_create(i*TILE,j*TILE,objLadder);
+                    tile_add(sprTiles,(t % 47)*TILE
+                        ,(t div 47)*TILE
                         ,TILE,TILE,i*TILE,j*TILE,50);
-                    instance_create(i*TILE,j*TILE,objSolid);
-                }    
+                }
+                if (t >= 141) //solid and background tiles
+                    tile_add(sprTiles,(t % 47)*TILE
+                        ,(t div 47)*TILE
+                        ,TILE,TILE,i*TILE,j*TILE,50);
+                
+                if (in(t,141,657)) //solid tiles                       
+                    instance_create(i*TILE,j*TILE,objSolid);   
             break;
         }
     }

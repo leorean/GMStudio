@@ -44,7 +44,7 @@ while (!file_text_eof(file))
     }
     else //handle tile data
     {
-        ds_grid_add(ds,i,j,real(string_digits(f)));
+        ds_grid_add(ds,i,j,real(string_digits(f))-1);
         i++;
         if (i >= w)
         {

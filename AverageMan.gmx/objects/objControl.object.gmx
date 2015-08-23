@@ -88,7 +88,7 @@ instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+
 //instance_deactivate_object(objLiving);
 //instance_activate_region(view_xview[0],view_yview[0],WIDTH,HEIGHT,true);
 
-show_debug_message("cs:"+string(instance_number(objCamStop))+",solid:"+string(instance_number(objSolid)));
+//show_debug_message("cs:"+string(instance_number(objCamStop))+",solid:"+string(instance_number(objSolid)));
 
 
 //++++
