@@ -54,6 +54,7 @@
     </sprites>
     <sprite>sprites\mskHole</sprite>
     <sprite>sprites\mskCamera</sprite>
+    <sprite>sprites\sprEffects</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -81,6 +82,7 @@
     <object>objects\objCamStop</object>
     <object>objects\objCamera</object>
     <object>objects\objHole</object>
+    <object>objects\objEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\LEVEL</room>

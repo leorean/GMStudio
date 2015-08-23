@@ -230,6 +230,9 @@ if (global.state == G_PLAY)
     //++++hole death++++
     if (collision_point(x,bbox_top,objHole,false,true))
     {
+        state = DEAD;
+        var e = instance_create(x,y+TILE,objEffect);
+        
         global.state = G_GAMEOVER;
     }
 
@@ -237,13 +240,11 @@ if (global.state == G_PLAY)
 }//end play
 if (global.state == G_GAMEOVER)
 {
-    state = DEAD;
     deathTimer = max(deathTimer-1,0);
-    
     if (!deathTimer)
     {
-        room_restart();
-        instance_destroy();
+        if (mouse_check_button(mb_left))
+            room_restart();
         //instance_destroy();
     }
 }
@@ -301,11 +302,6 @@ switch (state)
         fSpeed = 0;
         row = 3;
     break;
-    case DEAD:
-        fMax = 4;
-        fSpeed = .3;
-        row = 5;
-    break;
 }
 
 fCur = (fCur + fSpeed) % (fMax);
@@ -316,7 +312,7 @@ else
     drawy = y;
 
 //draw_self();
-if (invincible % 3 == 0)
+if (invincible % 3 == 0 &amp;&amp; state != DEAD)
     draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,
     floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
 </string>
