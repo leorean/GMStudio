@@ -226,7 +226,27 @@ if (global.state == G_PLAY)
             
     x = clamp(x,0,room_width);
     y = clamp(y,0,room_height+2*TILE);
-}//end paused
+    
+    //++++hole death++++
+    if (collision_point(x,bbox_top,objHole,false,true))
+    {
+        global.state = G_GAMEOVER;
+    }
+
+    deathTimer = 1*SEC;
+}//end play
+if (global.state == G_GAMEOVER)
+{
+    state = DEAD;
+    deathTimer = max(deathTimer-1,0);
+    
+    if (!deathTimer)
+    {
+        room_restart();
+        instance_destroy();
+        //instance_destroy();
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -280,6 +300,11 @@ switch (state)
         fMax = 2;
         fSpeed = 0;
         row = 3;
+    break;
+    case DEAD:
+        fMax = 4;
+        fSpeed = .3;
+        row = 5;
     break;
 }
 

@@ -32,6 +32,9 @@ for (var i = 0; i<w; i ++)
                 with(global.camera) instance_destroy();
                 global.camera = instance_create(view_xview[0],view_yview[0],objCamera);
             break;
+            case 2:
+                instance_create(i*TILE,j*TILE,objHole);
+            break;
             default:
                 if (in(t,47,93)) //ladders
                 {

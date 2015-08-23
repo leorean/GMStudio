@@ -52,6 +52,8 @@
       <sprite>sprites\mskDPad</sprite>
       <sprite>sprites\mskCamStop</sprite>
     </sprites>
+    <sprite>sprites\mskHole</sprite>
+    <sprite>sprites\mskCamera</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -78,11 +80,12 @@
     </objects>
     <object>objects\objCamStop</object>
     <object>objects\objCamera</object>
+    <object>objects\objHole</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\LEVEL</room>
   </rooms>
-  <constants number="18">
+  <constants number="21">
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
@@ -96,11 +99,14 @@
     <constant name="WALK">1</constant>
     <constant name="JUMP">2</constant>
     <constant name="LADDER">3</constant>
+    <constant name="DEAD">4</constant>
     <constant name="G_PAUSED">-1</constant>
     <constant name="G_START">0</constant>
     <constant name="G_PLAY">1</constant>
     <constant name="G_CAMMOVE">2</constant>
     <constant name="G_WIN">3</constant>
+    <constant name="G_GAMEOVER">4</constant>
+    <constant name="SEC">60</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
