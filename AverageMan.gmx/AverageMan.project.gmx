@@ -21,7 +21,7 @@
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
-    <script>scripts\DPadWindows.gml</script>
+    <script>scripts\importLevel.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>

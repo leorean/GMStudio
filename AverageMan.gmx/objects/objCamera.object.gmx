@@ -31,6 +31,11 @@ spd = 8;
 
 xo = x;
 yo = y;
+
+colL=noone;
+colR=noone;
+colU=noone;
+colD=noone;
 </string>
           </argument>
         </arguments>
@@ -60,11 +65,13 @@ if (state == IDLE)
 {
     xo = x;
     yo = y;
-    var colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
-    var colL = collision_line(x,y+.5*TILE,x,y+HEIGHT-.5*TILE,objCamStop,false,true);
+
+    dir = NONE;
     
-    var colU = collision_line(x+.5*TILE,y,x+WIDTH-.5*TILE,y,objCamStop,false,true);
-    var colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
+    colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
+    colL = collision_line(x-TILE,y+.5*TILE,x-TILE,y+HEIGHT-.5*TILE,objCamStop,false,true);
+    colU = collision_line(x+.5*TILE,y-TILE,x+WIDTH-.5*TILE,y-TILE,objCamStop,false,true);
+    colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
     
     if (objPlayer.cx &gt; x+WIDTH/2 &amp;&amp; !colR) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
     if (objPlayer.cx &lt; x+WIDTH/2 &amp;&amp; !colL) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
@@ -100,38 +107,38 @@ if (state == WALK)
     switch (dir)
     {
         case LEFT:
-            objPlayer.x -= .5*TILE/WIDTH*spd;
+            objPlayer.x -= 1.5*TILE/WIDTH*spd;
             x -= spd;
-            if (x &lt; xo - WIDTH)
+            if (x &lt; xo - WIDTH-TILE)
             {
-                x = xo - WIDTH;
+                x = xo - WIDTH-TILE;
                 state = IDLE;
             }
         break;
         case RIGHT:
-            objPlayer.x += .5*TILE/WIDTH*spd;
+            objPlayer.x += 1.5*TILE/WIDTH*spd;
             x += spd;
-            if (x &gt; xo + WIDTH)
+            if (x &gt; xo + WIDTH+TILE)
             {
-                x = xo + WIDTH;
+                x = xo + WIDTH+TILE
                 state = IDLE;
             }
         break;
         case UP:
-            objPlayer.y -= .5*TILE/HEIGHT*spd;
+            objPlayer.y -= 1.5*TILE/HEIGHT*spd;
             y -= spd;
-            if (y &lt; yo -HEIGHT)
+            if (y &lt; yo -HEIGHT-TILE)
             {
-                y = yo - HEIGHT;
+                y = yo - HEIGHT-TILE;
                 state = IDLE;
             }
         break;
         case DOWN:
-            objPlayer.y += .5*TILE/HEIGHT*spd;
+            objPlayer.y += 1.5*TILE/HEIGHT*spd;
             y += spd;
-            if (y &gt; yo + HEIGHT)
+            if (y &gt; yo + HEIGHT+TILE)
             {
-                y = yo + HEIGHT;
+                y = yo + HEIGHT+TILE;
                 state = IDLE;
             }
         break;
