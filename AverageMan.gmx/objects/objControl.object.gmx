@@ -39,6 +39,8 @@ global.btnJump = noone;
 global.dPad = noone;
 global.camera = noone;
 
+//++++import levels HERE++++
+l0Data = importLevel("L0.tmx");
 </string>
           </argument>
         </arguments>
@@ -141,13 +143,15 @@ if (!instance_exists(global.btnJump))
     global.btnJump = instance_create(WIDTH-3*TILE,HEIGHT-4*TILE,objButton);
 if (!instance_exists(global.dPad))
     global.dPad = instance_create(-100,-100,objDPad);
-if (!instance_exists(global.camera))
-global.camera = instance_create(0,0,objCamera);
 
 window_set_size(2*WIDTH,2*HEIGHT);
 
 global.timer = 0;
 global.state = G_START;
+
+
+createRoom(l0Data);
+
 
 </string>
           </argument>

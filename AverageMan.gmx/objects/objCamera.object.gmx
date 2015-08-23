@@ -36,6 +36,7 @@ colL=noone;
 colR=noone;
 colU=noone;
 colD=noone;
+
 </string>
           </argument>
         </arguments>
@@ -63,43 +64,47 @@ view_yview[0] = y;
 
 if (state == IDLE)
 {
+    if (global.state == G_CAMMOVE)
+        global.state = G_PLAY;
+    
     xo = x;
     yo = y;
 
     dir = NONE;
-    
-    colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
-    colL = collision_line(x-TILE,y+.5*TILE,x-TILE,y+HEIGHT-.5*TILE,objCamStop,false,true);
-    colU = collision_line(x+.5*TILE,y-TILE,x+WIDTH-.5*TILE,y-TILE,objCamStop,false,true);
-    colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
-    
-    if (objPlayer.cx &gt; x+WIDTH/2 &amp;&amp; !colR) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
-    if (objPlayer.cx &lt; x+WIDTH/2 &amp;&amp; !colL) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
-    if (objPlayer.cy &gt; y+HEIGHT/2 &amp;&amp; !colD) y = clamp(objPlayer.cy-HEIGHT/2,0,room_height-HEIGHT)
-    if (objPlayer.cy &lt; y+HEIGHT/2 &amp;&amp; !colU) y = clamp(objPlayer.cy-HEIGHT/2,0,room_height-HEIGHT);
+
+    if (global.state != G_START)
+    {
+        colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
+        colL = collision_line(x-TILE,y+.5*TILE,x-TILE,y+HEIGHT-.5*TILE,objCamStop,false,true);
+        colU = collision_line(x+.5*TILE,y-TILE,x+WIDTH-.5*TILE,y-TILE,objCamStop,false,true);
+        colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
         
-    if (global.state == G_CAMMOVE)
-        global.state = G_PLAY;
-    
-    if (objPlayer.bbox_left &gt; x+WIDTH &amp;&amp; x &lt; room_width-WIDTH)
-    {
-        dir = RIGHT;
-        state = WALK;
-    } else if (objPlayer.bbox_right &lt; x &amp;&amp; x &gt; 0)
-    {
-        dir = LEFT;
-        state = WALK;
-    } else if (objPlayer.bbox_top &gt; y+HEIGHT &amp;&amp; y &lt; room_height-HEIGHT)
-    {
-        dir = DOWN;
-        state = WALK;
-    } else if (objPlayer.bbox_bottom &lt; y &amp;&amp; y &gt; 0)
-    {
-        dir = UP;
-        state = WALK;
+        if (objPlayer.cx &gt; x+WIDTH/2 &amp;&amp; !colR) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
+        if (objPlayer.cx &lt; x+WIDTH/2 &amp;&amp; !colL) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
+        if (objPlayer.cy &gt; y+HEIGHT/2 &amp;&amp; !colD) y = clamp(objPlayer.cy-HEIGHT/2,0,room_height-HEIGHT)
+        if (objPlayer.cy &lt; y+HEIGHT/2 &amp;&amp; !colU) y = clamp(objPlayer.cy-HEIGHT/2,0,room_height-HEIGHT);
+        
+        if (objPlayer.bbox_left &gt; x+WIDTH &amp;&amp; x &lt; room_width-WIDTH)
+        {
+            dir = RIGHT;
+            state = WALK;
+        } else if (objPlayer.bbox_right &lt; x &amp;&amp; x &gt; 0)
+        {
+            dir = LEFT;
+            state = WALK;
+        } else if (objPlayer.bbox_top &gt; y+HEIGHT &amp;&amp; y &lt; room_height-HEIGHT)
+        {
+            dir = DOWN;
+            state = WALK;
+        } else if (objPlayer.bbox_bottom &lt; y &amp;&amp; y &gt; 0)
+        {
+            dir = UP;
+            state = WALK;
+        }
     }
+    
 }
-if (state == WALK)
+if (state == WALK &amp;&amp; global.state != G_START)
 {
     if (global.state == G_PLAY)
         global.state = G_CAMMOVE;
@@ -142,8 +147,6 @@ if (state == WALK)
                 state = IDLE;
             }
         break;
-        
-        
     }
 }
 

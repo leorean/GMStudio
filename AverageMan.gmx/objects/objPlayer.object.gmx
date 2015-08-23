@@ -26,8 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>//
-starty = y;
-y = view_yview[0]-2*TILE;
+//starty = y;
+//y = view_yview[0]-2*TILE;
 
 cx = x;
 cy = y;
