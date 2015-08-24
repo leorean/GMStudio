@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>fCur = 0;
-fSpeed = .2;
+fSpeed = .3;
 fMax = 4;
 type = 0;
 </string>
@@ -55,7 +55,7 @@ type = 0;
 if (fCur &gt; fMax)
     instance_destroy();
 
-frame = floor(fCur);
+frame = min(floor(fCur),fMax);
 draw_sprite_part(sprEffects,-1,frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-1*TILE,y-1*TILE);
 </string>
           </argument>

@@ -243,7 +243,7 @@ if (global.state == G_GAMEOVER)
     deathTimer = max(deathTimer-1,0);
     if (!deathTimer)
     {
-        if (mouse_check_button(mb_left))
+        if (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_anykey))
             room_restart();
         //instance_destroy();
     }
