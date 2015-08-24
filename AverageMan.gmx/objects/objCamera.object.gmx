@@ -178,7 +178,7 @@ if (instance_exists(objPlayer))
             <string>//draw_set_alpha(1);
 //draw_set_color(make_color_rgb(39,151,255));
 //draw_rectangle(x,y,x+WIDTH,y+HEIGHT,0);
-draw_clear(c_white);
+draw_clear(c_black);
 
 </string>
           </argument>

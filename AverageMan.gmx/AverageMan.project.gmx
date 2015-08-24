@@ -64,6 +64,7 @@
     <script>scripts\in.gml</script>
     <script>scripts\importLevel.gml</script>
     <script>scripts\createRoom.gml</script>
+    <script>scripts\addTile.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>

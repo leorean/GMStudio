@@ -34,7 +34,7 @@ while (!file_text_eof(file))
         {
             var str = string_copy(f,string_pos('height="',f)+8,5);
             h = real(string_digits(str));
-            ds_grid_resize(ds,w,h);            
+            ds_grid_resize(ds,w,h);
         }
         if (string_pos('<data>',f) != 0)
         {
