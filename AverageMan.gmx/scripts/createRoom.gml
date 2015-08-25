@@ -46,6 +46,11 @@ for (var i = 0; i<w; i ++)
                     instance_create(i*TILE,j*TILE,objLadder);
                     addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 }
+                if (in(fg,94,140)) //spikes
+                {
+                    instance_create(i*TILE,j*TILE,objEnemy);
+                    addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                }
                 if (fg >= 141) //solid tiles
                 {
                     addTile(fg,i*TILE,j*TILE,LAYER_FG);
