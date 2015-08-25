@@ -37,6 +37,10 @@ colR=noone;
 colU=noone;
 colD=noone;
 
+a = 0;
+b = 0;
+w = 400; //bg width
+h = 240; //bg height
 </string>
           </argument>
         </arguments>
@@ -61,6 +65,10 @@ colD=noone;
             <kind>1</kind>
             <string>view_xview[0] = x;
 view_yview[0] = y;
+
+//a = ((view_xview[0]*.5) mod w);
+a = ((view_xview[0]*.8) mod w);
+b = view_yview[0];
 
 if (instance_exists(objPlayer))
 {
@@ -178,7 +186,10 @@ if (instance_exists(objPlayer))
             <string>//draw_set_alpha(1);
 //draw_set_color(make_color_rgb(39,151,255));
 //draw_rectangle(x,y,x+WIDTH,y+HEIGHT,0);
-draw_clear(c_black);
+//draw_clear(c_black);
+
+draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a-w),b);
+draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a),b);
 
 </string>
           </argument>

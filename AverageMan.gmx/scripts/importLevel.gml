@@ -11,7 +11,9 @@ else
     exit;
 }
 
-var data, f,i,j,w,h;
+var data, f,i,j,w,h, layer;
+
+layer = 0;
 
 data = false;
 i = 0;j = 0;
@@ -34,7 +36,7 @@ while (!file_text_eof(file))
         {
             var str = string_copy(f,string_pos('height="',f)+8,5);
             h = real(string_digits(str));
-            ds_grid_resize(ds,w,h);
+            ds_grid_resize(ds,w,2*h);
         }
         if (string_pos('<data>',f) != 0)
         {
@@ -44,16 +46,28 @@ while (!file_text_eof(file))
     }
     else //handle tile data
     {
-        ds_grid_add(ds,i,j,real(string_digits(f))-1);
-        i++;
-        if (i >= w)
+        if (string_pos('gid=',f) != 0)
         {
-            i = 0;
-            j++;
+            ds_grid_add(ds,i,j,real(string_digits(f))-1);
+            i++;
+            if (i >= w)
+            {
+                i = 0;
+                j++;
+            }
+
+            if (j >= h)
+            {
+                layer++;
+                if (layer > 1) break;
+                //j = 0;
+                //break;
+            }
         }
+        
         file_text_readln(file);
-        if (j >= h)
-            break;
+        
+        
     }
 }
 
