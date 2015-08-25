@@ -1,8 +1,8 @@
 var data = argument0;
 
-var w = ds_grid_width(data);
-var h = ds_grid_height(data);
-var t = 0;
+var w = ds_grid_width(data[0]);
+var h = ds_grid_height(data[0]);
+var fg = 0;
 var bg = 0;
 
 if (room_width!=w*TILE || room_height!=h*TILE)
@@ -17,13 +17,13 @@ for (var i = 0; i<w; i ++)
 {
     for (var j = 0; j<h; j++)
     {
-        t = ds_grid_get(data,i,j);
-        bg = ds_grid_get(data,i,j+h);
+        fg = ds_grid_get(data[1],i,j);
+        bg = ds_grid_get(data[0],i,j);
 
         if (bg > 0) //bg tiles
             addTile(bg,i*TILE,j*TILE,60);
 
-        switch(t)
+        switch(fg)
         {
             case 0: //camStop
                 //if (place_free(i*TILE,j*TILE))
@@ -42,15 +42,15 @@ for (var i = 0; i<w; i ++)
                 instance_create(i*TILE,j*TILE,objHole);
             break;
             default:
-                if (in(t,47,93)) //ladders
+                if (in(fg,47,93)) //ladders
                 {
                     instance_create(i*TILE,j*TILE,objLadder);
-                    addTile(t,i*TILE,j*TILE,50);
+                    addTile(fg,i*TILE,j*TILE,50);
                 }
-                if (t >= 141) //solid and background tiles
-                    addTile(t,i*TILE,j*TILE,50);
+                if (fg >= 141) //solid and background tiles
+                    addTile(fg,i*TILE,j*TILE,50);
                 
-                if (in(t,141,657)) //solid tiles                       
+                if (in(fg,141,657)) //solid tiles                       
                     instance_create(i*TILE,j*TILE,objSolid);
             break;
         }

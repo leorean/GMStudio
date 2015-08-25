@@ -41,6 +41,7 @@ global.camera = noone;
 
 //++++import levels HERE++++
 l0Data = importLevel("L0.tmx");
+a=1;
 </string>
           </argument>
         </arguments>
