@@ -104,21 +104,11 @@ if (global.state == G_PLAY)
     
     var spd = 2;
     if (os_type == os_android) spd = 2*objDPad.forceX;
-    /*
-    kLeft = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_left) || (instance_exists(objDPad) &amp;&amp; objDPad.kLeft &amp;&amp; objDPad.forceX &gt;= .6)) &amp;&amp; (global.gameState == G.PLAY);
-    kRight = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_right) || (instance_exists(objDPad) &amp;&amp; objDPad.kRight &amp;&amp; objDPad.forceX &gt;= .6)) &amp;&amp; (global.gameState == G.PLAY);
-    kUp = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_up) || (instance_exists(objDPad) &amp;&amp; objDPad.kUp &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-    kDown = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(vk_down) || (instance_exists(objDPad) &amp;&amp; objDPad.kDown &amp;&amp; objDPad.forceY &gt;= .35)) &amp;&amp; (global.gameState == G.PLAY);
-    kJump = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check_pressed(ord('A')) || (instance_exists(objDPadButton1) &amp;&amp; objDPadButton1.pressed)) &amp;&amp; (global.gameState == G.PLAY);
-    kAction = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(ord('S')) || mouse_check_button(mb_right) || (instance_exists(objDPadButton2) &amp;&amp; objDPadButton2.pressing)) &amp;&amp; (global.gameState == G.PLAY);
-    kWeapon = !die &amp;&amp; !blockDelay &amp;&amp; (keyboard_check(ord('D')) || (instance_exists(objDPadButton3) &amp;&amp; objDPadButton3.pressed)) &amp;&amp; (global.gameState == G.PLAY);
-    diag = ((instance_exists(objDPad) &amp;&amp; objDPad.diag)) &amp;&amp; (global.gameState == G.PLAY);
-    */
     
     //++++routine++++
-    onGround = (place_meeting(x,y+1,objSolid)||(place_meeting(x,y+1,objLadder)&amp;&amp;!place_meeting(x,y,objLadder))) &amp;&amp; yVel &gt;= 0;
-    if ((kUp || kDown || state == LADDER) &amp;&amp; !kJump &amp;&amp; !invincible)
-        &amp;&amp; !(kDown &amp;&amp;collision_point(x,bbox_bottom+1,objSolid,false,true))
+    onGround = (place_meeting(x,y+1,objSolid)||(place_meeting(x,y+1,objLadder) &amp;&amp; !place_meeting(x,y,objLadder))) &amp;&amp; yVel &gt;= 0;
+    if ((((kUp || kDown) &amp;&amp; !kJump) || (state == LADDER || (kJump &amp;&amp; state != LADDER &amp;&amp; yVel &gt; 0)) &amp;&amp; !(kJump &amp;&amp; kDown)) &amp;&amp; !invincible)
+        &amp;&amp; !(kDown &amp;&amp; collision_point(x,bbox_bottom+1,objSolid,false,true))
             onLadder = collision_point(cx,bbox_bottom-1,objLadder,false,true);
     else
         onLadder = noone;
@@ -162,7 +152,9 @@ if (global.state == G_PLAY)
     {
         if (!kJump)
             jumped = false;
+        
         jumpDist = 0;
+        
         if (!invincible)
             yVel = 0;
         if (onGround)
@@ -172,23 +164,17 @@ if (global.state == G_PLAY)
         }
         if (onLadder)
         {
-            //x = (x div TILE) * TILE + TILE*.5;
             x = onLadder.x+.5*TILE;
             xVel = 0;
             state = LADDER;
             if (kUp || kDown) fCur = (fCur+.1)%2;
             if (kUp)
-                yVel = -1;
+                yVel = -.75;
             else if (kDown)
-            {
-                yVel = 1;
-                /*if (collision_point(x,bbox_bottom+1,objSolid,false,true))
-                {
-                    onLadder = noone;
-                    state = IDLE;
-                }*/
-            }
-            else if (!kJump) yVel = 0;
+                yVel = .75;
+            else if (!kJump)
+                yVel = 0;
+                      
         }
     
     }
@@ -201,10 +187,16 @@ if (global.state == G_PLAY)
     var jspd = 3.5; //jump speed
     if (kJump &amp;&amp; !jumped)
     {
-        state = JUMP;
+        if (!kDown)
+        {
+            if (jumpDist &lt; 3*TILE) //max jump height
+                yVel = -jspd;
+        }    
         jumpDist += jspd;
-        if (jumpDist &lt; 3*TILE) //max jump height
-            yVel = -jspd;
+        if ((!kDown &amp;&amp; onGround) || !onGround)
+            state = JUMP;
+        
+                    
     }
     if (!kJump) jumpDist = 3*TILE;
     

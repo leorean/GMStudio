@@ -106,7 +106,7 @@
   <rooms name="rooms">
     <room>rooms\LEVEL</room>
   </rooms>
-  <constants number="21">
+  <constants number="23">
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
@@ -128,6 +128,8 @@
     <constant name="G_WIN">3</constant>
     <constant name="G_GAMEOVER">4</constant>
     <constant name="SEC">60</constant>
+    <constant name="LAYER_FG">50</constant>
+    <constant name="LAYER_BG">55</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

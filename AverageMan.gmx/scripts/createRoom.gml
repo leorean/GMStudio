@@ -21,13 +21,12 @@ for (var i = 0; i<w; i ++)
         bg = ds_grid_get(data[0],i,j);
 
         if (bg > 0) //bg tiles
-            addTile(bg,i*TILE,j*TILE,60);
+            addTile(bg,i*TILE,j*TILE,LAYER_BG);
 
         switch(fg)
         {
             case 0: //camStop
-                //if (place_free(i*TILE,j*TILE))
-                instance_create(i*TILE,j*TILE,objCamStop);
+                instance_create(i*TILE,j*TILE,objCamStop); //invisible
             break;
             case 1: //player
                 var p = instance_create(i*TILE+.5*TILE,j*TILE-TILE,objPlayer);
@@ -39,19 +38,20 @@ for (var i = 0; i<w; i ++)
                 
             break;
             case 2:
-                instance_create(i*TILE,j*TILE,objHole);
+                instance_create(i*TILE,j*TILE,objHole); //invisible
             break;
             default:
                 if (in(fg,47,93)) //ladders
                 {
                     instance_create(i*TILE,j*TILE,objLadder);
-                    addTile(fg,i*TILE,j*TILE,50);
+                    addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 }
-                if (fg >= 141) //solid and background tiles
-                    addTile(fg,i*TILE,j*TILE,50);
-                
-                if (in(fg,141,657)) //solid tiles                       
+                if (fg >= 141) //solid tiles
+                {
+                    addTile(fg,i*TILE,j*TILE,LAYER_FG);
                     instance_create(i*TILE,j*TILE,objSolid);
+                }
+                    
             break;
         }
     }
