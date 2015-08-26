@@ -72,6 +72,7 @@
     <sprite>sprites\mskHole</sprite>
     <sprite>sprites\mskCamera</sprite>
     <sprite>sprites\sprEffects</sprite>
+    <sprite>sprites\mskPlatform</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -97,6 +98,7 @@
       <object>objects\objSolid</object>
       <object>objects\objLiving</object>
       <object>objects\objStatic</object>
+      <object>objects\objPlatform</object>
     </objects>
     <object>objects\objCamStop</object>
     <object>objects\objCamera</object>

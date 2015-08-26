@@ -41,9 +41,14 @@ for (var i = 0; i<w; i ++)
                 instance_create(i*TILE,j*TILE,objHole); //invisible
             break;
             default:
-                if (in(fg,47,93)) //ladders
+                if (in(fg,47,57)) //ladders
                 {
                     instance_create(i*TILE,j*TILE,objLadder);
+                    addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                }
+                if (in(fg,58,93)) //platforms
+                {
+                    instance_create(i*TILE,j*TILE,objPlatform);
                     addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 }
                 if (in(fg,94,140)) //spikes

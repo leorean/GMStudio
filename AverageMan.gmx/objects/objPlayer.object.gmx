@@ -100,6 +100,7 @@ if (global.state == G_PLAY)
     var kUp = keyboard_check(vk_up) || (instance_exists(global.dPad) &amp;&amp; global.dPad.kUp &amp;&amp; global.dPad.forceY &gt;= .35);
     var kDown = keyboard_check(vk_down) || (instance_exists(global.dPad) &amp;&amp; global.dPad.kDown &amp;&amp; global.dPad.forceY &gt;= .35);
     var kJump = keyboard_check(ord('A')) || (instance_exists(global.btnJump)&amp;&amp; global.btnJump.pressing);
+    var kJumpPressed = keyboard_check_pressed(ord('A')) || (instance_exists(global.btnJump)&amp;&amp; global.btnJump.pressed);
     var kAttack = keyboard_check(ord('S')) || (instance_exists(global.btnAttack)&amp;&amp; global.btnAttack.pressing);
     
     var spd = 2;
@@ -107,12 +108,31 @@ if (global.state == G_PLAY)
     
     //++++routine++++
     onGround = (place_meeting(x,y+1,objSolid)||(place_meeting(x,y+1,objLadder) &amp;&amp; !place_meeting(x,y,objLadder))) &amp;&amp; yVel &gt;= 0;
-    if ((((kUp || kDown) &amp;&amp; !kJump) || (state == LADDER || (kJump &amp;&amp; state != LADDER &amp;&amp; yVel &gt; 0)) &amp;&amp; !(kJump &amp;&amp; kDown)) &amp;&amp; !invincible)
+    if (((kUp || kDown) &amp;&amp; !kJump) || state == LADDER || (kJumpPressed &amp;&amp; state != LADDER) &amp;&amp; !invincible)
         &amp;&amp; !(kDown &amp;&amp; collision_point(x,bbox_bottom+1,objSolid,false,true))
             onLadder = collision_point(cx,bbox_bottom-1,objLadder,false,true);
     else
         onLadder = noone;
-    //catch the ladder on ground
+        
+    if (yVel &gt;= 0)
+        onPlatform = collision_point(cx,bbox_bottom+1,objPlatform,true,true);
+    else
+        onPlatform = noone;
+    
+    if (onPlatform)
+    {
+        onGround = true;
+        y = onPlatform.y - 2*TILE;
+    }
+    /*
+        if ((((kUp || kDown) &amp;&amp; !kJump) || ((state == LADDER) || (kJump &amp;&amp; state != LADDER &amp;&amp; yVel &gt; 0)) &amp;&amp; !(kJump &amp;&amp; kDown)) &amp;&amp; !invincible)
+        &amp;&amp; !(kDown &amp;&amp; collision_point(x,bbox_bottom+1,objSolid,false,true))
+            onLadder = collision_point(cx,bbox_bottom-1,objLadder,false,true);
+    else
+        onLadder = noone;
+    */
+    
+    //catch the ladder below
     if (collision_point(x,bbox_bottom+2,objLadder,false,true)
     &amp;&amp; !collision_point(x,bbox_bottom-1,objLadder,false,true)
     &amp;&amp; kDown)
@@ -135,7 +155,7 @@ if (global.state == G_PLAY)
     }
     
     
-    if (!onLadder)
+    if (!onLadder &amp;&amp; !onPlatform)
         yVel += yGrav;
     
     if (kAttack)
@@ -152,6 +172,8 @@ if (global.state == G_PLAY)
     {
         if (!kJump)
             jumped = false;
+        else
+            onPlatform = noone;
         
         jumpDist = 0;
         
@@ -211,7 +233,8 @@ if (global.state == G_PLAY)
         xVel = 0;
     
     repeat(10)
-        if (!place_meeting(x,y+.1*yVel,objSolid) &amp;&amp; !(place_meeting(x,y+1,objLadder)&amp;&amp;!place_meeting(x,y,objLadder)&amp;&amp;(!kDown&amp;&amp;!kUp&amp;&amp;!kJump)))
+        if (!place_meeting(x,y+.1*yVel,objSolid) &amp;&amp; !(place_meeting(x,y+1,objLadder)&amp;&amp;!place_meeting(x,y,objLadder)&amp;&amp;(!kDown&amp;&amp;!kUp&amp;&amp;!kJump))
+            &amp;&amp; !onPlatform)
             y += .1*yVel;
         else
             yVel = 0;
@@ -235,8 +258,7 @@ if (global.state == G_GAMEOVER)
     deathTimer = max(deathTimer-1,0);
     if (!deathTimer)
     {
-        if (mouse_check_button_pressed(mb_left) || keyboard_check_pressed(vk_anykey))
-            room_restart();
+        room_restart();
         //instance_destroy();
     }
 }
