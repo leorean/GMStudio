@@ -34,6 +34,7 @@ cy = y;
 
 dir = RIGHT;
 state = SPAWN;
+statePrev = state;
 xVel = 0;
 yVel = 0;
 yGrav = .3;
@@ -241,17 +242,20 @@ if (global.state == G_PLAY)
             
     x = clamp(x,0,room_width);
     y = clamp(y,0,room_height+2*TILE);
+    if (state != statePrev)
+        fCur = 0;
+    statePrev = state;
     
     //++++hole death++++
     if (collision_point(x,bbox_top,objHole,false,true))
     {
         state = DEAD;
-        var e = instance_create(x,y+TILE,objEffect);
+        effectDead(x,y+TILE);
         
         global.state = G_GAMEOVER;
     }
 
-    deathTimer = 1*SEC;
+    deathTimer = 1.5*SEC;
 }//end play
 if (global.state == G_GAMEOVER)
 {

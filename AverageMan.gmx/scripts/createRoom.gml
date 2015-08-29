@@ -40,7 +40,7 @@ for (var i = 0; i<w; i ++)
             case 2: //holes
                 instance_create(i*TILE,j*TILE,objHole); //invisible
             break;
-            case 3: //doors - look for the top
+            case 3: //TODO: doors
                 var k = j;
                 while (!instance_place(i*TILE,k*TILE-TILE,objSolid))
                     k -= 1;

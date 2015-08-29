@@ -26,9 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>fCur = 0;
-fSpeed = .3;
+fSpeed = .2;
 fMax = 4;
 type = 0;
+xVel = 0;
+yVel = 0;
 </string>
           </argument>
         </arguments>
@@ -51,12 +53,20 @@ type = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur += fSpeed;
-if (fCur &gt; fMax)
-    instance_destroy();
+            <string>if (global.state &gt; G_PAUSED)
+{
+    x += xVel;
+    y += yVel;
+    
+    fCur += fSpeed;
+    if (fCur &gt; fMax)
+        instance_destroy();
+    
+    frame = min(floor(fCur),fMax);
+}
 
-frame = min(floor(fCur),fMax);
-draw_sprite_part(sprEffects,-1,frame*2*TILE,type*2*TILE,2*TILE,2*TILE,x-1*TILE,y-1*TILE);
+draw_sprite_part(sprEffects,-1,frame*TILE,type*TILE,TILE,TILE,x-.5*TILE,y-.5*TILE);
+
 </string>
           </argument>
         </arguments>

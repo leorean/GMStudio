@@ -199,9 +199,6 @@ if (instance_exists(objPlayer))
 
 draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a-w),b);
 draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a),b);
-
-draw_set_color(c_red);
-draw_rectangle(xo,yo,xo+TILE,yo+TILE,1);
 </string>
           </argument>
         </arguments>
