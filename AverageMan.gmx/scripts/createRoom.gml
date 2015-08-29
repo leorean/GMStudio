@@ -37,8 +37,14 @@ for (var i = 0; i<w; i ++)
                 global.camera = instance_create(view_xview[0],view_yview[0],objCamera);
                 
             break;
-            case 2:
+            case 2: //holes
                 instance_create(i*TILE,j*TILE,objHole); //invisible
+            break;
+            case 3: //doors - look for the top
+                var k = j;
+                while (!instance_place(i*TILE,k*TILE-TILE,objSolid))
+                    k -= 1;
+                instance_create(i*TILE+.5*TILE,k*TILE,objDoor);
             break;
             default:
                 if (in(fg,47,57)) //ladders

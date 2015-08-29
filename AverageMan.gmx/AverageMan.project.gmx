@@ -73,6 +73,8 @@
     <sprite>sprites\mskCamera</sprite>
     <sprite>sprites\sprEffects</sprite>
     <sprite>sprites\mskPlatform</sprite>
+    <sprite>sprites\mskDoor</sprite>
+    <sprite>sprites\mskControl</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -104,6 +106,7 @@
     <object>objects\objCamera</object>
     <object>objects\objHole</object>
     <object>objects\objEffect</object>
+    <object>objects\objDoor</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\LEVEL</room>

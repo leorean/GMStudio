@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>dir = NONE;
 state = IDLE;
-spd = 8;
+spd = 6;
 
 xo = x;
 yo = y;
@@ -85,9 +85,16 @@ if (instance_exists(objPlayer))
         if (global.state == G_PLAY)
         {
             colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
-            colL = collision_line(x-TILE,y+.5*TILE,x-TILE,y+HEIGHT-.5*TILE,objCamStop,false,true);
+            colL = collision_line(x-1,y+.5*TILE,x-1,y+HEIGHT-.5*TILE,objCamStop,false,true);
             colU = collision_line(x+.5*TILE,y-TILE,x+WIDTH-.5*TILE,y-TILE,objCamStop,false,true);
             colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
+
+            /*
+            colR = collision_rectangle(x+WIDTH,y+.5*TILE,x+WIDTH-TILE,y+HEIGHT-.5*TILE,objCamStop,false,true);
+            colL = collision_rectangle(x-TILE,y+.5*TILE,x,y+HEIGHT-.5*TILE,objCamStop,false,true);
+            colU = collision_line(x+.5*TILE,y-TILE,x+WIDTH-.5*TILE,y-TILE,objCamStop,false,true);
+            colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
+            */            
             
             if (objPlayer.cx &gt; x+WIDTH/2 &amp;&amp; !colR) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
             if (objPlayer.cx &lt; x+WIDTH/2 &amp;&amp; !colL) x = clamp(objPlayer.cx-WIDTH/2,0,room_width-WIDTH);
@@ -123,7 +130,8 @@ if (instance_exists(objPlayer))
         switch (dir)
         {
             case LEFT:
-                objPlayer.x -= 1*TILE/(WIDTH+TILE)*spd;
+                objPlayer.x -= 1.5*TILE/(WIDTH+TILE)*spd;
+                objPlayer.yVel = 0;                
                 x -= spd;
                 if (x &lt; xo - WIDTH-TILE)
                 {
@@ -132,7 +140,8 @@ if (instance_exists(objPlayer))
                 }
             break;
             case RIGHT:
-                objPlayer.x += 1*TILE/(WIDTH+TILE)*spd;
+                objPlayer.x += 1.5*TILE/(WIDTH+TILE)*spd;
+                objPlayer.yVel = 0;
                 x += spd;
                 if (x &gt; xo + WIDTH+TILE)
                 {
@@ -191,6 +200,8 @@ if (instance_exists(objPlayer))
 draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a-w),b);
 draw_background_part(sprBg,0,0*h,w,h,view_xview[0]-floor(a),b);
 
+draw_set_color(c_red);
+draw_rectangle(xo,yo,xo+TILE,yo+TILE,1);
 </string>
           </argument>
         </arguments>
