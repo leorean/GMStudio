@@ -31,6 +31,7 @@ surf = -1;
 aspect_x = 1;
 aspect_y = 1;
 
+global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 
 global.state = G_START;
 
@@ -87,6 +88,13 @@ instance_deactivate_object(objStatic);
 instance_deactivate_object(objCamStop);
 
 instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+2*off,true);
+
+//kill temporary instances
+if (global.state == G_CAMMOVE)
+{
+    with(objProjectile)
+        instance_destroy();
+}
 
 //instance_deactivate_object(objLiving);
 //instance_activate_region(view_xview[0],view_yview[0],WIDTH,HEIGHT,true);
@@ -263,6 +271,7 @@ else
             <string>//++++DRAW HUD++++
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
+draw_set_font(global.fntDefault);
 
 var vx = view_xview[0];
 var vy = view_yview[0];
@@ -280,8 +289,16 @@ if (fade &gt; 0)
     draw_rectangle(vx,vy,vx+WIDTH,vy+HEIGHT,0);
 
 }
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_set_alpha(1);
+
+//draw paused
+if (global.state == G_PAUSED)
+{
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);
+    draw_text(vx+WIDTH/2,vy+HEIGHT/2,"-paused-");
+}
 
 //player hp
 if (instance_exists(objPlayer))
@@ -297,6 +314,8 @@ if (instance_exists(objPlayer))
 }
 
 //fps
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
 draw_text(vx,vy+HEIGHT-TILE,fps);
 </string>
           </argument>

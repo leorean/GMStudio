@@ -3,7 +3,7 @@
   <spriteName>mskDPad</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-101</depth>
+  <depth>-99</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -67,78 +67,81 @@ offx = -100; offy = -100;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>for (var i = 0; i &lt; 5; i++)
-    if(in(device_mouse_x_to_gui(i),0,0+WIDTH/2))//if (in(device_mouse_x(i),bbox_left,bbox_right)&amp;&amp;in(device_mouse_y(i),bbox_top,bbox_bottom))
-        if(device_mouse_check_button(i,mb_left))
-        {
-            dev = i;
-        }
-    
-if (!device_mouse_check_button(dev,mb_left))
-    dev = -1;
-
-kLeft = false;
-kRight = false;
-kUp = false;
-kDown = false;
-
-    
-if (dev&gt;-1)
+            <string>if (global.state == G_PLAY)
 {
-    if (offx == -100 &amp;&amp; offy == -100)
+    
+    for (var i = 0; i &lt; 5; i++)
+        if(in(device_mouse_x_to_gui(i),0,0+WIDTH/2))//if (in(device_mouse_x(i),bbox_left,bbox_right)&amp;&amp;in(device_mouse_y(i),bbox_top,bbox_bottom))
+            if(device_mouse_check_button(i,mb_left))
+            {
+                dev = i;
+            }
+        
+    if (!device_mouse_check_button(dev,mb_left))
+        dev = -1;
+    
+    kLeft = false;
+    kRight = false;
+    kUp = false;
+    kDown = false;
+    
+        
+    if (dev&gt;-1)
     {
-        offx = device_mouse_x_to_gui(dev);//+view_xview[0];
-        offy = device_mouse_y_to_gui(dev);//+view_yview[0];
+        if (offx == -100 &amp;&amp; offy == -100)
+        {
+            offx = device_mouse_x_to_gui(dev);//+view_xview[0];
+            offy = device_mouse_y_to_gui(dev);//+view_yview[0];
+        }
+        
+        //cx = device_mouse_x_to_gui(dev)+view_xview[0] + offx;
+        //cy = device_mouse_y_to_gui(dev)+view_yview[0] + offy;
+        
+        var angle = point_direction(offx,offy,device_mouse_x_to_gui(dev),device_mouse_y_to_gui(dev));
+        var rad_angle = ((angle / 180) * pi);
+            
+        sx = x + (cos(rad_angle)) * min(abs(offx-device_mouse_x_to_gui(dev)),radius);
+        sy = y -(sin(rad_angle)) * min(abs(offy-device_mouse_y_to_gui(dev)),radius);
+        
+        if (in(angle,315,360) || in(angle,0,45))
+            kRight = true;
+            
+        if (in(angle,45,135))
+            kUp = true;
+            
+        if (in(angle,135,225))
+            kLeft = true;
+            
+        if (in(angle,225,315))
+            kDown = true;
+    
+        //diagonal
+            //if (in(angle,30,60) || in(angle,120,150) || in(angle,210,240) || in(angle,300,330))
+        //    diag = true;
+        if (in(angle,30,60))
+            {kRight = true;kUp = true}
+        if (in(angle,120,150))
+            {kLeft = true;kUp = true}
+        if (in(angle,210,240))
+            {kLeft = true;kDown = true}
+        if (in(angle,300,330))
+            {kRight = true;kDown = true}
+    
+        
+    } else
+    {
+        offx = -100;
+        offy = -100;
+        sx = x;
+        sy = y;
+    //    sx -= (sx - cx) / 4;
+    //    sy -= (sy - cy) / 4;
     }
     
-    //cx = device_mouse_x_to_gui(dev)+view_xview[0] + offx;
-    //cy = device_mouse_y_to_gui(dev)+view_yview[0] + offy;
-    
-    var angle = point_direction(offx,offy,device_mouse_x_to_gui(dev),device_mouse_y_to_gui(dev));
-    var rad_angle = ((angle / 180) * pi);
-        
-    sx = x + (cos(rad_angle)) * min(abs(offx-device_mouse_x_to_gui(dev)),radius);
-    sy = y -(sin(rad_angle)) * min(abs(offy-device_mouse_y_to_gui(dev)),radius);
-    
-    if (in(angle,315,360) || in(angle,0,45))
-        kRight = true;
-        
-    if (in(angle,45,135))
-        kUp = true;
-        
-    if (in(angle,135,225))
-        kLeft = true;
-        
-    if (in(angle,225,315))
-        kDown = true;
+    forceX = min(abs(x - sx) / (radius-.5*TILE),1);
+    forceY = min(abs(y - sy) / (radius-.5*TILE),1);
 
-    //diagonal
-        //if (in(angle,30,60) || in(angle,120,150) || in(angle,210,240) || in(angle,300,330))
-    //    diag = true;
-    if (in(angle,30,60))
-        {kRight = true;kUp = true}
-    if (in(angle,120,150))
-        {kLeft = true;kUp = true}
-    if (in(angle,210,240))
-        {kLeft = true;kDown = true}
-    if (in(angle,300,330))
-        {kRight = true;kDown = true}
-
-    
-} else
-{
-    offx = -100;
-    offy = -100;
-    sx = x;
-    sy = y;
-//    sx -= (sx - cx) / 4;
-//    sy -= (sy - cy) / 4;
 }
-
-forceX = min(abs(x - sx) / (radius-.5*TILE),1);
-forceY = min(abs(y - sy) / (radius-.5*TILE),1);
-
-
 </string>
           </argument>
         </arguments>

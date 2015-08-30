@@ -77,6 +77,7 @@
       <sprite>sprites\mskCamStop</sprite>
       <sprite>sprites\mskHole</sprite>
     </sprites>
+    <sprite>sprites\sprFntDefault</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -106,6 +107,7 @@
       <object>objects\objLiving</object>
       <object>objects\objStatic</object>
       <object>objects\objPlatform</object>
+      <object>objects\objProjectile</object>
     </objects>
     <object>objects\objCamStop</object>
     <object>objects\objCamera</object>

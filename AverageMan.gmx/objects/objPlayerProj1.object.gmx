@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>-20</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objProjectile</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
+dir = NONE;
 
 </string>
           </argument>
@@ -64,6 +65,29 @@ yVel = 0;
         instance_destroy();
     }
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_sprite_part_ext(sprGfx,-1,0,8*TILE,TILE,TILE,x-.5*TILE+(dir==LEFT)*TILE,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,1);
 </string>
           </argument>
         </arguments>

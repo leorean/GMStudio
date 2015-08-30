@@ -176,6 +176,7 @@ if (global.state == G_PLAY)
                 case 0:
                     var proj = instance_create(x+sign(dir)*TILE,cy,objPlayerProj1);
                     proj.xVel = sign(dir)*5;
+                    proj.dir = dir;
                     attackDelay = .5*SEC;
                 break;
             }
