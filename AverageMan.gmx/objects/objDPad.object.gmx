@@ -3,7 +3,7 @@
   <spriteName>mskDPad</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-99</depth>
+  <depth>-101</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -167,8 +167,12 @@ y = view_yview[0]+offy;
 draw_set_color(c_black);
 draw_set_alpha(1);
 
-draw_sprite(mskDPad,-1,x,y);
-draw_circle(sx,sy,TILE,1);
+//draw_sprite(mskDPad,-1,x,y);
+//draw_circle(sx,sy,TILE,1);
+
+draw_sprite_part_ext(sprGfx,-1,0,0,5*TILE,5*TILE,x-2.5*TILE,y-2.5*TILE,1,1,c_white,.75);
+draw_sprite_part_ext(sprGfx,-1,5*TILE,3*TILE,2*TILE,2*TILE,sx-1*TILE,sy-1*TILE,1,1,c_white,1);
+
 
 //draw_circle(device_mouse_x_to_gui(0)+view_xview[0],device_mouse_y_to_gui(0)+view_yview[0],TILE,1);
 </string>

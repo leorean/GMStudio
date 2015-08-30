@@ -71,6 +71,8 @@ if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_backspace))
 
 if (keyboard_check_pressed(ord('R')))
     room_restart();
+if (keyboard_check_pressed(ord('K')))
+    objPlayer.hp = 0;
     
 if (keyboard_check_pressed(ord('P')))
     if (global.state == G_PLAY)
@@ -141,16 +143,25 @@ if (surface_exists(surf))
           <argument>
             <kind>1</kind>
             <string>if (!instance_exists(global.btnAttack))
+{
     global.btnAttack = instance_create(WIDTH-6*TILE,HEIGHT-3*TILE,objButton);
+    global.btnAttack.type = 0;
+}
 if (!instance_exists(global.btnJump))
+{
     global.btnJump = instance_create(WIDTH-3*TILE,HEIGHT-4*TILE,objButton);
+    global.btnJump.type = 1;
+}
 if (!instance_exists(global.dPad))
     global.dPad = instance_create(-100,-100,objDPad);
 
 window_set_size(2*WIDTH,2*HEIGHT);
+fade = 1.5; //alpha for black fadeout/fadein
 
 global.timer = 0;
 global.state = G_START;
+
+global.attackType = 0; //player type
 
 createRoom(l0Data);
 
@@ -249,12 +260,44 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_black);
-draw_set_alpha(1);
+            <string>//++++DRAW HUD++++
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 
-draw_text(view_xview[0],view_yview[0]+HEIGHT-TILE,fps);
+var vx = view_xview[0];
+var vy = view_yview[0];
+
+//++++draw fade effect++++
+if (global.state == G_GAMEOVER)
+    fade = min(fade + .02,1);
+else
+    fade = max(fade - .02,-1.5);
+
+if (fade &gt; 0)
+{
+    draw_set_color(c_black);
+    draw_set_alpha(fade);
+    draw_rectangle(vx,vy,vx+WIDTH,vy+HEIGHT,0);
+
+}
+draw_set_color(c_black);
+draw_set_alpha(1);
+
+//player hp
+if (instance_exists(objPlayer))
+{
+    var hp = objPlayer.hp/objPlayer.maxHp;
+    draw_sprite_part(sprGfx,-1,0,5*TILE,TILE,3*TILE,vx+TILE,vy+TILE);
+    draw_sprite_part(sprGfx,-1,TILE,5*TILE+(1-hp)*3*TILE,TILE,3*TILE*hp,vx+TILE,vy+3*TILE*(1-hp)+TILE);
+    if (in(objPlayer.invincible,objPlayer.maxInvincible*.5,objPlayer.maxInvincible) &amp;&amp; ((objPlayer.invincible % 4) == 0))
+    {
+        draw_sprite_part(sprGfx,-1,2*TILE,5*TILE,TILE,3*TILE,vx+TILE,vy+TILE);
+    }
+    
+}
+
+//fps
+draw_text(vx,vy+HEIGHT-TILE,fps);
 </string>
           </argument>
         </arguments>

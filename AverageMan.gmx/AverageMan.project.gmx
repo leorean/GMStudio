@@ -59,22 +59,24 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprite>sprites\sprGfx</sprite>
+    <sprite>sprites\sprEffects</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprites name="masks">
+      <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskEnemy</sprite>
       <sprite>sprites\mskSolid</sprite>
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskLadder</sprite>
       <sprite>sprites\mskButton</sprite>
       <sprite>sprites\mskDPad</sprite>
+      <sprite>sprites\mskProjSmall</sprite>
+      <sprite>sprites\mskDoor</sprite>
+      <sprite>sprites\mskControl</sprite>
+      <sprite>sprites\mskPlatform</sprite>
       <sprite>sprites\mskCamStop</sprite>
+      <sprite>sprites\mskHole</sprite>
     </sprites>
-    <sprite>sprites\mskHole</sprite>
-    <sprite>sprites\mskCamera</sprite>
-    <sprite>sprites\sprEffects</sprite>
-    <sprite>sprites\mskPlatform</sprite>
-    <sprite>sprites\mskDoor</sprite>
-    <sprite>sprites\mskControl</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -86,7 +88,9 @@
     <script>scripts\createRoom.gml</script>
     <script>scripts\addTile.gml</script>
     <script>scripts\importLevel.gml</script>
-    <script>scripts\effectDead.gml</script>
+    <scripts name="effects">
+      <script>scripts\effectDead.gml</script>
+    </scripts>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -108,6 +112,7 @@
     <object>objects\objHole</object>
     <object>objects\objEffect</object>
     <object>objects\objDoor</object>
+    <object>objects\objPlayerProj1</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\LEVEL</room>

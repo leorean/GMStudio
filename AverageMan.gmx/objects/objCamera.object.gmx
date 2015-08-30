@@ -85,7 +85,7 @@ if (instance_exists(objPlayer))
         if (global.state == G_PLAY)
         {
             colR = collision_line(x+WIDTH,y+.5*TILE,x+WIDTH,y+HEIGHT-.5*TILE,objCamStop,false,true);
-            colL = collision_line(x-1,y+.5*TILE,x-1,y+HEIGHT-.5*TILE,objCamStop,false,true);
+            colL = collision_line(x-2,y+.5*TILE,x-2,y+HEIGHT-.5*TILE,objCamStop,false,true);
             colU = collision_line(x+.5*TILE,y-TILE,x+WIDTH-.5*TILE,y-TILE,objCamStop,false,true);
             colD = collision_line(x+.5*TILE,y+HEIGHT,x+WIDTH-.5*TILE,y+HEIGHT,objCamStop,false,true);
 
@@ -150,7 +150,7 @@ if (instance_exists(objPlayer))
                 }
             break;
             case UP:
-                objPlayer.y = floor(objPlayer.y-.5*TILE/(HEIGHT+TILE)*spd);
+                objPlayer.y = objPlayer.y-1*TILE/(HEIGHT+TILE)*spd;
                 y -= spd;
                 if (y &lt; yo -HEIGHT-TILE)
                 {
@@ -159,7 +159,7 @@ if (instance_exists(objPlayer))
                 }
             break;
             case DOWN:
-                objPlayer.y = floor(objPlayer.y+.5*TILE/(HEIGHT+TILE)*spd);
+                objPlayer.y = objPlayer.y+1*TILE/(HEIGHT+TILE)*spd;
                 y += spd;
                 if (y &gt; yo + HEIGHT+TILE)
                 {
