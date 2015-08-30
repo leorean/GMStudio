@@ -48,6 +48,9 @@ onGround = false;
 onLadder = false;
 attacking = false;
 attackDelay = 0; //cooldown to shoot
+hasAttacked = false;
+charge = 0;
+maxCharge = .5*SEC;
 jumped = false;
 jumpDist = false;
 
@@ -109,6 +112,7 @@ if (global.state == G_PLAY)
     var kJumpPressed = keyboard_check_pressed(ord('A')) || (instance_exists(global.btnJump)&amp;&amp; global.btnJump.pressed);
     var kAttack = keyboard_check(ord('S')) || (instance_exists(global.btnAttack)&amp;&amp; global.btnAttack.pressing);
     var kAttackPressed = keyboard_check_pressed(ord('S')) || (instance_exists(global.btnAttack)&amp;&amp; global.btnAttack.pressed);
+    var kAttackReleased = keyboard_check_released(ord('S')) || (instance_exists(global.btnAttack)&amp;&amp; global.btnAttack.released);
     
     var spd = 2;
     if (os_type == os_android) spd = 2*objDPad.forceX;
@@ -158,33 +162,63 @@ if (global.state == G_PLAY)
     }
     
     invincible = max(invincible - 1, 0);
-    if (invincible &gt; .5*maxInvincible)
+    if (invincible &gt; .5*maxInvincible || state == DEAD)
     {
         kLeft = false; kRight = false; kUp = false; kDown = false; kJump = false; kAttack = false;
-        kJumpPressed = false; kAttackPressed = false;
+        kJumpPressed = false; kAttackPressed = false; kAttackReleased = false;
     }
     
     
     if (!onLadder &amp;&amp; !onPlatform)
         yVel += yGrav;
     
+    //++++ATTACK ROUTINE++++
     attackDelay = max(attackDelay-1,0);
+    attacking = max(attacking-1,0);
+    /*if (attackDelay || kAttack) attacking = true;
+    else
+        attacking = false;*/
+    
     if (kAttack)
     {
-        attacking = true;
-        if (!attackDelay)
+        
+        charge = min(charge+1,maxCharge);
+        if (!attackDelay &amp;&amp; !hasAttacked)
+            switch (global.attackType) //NORMAL SHOTS
+            {
+                case 0:
+                    var proj = instance_create(x+sign(dir)*TILE,cy,objPlayerProj1);
+                    proj.xVel = sign(dir)*5;
+                    proj.dir = dir;
+                    proj.dmg = 3;
+                    proj.type = 0;
+                    attackDelay = 10;
+                break;
+            }
+        attacking = attackDelay + 10;
+        hasAttacked = true;
+    }
+    
+    if (kAttackReleased)
+    {
+        if (charge == maxCharge) //CHARGED SHOTS
+        {
             switch (global.attackType)
             {
                 case 0:
                     var proj = instance_create(x+sign(dir)*TILE,cy,objPlayerProj1);
                     proj.xVel = sign(dir)*5;
                     proj.dir = dir;
-                    attackDelay = .5*SEC;
+                    proj.dmg = 12;
+                    proj.type = 1;
+                    attackDelay = 10;
                 break;
             }
+        }
+        charge = 0;
+        hasAttacked = false;
     }
-    else
-        attacking = false;
+    //++++
     
     if (kLeft) {dir = LEFT; xVel = -spd}
     if (kRight) {dir = RIGHT; xVel = spd}
@@ -354,8 +388,20 @@ else
 
 //draw_self();
 if (invincible % 3 == 0 &amp;&amp; state != DEAD)
-    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*attacking*2*TILE,row*2*TILE,2*TILE,2*TILE,
+{
+    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*(attacking&gt;0)*2*TILE,row*2*TILE,2*TILE,2*TILE,
     floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
+    
+    //charge effect
+    if (charge == maxCharge &amp;&amp; global.timer % 4 == 0)
+    {
+        draw_set_blend_mode(bm_add);
+        draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*(attacking&gt;0)*2*TILE,row*2*TILE,2*TILE,2*TILE,
+        floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
+        draw_set_blend_mode(bm_normal);
+        
+    }
+}
 </string>
           </argument>
         </arguments>

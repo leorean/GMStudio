@@ -103,6 +103,10 @@ if (global.state == G_CAMMOVE)
 
 
 //++++
+if (global.state &gt; G_PAUSED)
+{
+    global.timer = (global.timer+1) % INF;
+}
 </string>
           </argument>
         </arguments>

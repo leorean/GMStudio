@@ -174,7 +174,8 @@ draw_set_alpha(1);
 //draw_circle(sx,sy,TILE,1);
 
 draw_sprite_part_ext(sprGfx,-1,0,0,5*TILE,5*TILE,x-2.5*TILE,y-2.5*TILE,1,1,c_white,.75);
-draw_sprite_part_ext(sprGfx,-1,5*TILE,3*TILE,2*TILE,2*TILE,sx-1*TILE,sy-1*TILE,1,1,c_white,1);
+if (global.state != G_CAMMOVE)
+    draw_sprite_part_ext(sprGfx,-1,5*TILE,3*TILE,2*TILE,2*TILE,sx-1*TILE,sy-1*TILE,1,1,c_white,1);
 
 
 //draw_circle(device_mouse_x_to_gui(0)+view_xview[0],device_mouse_y_to_gui(0)+view_yview[0],TILE,1);

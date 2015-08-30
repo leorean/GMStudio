@@ -28,7 +28,7 @@
             <string>xVel = 0;
 yVel = 0;
 dir = NONE;
-
+type = 0;
 </string>
           </argument>
         </arguments>
@@ -87,7 +87,17 @@ dir = NONE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part_ext(sprGfx,-1,0,8*TILE,TILE,TILE,x-.5*TILE+(dir==LEFT)*TILE,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,1);
+            <string>if (type == 1)
+{
+    var i = 0;
+    repeat(3)
+    {
+        draw_sprite_part_ext(sprGfx,-1,type*TILE,8*TILE,TILE,TILE,x-.5*TILE+(dir==LEFT)*TILE-sign(dir)*i*4,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,.3);
+        i++;
+    }
+}
+draw_sprite_part_ext(sprGfx,-1,type*TILE,8*TILE,TILE,TILE,x-.5*TILE+(dir==LEFT)*TILE,y-.5*TILE,-1+2*(dir==RIGHT),1,c_white,1);
+
 </string>
           </argument>
         </arguments>

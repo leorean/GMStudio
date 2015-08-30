@@ -119,7 +119,8 @@
   <rooms name="rooms">
     <room>rooms\LEVEL</room>
   </rooms>
-  <constants number="23">
+  <constants number="24">
+    <constant name="INF">90000000</constant>
     <constant name="WIDTH">400</constant>
     <constant name="HEIGHT">240</constant>
     <constant name="TILE">16</constant>
