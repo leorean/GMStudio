@@ -108,6 +108,7 @@ if (global.state == G_PLAY)
     var kJump = keyboard_check(ord('A')) || (instance_exists(global.btnJump)&amp;&amp; global.btnJump.pressing);
     var kJumpPressed = keyboard_check_pressed(ord('A')) || (instance_exists(global.btnJump)&amp;&amp; global.btnJump.pressed);
     var kAttack = keyboard_check(ord('S')) || (instance_exists(global.btnAttack)&amp;&amp; global.btnAttack.pressing);
+    var kAttackPressed = keyboard_check_pressed(ord('S')) || (instance_exists(global.btnAttack)&amp;&amp; global.btnAttack.pressed);
     
     var spd = 2;
     if (os_type == os_android) spd = 2*objDPad.forceX;
@@ -160,6 +161,7 @@ if (global.state == G_PLAY)
     if (invincible &gt; .5*maxInvincible)
     {
         kLeft = false; kRight = false; kUp = false; kDown = false; kJump = false; kAttack = false;
+        kJumpPressed = false; kAttackPressed = false;
     }
     
     
