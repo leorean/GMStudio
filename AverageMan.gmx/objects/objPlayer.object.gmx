@@ -188,7 +188,7 @@ if (global.state == G_PLAY)
             {
                 case 0:
                     var proj = instance_create(x+sign(dir)*TILE,cy,objPlayerProj1);
-                    proj.xVel = sign(dir)*5;
+                    proj.xVel = sign(dir)*4;
                     proj.dir = dir;
                     proj.dmg = 3;
                     proj.type = 0;
@@ -207,7 +207,7 @@ if (global.state == G_PLAY)
             {
                 case 0:
                     var proj = instance_create(x+sign(dir)*TILE,cy,objPlayerProj1);
-                    proj.xVel = sign(dir)*5;
+                    proj.xVel = sign(dir)*3;
                     proj.dir = dir;
                     proj.dmg = 12;
                     proj.type = 1;
@@ -344,7 +344,8 @@ if (global.state == G_GAMEOVER)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frame = floor(fCur);
+            <string>draw_set_alpha(1);
+frame = floor(fCur);
 
 switch (state)
 {
@@ -387,20 +388,29 @@ else
     drawy = y;
 
 //draw_self();
-if (invincible % 3 == 0 &amp;&amp; state != DEAD)
+if (state != DEAD)
 {
-    draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*(attacking&gt;0)*2*TILE,row*2*TILE,2*TILE,2*TILE,
-    floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
-    
-    //charge effect
-    if (charge == maxCharge &amp;&amp; global.timer % 4 == 0)
+    if (invincible &gt; .5*maxInvincible)
     {
-        draw_set_blend_mode(bm_add);
+    //draw_sprite_part_ext(sprGfx,-1,3*TILE,5*TILE,2*TILE,2*TILE,cx-TILE,cy-TILE,1,1,c_white,.5);
+    
+    }
+    if ((invincible % 6) &lt; 3)
+    {
         draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*(attacking&gt;0)*2*TILE,row*2*TILE,2*TILE,2*TILE,
         floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
-        draw_set_blend_mode(bm_normal);
         
-    }
+        //charge effect
+        if (charge == maxCharge &amp;&amp; (global.timer % 4 == 0))
+        {
+            draw_set_blend_mode(bm_add);
+            draw_sprite_part_ext(sprPlayer,-1,frame*2*TILE+fMax*(attacking&gt;0)*2*TILE,row*2*TILE,2*TILE,2*TILE,
+            floor(x)-TILE+2*TILE*(dir == LEFT),floor(drawy),sign(dir),1,c_white,1);
+            draw_set_blend_mode(bm_normal);
+            
+        }
+    } else if (invincible &gt; .5*maxInvincible)
+        draw_sprite_part_ext(sprGfx,-1,3*TILE,5*TILE,2*TILE,2*TILE,cx-TILE,cy-TILE,1,1,c_white,1);
 }
 </string>
           </argument>
