@@ -92,6 +92,7 @@
     <scripts name="effects">
       <script>scripts\effectDead.gml</script>
     </scripts>
+    <script>scripts\findMode.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
