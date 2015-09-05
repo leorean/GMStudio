@@ -302,7 +302,9 @@ if (global.state == G_PLAY)
     statePrev = state;
     
     //++++death++++
-    if (hp &lt;= 0 || collision_point(x,bbox_top,objHole,false,true))
+    if (collision_point(x,bbox_top,objHole,false,true)) hp = 0;
+    
+    if (hp &lt;= 0)
     {
         state = DEAD;
         effectDead(x,y+TILE);

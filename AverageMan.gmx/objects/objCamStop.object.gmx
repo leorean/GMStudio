@@ -65,11 +65,11 @@
         }
 
     var res = findMode(n);
-    var ww = tile_get_width(res);
-    var hh = tile_get_height(res);
+    //var ww = tile_get_width(res);
+    //var hh = tile_get_height(res);
     var ll = tile_get_left(res);
     var tt = tile_get_top(res);
-    tile_add(sprTiles, ll, tt, ww, hh, x, y, LAYER_FG);
+    tile_add(sprTiles, ll, tt, TILE, TILE, x, y, LAYER_FG);
     //addTile(findMode(n),x,y,LAYER_FG);
     checked = true;
 }
