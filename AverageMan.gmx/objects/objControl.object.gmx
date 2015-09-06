@@ -161,12 +161,12 @@ if (surface_exists(surf))
             <kind>1</kind>
             <string>if (!instance_exists(global.btnAttack))
 {
-    global.btnAttack = instance_create(WIDTH-6*TILE,HEIGHT-3*TILE,objButton);
+    global.btnAttack = instance_create(WIDTH-5*TILE,HEIGHT-3*TILE,objButton);
     global.btnAttack.type = 0;
 }
 if (!instance_exists(global.btnJump))
 {
-    global.btnJump = instance_create(WIDTH-3*TILE,HEIGHT-4*TILE,objButton);
+    global.btnJump = instance_create(WIDTH-2*TILE,HEIGHT-4*TILE,objButton);
     global.btnJump.type = 1;
 }
 if (!instance_exists(global.dPad))
