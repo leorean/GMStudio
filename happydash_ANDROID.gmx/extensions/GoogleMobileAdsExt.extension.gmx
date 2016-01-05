@@ -17,6 +17,7 @@
   <androidsourcedir></androidsourcedir>
   <macsourcedir></macsourcedir>
   <maclinkerflags></maclinkerflags>
+  <maccompilerflags></maccompilerflags>
   <androidinject> &lt;meta-data android:name="com.google.android.gms.version"
                android:value="4242000" /&gt;
 &lt;activity android:name="com.google.android.gms.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" /&gt;</androidinject>
