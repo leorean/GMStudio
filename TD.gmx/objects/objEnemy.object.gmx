@@ -42,8 +42,7 @@ row = 0;
 
 //++++
 
-next = noone;
-prev = noone;
+ground = noone;
 </string>
           </argument>
         </arguments>
@@ -70,33 +69,86 @@ prev = noone;
 {
     cx = x+.5*TILE;
     cy = y+.5*TILE;
-    if (next == noone) //find start
+
+    if (ground == noone)
+    {        
+        ground = instance_place(x,y,objPath);
+        
+        if (ground != noone)
+        {
+            if (abs(cx-ground.cx)&gt;abs(cy-ground.cy))
+            {
+                if (cx &lt; ground.cx)
+                    dir = RIGHT;
+                else
+                    dir = LEFT;
+            } else
+            {
+                if (cy &lt; ground.cy)
+                    dir = DOWN;
+                else
+                    dir = UP;
+            }            
+        }
+    } else
     {
-        var l = instance_place(cx-TILE,cy,objPath);
-        var r = instance_place(cx+TILE,cy,objPath);
-        var u = instance_place(cx,cy-TILE,objPath);
-        var d = instance_place(cx,cy+TILE,objPath);
         
-        var choice;
+    }
+    
+    switch (dir)
+    {
+        case LEFT:
+        case RIGHT:
+            x += sign(dir)*vel;
+        break;
+        case UP:
+        case DOWN:
+            y += sign(dir)*vel;
+        break;
+    }
+    
+    /*
+    if (walked == 0)
+    {
+        var nbr = getNeighbours(self);
+        var tmpmin = 9999;
+        var choice, tmpchoice;
+        choice[0] = noone;
+        var numchoice = 0;
         
-        choice[0] = l;
-        choice[1] = r;
-        choice[2] = u;
-        choice[3] = d;
-        
+        for (var i = 0; i &lt; array_length_1d(nbr); i++)
+        {
+            if (nbr[i].dist &lt; tmpmin)
+            {
+                tmpmin = nbr[i].dist;
+                tmpchoice = nbr[i];
+            }
+        }
+                
         while (next == noone)
-            next = choice[irandom(3)];
+            next = tmpchoice;//choice[floor(random(numchoice))];
         
-        if (next == l) dir = LEFT;
-        if (next == r) dir = RIGHT;
-        if (next == u) dir = UP;
-        if (next == d) dir = DOWN;
-     
+        var nextAng = point_direction(cx,cy,next.cx,next.cy)+360;
+            
+        if (in(nextAng,45+0*90+360,45+1*90+360))
+            dir = UP;
+        if (in(nextAng,45+1*90+360,45+2*90+360))
+            dir = LEFT;
+        if (in(nextAng,45+2*90+360,45+3*90+360))
+            dir = DOWN;
+        if (in(nextAng,45-1*90+360,45+0*90+360))
+            dir = RIGHT;
+            
         prev = next;
+        walked = TILE;
         
     } else //walk in direction
     {
     
+        walked = max(walked - vel, 0);
+    
+        next = instance_place(x,y,objPath);
+        
         if (dir == LEFT || dir == RIGHT)
             y = (cy div TILE) * TILE;
         if (dir == UP || dir == DOWN)
@@ -106,22 +158,22 @@ prev = noone;
         {
         case LEFT:
             x -= vel;
-            next = instance_place(x-TILE-vel,y,objPath);
+            //next = instance_place(x-TILE-vel,y,objPath);
         break;
         case RIGHT:
             x += vel;
-            next = instance_place(x+TILE+vel,y,objPath);
+            //next = instance_place(x+TILE+vel,y,objPath);
         break;
         case UP:
             y -= vel;
-            next = instance_place(x,y-TILE-vel,objPath);
+            //next = instance_place(x,y-TILE-vel,objPath);
         break;
         case DOWN:
             y += vel;
-            next = instance_place(x,y+TILE+vel,objPath);
+            //next = instance_place(x,y+TILE+vel,objPath);
         break;
         }
-    }
+    }*/
     
     if (place_meeting(x,y,objGoal))
     {

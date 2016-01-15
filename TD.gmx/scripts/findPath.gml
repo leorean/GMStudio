@@ -1,32 +1,33 @@
 if (argument0 == noone)
     exit;
 
-var list = ds_list_create();
-var visited = ds_list_create();
+var list = ds_queue_create();
 
-with(objPath) dist = 0;
+with(objPath) { dist = 0; visited = false; }
 
-ds_list_add(list,argument0);
+ds_queue_enqueue(list,argument0);
+argument0.visited = true;
 
-while (ds_list_size(list) > 0)
+while (ds_queue_size(list) > 0)
 {
-    var cur = ds_list_find_value(list,0);
+    var cur = ds_queue_dequeue(list);
     var neighbours = getNeighbours(cur);
-    ds_list_delete(list,0);
-    
+
     for (var i = 0; i < array_length_1d(neighbours); i++)
     {
         var next = neighbours[i];
-        if (ds_list_find_index(visited,next) == -1)
+        if (!next.visited)
         {
-            ds_list_add(list,next);
+            ds_queue_enqueue(list,next);
             next.dist = 1 + cur.dist;
-            ds_list_add(visited,cur);
+            next.visited = true;
         }
     }
+    show_debug_message("size: "+string(ds_queue_size(list)));
 }
 
-ds_list_destroy(list);
-ds_list_destroy(visited);
+show_debug_message("------------");
+ds_queue_destroy(list);
+
 
 

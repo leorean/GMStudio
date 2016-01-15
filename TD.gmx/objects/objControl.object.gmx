@@ -95,22 +95,24 @@ if (global.state &gt; G_PAUSED)
     global.timer = (global.timer+1) % INF;
 }
 
-if (mouse_check_button(mb_left))
+if (mouse_check_button(mb_right))
 {
     var tgt = collision_point(mouse_x,mouse_y,objPath,false,true);
     if (tgt != noone)
     {
-        findPath(tgt);
+        findPath(global.goal);
         with(tgt) instance_destroy();        
     }
 }
-if (mouse_check_button(mb_right) &amp;&amp; !instance_place(cursor_x,cursor_y, objPath))
+if (mouse_check_button(mb_left) &amp;&amp; !instance_place(cursor_x,cursor_y, objPath))
 {
     var newPth = instance_create(cursor_x,cursor_y,objPath);
+    findPath(global.goal);
+
 }
-if (mouse_check_button_released(mb_right))
+if (mouse_check_button_released(mb_left))
 {
-    findPath(instance_place(cursor_x,cursor_y, objPath));
+    //findPath(global.goal);
 }
 //++++enemy spawning++++
 
@@ -118,7 +120,8 @@ if (global.state == G_PLAY)
 {
     if (delay == 0)
     {
-        instance_create(global.spawn.x,global.spawn.y,objEnemy);
+        var r = floor(random(array_length_1d(global.spawn)));
+        instance_create(global.spawn[r].x,global.spawn[r].y,objEnemy);
         delay = 2*SEC;
     } else
         delay = max(delay-1,0);

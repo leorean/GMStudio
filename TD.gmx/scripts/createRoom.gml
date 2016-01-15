@@ -6,6 +6,8 @@ var fg = 0;
 var bg = 0;
 var obj = 0;
 
+var numspawn=0;
+
 if (room_width!=w*TILE || room_height!=h*TILE)
 {
     room_set_width(room,w*TILE);
@@ -30,7 +32,8 @@ for (var i = 0; i<w; i ++)
         switch (obj)
         {
             case 0: //spawn
-                global.spawn = instance_create(i*TILE,j*TILE,objSpawn);
+                global.spawn[numspawn] = instance_create(i*TILE,j*TILE,objSpawn);
+                numspawn++;
             break;
             case 1: //goal
                 global.goal = instance_create(i*TILE,j*TILE,objGoal);

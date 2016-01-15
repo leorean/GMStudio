@@ -26,6 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>dist = 0;
+visited = false;
+cx = x+.5*TILE;
+cy = y+.5*TILE;
 </string>
           </argument>
         </arguments>
