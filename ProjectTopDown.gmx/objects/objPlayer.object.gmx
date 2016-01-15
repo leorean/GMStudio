@@ -122,12 +122,12 @@ if (global.state == G_PLAY)
     var kBPressed = keyboard_check_pressed(ord('S')) || (instance_exists(global.btnB)&amp;&amp; global.btnB.pressed);
     //var kBReleased = keyboard_check_released(ord('S')) || (instance_exists(global.btnB)&amp;&amp; global.btnB.released);
     
-    var spd = 2;
+    var spd = 1.5;
     var spdX = spd; var spdY = spd;
-    if (os_type == os_android)
+    if (os_type == os_android || global.dPad.dev &gt; -1)
     {
-        spdX = 2*objDPad.forceX;
-        spdY = 2*objDPad.forceY;
+        spdX = spd*objDPad.forceX;
+        spdY = spd*objDPad.forceY;
     }
     
     //++++routine++++
@@ -195,11 +195,15 @@ if (global.state == G_PLAY)
     
     //++++move
     
-    if (kLeft) {dir = LEFT; xVel = -spdX}
-    if (kRight) {dir = RIGHT; xVel = spdX}
-    if (kUp) {dir = UP; yVel = -spdY}
-    if (kDown) {dir = DOWN; yVel = spdY}
-    
+    if (state == IDLE || state == WALK)
+    {
+        if (kLeft) {dir = LEFT; xVel = -spdX; state = WALK;}
+        if (kRight) {dir = RIGHT; xVel = spdX; state = WALK;}
+        if (kUp) {dir = UP; yVel = -spdY; state = WALK;}
+        if (kDown) {dir = DOWN; yVel = spdY; state = WALK;}
+        
+        if (state == WALK &amp;&amp; !kLeft &amp;&amp; !kRight &amp;&amp; !kUp &amp;&amp; !kDown) state = IDLE;
+    }
     if (!kLeft &amp;&amp; !kRight &amp;&amp; (invincible &lt; 30)) xVel = 0;
     if (!kUp &amp;&amp; !kDown &amp;&amp; (invincible &lt; 30)) yVel = 0;
         

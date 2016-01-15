@@ -29,6 +29,7 @@
     <script>scripts\in.gml</script>
     <script>scripts\drawCircle.gml</script>
   </scripts>
+  <shaders name="shaders"/>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objChicken</object>
