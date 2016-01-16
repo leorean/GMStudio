@@ -39,7 +39,9 @@ global.state = G_START;
 
 //++++import levels HERE++++
 map0Data = importLevel("MAP0.tmx");
-//a=1;
+
+cursor_x=0;
+cursor_y=0;
 </string>
           </argument>
         </arguments>
@@ -87,14 +89,16 @@ if (keyboard_check_pressed(ord('P')))
         global.state = G_PLAY;
 
 //++++
-var cursor_x = (mouse_x div TILE) * TILE;
-var cursor_y = (mouse_y div TILE) * TILE;
+cursor_x = (mouse_x div TILE) * TILE;
+cursor_y = (mouse_y div TILE) * TILE;
 
 if (global.state &gt; G_PAUSED)
 {
     global.timer = (global.timer+1) % INF;
 }
 
+
+/*
 if (mouse_check_button(mb_right))
 {
     var tgt = collision_point(mouse_x,mouse_y,objPath,false,true);
@@ -114,6 +118,8 @@ if (mouse_check_button_released(mb_left))
 {
     //findPath(global.goal);
 }
+*/
+
 //++++enemy spawning++++
 
 if (global.state == G_PLAY)
@@ -281,7 +287,27 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//++++DRAW HUD++++
+            <string>//++++DRAW TOWER MASKS + logic++++
+var free = !collision_rectangle(cursor_x,cursor_y,cursor_x,cursor_y,objStatic,false,true);
+if (mouse_check_button(mb_left))
+{
+    var rectcol = c_blue;
+    if (!free)
+        rectcol = c_red;
+
+    draw_set_color(rectcol);
+    draw_set_alpha(.5);
+    draw_rectangle(cursor_x,cursor_y,cursor_x+TILE,cursor_y+TILE,false);
+}
+if (mouse_check_button_released(mb_left) &amp;&amp; free)
+{
+    instance_create(cursor_x,cursor_y,objTower);
+}
+
+
+//++++DRAW HUD++++
+draw_set_color(c_white);
+draw_set_alpha(1);
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 draw_set_font(global.fntDefault);

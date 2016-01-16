@@ -61,6 +61,8 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprEnemies</sprite>
     <sprite>sprites\mskPath</sprite>
+    <sprite>sprites\sprTowers</sprite>
+    <sprite>sprites\mskTower</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -77,6 +79,7 @@
     <script>scripts\findMode.gml</script>
     <script>scripts\findPath.gml</script>
     <script>scripts\getNeighbours.gml</script>
+    <script>scripts\findEnemies.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -97,6 +100,8 @@
       <object>objects\objGoal</object>
       <object>objects\objPath</object>
     </objects>
+    <object>objects\objTower</object>
+    <object>objects\objProjectile1</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

@@ -34,9 +34,9 @@
    <tile gid="143"/>
    <tile gid="143"/>
    <tile gid="143"/>
-   <tile gid="143"/>
+   <tile gid="96"/>
    <tile gid="471"/>
-   <tile gid="143"/>
+   <tile gid="96"/>
    <tile gid="143"/>
    <tile gid="143"/>
    <tile gid="143"/>
@@ -317,8 +317,8 @@
    <tile gid="96"/>
    <tile gid="143"/>
    <tile gid="145"/>
-   <tile gid="191"/>
-   <tile gid="191"/>
+   <tile gid="193"/>
+   <tile gid="193"/>
    <tile gid="191"/>
    <tile gid="191"/>
    <tile gid="191"/>
