@@ -50,11 +50,9 @@
       <sprite>sprites\mskEnemy</sprite>
       <sprite>sprites\mskSolid</sprite>
       <sprite>sprites\mskPlayer</sprite>
-      <sprite>sprites\mskLadder</sprite>
       <sprite>sprites\mskButton</sprite>
       <sprite>sprites\mskDPad</sprite>
       <sprite>sprites\mskProjSmall</sprite>
-      <sprite>sprites\mskDoor</sprite>
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskPlatform</sprite>
       <sprite>sprites\mskTile</sprite>
@@ -66,7 +64,6 @@
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
-    <background>background\sprBg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">

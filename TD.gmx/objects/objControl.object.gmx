@@ -122,7 +122,7 @@ if (global.state == G_PLAY)
     {
         var r = floor(random(array_length_1d(global.spawn)));
         instance_create(global.spawn[r].x,global.spawn[r].y,objEnemy);
-        delay = 2*SEC;
+        delay = 1*SEC;
     } else
         delay = max(delay-1,0);
 }

@@ -51,9 +51,10 @@ cy = y+.5*TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_halign(fa_center);
+            <string>/*draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_text(x+.5*TILE,y+.5*TILE,dist);
+*/
 </string>
           </argument>
         </arguments>

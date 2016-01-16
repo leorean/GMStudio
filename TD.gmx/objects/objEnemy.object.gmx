@@ -44,6 +44,7 @@ row = 0;
 
 ground = noone;
 next = noone;
+minDist = 9999;
 </string>
           </argument>
         </arguments>
@@ -74,24 +75,24 @@ next = noone;
     if (next == noone)
     {
         nbrs = getNeighbours(self);
-        var minDist = 9999;
-        var choiceIndex = -1;
+        var choiceIndex = 0;
+        var choice;
         
         for (var i = 0; i &lt; 4; i++)
         {
-            if (nbrs[i] != noone &amp;&amp; nbrs[i].dist &lt; minDist)
+            if (nbrs[i] != noone &amp;&amp; nbrs[i].dist &lt;= minDist)
             {
                 minDist = nbrs[i].dist;
-                //choiceIndex = i;
-                next = nbrs[i];
+                choice[choiceIndex] = nbrs[i];
+                choiceIndex++;
             }
         }
+                
+        next = choice[floor(random(array_length_1d(choice)))];
+        
     }
     else
     {
-    
-        dir = RIGHT;
-    
         if (!instance_exists(next))
             next = noone;
         else
@@ -99,6 +100,11 @@ next = noone;
             x += sign(next.cx-cx)*vel;
             y += sign(next.cy-cy)*vel;
             
+            if (x!=xprevious)
+                dir = 1*sign(x-xprevious);
+            else
+                dir = 2*sign(y-yprevious);
+                
             if (abs(cx-next.cx) &lt;=1 &amp;&amp; abs(cy-next.cy) &lt;=1)
                 next = noone;
         }        
@@ -200,7 +206,7 @@ next = noone;
         }
     }*/
     
-    if (place_meeting(x,y,objGoal))
+    if (place_meeting(x,y,objGoal) || minDist == 0)
     {
         global.hp = max(global.hp-dmg,0);
         instance_destroy();
