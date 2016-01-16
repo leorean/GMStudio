@@ -83,12 +83,12 @@
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
+    <object>objects\objEnemy</object>
     <objects name="INPUT">
       <object>objects\objDPad</object>
       <object>objects\objButton</object>
     </objects>
     <objects name="hierarchy">
-      <object>objects\objEnemy</object>
       <object>objects\objSolid</object>
       <object>objects\objLiving</object>
       <object>objects\objStatic</object>

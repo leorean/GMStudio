@@ -9,12 +9,14 @@ for (var nj = -1; nj <= 1; nj++)
         if (nbr != noone)
         {
             nbrs[nk] = nbr;
-            nk++;
         }
+        else
+            nbrs[nk] = noone;
+        nk++;
     }
 }
 
-if (nk == 0) //no neighbours
-    return noone;
+//if (nk == 0) //no neighbours
+//    nbrs[0] = noone;
 
 return nbrs;

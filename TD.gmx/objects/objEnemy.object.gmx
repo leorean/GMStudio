@@ -43,6 +43,7 @@ row = 0;
 //++++
 
 ground = noone;
+next = noone;
 </string>
           </argument>
         </arguments>
@@ -70,32 +71,56 @@ ground = noone;
     cx = x+.5*TILE;
     cy = y+.5*TILE;
 
-    if (ground == noone)
-    {        
-        ground = instance_place(x,y,objPath);
-        
-        if (ground != noone)
-        {
-            if (abs(cx-ground.cx)&gt;abs(cy-ground.cy))
-            {
-                if (cx &lt; ground.cx)
-                    dir = RIGHT;
-                else
-                    dir = LEFT;
-            } else
-            {
-                if (cy &lt; ground.cy)
-                    dir = DOWN;
-                else
-                    dir = UP;
-            }            
-        }
-    } else
+    if (next == noone)
     {
+        nbrs = getNeighbours(self);
+        var minDist = 9999;
+        var choiceIndex = -1;
         
+        for (var i = 0; i &lt; 4; i++)
+        {
+            if (nbrs[i] != noone &amp;&amp; nbrs[i].dist &lt; minDist)
+            {
+                minDist = nbrs[i].dist;
+                //choiceIndex = i;
+                next = nbrs[i];
+            }
+        }
     }
+    else
+    {
     
-    switch (dir)
+        dir = RIGHT;
+    
+        if (!instance_exists(next))
+            next = noone;
+        else
+        {
+            x += sign(next.cx-cx)*vel;
+            y += sign(next.cy-cy)*vel;
+            
+            if (abs(cx-next.cx) &lt;=1 &amp;&amp; abs(cy-next.cy) &lt;=1)
+                next = noone;
+        }        
+    }
+        
+    /*switch (choiceIndex)
+    {
+        case 0:
+            dir = UP;
+        break;
+        case 1:
+            dir = LEFT;
+        break;
+        case 2:
+            dir = DOWN;
+        break;
+        case 3:
+            dir = RIGHT;
+        break;
+    }*/
+    
+    /*switch (dir)
     {
         case LEFT:
         case RIGHT:
@@ -105,7 +130,7 @@ ground = noone;
         case DOWN:
             y += sign(dir)*vel;
         break;
-    }
+    }*/
     
     /*
     if (walked == 0)

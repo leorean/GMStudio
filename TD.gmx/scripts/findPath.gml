@@ -16,6 +16,9 @@ while (ds_queue_size(list) > 0)
     for (var i = 0; i < array_length_1d(neighbours); i++)
     {
         var next = neighbours[i];
+        
+        if (next == noone) continue;
+        
         if (!next.visited)
         {
             ds_queue_enqueue(list,next);
@@ -23,10 +26,10 @@ while (ds_queue_size(list) > 0)
             next.visited = true;
         }
     }
-    show_debug_message("size: "+string(ds_queue_size(list)));
+    //show_debug_message("size: "+string(ds_queue_size(list)));
 }
 
-show_debug_message("------------");
+//show_debug_message("------------");
 ds_queue_destroy(list);
 
 

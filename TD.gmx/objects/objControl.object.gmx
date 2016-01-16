@@ -100,8 +100,8 @@ if (mouse_check_button(mb_right))
     var tgt = collision_point(mouse_x,mouse_y,objPath,false,true);
     if (tgt != noone)
     {
-        findPath(global.goal);
         with(tgt) instance_destroy();        
+        findPath(global.goal);
     }
 }
 if (mouse_check_button(mb_left) &amp;&amp; !instance_place(cursor_x,cursor_y, objPath))
