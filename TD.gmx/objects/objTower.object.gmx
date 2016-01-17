@@ -3,7 +3,7 @@
   <spriteName>mskTower</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>5</depth>
+  <depth>10</depth>
   <persistent>0</persistent>
   <parentName>objStatic</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -75,22 +75,29 @@ if (global.state == G_PLAY)
         
         if (!del)
         {
-            state = ATTACK;
-            fCur = 0;
-            del = delay;
+            var found = false;
             
+            del = 5;
+
             //todo: choose enemies, shoot, depending on type
-            
-            var enemies = findEnemies(cx,cy,2*range,multi);
+            var enemies = findEnemies(cx,cy,range,multi);
 
             for (var i = 0; i &lt; array_length_1d(enemies); i++)
             {
                 if (instance_exists(enemies[i]))
                 {
+                    found = true;
                     var proj = instance_create(cx,cy,objProjectile1);
                     proj.target = enemies[i];
                     proj.dmg = dmg;
                 }
+            }
+            
+            if (found)
+            {
+                state = ATTACK;
+                fCur = 0;
+                del = delay;
             }
         }
     }
@@ -124,6 +131,11 @@ if (state == ATTACK &amp;&amp; fCur &gt;= fMax-fSpeed-1)
     state = IDLE;
 
 draw_sprite_part(sprTowers,-1,frame*TILE+4*(state==ATTACK)*TILE+8*type*TILE,0,TILE,TILE,x,y);
+
+if (mouse_check_button(mb_left) &amp;&amp; collision_point(mouse_x,mouse_y,id,false,false))
+{
+    drawRadius(cx,cy,range,c_white);
+}
 </string>
           </argument>
         </arguments>

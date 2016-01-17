@@ -35,7 +35,7 @@ aspect_y = 1;
 
 global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 
-global.state = G_START;
+global.state = G_READY;
 
 //++++import levels HERE++++
 map0Data = importLevel("MAP0.tmx");
@@ -183,6 +183,8 @@ if (surface_exists(surf))
 global.state = G_PLAY;
 
 global.hp = 500;
+global.gold = 0;
+
 global.spawn = noone;
 global.goal = noone;
 
@@ -325,6 +327,16 @@ if (global.state == G_PAUSED)
     draw_set_valign(fa_center);
     draw_text(vx+WIDTH/2,vy+HEIGHT/2,"-paused-");
 }
+
+draw_set_halign(fa_right);
+
+//hp
+draw_sprite_part(sprGfx,-1,0,0,TILE,TILE,WIDTH-TILE,TILE);
+draw_text(WIDTH-TILE,TILE,global.hp);
+
+//gold
+draw_sprite_part(sprGfx,-1,TILE,0,TILE,TILE,WIDTH-TILE,0);
+draw_text(WIDTH-TILE,0,global.gold);
 
 //fps
 draw_set_halign(fa_left);

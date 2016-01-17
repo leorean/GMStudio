@@ -52,12 +52,21 @@ steps = 50;
             <kind>1</kind>
             <string>if (!instance_exists(target))
     instance_destroy();
+else
+{
+    steps = max(steps-1,1);
     
-steps = max(steps-1,1);
-
-x = (target.cx-x)/steps;
-y = (target.cy-y)/steps;
-
+    var angle = point_direction(x,y,target.cx,target.cy);
+    
+    x += lengthdir_x(3,angle);
+    y += lengthdir_y(3,angle);
+    
+    if (place_meeting(x,y,target))
+    {
+        target.hp = max(target.hp-dmg,0);
+        instance_destroy();
+    }
+}
 </string>
           </argument>
         </arguments>

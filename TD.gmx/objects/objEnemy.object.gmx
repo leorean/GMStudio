@@ -26,11 +26,14 @@
           <argument>
             <kind>1</kind>
             <string>dmg = 1;
-hp = 5;
-dir = NONE;
+maxHp = 5;
+hp = maxHp;
 vel = .5;
-state = WALK;
+value = 2;
 type = 0;
+
+dir = NONE;
+state = WALK;
 
 cx = x+.5*TILE;
 cy = y+.5*TILE;
@@ -112,102 +115,12 @@ minDist = 9999;
                 next = noone;
         }        
     }
-        
-    /*switch (choiceIndex)
-    {
-        case 0:
-            dir = UP;
-        break;
-        case 1:
-            dir = LEFT;
-        break;
-        case 2:
-            dir = DOWN;
-        break;
-        case 3:
-            dir = RIGHT;
-        break;
-    }*/
     
-    /*switch (dir)
+    if (hp == 0)
     {
-        case LEFT:
-        case RIGHT:
-            x += sign(dir)*vel;
-        break;
-        case UP:
-        case DOWN:
-            y += sign(dir)*vel;
-        break;
-    }*/
-    
-    /*
-    if (walked == 0)
-    {
-        var nbr = getNeighbours(self);
-        var tmpmin = 9999;
-        var choice, tmpchoice;
-        choice[0] = noone;
-        var numchoice = 0;
-        
-        for (var i = 0; i &lt; array_length_1d(nbr); i++)
-        {
-            if (nbr[i].dist &lt; tmpmin)
-            {
-                tmpmin = nbr[i].dist;
-                tmpchoice = nbr[i];
-            }
-        }
-                
-        while (next == noone)
-            next = tmpchoice;//choice[floor(random(numchoice))];
-        
-        var nextAng = point_direction(cx,cy,next.cx,next.cy)+360;
-            
-        if (in(nextAng,45+0*90+360,45+1*90+360))
-            dir = UP;
-        if (in(nextAng,45+1*90+360,45+2*90+360))
-            dir = LEFT;
-        if (in(nextAng,45+2*90+360,45+3*90+360))
-            dir = DOWN;
-        if (in(nextAng,45-1*90+360,45+0*90+360))
-            dir = RIGHT;
-            
-        prev = next;
-        walked = TILE;
-        
-    } else //walk in direction
-    {
-    
-        walked = max(walked - vel, 0);
-    
-        next = instance_place(x,y,objPath);
-        
-        if (dir == LEFT || dir == RIGHT)
-            y = (cy div TILE) * TILE;
-        if (dir == UP || dir == DOWN)
-            x = (cx div TILE) * TILE;
-            
-        switch (dir)
-        {
-        case LEFT:
-            x -= vel;
-            //next = instance_place(x-TILE-vel,y,objPath);
-        break;
-        case RIGHT:
-            x += vel;
-            //next = instance_place(x+TILE+vel,y,objPath);
-        break;
-        case UP:
-            y -= vel;
-            //next = instance_place(x,y-TILE-vel,objPath);
-        break;
-        case DOWN:
-            y += vel;
-            //next = instance_place(x,y+TILE+vel,objPath);
-        break;
-        }
-    }*/
+        global.gold += value;
+        instance_destroy();
+    }
     
     if (place_meeting(x,y,objGoal) || minDist == 0)
     {
@@ -257,6 +170,14 @@ switch(dir)
 }
 
 draw_sprite_part(sprEnemies,-1,frame*TILE + type*4*TILE,row*TILE,TILE,TILE,x,y);
+
+if (hp &lt; maxHp)
+{
+draw_set_color(c_black);
+draw_line_width(x,y-2,x+TILE,y-2,2);
+draw_set_color(c_red);
+draw_line_width(x,y-2,x+TILE*(hp/maxHp),y-2,2);
+}
 </string>
           </argument>
         </arguments>

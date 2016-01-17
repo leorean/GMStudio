@@ -80,6 +80,7 @@
     <script>scripts\findPath.gml</script>
     <script>scripts\getNeighbours.gml</script>
     <script>scripts\findEnemies.gml</script>
+    <script>scripts\drawRadius.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -123,7 +124,7 @@
     <constant name="ATTACK">3</constant>
     <constant name="DEAD">4</constant>
     <constant name="G_PAUSED">-1</constant>
-    <constant name="G_START">0</constant>
+    <constant name="G_READY">0</constant>
     <constant name="G_PLAY">1</constant>
     <constant name="G_CAMMOVE">2</constant>
     <constant name="G_WIN">3</constant>
