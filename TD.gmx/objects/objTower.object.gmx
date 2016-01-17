@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>dmg = 1;
-delay = 1*SEC;
+delay = 20;
 del = delay;
 range = 2*TILE;
 
@@ -69,7 +69,7 @@ cy = y+.5*TILE;
 
 if (global.state == G_PLAY)
 {
-    if (state == IDLE)
+    if (true)//state == IDLE)
     {
         del = max(del-1,0);
         
