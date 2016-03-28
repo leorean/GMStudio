@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>5</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -29,9 +29,10 @@
 yVel = 0;
 state = IDLE;
 
+deathTimer = 2*SEC;
+
 dragged = false;
 angle = 0;
-
 yGrav = .12;
 
 //draw vars
@@ -77,121 +78,144 @@ path = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//+++++physics++++++
-onGround = (yVel &gt;=-yGrav &amp;&amp; (collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objBlock,true,true) != noone));
-cx = x + TILE/2;
-cy = y + TILE/2;
-
-if (onGround)
+            <string>if (global.state != G_PAUSED)
 {
-    if (xVel &lt; 0) dir = LEFT;
-    if (xVel &gt; 0) dir = RIGHT;
-
-    if (state == JUMP) state = IDLE;
-
-    //friction from jumping
-    if (state != WALK)
-    {
-        if (abs(xVel) &lt; 1.5)
-        {
-            xVel *= .3;
-        }
-        else
-            xVel *= .85;
-    }
-} else
-    state = JUMP;
-
-yVel += yGrav;
-
-//++++routine++++
-if (state == IDLE || state == WALK)
-{
-    if (global.kLeft &amp;&amp; !global.kRight)
-    {
-        dir = LEFT;
-        state = WALK;
-        if (xVel &gt; 0) xVel -= .1;        
-        xVel = max(xVel - .1,-2);
-    }
-    if (global.kRight &amp;&amp; !global.kLeft)
-    {
-        dir = RIGHT;
-        state = WALK;
-        if (xVel &lt; 0) xVel += .1;
-        xVel = min(xVel + .1,2);
-    }
-    if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
-        state = IDLE;
-        
-    if (mouse_check_button(mb_left))
-    {
-        mx = global.mousex;
-        my = global.mousey;
-        state = CHARGE;
-    }
-        //if (in(global.mousex,cx-dr,cx+dr) &amp;&amp; in(global.mousey,cy-dr,cy+dr))
-            //state = CHARGE;
-}
-if (state == CHARGE)
-{
-    xVel *= .8;
-    yVel *= .8;
-
-    angle = point_direction(mx, my, global.mousex, global.mousey);
-    var rad_angle = ((angle / 180) * pi);
+    //+++++physics++++++
+    onGround = (yVel &gt;=-yGrav &amp;&amp; (collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objSolid,true,true) != noone));
+    cx = x + TILE/2;
+    cy = y + TILE/2;
     
-    dx = mx - (cos(rad_angle)) * min(abs(mx - global.mousex), dmax);
-    dy = my + (sin(rad_angle)) * min(abs(my - global.mousey), dmax);
-    
-    var pow = clamp( (point_distance(mx, my, dx, dy) / dmax) * 6.5 , 1.5, 6.5);
-    var pow_x = -lengthdir_x(pow, angle);
-    var pow_y = -lengthdir_y(pow, angle);
-
-    if (!instance_exists(path))
-        path = instance_create(cx,cy,objPath);
-    
-    path.x = cx;
-    path.y = cy;
-    path.x0 = cx;
-    path.y0 = cy;
-    path.vx0 = pow_x;
-    path.vy0 = pow_y;    
-    path.g = yGrav;
-    
-    if (mouse_check_button_released(mb_left))
+    if (onGround)
     {
-        xVel = pow_x;
-        yVel = pow_y;
-
         if (xVel &lt; 0) dir = LEFT;
         if (xVel &gt; 0) dir = RIGHT;
-        state = JUMP;
-
-        with(path)
-            instance_destroy();
-        path = noone;
+    
+        if (state == JUMP) state = IDLE;
+    
+        //friction from jumping
+        if (state != WALK)
+        {
+            if (abs(xVel) &lt; 1.5)
+            {
+                xVel *= .3;
+            }
+            else
+                xVel *= .85;
+        }
+    } else 
+        if (state != DEAD)
+            state = JUMP;
+    
+    yVel += yGrav;
+    
+    //++++routine++++
+    if (state == IDLE || state == WALK)
+    {
+        if (global.kLeft &amp;&amp; !global.kRight)
+        {
+            dir = LEFT;
+            state = WALK;
+            if (xVel &gt; 0) xVel -= .1;        
+            xVel = max(xVel - .1,-2);
+        }
+        if (global.kRight &amp;&amp; !global.kLeft)
+        {
+            dir = RIGHT;
+            state = WALK;
+            if (xVel &lt; 0) xVel += .1;
+            xVel = min(xVel + .1,2);
+        }
+        if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
+            state = IDLE;
+            
+        if (mouse_check_button(mb_left))
+        {
+            mx = global.mousex;
+            my = global.mousey;
+            state = CHARGE;
+        }
+            //if (in(global.mousex,cx-dr,cx+dr) &amp;&amp; in(global.mousey,cy-dr,cy+dr))
+                //state = CHARGE;
+    }
+    if (state == CHARGE)
+    {
+        xVel *= .8;
+        yVel *= .8;
+    
+        angle = point_direction(mx, my, global.mousex, global.mousey);
+        var rad_angle = ((angle / 180) * pi);
+        
+        dx = mx - (cos(rad_angle)) * min(abs(mx - global.mousex), dmax);
+        dy = my + (sin(rad_angle)) * min(abs(my - global.mousey), dmax);
+        
+        var pow = clamp( (point_distance(mx, my, dx, dy) / dmax) * 6.5 , 1.5, 6.5);
+        var pow_x = -lengthdir_x(pow, angle);
+        var pow_y = -lengthdir_y(pow, angle);
+    
+        if (!instance_exists(path))
+            path = instance_create(cx,cy,objPath);
+        
+        path.x = cx;
+        path.y = cy;
+        path.x0 = cx;
+        path.y0 = cy;
+        path.vx0 = pow_x;
+        path.vy0 = pow_y;    
+        path.g = yGrav;
+        
+        if (mouse_check_button_released(mb_left) &amp;&amp; state != DEAD)
+        {
+            xVel = pow_x;
+            yVel = pow_y;
+    
+            if (xVel &lt; 0) dir = LEFT;
+            if (xVel &gt; 0) dir = RIGHT;
+            state = JUMP;
+    
+            with(path)
+                instance_destroy();
+            path = noone;
+        }
+    }
+    
+    if (place_meeting(x, y, objEnemy) &amp;&amp; state != DEAD)
+    {
+        repeat(40)
+        {
+            var p = instance_create(bbox_left+random(TILE),bbox_top+random(TILE),objParticle);
+            p.xVel = xVel + -2 + random(4);
+            p.yVel = yVel + -3 + random(2);
+        }
+        state = DEAD;        
+    }
+    
+    if (state == DEAD)
+    {
+        xVel *= .9;
+        yVel *= .9;
+        deathTimer = max(deathTimer - 1, 0);
+        if (!deathTimer)
+            room_restart();
+    }
+    
+    //++++collision and move routine++++
+    if (!place_meeting(x, y + yVel, objSolid))
+        y += yVel;
+    else
+    {
+        yVel *= -.3;
+    }
+    
+    if (in(x + xVel, 0, room_width - TILE) &amp;&amp; !place_meeting(x + xVel, y, objSolid))
+        x += xVel;
+    else
+    {
+        if (abs(xVel) &gt; 1.5)
+            xVel *= -.3;
+        else
+            xVel *= .5;
     }
 }
-
-//++++collision and move routine++++
-if (!place_meeting(x,y + yVel,objBlock))
-    y += yVel;
-else
-{
-    yVel *= -.3;
-}
-
-if (in(x + xVel, 0, room_width - TILE) &amp;&amp; !place_meeting(x + xVel, y, objBlock))
-    x += xVel;
-else
-{
-    if (abs(xVel) &gt; 1.5)
-        xVel *= -.3;
-    else
-        xVel *= .5;
-}
-
 </string>
           </argument>
         </arguments>
@@ -215,6 +239,8 @@ else
           <argument>
             <kind>1</kind>
             <string>    //draw_sprite_ext(mskPlayer, -1,floor(x),floor(y),1,1,0,c,1);
+var drawx = cx;
+var drawy = cy;
 
 switch(state)
 {
@@ -229,22 +255,27 @@ switch(state)
         frame = floor(fCur) + 6;
     break;
     case CHARGE:
-        draw_angle = 0;
+        draw_angle = 270+point_direction(mx,my-1,global.mousex,global.mousey);
         frame = 4;
+        drawx = cx-1+random(2);
     break;
     case JUMP:
         draw_angle = 90+point_direction(cx,cy-1,cx+xVel,cy+yVel);
         frame = 5;
     break;
+    case DEAD:
+        frame = 10;
+    break;
 }
     
-draw_sprite_ext(sprPlayer,frame,cx,cy,sign(dir),1,draw_angle,c_white,1);
+draw_sprite_ext(sprPlayer,frame,drawx,drawy,sign(dir),1,draw_angle,c_white,1);
 
-if (state == IDLE)
+/*if (state == IDLE)
     draw_circle(cx,cy,dr,1);
 
 if (state == CHARGE)
     draw_line(mx,my,dx,dy);
+*/
 
 draw_circle(global.mousex,global.mousey,3,1);
 </string>

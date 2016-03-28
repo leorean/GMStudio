@@ -38,6 +38,12 @@ surf = -1; //drawing surface
 global.mousex=0;
 global.mousey=0;
 
+global.timer = 0;
+global.state = G_PLAY;
+
+global.camera = noone;
+
+l0Data = importLevel("L0.tmx");
 </string>
           </argument>
         </arguments>
@@ -70,7 +76,15 @@ if (keyboard_check_pressed(ord('Q')))
 }
 if (keyboard_check_pressed(ord('R')))
     room_restart();
-    
+
+if (keyboard_check_pressed(ord('P')))
+{
+    if (global.state == G_PLAY)
+        global.state = G_PAUSED;
+    else if (global.state == G_PAUSED)
+        global.state = G_PLAY;
+}
+
 if (keyboard_check_pressed(vk_backspace))
     game_end();
 
@@ -80,6 +94,10 @@ global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
 global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
 global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A'));
 global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'));
+
+//++++global routines++++
+if (global.state != G_PAUSED)
+    global.timer = (global.timer + 1) % INF;
 </string>
           </argument>
         </arguments>
@@ -102,13 +120,11 @@ global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'));
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//window_set_size(WIDTH*3,HEIGHT*3);
+            <string>global.timer = 0;
+global.state = G_PLAY;
+global.camera = noone;
 
-for (i = -10; i &lt; 10; i++)
-{
-    j = 1 / power(i,2);
-    show_debug_message(j);
-}
+createRoom(l0Data);
 
 </string>
           </argument>
