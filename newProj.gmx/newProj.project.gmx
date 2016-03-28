@@ -21,6 +21,7 @@
   <scripts name="scripts">
     <script>scripts\resetRope.gml</script>
   </scripts>
+  <shaders name="shaders"/>
   <fonts name="fonts">
     <font>fonts\fntDefault</font>
   </fonts>

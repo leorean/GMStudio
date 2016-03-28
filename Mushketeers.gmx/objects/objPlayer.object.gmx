@@ -43,6 +43,9 @@ dir = RIGHT;
 //center of sprite
 cx = x+TILE/2;
 cy = y+TILE/2;
+//spawn of mouse in relation to drag
+mx = cx;
+my = cy;
 
 //drag radius
 dr = 2*TILE;
@@ -51,7 +54,7 @@ dmax = 5*TILE;
 //current angular drag distance
 dx = cx;
 dy = cy;
-
+path = noone;
 </string>
           </argument>
         </arguments>
@@ -74,76 +77,116 @@ dy = cy;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-//+++++physics++++++
+            <string>//+++++physics++++++
 onGround = (yVel &gt;=-yGrav &amp;&amp; (collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objBlock,true,true) != noone));
-cx = x+TILE/2;
-cy = y+TILE/2;
+cx = x + TILE/2;
+cy = y + TILE/2;
 
 if (onGround)
 {
-    if (abs(xVel) &lt; 1.5)
+    if (xVel &lt; 0) dir = LEFT;
+    if (xVel &gt; 0) dir = RIGHT;
+
+    if (state == JUMP) state = IDLE;
+
+    //friction from jumping
+    if (state != WALK)
     {
-        xVel *= .3;
-//        yVel = 0;
-        if (state == JUMP) state = IDLE;        
+        if (abs(xVel) &lt; 1.5)
+        {
+            xVel *= .3;
+        }
+        else
+            xVel *= .85;
     }
-    else
-        xVel *= .85;    
 } else
     state = JUMP;
 
 yVel += yGrav;
 
-//++++jump routine++++
-if (state == IDLE)
+//++++routine++++
+if (state == IDLE || state == WALK)
 {
-    if (mouse_check_button(mb_left))    
-        if (in(global.mousex,cx-dr,cx+dr) &amp;&amp; in(global.mousey,cy-dr,cy+dr))
-        {
-            state = CHARGE;
-        }
+    if (global.kLeft &amp;&amp; !global.kRight)
+    {
+        dir = LEFT;
+        state = WALK;
+        if (xVel &gt; 0) xVel -= .1;        
+        xVel = max(xVel - .1,-2);
+    }
+    if (global.kRight &amp;&amp; !global.kLeft)
+    {
+        dir = RIGHT;
+        state = WALK;
+        if (xVel &lt; 0) xVel += .1;
+        xVel = min(xVel + .1,2);
+    }
+    if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
+        state = IDLE;
+        
+    if (mouse_check_button(mb_left))
+    {
+        mx = global.mousex;
+        my = global.mousey;
+        state = CHARGE;
+    }
+        //if (in(global.mousex,cx-dr,cx+dr) &amp;&amp; in(global.mousey,cy-dr,cy+dr))
+            //state = CHARGE;
 }
 if (state == CHARGE)
 {
-    xVel *=.8;
-    yVel *=.8;
+    xVel *= .8;
+    yVel *= .8;
 
-    angle = point_direction(cx,cy,global.mousex,global.mousey);
+    angle = point_direction(mx, my, global.mousex, global.mousey);
     var rad_angle = ((angle / 180) * pi);
     
-    dx = cx - (cos(rad_angle)) * min(abs(cx-global.mousex),dmax);
-    dy = cy + (sin(rad_angle)) * min(abs(cy-global.mousey),dmax);
+    dx = mx - (cos(rad_angle)) * min(abs(mx - global.mousex), dmax);
+    dy = my + (sin(rad_angle)) * min(abs(my - global.mousey), dmax);
     
-    //angle = point_direction(cx,cy,dx,dy);
-    //pow = clamp(point_distance(cx,cy,mouse_x,mouse_y)/10,2,5);
+    var pow = clamp( (point_distance(mx, my, dx, dy) / dmax) * 6.5 , 1.5, 6.5);
+    var pow_x = -lengthdir_x(pow, angle);
+    var pow_y = -lengthdir_y(pow, angle);
+
+    if (!instance_exists(path))
+        path = instance_create(cx,cy,objPath);
     
-    var pow = clamp( (point_distance(cx,cy,dx,dy) / dmax) * 6.5 , 1.5, 6.5);
+    path.x = cx;
+    path.y = cy;
+    path.x0 = cx;
+    path.y0 = cy;
+    path.vx0 = pow_x;
+    path.vy0 = pow_y;    
+    path.g = yGrav;
     
     if (mouse_check_button_released(mb_left))
     {
-        xVel = -lengthdir_x(pow,angle);
-        yVel = -lengthdir_y(pow,angle);        
+        xVel = pow_x;
+        yVel = pow_y;
 
-        if (xVel&lt;0) dir = LEFT;
-        if (xVel&gt;0) dir = RIGHT;
+        if (xVel &lt; 0) dir = LEFT;
+        if (xVel &gt; 0) dir = RIGHT;
         state = JUMP;
+
+        with(path)
+            instance_destroy();
+        path = noone;
     }
 }
 
 //++++collision and move routine++++
-if (y+yVel&gt;0 &amp;&amp; !place_meeting(x,y+yVel,objBlock))
+if (!place_meeting(x,y + yVel,objBlock))
     y += yVel;
 else
 {
     yVel *= -.3;
 }
 
-if (in(x+xVel,0,room_width-TILE) &amp;&amp; !place_meeting(x+xVel,y,objBlock))
+if (in(x + xVel, 0, room_width - TILE) &amp;&amp; !place_meeting(x + xVel, y, objBlock))
     x += xVel;
 else
 {
-    if (abs(xVel)&gt;1.5)
+    if (abs(xVel) &gt; 1.5)
         xVel *= -.3;
     else
         xVel *= .5;
@@ -180,28 +223,28 @@ switch(state)
         fCur = (fCur+.08) % 4;
         frame = floor(fCur);
     break;
+    case WALK:
+        draw_angle = 0;
+        fCur = (fCur+.15) % 4;
+        frame = floor(fCur) + 6;
+    break;
     case CHARGE:
         draw_angle = 0;
         frame = 4;
     break;
     case JUMP:
-        draw_angle = 90+point_direction(cx,cy-2,cx+xVel,cy+yVel);
+        draw_angle = 90+point_direction(cx,cy-1,cx+xVel,cy+yVel);
         frame = 5;
     break;
 }
     
 draw_sprite_ext(sprPlayer,frame,cx,cy,sign(dir),1,draw_angle,c_white,1);
-//draw_self();
 
 if (state == IDLE)
-{
     draw_circle(cx,cy,dr,1);
-}
 
 if (state == CHARGE)
-{
-    draw_line(cx,cy,dx,dy);
-}
+    draw_line(mx,my,dx,dy);
 
 draw_circle(global.mousex,global.mousey,3,1);
 </string>

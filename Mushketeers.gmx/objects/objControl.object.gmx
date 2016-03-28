@@ -26,7 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>//++++global drawing variables++++
-global.quality = 0; //0 = low, 1 = med, 2 = high
+
+global.quality = 2; //0 = low, 1 = med, 2 = high
+if (os_type == os_android)
+    global.quality = 0;
+
 global.w = view_wport[0];
 global.h = view_hport[0];
 surf = -1; //drawing surface
@@ -67,11 +71,15 @@ if (keyboard_check_pressed(ord('Q')))
 if (keyboard_check_pressed(ord('R')))
     room_restart();
     
-    
-//++++global routines++++
+if (keyboard_check_pressed(vk_backspace))
+    game_end();
+
+//++++global input++++
 
 global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
 global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
+global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A'));
+global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'));
 </string>
           </argument>
         </arguments>
@@ -176,6 +184,35 @@ else
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(true);    
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_color(c_white);
+draw_set_alpha(1);
+
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+
+draw_text(view_xview[0]+view_wview[0]-TILE,view_yview[0]+view_hview[0]-TILE,fps);
 </string>
           </argument>
         </arguments>

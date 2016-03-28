@@ -10,6 +10,7 @@
     <sprite>sprites\mskControl</sprite>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\mskPath</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -23,17 +24,19 @@
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
     <object>objects\objBlock</object>
+    <object>objects\objPath</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="12">
+  <constants number="13">
     <constant name="INF">90000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="IDLE">0</constant>
     <constant name="JUMP">1</constant>
     <constant name="CHARGE">2</constant>
-    <constant name="DIE">3</constant>
+    <constant name="WALK">3</constant>
+    <constant name="DIE">4</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="UP">-2</constant>
