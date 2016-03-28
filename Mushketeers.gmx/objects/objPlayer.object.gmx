@@ -51,7 +51,7 @@ my = cy;
 //drag radius
 dr = 2*TILE;
 //max drag distance for mouse
-dmax = 5*TILE;
+dmax = 10*TILE;
 //current angular drag distance
 dx = cx;
 dy = cy;
@@ -109,6 +109,13 @@ path = noone;
     yVel += yGrav;
     
     //++++routine++++
+    
+    if (state != CHARGE &amp;&amp; state != DEAD &amp;&amp; device_mouse_check_button_pressed(0,mb_left))
+    {
+        mx = global.mousex;
+        my = global.mousey;
+    }
+    
     if (state == IDLE || state == WALK)
     {
         if (global.kLeft &amp;&amp; !global.kRight)
@@ -127,28 +134,25 @@ path = noone;
         }
         if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
             state = IDLE;
-            
-        if (mouse_check_button(mb_left))
+
+        if (device_mouse_check_button(0,mb_left))
         {
-            mx = global.mousex;
-            my = global.mousey;
-            state = CHARGE;
+            if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
+                state = CHARGE;
         }
-            //if (in(global.mousex,cx-dr,cx+dr) &amp;&amp; in(global.mousey,cy-dr,cy+dr))
-                //state = CHARGE;
     }
     if (state == CHARGE)
     {
         xVel *= .8;
         yVel *= .8;
-    
+        
         angle = point_direction(mx, my, global.mousex, global.mousey);
         var rad_angle = ((angle / 180) * pi);
         
         dx = mx - (cos(rad_angle)) * min(abs(mx - global.mousex), dmax);
         dy = my + (sin(rad_angle)) * min(abs(my - global.mousey), dmax);
         
-        var pow = clamp( (point_distance(mx, my, dx, dy) / dmax) * 6.5 , 1.5, 6.5);
+        var pow = clamp( (point_distance(mx, my, dx, dy) / dmax) * 5, 2, 5);
         var pow_x = -lengthdir_x(pow, angle);
         var pow_y = -lengthdir_y(pow, angle);
     
@@ -178,9 +182,9 @@ path = noone;
         }
     }
     
-    if (place_meeting(x, y, objEnemy) &amp;&amp; state != DEAD)
+    if (state != DEAD &amp;&amp; (place_meeting(x, y, objEnemy) || cy &gt; room_width + TILE))
     {
-        repeat(40)
+        repeat(20)
         {
             var p = instance_create(bbox_left+random(TILE),bbox_top+random(TILE),objParticle);
             p.xVel = xVel + -2 + random(4);
@@ -191,8 +195,8 @@ path = noone;
     
     if (state == DEAD)
     {
-        xVel *= .9;
-        yVel *= .9;
+        xVel *= .99;
+        yVel *= .99;
         deathTimer = max(deathTimer - 1, 0);
         if (!deathTimer)
             room_restart();
@@ -277,7 +281,8 @@ if (state == CHARGE)
     draw_line(mx,my,dx,dy);
 */
 
-draw_circle(global.mousex,global.mousey,3,1);
+//draw_circle(global.mousex,global.mousey,3,1);
+//draw_text(cx,y-2*TILE,string(global.mousex)+","+string(global.mousey)+":"+string(mx)+","+string(my));
 </string>
           </argument>
         </arguments>

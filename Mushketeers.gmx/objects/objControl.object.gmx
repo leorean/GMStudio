@@ -3,7 +3,7 @@
   <spriteName>mskControl</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-200</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>//++++global drawing variables++++
+randomize();
 
 global.quality = 2; //0 = low, 1 = med, 2 = high
 if (os_type == os_android)
@@ -49,7 +50,7 @@ l0Data = importLevel("L0.tmx");
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -89,15 +90,46 @@ if (keyboard_check_pressed(vk_backspace))
     game_end();
 
 //++++global input++++
+//global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
+//global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
+global.mousex = device_mouse_x_to_gui(0);
+global.mousey = device_mouse_y_to_gui(0);
 
-global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
-global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
 global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A'));
 global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'));
 
-//++++global routines++++
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//++++global routines++++
 if (global.state != G_PAUSED)
     global.timer = (global.timer + 1) % INF;
+
+//++++instance management++++
+var off = 3*TILE;
+
+instance_deactivate_object(objStatic);
+instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+2*off,true);
+
 </string>
           </argument>
         </arguments>

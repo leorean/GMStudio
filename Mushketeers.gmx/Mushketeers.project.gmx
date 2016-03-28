@@ -50,9 +50,13 @@
     <sprite>sprites\mskEnemy</sprite>
     <sprite>sprites\mskParticle</sprite>
     <sprite>sprites\mskCamera</sprite>
+    <sprite>sprites\sprLight</sprite>
+    <sprite>sprites\mskCollect</sprite>
+    <sprite>sprites\sprMisc</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
+    <background>background\sprBg</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -72,6 +76,11 @@
     <object>objects\objEnemy</object>
     <object>objects\objParticle</object>
     <object>objects\objCamera</object>
+    <objects name="hierarchy">
+      <object>objects\objStatic</object>
+    </objects>
+    <object>objects\objLight</object>
+    <object>objects\objCollect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
