@@ -55,6 +55,9 @@
     <sprite>sprites\sprMisc</sprite>
     <sprite>sprites\sprParticleCollect</sprite>
     <sprite>sprites\sprFntDefault</sprite>
+    <sprite>sprites\mskCoin</sprite>
+    <sprite>sprites\sprFlash</sprite>
+    <sprite>sprites\mskButton</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -79,7 +82,11 @@
     <objects name="hierarchy">
       <object>objects\objStatic</object>
     </objects>
+    <object>objects\objCoin</object>
     <object>objects\objCollect</object>
+    <objects name="Input">
+      <object>objects\objButton</object>
+    </objects>
     <objects name="Effects">
       <object>objects\objLight</object>
       <object>objects\objEffectGlitter</object>

@@ -51,7 +51,7 @@ my = cy;
 //drag radius
 dr = 2*TILE;
 //max drag distance for mouse
-dmax = 10*TILE;
+dmax = 6*TILE;
 //current angular drag distance
 dx = cx;
 dy = cy;
@@ -135,7 +135,7 @@ path = noone;
         if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
             state = IDLE;
 
-        if (device_mouse_check_button(0,mb_left))
+        if (device_mouse_check_button(0,mb_left) &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
         {
             if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
                 state = CHARGE;
@@ -207,9 +207,18 @@ path = noone;
         var collectable = instance_place(x,y,objCollect);
         if (collectable != noone &amp;&amp; !collectable.collected)
         {
+            global.flash = true;
             collectable.collected = true;
             global.collectables++;
             collectable = noone;
+        }
+        
+        var coin = instance_place(x,y,objCoin)
+        if (coin != noone &amp;&amp; !coin.collected)
+        {
+            coin.collected = true;
+            global.coins++;
+            coin = noone;
         }
     }
     //++++collision and move routine++++

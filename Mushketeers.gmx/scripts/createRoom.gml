@@ -48,6 +48,9 @@ for (var i = 0; i<w; i ++)
             case 2: //collectables
                 instance_create(i*TILE,j*TILE,objCollect);
                 global.maxCollectables++;
+            break;
+            case 3: //coins
+                instance_create(i*TILE,j*TILE,objCoin);
             break;            
             default:
                 if (fg>=32)

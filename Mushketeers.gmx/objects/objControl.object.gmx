@@ -33,8 +33,8 @@ global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 
 //drawing vars
 global.quality = 2; //0 = low, 1 = med, 2 = high
-if (os_type == os_android)
-    global.quality = 0;
+//if (os_type == os_android)
+//    global.quality = 0;
 
 global.w = view_wport[0];
 global.h = view_hport[0];
@@ -94,13 +94,13 @@ if (keyboard_check_pressed(vk_backspace))
     game_end();
 
 //++++global input++++
-//global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
-//global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
-global.mousex = device_mouse_x_to_gui(0);
-global.mousey = device_mouse_y_to_gui(0);
+global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
+global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
+//global.mousex = device_mouse_x_to_gui(0);
+//global.mousey = device_mouse_y_to_gui(0);
 
-global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A'));
-global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'));
+global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
+global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
 
 </string>
           </argument>
@@ -126,7 +126,11 @@ global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'));
             <kind>1</kind>
             <string>//++++global routines++++
 if (global.state != G_PAUSED)
+{
     global.timer = (global.timer + 1) % INF;
+    
+    flashAlpha = max(flashAlpha - .03, 0);
+}
 
 //++++instance management++++
 var off = 3*TILE;
@@ -162,6 +166,23 @@ global.camera = noone;
 
 global.collectables = 0;
 global.maxCollectables = 0;
+
+global.coins = 0;
+
+//effects:
+global.shake = false;
+shakeTimer = 0;
+maxShakeTimer = .5*SEC;
+
+global.flash = false;
+flashAlpha = 0;
+
+//create room:
+with(objButton) instance_destroy();
+
+btnLeft = instance_create(3*TILE,.5*HEIGHT,objButton);
+btnRight = instance_create(WIDTH-3*TILE,.5*HEIGHT,objButton);
+
 createRoom(l0Data);
 
 
@@ -261,8 +282,22 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_color(c_white);
+            <string>//flash effect:
+
+if (global.flash)
+{
+    flashAlpha = 1;
+    global.flash = false;
+}
+if (flashAlpha &gt; 0)
+{    
+    var fc = c_white;
+    draw_sprite_ext(sprFlash,-1,view_xview[0],view_yview[0],1,1,0,c_white,flashAlpha);
+}
+
+draw_set_color(c_white);
 draw_set_alpha(1);
+draw_set_blend_mode(bm_normal);
 draw_set_font(global.fntDefault);
 
 draw_set_halign(fa_right);
