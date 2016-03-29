@@ -28,6 +28,10 @@
             <string>//++++global drawing variables++++
 randomize();
 
+//font
+global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
+
+//drawing vars
 global.quality = 2; //0 = low, 1 = med, 2 = high
 if (os_type == os_android)
     global.quality = 0;
@@ -39,9 +43,9 @@ surf = -1; //drawing surface
 global.mousex=0;
 global.mousey=0;
 
+//level vars
 global.timer = 0;
 global.state = G_PLAY;
-
 global.camera = noone;
 
 l0Data = importLevel("L0.tmx");
@@ -156,7 +160,10 @@ instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+
 global.state = G_PLAY;
 global.camera = noone;
 
+global.collectables = 0;
+global.maxCollectables = 0;
 createRoom(l0Data);
+
 
 </string>
           </argument>
@@ -256,11 +263,17 @@ else
             <kind>1</kind>
             <string>draw_set_color(c_white);
 draw_set_alpha(1);
+draw_set_font(global.fntDefault);
 
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
-draw_text(view_xview[0]+view_wview[0]-TILE,view_yview[0]+view_hview[0]-TILE,fps);
+//fps
+draw_text(view_xview[0]+view_wview[0],view_yview[0]+view_hview[0]-TILE,fps);
+
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+draw_text(view_xview[0]+view_wview[0],view_yview[0],string(global.collectables)+"/"+string(global.maxCollectables));
 </string>
           </argument>
         </arguments>

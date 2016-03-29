@@ -47,6 +47,7 @@ for (var i = 0; i<w; i ++)
             break;
             case 2: //collectables
                 instance_create(i*TILE,j*TILE,objCollect);
+                global.maxCollectables++;
             break;            
             default:
                 if (fg>=32)

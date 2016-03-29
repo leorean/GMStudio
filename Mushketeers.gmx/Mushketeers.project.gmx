@@ -53,6 +53,8 @@
     <sprite>sprites\sprLight</sprite>
     <sprite>sprites\mskCollect</sprite>
     <sprite>sprites\sprMisc</sprite>
+    <sprite>sprites\sprParticleCollect</sprite>
+    <sprite>sprites\sprFntDefault</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -72,15 +74,19 @@
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
     <object>objects\objSolid</object>
-    <object>objects\objPath</object>
     <object>objects\objEnemy</object>
-    <object>objects\objParticle</object>
     <object>objects\objCamera</object>
     <objects name="hierarchy">
       <object>objects\objStatic</object>
     </objects>
-    <object>objects\objLight</object>
     <object>objects\objCollect</object>
+    <objects name="Effects">
+      <object>objects\objLight</object>
+      <object>objects\objEffectGlitter</object>
+      <object>objects\objPath</object>
+      <object>objects\objParticle</object>
+      <object>objects\objParticleCollect</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

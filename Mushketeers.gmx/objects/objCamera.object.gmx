@@ -57,9 +57,9 @@ h = HEIGHT; //bg height
     x += (objPlayer.cx-x) / 20;
     y += (objPlayer.cy-y) / 10;
     
-    a = ((view_xview[0]*.2) mod w);
-    b = ((view_xview[0]*.4) mod w);
-    c = ((view_xview[0]*.7) mod w);
+    a = ((view_xview[0]*.2) % w);
+    b = ((view_xview[0]*.4) % w);
+    c = ((view_xview[0]*.6) % w);
 }
 </string>
           </argument>

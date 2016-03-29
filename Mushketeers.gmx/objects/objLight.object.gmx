@@ -60,10 +60,12 @@ s1 = size * .75;
 s2 = size * .55;
 s3 = size * .45;
 
+draw_set_blend_mode(bm_add);
 draw_sprite_ext(sprLight,0,x,y,s0,s0,0,c,alpha/4);
 draw_sprite_ext(sprLight,0,x,y,s1,s1,0,c,alpha/3);
 draw_sprite_ext(sprLight,0,x,y,s2,s2,0,c,alpha/2);
 draw_sprite_ext(sprLight,0,x,y,s3,s3,0,c,alpha);
+draw_set_blend_mode(bm_normal);
 </string>
           </argument>
         </arguments>

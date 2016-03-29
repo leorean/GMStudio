@@ -201,7 +201,17 @@ path = noone;
         if (!deathTimer)
             room_restart();
     }
-    
+    //++++collectables++++
+    if (state != DEAD)
+    {
+        var collectable = instance_place(x,y,objCollect);
+        if (collectable != noone &amp;&amp; !collectable.collected)
+        {
+            collectable.collected = true;
+            global.collectables++;
+            collectable = noone;
+        }
+    }
     //++++collision and move routine++++
     if (!place_meeting(x, y + yVel, objSolid))
         y += yVel;

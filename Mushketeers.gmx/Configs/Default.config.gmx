@@ -432,12 +432,18 @@
     <option_stayontop>false</option_stayontop>
     <option_sync_vertex>0</option_sync_vertex>
     <option_textureGroup0_border>2</option_textureGroup0_border>
-    <option_textureGroup0_nocropping>0</option_textureGroup0_nocropping>
+    <option_textureGroup0_nocropping>-1</option_textureGroup0_nocropping>
     <option_textureGroup0_parent>&lt;none&gt;</option_textureGroup0_parent>
-    <option_textureGroup0_scaled>0</option_textureGroup0_scaled>
+    <option_textureGroup0_scaled>-1</option_textureGroup0_scaled>
     <option_textureGroup0_targets>9223372036854775807</option_textureGroup0_targets>
-    <option_textureGroup_count>1</option_textureGroup_count>
+    <option_textureGroup1_border>2</option_textureGroup1_border>
+    <option_textureGroup1_nocropping>0</option_textureGroup1_nocropping>
+    <option_textureGroup1_parent>&lt;none&gt;</option_textureGroup1_parent>
+    <option_textureGroup1_scaled>-1</option_textureGroup1_scaled>
+    <option_textureGroup1_targets>9223372036854775807</option_textureGroup1_targets>
+    <option_textureGroup_count>2</option_textureGroup_count>
     <option_textureGroups0>Default</option_textureGroups0>
+    <option_textureGroups1>Font</option_textureGroups1>
     <option_tizen_app_id>http://yourdomain/Fish</option_tizen_app_id>
     <option_tizen_build_version>0</option_tizen_build_version>
     <option_tizen_display_name>Fish</option_tizen_display_name>

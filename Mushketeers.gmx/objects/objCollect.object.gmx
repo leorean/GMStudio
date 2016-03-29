@@ -27,20 +27,25 @@
             <kind>1</kind>
             <string>fCur = 0;
 frame = 0;
-t = 0;
+t = random(2*pi);
 y0 = y;
 
 cx = x+.5*TILE;
 cy = y+.5*TILE;
 
 collected = false;
+once = false;
 
 angle[0] = random(360);
-alpha[0] = .25;
+a[0] = .25;
 angle[1] = random(360);
-alpha[1] = .15;
+a[1] = .15;
 angle[2] = random(360);
-alpha[2] = .2;
+a[2] = .2;
+
+alpha = 1;
+color = c_white;
+ct = random(255);
 
 light = instance_create(cx,cy,objLight);
 </string>
@@ -67,21 +72,70 @@ light = instance_create(cx,cy,objLight);
             <kind>1</kind>
             <string>if (global.state != G_PAUSED)
 {
-    t = (t + .1) % (2*pi);
-    y = y0 + sin(t)*4;
-
+    if (!collected)
+    {
+        t = (t + .1) % (2*pi);
+        y = y0 + sin(t)*4;
+    }
+    
+    ct = (ct + 3) % 255;
+    
     cx = x+.5*TILE;
     cy = y+.5*TILE;
 
-    light.x = cx;
-    light.y = cy;
+    if (instance_exists(light))
+    {
+        light.x = cx;
+        light.y = cy;
+    }
     
     angle[0] = (angle[0] - 3) % 360;
     angle[1] = (angle[1] + 1.5) % 360;
     angle[2] = (angle[2] + 1) % 360;
     
-    fCur = (fCur + .13) % 4;
+    fCur = (fCur + .13) % 8;
     frame = floor(fCur);
+    
+    if (global.timer % 5 == 0)
+    {
+        var part = instance_create(cx-4+random(8),cy-4+random(8),objParticleCollect);
+        part.color = make_color_hsv(ct,155+random(100),255);
+        var ang = point_direction(cx,cy,part.x,part.y);
+        part.xVel = lengthdir_x(.5,ang);
+        part.yVel = lengthdir_y(.5,ang);        
+    }
+    
+    if (collected)
+    {
+        if (!once)
+        {
+            light.alpha = 1;
+            light.size = .5;
+            once = true;
+        }
+        y -= 1;
+        if (instance_exists(light))
+        {
+            light.size = .5;
+            light.alpha -= .05;
+            
+            if (light.alpha &lt;= 0)
+            {
+                with(light) instance_destroy();
+                instance_destroy();
+            }   
+        }
+        
+        //if (y &lt; y0-TILE)
+        //    instance_destroy();
+        if (global.timer % 1 == 0)
+        {
+            var r = 12;
+            var g = instance_create(cx-r+random(2*r),cy-r+random(2*r),objEffectGlitter);
+            g.color = make_color_hsv(random(255),155+random(100),255);
+        }            
+    
+    }
 }
 </string>
           </argument>
@@ -107,13 +161,14 @@ light = instance_create(cx,cy,objLight);
             <kind>1</kind>
             <string>if (!collected)
 {
-    draw_sprite_ext(sprLight,1,cx,cy,1,1,angle[0],light.c,alpha[0]);
-    draw_sprite_ext(sprLight,1,cx,cy,.9,.9,angle[1],light.c,alpha[1]);
-    draw_sprite_ext(sprLight,1,cx,cy,.7,.7,angle[2],light.c,alpha[2]);
+    draw_sprite_ext(sprLight,1,cx,cy,1,1,angle[0],light.c,a[0]);
+    draw_sprite_ext(sprLight,1,cx,cy,.9,.9,angle[1],light.c,a[1]);
+    draw_sprite_ext(sprLight,1,cx,cy,.7,.7,angle[2],light.c,a[2]);    
 }
 
-draw_sprite_part(sprMisc,-1,frame*TILE,0,TILE,TILE,x,y);
-
+color = make_color_hsv(ct,255,255);
+draw_sprite_part_ext(sprMisc,-1,frame*TILE,0,TILE,TILE,x,y,1,1,color,alpha);
+//draw_sprite_part(sprMisc,-1,frame*TILE,0,TILE,TILE,x,y);
 
 </string>
           </argument>
