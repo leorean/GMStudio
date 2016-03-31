@@ -94,10 +94,14 @@ if (keyboard_check_pressed(vk_backspace))
     game_end();
 
 //++++global input++++
-global.mousex = view_xview[0] + device_mouse_x(0) / room_width * WIDTH;
-global.mousey = view_yview[0] + device_mouse_y(0) / room_height * HEIGHT;
-//global.mousex = device_mouse_x_to_gui(0);
-//global.mousey = device_mouse_y_to_gui(0);
+for (i = 0; i &lt; 5; i++)
+    if (device_mouse_check_button(i,mb_any))
+    {
+        global.mousex = view_xview[0] + device_mouse_x(i) / room_width * WIDTH;
+        global.mousey = view_yview[0] + device_mouse_y(i) / room_height * HEIGHT;
+        //global.mousex = device_mouse_x_to_gui(i);
+        //global.mousey = device_mouse_y_to_gui(i);        
+    }
 
 global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
 global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
@@ -168,6 +172,11 @@ global.collectables = 0;
 global.maxCollectables = 0;
 
 global.coins = 0;
+
+global.spawnx = 0;
+global.spawny = 0;
+global.checkpoint = noone;
+
 
 //effects:
 global.shake = false;

@@ -27,23 +27,20 @@ for (var i = 0; i<w; i ++)
 
         switch (obj)
         {
-            case 0: //camStop
-                //instance_create(i*TILE,j*TILE,objCamStop); //invisible
-            break;
-        }
-        switch(fg)
-        {
             case 0: //player
                 var p = instance_create(i*TILE,j*TILE,objPlayer);
                 view_xview[0] = (p.x div (WIDTH+TILE)) * (WIDTH+TILE);
                 view_yview[0] = (p.y div (HEIGHT+TILE)) * (HEIGHT+TILE);
                 
+                global.spawnx = p.x;
+                global.spawny = p.y;
+                
                 with(global.camera) instance_destroy();
                 global.camera = instance_create(objPlayer.cx,objPlayer.cy,objCamera);
                 
             break;
-            case 1: //enemies
-                instance_create(i*TILE,j*TILE,objEnemy);
+            case 1: //checkpoint
+                instance_create(i*TILE,j*TILE,objCheckpoint);
             break;
             case 2: //collectables
                 instance_create(i*TILE,j*TILE,objCollect);
@@ -58,7 +55,13 @@ for (var i = 0; i<w; i ++)
             case 7: //spikes right
             case 8: //spikes around
                 instance_create(i*TILE,j*TILE,objEnemy);
-                addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                addTile(obj,i*TILE,j*TILE,LAYER_FG);
+            break;
+
+        }
+        switch(fg)
+        {
+            case 0:
             break;
             
             default:

@@ -58,6 +58,7 @@
     <sprite>sprites\mskCoin</sprite>
     <sprite>sprites\sprFlash</sprite>
     <sprite>sprites\mskButton</sprite>
+    <sprite>sprites\mskCheckpoint</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -94,6 +95,7 @@
       <object>objects\objParticle</object>
       <object>objects\objParticleCollect</object>
     </objects>
+    <object>objects\objCheckpoint</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

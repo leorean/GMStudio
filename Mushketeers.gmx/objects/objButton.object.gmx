@@ -68,7 +68,9 @@ offx = x;
 offy = y;
 }
 
-pressing = false;
+if (dev == -1)
+    pressing = false;
+
 pressed = false;
 released = false;
 
@@ -95,8 +97,8 @@ if (dev &gt; -1)
 {
     if (!device_mouse_check_button(dev,mb_any))
     {
+        pressing = false;
         released = true;
-        dev = -1;
     }
 }
 
