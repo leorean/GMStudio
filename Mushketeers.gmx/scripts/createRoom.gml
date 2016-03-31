@@ -51,7 +51,16 @@ for (var i = 0; i<w; i ++)
             break;
             case 3: //coins
                 instance_create(i*TILE,j*TILE,objCoin);
-            break;            
+            break;
+            case 4: //spikes up
+            case 5: //spikes down
+            case 6: //spikes left
+            case 7: //spikes right
+            case 8: //spikes around
+                instance_create(i*TILE,j*TILE,objEnemy);
+                addTile(fg,i*TILE,j*TILE,LAYER_FG);
+            break;
+            
             default:
                 if (fg>=32)
                     addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);

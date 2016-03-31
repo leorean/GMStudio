@@ -63,7 +63,7 @@ y0 = y;
         if (y&lt;y0-TILE)
             instance_destroy();
         
-        fCur = (fCur + .2) % 4;
+        fCur = (fCur + .3) % 4;
     }
     frame = floor(fCur);
     

@@ -51,7 +51,7 @@ my = cy;
 //drag radius
 dr = 2*TILE;
 //max drag distance for mouse
-dmax = 6*TILE;
+dmax = 4*TILE;
 //current angular drag distance
 dx = cx;
 dy = cy;

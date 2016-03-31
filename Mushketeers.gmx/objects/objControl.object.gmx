@@ -180,8 +180,10 @@ flashAlpha = 0;
 //create room:
 with(objButton) instance_destroy();
 
-btnLeft = instance_create(3*TILE,.5*HEIGHT,objButton);
-btnRight = instance_create(WIDTH-3*TILE,.5*HEIGHT,objButton);
+btnLeft = instance_create(2*TILE,.8*HEIGHT,objButton);
+btnLeft.type = 0;
+btnRight = instance_create(WIDTH-2*TILE,.8*HEIGHT,objButton);
+btnRight.type = 1;
 
 createRoom(l0Data);
 
@@ -258,7 +260,7 @@ else
     draw_surface_ext(surf,display_get_gui_width()/2-xoffset,display_get_gui_height()/2-yoffset,aspect_x,aspect_y,0,c_white,1);
     
     //Switch on alpha blending again for the next normal draw pass
-    draw_enable_alphablend(true);    
+    draw_enable_alphablend(false);    
 }
 </string>
           </argument>
