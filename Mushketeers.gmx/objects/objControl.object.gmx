@@ -94,14 +94,12 @@ if (keyboard_check_pressed(vk_backspace))
     game_end();
 
 //++++global input++++
-for (i = 0; i &lt; 5; i++)
-    if (device_mouse_check_button(i,mb_any))
-    {
-        global.mousex = view_xview[0] + device_mouse_x(i) / room_width * WIDTH;
-        global.mousey = view_yview[0] + device_mouse_y(i) / room_height * HEIGHT;
-        //global.mousex = device_mouse_x_to_gui(i);
-        //global.mousey = device_mouse_y_to_gui(i);        
-    }
+        
+//global.mousex = view_xview[0] + device_mouse_x(i) / room_width * WIDTH;
+//global.mousey = view_yview[0] + device_mouse_y(i) / room_height * HEIGHT;
+global.mousex = device_mouse_x_to_gui(0);
+global.mousey = device_mouse_y_to_gui(0);
+
 
 global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
 global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
@@ -271,6 +269,8 @@ else
     //Switch on alpha blending again for the next normal draw pass
     draw_enable_alphablend(false);    
 }
+
+//draw_line(global.mousex,global.mousey,objPlayer.mx,objPlayer.my);
 </string>
           </argument>
         </arguments>
@@ -310,6 +310,11 @@ draw_set_color(c_white);
 draw_set_alpha(1);
 draw_set_blend_mode(bm_normal);
 draw_set_font(global.fntDefault);
+
+
+draw_set_halign(fa_left);
+draw_set_valign(fa_top);
+draw_text(view_xview[0],view_yview[0],string(global.mousex)+":"+string(global.mousey));
 
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);

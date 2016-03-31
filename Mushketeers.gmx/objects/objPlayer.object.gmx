@@ -52,7 +52,7 @@ my = cy;
 //drag radius
 dr = 2*TILE;
 //max drag distance for mouse
-dmax = 4*TILE;
+dmax = 8*TILE;
 //current angular drag distance
 dx = cx;
 dy = cy;
@@ -111,11 +111,12 @@ path = noone;
     
     //++++routine++++
     
-    if (state == IDLE &amp;&amp; device_mouse_check_button_pressed(0,mb_left))
-    {
-        mx = global.mousex;
-        my = global.mousey;
-    }
+    if (state == IDLE || xVel &gt; 0 || yVel &gt; 0)
+        if (device_mouse_check_button_pressed(0,mb_left))
+        {
+            mx = global.mousex;
+            my = global.mousey;
+        }
     
     if (state == IDLE || state == WALK)
     {
@@ -136,12 +137,11 @@ path = noone;
         if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
             state = IDLE;
 
-        for (i = 0; i &lt; 5; i++)            
-            if (device_mouse_check_button(i,mb_left) &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
-            {
-                if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
-                    state = CHARGE;
-            }
+        if (device_mouse_check_button(0,mb_left) &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
+        {
+            if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
+                state = CHARGE;
+        }
     }
     if (state == CHARGE)
     {
@@ -169,7 +169,8 @@ path = noone;
         path.vy0 = pow_y;    
         path.g = yGrav;
         
-        if (mouse_check_button_released(mb_left) &amp;&amp; state != DEAD)
+        for (i = 0; i &lt; 5; i++)
+        if (state != DEAD &amp;&amp; device_mouse_check_button_released(i,mb_any))
         {
             xVel = pow_x;
             yVel = pow_y;
@@ -329,10 +330,6 @@ draw_sprite_ext(sprPlayer,frame,drawx,drawy,sign(dir),1,draw_angle,c_white,1);
 
 //if (state == IDLE)
 //    draw_circle(cx,cy,dr,1);
-
-if (state == CHARGE)
-    draw_line(mx,my,global.mousex,global.mousey);
-
 
 //draw_circle(global.mousex,global.mousey,3,1);
 //draw_text(cx,y-2*TILE,string(global.mousex)+","+string(global.mousey)+":"+string(mx)+","+string(my));
