@@ -3,7 +3,7 @@
   <spriteName>mskPath</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>4</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -58,7 +58,7 @@ alpha = 1;
     xx = x0 + vx0 * tt;
     yy = y0 + vy0 * tt + 0.5*g * tt*tt;
 
-    alpha = 1 - tt/45;
+    alpha = 1 - tt/50;
     draw_sprite_ext(mskPath,-1,xx,yy,1,1,0,c_white,alpha);
 }
 </string>

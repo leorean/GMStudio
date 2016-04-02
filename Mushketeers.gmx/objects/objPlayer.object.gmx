@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>-1</solid>
   <visible>-1</visible>
-  <depth>5</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -140,7 +140,7 @@ path = noone;
         if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
             state = IDLE;
 
-        if (device_mouse_check_button(0,mb_left))// &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
+        if (device_mouse_check_button(0,mb_left) &amp;&amp; (!global.mobile || (!global.kLeft &amp;&amp; !global.kRight)))
         {
             if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
                 state = CHARGE;
@@ -233,7 +233,6 @@ path = noone;
             global.flash = true;
             collectable.collected = true;
             global.collectables++;
-            collectable = noone;
         }
         
         if (global.state != G_WIN &amp;&amp; global.collectables == global.maxCollectables)
@@ -245,6 +244,15 @@ path = noone;
             light = instance_create(cx,cy,objLight);
             light.alpha = .001;
             light.size = .001;
+        }
+        
+        //secret
+        var secret = instance_place(x,y,objSecret);
+        if (secret != noone &amp;&amp; !secret.collected)
+        {
+            global.flash = true;
+            secret.collected = true;
+            global.secret = true;
         }
         
         //coins
@@ -261,7 +269,6 @@ path = noone;
             
             coin.collected = true;
             global.coins++;
-            coin = noone;
         }
         
         //checkpoint
@@ -271,7 +278,7 @@ path = noone;
             global.checkpoint = chk;
             global.spawnx = chk.x;
             global.spawny = chk.y;
-        }        
+        }
     }
     //++++collision and move routine++++
     if (in(x,view_xview[0],view_xview[0]+view_wview[0])
@@ -351,8 +358,7 @@ if (global.state != G_PAUSED)
             frame = floor(fCur) + 6;
         break;
         case CHARGE:
-            //draw_angle = 270+point_direction(mx,my-1,global.mousex,global.mousey);
-            draw_angle = 270+point_direction(cx,cy-1,global.mousex,global.mousey);
+            draw_angle = 270+point_direction(mx,my-1,global.mousex,global.mousey);
             frame = 4;
             drawx = cx-1+random(2);
         break;
@@ -362,6 +368,10 @@ if (global.state != G_PAUSED)
         break;
         case DEAD:
             frame = 10;
+        break;
+        case WIN:
+            frame = 11;
+            draw_angle = 0;
         break;
     }
 }

@@ -57,7 +57,9 @@ for (var i = 0; i<w; i ++)
                 instance_create(i*TILE,j*TILE,objEnemy);
                 addTile(obj,i*TILE,j*TILE,LAYER_FG);
             break;
-
+            case 9: //secret
+                instance_create(i*TILE,j*TILE,objSecret);
+            break;
         }
         switch(fg)
         {

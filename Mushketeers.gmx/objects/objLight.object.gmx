@@ -33,6 +33,15 @@ s0 = size * 1;
 s1 = size * .75;
 s2 = size * .55;
 s3 = size * .45;
+
+type = 0;
+
+angle[0] = random(360);
+a[0] = .25;
+angle[1] = random(360);
+a[1] = .15;
+angle[2] = random(360);
+a[2] = .2;
 </string>
           </argument>
         </arguments>
@@ -61,10 +70,26 @@ s2 = size * .55;
 s3 = size * .45;
 
 draw_set_blend_mode(bm_add);
+
 draw_sprite_ext(sprLight,0,x,y,s0,s0,0,c,alpha/4);
 draw_sprite_ext(sprLight,0,x,y,s1,s1,0,c,alpha/3);
 draw_sprite_ext(sprLight,0,x,y,s2,s2,0,c,alpha/2);
 draw_sprite_ext(sprLight,0,x,y,s3,s3,0,c,alpha);
+
+if (type == 1)
+{
+    if (global.state != G_PAUSED)
+    {
+        angle[0] = (angle[0] - 3) % 360;
+        angle[1] = (angle[1] + 1.5) % 360;
+        angle[2] = (angle[2] + 1) % 360;    
+    }
+    
+    draw_sprite_ext(sprLight,1,x,y,1,1,angle[0],c,a[0]);
+    draw_sprite_ext(sprLight,1,x,y,.9,.9,angle[1],c,a[1]);
+    draw_sprite_ext(sprLight,1,x,y,.7,.7,angle[2],c,a[2]);
+}
+
 draw_set_blend_mode(bm_normal);
 </string>
           </argument>

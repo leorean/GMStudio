@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>-200</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,8 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//++++global drawing variables++++
+            <string>//++++global variables++++
 randomize();
+
+global.mobile = false;
+if (os_type == os_android || os_type == os_ios)
+    global.mobile = true;
 
 //font
 global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
@@ -183,6 +187,31 @@ instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+
         </arguments>
       </action>
     </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Free Surface
+if (surface_exists(surf))
+    surface_free(surf);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="7" enumb="4">
       <action>
         <libid>1</libid>
@@ -206,7 +235,7 @@ global.camera = noone;
 
 global.collectables = 0;
 global.maxCollectables = 0;
-global.secret = 0;
+global.secret = false;
 global.coins = 0;
 
 global.spawnx = 0;
@@ -337,11 +366,16 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//curtain effect:
+            <string>var vx = view_xview[0];
+var vy = view_yview[0];
+var vw = view_wview[0];
+var vh = view_hview[0];
+
+//curtain effect:
 if (curtainx&gt;0)
 {
-    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,view_xview[0] - WIDTH/2 + curtainx,view_yview[0]);
-    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,view_xview[0]+view_wview[0]-curtainx,view_yview[0]);
+    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,vx - WIDTH/2 + curtainx,vy);
+    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,vx+vw-curtainx,vy);
 
 }
 
@@ -352,7 +386,7 @@ if (global.flash)
     global.flash = false;
 }
 if (flashAlpha &gt; 0)
-    draw_sprite_ext(sprScreenRect,-1,view_xview[0],view_yview[0],1,1,0,c_white,flashAlpha);
+    draw_sprite_ext(sprScreenRect,-1,vx,vy,1,1,0,c_white,flashAlpha);
 
 draw_set_color(c_white);
 draw_set_alpha(1);
@@ -360,22 +394,25 @@ draw_set_blend_mode(bm_normal);
 draw_set_font(global.fntDefault);
 
 //coins
-draw_set_halign(fa_left);
+draw_set_halign(fa_right);
 draw_set_valign(fa_top);
-draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,view_xview[0],view_yview[0]);
-draw_text(view_xview[0]+TILE,view_yview[0],global.coins);
+draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+TILE);
+draw_text(vx+vw-TILE,vy+TILE,global.coins);
+
+//secret
+draw_sprite_part(sprMisc,-1,11*TILE+(global.secret==true)*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+2*TILE);
 
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
 //fps
-draw_text(view_xview[0]+view_wview[0],view_yview[0]+view_hview[0]-TILE,fps);
+draw_text(vx+vw,vy+vh-TILE,fps);
 
 //collectables
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
-draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,view_xview[0]+view_wview[0]-TILE,view_yview[0]);
-draw_text(view_xview[0]+view_wview[0]-TILE,view_yview[0],string(global.collectables)+"/"+string(global.maxCollectables));
+draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy);
+draw_text(vx+vw-TILE,vy,string(global.collectables)+"/"+string(global.maxCollectables));
 </string>
           </argument>
         </arguments>

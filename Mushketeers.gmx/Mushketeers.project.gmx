@@ -54,6 +54,7 @@
       <sprite>sprites\mskPath</sprite>
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskControl</sprite>
+      <sprite>sprites\mskSecret</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprLight</sprite>
@@ -88,6 +89,7 @@
     </objects>
     <object>objects\objCoin</object>
     <object>objects\objCollect</object>
+    <object>objects\objSecret</object>
     <objects name="Input">
       <object>objects\objButton</object>
     </objects>
