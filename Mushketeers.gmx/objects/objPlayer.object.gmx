@@ -99,12 +99,14 @@ path = noone;
         //friction from jumping
         if (state != WALK)
         {
-            if (abs(xVel) &lt; 1.5)
+            xVel *= .8;
+            
+            /*if (abs(xVel) &lt; 1.5)
             {
                 xVel *= .3;
             }
             else
-                xVel *= .85;
+                xVel *= .85;*/
         }
     } else 
         if (state != DEAD)
@@ -140,8 +142,9 @@ path = noone;
         if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
             state = IDLE;
 
-        if (device_mouse_check_button(0,mb_left) &amp;&amp; (!global.mobile || (!global.kLeft &amp;&amp; !global.kRight)))
+        if (device_mouse_check_button(0,mb_left) &amp;&amp; (!global.mobile || (!global.kLeft &amp;&amp; !global.kRight &amp;&amp; !global.kPause)))
         {
+            if (global.mousex &gt; (2*TILE) &amp;&amp; global.mousey &gt; (2*TILE)) //cheap workaround for pause issue
             if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
                 state = CHARGE;
         }

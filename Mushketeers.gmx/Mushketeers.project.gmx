@@ -55,6 +55,7 @@
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskSecret</sprite>
+      <sprite>sprites\mskPauseMenuButton</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprLight</sprite>
@@ -63,6 +64,7 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprCurtain</sprite>
+    <sprite>sprites\sprPausemenu</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -90,8 +92,10 @@
     <object>objects\objCoin</object>
     <object>objects\objCollect</object>
     <object>objects\objSecret</object>
-    <objects name="Input">
+    <objects name="UI">
       <object>objects\objButton</object>
+      <object>objects\objPauseMenu</object>
+      <object>objects\objPauseMenuButton</object>
     </objects>
     <objects name="Effects">
       <object>objects\objLight</object>

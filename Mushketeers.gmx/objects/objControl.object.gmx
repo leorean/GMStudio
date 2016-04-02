@@ -35,10 +35,9 @@ if (os_type == os_android || os_type == os_ios)
 //font
 global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 
-//drawing vars
+//config vars
 global.quality = 2; //0 = low, 1 = med, 2 = high
-//if (os_type == os_android)
-//    global.quality = 0;
+global.mute = false;
 
 global.w = view_wport[0];
 global.h = view_hport[0];
@@ -89,28 +88,64 @@ if (keyboard_check_pressed(ord('R')))
 if (keyboard_check_pressed(ord('K')))
     global.collectables = global.maxCollectables;
     
-if (keyboard_check_pressed(ord('P')))
+/*if (keyboard_check_pressed(ord('P')))
 {
     if (global.state == G_PLAY)
         global.state = G_PAUSED;
     else if (global.state == G_PAUSED)
         global.state = G_PLAY;
-}
+}*/
 
 if (keyboard_check_pressed(vk_backspace))
     game_end();
 
-//++++global input++++
-        
+//++++global input++++        
 //global.mousex = view_xview[0] + device_mouse_x(i) / room_width * WIDTH;
 //global.mousey = view_yview[0] + device_mouse_y(i) / room_height * HEIGHT;
 global.mousex = device_mouse_x_to_gui(0);
 global.mousey = device_mouse_y_to_gui(0);
 
+global.kPause = btnPause.pressed || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord('P'));
 
-global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
-global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
+if (!btnPause.pressing)
+{
+    global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
+    global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
+} else
+{
+    global.kLeft = false;
+    global.kRight = false;
+}
 
+//++++pause menu handling++++
+if (global.kPause)
+{
+    if (global.state == G_PLAY)
+    {
+        var pmenu = instance_create(view_xview[0],view_yview[0],objPauseMenu);
+        pmenu.depth = depth-1;
+        with(objButton)
+            visible = false;
+        btnPause.visible = true;
+        global.state = G_PAUSED;        
+    }
+    else if (global.state == G_PAUSED)
+    {
+        with(objButton)
+            visible = true;
+        with(objPauseMenu)
+            instance_destroy();
+
+        global.state = G_PLAY;
+    }
+    
+    //pause menu should have:
+    //continue
+    //restart level
+    //mute/unmute
+    //Quality
+    //quit level    
+}
 </string>
           </argument>
         </arguments>
@@ -207,6 +242,8 @@ instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+
             <string>// Free Surface
 if (surface_exists(surf))
     surface_free(surf);
+    
+mouse_clear(mb_left);
 </string>
           </argument>
         </arguments>
@@ -257,14 +294,19 @@ curtainCloseTimer = 3*SEC;
 curtainOpenTimer = 1*SEC;
 winTimer = 1*SEC;
 
-//create room:
+//create UI buttons:
 with(objButton) instance_destroy();
 
 btnLeft = instance_create(2*TILE,.8*HEIGHT,objButton);
-btnLeft.type = 0;
+btnLeft.offspritex = 0;
 btnRight = instance_create(WIDTH-2*TILE,.8*HEIGHT,objButton);
-btnRight.type = 1;
+btnRight.offspritex = 3*TILE;
+btnPause = instance_create(1*TILE+1,1*TILE+1,objButton);
+btnPause.w = 2*TILE;
+btnPause.h = 2*TILE;
+btnPause.offspritex = 6*TILE;
 
+//create room:
 createRoom(l0Data);
 
 
@@ -366,18 +408,12 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var vx = view_xview[0];
+            <string>//DRAW UI HERE
+
+var vx = view_xview[0];
 var vy = view_yview[0];
 var vw = view_wview[0];
 var vh = view_hview[0];
-
-//curtain effect:
-if (curtainx&gt;0)
-{
-    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,vx - WIDTH/2 + curtainx,vy);
-    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,vx+vw-curtainx,vy);
-
-}
 
 //flash effect:
 if (global.flash)
@@ -413,6 +449,15 @@ draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy);
 draw_text(vx+vw-TILE,vy,string(global.collectables)+"/"+string(global.maxCollectables));
+
+
+
+//curtain effect:
+if (curtainx&gt;0)
+{
+    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,vx - WIDTH/2 + curtainx,vy);
+    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,vx+vw-curtainx,vy);
+}
 </string>
           </argument>
         </arguments>
