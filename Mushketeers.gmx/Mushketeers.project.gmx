@@ -42,23 +42,26 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskPlayer</sprite>
-    <sprite>sprites\mskControl</sprite>
-    <sprite>sprites\mskSolid</sprite>
+    <sprites name="masks">
+      <sprite>sprites\mskPlayer</sprite>
+      <sprite>sprites\mskSolid</sprite>
+      <sprite>sprites\mskEnemy</sprite>
+      <sprite>sprites\mskParticle</sprite>
+      <sprite>sprites\mskButton</sprite>
+      <sprite>sprites\mskCoin</sprite>
+      <sprite>sprites\mskCheckpoint</sprite>
+      <sprite>sprites\mskCollect</sprite>
+      <sprite>sprites\mskPath</sprite>
+      <sprite>sprites\mskCamera</sprite>
+      <sprite>sprites\mskControl</sprite>
+    </sprites>
     <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\mskPath</sprite>
-    <sprite>sprites\mskEnemy</sprite>
-    <sprite>sprites\mskParticle</sprite>
-    <sprite>sprites\mskCamera</sprite>
     <sprite>sprites\sprLight</sprite>
-    <sprite>sprites\mskCollect</sprite>
     <sprite>sprites\sprMisc</sprite>
-    <sprite>sprites\sprParticleCollect</sprite>
+    <sprite>sprites\sprParticleEmit</sprite>
     <sprite>sprites\sprFntDefault</sprite>
-    <sprite>sprites\mskCoin</sprite>
-    <sprite>sprites\sprFlash</sprite>
-    <sprite>sprites\mskButton</sprite>
-    <sprite>sprites\mskCheckpoint</sprite>
+    <sprite>sprites\sprScreenRect</sprite>
+    <sprite>sprites\sprCurtain</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -93,14 +96,14 @@
       <object>objects\objEffectGlitter</object>
       <object>objects\objPath</object>
       <object>objects\objParticle</object>
-      <object>objects\objParticleCollect</object>
+      <object>objects\objParticleEmit</object>
     </objects>
     <object>objects\objCheckpoint</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="19">
+  <constants number="21">
     <constant name="INF">90000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="IDLE">0</constant>
@@ -108,6 +111,7 @@
     <constant name="CHARGE">2</constant>
     <constant name="WALK">3</constant>
     <constant name="DEAD">4</constant>
+    <constant name="WIN">5</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="UP">-2</constant>
@@ -117,6 +121,7 @@
     <constant name="HEIGHT">240</constant>
     <constant name="G_PLAY">0</constant>
     <constant name="G_PAUSED">1</constant>
+    <constant name="G_WIN">2</constant>
     <constant name="SEC">60</constant>
     <constant name="LAYER_FG">50</constant>
     <constant name="LAYER_BG">55</constant>

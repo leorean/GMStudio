@@ -31,6 +31,9 @@ state = IDLE;
 
 maxDeathTimer = 2*SEC;
 deathTimer = maxDeathTimer;
+light = noone;
+
+alpha = 1;
 
 dragged = false;
 angle = 0;
@@ -79,7 +82,7 @@ path = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state != G_PAUSED)
+            <string>if (global.state != G_PAUSED &amp;&amp; global.state != G_WIN)
 {
     //+++++physics++++++
     onGround = (yVel &gt;=-yGrav &amp;&amp; (collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objSolid,true,true) != noone));
@@ -137,7 +140,7 @@ path = noone;
         if (state == WALK &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
             state = IDLE;
 
-        if (device_mouse_check_button(0,mb_left) &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
+        if (device_mouse_check_button(0,mb_left))// &amp;&amp; !global.kLeft &amp;&amp; !global.kRight)
         {
             if (abs(mx - global.mousex) &gt; 4 || abs(my - global.mousey) &gt; 4)
                 state = CHARGE;
@@ -179,11 +182,10 @@ path = noone;
             if (xVel &gt; 0) dir = RIGHT;
             state = JUMP;
     
-            with(path)
-                instance_destroy();
-            path = noone;
         }
-    }
+    } else
+        with(path)
+            instance_destroy();
     
     if (state != DEAD &amp;&amp; (place_meeting(x, y, objEnemy) || cy &gt; room_height))
     {
@@ -193,6 +195,7 @@ path = noone;
             p.xVel = xVel + -2 + random(4);
             p.yVel = yVel + -3 + random(2);
         }
+        global.shake = true;
         state = DEAD;        
     }
     
@@ -233,10 +236,29 @@ path = noone;
             collectable = noone;
         }
         
+        if (global.state != G_WIN &amp;&amp; global.collectables == global.maxCollectables)
+        {
+            xVel = 0;
+            yVel = 0;
+            state = WIN;
+            global.state = G_WIN;
+            light = instance_create(cx,cy,objLight);
+            light.alpha = .001;
+            light.size = .001;
+        }
+        
         //coins
         var coin = instance_place(x,y,objCoin)
-        if (coin != noone &amp;&amp; !coin.collected)
+        if (coin != noone &amp;&amp; !coin.collected)        
         {
+            //collect effect
+            repeat (5)
+            {
+                var r = 12;
+                var g = instance_create(cx-r+random(2*r),cy-r+random(2*r),objEffectGlitter);
+                g.color = make_color_hsv(25+random(25),155+random(100),255);
+            }
+            
             coin.collected = true;
             global.coins++;
             coin = noone;
@@ -273,6 +295,22 @@ path = noone;
         }
     }
 }
+
+if (global.state == G_WIN)
+{
+    with(path) instance_destroy();
+    
+    light.size *= 1.1;
+    light.alpha = min(light.alpha+.003,1);
+    
+    alpha = max(alpha - .01, 0);
+    if (global.timer % 2 == 0)
+    {
+        var r = 12;
+        var g = instance_create(cx-r+random(2*r),cy-r+random(2*r),objEffectGlitter);
+        g.color = make_color_hsv(random(255),155+random(100),255);
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -295,38 +333,39 @@ path = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>    //draw_sprite_ext(mskPlayer, -1,floor(x),floor(y),1,1,0,c,1);
-var drawx = cx;
+            <string>var drawx = cx;
 var drawy = cy;
 
-switch(state)
+if (global.state != G_PAUSED)
 {
-    case IDLE:
-        draw_angle = 0;
-        fCur = (fCur+.08) % 4;
-        frame = floor(fCur);
-    break;
-    case WALK:
-        draw_angle = 0;
-        fCur = (fCur+.15) % 4;
-        frame = floor(fCur) + 6;
-    break;
-    case CHARGE:
-        //draw_angle = 270+point_direction(mx,my-1,global.mousex,global.mousey);
-        draw_angle = 270+point_direction(cx,cy-1,global.mousex,global.mousey);
-        frame = 4;
-        drawx = cx-1+random(2);
-    break;
-    case JUMP:
-        draw_angle = 90+point_direction(cx,cy-1,cx+xVel,cy+yVel);
-        frame = 5;
-    break;
-    case DEAD:
-        frame = 10;
-    break;
+    switch(state)
+    {
+        case IDLE:
+            draw_angle = 0;
+            fCur = (fCur+.08) % 4;
+            frame = floor(fCur);
+        break;
+        case WALK:
+            draw_angle = 0;
+            fCur = (fCur+.15) % 4;
+            frame = floor(fCur) + 6;
+        break;
+        case CHARGE:
+            //draw_angle = 270+point_direction(mx,my-1,global.mousex,global.mousey);
+            draw_angle = 270+point_direction(cx,cy-1,global.mousex,global.mousey);
+            frame = 4;
+            drawx = cx-1+random(2);
+        break;
+        case JUMP:
+            draw_angle = 90+point_direction(cx,cy-1,cx+xVel,cy+yVel);
+            frame = 5;
+        break;
+        case DEAD:
+            frame = 10;
+        break;
+    }
 }
-    
-draw_sprite_ext(sprPlayer,frame,drawx,drawy,sign(dir),1,draw_angle,c_white,1);
+draw_sprite_ext(sprPlayer,frame,drawx,drawy,sign(dir),1,draw_angle,c_white,alpha);
 
 //if (state == IDLE)
 //    draw_circle(cx,cy,dr,1);

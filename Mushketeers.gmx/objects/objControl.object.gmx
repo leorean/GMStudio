@@ -82,6 +82,9 @@ if (keyboard_check_pressed(ord('Q')))
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
+if (keyboard_check_pressed(ord('K')))
+    global.collectables = global.maxCollectables;
+    
 if (keyboard_check_pressed(ord('P')))
 {
     if (global.state == G_PLAY)
@@ -132,13 +135,48 @@ if (global.state != G_PAUSED)
     global.timer = (global.timer + 1) % INF;
     
     flashAlpha = max(flashAlpha - .03, 0);
+    
+    //++++level win scenario++++
+    if (global.state == G_WIN)
+    {
+        curtainCloseTimer = max(curtainCloseTimer - 1, 0);
+    
+        if (!curtainCloseTimer)
+            curtainx = min(curtainx+curtainSpeed,WIDTH/2);
+
+        //TODO: LOAD LEVEL
+        if (curtainx==WIDTH/2)
+        {
+            winTimer = max(winTimer - 1, 0);
+            if (!winTimer)
+                room_restart();                
+        }
+                        
+    } else
+    {
+        curtainOpenTimer = max(curtainOpenTimer - 1, 0);
+        if (!curtainOpenTimer)
+            curtainx = max(curtainx-curtainSpeed,0);
+    }
 }
+
+if (global.shake)
+{
+    shakeTimer = maxShakeTimer;
+    global.shake = 0;
+}
+shakeTimer = max(shakeTimer - 1,0);
+if (shakeTimer)
+    view_angle[0] = -1+random(2);
+else
+    view_angle[0] = 0;
 
 //++++instance management++++
 var off = 3*TILE;
 
 instance_deactivate_object(objStatic);
 instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+2*off,true);
+
 
 </string>
           </argument>
@@ -168,7 +206,7 @@ global.camera = noone;
 
 global.collectables = 0;
 global.maxCollectables = 0;
-
+global.secret = 0;
 global.coins = 0;
 
 global.spawnx = 0;
@@ -179,10 +217,16 @@ global.checkpoint = noone;
 //effects:
 global.shake = false;
 shakeTimer = 0;
-maxShakeTimer = .5*SEC;
+maxShakeTimer = .2*SEC;
 
 global.flash = false;
 flashAlpha = 0;
+
+curtainx = WIDTH/2;
+curtainSpeed = 5;
+curtainCloseTimer = 3*SEC;
+curtainOpenTimer = 1*SEC;
+winTimer = 1*SEC;
 
 //create room:
 with(objButton) instance_destroy();
@@ -293,28 +337,33 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//flash effect:
+            <string>//curtain effect:
+if (curtainx&gt;0)
+{
+    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,view_xview[0] - WIDTH/2 + curtainx,view_yview[0]);
+    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,view_xview[0]+view_wview[0]-curtainx,view_yview[0]);
 
+}
+
+//flash effect:
 if (global.flash)
 {
     flashAlpha = 1;
     global.flash = false;
 }
 if (flashAlpha &gt; 0)
-{    
-    var fc = c_white;
-    draw_sprite_ext(sprFlash,-1,view_xview[0],view_yview[0],1,1,0,c_white,flashAlpha);
-}
+    draw_sprite_ext(sprScreenRect,-1,view_xview[0],view_yview[0],1,1,0,c_white,flashAlpha);
 
 draw_set_color(c_white);
 draw_set_alpha(1);
 draw_set_blend_mode(bm_normal);
 draw_set_font(global.fntDefault);
 
-
+//coins
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
-draw_text(view_xview[0],view_yview[0],string(global.mousex)+":"+string(global.mousey));
+draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,view_xview[0],view_yview[0]);
+draw_text(view_xview[0]+TILE,view_yview[0],global.coins);
 
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
@@ -322,9 +371,11 @@ draw_set_valign(fa_top);
 //fps
 draw_text(view_xview[0]+view_wview[0],view_yview[0]+view_hview[0]-TILE,fps);
 
+//collectables
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
-draw_text(view_xview[0]+view_wview[0],view_yview[0],string(global.collectables)+"/"+string(global.maxCollectables));
+draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,view_xview[0]+view_wview[0]-TILE,view_yview[0]);
+draw_text(view_xview[0]+view_wview[0]-TILE,view_yview[0],string(global.collectables)+"/"+string(global.maxCollectables));
 </string>
           </argument>
         </arguments>

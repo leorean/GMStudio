@@ -51,8 +51,7 @@ alpha = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(bm_normal);
-
+            <string>
 if (global.state !=G_PAUSED)
 {
     fCur += .1;
@@ -64,8 +63,10 @@ if (global.state !=G_PAUSED)
         instance_destroy();
 }
 
-if (frame&gt;=0)
-    draw_sprite_part_ext(sprMisc,-1,frame*TILE,2*TILE,TILE,TILE,x-.5*TILE,y-.5*TILE,1,1,color,alpha);
+draw_set_blend_mode(bm_add);
+draw_sprite_part_ext(sprMisc,-1,frame*TILE,2*TILE,TILE,TILE,x-.5*TILE,y-.5*TILE,1,1,color,alpha/2);
+draw_set_blend_mode(bm_normal);
+
 </string>
           </argument>
         </arguments>

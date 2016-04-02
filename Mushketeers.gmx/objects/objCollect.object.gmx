@@ -76,9 +76,8 @@ light = instance_create(cx,cy,objLight);
     {
         t = (t + .1) % (2*pi);
         y = y0 + sin(t)*4;
+        ct = (ct + 3) % 255;
     }
-    
-    ct = (ct + 3) % 255;
     
     cx = x+.5*TILE;
     cy = y+.5*TILE;
@@ -98,7 +97,7 @@ light = instance_create(cx,cy,objLight);
     
     if (global.timer % 5 == 0)
     {
-        var part = instance_create(cx-4+random(8),cy-4+random(8),objParticleCollect);
+        var part = instance_create(cx-4+random(8),cy-4+random(8),objParticleEmit);
         part.color = make_color_hsv(ct,155+random(100),255);
         var ang = point_direction(cx,cy,part.x,part.y);
         part.xVel = lengthdir_x(.5,ang);
@@ -118,6 +117,7 @@ light = instance_create(cx,cy,objLight);
         {
             //light.size *= 1.05;
             light.alpha = 0;
+            alpha -= .01;
             
             if (y &lt;= y0 - 2*TILE)
             {
@@ -131,8 +131,7 @@ light = instance_create(cx,cy,objLight);
             var r = 12;
             var g = instance_create(cx-r+random(2*r),cy-r+random(2*r),objEffectGlitter);
             g.color = make_color_hsv(random(255),155+random(100),255);
-        }            
-    
+        }
     }
 }
 </string>
@@ -162,11 +161,16 @@ light = instance_create(cx,cy,objLight);
     draw_sprite_ext(sprLight,1,cx,cy,1,1,angle[0],light.c,a[0]);
     draw_sprite_ext(sprLight,1,cx,cy,.9,.9,angle[1],light.c,a[1]);
     draw_sprite_ext(sprLight,1,cx,cy,.7,.7,angle[2],light.c,a[2]);    
+
+    draw_set_blend_mode(bm_normal);
 }
+else
+    draw_set_blend_mode(bm_add);
 
 color = make_color_hsv(ct,255,255);
+
 draw_sprite_part_ext(sprMisc,-1,frame*2*TILE,0,2*TILE,2*TILE,x-.5*TILE,y-.5*TILE,1,1,color,alpha);
-//draw_sprite_part(sprMisc,-1,frame*TILE,0,TILE,TILE,x,y);
+draw_set_blend_mode(bm_normal);
 
 </string>
           </argument>

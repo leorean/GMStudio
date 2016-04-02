@@ -20,6 +20,6 @@
   <width>2</width>
   <height>2</height>
   <frames>
-    <frame index="0">images\sprParticleCollect_0.png</frame>
+    <frame index="0">images\sprParticleEmit_0.png</frame>
   </frames>
 </sprite>
