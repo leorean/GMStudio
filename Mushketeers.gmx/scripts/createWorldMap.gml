@@ -36,19 +36,13 @@ for (var i = 0; i<w; i ++)
             else if (maxPlayableLevel.lvlid < obj && level.canBePlayed)
                 maxPlayableLevel = level;
             
-            if (maxPlayableLevel != noone)
-                show_debug_message("max: " + string(maxPlayableLevel.lvlid));
-                
             if (obj == global.currentLevel)
-            {
-            
+            {            
                 var worldMap = instance_create(level.x,level.y,objWorldMap);
                 worldMap.target = level;
                 with(worldMap)
-                {
                     worldPlayer = instance_create(x,y,objWorldPlayer);
-                    //worldPlayer.target = maxPlayableLevel;
-                }
+                worldMap.worldPlayer.target = level;
                 
                 show_debug_message("level " + string(obj) + " found at: " + string(i) + ","+ string(j));
             }
@@ -56,5 +50,5 @@ for (var i = 0; i<w; i ++)
     }
 }
 
-worldMap.worldPlayer.target = maxPlayableLevel;
-worldMap.target = maxPlayableLevel;
+//worldMap.worldPlayer.target = maxPlayableLevel;
+//worldMap.target = maxPlayableLevel;

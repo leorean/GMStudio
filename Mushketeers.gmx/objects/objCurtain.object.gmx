@@ -48,10 +48,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = view_xview[0];
-y = view_yview[0];
-
-timer = max(timer-1,0);
+            <string>timer = max(timer-1,0);
 
 if (!timer)
 {
@@ -70,9 +67,6 @@ if (!timer)
         curtainx = min(curtainx+8,WIDTH/2);
         if (curtainx == WIDTH/2)
         {
-            //if (!isClosed)
-            //    global.shake = true;
-            
             isClosed = true;
         }
     }
@@ -125,7 +119,10 @@ state = CLOSE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//curtain effect:
+            <string>x = view_xview[0];
+y = view_yview[0];
+
+//curtain effect:
 if (curtainx&gt;0)
 {
     draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,x - WIDTH/2 + curtainx,y);

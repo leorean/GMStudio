@@ -243,13 +243,15 @@ path = noone;
             light.alpha = .001;
             light.size = .001;
             
-            //global.currentLevel = 0;
             //cleared
             global.levelProps[global.currentLevel,1] = true;
             //foundSecret
             global.levelProps[global.currentLevel,2] = global.secret;
             //canBePlayed
             global.levelProps[min(global.currentLevel+1,100),3] = true;
+            
+            //set the next level as target
+            global.currentLevel = min(global.currentLevel+1,100);
             
             save();
         }

@@ -209,12 +209,6 @@ if (global.state != G_PAUSED)
         //++++level win scenario++++
         if (global.state == G_WIN)
         {
-            //curtainCloseTimer = max(curtainCloseTimer - 1, 0);
-        
-            //if (!curtainCloseTimer)
-            //    global.curtain.state = CLOSE;
-    
-            //TODO: LOAD LEVEL
             if (global.curtain.isClosed)
             {
                 winTimer = max(winTimer - 1, 0);
