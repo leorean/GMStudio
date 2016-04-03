@@ -105,7 +105,20 @@ if (mouse_check_button_pressed(mb_left) &amp;&amp; !anyButtonPressing)
 }
 
 if (instance_exists(worldPlayer.target) &amp;&amp; worldPlayer.target.canBePlayed)
+{
     btnStartLevel.visible = true;
+    if (btnStartLevel.pressed)
+    {
+        if ((worldPlayer.x * TILE) div TILE == worldPlayer.target.x
+            &amp;&amp; (worldPlayer.y * TILE) div TILE == worldPlayer.target.y)
+        {
+            global.lastLevelVisited = worldPlayer.target.lvlid;
+            save();
+            
+            room_goto(GAME);
+        }
+    }
+}
 else
     btnStartLevel.visible = false;
 

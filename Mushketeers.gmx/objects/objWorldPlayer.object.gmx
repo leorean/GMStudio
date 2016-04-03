@@ -83,7 +83,7 @@ cy = y+TILE*.5;
             <string>fCur = (fCur + .1) % 4;
 frame = floor(fCur);
 
-draw_sprite_part(sprMisc,-1,1*TILE+frame*TILE,7*TILE,TILE,TILE,x,y);
+draw_sprite_part(sprMisc,-1,frame*TILE,7*TILE,TILE,TILE,x,y);
 </string>
           </argument>
         </arguments>

@@ -64,7 +64,8 @@ global.mousey=0;
 global.timer = 0;
 global.state = G_PLAY;
 global.camera = noone;
-global.lastLevelVisited = 0;
+
+global.lastLevelVisited = -1;
 
 //level props:
 for (i = 0; i &lt; 100; i++)
@@ -81,7 +82,8 @@ for (i = 0; i &lt; 100; i++)
 }
 
 mapData = importLevel("WORLD.tmx");
-l0Data = importLevel("L0.tmx");
+//l0Data = importLevel("L0.tmx");
+levelData[0] = importLevel("L0.tmx");
 </string>
           </argument>
         </arguments>
@@ -345,7 +347,8 @@ if (room == GAME)
     btnPause.offspritex = 6*TILE;
     
     //create room:
-    createRoom(l0Data);
+    createRoom(levelData[global.lastLevelVisited]);
+    //createRoom(l0Data);
 }
 
 </string>

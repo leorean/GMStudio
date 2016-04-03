@@ -55,7 +55,11 @@ canBePlayed = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprMisc,-1,0,7*TILE,TILE,TILE,x,y);
+            <string>var row = 4;
+if (canBePlayed) row = 5;
+if (cleared) row = 6;
+
+draw_sprite_part(sprMisc,-1,row*TILE,7*TILE,TILE,TILE,x,y);
 
 draw_set_halign(fa_center);
 
