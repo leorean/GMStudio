@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>15</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,77 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>t = 0;
-s = 0;
-
-btnPlay = instance_create(5*TILE,9*TILE,objPauseMenuButton);
-btnPlay.type = 0;
-btnPlay.text = "play";
-
-btnQuit = instance_create(16*TILE,9*TILE,objPauseMenuButton);
-btnQuit.type = 2;
-btnQuit.text = "quit";
-
+            <string>global.curtain.timer = 1*SEC;
 global.curtain.state = OPEN;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>with(objPauseMenuButton) instance_destroy();
-mouse_clear(mb_left);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>t = (t+.05) % (2*pi);
-s = sin(t) * 4;
 
-if (btnPlay.pressed)
-{
-    global.curtain.state = CLOSE;
-}
+xVel = 0;
+yVel = 0;
 
-if (global.curtain.isClosed &amp;&amp; global.curtain.state == CLOSE)
-    room_goto(WORLDMAP);
-
-if (btnQuit.pressed)
-    game_end();
 </string>
           </argument>
         </arguments>
@@ -118,13 +53,7 @@ if (btnQuit.pressed)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(bm_normal);
-//background
-draw_sprite_part(sprHud,-1,0,HEIGHT+4*TILE,WIDTH,HEIGHT,0,0);
-
-//title
-draw_sprite_part_ext(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0+2,s+2,1,1,c_white,.5);
-draw_sprite_part(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0,s);
+            <string>draw_sprite(sprWorldMap,-1,0,0);
 </string>
           </argument>
         </arguments>

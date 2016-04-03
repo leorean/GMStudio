@@ -32,6 +32,15 @@ global.mobile = false;
 if (os_type == os_android || os_type == os_ios)
     global.mobile = true;
 
+//effects:
+global.shake = false;
+shakeTimer = 0;
+maxShakeTimer = .2*SEC;
+
+global.flash = false;
+flashAlpha = 0;
+
+    
 //font
 global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 
@@ -40,7 +49,7 @@ global.curtain = instance_create(0,0,objCurtain);
 
 //config vars
 global.quality = 2; //0 = low, 1 = med, 2 = high
-global.mute = false;
+global.mute = false; //todo:load/save
 
 global.w = view_wport[0];
 global.h = view_hport[0];
@@ -53,7 +62,9 @@ global.mousey=0;
 global.timer = 0;
 global.state = G_PLAY;
 global.camera = noone;
+global.lastLevelVisited = 0; //todo:load/save
 
+mapData = importLevel("WORLDMAP.tmx");
 l0Data = importLevel("L0.tmx");
 </string>
           </argument>
@@ -139,7 +150,6 @@ if (room == GAME)
     {
         with(objButton)
             visible = false;
-        btnPause.visible = true;
     }
     else if (global.state == G_PLAY)
     {
@@ -184,24 +194,24 @@ if (global.state != G_PAUSED)
         //++++level win scenario++++
         if (global.state == G_WIN)
         {
-            curtainCloseTimer = max(curtainCloseTimer - 1, 0);
+            //curtainCloseTimer = max(curtainCloseTimer - 1, 0);
         
-            if (!curtainCloseTimer)
-                global.curtain.state = CLOSE;
+            //if (!curtainCloseTimer)
+            //    global.curtain.state = CLOSE;
     
             //TODO: LOAD LEVEL
             if (global.curtain.isClosed)
             {
                 winTimer = max(winTimer - 1, 0);
                 if (!winTimer)
-                    room_restart();                
+                    room_restart();
             }
                             
         } else
         {
-            curtainOpenTimer = max(curtainOpenTimer - 1, 0);
+            /*curtainOpenTimer = max(curtainOpenTimer - 1, 0);
             if (!curtainOpenTimer)
-                global.curtain.state = OPEN;
+                global.curtain.state = OPEN;*/
         }
     }
 }
@@ -249,11 +259,12 @@ instance_activate_region(view_xview[0]-off,view_yview[0]-off,WIDTH+2*off,HEIGHT+
             <string>// Free Surface
 if (surface_exists(surf))
     surface_free(surf);
-    
+
 mouse_clear(mb_left);
 
 with (objPauseMenu) instance_destroy();
 with (objTitleMenu) instance_destroy();
+with (objWorldMap) instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -289,16 +300,6 @@ global.spawnx = 0;
 global.spawny = 0;
 global.checkpoint = noone;
 
-//effects:
-global.shake = false;
-shakeTimer = 0;
-maxShakeTimer = .2*SEC;
-
-global.flash = false;
-flashAlpha = 0;
-
-curtainCloseTimer = 3*SEC;
-curtainOpenTimer = 1*SEC;
 winTimer = 1*SEC;
 
 with(objButton) instance_destroy();
@@ -308,8 +309,18 @@ if (room == TITLE)
     instance_create(0,0,objTitleMenu);
 }
 
+if (room == WORLDMAP)
+{
+    createWorldMap(mapData);
+    instance_create(0,0,objWorldMap);
+}
+
 if (room == GAME)
 {
+
+    global.curtain.state = OPEN;
+    global.curtain.timer = 1*SEC;
+
     //create UI buttons:
     btnLeft = instance_create(2*TILE,.8*HEIGHT,objButton);
     btnLeft.offspritex = 0;
@@ -348,7 +359,7 @@ if (room == GAME)
             <kind>1</kind>
             <string>//++++SHADER++++
 shader_set(shader0);
-draw_clear(c_black);
+//draw_clear(c_black);
 
 //--------------------------------------------------
 

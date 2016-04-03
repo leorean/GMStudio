@@ -3,7 +3,24 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="2" name="datafiles">
+  <datafiles number="3" name="datafiles">
+    <datafile>
+      <name>WORLDMAP.tmx</name>
+      <exists>-1</exists>
+      <size>330259</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>WORLDMAP.tmx</filename>
+    </datafile>
     <datafile>
       <name>L0.tmx</name>
       <exists>-1</exists>
@@ -65,6 +82,8 @@
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprCurtain</sprite>
     <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\sprWorldMap</sprite>
+    <sprite>sprites\mskWorldPlayer</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -74,6 +93,7 @@
   <scripts name="scripts">
     <script>scripts\in.gml</script>
     <script>scripts\createRoom.gml</script>
+    <script>scripts\createWorldMap.gml</script>
     <script>scripts\addTile.gml</script>
     <script>scripts\importLevel.gml</script>
   </scripts>
@@ -107,6 +127,11 @@
       <object>objects\objParticleEmit</object>
     </objects>
     <object>objects\objCheckpoint</object>
+    <objects name="worldmap">
+      <object>objects\objWorldMap</object>
+      <object>objects\objLevel</object>
+      <object>objects\objWorldPlayer</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\TITLE</room>

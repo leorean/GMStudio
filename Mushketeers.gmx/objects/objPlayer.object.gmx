@@ -238,12 +238,15 @@ path = noone;
             global.collectables++;
         }
         
+        //++++WIN++++
         if (global.state != G_WIN &amp;&amp; global.collectables == global.maxCollectables)
         {
             xVel = 0;
             yVel = 0;
             state = WIN;
             global.state = G_WIN;
+            global.curtain.state = CLOSE;
+            global.curtain.timer = 3*SEC;
             light = instance_create(cx,cy,objLight);
             light.alpha = .001;
             light.size = .001;

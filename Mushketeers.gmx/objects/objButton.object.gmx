@@ -79,14 +79,19 @@ delay = max(delay-1,0);
 for (i = 0; i &lt; 5; i++)
 {
     if (in(device_mouse_x(i) / room_width * WIDTH, offx-w/2,offx+w/2)
-    &amp;&amp; in(device_mouse_y(i) / room_height * HEIGHT,offy-h/2,offy+h/2))
+    &amp;&amp; in(device_mouse_y(i) / room_height * HEIGHT,offy-h/2,offy+h/2)
+    &amp;&amp; visible)
     {
         dev = i;
         if (device_mouse_check_button(i,mb_any))
         {
             pressing = true;
         }
-        if (device_mouse_check_button_pressed(i,mb_any))
+        /*if (device_mouse_check_button_pressed(i,mb_any))
+        {
+            pressed = true;
+        }*/
+        if (device_mouse_check_button_released(i,mb_any))
         {
             pressed = true;
         }        

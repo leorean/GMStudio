@@ -41,7 +41,8 @@ btnSound = instance_create(x+17*TILE,y+2*TILE,objPauseMenuButton);
 btnSound.type = 3;
 btnSound.text = "sound"
 
-
+goingToRestart = false;
+goingToQuit = false;
 </string>
           </argument>
         </arguments>
@@ -88,31 +89,50 @@ mouse_clear(mb_left);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (btnPlay.pressed || keyboard_check_pressed(vk_backspace))
+            <string>if (!goingToRestart &amp;&amp; !goingToQuit)
 {
-    global.state = G_PLAY;
-}
-
-if (btnRetry.pressed)
-    room_restart();
+    if (btnPlay.pressed || keyboard_check_pressed(vk_backspace))
+    {
+        global.state = G_PLAY;
+    }
     
-if (btnQuit.pressed)
-    room_goto(WORLDMAP);
-
-if (global.mute)
-{
-    btnSound.type = 4;
-    btnSound.text = "sound off"
+    if (btnRetry.pressed)
+    {
+        goingToRestart = true;
+        global.curtain.state = CLOSE;
+    }
+       
+    if (btnQuit.pressed)
+    {
+        goingToQuit = true;
+        global.curtain.state = CLOSE;
+    }
+    
+    if (global.mute)
+    {
+        btnSound.type = 4;
+        btnSound.text = "sound off"
+    }
+    else
+    {
+        btnSound.type = 3;
+        btnSound.text = "sound on"
+    }
+    
+    if (btnSound.pressed)
+    {
+        global.mute = !global.mute;
+    }
 }
-else
+if (goingToRestart)
 {
-    btnSound.type = 3;
-    btnSound.text = "sound on"
+    if (global.curtain.isClosed)
+        room_restart();
 }
-
-if (btnSound.pressed)
+if (goingToQuit)
 {
-    global.mute = !global.mute;
+    if (global.curtain.isClosed)
+        room_goto(WORLDMAP);
 }
 
 if (global.state != G_PAUSED)
