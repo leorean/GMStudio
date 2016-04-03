@@ -77,6 +77,8 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="masks">
+      <sprite>sprites\mskLevel</sprite>
+      <sprite>sprites\mskWorldPlayer</sprite>
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskSolid</sprite>
       <sprite>sprites\mskEnemy</sprite>
@@ -99,8 +101,7 @@
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprCurtain</sprite>
     <sprite>sprites\sprHud</sprite>
-    <sprite>sprites\mskWorldPlayer</sprite>
-    <sprite>sprites\mskLevel</sprite>
+    <sprite>sprites\mskWorldMap</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -114,6 +115,8 @@
     <script>scripts\createWorldMap.gml</script>
     <script>scripts\addTile.gml</script>
     <script>scripts\importLevel.gml</script>
+    <script>scripts\save.gml</script>
+    <script>scripts\load.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

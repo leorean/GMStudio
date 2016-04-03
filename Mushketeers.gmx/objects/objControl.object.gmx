@@ -28,6 +28,8 @@
             <string>//++++global variables++++
 randomize();
 
+global.saveFile = "sv.ini";
+
 global.mobile = false;
 if (os_type == os_android || os_type == os_ios)
     global.mobile = true;
@@ -49,7 +51,7 @@ global.curtain = instance_create(0,0,objCurtain);
 
 //config vars
 global.quality = 2; //0 = low, 1 = med, 2 = high
-global.mute = false; //todo:load/save
+global.mute = false;
 
 global.w = view_wport[0];
 global.h = view_hport[0];
@@ -62,17 +64,20 @@ global.mousey=0;
 global.timer = 0;
 global.state = G_PLAY;
 global.camera = noone;
-global.lastLevelVisited = 0; //todo:load/save
+global.lastLevelVisited = 0;
 
 //level props:
 for (i = 0; i &lt; 100; i++)
 {
     //name:
-    global.levelProps[i,0] = "&lt;levelname&gt;";
-    //cleared //TODO:load/save
+    global.levelProps[i,0] = "Course " + string(i);
+    //lvlid: from obj
+    //cleared
     global.levelProps[i,1] = false;
-    //hasCrystal //TODO:load/save
+    //foundSecret
     global.levelProps[i,2] = false;
+    //canBePlayed
+    global.levelProps[i,3] = false;
 }
 
 mapData = importLevel("WORLD.tmx");
@@ -319,6 +324,7 @@ if (room == TITLE)
 
 if (room == WORLDMAP)
 {
+    load();
     createWorldMap(mapData);
 }
 

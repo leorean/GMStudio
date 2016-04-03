@@ -122,6 +122,7 @@ mouse_clear(mb_left);
     if (btnSound.pressed)
     {
         global.mute = !global.mute;
+        save();
     }
 }
 if (goingToRestart)
