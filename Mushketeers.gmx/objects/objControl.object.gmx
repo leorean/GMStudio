@@ -65,7 +65,7 @@ global.timer = 0;
 global.state = G_PLAY;
 global.camera = noone;
 
-global.lastLevelVisited = -1;
+global.currentLevel = -1;
 
 //level props:
 for (i = 0; i &lt; 100; i++)
@@ -219,7 +219,7 @@ if (global.state != G_PAUSED)
             {
                 winTimer = max(winTimer - 1, 0);
                 if (!winTimer)
-                    room_restart();
+                    room_goto(WORLDMAP);
             }
                             
         } else
@@ -347,7 +347,7 @@ if (room == GAME)
     btnPause.offspritex = 6*TILE;
     
     //create room:
-    createRoom(levelData[global.lastLevelVisited]);
+    createRoom(levelData[global.currentLevel]);
     //createRoom(l0Data);
 }
 

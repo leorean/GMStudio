@@ -98,16 +98,8 @@ path = noone;
     
         //friction from jumping
         if (state != WALK)
-        {
-            xVel *= .8;
-            
-            /*if (abs(xVel) &lt; 1.5)
-            {
-                xVel *= .3;
-            }
-            else
-                xVel *= .85;*/
-        }
+            xVel *= .8;            
+
     } else 
         if (state != DEAD)
             state = JUMP;
@@ -257,7 +249,7 @@ path = noone;
             //foundSecret
             global.levelProps[global.currentLevel,2] = global.secret;
             //canBePlayed
-            //global.levelProps[min(global.currentLevel,100),3] = false;
+            global.levelProps[min(global.currentLevel+1,100),3] = true;
             
             save();
         }

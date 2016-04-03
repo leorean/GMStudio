@@ -31,6 +31,8 @@ fCur = 0;
 cx = x+TILE*.5;
 cy = y+TILE*.5;
 
+current = noone;
+next = noone;
 target = noone;
 </string>
           </argument>
@@ -57,7 +59,40 @@ target = noone;
             <string>cx = x+TILE*.5;
 cy = y+TILE*.5;
 
+if (current == noone &amp;&amp; global.curtain.isOpen)
+{
+    current = instance_place(x,y,objLevel);
+    if (current != noone)
+    {
+        show_debug_message("target: " + string(target.lvlid) + ", current: " + string(current.lvlid))
+        if (target.lvlid &gt; current.lvlid)
+        {
+            with(objLevel)
+                if (lvlid == objWorldPlayer.current.lvlid+1)
+                    objWorldPlayer.next = id;
+        }
+        else if (target.lvlid &lt; current.lvlid)
+        {
+            with(objLevel)
+                if (lvlid == objWorldPlayer.current.lvlid-1)
+                    objWorldPlayer.next = id;
+        }
+    }
+}
 
+if (next != noone)
+{
+    x += sign(next.x - x) * 1;
+    y += sign(next.y - y) * 1;
+    if (((x * TILE) div TILE) == next.x &amp;&amp; ((y * TILE) div TILE) == next.y)
+    {
+        x = (x * TILE) div TILE;
+        y = (y * TILE) div TILE;
+        show_debug_message("arrived to " + string(next.lvlid) + ", target is "+ string(target.lvlid));
+        current = noone;
+        next = noone;
+    }
+}
 </string>
           </argument>
         </arguments>

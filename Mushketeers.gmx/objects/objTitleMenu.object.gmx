@@ -37,6 +37,7 @@ btnQuit.type = 2;
 btnQuit.text = "quit";
 
 global.curtain.state = OPEN;
+global.curtain.timer = 1*SEC;
 </string>
           </argument>
         </arguments>

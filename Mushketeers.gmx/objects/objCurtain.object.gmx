@@ -70,8 +70,8 @@ if (!timer)
         curtainx = min(curtainx+8,WIDTH/2);
         if (curtainx == WIDTH/2)
         {
-            if (!isClosed)
-                global.shake = true;
+            //if (!isClosed)
+            //    global.shake = true;
             
             isClosed = true;
         }

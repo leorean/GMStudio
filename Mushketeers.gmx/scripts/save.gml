@@ -3,7 +3,7 @@ ini_open(working_directory + global.saveFile);
 ini_write_real('Options','mute',global.mute);
 ini_write_real('Options','quality',global.quality);
 
-ini_write_real('Worldmap','lastLevelVisited',global.lastLevelVisited);
+ini_write_real('Worldmap','currentLevel',global.currentLevel);
 
 for (i = 0;i < 100; i++)
 {

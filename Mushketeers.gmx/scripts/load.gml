@@ -5,7 +5,7 @@ if (file_exists(working_directory + global.saveFile))
     global.mute = ini_read_real('Options','mute',false);
     global.quality = ini_read_real('Options','quality', 2);
 
-    global.lastLevelVisited = ini_read_real('Worldmap','lastLevelVisited',0);
+    global.currentLevel = ini_read_real('Worldmap','currentLevel',0);
 
     for (i = 0;i < 100; i++)
     {
