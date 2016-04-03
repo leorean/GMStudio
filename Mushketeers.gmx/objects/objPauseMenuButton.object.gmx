@@ -26,7 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>type = 0;
+text = "";
 pressed = false;
+mouseover = false;
 w = 4*TILE;
 h = 4*TILE;
 </string>
@@ -51,14 +53,19 @@ h = 4*TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (in(view_xview[0]+device_mouse_x(0) / room_width * WIDTH, x, x+w)
+            <string>mouseover = false;
+pressed = false;
+
+if (in(view_xview[0]+device_mouse_x(0) / room_width * WIDTH, x, x+w)
 &amp;&amp; in(view_yview[0]+device_mouse_y(0) / room_height * HEIGHT, y, y+h))
-    if (mouse_check_button_pressed(mb_left))
-    {
+{
+    if (!global.mobile || mouse_check_button(mb_left))
+        mouseover = true;
+
+    if (mouse_check_button_released(mb_left))
         pressed = true;
-    }
-    else
-        pressed = false;
+                
+}
 </string>
           </argument>
         </arguments>
@@ -82,8 +89,18 @@ h = 4*TILE;
           <argument>
             <kind>1</kind>
             <string>draw_set_blend_mode(bm_normal);
-draw_sprite_part_ext(sprPausemenu,-1,type*w,HEIGHT,w,h,x + 2,y + 2,1,1,c_black,.4);
-draw_sprite_part_ext(sprPausemenu,-1,type*w,HEIGHT,w,h,x,y,1,1,c_white,1);
+draw_sprite_part_ext(sprHud,-1,w+type*w,HEIGHT,w,h,x + 2,y + 2,1,1,c_black,.4);
+draw_sprite_part(sprHud,-1,w+type*w,HEIGHT,w,h,x,y);
+
+
+draw_set_alpha(1);
+draw_set_halign(fa_center);
+
+if (mouseover)
+{
+    draw_sprite_part(sprHud,-1,0,HEIGHT,w,h,x,y);
+    draw_text(x+w/2,y+h,text);    
+}
         
 
 </string>

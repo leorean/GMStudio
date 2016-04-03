@@ -35,6 +35,9 @@ if (os_type == os_android || os_type == os_ios)
 //font
 global.fntDefault = font_add_sprite(sprFntDefault,ord(' '),true,1);
 
+//curtain
+global.curtain = instance_create(0,0,objCurtain);
+
 //config vars
 global.quality = 2; //0 = low, 1 = med, 2 = high
 global.mute = false;
@@ -75,7 +78,7 @@ l0Data = importLevel("L0.tmx");
           <argument>
             <kind>1</kind>
             <string>//++++debug keys++++
-if (keyboard_check_pressed(ord('Q')))
+if (keyboard_check_pressed(ord('C')))
 {
     global.quality = (global.quality+1)%3;
     if (surface_exists(surf))
@@ -85,16 +88,14 @@ if (keyboard_check_pressed(ord('Q')))
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
+if (keyboard_check_pressed(ord('Q')))
+    game_restart();
+
+if (keyboard_check_pressed(ord('L')))
+    room_goto_next();
+    
 if (keyboard_check_pressed(ord('K')))
     global.collectables = global.maxCollectables;
-    
-/*if (keyboard_check_pressed(ord('P')))
-{
-    if (global.state == G_PLAY)
-        global.state = G_PAUSED;
-    else if (global.state == G_PAUSED)
-        global.state = G_PLAY;
-}*/
 
 if (keyboard_check_pressed(vk_backspace))
     game_end();
@@ -105,47 +106,51 @@ if (keyboard_check_pressed(vk_backspace))
 global.mousex = device_mouse_x_to_gui(0);
 global.mousey = device_mouse_y_to_gui(0);
 
-global.kPause = btnPause.pressed || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord('P'));
-
-if (!btnPause.pressing)
+if (room == GAME)
 {
-    global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
-    global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
-} else
-{
-    global.kLeft = false;
-    global.kRight = false;
-}
-
-//++++pause menu handling++++
-if (global.kPause)
-{
-    if (global.state == G_PLAY)
+    global.kPause = btnPause.pressed || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord('P'));
+    
+    if (!btnPause.pressing)
     {
-        var pmenu = instance_create(view_xview[0],view_yview[0],objPauseMenu);
-        pmenu.depth = depth-1;
+        global.kLeft = keyboard_check(vk_left) || keyboard_check(ord('A')) || btnLeft.pressing;
+        global.kRight = keyboard_check(vk_right) || keyboard_check(ord('D'))  || btnRight.pressing;
+    } else
+    {
+        global.kLeft = false;
+        global.kRight = false;
+    }
+    
+    //++++pause menu handling++++
+    if (global.kPause)
+    {
+        if (global.state == G_PLAY)
+        {
+            var pmenu = instance_create(view_xview[0],view_yview[0],objPauseMenu);
+            pmenu.depth = depth-1;
+            global.state = G_PAUSED;        
+        }
+        else if (global.state == G_PAUSED)
+        {
+            global.state = G_PLAY;
+        }    
+    }
+    
+    if (global.state == G_PAUSED)
+    {
         with(objButton)
             visible = false;
         btnPause.visible = true;
-        global.state = G_PAUSED;        
     }
-    else if (global.state == G_PAUSED)
+    else if (global.state == G_PLAY)
     {
         with(objButton)
             visible = true;
         with(objPauseMenu)
             instance_destroy();
-
-        global.state = G_PLAY;
     }
-    
-    //pause menu should have:
-    //continue
-    //restart level
-    //mute/unmute
-    //Quality
-    //quit level    
+
 }
+
 </string>
           </argument>
         </arguments>
@@ -171,31 +176,33 @@ if (global.kPause)
             <string>//++++global routines++++
 if (global.state != G_PAUSED)
 {
-    global.timer = (global.timer + 1) % INF;
-    
+    global.timer = (global.timer + 1) % INF;    
     flashAlpha = max(flashAlpha - .03, 0);
     
-    //++++level win scenario++++
-    if (global.state == G_WIN)
+    if (room == GAME)
     {
-        curtainCloseTimer = max(curtainCloseTimer - 1, 0);
-    
-        if (!curtainCloseTimer)
-            curtainx = min(curtainx+curtainSpeed,WIDTH/2);
-
-        //TODO: LOAD LEVEL
-        if (curtainx==WIDTH/2)
+        //++++level win scenario++++
+        if (global.state == G_WIN)
         {
-            winTimer = max(winTimer - 1, 0);
-            if (!winTimer)
-                room_restart();                
+            curtainCloseTimer = max(curtainCloseTimer - 1, 0);
+        
+            if (!curtainCloseTimer)
+                global.curtain.state = CLOSE;
+    
+            //TODO: LOAD LEVEL
+            if (global.curtain.isClosed)
+            {
+                winTimer = max(winTimer - 1, 0);
+                if (!winTimer)
+                    room_restart();                
+            }
+                            
+        } else
+        {
+            curtainOpenTimer = max(curtainOpenTimer - 1, 0);
+            if (!curtainOpenTimer)
+                global.curtain.state = OPEN;
         }
-                        
-    } else
-    {
-        curtainOpenTimer = max(curtainOpenTimer - 1, 0);
-        if (!curtainOpenTimer)
-            curtainx = max(curtainx-curtainSpeed,0);
     }
 }
 
@@ -244,6 +251,9 @@ if (surface_exists(surf))
     surface_free(surf);
     
 mouse_clear(mb_left);
+
+with (objPauseMenu) instance_destroy();
+with (objTitleMenu) instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -279,7 +289,6 @@ global.spawnx = 0;
 global.spawny = 0;
 global.checkpoint = noone;
 
-
 //effects:
 global.shake = false;
 shakeTimer = 0;
@@ -288,27 +297,32 @@ maxShakeTimer = .2*SEC;
 global.flash = false;
 flashAlpha = 0;
 
-curtainx = WIDTH/2;
-curtainSpeed = 5;
 curtainCloseTimer = 3*SEC;
 curtainOpenTimer = 1*SEC;
 winTimer = 1*SEC;
 
-//create UI buttons:
 with(objButton) instance_destroy();
 
-btnLeft = instance_create(2*TILE,.8*HEIGHT,objButton);
-btnLeft.offspritex = 0;
-btnRight = instance_create(WIDTH-2*TILE,.8*HEIGHT,objButton);
-btnRight.offspritex = 3*TILE;
-btnPause = instance_create(1*TILE+1,1*TILE+1,objButton);
-btnPause.w = 2*TILE;
-btnPause.h = 2*TILE;
-btnPause.offspritex = 6*TILE;
+if (room == TITLE)
+{
+    instance_create(0,0,objTitleMenu);
+}
 
-//create room:
-createRoom(l0Data);
-
+if (room == GAME)
+{
+    //create UI buttons:
+    btnLeft = instance_create(2*TILE,.8*HEIGHT,objButton);
+    btnLeft.offspritex = 0;
+    btnRight = instance_create(WIDTH-2*TILE,.8*HEIGHT,objButton);
+    btnRight.offspritex = 3*TILE;
+    btnPause = instance_create(1*TILE+1,1*TILE+1,objButton);
+    btnPause.w = 2*TILE;
+    btnPause.h = 2*TILE;
+    btnPause.offspritex = 6*TILE;
+    
+    //create room:
+    createRoom(l0Data);
+}
 
 </string>
           </argument>
@@ -429,35 +443,29 @@ draw_set_alpha(1);
 draw_set_blend_mode(bm_normal);
 draw_set_font(global.fntDefault);
 
-//coins
-draw_set_halign(fa_right);
-draw_set_valign(fa_top);
-draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+TILE);
-draw_text(vx+vw-TILE,vy+TILE,global.coins);
+if (room == GAME)
+{
+    
+    //coins
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_top);
+    draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+TILE);
+    draw_text(vx+vw-TILE,vy+TILE,global.coins);
+    
+    //secret
+    draw_sprite_part(sprMisc,-1,11*TILE+(global.secret==true)*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+2*TILE);
 
-//secret
-draw_sprite_part(sprMisc,-1,11*TILE+(global.secret==true)*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+2*TILE);
+    //collectables
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_top);
+    draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy);
+    draw_text(vx+vw-TILE,vy,string(global.collectables)+"/"+string(global.maxCollectables));
 
-draw_set_halign(fa_right);
-draw_set_valign(fa_top);
+}
 
 //fps
-draw_text(vx+vw,vy+vh-TILE,fps);
-
-//collectables
 draw_set_halign(fa_right);
-draw_set_valign(fa_top);
-draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy);
-draw_text(vx+vw-TILE,vy,string(global.collectables)+"/"+string(global.maxCollectables));
-
-
-
-//curtain effect:
-if (curtainx&gt;0)
-{
-    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,vx - WIDTH/2 + curtainx,vy);
-    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,vx+vw-curtainx,vy);
-}
+draw_text(vx+vw,vy+vh-TILE,fps);
 </string>
           </argument>
         </arguments>

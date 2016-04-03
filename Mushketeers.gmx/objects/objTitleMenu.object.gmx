@@ -25,23 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>btnPlay = instance_create(x+4*TILE,y+9*TILE,objPauseMenuButton);
+            <string>t = 0;
+s = 0;
+
+btnPlay = instance_create(5*TILE,9*TILE,objPauseMenuButton);
 btnPlay.type = 0;
-btnPlay.text = "continue";
+btnPlay.text = "play";
 
-btnRetry = instance_create(x+10.5*TILE,y+8*TILE,objPauseMenuButton);
-btnRetry.type = 1;
-btnRetry.text = "retry";
-
-btnQuit = instance_create(x+17*TILE,y+9*TILE,objPauseMenuButton);
+btnQuit = instance_create(16*TILE,9*TILE,objPauseMenuButton);
 btnQuit.type = 2;
 btnQuit.text = "quit";
-
-btnSound = instance_create(x+17*TILE,y+2*TILE,objPauseMenuButton);
-btnSound.type = 3;
-btnSound.text = "sound"
-
-
 </string>
           </argument>
         </arguments>
@@ -88,38 +81,19 @@ mouse_clear(mb_left);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (btnPlay.pressed || keyboard_check_pressed(vk_backspace))
+            <string>t = (t+.05) % (2*pi);
+s = sin(t) * 4;
+
+if (btnPlay.pressed)
 {
-    global.state = G_PLAY;
+    global.curtain.state = CLOSE;
 }
 
-if (btnRetry.pressed)
-    room_restart();
-    
-if (btnQuit.pressed)
+if (global.curtain.isClosed)
     room_goto(WORLDMAP);
 
-if (global.mute)
-{
-    btnSound.type = 4;
-    btnSound.text = "sound off"
-}
-else
-{
-    btnSound.type = 3;
-    btnSound.text = "sound on"
-}
-
-if (btnSound.pressed)
-{
-    global.mute = !global.mute;
-}
-
-if (global.state != G_PAUSED)
-    instance_destroy();
-
-
-
+if (btnQuit.pressed)
+    game_end();
 </string>
           </argument>
         </arguments>
@@ -142,14 +116,13 @@ if (global.state != G_PAUSED)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//background
-draw_sprite_part(sprHud,-1,0,0,WIDTH,HEIGHT,x,y);
+            <string>draw_set_blend_mode(bm_normal);
+//background
+draw_sprite_part(sprHud,-1,0,HEIGHT+4*TILE,WIDTH,HEIGHT,0,0);
 
-draw_set_alpha(1);
-draw_set_halign(fa_center);
-
-draw_text(x+WIDTH/2,y+2*TILE,"-Pause-");
-
+//title
+draw_sprite_part_ext(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0+2,s+2,1,1,c_white,.5);
+draw_sprite_part(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0,s);
 </string>
           </argument>
         </arguments>

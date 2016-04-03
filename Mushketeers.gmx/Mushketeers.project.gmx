@@ -64,7 +64,7 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprCurtain</sprite>
-    <sprite>sprites\sprPausemenu</sprite>
+    <sprite>sprites\sprHud</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -96,6 +96,8 @@
       <object>objects\objButton</object>
       <object>objects\objPauseMenu</object>
       <object>objects\objPauseMenuButton</object>
+      <object>objects\objTitleMenu</object>
+      <object>objects\objCurtain</object>
     </objects>
     <objects name="Effects">
       <object>objects\objLight</object>
@@ -107,9 +109,11 @@
     <object>objects\objCheckpoint</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\TITLE</room>
+    <room>rooms\WORLDMAP</room>
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="21">
+  <constants number="23">
     <constant name="INF">90000000000</constant>
     <constant name="TILE">16</constant>
     <constant name="IDLE">0</constant>
@@ -131,6 +135,8 @@
     <constant name="SEC">60</constant>
     <constant name="LAYER_FG">50</constant>
     <constant name="LAYER_BG">55</constant>
+    <constant name="OPEN">0</constant>
+    <constant name="CLOSE">1</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

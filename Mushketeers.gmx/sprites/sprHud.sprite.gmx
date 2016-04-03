@@ -10,7 +10,7 @@
   <bbox_left>0</bbox_left>
   <bbox_right>799</bbox_right>
   <bbox_top>0</bbox_top>
-  <bbox_bottom>303</bbox_bottom>
+  <bbox_bottom>607</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -18,8 +18,8 @@
   </TextureGroups>
   <For3D>0</For3D>
   <width>800</width>
-  <height>304</height>
+  <height>608</height>
   <frames>
-    <frame index="0">images\sprPausemenu_0.png</frame>
+    <frame index="0">images\sprHud_0.png</frame>
   </frames>
 </sprite>

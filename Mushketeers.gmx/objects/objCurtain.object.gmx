@@ -3,8 +3,8 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
-  <persistent>0</persistent>
+  <depth>-205</depth>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,29 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>btnPlay = instance_create(x+4*TILE,y+9*TILE,objPauseMenuButton);
-btnPlay.type = 0;
-btnPlay.text = "continue";
+            <string>isOpen = false;
+isClosed = false;
 
-btnRetry = instance_create(x+10.5*TILE,y+8*TILE,objPauseMenuButton);
-btnRetry.type = 1;
-btnRetry.text = "retry";
+curtainx = WIDTH/2;
+curtainSpeed = 5;
 
-btnQuit = instance_create(x+17*TILE,y+9*TILE,objPauseMenuButton);
-btnQuit.type = 2;
-btnQuit.text = "quit";
-
-btnSound = instance_create(x+17*TILE,y+2*TILE,objPauseMenuButton);
-btnSound.type = 3;
-btnSound.text = "sound"
-
-
+state = OPEN;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="1" enumb="0">
+    <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -64,62 +54,27 @@ btnSound.text = "sound"
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>with(objPauseMenuButton) instance_destroy();
-mouse_clear(mb_left);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (btnPlay.pressed || keyboard_check_pressed(vk_backspace))
+            <string>x = view_xview[0];
+y = view_yview[0];
+
+if (state == OPEN)
 {
-    global.state = G_PLAY;
+    isClosed = false;
+    curtainx = max(curtainx-4, 0);
+    if (curtainx == 0)
+    {
+        isOpen = true;
+    }
 }
-
-if (btnRetry.pressed)
-    room_restart();
-    
-if (btnQuit.pressed)
-    room_goto(WORLDMAP);
-
-if (global.mute)
+if (state == CLOSE)
 {
-    btnSound.type = 4;
-    btnSound.text = "sound off"
+    isOpen = false;
+    curtainx = min(curtainx+4,WIDTH/2);
+    if (curtainx == WIDTH/2)
+    {
+        isClosed = true;
+    }
 }
-else
-{
-    btnSound.type = 3;
-    btnSound.text = "sound on"
-}
-
-if (btnSound.pressed)
-{
-    global.mute = !global.mute;
-}
-
-if (global.state != G_PAUSED)
-    instance_destroy();
-
-
-
 </string>
           </argument>
         </arguments>
@@ -142,13 +97,12 @@ if (global.state != G_PAUSED)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//background
-draw_sprite_part(sprHud,-1,0,0,WIDTH,HEIGHT,x,y);
-
-draw_set_alpha(1);
-draw_set_halign(fa_center);
-
-draw_text(x+WIDTH/2,y+2*TILE,"-Pause-");
+            <string>//curtain effect:
+if (curtainx&gt;0)
+{
+    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,x - WIDTH/2 + curtainx,y);
+    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,x+WIDTH-curtainx,y);
+}
 
 </string>
           </argument>
