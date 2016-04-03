@@ -3,11 +3,11 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="3" name="datafiles">
+  <datafiles number="5" name="datafiles">
     <datafile>
-      <name>WORLDMAP.tmx</name>
+      <name>WORLD.tmx</name>
       <exists>-1</exists>
-      <size>330259</size>
+      <size>342539</size>
       <exportAction>2</exportAction>
       <exportDir></exportDir>
       <overwrite>0</overwrite>
@@ -19,7 +19,7 @@
           <CopyToMask>9223372036854775807</CopyToMask>
         </Config>
       </ConfigOptions>
-      <filename>WORLDMAP.tmx</filename>
+      <filename>WORLD.tmx</filename>
     </datafile>
     <datafile>
       <name>L0.tmx</name>
@@ -55,6 +55,23 @@
       </ConfigOptions>
       <filename>tiles.tsx</filename>
     </datafile>
+    <datafile>
+      <name>worldtiles.tsx</name>
+      <exists>-1</exists>
+      <size>189</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>worldtiles.tsx</filename>
+    </datafile>
   </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
@@ -82,12 +99,13 @@
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprCurtain</sprite>
     <sprite>sprites\sprHud</sprite>
-    <sprite>sprites\sprWorldMap</sprite>
     <sprite>sprites\mskWorldPlayer</sprite>
+    <sprite>sprites\mskLevel</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
     <background>background\sprBg</background>
+    <background>background\sprWorldMap</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">

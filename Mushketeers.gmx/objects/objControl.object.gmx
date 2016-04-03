@@ -64,7 +64,18 @@ global.state = G_PLAY;
 global.camera = noone;
 global.lastLevelVisited = 0; //todo:load/save
 
-mapData = importLevel("WORLDMAP.tmx");
+//level props:
+for (i = 0; i &lt; 100; i++)
+{
+    //name:
+    global.levelProps[i,0] = "&lt;levelname&gt;";
+    //cleared //TODO:load/save
+    global.levelProps[i,1] = false;
+    //hasCrystal //TODO:load/save
+    global.levelProps[i,2] = false;
+}
+
+mapData = importLevel("WORLD.tmx");
 l0Data = importLevel("L0.tmx");
 </string>
           </argument>
@@ -107,9 +118,6 @@ if (keyboard_check_pressed(ord('L')))
     
 if (keyboard_check_pressed(ord('K')))
     global.collectables = global.maxCollectables;
-
-if (keyboard_check_pressed(vk_backspace))
-    game_end();
 
 //++++global input++++        
 //global.mousex = view_xview[0] + device_mouse_x(i) / room_width * WIDTH;
@@ -312,7 +320,6 @@ if (room == TITLE)
 if (room == WORLDMAP)
 {
     createWorldMap(mapData);
-    instance_create(0,0,objWorldMap);
 }
 
 if (room == GAME)

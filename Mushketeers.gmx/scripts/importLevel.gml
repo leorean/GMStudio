@@ -1,11 +1,12 @@
 var file;
+var ds;
 
 ds[0] = ds_grid_create(1,1);
 ds[1] = ds_grid_create(1,1);
 ds[2] = ds_grid_create(1,1);
-ds_grid_clear(ds[0],0);
-ds_grid_clear(ds[1],0);
-ds_grid_clear(ds[2],0);
+ds_grid_clear(ds[0],-1);
+ds_grid_clear(ds[1],-1);
+ds_grid_clear(ds[2],-1);
 
 if (file_exists(argument0))
     file = file_text_open_read(argument0);
@@ -34,7 +35,7 @@ while (!file_text_eof(file))
         w = real(string_digits(str));
         ds_grid_resize(ds[0],w,h);
         ds_grid_resize(ds[1],w,h);
-        ds_grid_resize(ds[2],w,h);        
+        ds_grid_resize(ds[2],w,h);
     }
     if (h == 1 && string_pos('height="',f) != 0)
     {
@@ -66,4 +67,13 @@ while (!file_text_eof(file))
 }
 
 file_text_close(file);
+
 return ds;
+/*ds_grid_resize(argument1[0],w,h);
+ds_grid_copy(argument1[0],ds);
+ds_grid_resize(argument1[1],w,h);
+ds_grid_copy(argument1[1],ds);
+ds_grid_resize(argument1[2],w,h);
+ds_grid_copy(argument1[2],ds);
+*/
+
