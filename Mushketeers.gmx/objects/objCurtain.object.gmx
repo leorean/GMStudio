@@ -125,8 +125,8 @@ y = view_yview[0];
 //curtain effect:
 if (curtainx&gt;0)
 {
-    draw_sprite_part(sprCurtain,-1,0,0,WIDTH/2,HEIGHT,x - WIDTH/2 + curtainx,y);
-    draw_sprite_part(sprCurtain,-1,WIDTH/2,0,WIDTH/2,HEIGHT,x+WIDTH-curtainx,y);
+    draw_sprite_part(sprHud,-1,WIDTH+0,0,WIDTH/2,HEIGHT,x - WIDTH/2 + curtainx,y);
+    draw_sprite_part(sprHud,-1,WIDTH+WIDTH/2,0,WIDTH/2,HEIGHT,x+WIDTH-curtainx,y);
 }
 
 </string>

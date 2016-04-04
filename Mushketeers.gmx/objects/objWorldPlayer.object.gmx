@@ -34,6 +34,8 @@ cy = y+TILE*.5;
 current = noone;
 next = noone;
 target = noone;
+
+state = IDLE;
 </string>
           </argument>
         </arguments>
@@ -67,12 +69,14 @@ if (current == noone &amp;&amp; global.curtain.isOpen)
         show_debug_message("target: " + string(target.lvlid) + ", current: " + string(current.lvlid))
         if (target.lvlid &gt; current.lvlid)
         {
+            state = WALK;
             with(objLevel)
                 if (lvlid == objWorldPlayer.current.lvlid+1)
                     objWorldPlayer.next = id;
         }
         else if (target.lvlid &lt; current.lvlid)
         {
+            state = WALK;        
             with(objLevel)
                 if (lvlid == objWorldPlayer.current.lvlid-1)
                     objWorldPlayer.next = id;
@@ -91,6 +95,7 @@ if (next != noone)
         show_debug_message("arrived to " + string(next.lvlid) + ", target is "+ string(target.lvlid));
         current = noone;
         next = noone;
+        state = IDLE;
     }
 }
 </string>

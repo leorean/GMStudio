@@ -34,8 +34,8 @@ btnRetry.type = 1;
 btnRetry.text = "retry";
 
 btnQuit = instance_create(x+17*TILE,y+9*TILE,objPauseMenuButton);
-btnQuit.type = 2;
-btnQuit.text = "quit";
+btnQuit.type = 5;
+btnQuit.text = "worldmap";
 
 btnSound = instance_create(x+17*TILE,y+2*TILE,objPauseMenuButton);
 btnSound.type = 3;

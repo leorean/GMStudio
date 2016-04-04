@@ -99,7 +99,6 @@
     <sprite>sprites\sprParticleEmit</sprite>
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprScreenRect</sprite>
-    <sprite>sprites\sprCurtain</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\mskWorldMap</sprite>
   </sprites>

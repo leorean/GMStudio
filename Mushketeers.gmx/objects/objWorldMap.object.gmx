@@ -120,16 +120,16 @@ with(objWorldPlayer) instance_destroy();
         focusy = global.mousey;
         
         var tmpLvl = instance_place(mx,my,objLevel);
-        if (tmpLvl != noone)
+        if (tmpLvl != noone &amp;&amp; tmpLvl.canBePlayed)
             target = tmpLvl;
         
         with(objLevel) selected = false;
         
         if (target != noone)
         {
-            target.selected = true;
             if (target.canBePlayed)
             {
+                target.selected = true;
                 worldPlayer.current = noone;
                 worldPlayer.target = target;
             }
@@ -138,7 +138,7 @@ with(objWorldPlayer) instance_destroy();
         }
     }
     
-    if (instance_exists(worldPlayer.target) &amp;&amp; worldPlayer.target.canBePlayed)
+    if (instance_exists(worldPlayer.target) &amp;&amp; worldPlayer.target.canBePlayed &amp;&amp; worldPlayer.state == IDLE)
     {
         btnStartLevel.visible = true;
         if (btnStartLevel.pressed)

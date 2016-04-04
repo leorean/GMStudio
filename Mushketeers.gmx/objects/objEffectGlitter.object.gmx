@@ -52,7 +52,7 @@ alpha = 1;
           <argument>
             <kind>1</kind>
             <string>
-if (global.state !=G_PAUSED)
+if (global.state != G_PAUSED)
 {
     fCur += .1;
     frame = floor(fCur);

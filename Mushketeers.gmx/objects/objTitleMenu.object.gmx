@@ -84,8 +84,20 @@ mouse_clear(mb_left);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>t = (t+.05) % (2*pi);
+            <string>t = (t+.03) % (2*pi);
 s = sin(t) * 4;
+
+if (global.timer % 15 == 0)
+{
+    repeat(5)
+    {
+        var p = instance_create(2*TILE+random(WIDTH-4*TILE),
+            3*TILE+random(4*TILE), objEffectGlitter);
+        p.depth = depth-1;
+            
+        p.color = make_color_hsv(random(255),100+random(155),255);
+    }
+}
 
 if (btnPlay.pressed)
 {
@@ -124,7 +136,7 @@ if (btnQuit.pressed)
 draw_sprite_part(sprHud,-1,0,HEIGHT+4*TILE,WIDTH,HEIGHT,0,0);
 
 //title
-draw_sprite_part_ext(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0+2,s+2,1,1,c_white,.5);
+draw_sprite_part_ext(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0+3,s+3,1,1,c_black,.3);
 draw_sprite_part(sprHud,-1,WIDTH,HEIGHT+4*TILE,WIDTH,HEIGHT,0,s);
 </string>
           </argument>
