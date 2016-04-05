@@ -43,7 +43,7 @@ vy = 0;
 goingToStartLevel = false;
 goingToQuit = false;
 
-btnStartLevel = instance_create(WIDTH/2,HEIGHT-3*TILE,objButton);
+btnStartLevel = instance_create(WIDTH/2,3*TILE,objButton);
 btnStartLevel.w = 2*TILE;
 btnStartLevel.h = 2*TILE;
 btnStartLevel.alpha = .6;
@@ -145,8 +145,9 @@ with(objWorldPlayer) instance_destroy();
         {
             if ((worldPlayer.x * TILE) div TILE == worldPlayer.target.x
                 &amp;&amp; (worldPlayer.y * TILE) div TILE == worldPlayer.target.y)
-            {
+            {            
                 goingToStartLevel = true;
+                global.curtain.timer = 1*SEC;
                 global.curtain.state = CLOSE;
             }
         }
@@ -173,7 +174,7 @@ with(objWorldPlayer) instance_destroy();
     {
         vel = 0;
         xVel = (worldPlayer.cx - x) / 30;
-        yVel = (worldPlayer.cy - y) / 30;
+        yVel = (worldPlayer.cy -2*TILE - y) / 30;
     }
     
     x += xVel;
@@ -232,9 +233,9 @@ draw_set_halign(fa_center);
 
 if (instance_exists(target))
 {
-    draw_text(vx+WIDTH/2,vy+TILE,target.name);
-    
-    draw_sprite_part(sprMisc,-1,7*TILE,6*TILE,2*TILE,2*TILE,target.x-.5*TILE,target.y-.5*TILE);
+    draw_text(vx+WIDTH/2,vy+.5*TILE,target.name);
+        
+    draw_sprite_part(sprMisc,-1,7*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
 }
 
 
