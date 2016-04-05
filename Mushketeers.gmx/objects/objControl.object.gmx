@@ -485,8 +485,8 @@ if (room == GAME)
 }
 
 //fps
-draw_set_halign(fa_right);
-draw_text(vx+vw,vy+vh-TILE,fps);
+/*draw_set_halign(fa_right);
+draw_text(vx+vw,vy+vh-TILE,fps);*/
 </string>
           </argument>
         </arguments>
