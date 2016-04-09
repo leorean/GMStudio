@@ -65,10 +65,11 @@ global.timer = 0;
 global.state = G_PLAY;
 global.camera = noone;
 
-global.currentLevel = -1;
+global.currentLevel = 0;
+global.nextLevel = -1;
 
 //level props:
-for (i = 0; i &lt; 100; i++)
+for (i = 0; i &lt; MAXLVL; i++)
 {
     //name:
     global.levelProps[i,0] = "Course " + string(i);
@@ -114,6 +115,15 @@ if (keyboard_check_pressed(ord('C')))
         surface_free(surf);
     show_debug_message("Quality set to" + string(global.quality));
 }
+
+if (keyboard_check_pressed(ord('J')))
+{
+    if (file_exists(working_directory + global.saveFile))
+    {
+        file_delete(working_directory + global.saveFile);
+    }
+}
+
 if (keyboard_check_pressed(ord('R')))
     room_restart();
 
@@ -213,7 +223,10 @@ if (global.state != G_PAUSED)
             {
                 winTimer = max(winTimer - 1, 0);
                 if (!winTimer)
+                {
+                    
                     room_goto(WORLDMAP);
+                }
             }
                             
         } else
@@ -470,17 +483,17 @@ if (room == GAME)
     //coins
     draw_set_halign(fa_right);
     draw_set_valign(fa_top);
-    draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+TILE);
-    draw_text(vx+vw-TILE,vy+TILE,global.coins);
+    draw_sprite_part(sprMisc,-1,10*TILE,2*TILE,TILE,TILE,vx+vw-3*TILE,vy+TILE);
+    draw_text(vx+vw-3*TILE,vy+TILE,global.coins);
     
     //secret
-    draw_sprite_part(sprMisc,-1,11*TILE+(global.secret==true)*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy+2*TILE);
+    draw_sprite_part(sprMisc,-1,13*TILE+(global.secret==true)*2*TILE,2*TILE,2*TILE,2*TILE,vx+vw-2*TILE,vy);
 
     //collectables
     draw_set_halign(fa_right);
     draw_set_valign(fa_top);
-    draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,vx+vw-TILE,vy);
-    draw_text(vx+vw-TILE,vy,string(global.collectables)+"/"+string(global.maxCollectables));
+    draw_sprite_part(sprMisc,-1,9*TILE,2*TILE,TILE,TILE,vx+vw-3*TILE,vy);
+    draw_text(vx+vw-3*TILE,vy,string(global.collectables)+"/"+string(global.maxCollectables));
 
 }
 

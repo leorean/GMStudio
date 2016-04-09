@@ -30,6 +30,7 @@ yVel = 0;
 color = c_white;
 alpha = 1;
 size = 2;
+fric = 0;
 </string>
           </argument>
         </arguments>
@@ -59,7 +60,10 @@ size = 2;
     
     if (size &lt; 0 || alpha &lt;= 0)
         instance_destroy();
-        
+
+    xVel = sign(xVel)*(abs(xVel)*fric);
+    yVel = sign(yVel)*(abs(yVel)*fric);
+    
     x += xVel;
     y += yVel;
 }

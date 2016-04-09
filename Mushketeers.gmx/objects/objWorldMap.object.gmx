@@ -138,14 +138,28 @@ with(objWorldPlayer) instance_destroy();
         }
     }
     
-    if (instance_exists(worldPlayer.target) &amp;&amp; worldPlayer.target.canBePlayed &amp;&amp; worldPlayer.state == IDLE)
+    if (instance_exists(worldPlayer.target)
+     &amp;&amp; worldPlayer.target.canBePlayed &amp;&amp; worldPlayer.state == IDLE
+     &amp;&amp; distance_to_object(worldPlayer) &lt; 6*TILE)
     {
         btnStartLevel.visible = true;
         if (btnStartLevel.pressed)
         {
             if ((worldPlayer.x * TILE) div TILE == worldPlayer.target.x
                 &amp;&amp; (worldPlayer.y * TILE) div TILE == worldPlayer.target.y)
-            {            
+            {
+            
+                for(i = 0; i &lt; 360; i+=10)
+                {
+                    var p = instance_create(btnStartLevel.x,btnStartLevel.y,objParticleEmit);
+                    p.xVel = lengthdir_x(3 - 1*(i%40==0) - .5*(i%20==0),i);
+                    p.yVel = lengthdir_y(3 - 1*(i%40==0) - .5*(i%20==0),i);
+                    p.alpha = 1;
+                    p.size = 3;
+                    p.fric = .95;
+                    p.color = make_color_hsv((i / 360 * 255),200,255);
+                }
+                
                 goingToStartLevel = true;
                 global.curtain.timer = 1*SEC;
                 global.curtain.state = CLOSE;
