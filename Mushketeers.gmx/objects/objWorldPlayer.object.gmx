@@ -124,10 +124,12 @@ if (next != noone &amp;&amp; global.curtain.isOpen)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur + .1 + .1*(next != noone)) % 4;
+            <string>//drawn in objWorldMap
+/*fCur = (fCur + .1 + .1*(next != noone)) % 4;
 frame = floor(fCur);
 
 draw_sprite_part(sprMisc,-1,frame*TILE,7*TILE,TILE,TILE,x,y-6);
+*/
 </string>
           </argument>
         </arguments>

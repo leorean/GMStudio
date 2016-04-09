@@ -181,15 +181,25 @@ with(objWorldPlayer) instance_destroy();
             var dx = focusx - (cos(rad_angle)) * min(abs(focusx - global.mousex), dmax);
             var dy = focusy + (sin(rad_angle)) * min(abs(focusy - global.mousey), dmax);
             
-            var pow = (point_distance(focusx, focusy, dx, dy) / dmax) * 6;
-            xVel = lengthdir_x(pow, angle);
-            yVel = lengthdir_y(pow, angle);
+            var pow = (point_distance(focusx, focusy, dx, dy) / dmax) * 6;// * (1-max(80/(1+distance_to_object(worldPlayer)),0));
+
+            if (distance_to_object(worldPlayer) &lt; 100)
+            {
+                xVel = lengthdir_x(pow, angle);
+                yVel = lengthdir_y(pow, angle);
+            }
+            else
+            {
+                xVel *= .9;
+                yVel *= .9;
+            }
+            
         }
     } else
     {
         vel = 0;
         xVel = (worldPlayer.cx - x) / 30;
-        yVel = (worldPlayer.cy -2*TILE - y) / 30;
+        yVel = (worldPlayer.cy /*-2*TILE*/ - y) / 30;
     }
     
     x += xVel;
@@ -237,15 +247,16 @@ if (goingToQuit)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_blend_mode(bm_normal);
-
-vx = view_xview[0];
+            <string>vx = view_xview[0];
 vy = view_yview[0];
 
 //background:
 draw_background_part(sprWorldMap,vx,vy,WIDTH,HEIGHT,vx,vy);
 
 //clouds:
+draw_set_blend_mode(bm_normal);
+draw_sprite_part_ext(sprHud,-1,2*WIDTH,HEIGHT,WIDTH,HEIGHT,vx,vy,1,1,c_white,.6);
+draw_set_blend_mode(bm_normal);
 draw_sprite_part(sprHud,-1,2*WIDTH,0,WIDTH,HEIGHT,vx,vy);
 
 //draw levels:
@@ -256,27 +267,50 @@ with(objLevel)
     if (cleared) row = 2;
     if (secretFound) row = 3;
     draw_sprite_part(sprMisc,-1,row*2*TILE,8*TILE,2*TILE,2*TILE,x-.5*TILE,y-.5*TILE);
+    
+    if (secretFound
+     &amp;&amp; in(cx,view_xview[0],view_xview[0]+WIDTH)
+     &amp;&amp; in(cy,view_yview[0],view_yview[0]+HEIGHT))
+    {
+        if (global.timer % 5 == 0)
+        {
+                var p = instance_create(cx-1*TILE+random(2*TILE),
+                    cy-1*TILE+random(2*TILE), objEffectGlitter);
+                p.depth = objWorldPlayer.depth-1;
+                p.color = make_color_hsv(random(255),100+random(155),255);
+        }
+    }
 }
 
+//draw player:
+with(worldPlayer)
+{
+    fCur = (fCur + .1 + .1*(next != noone)) % 4;
+    frame = floor(fCur);
+    
+    draw_sprite_part(sprMisc,-1,frame*TILE,7*TILE,TILE,TILE,x,y-6);
+}
 
 draw_set_halign(fa_right);
+draw_set_valign(fa_center);
 
 if (instance_exists(target))
 {
+
+    //target crosshair:
+    draw_sprite_part(sprMisc,-1,8*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
 
     if (worldPlayer.current == target)
     {
         //HUD overlay:
         draw_sprite_part(sprMisc,-1,17*TILE,0,9*TILE,3*TILE,vx+WIDTH-9*TILE,vy+HEIGHT-3*TILE);
         //LVL text:
-        draw_text(vx+WIDTH - 3*TILE,vy+HEIGHT-2*TILE,target.name);
+        draw_text_ext(vx+WIDTH - 2.5*TILE,vy+HEIGHT-1.5*TILE,target.name,-1,6.5*TILE);
     }
     
-    //target crosshair:
-    draw_sprite_part(sprMisc,-1,8*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
 }
 
-
+draw_set_valign(fa_top);
 </string>
           </argument>
         </arguments>
