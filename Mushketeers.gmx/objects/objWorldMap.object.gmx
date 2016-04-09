@@ -43,7 +43,7 @@ vy = 0;
 goingToStartLevel = false;
 goingToQuit = false;
 
-btnStartLevel = instance_create(WIDTH/2,3*TILE,objButton);
+btnStartLevel = instance_create(WIDTH-1.25*TILE,HEIGHT-1.25*TILE,objButton);
 btnStartLevel.w = 2*TILE;
 btnStartLevel.h = 2*TILE;
 btnStartLevel.alpha = .6;
@@ -143,6 +143,7 @@ with(objWorldPlayer) instance_destroy();
      &amp;&amp; distance_to_object(worldPlayer) &lt; 6*TILE)
     {
         btnStartLevel.visible = true;
+        
         if (btnStartLevel.pressed)
         {
             if ((worldPlayer.x * TILE) div TILE == worldPlayer.target.x
@@ -236,20 +237,43 @@ if (goingToQuit)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>vx = view_xview[0];
+            <string>draw_set_blend_mode(bm_normal);
+
+vx = view_xview[0];
 vy = view_yview[0];
 
-draw_set_blend_mode(bm_normal);
-//draw_background(sprWorldMap,0,0);
+//background:
 draw_background_part(sprWorldMap,vx,vy,WIDTH,HEIGHT,vx,vy);
 
-draw_set_halign(fa_center);
+//clouds:
+draw_sprite_part(sprHud,-1,2*WIDTH,0,WIDTH,HEIGHT,vx,vy);
+
+//draw levels:
+with(objLevel)
+{
+    var row = 0;
+    if (canBePlayed) row = 1;
+    if (cleared) row = 2;
+    if (secretFound) row = 3;
+    draw_sprite_part(sprMisc,-1,row*2*TILE,8*TILE,2*TILE,2*TILE,x-.5*TILE,y-.5*TILE);
+}
+
+
+draw_set_halign(fa_right);
 
 if (instance_exists(target))
 {
-    draw_text(vx+WIDTH/2,vy+.5*TILE,target.name);
-        
-    draw_sprite_part(sprMisc,-1,7*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
+
+    if (worldPlayer.current == target)
+    {
+        //HUD overlay:
+        draw_sprite_part(sprMisc,-1,17*TILE,0,9*TILE,3*TILE,vx+WIDTH-9*TILE,vy+HEIGHT-3*TILE);
+        //LVL text:
+        draw_text(vx+WIDTH - 3*TILE,vy+HEIGHT-2*TILE,target.name);
+    }
+    
+    //target crosshair:
+    draw_sprite_part(sprMisc,-1,8*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
 }
 
 

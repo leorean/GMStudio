@@ -61,8 +61,11 @@ fric = 0;
     if (size &lt; 0 || alpha &lt;= 0)
         instance_destroy();
 
-    xVel = sign(xVel)*(abs(xVel)*fric);
-    yVel = sign(yVel)*(abs(yVel)*fric);
+    if (fric &gt; 0)
+    {
+        xVel = sign(xVel)*(abs(xVel)*fric);
+        yVel = sign(yVel)*(abs(yVel)*fric);
+    }
     
     x += xVel;
     y += yVel;

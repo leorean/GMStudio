@@ -86,12 +86,16 @@ if (current == noone &amp;&amp; global.curtain.isOpen)
 
 if (next != noone &amp;&amp; global.curtain.isOpen)
 {
-    x += sign(next.x - x) * 1;
-    y += sign(next.y - y) * 1;
-    if (((x * TILE) div TILE) == next.x &amp;&amp; ((y * TILE) div TILE) == next.y)
+    var angle = point_direction(cx,cy,next.cx,next.cy);
+    x += lengthdir_x(1,angle);
+    y += lengthdir_y(1,angle);    
+    //x += sign(next.x - x) * 1;
+    //y += sign(next.y - y) * 1;
+    //if (((x * TILE) div TILE) == next.x &amp;&amp; ((y * TILE) div TILE) == next.y)
+    if (abs(cx-next.cx) &lt; 2 &amp;&amp; abs(cy - next.cy) &lt; 2)
     {
-        x = (x * TILE) div TILE;
-        y = (y * TILE) div TILE;
+        x = (cx div TILE) * TILE;
+        y = (cy div TILE) * TILE;
         show_debug_message("arrived to " + string(next.lvlid) + ", target is "+ string(target.lvlid));
         current = noone;
         next = noone;
@@ -120,7 +124,7 @@ if (next != noone &amp;&amp; global.curtain.isOpen)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur + .1) % 4;
+            <string>fCur = (fCur + .1 + .1*(next != noone)) % 4;
 frame = floor(fCur);
 
 draw_sprite_part(sprMisc,-1,frame*TILE,7*TILE,TILE,TILE,x,y-6);
