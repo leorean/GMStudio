@@ -91,7 +91,7 @@ mouse_clear(mb_left);
             <kind>1</kind>
             <string>if (!goingToRestart &amp;&amp; !goingToQuit)
 {
-    if (btnPlay.pressed || keyboard_check_pressed(vk_backspace))
+    if (btnPlay.pressed)
     {
         global.state = G_PLAY;
     }
@@ -102,7 +102,7 @@ mouse_clear(mb_left);
         global.curtain.state = CLOSE;
     }
        
-    if (btnQuit.pressed)
+    if (btnQuit.pressed || keyboard_check_pressed(vk_backspace))
     {
         goingToQuit = true;
         global.curtain.state = CLOSE;

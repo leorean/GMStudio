@@ -107,7 +107,7 @@ if (btnPlay.pressed)
 if (global.curtain.isClosed &amp;&amp; global.curtain.state == CLOSE)
     room_goto(WORLDMAP);
 
-if (btnQuit.pressed)
+if (btnQuit.pressed || keyboard_check_pressed(vk_backspace))
     game_end();
 </string>
           </argument>

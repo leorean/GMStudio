@@ -84,14 +84,15 @@ for (i = 0; i &lt; 5; i++)
         {
             pressing = true;
         }
-        /*if (device_mouse_check_button_pressed(i,mb_any))
+        if (device_mouse_check_button_pressed(i,mb_any))
         {
             pressed = true;
-        }*/
+        }
         if (device_mouse_check_button_released(i,mb_any))
         {
-            pressed = true;
-        }        
+            released = true;
+        }
+        
     }
 }
 

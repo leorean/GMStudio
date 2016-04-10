@@ -159,7 +159,9 @@ global.mousey = device_mouse_y_to_gui(0);
 
 if (room == GAME)
 {
-    global.kPause = btnPause.pressed || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord('P'));
+    global.kPause = btnPause.pressed
+     || keyboard_check_pressed(vk_escape)
+     || keyboard_check_pressed(ord('P'));
     
     if (!btnPause.pressing)
     {
