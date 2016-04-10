@@ -86,9 +86,15 @@ path = noone;
 {
     //+++++physics++++++
     onGround = (yVel &gt;=-yGrav &amp;&amp; (collision_line(bbox_left,bbox_bottom+1,bbox_right,bbox_bottom+1,objSolid,true,true) != noone));
+
     cx = x + TILE/2;
     cy = y + TILE/2;
     
+    /*if (onPlatform)
+    {
+        //y = (platform.y div TILE) * TILE - TILE;
+    }*/
+            
     if (onGround)
     {
         if (xVel &lt; 0) dir = LEFT;
@@ -300,15 +306,18 @@ path = noone;
     //++++collision and move routine++++
     if (in(x,view_xview[0],view_xview[0]+view_wview[0])
         &amp;&amp; in(y,view_yview[0],view_yview[0]+view_hview[0]+TILE))
-    {
-        if (!place_meeting(x, y + yVel, objSolid))
+    {    
+        if (!place_meeting(x, y + yVel, objBlock)
+            &amp;&amp; !(place_meeting(x,y+yVel,objPlatform) &amp;&amp; (yVel &gt; 0 &amp;&amp; !place_meeting(x,y-1,objPlatform)) ))
+        {
             y += yVel;
+        }
         else
         {
-            yVel *= -.3;
+            yVel = min(yVel * -.3, 0);
         }
         
-        if (in(x + xVel, 0, room_width - TILE) &amp;&amp; !place_meeting(x + xVel, y, objSolid))
+        if (in(x + xVel, 0, room_width - TILE) &amp;&amp; !place_meeting(x + xVel, y, objBlock))
             x += xVel;
         else
         {

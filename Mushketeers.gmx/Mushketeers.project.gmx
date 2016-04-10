@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="5" name="datafiles">
+  <datafiles number="7" name="datafiles">
     <datafile>
       <name>WORLD.tmx</name>
       <exists>-1</exists>
@@ -37,6 +37,40 @@
         </Config>
       </ConfigOptions>
       <filename>L0.tmx</filename>
+    </datafile>
+    <datafile>
+      <name>L1.tmx</name>
+      <exists>-1</exists>
+      <size>330272</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>L1.tmx</filename>
+    </datafile>
+    <datafile>
+      <name>L2.tmx</name>
+      <exists>-1</exists>
+      <size>330272</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>L2.tmx</filename>
     </datafile>
     <datafile>
       <name>tiles.tsx</name>
@@ -101,6 +135,7 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\mskPlatform</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -123,11 +158,13 @@
   <objects name="objects">
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
-    <object>objects\objSolid</object>
     <object>objects\objEnemy</object>
     <object>objects\objCamera</object>
     <objects name="hierarchy">
       <object>objects\objStatic</object>
+      <object>objects\objSolid</object>
+      <object>objects\objPlatform</object>
+      <object>objects\objBlock</object>
     </objects>
     <object>objects\objCoin</object>
     <object>objects\objCollect</object>

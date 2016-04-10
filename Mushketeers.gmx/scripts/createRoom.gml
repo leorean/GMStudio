@@ -65,14 +65,17 @@ for (var i = 0; i<w; i ++)
         {
             case 0:
             break;
-            
+            case 192: //platform
+                addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                instance_create(i*TILE,j*TILE,objPlatform);
+            break;
             default:
                 if (fg>=32)
                     addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);
                 if (fg>=64)
                 {
                     addTile(fg,i*TILE,j*TILE,LAYER_FG);
-                    instance_create(i*TILE,j*TILE,objSolid);
+                    instance_create(i*TILE,j*TILE,objBlock);
                 }
             break;
         }

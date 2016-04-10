@@ -337,6 +337,13 @@ if (room == WORLDMAP)
     createWorldMap(mapData);
 }
 
+//DEBUG
+if (room == TITLE) 
+{
+    room_goto(GAME);
+//room_restart();
+}
+
 if (room == GAME)
 {
 
