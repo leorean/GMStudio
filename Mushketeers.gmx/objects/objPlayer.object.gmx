@@ -308,7 +308,7 @@ path = noone;
         &amp;&amp; in(y,view_yview[0],view_yview[0]+view_hview[0]+TILE))
     {    
         if (!place_meeting(x, y + yVel, objBlock)
-            &amp;&amp; !(place_meeting(x,y+yVel,objPlatform) &amp;&amp; (yVel &gt; 0 &amp;&amp; !place_meeting(x,y-1,objPlatform)) ))
+            &amp;&amp; !(place_meeting(x,y+yVel,objPlatform) &amp;&amp; (yVel &gt; 0 &amp;&amp; !place_meeting(x,y-1,objPlatform))))
         {
             y += yVel;
         }

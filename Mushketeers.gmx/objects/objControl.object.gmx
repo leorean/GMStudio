@@ -83,8 +83,10 @@ for (i = 0; i &lt; MAXLVL; i++)
 }
 
 mapData = importLevel("WORLD.tmx");
-//l0Data = importLevel("L0.tmx");
+//TODO: maybe lazy-load??
 levelData[0] = importLevel("L0.tmx");
+levelData[1] = importLevel("L1.tmx");
+levelData[2] = importLevel("L2.tmx");
 </string>
           </argument>
         </arguments>
@@ -114,6 +116,19 @@ if (keyboard_check_pressed(ord('C')))
     if (surface_exists(surf))
         surface_free(surf);
     show_debug_message("Quality set to" + string(global.quality));
+}
+
+//DEBUG ROOMS
+if (keyboard_check(vk_control))
+{
+    var goto = -1;
+    for (i = 0; i &lt; 10; i++)
+    if (keyboard_check_pressed(ord(string(i)))) { goto = i; }
+    if (goto != -1)
+    {
+        global.currentLevel = goto;
+        room_goto(GAME);
+    }    
 }
 
 if (keyboard_check_pressed(ord('J')))
@@ -337,13 +352,6 @@ if (room == WORLDMAP)
     createWorldMap(mapData);
 }
 
-//DEBUG
-if (room == TITLE) 
-{
-    room_goto(GAME);
-//room_restart();
-}
-
 if (room == GAME)
 {
 
@@ -505,8 +513,8 @@ if (room == GAME)
 }
 
 //fps
-/*draw_set_halign(fa_right);
-draw_text(vx+vw,vy+vh-TILE,fps);*/
+draw_set_halign(fa_right);
+draw_text(vx+vw,vy+vh-TILE,fps);
 </string>
           </argument>
         </arguments>

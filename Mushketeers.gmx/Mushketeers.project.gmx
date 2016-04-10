@@ -124,9 +124,9 @@
       <sprite>sprites\mskPath</sprite>
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskControl</sprite>
-      <sprite>sprites\mskSecret</sprite>
       <sprite>sprites\mskPauseMenuButton</sprite>
       <sprite>sprites\mskWorldMap</sprite>
+      <sprite>sprites\mskPlatform</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprLight</sprite>
@@ -135,7 +135,6 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprHud</sprite>
-    <sprite>sprites\mskPlatform</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
