@@ -29,6 +29,8 @@
 pressing = false;
 released = false;
 
+enabled = true;
+
 w = 3*TILE;
 h = 3*TILE;
 
@@ -77,7 +79,7 @@ for (i = 0; i &lt; 5; i++)
 {
     if (in(device_mouse_x(i) / room_width * WIDTH, offx-w/2,offx+w/2)
     &amp;&amp; in(device_mouse_y(i) / room_height * HEIGHT,offy-h/2,offy+h/2)
-    &amp;&amp; visible)
+    &amp;&amp; visible &amp;&amp; enabled)
     {
         dev = i;
         if (device_mouse_check_button(i,mb_any))
@@ -130,7 +132,8 @@ if (dev &gt; -1)
             <string>x = view_xview[0]+offx;
 y = view_yview[0]+offy;
 
-draw_sprite_part_ext(sprMisc,-1,offspritex,4*TILE,w,h,x-w/2,y-h/2,1,1,c_white,alpha);
+draw_set_blend_mode(bm_normal);
+draw_sprite_part_ext(sprMisc,-1,offspritex,4*TILE,w,h,x-w/2,y-h/2,1,1,c_white,alpha*.5+(enabled*alpha*.5));
 
 if (pressing)
 {

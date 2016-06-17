@@ -201,7 +201,7 @@ if (o_player.y &gt; deathline)
           <argument>
             <kind>1</kind>
             <string>depth = 100;
-
+/*
 draw_sprite_ext(sky[4],0,view_xview[0],view_yview[0] - (view_yview[0] mod view_hview[0]),1,1,0,c_white,sky_a[4]);
 draw_sprite_ext(sky[4],0,view_xview[0],view_yview[0] - (view_yview[0] mod view_hview[0]) - view_hview[0],1,1,0,c_white,sky_a[4]);
 
@@ -216,7 +216,7 @@ draw_sprite_ext(sky[1],0,view_xview[0],view_yview[0] - (view_yview[0] mod view_h
 
 draw_sprite_ext(sky[0],0,view_xview[0],view_yview[0] - (view_yview[0] mod view_hview[0]),1,1,0,c_white,sky_a[0]);
 draw_sprite_ext(sky[0],0,view_xview[0],view_yview[0] - (view_yview[0] mod view_hview[0]) - view_hview[0],1,1,0,c_white,sky_a[0]);
-
+*/
 depth = -100;
 
 draw_set_font(font);

@@ -112,9 +112,9 @@ with(objWorldPlayer) instance_destroy();
     var mx = view_xview[0] + (device_mouse_x(0) / room_width * WIDTH);
     var my = view_yview[0] + (device_mouse_y(0) / room_height * HEIGHT);
     
-    var anyButtonPressing = btnStartLevel.pressing || btnQuit.pressing;
+    //var anyButtonPressing = btnStartLevel.pressing || btnQuit.pressing;
     
-    if (mouse_check_button_pressed(mb_left) &amp;&amp; !anyButtonPressing)
+    if (mouse_check_button_pressed(mb_left))
     {
         focusx = global.mousex;
         focusy = global.mousey;
@@ -133,16 +133,13 @@ with(objWorldPlayer) instance_destroy();
                 worldPlayer.current = noone;
                 worldPlayer.target = target;
             }
-            //else
-            //    worldPlayer.target = noone;
         }
     }
     
     if (instance_exists(worldPlayer.target)
-     &amp;&amp; worldPlayer.target.canBePlayed &amp;&amp; worldPlayer.state == IDLE
-     &amp;&amp; distance_to_object(worldPlayer) &lt; 6*TILE)
+     &amp;&amp; worldPlayer.target.canBePlayed &amp;&amp; worldPlayer.state == IDLE)
     {
-        btnStartLevel.visible = true;
+        btnStartLevel.enabled = true;
         
         if (btnStartLevel.pressed)
         {
@@ -168,10 +165,10 @@ with(objWorldPlayer) instance_destroy();
         }
     }
     else
-        btnStartLevel.visible = false;
+        btnStartLevel.enabled = false;
     
     //scrolling
-    if (mouse_check_button(mb_left) &amp;&amp; !anyButtonPressing)
+    if (mouse_check_button(mb_left))
     {
         if (focusx != global.mousex || focusy != global.mousey)
         {
@@ -294,21 +291,14 @@ with(worldPlayer)
 draw_set_halign(fa_right);
 draw_set_valign(fa_center);
 
+//target crosshair:
+draw_sprite_part(sprMisc,-1,8*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
+
+//HUD overlay:
+draw_sprite_part(sprMisc,-1,17*TILE,0,9*TILE,3*TILE,vx+WIDTH-9*TILE,vy+HEIGHT-3*TILE);
+//LVL text:
 if (instance_exists(target))
-{
-
-    //target crosshair:
-    draw_sprite_part(sprMisc,-1,8*TILE,6*TILE,3*TILE,3*TILE,target.x-TILE,target.y-TILE);
-
-    if (worldPlayer.current == target)
-    {
-        //HUD overlay:
-        draw_sprite_part(sprMisc,-1,17*TILE,0,9*TILE,3*TILE,vx+WIDTH-9*TILE,vy+HEIGHT-3*TILE);
-        //LVL text:
-        draw_text_ext(vx+WIDTH - 2.5*TILE,vy+HEIGHT-1.5*TILE,target.name,-1,6.5*TILE);
-    }
-    
-}
+    draw_text_ext(vx+WIDTH - 2.5*TILE,vy+HEIGHT-1.5*TILE,target.name,-1,6.5*TILE);
 
 draw_set_valign(fa_top);
 </string>
