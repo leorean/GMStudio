@@ -8,6 +8,30 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//font
+global.fntDefault = font_add_sprite(sprFntDefault, ord(' '), true, 1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="1">
       <action>
         <libid>1</libid>
@@ -25,7 +49,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(ord('Q')))
+            <string>// key input
+
+if (keyboard_check_pressed(ord('Q')))
     game_restart();
 
 if (keyboard_check_pressed(ord('R')))
@@ -33,6 +59,27 @@ if (keyboard_check_pressed(ord('R')))
     
 if (keyboard_check_pressed(vk_escape))
     game_end();
+
+if (mouse_check_button_pressed(mb_left))
+{
+    enemy = instance_place(mouse_x,mouse_y,objEnemy);
+    if (instance_exists(enemy) &amp;&amp; !enemy.invincible)
+    {
+        var _kbAngle = point_direction(enemy.x,enemy.y,enemy.x-1.5,enemy.y-2);
+        enemy.xVel = lengthdir_x(global.kb, _kbAngle);
+        enemy.yVel = lengthdir_y(global.kb, _kbAngle);
+        enemy.chain = global.chain;
+        enemy.hurt = global.dmg;
+    }
+}
+    
+// global routines:
+
+if (global.timer % (2.5 * SEC) == 0)
+    instance_create(0,GROUND-2*TILE,objEnemy);
+        
+global.timer = (global.timer + 1) % INF;
+
 
 </string>
           </argument>
@@ -56,12 +103,25 @@ if (keyboard_check_pressed(vk_escape))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>player = instance_create(room_width/2,room_height/2,objPlayer);
-b = noone;
+            <string>player = instance_create(room_width/2,2*room_height/3,objPlayer);
 
 global.state = PLAY;
 
+//stats
+global.dmg = 1;
+global.chain = 3;
+global.kb = 2;
+global.maxHp = 10
+global.hp = global.maxHp;
+
+global.timer = 0;
 delay = 0;
+
+//create floor
+for (var i = -6; i &lt; room_width/TILE + 6; i++)
+{
+    instance_create(i*TILE, GROUND, objSolid);
+}
 </string>
           </argument>
         </arguments>
@@ -85,12 +145,15 @@ delay = 0;
           <argument>
             <kind>1</kind>
             <string>//HUD
+draw_set_font(global.fntDefault);
 
-draw_set_color(c_black);
+draw_set_color(c_white);
 draw_set_alpha(1);
 
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
+
+draw_text(room_width, 0, "Hello World!");
 
 draw_text(room_width,room_height-TILE,fps);
 </string>

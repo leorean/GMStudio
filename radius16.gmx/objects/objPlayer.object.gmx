@@ -33,7 +33,18 @@ fCur = 0;
 frame = 0;
 fSpeed = .1;
 
+state = IDLE;
+lastState = state;
+
+
+delay = 0;
+maxDelay = 40;
+proj = noone;
+
 dir = RIGHT;
+
+// sprite width = strip width / sub images
+sprPlayer = sprite_add("player.png",8,true,false,1.5*TILE,2.5*TILE);
 </string>
           </argument>
         </arguments>
@@ -59,31 +70,37 @@ dir = RIGHT;
             <string>if (global.state == PLAY)
 {
 
-    if (xVel &lt;= 0) dir = LEFT else dir = RIGHT;
+    if (mouse_x &lt;= x) dir = LEFT else dir = RIGHT;
 
-    fCur = (fCur + fSpeed) % 4;
-    frame = floor(fCur);
+    angle = point_direction(x,y,mouse_x,mouse_y);
 
+    if (mouse_check_button_pressed(mb_left)
+        &amp;&amp; instance_place(mouse_x,mouse_y,objEnemy) != noone)
+    {
+        state = ATTACK;
+    }
+    
     if (mouse_check_button(mb_left))
     {
-        angle = point_direction(x,y,mouse_x,mouse_y);        
-        xVel += lengthdir_x(.3,angle);
-        yVel += lengthdir_y(.3,angle);
-        /*xVel += sign(mouse_x - x) * .2;
-        if (y &gt; mouse_y)
-            yVel += sign(mouse_y - y) * .3;
-        */
+        if (state != ATTACK)
+        {
+            state = WALK;
+            xVel += lengthdir_x(.3,angle);
+            yVel += lengthdir_y(.3,angle);
+        }
     } else
-        yVel += yGrav;
-    
+    {
+        xVel *= .9;
+        yVel *= .9;
+    }
+        
+    delay = max(delay-1,0);
 
-    if (y &gt; 16*TILE)
-        yVel = max(yVel - .3, -2);
-    else if (y &gt; 14*TILE)
-        yVel -= .1;
+    if (y &gt; 15*TILE)
+        yVel = max(yVel - .2, -2);
 
-    xVel = sign(xVel) * min(abs(xVel), 5);
-    yVel = sign(yVel) * min(abs(yVel), 5);
+    xVel = sign(xVel) * min(abs(xVel), 4);
+    yVel = sign(yVel) * min(abs(yVel), 4);
     
     if (!in(x+xVel,0,room_width))
         xVel = - xVel * .3;
@@ -101,8 +118,7 @@ dir = RIGHT;
         xVel *= .9;
         yVel = 0;
     }
-    
-    
+
 }
 </string>
           </argument>
@@ -126,7 +142,38 @@ dir = RIGHT;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part_ext(sprPlayer,-1,3*frame*TILE,0,3*TILE,4*TILE,x-1.5*TILE*sign(dir),y-2.5*TILE,sign(dir),1,c_white,1);
+            <string>var _s = 0
+switch(state)
+{
+    case IDLE:
+    case WALK:
+        _s = 0;
+        fSpeed = .1;
+        break;
+    case ATTACK:
+        _s = 1;
+        fSpeed = .2;
+        break;
+}
+
+if (state != lastState) fCur = 4* _s;
+
+fCur =  4 * _s + (fCur + fSpeed) % 4;
+frame = floor(fCur);
+
+if (state == ATTACK &amp;&amp; (frame % 4) == 3)
+    state = IDLE;
+
+lastState = state;
+
+if (state == WALK)
+    draw_angle = point_direction(x,y,x+xVel,y - 1*TILE +yVel) - 90
+//else if (state == ATTACK)
+//    draw_angle = point_direction(mouse_x, mouse_y, x, y) + 180 * (mouse_x &gt; x);
+else
+    draw_angle = 0;
+
+draw_sprite_ext(sprPlayer,frame,x,y,sign(dir),1,draw_angle,c_white,1);
 </string>
           </argument>
         </arguments>

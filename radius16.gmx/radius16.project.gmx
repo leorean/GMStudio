@@ -3,14 +3,51 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="2" name="datafiles">
+    <datafile>
+      <name>player.png</name>
+      <exists>-1</exists>
+      <size>1952</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>player.png</filename>
+    </datafile>
+    <datafile>
+      <name>fntDefault.png</name>
+      <exists>-1</exists>
+      <size>2965</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>fntDefault.png</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\mskControl</sprite>
     <sprite>sprites\mskSolid</sprite>
-    <sprite>sprites\mskBall</sprite>
-    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\mskEnemy</sprite>
+    <sprite>sprites\mskPlayerProjectile</sprite>
+    <sprite>sprites\sprFntDefault</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -21,18 +58,28 @@
     <object>objects\objPlayer</object>
     <object>objects\objControl</object>
     <object>objects\objSolid</object>
-    <object>objects\objBall</object>
+    <object>objects\objEnemy</object>
+    <object>objects\objPlayerProjectile</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="6">
+  <constants number="15">
     <constant name="PAUSE">0</constant>
     <constant name="PLAY">1</constant>
     <constant name="GAMEOVER">2</constant>
     <constant name="TILE">16</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
+    <constant name="INF">90000000</constant>
+    <constant name="SEC">60</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="WALK">1</constant>
+    <constant name="HURT">2</constant>
+    <constant name="DIE">3</constant>
+    <constant name="ATTACK">4</constant>
+    <constant name="P_WALK">0</constant>
+    <constant name="GROUND">19*TILE</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
