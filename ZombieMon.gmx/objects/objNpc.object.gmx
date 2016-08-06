@@ -25,8 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>maxHp = 100;
-infectedHp = //TODO
+            <string>infectedHp = 100;
+hp = 200;
+
 dir = NONE;
 
 xVel = 0;
@@ -40,9 +41,12 @@ target = noone;
 fleeFrom = noone;
 
 walkSpeed = 1;
-huntSpeed = 1.2;
 runSpeed = 1.3;
 
+deathTimer = 1*SEC;
+delay = 0;
+
+// graphics
 </string>
           </argument>
         </arguments>
@@ -110,7 +114,7 @@ if (state == PANIC)
     yVel = lengthdir_y(runSpeed, angle);
     dir = angleToDir(angle);
 
-    walkDist =  max(walkDist - runSpeed, 0);
+    walkDist = max(walkDist - runSpeed, 0);
     
     if (walkDist == 0)
     {
@@ -133,17 +137,19 @@ if (state == PANIC)
         if (fleeFrom != noone &amp;&amp; instance_exists(fleeFrom))
         {
             angle = point_direction(fleeFrom.x, fleeFrom.y, x, y);
-        }
+        } else
+            state = WALK;
     }
 }
 
 // chase other npcs
 if (state == INFECTED)
-{
+{    
     dir = angleToDir(angle);
-    walkDist =  max(walkDist - huntSpeed, 0);
-    xVel = lengthdir_x(huntSpeed, angle);
-    yVel = lengthdir_y(huntSpeed, angle);
+    var spd = min(.25 * global.huntSpeed + global.huntSpeed * (hp / global.infectedHp), global.huntSpeed);
+    walkDist =  max(walkDist - spd, 0);
+    xVel = lengthdir_x(spd, angle);
+    yVel = lengthdir_y(spd, angle);
     
     if (walkDist == 0)
     {
@@ -159,7 +165,7 @@ if (state == INFECTED)
         for (i = 0; i &lt; instance_number(objNpc); i++)
         {
             var t = instance_find(objNpc, i);
-            if (instance_exists(t) &amp;&amp; t != self &amp;&amp; t.state != INFECTED)
+            if (instance_exists(t) &amp;&amp; t != self &amp;&amp; t.state != INFECTED &amp;&amp; t.state != DIE)
             {
                 if (distance_to_object(t) &lt; maxDist)
                 {
@@ -176,19 +182,56 @@ if (state == INFECTED)
     else
     {        
         angle = point_direction(x, y, target.x, target.y);
-                        
+
+        // infect others
         if (place_meeting(x, y, target))
         {
-            target.state = INFECTED;
-            target = noone;
+            if (delay == 0)
+            {
+                target.hp = max(target.hp - global.dmg, 0);
+                delay = global.delay;
+                hp = min(hp + global.leech, global.infectedHp);
+            }
+            if (target.hp == 0)
+            {
+                target.hp = global.infectedHp;
+                
+                // chance to infect
+                var rnd = random(1);
+                if (rnd &gt;= global.infectChance)
+                    target.state = INFECTED;
+                else
+                    target.state = DIE;
+                
+                target = noone;
+                //TODO: spawn coins here
+            }
         }
+    }
+    
+    delay = max(delay - 1, 0);
+    
+    hp = max(hp - 1, 0);
+    if (hp == 0)
+    {
+        state = DIE;
     }
 }
 
-// try to flee
-if (state == PANIC)
+// die after infection
+if (state == DIE)
 {
-
+    hp = 0;
+    xVel = 0;
+    yVel = 0;
+    dir = DOWN;
+    
+    deathTimer = max(deathTimer - 1, 0);
+    
+    if (deathTimer == 0)
+    {
+        instance_destroy();
+    }
 }
 
 if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, WIDTH - TILE))
@@ -240,9 +283,9 @@ if (state == PANIC) c = c_olive;
 
 draw_sprite_ext(mskNpc, -1, x, y, 1, 1, 0, c, 1);
 
-draw_text(x,y-TILE,dir);
+draw_text(x,y-TILE,hp);
 
-if (target != noone)
+if (target != noone &amp;&amp; instance_exists(target))
 {
     draw_line(x,y,target.x,target.y);
 }

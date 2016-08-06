@@ -58,6 +58,7 @@ if (mouse_check_button(mb_left))
     if (instance_exists(e) &amp;&amp; e.state != INFECTED)
     {
         e.state = INFECTED;
+        e.hp = global.infectedHp;
     }
 }
 </string>
@@ -84,6 +85,14 @@ if (mouse_check_button(mb_left))
             <kind>1</kind>
             <string>global.state = G_PLAY;
 global.timer = 0;
+
+global.dmg = 25;
+global.delay = 10;
+global.infectedHp = 450;
+global.leech = 40;
+
+global.huntSpeed = 2;
+global.infectChance = .5;
 </string>
           </argument>
         </arguments>

@@ -25,7 +25,8 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="16">
+  <constants number="17">
+    <constant name="SEC">60</constant>
     <constant name="DIE">3</constant>
     <constant name="INFECTED">2</constant>
     <constant name="PANIC">1</constant>
