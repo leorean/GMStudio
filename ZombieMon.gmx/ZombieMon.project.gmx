@@ -9,6 +9,10 @@
     <sprite>sprites\mskControl</sprite>
     <sprite>sprites\mskNpc</sprite>
     <sprite>sprites\mskSolid</sprite>
+    <sprite>sprites\mskInitiator</sprite>
+    <sprite>sprites\sprNpc</sprite>
+    <sprite>sprites\mskCoin</sprite>
+    <sprite>sprites\sprCoin</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -16,11 +20,14 @@
     <script>scripts\in.gml</script>
     <script>scripts\angleToDir.gml</script>
     <script>scripts\findTargets.gml</script>
+    <script>scripts\spawnCoins.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objNpc</object>
     <object>objects\objSolid</object>
+    <object>objects\objInitiator</object>
+    <object>objects\objCoin</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

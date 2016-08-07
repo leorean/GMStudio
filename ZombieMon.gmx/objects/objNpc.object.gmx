@@ -28,8 +28,6 @@
             <string>infectedHp = 100;
 hp = 200;
 
-dir = NONE;
-
 xVel = 0;
 yVel = 0;
 
@@ -40,13 +38,27 @@ angle = random(360);
 target = noone;
 fleeFrom = noone;
 
-walkSpeed = 1;
+walkSpeed = .7;
 runSpeed = 1.3;
 
 deathTimer = 1*SEC;
 delay = 0;
 
+value = 1337;
+
 // graphics
+dir = NONE;
+lastDir = NONE;
+frame = 0;
+fCur = 0;
+fSpeed = .1;
+type = 0;
+row = 0;
+col = 0;
+
+xprev = 0;
+yprev = 0;
+dst = 0;
 </string>
           </argument>
         </arguments>
@@ -86,7 +98,6 @@ if (state == WALK)
     
     xVel = lengthdir_x(walkSpeed, angle);
     yVel = lengthdir_y(walkSpeed, angle);
-    dir = angleToDir(angle);
     
     if (global.timer % 30 == 0)
     {
@@ -112,7 +123,6 @@ if (state == PANIC)
 {
     xVel = lengthdir_x(runSpeed, angle);
     yVel = lengthdir_y(runSpeed, angle);
-    dir = angleToDir(angle);
 
     walkDist = max(walkDist - runSpeed, 0);
     
@@ -145,7 +155,6 @@ if (state == PANIC)
 // chase other npcs
 if (state == INFECTED)
 {    
-    dir = angleToDir(angle);
     var spd = min(.25 * global.huntSpeed + global.huntSpeed * (hp / global.infectedHp), global.huntSpeed);
     walkDist =  max(walkDist - spd, 0);
     xVel = lengthdir_x(spd, angle);
@@ -174,13 +183,9 @@ if (state == INFECTED)
                 }
             }
         }
-        if (target != noone)
-        {
-            //target.fleeFrom = id;
-        }
     }
     else
-    {        
+    {
         angle = point_direction(x, y, target.x, target.y);
 
         // infect others
@@ -204,7 +209,8 @@ if (state == INFECTED)
                     target.state = DIE;
                 
                 target = noone;
-                //TODO: spawn coins here
+                
+                spawnCoins(value, x + 8, y + 8);
             }
         }
     }
@@ -224,7 +230,6 @@ if (state == DIE)
     hp = 0;
     xVel = 0;
     yVel = 0;
-    dir = DOWN;
     
     deathTimer = max(deathTimer - 1, 0);
     
@@ -234,27 +239,36 @@ if (state == DIE)
     }
 }
 
-if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, WIDTH - TILE))
+if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, room_width - TILE))
     x += xVel;
 else
 {
     xVel = 0;
-    //angle = (angle + 180) % 360;
-    //walkDist += TILE;
     target = noone;
-    //walkDist = 0;
 }
-if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, HEIGHT - TILE))
+if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - TILE))
     y += yVel;
 else
 {
     yVel = 0;
-    //angle = (angle + 180) % 360;
-    //walkDist += TILE;
     target = noone;    
-    //walkDist = 0;
 }
 
+// cosmetic bullshit
+if (dst == 0)
+{
+    dir = angleToDir(point_direction(xprev, yprev, x, y));
+
+    xprev = x;
+    yprev = y;
+    dst = 3;
+} else
+    dst = max(dst-1, 0);
+
+if (state == DIE)
+    dir = DOWN;
+
+depth = room_height - y + 30;
 </string>
           </argument>
         </arguments>
@@ -277,18 +291,48 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state == WALK) c = c_white;
-if (state == INFECTED) c = c_red;
-if (state == PANIC) c = c_olive;
+            <string>fCur = (fCur + fSpeed) % 2;
+frame = floor(fCur);
 
-draw_sprite_ext(mskNpc, -1, x, y, 1, 1, 0, c, 1);
-
-draw_text(x,y-TILE,hp);
-
-if (target != noone &amp;&amp; instance_exists(target))
+switch(state)
 {
-    draw_line(x,y,target.x,target.y);
+    case WALK:
+        col = 0;
+        fSpeed = .1;
+    break;
+    case PANIC:
+        col = 2;
+        fSpeed = .2;
+    break;
+    case INFECTED:
+        fSpeed = .15;
+        col = 4;
+    break;
+    case DIE:
+        fSpeed = .15;
+        col = 6;
+    break;
 }
+
+switch(dir)
+{
+    case DOWN:
+        row = 0;
+    break;
+    case UP:
+        row = 1;
+    break;
+    case LEFT:
+        row = 2;
+    break;
+    case RIGHT:
+        row = 3;
+    break;
+}
+
+draw_sprite_part(sprNpc, -1, col * TILE + frame * TILE, row * TILE, TILE, TILE, x, y);
+
+//draw_text(x, y-TILE, string(xVel) + ", " + string(yVel));
 </string>
           </argument>
         </arguments>
