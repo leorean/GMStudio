@@ -32,6 +32,7 @@ xVel = 0;
 yVel = 0;
 
 state = WALK;
+statePrev = WALK;
 walkDist = 0;
 angle = random(360);
 
@@ -190,7 +191,7 @@ if (state == INFECTED)
         angle = point_direction(x, y, target.x, target.y);
 
         // infect others
-        if (place_meeting(x, y, target))
+        if (collision_rectangle(x, y, x+TILE, y+TILE, target, false, true))
         {
             if (delay == 0)
             {
@@ -273,7 +274,12 @@ if (dst == 0)
 
 if (state == DIE)
     dir = DOWN;
+    
+if ((state == INFECTED || state == DIE) &amp;&amp; statePrev != state)
+    instance_create(x+8, y+8, objEffect);
 
+statePrev = state;
+    
 depth = room_height - y + 30;
 </string>
           </argument>

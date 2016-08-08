@@ -14,6 +14,7 @@
     <sprite>sprites\mskCoin</sprite>
     <sprite>sprites\sprCoin</sprite>
     <sprite>sprites\sprFnt</sprite>
+    <sprite>sprites\sprEffect</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -30,6 +31,7 @@
     <object>objects\objInitiator</object>
     <object>objects\objCoin</object>
     <object>objects\objText</object>
+    <object>objects\objEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

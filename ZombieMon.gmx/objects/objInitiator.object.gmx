@@ -115,7 +115,12 @@ if (thrown)
         }
         
         var t = instance_create(x, y, objText);
-        t.text = string(count) + " Hits!";
+        if (count == 0)
+            t.text = "Miss";
+        if (count == 1)
+            t.text = "1 Hit!";
+        if (count &gt; 1)
+            t.text = string(count) + " Hits!";
         
         instance_destroy();
     }
