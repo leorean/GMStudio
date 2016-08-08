@@ -38,4 +38,9 @@ while ((_c div 5) > 0)
     t.value = 5;
     _c -= 5;
 }
-
+while ((_c div 1) > 0)
+{
+    var t = instance_create(_x, _y, objCoin);
+    t.value = 1;
+    _c -= 1;
+}

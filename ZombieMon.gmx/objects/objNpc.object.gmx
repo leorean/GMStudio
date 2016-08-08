@@ -45,6 +45,7 @@ deathTimer = 1*SEC;
 delay = 0;
 
 value = 1337;
+spawnedCoins = false;
 
 // graphics
 dir = NONE;
@@ -208,9 +209,9 @@ if (state == INFECTED)
                 else
                     target.state = DIE;
                 
-                target = noone;
-                
                 spawnCoins(value, x + 8, y + 8);
+                    
+                target = noone;                
             }
         }
     }
@@ -227,6 +228,11 @@ if (state == INFECTED)
 // die after infection
 if (state == DIE)
 {
+
+    /*if (!spawnedCoins)
+        spawnCoins(value, x + 8, y + 8);
+    spawnedCoins = true;*/
+    
     hp = 0;
     xVel = 0;
     yVel = 0;

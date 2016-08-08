@@ -84,7 +84,7 @@ if (dragged &amp;&amp; !thrown)
         xVel = lengthdir_x(force, angle);
         yVel = lengthdir_y(force, angle);
         
-        if (force &lt; 1.5)
+        if (force &lt; 1)
         {
             thrown = false;
             dragged = false;
@@ -98,13 +98,11 @@ if (thrown)
 {
     timer = max(timer - 1, 0);
     
-    //xVel *= (timer / maxTimer);
-    //yVel *= (timer / maxTimer);
-    
     if (!timer)
     {
         xVel = 0;
         yVel = 0;
+        var count = 0;
         for (i = 0; i &lt; instance_number(objNpc); i++)
         {
             var t = instance_find(objNpc, i);
@@ -112,14 +110,23 @@ if (thrown)
             {
                 t.state = INFECTED;
                 t.hp = global.infectedHp;
+                count++;
             }
         }
+        
+        var t = instance_create(x, y, objText);
+        t.text = string(count) + " Hits!";
+        
         instance_destroy();
     }
+} else
+{
+    xVel = 0;
+    yVel = 0;
 }
 
-xVel = sign(xVel) * min(abs(xVel), 8);
-yVel = sign(yVel) * min(abs(yVel), 8);
+xVel = sign(xVel) * min(abs(xVel), 12);
+yVel = sign(yVel) * min(abs(yVel), 12);
 
 if (in(x + xVel, 40, room_width-40))
     x += xVel * (timer / maxTimer);

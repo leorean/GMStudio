@@ -26,6 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>randomize();
+
+global.fnt = font_add_sprite(sprFnt, ord(' '), true, 1);
 </string>
           </argument>
         </arguments>
@@ -116,7 +118,7 @@ global.huntSpeed = 2;
 global.infectChance = .5;
 
 
-repeat(100)
+repeat(25)
 {
     var rndx = -1;
     var rndy = -1;
@@ -129,6 +131,42 @@ repeat(100)
 }
 
 instance_create(room_width/2, room_height - 40, objInitiator);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>display_set_gui_size(.5* WIDTH, .5* HEIGHT);
+
+var w = display_get_gui_width();
+var h = display_get_gui_height();
+
+
+draw_set_alpha(1);
+draw_set_color(c_white);
+draw_set_font(global.fnt);
+
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+
+draw_text(w - 0, 0, "$" + string(global.coins));
 </string>
           </argument>
         </arguments>

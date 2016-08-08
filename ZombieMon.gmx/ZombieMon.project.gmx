@@ -13,6 +13,7 @@
     <sprite>sprites\sprNpc</sprite>
     <sprite>sprites\mskCoin</sprite>
     <sprite>sprites\sprCoin</sprite>
+    <sprite>sprites\sprFnt</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -28,6 +29,7 @@
     <object>objects\objSolid</object>
     <object>objects\objInitiator</object>
     <object>objects\objCoin</object>
+    <object>objects\objText</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
