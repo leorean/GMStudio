@@ -49,12 +49,13 @@ value = 1337;
 spawnedCoins = false;
 
 // graphics
+type = irandom(1);
+
 dir = NONE;
 lastDir = NONE;
 frame = 0;
 fCur = 0;
 fSpeed = .1;
-type = 0;
 row = 0;
 col = 0;
 
@@ -329,18 +330,21 @@ switch(state)
 switch(dir)
 {
     case DOWN:
-        row = 0;
+        row = 0 + 4*type;
     break;
     case UP:
-        row = 1;
+        row = 1 + 4*type;
     break;
     case LEFT:
-        row = 2;
+        row = 2 + 4*type;
     break;
     case RIGHT:
-        row = 3;
+        row = 3 + 4*type;
     break;
 }
+
+if (state == INFECTED || state == DIE)
+    type = 0;
 
 draw_sprite_part(sprNpc, -1, col * TILE + frame * TILE, row * TILE, TILE, TILE, x, y);
 
