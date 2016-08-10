@@ -51,7 +51,9 @@ type = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = min(fCur + fSpeed, 4);
+            <string>draw_set_alpha(1);
+
+fCur = min(fCur + fSpeed, 4);
 frame = floor (fCur);
 
 if (fCur == 4) instance_destroy();

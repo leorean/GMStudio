@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>randomize();
 
+surf = -1; //drawing surface
+
 global.fnt = font_add_sprite(sprFnt, ord(' '), true, 1);
 </string>
           </argument>
@@ -79,8 +81,40 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>view_wview = room_width;
-view_hview = view_wview * 1.7777778;
+            <string>//view_wview = room_width + TILE;
+//view_hview = (view_wview * 1.7777778);
+
+/*var _vh = view_wview * 1.7777778;
+var _vw = view_hview / 1.7777778;
+
+view_wview = max(_vw, room_width + TILE);
+view_hview = max(_vh, room_height + TILE);
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Free Surface
+if (surface_exists(surf))
+    surface_free(surf);
 </string>
           </argument>
         </arguments>
@@ -107,6 +141,9 @@ view_hview = view_wview * 1.7777778;
 global.timer = 0;
 
 global.coins = 0;
+
+// upgradeable variables:
+
 global.coinRadius = 2*TILE;
 
 global.dmg = 25;
@@ -117,6 +154,7 @@ global.leech = 40;
 global.huntSpeed = 2;
 global.infectChance = .5;
 
+global.value = 3;
 
 repeat(25)
 {
@@ -153,11 +191,59 @@ instance_create(room_width/2, room_height - 40, objInitiator);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>display_set_gui_size(.5* WIDTH, .5* HEIGHT);
+            <string>//++++SHADER++++
+shader_set(shader0);
+draw_clear(c_black);
+
+//--------------------------------------------------
+
+//++++SURFACE++++
+if (!surface_exists(surf))
+{
+    //Create (or recreate) the surface when needed
+    //QUALITY:
+    
+    view_wview = room_width;
+    view_hview = room_height;
+    
+    var _w = view_wport[0];
+    var _h = view_hport[0];
+
+    surf = surface_create(_w, _h);
+    surface_set_target(surf);
+    
+    draw_clear(c_black);
+    surface_reset_target();
+    
+    //Set the view that you want to draw to the surface
+    view_surface_id[0] = surf;
+        
+}
+else
+{
+
+    //Disable alpha blending (not needed since we are drawing the whole view)
+    draw_enable_alphablend(false);
+    //Draw the surface stretched to the GUI layer
+    
+    var aspect_x = display_get_gui_width() / surface_get_width(surf);
+    var aspect_y = display_get_gui_height() / surface_get_height(surf);
+    
+    display_set_gui_size(surface_get_width(surf) / 2, surface_get_height(surf) / 2);
+    
+    var xoffset = (surface_get_width(surf)*aspect_x) / 2;
+    var yoffset = (surface_get_height(surf)*aspect_y) / 2;
+    draw_surface_ext(surf,
+        display_get_gui_width() / 2 - xoffset,
+        display_get_gui_height() / 2 - yoffset, aspect_x, aspect_y, 0, c_white, 1);
+    
+    //Switch on alpha blending again for the next normal draw pass
+    draw_enable_alphablend(true);
+    
+}
 
 var w = display_get_gui_width();
 var h = display_get_gui_height();
-
 
 draw_set_alpha(1);
 draw_set_color(c_white);
