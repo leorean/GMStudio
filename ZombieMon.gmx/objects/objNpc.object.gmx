@@ -180,6 +180,7 @@ if (state == INFECTED)
             if (instance_exists(t) &amp;&amp; t != self &amp;&amp; t.state != INFECTED &amp;&amp; t.state != DIE)
             {
                 if (distance_to_object(t) &lt; maxDist
+                 &amp;&amp; (t.fleeFrom == id || t.fleeFrom == noone || instance_number(objNpc) &lt;= 2)
                  &amp;&amp; !collision_line(x+8,y+8,t.x+8,t.y+8,objSolid,false,true))
                 {
                     target = t;
@@ -193,13 +194,13 @@ if (state == INFECTED)
         angle = point_direction(x, y, target.x, target.y);
 
         // infect others
-        if (collision_rectangle(x, y, x+TILE, y+TILE, target, false, true))
+        if (collision_rectangle(x + xVel, y + yVel, x+TILE+xVel, y+TILE+yVel, target, false, true))
         {
             if (delay == 0)
             {
                 target.hp = max(target.hp - global.dmg, 0);
                 delay = global.delay;
-                hp = min(hp + global.leech, global.infectedHp);
+                //hp = min(hp + global.leech, global.infectedHp);
             }
             if (target.hp == 0)
             {
@@ -231,10 +232,6 @@ if (state == INFECTED)
 // die after infection
 if (state == DIE)
 {
-
-    /*if (!spawnedCoins)
-        spawnCoins(value, x + 8, y + 8);
-    spawnedCoins = true;*/
     
     hp = 0;
     xVel = 0;

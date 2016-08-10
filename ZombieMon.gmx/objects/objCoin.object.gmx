@@ -36,7 +36,7 @@ fCur = irandom(4);
 taken = false;
 
 alpha = 1;
-timer = 4*SEC;
+timer = 8*SEC;
 fSpeed = .1;
 </string>
           </argument>
@@ -69,7 +69,7 @@ fSpeed = .1;
     timer = max(timer - 1, 0);
     if (!timer)
     {
-        alpha = max(alpha - .01, 0);
+        alpha = max(alpha - .005, 0);
         if (!alpha)
             instance_destroy();
     }
