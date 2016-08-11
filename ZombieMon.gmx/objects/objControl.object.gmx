@@ -271,6 +271,17 @@ draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
 draw_text(w - 0, 0, "$" + string(global.coins));
+
+/*for (var i = 0; i &lt; instance_number(objText); i++)
+{
+    var _txt = instance_find(objText, i);
+    draw_set_alpha(_txt.alpha);
+    draw_set_color(_txt.color);
+    draw_set_font(global.fnt);
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_top);
+    draw_text_transformed(_txt.x, _txt.y, _txt.text, 1, 1, 0);
+}*/
 </string>
           </argument>
         </arguments>

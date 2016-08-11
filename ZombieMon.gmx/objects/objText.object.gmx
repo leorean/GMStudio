@@ -36,7 +36,7 @@ color = c_white;
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -67,7 +67,12 @@ draw_set_color(color);
 draw_set_font(global.fnt);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
-draw_text_transformed(x, y, text, 2, 2, 0);
+
+var w = display_get_gui_width();
+var h = display_get_gui_height();
+
+draw_text_transformed( (x / room_width) * w,
+ (y / room_height) * h, text, 1, 1, 0);
 </string>
           </argument>
         </arguments>
