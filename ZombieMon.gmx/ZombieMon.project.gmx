@@ -48,6 +48,7 @@
     <script>scripts\importLevel.gml</script>
     <script>scripts\createRoom.gml</script>
     <script>scripts\addTile.gml</script>
+    <script>scripts\spawnNewPerson.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

@@ -70,7 +70,7 @@ fSpeed = .1;
     if (!timer)
     {
         alpha = max(alpha - .005, 0);
-        if (!alpha)
+        if (alpha == 0)
             instance_destroy();
     }
     
@@ -95,8 +95,8 @@ if (taken)
     fSpeed = .2;
 }
 
-x = max(min(x + xVel, room_width-TILE), TILE);
-y = max(min(y + yVel, room_height-TILE), TILE);
+x = max(min(x + xVel, room_width-8), 8);
+y = max(min(y + yVel, room_height-8), 8);
 
 </string>
           </argument>

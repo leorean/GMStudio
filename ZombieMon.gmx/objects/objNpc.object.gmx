@@ -31,6 +31,8 @@ hp = 200;
 xVel = 0;
 yVel = 0;
 
+spawned = false;
+
 state = WALK;
 statePrev = WALK;
 walkDist = 0;
@@ -97,6 +99,11 @@ if (state == WALK)
         angle += -6+random(12);
     }
     
+    if (!spawned) {
+        if(x &lt; 0) angle = 0;
+        else angle = 180;
+    }
+    
     walkDist =  max(walkDist - walkSpeed, 0);
     
     xVel = lengthdir_x(walkSpeed, angle);
@@ -149,9 +156,15 @@ if (state == PANIC)
         }
         if (fleeFrom != noone &amp;&amp; instance_exists(fleeFrom))
         {
-            angle = point_direction(fleeFrom.x, fleeFrom.y, x, y);
+            angle = point_direction(fleeFrom.x, fleeFrom.y, x, y)
+                - 15 + random(30);
         } else
             state = WALK;
+            
+        if (!spawned) {
+            if(x &lt; 0) angle = 0;
+            else angle = 180;
+        }
     }
 }
 
@@ -181,7 +194,8 @@ if (state == INFECTED)
             {
                 if (distance_to_object(t) &lt; maxDist
                  &amp;&amp; (t.fleeFrom == id || t.fleeFrom == noone || instance_number(objNpc) &lt;= 2)
-                 &amp;&amp; !collision_line(x+8,y+8,t.x+8,t.y+8,objSolid,false,true))
+                 &amp;&amp; !collision_line(x+8,y+8,t.x+8,t.y+8,objSolid,false,true)
+                 &amp;&amp; t.spawned)
                 {
                     target = t;
                     maxDist = distance_to_object(t);
@@ -246,17 +260,31 @@ if (state == DIE)
     }
 }
 
-if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, room_width - TILE))
+if (!spawned)
+{
+    x = max(-TILE,min(x, room_width));
+    y = max(-TILE,min(y, room_height));
+    if (in(x,0,room_width-TILE) &amp;&amp; in(y,0,room_height-TILE) 
+    &amp;&amp; !place_meeting(x+xVel,y+yVel,objSolid))
+        spawned = true;
+    
     x += xVel;
-else
-{
-    xVel = 0;
-}
-if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - TILE))
     y += yVel;
-else
+    
+} else
 {
-    yVel = 0;
+    if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, room_width - TILE))
+        x += xVel;
+    else
+    {
+        xVel = 0;
+    }
+    if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - TILE))
+        y += yVel;
+    else
+    {
+        yVel = 0;
+    }
 }
 
 // cosmetic bullshit
