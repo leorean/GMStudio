@@ -85,8 +85,8 @@ fSpeed = .1;
 
 if (taken)
 {
-    xVel = (mouse_x - x+8) / 5;
-    yVel = (mouse_y - y+8) / 5;
+    xVel = (mouse_x - x) / 5;
+    yVel = (mouse_y - y) / 5;
     
     alpha = max(alpha - .02, 0);
     if (!alpha)
@@ -95,15 +95,15 @@ if (taken)
     fSpeed = .2;
 }
 
-x = max(min(x + xVel, room_width-TILE), 0);
-y = max(min(y + yVel, room_height-TILE), 0);
+x = max(min(x + xVel, room_width-TILE), TILE);
+y = max(min(y + yVel, room_height-TILE), TILE);
 
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -151,7 +151,15 @@ switch(value)
     
 }
 
-draw_sprite_part_ext(sprCoin, -1, frame*TILE, v * TILE, TILE, TILE, x, y, 1, 1, c_white, alpha);
+draw_set_alpha(1);
+
+var w = display_get_gui_width();
+var h = display_get_gui_height();
+
+var xt = (x / room_width) * w;
+var yt = (y / room_height) * h;
+
+draw_sprite_part_ext(sprCoin, -1, frame*TILE, v * TILE, TILE, TILE, xt-8, yt-8, 1, 1, c_white, alpha);
 </string>
           </argument>
         </arguments>

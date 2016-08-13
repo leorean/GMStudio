@@ -3,6 +3,25 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
+  <datafiles number="1" name="datafiles">
+    <datafile>
+      <name>LEVEL0.tmx</name>
+      <exists>-1</exists>
+      <size>330360</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>LEVEL0.tmx</filename>
+    </datafile>
+  </datafiles>
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
@@ -16,7 +35,9 @@
     <sprite>sprites\sprFnt</sprite>
     <sprite>sprites\sprEffect</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\sprTiles</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
@@ -24,6 +45,9 @@
     <script>scripts\findTargets.gml</script>
     <script>scripts\spawnCoins.gml</script>
     <script>scripts\createArray.gml</script>
+    <script>scripts\importLevel.gml</script>
+    <script>scripts\createRoom.gml</script>
+    <script>scripts\addTile.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -40,7 +64,9 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="17">
+  <constants number="20">
+    <constant name="LAYER_FG">50000</constant>
+    <constant name="LAYER_BG">50005</constant>
     <constant name="SEC">60</constant>
     <constant name="DIE">3</constant>
     <constant name="INFECTED">2</constant>
@@ -56,8 +82,9 @@
     <constant name="WIDTH">360</constant>
     <constant name="HEIGHT">640</constant>
     <constant name="G_PAUSE">0</constant>
-    <constant name="G_PLAY">1</constant>
-    <constant name="G_OVER">2</constant>
+    <constant name="G_START">1</constant>
+    <constant name="G_PLAY">2</constant>
+    <constant name="G_OVER">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

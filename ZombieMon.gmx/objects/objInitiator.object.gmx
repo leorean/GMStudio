@@ -38,6 +38,40 @@ thrown = false;
 
 maxTimer = 2*SEC;
 timer = maxTimer;
+
+xprev = x;
+yprev = y;
+mx = x;
+my = y;
+
+force = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*if (!device_mouse_check_button_released(0, mb_left))
+{
+    xprev = mx;
+    yprev = my;
+}*/
 </string>
           </argument>
         </arguments>
@@ -60,38 +94,28 @@ timer = maxTimer;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!dragged)
+            <string>mx = device_mouse_x(0);
+my = device_mouse_y(0);
+
+if (!dragged)
 {
-    if (mouse_check_button_pressed(mb_left) &amp;&amp; in(mouse_x,x-40,x+40) &amp;&amp; in(mouse_y,y-40,y+40))
+    
+    if (device_mouse_check_button_pressed(0, mb_left) &amp;&amp; in(mx,x-40,x+40) &amp;&amp; in(my,y-40,y+40))
     {
         dragged = true;
-        xoff = x - mouse_x;
-        yoff = y - mouse_y;
+        xoff = x - mx;
+        yoff = y - my;
     }
 }
 
 if (dragged &amp;&amp; !thrown)
 {
-    x = min(max(mouse_x + xoff, 40),room_width-40);
-    y = min(max(mouse_y + yoff, 2/3 * room_height),room_height-40);
+
+    xVel = (mx - (x - xoff)) / 6;
+    yVel = (my - (y - yoff)) / 6;
     
-    if (mouse_check_button_released(mb_left))
-    {
+    if (!device_mouse_check_button(0, mb_left) &amp;&amp; max(abs(xVel),abs(yVel)&gt;1))
         thrown = true;
-        var angle = point_direction(xprev, yprev, mouse_x, mouse_y);
-        
-        force = max(abs(mouse_x-xprev), abs(mouse_y-yprev));
-        xVel = lengthdir_x(force, angle);
-        yVel = lengthdir_y(force, angle);
-        
-        if (force &lt; 1)
-        {
-            thrown = false;
-            dragged = false;
-            x = spawnx;
-            y = spawny;            
-        }
-    }
 }
 
 if (thrown)
@@ -110,6 +134,7 @@ if (thrown)
             {
                 t.state = INFECTED;
                 t.hp = global.infectedHp;
+                global.peopleLeft--;
                 count++;
             }
         }
@@ -122,16 +147,18 @@ if (thrown)
         if (count &gt; 1)
             t.text = string(count) + " Hits!";
         
+        global.state = G_PLAY;
+        
         instance_destroy();
     }
 } else
 {
-    xVel = 0;
-    yVel = 0;
+    /*xVel = 0;
+    yVel = 0;*/
 }
 
-xVel = sign(xVel) * min(abs(xVel), 12);
-yVel = sign(yVel) * min(abs(yVel), 12);
+xVel = sign(xVel) * min(abs(xVel), 16);
+yVel = sign(yVel) * min(abs(yVel), 16);
 
 if (in(x + xVel, 40, room_width-40))
     x += xVel * (timer / maxTimer);
@@ -143,8 +170,34 @@ if (in(y + yVel, 40, room_height-40))
 else
     yVel = -yVel * .9;
 
-xprev = mouse_x;
-yprev = mouse_y;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+
+//draw_text(64,64, force);
+
+
 </string>
           </argument>
         </arguments>

@@ -157,7 +157,7 @@ if (state == PANIC)
 
 // chase other npcs
 if (state == INFECTED)
-{    
+{
     var spd = min(.25 * global.huntSpeed + global.huntSpeed * (hp / global.infectedHp), global.huntSpeed);
     walkDist =  max(walkDist - spd, 0);
     xVel = lengthdir_x(spd, angle);
@@ -213,6 +213,7 @@ if (state == INFECTED)
                 else
                     target.state = DIE;
                 
+                global.peopleLeft--;
                 spawnCoins(value, x + 8, y + 8);
                     
                 target = noone;                
@@ -250,14 +251,12 @@ if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, room_width 
 else
 {
     xVel = 0;
-    target = noone;
 }
 if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - TILE))
     y += yVel;
 else
 {
     yVel = 0;
-    target = noone;    
 }
 
 // cosmetic bullshit
@@ -275,7 +274,9 @@ if (state == DIE)
     dir = DOWN;
     
 if ((state == INFECTED || state == DIE) &amp;&amp; statePrev != state)
+{
     instance_create(x+8, y+8, objEffect);
+}
 
 statePrev = state;
     

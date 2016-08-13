@@ -82,6 +82,7 @@
     <script>scripts\findEnemies.gml</script>
     <script>scripts\drawRadius.gml</script>
   </scripts>
+  <shaders name="shaders"/>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objEnemy</object>
