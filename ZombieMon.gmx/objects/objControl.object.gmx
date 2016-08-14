@@ -3,7 +3,7 @@
   <spriteName>mskControl</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-100</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -33,34 +33,51 @@ if (os_type == os_windows)
 }
 
 surf = -1; //drawing surface
+global.zoom = 4;
 
 global.fnt = font_add_sprite(sprFnt, ord(' '), true, 1);
 
 // ++++ level data ++++
 
-global.level = 0;
-
 levelData[0] = importLevel("LEVEL0.tmx");
-levelParams[0] = createArray(30, 10, 0); //population, density, security
+levelParams[0] = array(20, 15, 0, 30); //population, density, security, npc hp
 //levelData[1] = importLevel("L1.tmx");
 //levelData[2] = importLevel("L2.tmx");
 
 // ++++ define upgrades &amp; prices! ++++
 
 //global price list for all upgrades
-prices = createArray(0, 500, 2000, 7000, 11500, 19200, 34000, 51000, 172000, 390000, 1250000);
+prices = array(0, 500, 2000, 7000, 11500, 19200, 34000, 51000, 172000, 390000, 1250000);
 
-u_dmg = createArray(10, 15, 25, 35, 50, 70, 85, 100, 120, 150, 175);
-u_delay = createArray(32, 30, 28, 25, 22, 18, 16, 14, 11, 10, 8);
-u_infectedHp = createArray(135, 150, 175, 200, 225, 250, 300, 350, 450, 550, 650);
-u_huntSpeed = createArray(1.1, 1.15, 1.20, 1.25, 1.3, 1.35, 1.40, 1.45, 1.50, 1.55, 1.6);
-u_infectChance = createArray(0.27, 0.31, 0.34, 0.38, 0.42, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95);
-u_value = createArray(3, 15, 27, 80, 155, 285, 423, 681, 1208, 1654, 2358);
-
-u_coinRadius = createArray(32, 36, 42, 48, 52, 64, 80, 96, 128, 144, 160);
+u_dmg[0] = array(10, 15, 25, 35, 50, 70, 85, 100, 120, 150, 175);
+u_delay[0] = array(30, 28, 26, 23, 19, 17, 15, 13, 12, 10, 8);
+u_infectedHp[0] = array(235, 250, 275, 300, 325, 350, 380, 400, 450, 550, 650);
+u_huntSpeed[0] = array(1.1, 1.15, 1.20, 1.25, 1.3, 1.35, 1.40, 1.45, 1.50, 1.55, 1.6);
+u_infectChance[0] = array(0.27, 0.31, 0.34, 0.38, 0.42, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95);
+u_value[0] = array(3, 15, 27, 80, 155, 285, 423, 681, 1208, 1654, 2358);
+u_coinRadius[0] = array(32, 36, 42, 48, 52, 64, 80, 96, 128, 144, 160);
 
 //further upgrades:
 //ball upgrades, tries, money multiplier?
+
+// ++++ LOAD/SAVE PARAMETERS ++++
+global.level = 0;
+
+setUpgradeLevel(u_dmg, 0);
+setUpgradeLevel(u_delay, 0);
+setUpgradeLevel(u_infectedHp, 0);
+setUpgradeLevel(u_huntSpeed, 0);
+setUpgradeLevel(u_infectChance, 0);
+setUpgradeLevel(u_value, 0);
+setUpgradeLevel(u_coinRadius, 0);
+
+/*u_dmg[1] = 0;
+u_delay[1] = 0;
+u_infectedHp[1] = 0;
+u_huntSpeed[1] = 0;
+u_infectChance[1] = 0;
+u_value[1] = 0;
+u_coinRadius[1] = 0;*/
 
 </string>
           </argument>
@@ -124,14 +141,17 @@ for (i = 0; i &lt; instance_number(objNpc); i++)
         peopleOnScreen++;
 }
 
-if (global.state == G_PLAY &amp;&amp; (zombiesLeft == 0 || global.peopleLeft == 0))
+if (global.state == G_PLAY &amp;&amp; (zombiesLeft == 0 || global.kills == levelPopulation))
     gameOverTimer = max(gameOverTimer - 1 , 0);
 
 if (!gameOverTimer)
     global.state = G_OVER;
-    
-if (peopleOnScreen &lt; levelDensity &amp;&amp; global.peopleLeft &gt; 0)
-    spawnNewPerson();
+
+/*show_debug_message(string(peopleOnScreen) + ", " + string(global.kills)
+    + ", " + string(peopleOnScreen));*/
+
+if (peopleOnScreen &lt; levelDensity &amp;&amp; (global.kills &lt;= (levelPopulation - levelDensity)))
+    spawnNewNpc();
 </string>
           </argument>
         </arguments>
@@ -192,19 +212,20 @@ var _lp = levelParams[global.level];
 
 levelPopulation = _lp[0];
 levelDensity = _lp[1];
+global.npcHp = _lp[3];
 
-global.peopleLeft = levelPopulation;
+//global.peopleLeft = levelPopulation;
+global.kills = 0;
 
 // upgradeable variables:
 
-global.coinRadius = 32;
-global.dmg = 25;
-global.delay = 10;
-global.infectedHp = 450;
-global.huntSpeed = 2;
-global.infectChance = .5;
-
-global.value = 3;
+global.coinRadius = getParamFromUpgrade(u_coinRadius);
+global.dmg = getParamFromUpgrade(u_dmg);
+global.delay = getParamFromUpgrade(u_delay);
+global.infectedHp = getParamFromUpgrade(u_infectedHp);
+global.huntSpeed = getParamFromUpgrade(u_huntSpeed);
+global.infectChance = getParamFromUpgrade(u_infectChance);
+global.value = getParamFromUpgrade(u_value);
 
 repeat(levelDensity)
 {
@@ -216,10 +237,10 @@ repeat(levelDensity)
         rndx = irandom(room_width div TILE - 1) * TILE;
         rndy = irandom(room_height div TILE - 1) * TILE;
     }
-    instance_create(rndx, rndy, objNpc);
+    var _npc = instance_create(rndx, rndy, objNpc);
 }
 
-instance_create(room_width/2, room_height - 40, objInitiator);
+instance_create(0, 0, objInitiator);
 
 
 </string>
@@ -292,7 +313,7 @@ else
     var aspect_x = display_get_gui_width() / surface_get_width(surf);
     var aspect_y = display_get_gui_height() / surface_get_height(surf);
     
-    display_set_gui_size(surface_get_width(surf) / 4, surface_get_height(surf) / 4);
+    display_set_gui_size(surface_get_width(surf) / global.zoom, surface_get_height(surf) / global.zoom);
     
     var xoffset = (surface_get_width(surf)*aspect_x) / 2;
     var yoffset = (surface_get_height(surf)*aspect_y) / 2;
@@ -325,7 +346,7 @@ draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
 if (global.state == G_OVER)
-    draw_text(w/2, h/2, "Your turn is over.");
+    draw_text(w/2, h/2, "Bewitched " + string(global.kills) + " people.");
 </string>
           </argument>
         </arguments>

@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>infectedHp = global.infectedHp;
-hp = 200;
+hp = global.npcHp;//200;
 
 xVel = 0;
 yVel = 0;
@@ -42,7 +42,8 @@ target = noone;
 fleeFrom = noone;
 
 walkSpeed = .7;
-runSpeed = 1.3;
+runSpeed = 1.25;
+boost = .5; //additional speed when transitioning
 
 deathTimer = 1*SEC;
 delay = 0;
@@ -92,18 +93,15 @@ if (state == WALK)
     if (walkDist == 0)
     {
         walkDist = (1+random(2)) * TILE;
-        angle = random(360);
+        if (spawned)
+            angle = random(360);
 
     } else
     {
-        angle += -6+random(12);
+        if (spawned)
+            angle += -6+random(12);
     }
-    
-    if (!spawned) {
-        if(x &lt; 0) angle = 0;
-        else angle = 180;
-    }
-    
+        
     walkDist =  max(walkDist - walkSpeed, 0);
     
     xVel = lengthdir_x(walkSpeed, angle);
@@ -139,7 +137,8 @@ if (state == PANIC)
     if (walkDist == 0)
     {
         fleeFrom = noone;
-        angle = random(360);
+        if (spawned)
+            angle = random(360);
         walkDist = TILE;
         var maxDist = 64;
         for (i = 0; i &lt; instance_number(objNpc); i++)
@@ -156,22 +155,25 @@ if (state == PANIC)
         }
         if (fleeFrom != noone &amp;&amp; instance_exists(fleeFrom))
         {
-            angle = point_direction(fleeFrom.x, fleeFrom.y, x, y)
-                - 15 + random(30);
+            if (spawned &amp;&amp; in(x, TILE, room_width-2*TILE) &amp;&amp; in(y, TILE, room_height-2*TILE))
+                angle = point_direction(fleeFrom.x, fleeFrom.y, x, y)
+                    - 15 + random(30);
         } else
-            state = WALK;
-            
-        if (!spawned) {
-            if(x &lt; 0) angle = 0;
-            else angle = 180;
-        }
+            state = WALK;         
     }
 }
 
 // chase other npcs
 if (state == INFECTED)
 {
-    var spd = min(.25 * global.huntSpeed + global.huntSpeed * (hp / global.infectedHp), global.huntSpeed);
+    var spd = min(.25 * global.huntSpeed + global.huntSpeed * (hp / global.infectedHp), 
+        global.huntSpeed)
+        + boost;
+
+    boost = max(boost - .01, 0);
+    
+    delay = max(delay - 1, 0);
+    
     walkDist =  max(walkDist - spd, 0);
     xVel = lengthdir_x(spd, angle);
     yVel = lengthdir_y(spd, angle);
@@ -213,8 +215,14 @@ if (state == INFECTED)
             if (delay == 0)
             {
                 target.hp = max(target.hp - global.dmg, 0);
-                delay = global.delay;
+                show_debug_message("bite: " + string(global.dmg));
+                
+                var _txt = instance_create(x+8, y, objText);
+                _txt.color = c_red;
+                _txt.text = global.dmg;
                 //hp = min(hp + global.leech, global.infectedHp);
+
+                delay = global.delay;
             }
             if (target.hp == 0)
             {
@@ -227,15 +235,13 @@ if (state == INFECTED)
                 else
                     target.state = DIE;
                 
-                global.peopleLeft--;
+                global.kills++;
                 spawnCoins(value, x + 8, y + 8);
                     
                 target = noone;                
             }
         }
     }
-    
-    delay = max(delay - 1, 0);
     
     hp = max(hp - 1, 0);
     if (hp == 0)
@@ -265,7 +271,7 @@ if (!spawned)
     x = max(-TILE,min(x, room_width));
     y = max(-TILE,min(y, room_height));
     if (in(x,0,room_width-TILE) &amp;&amp; in(y,0,room_height-TILE) 
-    &amp;&amp; !place_meeting(x+xVel,y+yVel,objSolid))
+    &amp;&amp; !place_meeting(x, y, objSolid))
         spawned = true;
     
     x += xVel;

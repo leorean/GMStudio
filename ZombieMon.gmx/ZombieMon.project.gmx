@@ -34,6 +34,7 @@
     <sprite>sprites\sprCoin</sprite>
     <sprite>sprites\sprFnt</sprite>
     <sprite>sprites\sprEffect</sprite>
+    <sprite>sprites\sprInitiator</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -44,11 +45,13 @@
     <script>scripts\angleToDir.gml</script>
     <script>scripts\findTargets.gml</script>
     <script>scripts\spawnCoins.gml</script>
-    <script>scripts\createArray.gml</script>
+    <script>scripts\array.gml</script>
     <script>scripts\importLevel.gml</script>
     <script>scripts\createRoom.gml</script>
     <script>scripts\addTile.gml</script>
-    <script>scripts\spawnNewPerson.gml</script>
+    <script>scripts\spawnNewNpc.gml</script>
+    <script>scripts\getParamFromUpgrade.gml</script>
+    <script>scripts\setUpgradeLevel.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -61,6 +64,7 @@
     <object>objects\objCoin</object>
     <object>objects\objText</object>
     <object>objects\objEffect</object>
+    <object>objects\objSpawn</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

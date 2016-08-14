@@ -29,6 +29,12 @@ for (var i = 0; i<w; i ++)
         if (fg >= 228) //solid tiles
             instance_create(i*TILE,j*TILE,objSolid);
 
+        switch (obj)
+        {
+            case 0: //spawn
+                instance_create(i*TILE,j*TILE,objSpawn);                
+            break;
+        }
         /*switch (obj)
         {
             case 0: //spawn
