@@ -129,8 +129,9 @@ if (state == WALK)
 // flee in panic
 if (state == PANIC)
 {
-    xVel = lengthdir_x(runSpeed, angle);
-    yVel = lengthdir_y(runSpeed, angle);
+    var _rnspd = max(.5, runSpeed * (hp/global.npcHp));
+    xVel = lengthdir_x(_rnspd, angle);
+    yVel = lengthdir_y(_rnspd, angle);
 
     walkDist = max(walkDist - runSpeed, 0);
     
@@ -215,11 +216,11 @@ if (state == INFECTED)
             if (delay == 0)
             {
                 target.hp = max(target.hp - global.dmg, 0);
-                show_debug_message("bite: " + string(global.dmg));
                 
                 var _txt = instance_create(x+8, y, objText);
                 _txt.color = c_red;
                 _txt.text = global.dmg;
+                
                 //hp = min(hp + global.leech, global.infectedHp);
 
                 delay = global.delay;

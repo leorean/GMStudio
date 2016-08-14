@@ -39,8 +39,8 @@ thrown = false;
 maxTimer = 2*SEC;
 timer = maxTimer;
 
-xprev = x;
-yprev = y;
+//xprev = x;
+//yprev = y;
 mx = x;
 my = y;
 
@@ -57,7 +57,17 @@ y = room_height - h/2;
 sx = 1;
 sy = 1;
 
-sprDub = sprite_duplicate(sprInitiator);
+// rotational stuffs:
+
+rotation = 0;
+rotspeed = 0;
+rotspeedprev = 0;
+
+_x = 0;
+_y = 0;
+
+xprev = 0;
+yprev = 0;
 </string>
           </argument>
         </arguments>
@@ -102,10 +112,23 @@ if (dragged &amp;&amp; !thrown)
 
     xVel = (mx - (x - xoff)) / 6;
     yVel = (my - (y - yoff)) / 6;
+ 
+    _x = mx - (x - xoff) - xVel;
+    _y = my - (y - yoff) - yVel;
     
+    a1 = arctan2(xprev, yprev);
+    a2 = arctan2(_x, _y);
+    
+    rotspeed += .03 * ((a2 - a1) * 180 / pi);
+    show_debug_message(string(_x)+", "+string(_y)+", "+string(rotspeed)+", "+string(rotation));
+
     if (!device_mouse_check_button(0, mb_left) &amp;&amp; max(abs(xVel),abs(yVel) &gt;= 0))
         thrown = true;
+} else
+{
+    //rotspeed *= .9;
 }
+    rotation += rotspeed;// + .1* rotspeedprev;
 
 if (thrown)
 {
@@ -149,13 +172,25 @@ yVel = sign(yVel) * min(abs(yVel), 16);
 if (in(x + xVel, w/2, room_width-w/2))
     x += xVel * (timer / maxTimer);
 else
-    xVel = -xVel * .9;
+{
+    if (thrown)
+        xVel = -xVel * .9;
+    else
+        xVel = 0;
+}
 
 if (in(y + yVel, h/2, room_height-h/2))
     y += yVel * (timer / maxTimer);
 else
-    yVel = -yVel * .9;
+{
+    if (thrown)
+        yVel = -yVel * .9;
+    else
+        yVel = 0;
+}
 
+xprev = _x;
+yprev = _y;
 
 </string>
           </argument>
@@ -186,8 +221,8 @@ var _h = display_get_gui_height();
 xt = (x / room_width) * _w;
 yt = (y / room_height) * _h;
 
-draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, 0, c_white, .4);
-draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, 0, c_white, 1);
+draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .4);
+draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, rotation, c_white, 1);
 
 
 </string>
@@ -198,12 +233,12 @@ draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, 0, c_white, 1);
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>605</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
@@ -212,19 +247,7 @@ draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, 0, c_white, 1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*//draw_self();
-//draw_sprite(mskNpc,-1, x-w/2*scale - 8,y-8);
-
-bl = x - (w/2)*sx;
-br = x + (w/2)*sx;
-bt = y - (h/2)*sy;
-bb = y + (h/2)*sy;;
-
-//if (in(t.x + 8, x - (w/2)/sx, x + (w/2)/sx) &amp;&amp; in (t.y + 8, y - (h/2)/sy, y + (h/2)/sy))
-
-//draw_rectangle(bl, bt, br, bb, 0);
-*/
-</string>
+            <string>to hide mask</string>
           </argument>
         </arguments>
       </action>
