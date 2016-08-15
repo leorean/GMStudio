@@ -153,7 +153,7 @@ if (thrown)
         
         var t = instance_create(x, y, objText);
         if (count == 0)
-            t.text = "Miss";
+            t.text = "Failed..";
         if (count == 1)
             t.text = "1 Hit!";
         if (count &gt; 1)

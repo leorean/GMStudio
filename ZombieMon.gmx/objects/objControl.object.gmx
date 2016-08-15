@@ -306,11 +306,11 @@ if (global.state == G_OVER)
 {
     var gameoverText;
     if (global.kills == 0)
-        gameoverText = "The ritual#has failed.";
+        gameoverText = "Everyone survived..";
     else if (global.kills &lt; levelPopulation)
-        gameoverText = string(global.kills) + " victims claimed.";
+        gameoverText = "Population left:#" + string(levelPopulation - global.kills);
     else
-        gameoverText = "It is done!";
+        gameoverText = "Noone is left.";
     draw_text(w/2, h/3, gameoverText);
 }
 </string>

@@ -45,14 +45,14 @@ walkSpeed = .7;
 runSpeed = 1.25;
 boost = .5; //additional speed when transitioning
 
-deathTimer = 1*SEC;
+deathTimer = 3*SEC;
 delay = 0;
 
 value = global.value;
 spawnedCoins = false;
 
 // graphics
-type = 0;//irandom(4);
+type = irandom(3);//irandom(4);
 
 dir = NONE;
 lastDir = NONE;
@@ -314,6 +314,7 @@ if (state == DIE)
     
 if ((state == INFECTED || state == DIE) &amp;&amp; statePrev != state)
 {
+    fCur = 0;
     instance_create(x+8, y+8, objEffect);
 }
 
@@ -348,6 +349,7 @@ if (state != DIE)
     fCur = (fCur + fSpeed) % 2;
 else
     fCur = (fCur + fSpeed) % 4;
+    //fCur = min((fCur + fSpeed), 3);
 
 frame = floor(fCur);
 

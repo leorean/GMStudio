@@ -27,8 +27,8 @@
             <kind>1</kind>
             <string>color = c_white;
 alpha = 2;
-xVel = -2+random(4);
-yVel = -2+random(4);
+xVel = -1+random(2);
+yVel = -1+random(2);
 
 z = -.3;
 zVel = -1-random(1);
@@ -73,20 +73,21 @@ if (!collision_point(x, y+yVel, objSolid, false, true))
 else
     yVel *= -.5;
 
-//if (z+zVel &gt; 0)
-//    zVel *= -.5;
-
 z = min(z +zVel, 0);
 
 if (z &lt; 0) depth = 0;
 else
+{
+    xVel = 0;
+    yVel = 0;
     depth = LAYER_BG-1;
+}
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="75">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -103,37 +104,15 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var w = display_get_gui_width();
+            <string>/*var w = display_get_gui_width();
 var h = display_get_gui_height();
 
 var xt = (x / room_width) * w;
-var yt = (y / room_height) * h;
+var yt = (y / room_height) * h;*/
 
-draw_sprite_ext(sprParticle, -1, xt, yt, zoom, zoom, 0, c_black, min(alpha, .5));
-draw_sprite_ext(sprParticle, -1, xt, yt + z, zoom, zoom, 0, color, min(alpha, .8));
+draw_sprite_ext(sprParticle, -1, x, y, zoom, zoom, 0, c_black, min(alpha, .5));
+draw_sprite_ext(sprParticle, -1, x, y + z, zoom, zoom, 0, color, min(alpha, .8));
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//disable drawing mask</string>
           </argument>
         </arguments>
       </action>
