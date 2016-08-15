@@ -35,6 +35,8 @@
     <sprite>sprites\sprFnt</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprInitiator</sprite>
+    <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\sprParticle</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -52,6 +54,8 @@
     <script>scripts\spawnNewNpc.gml</script>
     <script>scripts\getParamFromUpgrade.gml</script>
     <script>scripts\setUpgradeLevel.gml</script>
+    <script>scripts\spawnBlood.gml</script>
+    <script>scripts\particle.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -65,6 +69,7 @@
     <object>objects\objText</object>
     <object>objects\objEffect</object>
     <object>objects\objSpawn</object>
+    <object>objects\objParticle</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

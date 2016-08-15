@@ -116,11 +116,11 @@ if (dragged &amp;&amp; !thrown)
     {
         if (point_distance(mx, my, mxprev, myprev) &gt; 5)
         {
-            if (abs(a2 - a1) &gt; 12)
-                rotspeed += -sign(a2-a1) * .02 * point_distance(mx, my, mxprev, myprev);
+            if (abs(a2 - a1) &gt; 10)
+                rotspeed += -sign(a2-a1) * .05 * point_distance(mx, my, mxprev, myprev);
         }
         else
-            rotspeed *= .95;
+            rotspeed *= .98;
     }
     
     if (!device_mouse_check_button(0, mb_left) &amp;&amp; max(abs(xVel),abs(yVel) &gt;= 0))
@@ -224,7 +224,7 @@ yt = (y / room_height) * _h;
 
 var value = max(abs(rotspeed)/(maxrotspeed) - .75, 0);
 
-show_debug_message(value);
+//show_debug_message(value);
 
 if (rotspeed &lt; 0)
     color = make_colour_hsv(145, 255 * value, 255);
@@ -233,7 +233,7 @@ else if (rotspeed &gt; 0)
 else
     color = c_white;
         
-draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .4);
+draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .6 * timer/maxTimer);
 draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, rotation, color, 1);
 
 

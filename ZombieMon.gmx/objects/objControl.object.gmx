@@ -60,6 +60,17 @@ u_coinRadius[0] = array(32, 36, 42, 48, 52, 64, 80, 96, 128, 144, 160);
 //further upgrades:
 //ball upgrades, tries, money multiplier?
 
+
+// ++++ pool of particles to reuse ++++
+global.poolIndex = 0;
+for (var i = 0; i &lt; 512; i++)
+{
+    global.pool[i] = instance_create(-1, -1, objParticle);
+    global.pool[i].xVel = 0;
+    global.pool[i].yVel = 0;
+    global.pool[i].alpha = 0;
+}
+
 // ++++ LOAD/SAVE PARAMETERS ++++
 global.level = 0;
 
@@ -103,7 +114,10 @@ u_coinRadius[1] = 0;*/
             <kind>1</kind>
             <string>if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
     room_restart();
-    
+
+if (keyboard_check_pressed(ord('Q')))
+    game_restart();
+        
 if (keyboard_check(vk_space))
     room_speed = 5;
 else
@@ -240,6 +254,10 @@ repeat(levelDensity)
     var _npc = instance_create(rndx, rndy, objNpc);
 }
 
+// clean up mess
+with(objParticle) alpha = 0;
+
+// create initiator
 instance_create(0, 0, objInitiator);
 
 

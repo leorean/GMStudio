@@ -52,7 +52,7 @@ value = global.value;
 spawnedCoins = false;
 
 // graphics
-type = irandom(4);
+type = 0;//irandom(4);
 
 dir = NONE;
 lastDir = NONE;
@@ -217,9 +217,11 @@ if (state == INFECTED)
             {
                 target.hp = max(target.hp - global.dmg, 0);
                 
-                var _txt = instance_create(x+8, y, objText);
+                spawnBlood(target.x+8, target.y+8, 2+random(3));
+                
+                /*var _txt = instance_create(x+8, y, objText);
                 _txt.color = c_red;
-                _txt.text = global.dmg;
+                _txt.text = global.dmg;*/
                 
                 //hp = min(hp + global.leech, global.infectedHp);
 
@@ -238,7 +240,9 @@ if (state == INFECTED)
                 
                 global.kills++;
                 spawnCoins(value, x + 8, y + 8);
-                    
+                
+                spawnBlood(target.x+8, target.y+8, 15);
+                
                 target = noone;                
             }
         }
@@ -340,7 +344,11 @@ depth = room_height - y + 30;
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
-fCur = (fCur + fSpeed) % 2;
+if (state != DIE)
+    fCur = (fCur + fSpeed) % 2;
+else
+    fCur = (fCur + fSpeed) % 4;
+
 frame = floor(fCur);
 
 switch(state)
@@ -379,12 +387,17 @@ switch(dir)
     break;
 }
 
+//HP bar
+if ((state == PANIC || state == WALK) &amp;&amp; hp &lt; global.npcHp)
+{
+    draw_sprite_part(sprHud, -1, 0, 0, TILE, 1, x, y - 1);
+    draw_sprite_part(sprHud, -1, 0, 1, TILE * hp/global.npcHp, 1, x, y - 1);
+}
+
 if (state == INFECTED || state == DIE)
     type = 0;
 
 draw_sprite_part(sprNpc, -1, col * TILE + frame * TILE, row * TILE, TILE, TILE, x, y);
-
-//draw_text(x, y-TILE, string(xVel) + ", " + string(yVel));
 </string>
           </argument>
         </arguments>
