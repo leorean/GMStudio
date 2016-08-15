@@ -39,10 +39,8 @@ thrown = false;
 maxTimer = 2*SEC;
 timer = maxTimer;
 
-//xprev = x;
-//yprev = y;
-mx = x;
-my = y;
+mx = device_mouse_x(0);
+my = device_mouse_y(0);
 
 force = 0;
 
@@ -61,11 +59,10 @@ sy = 1;
 
 rotation = 0;
 rotspeed = 0;
-rotspeedprev = 0;
+maxrotspeed = 18;
 
-_x = 0;
-_y = 0;
-
+a1 = 0;
+a2 = 0;
 xprev = 0;
 yprev = 0;
 </string>
@@ -113,22 +110,24 @@ if (dragged &amp;&amp; !thrown)
     xVel = (mx - (x - xoff)) / 6;
     yVel = (my - (y - yoff)) / 6;
  
-    _x = mx - (x - xoff) - xVel;
-    _y = my - (y - yoff) - yVel;
+    a1 = point_direction(mx, my, x, y);
     
-    a1 = arctan2(xprev, yprev);
-    a2 = arctan2(_x, _y);
+    if !(device_mouse_check_button_pressed(0, mb_left))
+    {
+        if (point_distance(mx, my, mxprev, myprev) &gt; 5)
+        {
+            if (abs(a2 - a1) &gt; 12)
+                rotspeed += -sign(a2-a1) * .02 * point_distance(mx, my, mxprev, myprev);
+        }
+        else
+            rotspeed *= .95;
+    }
     
-    rotspeed += .03 * ((a2 - a1) * 180 / pi);
-    show_debug_message(string(_x)+", "+string(_y)+", "+string(rotspeed)+", "+string(rotation));
-
     if (!device_mouse_check_button(0, mb_left) &amp;&amp; max(abs(xVel),abs(yVel) &gt;= 0))
         thrown = true;
-} else
-{
-    //rotspeed *= .9;
 }
-    rotation += rotspeed;// + .1* rotspeedprev;
+    rotspeed = sign(rotspeed) * min(abs(rotspeed), maxrotspeed);
+    rotation += rotspeed;
 
 if (thrown)
 {
@@ -189,8 +188,10 @@ else
         yVel = 0;
 }
 
-xprev = _x;
-yprev = _y;
+//store for next step
+a2 = a1;
+mxprev = mx;
+myprev = my;
 
 </string>
           </argument>
@@ -221,8 +222,19 @@ var _h = display_get_gui_height();
 xt = (x / room_width) * _w;
 yt = (y / room_height) * _h;
 
+var value = max(abs(rotspeed)/(maxrotspeed) - .75, 0);
+
+show_debug_message(value);
+
+if (rotspeed &lt; 0)
+    color = make_colour_hsv(145, 255 * value, 255);
+else if (rotspeed &gt; 0)
+    color = make_colour_hsv(0, 255 * value, 255);
+else
+    color = c_white;
+        
 draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .4);
-draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, rotation, c_white, 1);
+draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, rotation, color, 1);
 
 
 </string>
