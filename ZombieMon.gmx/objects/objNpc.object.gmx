@@ -52,7 +52,7 @@ value = global.value;
 spawnedCoins = false;
 
 // graphics
-type = irandom(3);//irandom(4);
+type = irandom(7);//irandom(4);
 
 dir = NONE;
 lastDir = NONE;

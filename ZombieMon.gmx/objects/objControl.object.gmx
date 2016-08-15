@@ -285,6 +285,11 @@ instance_create(0, 0, objInitiator);
             <kind>1</kind>
             <string>// ++++ DRAW GUI HERE ++++
 
+if (global.state == G_START || global.state == G_PLAY)
+    draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 1, c_white, .3);
+if (global.state == G_OVER)
+    draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 20, c_white, .3);
+
 var w = display_get_gui_width();
 var h = display_get_gui_height();
 

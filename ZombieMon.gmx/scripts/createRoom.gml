@@ -50,3 +50,6 @@ for (var i = 0; i<w; i ++)
         }*/
     }
 }
+
+if (!instance_exists(objSpawn))
+    show_message("No spawn exists in this map!");

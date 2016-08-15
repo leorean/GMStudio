@@ -233,7 +233,7 @@ else if (rotspeed &gt; 0)
 else
     color = c_white;
         
-draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .6 * timer/maxTimer);
+draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .4 * timer/maxTimer);
 draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, rotation, color, 1);
 
 
