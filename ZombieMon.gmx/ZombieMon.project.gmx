@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="1" name="datafiles">
+  <datafiles number="2" name="datafiles">
     <datafile>
       <name>LEVEL0.tmx</name>
       <exists>-1</exists>
@@ -20,6 +20,23 @@
         </Config>
       </ConfigOptions>
       <filename>LEVEL0.tmx</filename>
+    </datafile>
+    <datafile>
+      <name>LEVEL1.tmx</name>
+      <exists>-1</exists>
+      <size>9945</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>LEVEL1.tmx</filename>
     </datafile>
   </datafiles>
   <NewExtensions/>
@@ -70,9 +87,12 @@
     <object>objects\objEffect</object>
     <object>objects\objSpawn</object>
     <object>objects\objParticle</object>
+    <object>objects\objLevelSelector</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\TITLE</room>
     <room>rooms\GAME</room>
+    <room>rooms\SHOP</room>
   </rooms>
   <constants number="20">
     <constant name="LAYER_FG">50000</constant>
