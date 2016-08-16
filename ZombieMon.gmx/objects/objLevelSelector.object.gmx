@@ -69,11 +69,8 @@ draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
     
-for (i = 0; i &lt; levelCount*room_width; i++)
-{
-    c = make_color_hsv((s % 2 == 0) *45, 255,255);
-    draw_sprite_ext(sprParticle, -1, i,120,1,1,0,c,1);
-}
+//c = make_color_hsv((s % 2 == 0) *45, 255,255);
+//draw_line_colour(0, 120,room_width, 120, c, c);
 
 if (levelDrag)
 {
@@ -107,7 +104,7 @@ else
 for (i = 0; i &lt; levelCount; i++)
 {
     draw_sprite_part(sprHud, -1, 0, 2*TILE, 5*TILE, 5*TILE, (x + i*room_width) - 2.5*TILE, 128);
-    draw_text((x + i*room_width) - 2.5*TILE, 112, (i*room_width) + room_width/2);
+    //draw_text((x + i*room_width) - 2.5*TILE, 112, (i*room_width) + room_width/2);
 }
 </string>
           </argument>
