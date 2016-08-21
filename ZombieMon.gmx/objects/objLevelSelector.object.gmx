@@ -25,16 +25,130 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = room_width/2;
+            <string>mask_index = sprParticle;
+
+bgx = 0;
+bgy = 0;
+
+x = room_width/2;
+y = room_height;
+
 xVel = 0;
+yVel = 0;
+
+state = 0;
+desty = room_height;
 
 levelParams = objControl.levelParams;
 levelCount = array_length_1d(levelParams);
-
-s = 0;
 destx = 0;
-dragx = x;
 
+offx = room_width/2;
+space = 96;
+
+mouse_x_prev = mouse_x;
+selected = 0;
+
+for (i = 0; i &lt; levelCount; i++)
+{
+    lvl[i] = instance_create((x + i*space)/* - 2.5*TILE*/, 128, objLvl);
+    lvl[i].l = i;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>var levelDragPressed = in(mouse_y, y + 128, y + 128+5*TILE) 
+    &amp;&amp; mouse_check_button_pressed(mb_left);
+var levelDragReleased = in(mouse_y, y + 128, y + 128+5*TILE) 
+    &amp;&amp; mouse_check_button_released(mb_left);    
+var levelDrag = in(mouse_y, y + 128, y + 128+5*TILE)
+    &amp;&amp; !mouse_check_button_pressed(mb_left) &amp;&amp; mouse_check_button(mb_left);
+
+if (state == 0) //title state
+{
+    if (mouse_check_button_released(mb_left))
+        state = 1;
+    desty = room_height;
+}
+
+if (state == 1) //selectable state
+{
+    if (keyboard_check_pressed(vk_backspace))
+        state = 0;
+    desty = 0;
+        
+    if (levelDrag)
+    {
+        if(abs(mouse_x - mouse_x_prev) &gt; 4)
+            selected = -1;
+            
+        xVel -= (mouse_x_prev - mouse_x) / 5;
+    }
+    else
+    {
+        if (selected != -1)
+        {
+            destx = -(selected*space) + offx;
+            xVel = (destx - x) / 10;
+        }
+        else
+        {
+            if (abs(xVel) &gt; .5)
+                xVel *= .94;
+            else
+            {
+                /*var _sel = instance_place(room_width/2, y + 128, objLvl);
+                if (instance_exists(_sel))
+                    selected = _sel.l;
+                */
+            }
+        }
+    }
+    
+    if (levelDragPressed)
+    {
+        xVel = 0;
+        var _sel = instance_place(mouse_x, mouse_y, objLvl);
+        if (instance_exists(_sel))
+            selected = _sel.l;
+    }
+}
+
+yVel = (desty - y) / 10;
+xVel = sign(xVel)*min(abs(xVel), 10);
+
+if (in(x + xVel, -(levelCount-1)*space + offx, offx))
+    x += xVel;
+else
+{
+    xVel = 0;
+}
+
+y += yVel;
+
+with(objLvl)
+    x += objLevelSelector.xVel;
+
+mouse_x_prev = mouse_x;
 </string>
           </argument>
         </arguments>
@@ -57,55 +171,43 @@ dragx = x;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var levelDragPressed = in(mouse_y, 128, 128+5*TILE) 
-    &amp;&amp; mouse_check_button_pressed(mb_left);
-var levelDragReleased = in(mouse_y, 128, 128+5*TILE) 
-    &amp;&amp; mouse_check_button_released(mb_left);    
-var levelDrag = in(mouse_y, 128, 128+5*TILE) 
-    &amp;&amp; !mouse_check_button_pressed(mb_left) &amp;&amp; mouse_check_button(mb_left);
-
-draw_set_alpha(1);
+            <string>draw_set_alpha(1);
 draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
-    
-//c = make_color_hsv((s % 2 == 0) *45, 255,255);
-//draw_line_colour(0, 120,room_width, 120, c, c);
 
-if (levelDrag)
-{
-    xVel += (dragx - mouse_x) / 120;
-    s = (room_width - x) div (room_width);
-    show_debug_message(s);
-}
-else
-{
-    dragx = mouse_x;    
-    destx = -(s*(room_width)) + room_width/2;
-    xVel = (destx - x) / 10;
-    xVel = sign(xVel)*min(abs(xVel), 3);
-}
+//draw bg
+bgx = (bgx - .5) % 192;
+bgy = (bgy - .5) % 320;
 
-if (abs(x - destx) &lt; room_width/3)
-{
-    var _ld = levelParams[s];
-    draw_text(room_width/2, 212, _ld[0]);
-}
+draw_sprite(sprBackground, -1, bgx, bgy);
+draw_sprite(sprBackground, -1, bgx + 192, bgy);
+draw_sprite(sprBackground, -1, bgx, bgy + 320);
+draw_sprite(sprBackground, -1, bgx + 192, bgy + 320);
 
-xVel = sign(xVel)*min(abs(xVel), 8);
+var finalSelection = selected != -1 &amp;&amp; abs(lvl[selected].x - room_width/2) &lt; 128;
 
-if (in(x + xVel, -(levelCount-1)*room_width + room_width/2, room_width/2))
-    x += xVel;
-else
-{
-    xVel = 0;
-}
-
+//draw levels
 for (i = 0; i &lt; levelCount; i++)
 {
-    draw_sprite_part(sprHud, -1, 0, 2*TILE, 5*TILE, 5*TILE, (x + i*room_width) - 2.5*TILE, 128);
-    //draw_text((x + i*room_width) - 2.5*TILE, 112, (i*room_width) + room_width/2);
+
+    draw_sprite_part_ext(sprHud, -1, 0, 2*TILE, 5*TILE, 5*TILE, (x + i*space) - 2.5*TILE, y + 128, 1, 1, c_white, 1);
+    draw_set_blend_mode(bm_add);
+    draw_sprite_part_ext(sprHud, -1, 0, 7*TILE, 5*TILE, 5*TILE, (x + i*space) - 2.5*TILE, y + 128, 1, 1, c_white, .6);
+    draw_sprite_part_ext(sprHud, -1, 0, 12*TILE, 5*TILE, 5*TILE, (x + i*space) - 2.5*TILE, y + 128, 1, 1, c_white, .2
+        *(finalSelection &amp;&amp; selected == i));
+    draw_set_blend_mode(bm_normal);
+    draw_sprite_part(sprHud, -1, 5*TILE+i*3*TILE, 2*TILE, 3*TILE, 3*TILE, (x + i*space) - 1.5*TILE, y + 128 + TILE);
 }
+
+//draw selection
+if (finalSelection)
+{
+    var _ld = levelParams[selected];
+    draw_text(offx, y + 212, _ld[0]);
+}
+
+
 </string>
           </argument>
         </arguments>

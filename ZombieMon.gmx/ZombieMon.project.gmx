@@ -54,6 +54,8 @@
     <sprite>sprites\sprInitiator</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprParticle</sprite>
+    <sprite>sprites\mskLvlSel</sprite>
+    <sprite>sprites\sprBackground</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -87,7 +89,10 @@
     <object>objects\objEffect</object>
     <object>objects\objSpawn</object>
     <object>objects\objParticle</object>
-    <object>objects\objLevelSelector</object>
+    <objects name="HUD">
+      <object>objects\objLvl</object>
+      <object>objects\objLevelSelector</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\TITLE</room>
