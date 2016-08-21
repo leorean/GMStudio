@@ -1,5 +1,7 @@
 var file;
 
+var ds;
+
 ds[0] = ds_grid_create(1,1);
 ds[1] = ds_grid_create(1,1);
 ds_grid_clear(ds[0],0);

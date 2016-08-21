@@ -10,6 +10,7 @@ var numspawn=0;
 
 if (room_width!=w*TILE || room_height!=h*TILE)
 {
+
     room_set_width(room,w*TILE);
     room_set_height(room,h*TILE);
     room_restart();

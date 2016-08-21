@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>randomize();
+device_mouse_dbclick_enable(false);
 if (os_type == os_windows)
 {
     window_set_size(360, 640);
@@ -41,7 +42,7 @@ global.fnt = font_add_sprite(sprFnt, ord(' '), true, 1);
 //params: name, population, density, security, npc hp
 
 levelData[0] = importLevel("LEVEL0.tmx");
-levelParams[0] = array("Newshire", 20, 15, 0.0, 30);
+levelParams[0] = array("Newb Ville", 20, 15, 0.0, 30);
 levelData[1] = importLevel("LEVEL1.tmx");
 levelParams[1] = array("Wellington", 60, 40, 0.1, 55);
 
@@ -49,6 +50,7 @@ levelData[2] = 0;
 levelParams[2] = array("3", 60, 40, 0.1, 55);
 levelData[3] = 0;
 levelParams[3] = array("4", 60, 40, 0.1, 55);
+
 
 //Wellington, Newfield, Almerst, Bloodworth, Norfolk, Strong Haven, Swordbreak, 
 
@@ -80,6 +82,8 @@ for (var i = 0; i &lt; 512; i++)
 
 // ++++ LOAD/SAVE PARAMETERS ++++
 global.level = 0;
+global.maxLevel = 0
+global.coins = 0;
 
 setUpgradeLevel(u_dmg, 0);
 setUpgradeLevel(u_delay, 0);
@@ -111,8 +115,18 @@ setUpgradeLevel(u_coinRadius, 0);
           <argument>
             <kind>1</kind>
             <string>if (room == GAME)
+{
     if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
         room_restart();
+        
+    if (in(device_mouse_x_to_gui(0), 0, 1*TILE) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 1*TILE))
+        if (mouse_check_button_released(mb_left))
+            room_goto(TITLE);
+}
+
+if (room == SHOP)
+    if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
+        room_goto(TITLE);
 
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
@@ -230,6 +244,9 @@ global.timer = 0;
 // clean up mess
 with(objParticle) alpha = 0;
 
+// alpha effect for starting a level
+alpha = 1.5;
+
 //todo: load these parameters:
 
 var _lp = levelParams[global.level];
@@ -259,6 +276,7 @@ if (room == TITLE)
 // starting a level
 if (room == GAME)
 {
+    
     createRoom(levelData[global.level]);
 
     repeat(levelDensity)
@@ -314,15 +332,18 @@ draw_set_valign(fa_top);
 
 if (room == GAME)
 {
-    
+
     // border
     if (global.state == G_START || global.state == G_PLAY)
         draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 1, c_white, .3);
     if (global.state == G_OVER)
         draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 20, c_white, .3);
-    
+        
     // coins
     draw_text(w - 0, 0, "$" + string(global.coins));
+    
+    // back icon
+    draw_sprite_part(sprHud, -1, 2*TILE, 0, 1*TILE, 1*TILE, 0, 0);
     
     // game over text
     draw_set_halign(fa_center);
@@ -339,6 +360,11 @@ if (room == GAME)
             gameoverText = "Noone is left.";
         draw_text(w/2, h/3, gameoverText);
     }
+    
+    // alpha effect
+    alpha = max(alpha - .02, 0);
+    if (alpha)
+        draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_white, alpha);
 }
 
 </string>
