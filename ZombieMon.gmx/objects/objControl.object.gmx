@@ -144,29 +144,32 @@ else
           <argument>
             <kind>1</kind>
             <string>// game routine
-if (room == GAME &amp;&amp; global.state != G_PAUSE)
+if (global.state != G_PAUSE)
 {
-    zombiesLeft = 0;
-    peopleOnScreen = 0;
-    for (i = 0; i &lt; instance_number(objNpc); i++)
+    global.timer = (global.timer + 1) % INFINITE;
+    if (room == GAME)
     {
-        var _t = instance_find(objNpc, i);
-        if (_t.state == INFECTED)
-            zombiesLeft++;
-        if (_t.state != INFECTED &amp;&amp; _t.state != DIE)
-            peopleOnScreen++;
+        zombiesLeft = 0;
+        peopleOnScreen = 0;
+        for (i = 0; i &lt; instance_number(objNpc); i++)
+        {
+            var _t = instance_find(objNpc, i);
+            if (_t.state == INFECTED)
+                zombiesLeft++;
+            if (_t.state != INFECTED &amp;&amp; _t.state != DIE)
+                peopleOnScreen++;
+        }
+        
+        if (global.state == G_PLAY &amp;&amp; (zombiesLeft == 0 || global.kills == levelPopulation))
+            gameOverTimer = max(gameOverTimer - 1 , 0);
+        
+        if (!gameOverTimer)
+            global.state = G_OVER;
+        
+        if (peopleOnScreen &lt; levelDensity &amp;&amp; (global.kills &lt;= (levelPopulation - levelDensity)))
+            spawnNewNpc();
     }
-    
-    if (global.state == G_PLAY &amp;&amp; (zombiesLeft == 0 || global.kills == levelPopulation))
-        gameOverTimer = max(gameOverTimer - 1 , 0);
-    
-    if (!gameOverTimer)
-        global.state = G_OVER;
-    
-    if (peopleOnScreen &lt; levelDensity &amp;&amp; (global.kills &lt;= (levelPopulation - levelDensity)))
-        spawnNewNpc();
 }
-
 // title menu routine
 if(room == TITLE)
 {

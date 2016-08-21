@@ -85,6 +85,11 @@ var levelDrag = in(mouse_y, y + 128, y + 128+5*TILE)
 
 if (state == 0) //title state
 {
+    selected = 0;
+    if (keyboard_check_pressed(vk_backspace)
+        || keyboard_check_pressed(vk_escape))
+        game_end();
+    
     if (mouse_check_button_released(mb_left))
         state = 1;
     desty = room_height;
@@ -92,7 +97,9 @@ if (state == 0) //title state
 
 if (state == 1) //selectable state
 {
-    if (keyboard_check_pressed(vk_backspace))
+    if (keyboard_check_pressed(vk_backspace)
+        || keyboard_check_pressed(vk_escape)
+        || mouse_check_button_pressed(mb_right))
         state = 0;
     desty = 0;
         
@@ -112,14 +119,14 @@ if (state == 1) //selectable state
         }
         else
         {
-            if (abs(xVel) &gt; .5)
-                xVel *= .94;
+            if (abs(xVel) &gt; .2)
+                xVel *= .92;
             else
             {
-                /*var _sel = instance_place(room_width/2, y + 128, objLvl);
+                var _sel = instance_place(room_width/2, y + 128, objLvl);
                 if (instance_exists(_sel))
                     selected = _sel.l;
-                */
+                
             }
         }
     }
@@ -180,14 +187,38 @@ draw_set_valign(fa_top);
 bgx = (bgx - .5) % 192;
 bgy = (bgy - .5) % 320;
 
-draw_sprite(sprBackground, -1, bgx, bgy);
-draw_sprite(sprBackground, -1, bgx + 192, bgy);
-draw_sprite(sprBackground, -1, bgx, bgy + 320);
-draw_sprite(sprBackground, -1, bgx + 192, bgy + 320);
+var _a = max((room_height - y) / room_height, .3);
+
+draw_sprite_ext(sprBackground, -1, bgx, bgy, 1, 1, 0, c_white, _a);
+draw_sprite_ext(sprBackground, -1, bgx + 192, bgy, 1, 1, 0, c_white, _a);
+draw_sprite_ext(sprBackground, -1, bgx, bgy + 320, 1, 1, 0, c_white, _a);
+draw_sprite_ext(sprBackground, -1, bgx + 192, bgy + 320, 1, 1, 0, c_white, _a);
+
+//draw title
+
+var _t = .03 * (global.timer);
+var _y = floor(8 * sin(_t));
+
+if (global.timer % 30 &gt; 25)
+{
+    draw_sprite_part_ext(sprHud, -1, 5*TILE,5*TILE, 10*TILE, 9*TILE, room_width/2-5*TILE - 3 + random(6), y - room_height - 3 +
+    random(6) + 4*TILE + _y, 1, 1, c_white, .3);
+}
+if (global.timer % 50 &gt; 40)
+{
+    draw_sprite_part_ext(sprHud, -1, 5*TILE,5*TILE, 10*TILE, 9*TILE, room_width/2-5*TILE - 6 + random(12), y - room_height - 6 +
+    random(12) + 4*TILE + _y, 1, 1, c_white, .1);
+}
+draw_sprite_part(sprHud, -1, 5*TILE,5*TILE, 10*TILE, 9*TILE, room_width/2-5*TILE, y - room_height + 4*TILE + _y);
+
+if (global.timer % 90 &lt; 60)
+draw_text(room_width/2, y - 4*TILE, "Tap to play");
+
+
+//draw levels
 
 var finalSelection = selected != -1 &amp;&amp; abs(lvl[selected].x - room_width/2) &lt; 128;
 
-//draw levels
 for (i = 0; i &lt; levelCount; i++)
 {
 
