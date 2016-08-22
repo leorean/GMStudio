@@ -53,6 +53,7 @@ selected = 0;
 
 btnPlay = false;
 btnShop = false;
+tapTimer = 0;
 
 alpha = -.5;
 bgspeed = .5;
@@ -128,9 +129,10 @@ if (state == 1) //selectable state
     if (levelDrag)
     {
         if(abs(mouse_x - dragx) &gt; 6)
+        {
             selected = -1;
-            
-        xVel -= (dragx - mouse_x) / 30;
+            xVel = -(dragx - mouse_x) / 10;
+        }
     }
     else
     {
@@ -154,14 +156,29 @@ if (state == 1) //selectable state
         }
     }
     
+    // double -tap to play
+    var _sel = instance_place(mouse_x, mouse_y, objLvl);
+    
+    if (mouse_check_button_pressed(mb_left) &amp;&amp; instance_exists(_sel)
+    &amp;&amp; _sel.l == selected &amp;&amp; selected &lt;= global.maxLevel)
+    {
+        if(!tapTimer)
+            tapTimer = 20;
+        else
+            state = 2;
+    }
+    
     if (levelDragPressed)
     {
-        xVel = 0;
+        /*if (!tapTimer)
+            xVel = 0;*/
         var _sel = instance_place(mouse_x, mouse_y, objLvl);
         if (instance_exists(_sel))
             selected = _sel.l;
     }
 }
+
+tapTimer = max(tapTimer - 1, 0);
 
 //back while transitioning
 if (state == 2 || state == 3)
@@ -347,7 +364,7 @@ if (state == 1)
 if (state == 2)
 {
     var _ld = levelParams[selected];
-    draw_text(offx, y + room_height + 8*TILE, "Traveling to#" + string(_ld[0]) + "...");
+    draw_text(offx, y + room_height + 8*TILE, "Invading#" + string(_ld[0]) + "...");
     draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_white, alpha);
 }
 

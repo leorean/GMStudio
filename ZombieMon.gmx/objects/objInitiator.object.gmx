@@ -47,9 +47,17 @@ force = 0;
 w = sprite_width;
 h = sprite_height;
 
+repeat(30)
+{
+    var _rx = x - w/2 + random(w);
+    var _ry = y - h/2 + random(h);
+    var _g = instance_create(_rx, _ry, objEffectGlitter);
+    _g.color = make_color_hsv(170+random(30),255,200+random(55));
+}
+
 //spawn location
-x = room_width/2;
-y = room_height - h/2;
+//x = room_width/2;
+//y = room_height - h/2;
 
 //scaling factor for gui-to-collision mapping
 sx = 1;
@@ -63,8 +71,8 @@ maxrotspeed = 18;
 
 a1 = 0;
 a2 = 0;
-xprev = 0;
-yprev = 0;
+mxprev = 0;
+myprev = 0;
 </string>
           </argument>
         </arguments>
@@ -96,7 +104,7 @@ sy = (room_height / view_hport) * global.zoom;
 if (!dragged)
 {
     
-    if (device_mouse_check_button_pressed(0, mb_left) &amp;&amp; in(mx,x-w/2,x+w/2) &amp;&amp; in(my,y-h/2,y+h/2))
+    if (device_mouse_check_button(0, mb_left) &amp;&amp; in(mx,x-w/2,x+w/2) &amp;&amp; in(my,y-h/2,y+h/2))
     {
         dragged = true;
         xoff = x - mx;
@@ -142,18 +150,22 @@ if (thrown)
         {
             var t = instance_find(objNpc, i);
             if (in(t.x + 8, x - (w/2)*sx, x + (w/2)*sx) 
-            &amp;&amp; in (t.y + 8, y - (h/2)*sy, y + (h/2)*sy))
+            &amp;&amp; in (t.y + 8, y - (h/2)*sy, y + (h/2)*sy)
+            &amp;&amp; t.state == WALK)
             {
+                instance_create(t.x + .5*TILE, t.y+TILE, objLightning);
                 t.state = INFECTED;
                 t.hp = global.infectedHp;
                 global.kills++;
                 count++;
             }
         }
+        if (count &gt; 0)
+            global.flash = true;
         
         var t = instance_create(x, y, objText);
         if (count == 0)
-            t.text = "Failed..";
+            t.text = "Missed";
         if (count == 1)
             t.text = "1 Hit!";
         if (count &gt; 1)
@@ -232,11 +244,53 @@ else if (rotspeed &gt; 0)
     color = make_colour_hsv(0, 255 * value, 255);
 else
     color = c_white;
-        
-draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, c_white, .4 * timer/maxTimer);
-draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, rotation, color, 1);
+
+draw_sprite_ext(sprInitiator, 2, xt, yt, 1, 1, rotation, c_white,
+    .6 * timer/maxTimer);
+draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, color, 
+    1 * timer/maxTimer);
 
 
+var fg = c_white;
+if (global.timer % 4 == 0 &amp;&amp; timer/maxTimer &lt; .3)
+    fg = make_color_hsv(170+random(30), 255, 200+random(55));    
+
+draw_sprite_ext(sprInitiator, 3, xt, yt, 1, 1, rotation/10, fg, 
+    .5 - timer/maxTimer);
+    
+/*
+draw_sprite_ext(sprInitiator, 2, xt, yt, 1, 1, rotation, c_white,
+    .6 * timer/maxTimer);
+draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation, color, 
+    1 * timer/maxTimer);
+
+var fg = c_white;
+if (timer/maxTimer &lt; .5)
+{
+    if (global.timer % 2 == 0)
+        fg = c_white;
+    else
+        fg = make_color_hsv(170+random(30), 255, 200+random(55));
+}
+
+draw_sprite_ext(sprInitiator, 1, xt, yt, 1, 1, rotation/3, c_white,
+    .4 - timer/maxTimer);    
+if (global.timer % 5 == 0)
+    draw_sprite_ext(sprInitiator, 0, xt, yt, 1, 1, -rotation, fg,
+        .8 - timer/maxTimer);
+
+if (timer/maxTimer &lt; .3)
+{
+    var fg = make_color_hsv(170+random(30), 255, 200+random(55));
+    if (global.timer % 4 == 0)
+    {
+        draw_sprite_ext(sprInitiator, 3, xt-8+random(16), yt-8+random(16), 1, 1, random(360), 
+            fg, .3);
+        draw_sprite_ext(sprInitiator, 3, xt-8+random(16), yt-8+random(16), 1, 1, random(360), 
+            c_white, 1);
+
+    }
+}*/
 </string>
           </argument>
         </arguments>

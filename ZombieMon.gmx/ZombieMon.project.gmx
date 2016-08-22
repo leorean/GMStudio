@@ -57,6 +57,8 @@
     <sprite>sprites\mskLvlSel</sprite>
     <sprite>sprites\sprBackground</sprite>
     <sprite>sprites\sprBgMask</sprite>
+    <sprite>sprites\sprGlitter</sprite>
+    <sprite>sprites\sprLightning</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -87,12 +89,16 @@
     <object>objects\objInitiator</object>
     <object>objects\objCoin</object>
     <object>objects\objText</object>
-    <object>objects\objEffect</object>
     <object>objects\objSpawn</object>
-    <object>objects\objParticle</object>
     <objects name="HUD">
       <object>objects\objLvl</object>
       <object>objects\objLevelSelector</object>
+    </objects>
+    <objects name="Effects">
+      <object>objects\objEffectGlitter</object>
+      <object>objects\objParticle</object>
+      <object>objects\objEffect</object>
+      <object>objects\objLightning</object>
     </objects>
   </objects>
   <rooms name="rooms">
