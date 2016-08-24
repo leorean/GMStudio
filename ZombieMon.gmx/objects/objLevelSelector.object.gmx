@@ -33,7 +33,7 @@ bgy = 0;
 x = room_width/2;
 y = room_height;
 
-selectY = 6*TILE;
+selectY = 12*TILE;
 
 xVel = 0;
 yVel = 0;
@@ -58,11 +58,22 @@ tapTimer = 0;
 alpha = -.5;
 bgspeed = .5;
 
+mapx = -1;
+mapy = -1;
+
 for (i = 0; i &lt; levelCount; i++)
 {
     lvl[i] = instance_create((x + i*space)/* - 2.5*TILE*/, selectY, objLvl);
     lvl[i].l = i;
 }
+
+lvl[0].map = array(64, 80);
+lvl[1].map = array(112, 64);
+lvl[2].map = array(144, 96);
+lvl[3].map = array(112, 144);
+//lvl[4].map = array(324, 123);
+//lvl[5].map = array(354, 234);
+
 </string>
           </argument>
         </arguments>
@@ -111,6 +122,29 @@ if (state == 1) //selectable state
     desty = room_height;
     bgspeed = .5;
 
+    // scroll to map
+    
+    if (true)
+    {
+        var _sel = instance_place(room_width/2, y + selectY, objLvl);
+        var _s = -1;
+        if (instance_exists(_sel))
+        {
+            _s = _sel.l;
+            
+            var _lvs = lvl[_s].map;
+            mapx += (_lvs[0] - mapx) / 8;
+            mapy += (_lvs[1] - mapy) / 8;
+        }
+        else if (selected != -1)
+        {
+            var _lvs = lvl[selected].map;
+            mapx += (_lvs[0] - mapx) / 8;
+            mapy += (_lvs[1] - mapy) / 8;        
+        }
+    }
+    
+    /*
     btnPlay = in(mouse_x, 1*TILE, 5*TILE) &amp;&amp; in(mouse_y, y + room_height - 5*TILE, y + room_height - 1*TILE)
         &amp;&amp; selected &lt;= global.maxLevel;
     
@@ -120,7 +154,7 @@ if (state == 1) //selectable state
         state = 2;
     
     if (btnShop &amp;&amp; mouse_check_button_released(mb_left))
-        state = 3;
+        state = 3;*/
           
     if (backPressed || mouse_check_button_pressed(mb_right))
         state = 0;
@@ -163,7 +197,7 @@ if (state == 1) //selectable state
     &amp;&amp; _sel.l == selected &amp;&amp; selected &lt;= global.maxLevel)
     {
         if(!tapTimer)
-            tapTimer = 20;
+            tapTimer = 30;
         else
             state = 2;
     }
@@ -270,6 +304,15 @@ draw_sprite_ext(sprBackground, -1, bgx + 192, bgy, 1, 1, 0, c_white, _a);
 draw_sprite_ext(sprBackground, -1, bgx, bgy + 320, 1, 1, 0, c_white, _a);
 draw_sprite_ext(sprBackground, -1, bgx + 192, bgy + 320, 1, 1, 0, c_white, _a);
 
+// draw map
+if (state == 1 || state == 2)
+{
+    var mofx = room_width/2;
+    var mofy = room_height/3;
+    draw_sprite(sprMap, -1, mofx - mapx - 8, mofy - mapy + 8);
+    draw_sprite_part(sprHud, -1, TILE, TILE, TILE, TILE, mofx, mofy);
+}
+
 // draw mask
 draw_set_blend_mode(bm_subtract);
 draw_sprite_part_ext(sprBgMask, -1, 0, 0, 180, 320, 0, 0, 1, 1, c_white, .05);
@@ -349,7 +392,7 @@ if (finalSelection)
 }
 
 // draw buttons
-if (state == 1)
+/*if (state == 1)
 {
     // play
     draw_sprite_part_ext(sprHud, -1, (4*TILE*(btnPlay &amp;&amp; mouse_check_button(mb_left))), 17*TILE, 4*TILE, 4*TILE,
@@ -358,7 +401,7 @@ if (state == 1)
     // shop
     draw_sprite_part_ext(sprHud, -1, (4*TILE*(btnShop &amp;&amp; mouse_check_button(mb_left))), 21*TILE, 4*TILE, 4*TILE,
         room_width - 5*TILE, y + room_height - 5*TILE, 1, 1, c_white, .3+(.7*canShop));
-}
+}*/
 
 // draw alpha for level transition
 if (state == 2)

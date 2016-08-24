@@ -8,18 +8,18 @@
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
   <bbox_left>0</bbox_left>
-  <bbox_right>831</bbox_right>
+  <bbox_right>639</bbox_right>
   <bbox_top>0</bbox_top>
-  <bbox_bottom>447</bbox_bottom>
+  <bbox_bottom>639</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>832</width>
-  <height>448</height>
+  <width>640</width>
+  <height>640</height>
   <frames>
-    <frame index="0">images\sprHud_0.png</frame>
+    <frame index="0">images\sprMap_0.png</frame>
   </frames>
 </sprite>

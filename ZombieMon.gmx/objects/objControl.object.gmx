@@ -185,7 +185,7 @@ if (global.state != G_PAUSE)
         // flash
         if (global.flash)
         {
-            flashalpha = 1;
+            flashAlpha = 1;
             global.flash = false;
         }
         
@@ -285,7 +285,7 @@ with(objParticle) alpha = 0;
 
 // alpha effect for starting a level / flashing
 alpha = 1.5;
-flashalpha = 0;
+flashAlpha = 0;
 global.flash = false;
             
 //todo: load these parameters:
@@ -375,8 +375,19 @@ if (room == GAME)
     // border
     if (global.state == G_START || global.state == G_PLAY)
         draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 1, c_white, .3);
-    if (global.state == G_OVER)
-        draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 20, c_white, .3);
+    
+    //flash effect
+    if (global.state != G_OVER)
+        flashAlpha = max(flashAlpha - .05, 0);
+    else
+    {
+        flashAlpha = min(flashAlpha + .01, 1);
+        if (flashAlpha == 1 &amp;&amp; mouse_check_button_pressed(mb_left))
+            room_goto(SHOP);
+            
+    }
+    if (flashAlpha)
+        draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_black, flashAlpha);
         
     // coins
     draw_text(w - 0, 0, "$" + string(global.coins));
@@ -396,7 +407,7 @@ if (room == GAME)
         else if (global.kills &lt; levelPopulation)
             gameoverText = "Survivors:#" + string(levelPopulation - global.kills);
         else
-            gameoverText = "No survivors.##Level clear!";
+            gameoverText = "No survivors.#Level clear!";
         draw_text(w/2, h/3, gameoverText);
     }
     
@@ -404,11 +415,6 @@ if (room == GAME)
     alpha = max(alpha - .02, 0);
     if (alpha)
         draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_white, alpha);
-
-    //flash effect
-    flashalpha = max(flashalpha - .05, 0);
-    if (flashalpha)
-        draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_black, flashalpha);
 }
 
 </string>

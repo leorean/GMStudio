@@ -59,6 +59,7 @@
     <sprite>sprites\sprBgMask</sprite>
     <sprite>sprites\sprGlitter</sprite>
     <sprite>sprites\sprLightning</sprite>
+    <sprite>sprites\sprMap</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -102,6 +103,7 @@
     </objects>
   </objects>
   <rooms name="rooms">
+    <room>rooms\_LOAD_</room>
     <room>rooms\TITLE</room>
     <room>rooms\GAME</room>
     <room>rooms\SHOP</room>
