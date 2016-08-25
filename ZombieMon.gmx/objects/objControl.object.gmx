@@ -55,6 +55,8 @@ levelData[2] = 0;
 levelParams[2] = array("3", 60, 40, 0.1, 55);
 levelData[3] = 0;
 levelParams[3] = array("4", 60, 40, 0.1, 55);
+levelData[4] = 0;
+levelParams[4] = array("4", 60, 40, 0.1, 55);
 
 
 //Wellington, Newfield, Almerst, Bloodworth, Norfolk, Strong Haven, Swordbreak, 
@@ -87,7 +89,7 @@ for (var i = 0; i &lt; 512; i++)
 
 // ++++ LOAD/SAVE PARAMETERS ++++
 global.level = 0;
-global.maxLevel = 0
+global.maxLevel = 1
 global.coins = 0;
 global.maxTries = 1; // don't change for now
 
@@ -127,7 +129,9 @@ setUpgradeLevel(u_coinRadius, 0);
         
     if (in(device_mouse_x_to_gui(0), 0, 1*TILE) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 1*TILE))
         if (mouse_check_button_released(mb_left))
+        {
             room_goto(TITLE);
+        }
 }
 
 if (room == SHOP)

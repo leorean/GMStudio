@@ -33,7 +33,7 @@ bgy = 0;
 x = room_width/2;
 y = room_height;
 
-selectY = 12*TILE;
+selectY = 13*TILE;
 
 xVel = 0;
 yVel = 0;
@@ -58,8 +58,8 @@ tapTimer = 0;
 alpha = -.5;
 bgspeed = .5;
 
-mapx = -1;
-mapy = -1;
+mapx = -100;
+mapy = -100;
 
 for (i = 0; i &lt; levelCount; i++)
 {
@@ -71,7 +71,7 @@ lvl[0].map = array(64, 80);
 lvl[1].map = array(112, 64);
 lvl[2].map = array(144, 96);
 lvl[3].map = array(112, 144);
-//lvl[4].map = array(324, 123);
+lvl[4].map = array(176, 144);
 //lvl[5].map = array(354, 234);
 
 </string>
@@ -115,6 +115,10 @@ if (state == 0) //title state
     
     if (mouse_check_button_released(mb_left))
         state = 1;
+    
+    //reset map    
+    mapx = room_width/2;
+    mapy = -2000;
 }
 
 if (state == 1) //selectable state
@@ -310,8 +314,22 @@ if (state == 1 || state == 2)
     var mofx = room_width/2;
     var mofy = room_height/3;
     draw_sprite(sprMap, -1, mofx - mapx - 8, mofy - mapy + 8);
-    draw_sprite_part(sprHud, -1, TILE, TILE, TILE, TILE, mofx, mofy);
-}
+    
+    for (i = 0; i &lt; array_length_1d(lvl); i++)
+    {
+        var _mapx = lvl[i].map[0];
+        var _mapy = lvl[i].map[1];
+        
+        draw_sprite_part(sprHud, -1, 2*TILE + (global.maxLevel &gt; i)*TILE + (global.maxLevel &lt; i)*2*TILE, TILE, TILE, TILE, 
+            mofx + _mapx - mapx - 8 , mofy + _mapy - mapy + 8);    
+    }
+    
+    var _sint = sin((global.timer % 30) / 15) * 4;
+    //map cursor
+    if (selected != -1)
+    if (point_distance(mapx, mapy, lvl[selected].map[0], lvl[selected].map[1]) &lt; 3)
+        draw_sprite_part(sprHud, -1, TILE, TILE, TILE, TILE, mofx - 8, mofy + _sint);
+}    
 
 // draw mask
 draw_set_blend_mode(bm_subtract);
@@ -378,17 +396,21 @@ var canShop = true;
 // draw selection
 if (finalSelection)
 {
+    draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, y + selectY - 1.5*TILE, 20, 1, c_white, .4);
     var _ld = levelParams[selected];
     if (selected &lt;= global.maxLevel)
     {
-        draw_text(offx, y + selectY + 5.5*TILE, _ld[0]);
+        draw_text(offx, y + selectY + -1.5*TILE, _ld[0]);
         canPlay = true;
+        
+        if (global.timer % 60 &gt; 30)
+            draw_text(offx, y + selectY + 5.5*TILE, "-double tap-");
     }
     else
     {
         draw_set_halign(fa_center);
-        draw_text(offx, y + selectY + 5.5*TILE, "???");
-    }
+        draw_text(offx, y + selectY + -1.5*TILE, "???");
+    }    
 }
 
 // draw buttons
@@ -407,7 +429,7 @@ if (finalSelection)
 if (state == 2)
 {
     var _ld = levelParams[selected];
-    draw_text(offx, y + room_height + 8*TILE, "Invading#" + string(_ld[0]) + "...");
+    //draw_text(offx, y + room_height + 8*TILE, "Invading#" + string(_ld[0]) + "...");
     draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_white, alpha);
 }
 
