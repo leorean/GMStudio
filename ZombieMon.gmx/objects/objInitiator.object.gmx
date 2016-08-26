@@ -180,7 +180,7 @@ if (thrown)
 xVel = sign(xVel) * min(abs(xVel), 16);
 yVel = sign(yVel) * min(abs(yVel), 16);
 
-if (in(x + xVel, w/2, room_width-w/2))
+if (in(x + xVel, w/2 * sx, room_width-w/2 * sx))
     x += xVel * (timer / maxTimer);
 else
 {
@@ -190,7 +190,7 @@ else
         xVel = 0;
 }
 
-if (in(y + yVel, h/2, room_height-h/2))
+if (in(y + yVel, h/2 * sy, room_height-h/2 * sy))
     y += yVel * (timer / maxTimer);
 else
 {

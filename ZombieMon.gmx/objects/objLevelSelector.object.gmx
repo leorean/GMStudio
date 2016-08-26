@@ -29,6 +29,9 @@
 
 bgx = 0;
 bgy = 0;
+bgspeed = .5;
+cloudx = 0;
+cloudy = 0;
 
 x = room_width/2;
 y = room_height;
@@ -38,7 +41,7 @@ selectY = 13*TILE;
 xVel = 0;
 yVel = 0;
 
-state = 0;
+state = 1;
 desty = room_height;
 
 levelParams = objControl.levelParams;
@@ -56,7 +59,6 @@ btnShop = false;
 tapTimer = 0;
 
 alpha = -.5;
-bgspeed = .5;
 
 mapx = -100;
 mapy = -100;
@@ -329,12 +331,19 @@ if (state == 1 || state == 2)
     if (selected != -1)
     if (point_distance(mapx, mapy, lvl[selected].map[0], lvl[selected].map[1]) &lt; 3)
         draw_sprite_part(sprHud, -1, TILE, TILE, TILE, TILE, mofx - 8, mofy + _sint);
-}    
+}
 
 // draw mask
 draw_set_blend_mode(bm_subtract);
-draw_sprite_part_ext(sprBgMask, -1, 0, 0, 180, 320, 0, 0, 1, 1, c_white, .05);
+draw_sprite_part_ext(sprBgMask, -1, 0, 0, 180, 320, 0, 0, 1, 1, c_white, .04);
 draw_set_blend_mode(bm_normal);
+
+    // draw clouds
+    cloudx = (cloudx + .3) % 192;
+    cloudy = (cloudy - .1) % 320;
+    
+    draw_sprite_ext(sprClouds, -1, cloudx - 192 + 3, cloudy - 360 + 12, 1, 1, 0, c_black, .2);
+    draw_sprite_ext(sprClouds, -1, cloudx - 192, cloudy - 360, 1, 1, 0, c_white, _a*.7);
 
 // draw title
 

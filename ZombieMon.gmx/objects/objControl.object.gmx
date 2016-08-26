@@ -42,6 +42,8 @@ global.zoom = 4;
 
 global.fnt = font_add_sprite(sprFnt, ord(' '), true, 1);
 
+firstTimeLoaded = false;
+
 // ++++ level data ++++
 
 //params: name, population, density, security, npc hp
@@ -316,7 +318,14 @@ global.tries = global.maxTries;
 
 // title screen
 if (room == TITLE)
-    instance_create(0, 0, objLevelSelector);
+{
+    var _s = instance_create(0, 0, objLevelSelector);
+
+    if (!firstTimeLoaded)
+        _s.state = 0;
+    
+    firstTimeLoaded = true;
+}
 
 // starting a level
 if (room == GAME)
