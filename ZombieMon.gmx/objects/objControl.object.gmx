@@ -32,6 +32,9 @@ if (os_type == os_windows)
     window_set_size(360, 640);
 }
 
+instance_create(0, 0, objTransition);
+global.nextRoom = noone;
+
 // for initiating the round
 spawned = false;
 mx_prev = mouse_x;
@@ -212,12 +215,6 @@ if (global.state != G_PAUSE)
                 global.shake = false;
         }
         
-        // flash
-        if (global.flash)
-        {
-            flashAlpha = 1;
-            global.flash = false;
-        }
         
         if (global.state == G_PLAY
             &amp;&amp; (zombiesLeft == 0 || global.kills == levelPopulation))
@@ -306,11 +303,6 @@ global.timer = 0;
 // clean up mess
 with(objParticle) alpha = 0;
 
-// alpha effect for starting a level / flashing
-alpha = 1.5;
-flashAlpha = 0;
-global.flash = false;
-
 global.shake = false;
 
 // item
@@ -382,6 +374,26 @@ if (room == GAME)
     <event eventtype="8" enumb="75">
       <action>
         <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>HUD</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
         <id>603</id>
         <kind>7</kind>
         <userelative>0</userelative>
@@ -443,24 +455,6 @@ if (room == GAME)
         
     /*******/
     
-    // border
-    /*if (global.state == G_START || global.state == G_PLAY)
-        draw_sprite_part_ext(sprHud, -1, TILE, 0, TILE, TILE, 0, 0, 20, 1, c_white, .3);
-    */
-    
-    //flash effect
-    if (global.state != G_OVER)
-        flashAlpha = max(flashAlpha - .05, 0);
-    else
-    {
-        flashAlpha = min(flashAlpha + .005, 1);
-        if (flashAlpha == 1 &amp;&amp; mouse_check_button_pressed(mb_left))
-            room_goto(SHOP);
-            
-    }
-    if (flashAlpha)
-        draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_black, flashAlpha);
-    
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
         
@@ -475,7 +469,8 @@ if (room == GAME)
     if (global.state == G_PLAY &amp;&amp; gameOverTimer &lt; 3*SEC)
         draw_text(w/2, h/3, ceil(gameOverTimer / SEC));
     if (global.state == G_OVER)
-        draw_text(w/2, h/3, "Back to the lair");
+        global.nextRoom = SHOP;
+        //draw_text(w/2, h/3, "Back to the lair");
     
     /*if (global.state == G_OVER)
     {            
@@ -488,11 +483,6 @@ if (room == GAME)
             gameoverText = "No survivors.#Level clear!";
         //draw_text(w/2, h/3, gameoverText);
     }*/
-    
-    // alpha effect
-    alpha = max(alpha - .02, 0);
-    if (alpha)
-        draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_white, alpha);
 }
 
 </string>
@@ -501,6 +491,26 @@ if (room == GAME)
       </action>
     </event>
     <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>shader stuff</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -519,7 +529,7 @@ if (room == GAME)
             <kind>1</kind>
             <string>//++++SHADER++++
 shader_set(shader0);
-//draw_clear(c_black);
+draw_clear(c_black);
 
 //--------------------------------------------------
 

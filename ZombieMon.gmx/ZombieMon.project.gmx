@@ -80,6 +80,7 @@
     <sprite>sprites\sprClouds</sprite>
     <sprite>sprites\sprBomb</sprite>
     <sprite>sprites\mskBomb</sprite>
+    <sprite>sprites\sprTransition</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -120,6 +121,7 @@
       <object>objects\objParticle</object>
       <object>objects\objEffect</object>
       <object>objects\objLightning</object>
+      <object>objects\objTransition</object>
     </objects>
     <object>objects\objBomb</object>
     <object>objects\objInfector</object>

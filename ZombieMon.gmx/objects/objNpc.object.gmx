@@ -360,8 +360,8 @@ depth = room_height - y + 30;
 if (state != DIE)
     fCur = (fCur + fSpeed) % 2;
 else
-    fCur = (fCur + fSpeed) % 4;
-    //fCur = min((fCur + fSpeed), 3);
+    //fCur = (fCur + fSpeed) % 4;
+    fCur = min((fCur + fSpeed), 3);
 
 frame = floor(fCur);
 
@@ -380,7 +380,7 @@ switch(state)
         col = 4;
     break;
     case DIE:
-        fSpeed = .15;
+        fSpeed = .1;
         col = 6;
     break;
 }

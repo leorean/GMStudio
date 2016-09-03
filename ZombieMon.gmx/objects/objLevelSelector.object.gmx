@@ -238,14 +238,17 @@ if (state == 2 || state == 3)
 // play pressed
 if (state == 2)
 {
+    global.level = selected;
+    global.nextRoom = GAME;
     bgspeed = min(bgspeed + .02, 4);
     desty = -room_height;
-    alpha = min(alpha + .02, 1);
+    state = 3;
+    /*alpha = min(alpha + .02, 1);
     if (alpha == 1)
     {
         global.level = selected;
-        room_goto(GAME);
-    }
+        //room_goto(GAME);
+    }*/
 }
 
 // shop
@@ -429,18 +432,6 @@ if (finalSelection)
     }    
 }
 
-// draw buttons
-/*if (state == 1)
-{
-    // play
-    draw_sprite_part_ext(sprHud, -1, (4*TILE*(btnPlay &amp;&amp; mouse_check_button(mb_left))), 17*TILE, 4*TILE, 4*TILE,
-        1*TILE, y + room_height - 5*TILE, 1, 1, c_white,.3+(.7*canPlay));
-    
-    // shop
-    draw_sprite_part_ext(sprHud, -1, (4*TILE*(btnShop &amp;&amp; mouse_check_button(mb_left))), 21*TILE, 4*TILE, 4*TILE,
-        room_width - 5*TILE, y + room_height - 5*TILE, 1, 1, c_white, .3+(.7*canShop));
-}*/
-
 // draw alpha for level transition
 if (state == 2)
 {
@@ -448,14 +439,6 @@ if (state == 2)
     //draw_text(offx, y + room_height + 8*TILE, "Invading#" + string(_ld[0]) + "...");
     draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_white, alpha);
 }
-
-// draw alpha for shop transition
-if (state == 3)
-{
-    draw_text(offx, y + room_height + 8*TILE, "Entering the#demon shop...");    
-    draw_sprite_part_ext(sprBgMask, -1, 180, 0, 180, 320, 0, 0, 1, 1, c_black, alpha);
-}
-
 </string>
           </argument>
         </arguments>
