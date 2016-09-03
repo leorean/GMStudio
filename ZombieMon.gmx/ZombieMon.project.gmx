@@ -123,11 +123,12 @@
     </objects>
     <object>objects\objBomb</object>
     <object>objects\objInfector</object>
+    <object>objects\objItem</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\_LOAD_</room>
-    <room>rooms\GAME</room>
     <room>rooms\TITLE</room>
+    <room>rooms\GAME</room>
     <room>rooms\SHOP</room>
   </rooms>
   <constants number="20">

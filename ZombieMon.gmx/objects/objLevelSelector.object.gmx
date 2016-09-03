@@ -105,8 +105,19 @@ var levelDragReleased = in(mouse_y, y + selectY, y + selectY+5*TILE)
 var levelDrag = in(mouse_y, y + selectY, y + selectY+5*TILE)
     &amp;&amp; !mouse_check_button_pressed(mb_left) &amp;&amp; mouse_check_button(mb_left);
 
+var doubleClick;
+if (os_type != os_windows)
+    doubleClick = mouse_check_button_pressed(mb_right);
+else
+{
+    doubleClick = mouse_check_button_pressed(mb_left) &amp;&amp; tapTimer;
+    if (mouse_check_button_pressed(mb_left))
+        tapTimer = 30;
+}
+    
 var backPressed = keyboard_check_pressed(vk_backspace) || keyboard_check_pressed(vk_escape);
 var backReleased = keyboard_check_released(vk_backspace) || keyboard_check_released(vk_escape);
+
 
 if (state == 0) //title state
 {
@@ -162,7 +173,7 @@ if (state == 1) //selectable state
     if (btnShop &amp;&amp; mouse_check_button_released(mb_left))
         state = 3;*/
           
-    if (backPressed || mouse_check_button_pressed(mb_right))
+    if (backPressed)
         state = 0;
     desty = 0;
         
@@ -199,19 +210,15 @@ if (state == 1) //selectable state
     // double -tap to play
     var _sel = instance_place(mouse_x, mouse_y, objLvl);
     
-    if (mouse_check_button_pressed(mb_left) &amp;&amp; instance_exists(_sel)
+    if (doubleClick &amp;&amp; instance_exists(_sel)
     &amp;&amp; _sel.l == selected &amp;&amp; selected &lt;= global.maxLevel)
-    {
-        if(!tapTimer)
-            tapTimer = 30;
-        else
-            state = 2;
+    {        
+        state = 2;
     }
     
     if (levelDragPressed)
     {
-        /*if (!tapTimer)
-            xVel = 0;*/
+
         var _sel = instance_place(mouse_x, mouse_y, objLvl);
         if (instance_exists(_sel))
             selected = _sel.l;

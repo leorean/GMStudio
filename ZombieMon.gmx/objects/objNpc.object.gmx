@@ -92,7 +92,7 @@ if (state != DIE &amp;&amp; state != INFECTED)
 {
     if(place_meeting(x, y, objInfector))
     {
-        instance_create(x + .5*TILE, y+TILE, objLightning);
+        //instance_create(x + .5*TILE, y+TILE, objLightning);
         state = INFECTED;
         hp = global.infectedHp;
         global.kills++;

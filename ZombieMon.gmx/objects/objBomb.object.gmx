@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objItem</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -32,7 +32,8 @@ radius = 2; // UPGRADEABLE
 type = 0;
 
 exploded = false;
-
+holding = true;
+free = false;
 
 frame = 0;
 fCur = 0;
@@ -59,27 +60,43 @@ fCur = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>timer = max(timer - 1, 0);
-
-if (!timer)
+            <string>free = !place_meeting(x, y, objSolid) &amp;&amp; !place_meeting(x, y, objBomb)
+    &amp;&amp; device_mouse_y_to_gui(0) &lt; display_get_gui_height() - 2*TILE;
+if (holding)
 {
-    /*for (i = -radius; i &lt;= radius; i++)
-    for (j = -radius; j &lt;= radius; j++)
-    {
-        if (i == j == 0 || i != j)
+    timer = maxTimer;
+    x = ((mouse_x) div TILE) * TILE;
+    y = ((mouse_y) div TILE) * TILE;
+    
+    if (free)
+        if (mouse_check_button_released(mb_left))
         {
-            //Draw
+            holding = false;
+            global.item = noone;
         }
-    }*/
-
-    if (!exploded)
-    {
-        exploded = true;
-        fCur = 0;
-        
-        depth = room_height - y + 35;
-    }
 }
+
+if (!holding)
+{
+    timer = max(timer - 1, 0);
+    
+    if (!timer)
+    {
+        if (!exploded)
+        {
+            global.shake = true;
+            global.state = G_PLAY;
+            
+            exploded = true;
+            fCur = 0;
+        }
+    }
+    
+    depth = room_height - y + 35;
+} else
+    depth = 0;
+
+
 </string>
           </argument>
         </arguments>
@@ -104,12 +121,23 @@ if (!timer)
             <kind>1</kind>
             <string>frame = floor(fCur);
 
+var a = 1;
+var c = c_white;
+
+if (holding)
+{
+    a = .5;
+    if (!free) c = c_red;
+}
+
 if (!exploded)
 {
-    fSpeed = (.3 * (1 - (timer / maxTimer)));
-    fCur = (fCur + fSpeed) % 2;
-
-    draw_sprite_part(sprBomb, -1, frame*TILE, 0, TILE, TILE, x, y);
+    if ((timer/maxTimer) &lt; .5)
+    {
+        fSpeed = (.3 * (1 - (timer / maxTimer)));
+        fCur = (fCur + fSpeed) % 2;
+    }
+    draw_sprite_part_ext(sprBomb, -1, frame*TILE, 0, TILE, TILE, x, y, 1, 1, c, a);
 }
 if (exploded)
 {
@@ -118,9 +146,14 @@ if (exploded)
     for (i = -radius; i &lt;= radius; i++)
     for (j = -radius; j &lt;= radius; j++)
     {
-        if ((i == 0 || j == 0) &amp;&amp; i != j)
+        if ((((i == 0 || j == 0) &amp;&amp; i != j) || (i == 0 &amp;&amp; j == 0))
+         &amp;&amp; !place_meeting(x + i*TILE, y + j*TILE, objSolid))
         {
             instance_create(x + i*TILE, y + j*TILE, objInfector);
+            
+            //middle part
+            if (i == 0 &amp;&amp; j == 0)
+                draw_sprite_part(sprBomb, -1, 2*TILE + frame*TILE, 0*TILE, TILE, TILE, x + i*TILE, y+j*TILE);
             
             //up
             if (i == 0 &amp;&amp; j &lt; 0)
@@ -140,14 +173,6 @@ if (exploded)
     if (fCur == 3)
         instance_destroy();
 }
-/*for (i = -radius; i &lt;= radius; i++)
-    for (j = -radius; j &lt;= radius; j++)
-    {
-        if (i == j == 0 || i != j)
-        {
-            //Draw
-        }
-    }*/
 </string>
           </argument>
         </arguments>
