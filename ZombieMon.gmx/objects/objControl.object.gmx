@@ -134,6 +134,12 @@ setUpgradeLevel(u_coinRadius, 0);
         {
             room_goto(TITLE);
         }
+        
+    if (!place_meeting(mouse_x,mouse_y, objSolid)
+        &amp;&amp; mouse_check_button_released(mb_left))
+    {
+        instance_create((mouse_x div TILE)*TILE, (mouse_y div TILE)*TILE, objBomb);
+    }
 }
 
 if (room == SHOP)
@@ -196,7 +202,7 @@ if (global.state != G_PAUSE)
         }
         
         // spawn initiators
-        if (mouse_check_button(mb_left))
+        /*if (mouse_check_button(mb_left))
         {            
             if (!spawned &amp;&amp; point_distance(mouse_x, mouse_y, mx_prev, my_prev) &gt; 3)
             {
@@ -211,7 +217,7 @@ if (global.state != G_PAUSE)
             }
         }
         if (mouse_check_button_released(mb_left))
-            spawned = false;
+            spawned = false;*/
         
         if (global.state == G_PLAY
             &amp;&amp; (zombiesLeft == 0 || global.kills == levelPopulation)

@@ -56,8 +56,8 @@ repeat(30)
 }
 
 //spawn location
-//x = room_width/2;
-//y = room_height - h/2;
+x = room_width/2;
+y = room_height - h/2;
 
 //scaling factor for gui-to-collision mapping
 sx = 1;
@@ -115,6 +115,8 @@ if (!dragged)
 if (dragged &amp;&amp; !thrown)
 {
 
+    //y = max(y, 3/4 * room_height);
+
     xVel = (mx - (x - xoff)) / 6;
     yVel = (my - (y - yoff)) / 6;
  
@@ -131,7 +133,7 @@ if (dragged &amp;&amp; !thrown)
             rotspeed *= .98;
     }
     
-    if (!device_mouse_check_button(0, mb_left) &amp;&amp; max(abs(xVel),abs(yVel) &gt;= 0))
+    if (!device_mouse_check_button(0, mb_left))// &amp;&amp; max(abs(xVel),abs(yVel) &gt;= 0))
         thrown = true;
 }
     rotspeed = sign(rotspeed) * min(abs(rotspeed), maxrotspeed);
@@ -139,9 +141,11 @@ if (dragged &amp;&amp; !thrown)
 
 if (thrown)
 {
-    timer = max(timer - 1, 0);
+    //timer = max(timer - 1, 0);
+    xVel *= .98;
+    yVel *= .98;
     
-    if (!timer)
+    if (max(abs(xVel), abs(yVel)) &lt; .2)
     {
         xVel = 0;
         yVel = 0;
@@ -180,8 +184,11 @@ if (thrown)
 xVel = sign(xVel) * min(abs(xVel), 16);
 yVel = sign(yVel) * min(abs(yVel), 16);
 
+x = max(w/2 * sx, min(x + xVel, room_width-w/2 * sx));
+y = max(h/2 * sy, min(y + yVel, room_height-h/2 * sy));
+
 if (in(x + xVel, w/2 * sx, room_width-w/2 * sx))
-    x += xVel * (timer / maxTimer);
+    x += xVel;// * (timer / maxTimer);
 else
 {
     if (thrown)

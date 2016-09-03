@@ -78,6 +78,8 @@
     <sprite>sprites\sprLightning</sprite>
     <sprite>sprites\sprMap</sprite>
     <sprite>sprites\sprClouds</sprite>
+    <sprite>sprites\sprBomb</sprite>
+    <sprite>sprites\mskBomb</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -119,11 +121,13 @@
       <object>objects\objEffect</object>
       <object>objects\objLightning</object>
     </objects>
+    <object>objects\objBomb</object>
+    <object>objects\objInfector</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\_LOAD_</room>
-    <room>rooms\TITLE</room>
     <room>rooms\GAME</room>
+    <room>rooms\TITLE</room>
     <room>rooms\SHOP</room>
   </rooms>
   <constants number="20">

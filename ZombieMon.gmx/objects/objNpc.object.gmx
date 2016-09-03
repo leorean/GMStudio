@@ -52,7 +52,7 @@ value = global.value;
 spawnedCoins = false;
 
 // graphics
-type = irandom(7);//irandom(4);
+type = irandom(8);
 
 dir = NONE;
 lastDir = NONE;
@@ -87,7 +87,19 @@ dst = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// walk around randomly
+            <string>//infector!
+if (state != DIE &amp;&amp; state != INFECTED)
+{
+    if(place_meeting(x, y, objInfector))
+    {
+        instance_create(x + .5*TILE, y+TILE, objLightning);
+        state = INFECTED;
+        hp = global.infectedHp;
+        global.kills++;
+    }
+}
+
+// walk around randomly
 if (state == WALK)
 {
     if (walkDist == 0)
@@ -398,7 +410,7 @@ if ((state == PANIC || state == WALK) &amp;&amp; hp &lt; global.npcHp)
 
 if (state == INFECTED || state == DIE)
     type = 0;
-
+    
 draw_sprite_part(sprNpc, -1, col * TILE + frame * TILE, row * TILE, TILE, TILE, x, y);
 </string>
           </argument>

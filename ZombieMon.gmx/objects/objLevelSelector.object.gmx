@@ -111,7 +111,7 @@ var backReleased = keyboard_check_released(vk_backspace) || keyboard_check_relea
 if (state == 0) //title state
 {
     desty = room_height;
-    selected = 0;
+    selected = global.maxLevel;
     if (backPressed)
         game_end();
     
@@ -233,7 +233,7 @@ if (state == 2)
 {
     bgspeed = min(bgspeed + .02, 4);
     desty = -room_height;
-    alpha = min(alpha + .01, 1);
+    alpha = min(alpha + .02, 1);
     if (alpha == 1)
     {
         global.level = selected;
@@ -242,7 +242,7 @@ if (state == 2)
 }
 
 // shop
-if (state == 3)
+/*if (state == 3)
 {
     bgspeed = max(bgspeed - .008, 0);
     desty = -room_height;
@@ -251,7 +251,7 @@ if (state == 3)
     {
         room_goto(SHOP);
     }
-}
+}*/
 
 yVel = (desty - y) / 10;
 xVel = sign(xVel)*min(abs(xVel), 10);
