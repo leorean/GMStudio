@@ -44,6 +44,7 @@ surf = -1; //drawing surface
 global.zoom = 4;
 
 global.fnt = font_add_sprite(sprFnt, ord(' '), true, 1);
+global.fntSmall = font_add_sprite(sprFntSmall, ord(' '), true, 1);
 
 firstTimeLoaded = false;
 
@@ -137,18 +138,11 @@ item[3] = 0;
 {
     if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
         room_restart();
-        
-    /*if (in(device_mouse_x_to_gui(0), 0, 1*TILE) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 1*TILE))
-        if (mouse_check_button_released(mb_left))
-        {
-            room_goto(TITLE);
-        }*/
-        
 }
 
 if (room == SHOP)
     if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
-        room_goto(TITLE);
+        global.nextRoom = TITLE;
 
 if (keyboard_check_pressed(ord('Q')))
     game_restart();
@@ -296,7 +290,7 @@ if (surface_exists(surf))
           <argument>
             <kind>1</kind>
             <string>global.state = G_START;
-maxGameOverTimer = 5*SEC;
+maxGameOverTimer = 3*SEC;
 gameOverTimer = maxGameOverTimer;
 global.timer = 0;
 
@@ -306,7 +300,7 @@ with(objParticle) alpha = 0;
 global.shake = false;
 
 // item
-global.item = noone;
+global.item = -1;
 
 //TODO: load these parameters:
 
@@ -421,38 +415,66 @@ if (room == GAME)
 {
 
     /****TOOL BAR***/
-    draw_sprite_part_ext(sprHud, -1, 0, 19*TILE, WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, .5);
-    draw_sprite_part(sprHud, -1, 0, 21*TILE, WIDTH, 2*TILE, 0, h - 2*TILE);
-
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
+    draw_sprite_part_ext(sprHud, -1, 0, 19*TILE, WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, 1);
+    draw_sprite_part_ext(sprHud, -1, 0, 21*TILE, WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, .4);
     
-    // if y in bar
-    if (in(device_mouse_y_to_gui(0), h - 2*TILE, h))
+    // if y in bar and not holding an item
+    if (in(device_mouse_y_to_gui(0), h - 2*TILE, h) &amp;&amp; !place_meeting(mouse_x, mouse_y, objItem))
     {
         //demon bomb
         if(in(device_mouse_x_to_gui(0), 0, 2*TILE) &amp;&amp; global.items[0] &gt; 0
-        &amp;&amp; mouse_check_button_pressed(mb_left) &amp;&amp; global.item == noone)
+        &amp;&amp; mouse_check_button_pressed(mb_left))
         {
-            global.item = instance_create(mouse_x - .5*TILE, mouse_y-.5*TILE, objBomb);
-            global.items[0]--;
+            if (global.item == -1)
+                global.item = 0;
+            else
+                global.item = -1;
         }
     }
+    else //place items
+    {
+        if (mouse_check_button_pressed(mb_left))
+        {
+            if (global.item == 0)
+            {
+                instance_create(mouse_x - .5*TILE, mouse_y-.5*TILE, objBomb);
+                global.items[0]--;
+            }
+            global.item = -1;
+        }
+    }
+    
     // draw items
     for (i = 0; i &lt; 4; i++)
     {
-        if (global.item == noone)
-            itemAlpha = 1;
+    
+        itemAlpha = 1;
+
+        if (global.item == i)
+        {
+            xo = -1+random(2);
+            yo = -1+random(2);
+        }
         else
+        {
+            xo = 0;
+            yo = 0;
+        }
+        if (global.items[i] == 0)
             itemAlpha = .5;
-        
+
         if (global.items[i] &gt; 0)
         {
-            draw_sprite_part_ext(sprHud,-1, i*2*TILE, 17*TILE, 2*TILE, 2*TILE, i*TILE, h-2*TILE, 1, 1, c_white, itemAlpha);
-            draw_text(1*TILE + 2*i*TILE, h - 2*TILE, global.items[i]);
+            draw_sprite_part_ext(sprHud,-1, i*2*TILE, 17*TILE, 2*TILE, 2*TILE, i*TILE + xo, h-2*TILE + yo, 1, 1, c_white, itemAlpha);
+            draw_set_font(global.fntSmall);
+            draw_set_halign(fa_center);
+            draw_set_valign(fa_top);
+
+            draw_text(TILE + 2*i*TILE, h - 2.5*TILE-2, "x"+string(global.items[i]));
+            draw_set_font(global.fnt);
         }
     }
-        
+    
     /*******/
     
     draw_set_halign(fa_left);
@@ -467,7 +489,7 @@ if (room == GAME)
     draw_set_valign(fa_center);
     
     if (global.state == G_PLAY &amp;&amp; gameOverTimer &lt; 3*SEC)
-        draw_text(w/2, h/3, ceil(gameOverTimer / SEC));
+        draw_text(w/2, h/3, "Ending in " + string(ceil(gameOverTimer / SEC)));
     if (global.state == G_OVER)
         global.nextRoom = SHOP;
         //draw_text(w/2, h/3, "Back to the lair");

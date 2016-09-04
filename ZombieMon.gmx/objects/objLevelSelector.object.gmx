@@ -357,6 +357,8 @@ draw_set_blend_mode(bm_normal);
 
 // draw title
 
+draw_sprite_part(sprHud, -1, 15*TILE, 5*TILE, 5*TILE, 4*TILE, room_width/2 - 2.5*TILE, y - room_height + 15*TILE);
+
 var _t = .03 * (global.timer);
 var _y = floor(8 * sin(_t));
 
@@ -372,8 +374,14 @@ if (global.timer % 50 &gt; 30)
 }
 draw_sprite_part(sprHud, -1, 5*TILE,5*TILE, 10*TILE, 9*TILE, room_width/2-5*TILE, y - room_height + 4*TILE + _y);
 
-if (state == 0 &amp;&amp; global.timer % 90 &lt; 60)
-draw_text(room_width/2, y - 4*TILE, "Tap to play");
+//color and alpha for flashing text
+var _ca = sin(2*_t);
+var _cv = c_white;
+
+if (state == 0)// &amp;&amp; global.timer % 90 &lt; 60)
+{    
+    draw_text_color(room_width/2, y - 1.25*TILE, "Tap to play", _cv, _cv, _cv, _cv, _ca);
+}
 
 // draw options
 /*if (state == 1)
@@ -422,8 +430,8 @@ if (finalSelection)
         draw_text(offx, y + selectY + -1.5*TILE, _ld[0]);
         canPlay = true;
         
-        if (global.timer % 60 &gt; 30)
-            draw_text(offx, y + selectY + 5.5*TILE, "-double tap-");
+        //if (global.timer % 60 &gt; 30)
+        draw_text_color(offx, y + selectY + 5.5*TILE, "*double tap*", _cv, _cv, _cv, _cv, _ca);
     }
     else
     {

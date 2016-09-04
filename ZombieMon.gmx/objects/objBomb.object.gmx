@@ -72,7 +72,6 @@ if (holding)
         if (mouse_check_button_released(mb_left))
         {
             holding = false;
-            global.item = noone;
         }
 }
 
@@ -97,6 +96,62 @@ if (!holding)
     depth = 0;
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="75">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>text</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*draw_set_alpha(1);
+
+var w = display_get_gui_width();
+var h = display_get_gui_height();
+
+var xt = ((x + .5*TILE) / room_width) * w;
+var yt = ((y - TILE) / room_height) * h;
+
+if (!holding &amp;&amp; !exploded)
+{
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_top);
+    draw_text(xt, yt, ceil((timer / SEC)));
+}*/
 </string>
           </argument>
         </arguments>
@@ -132,12 +187,16 @@ if (holding)
 
 if (!exploded)
 {
-    if ((timer/maxTimer) &lt; .5)
+    if ((timer/maxTimer) &lt; .25)
     {
         fSpeed = (.3 * (1 - (timer / maxTimer)));
         fCur = (fCur + fSpeed) % 2;
     }
     draw_sprite_part_ext(sprBomb, -1, frame*TILE, 0, TILE, TILE, x, y, 1, 1, c, a);
+    
+    // fuse
+    var fuseFrame = ((1 - (timer / maxTimer))*5*TILE) div TILE;
+    draw_sprite_part(sprBomb, -1, 8*TILE + fuseFrame*TILE, (global.timer % 10 &gt; 5)*TILE, TILE, TILE, x, y-TILE);
 }
 if (exploded)
 {
