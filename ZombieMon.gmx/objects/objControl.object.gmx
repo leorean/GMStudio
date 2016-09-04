@@ -302,6 +302,13 @@ global.shake = false;
 // item
 global.item = -1;
 
+//coin collector
+global.coins = 0;
+global.coinCount = 0;
+maxCoinTimer = .5*SEC;
+coinTimer = 0;
+lastCoinCount = 0;
+
 //TODO: load these parameters:
 
 var _lp = levelParams[global.level];
@@ -407,6 +414,9 @@ if (room == GAME)
 var w = display_get_gui_width();
 var h = display_get_gui_height();
 
+var xt = (mouse_x / room_width) * w;
+var yt = (mouse_y / room_height) * h;
+
 draw_set_alpha(1);
 draw_set_color(c_white);
 draw_set_font(global.fnt);
@@ -415,8 +425,9 @@ if (room == GAME)
 {
 
     /****TOOL BAR***/
-    draw_sprite_part_ext(sprHud, -1, 0, 19*TILE, WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, 1);
-    draw_sprite_part_ext(sprHud, -1, 0, 21*TILE, WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, .4);
+    draw_sprite_part_ext(sprHud, -1, 0, 19*TILE, .5*WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, 1);
+    //draw_sprite_part_ext(sprHud, -1, 0, 21*TILE, .5*WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, 1);
+    //draw_sprite_part_ext(sprHud, -1, 0, 21*TILE, WIDTH, 2*TILE, 0, h - 2*TILE, 1, 1, c_white, .4);
     
     // if y in bar and not holding an item
     if (in(device_mouse_y_to_gui(0), h - 2*TILE, h) &amp;&amp; !place_meeting(mouse_x, mouse_y, objItem))
@@ -447,25 +458,29 @@ if (room == GAME)
     // draw items
     for (i = 0; i &lt; 4; i++)
     {
-    
-        itemAlpha = 1;
+        var isSelected = global.item == i;
 
-        if (global.item == i)
-        {
-            xo = -1+random(2);
-            yo = -1+random(2);
-        }
-        else
-        {
-            xo = 0;
-            yo = 0;
-        }
+        // item bg
+        draw_sprite_part(sprHud, -1, 2*TILE*(global.item == i), 23*TILE, 2*TILE, 2*TILE, i*2*TILE, h - 2*TILE);
+        //    1, 1, c_white, .5+.5*isSelected);
+        //draw_sprite_part(sprHud, -1, 4*TILE, 23*TILE, 2*TILE, 2*TILE, i*2*TILE, h - 2*TILE);
+        
         if (global.items[i] == 0)
             itemAlpha = .5;
 
         if (global.items[i] &gt; 0)
         {
-            draw_sprite_part_ext(sprHud,-1, i*2*TILE, 17*TILE, 2*TILE, 2*TILE, i*TILE + xo, h-2*TILE + yo, 1, 1, c_white, itemAlpha);
+            draw_sprite_part(sprHud,-1, i*2*TILE, 17*TILE, 2*TILE, 2*TILE, i*TILE, h-2*TILE);
+
+            if (isSelected)
+            {
+                draw_set_blend_mode(bm_add);
+                draw_sprite_part_ext(sprHud,-1, i*2*TILE, 17*TILE, 2*TILE, 2*TILE, i*TILE, h-2*TILE,
+                 1, 1, c_white, .5);
+            }
+             
+            draw_set_blend_mode(bm_normal);
+            
             draw_set_font(global.fntSmall);
             draw_set_halign(fa_center);
             draw_set_valign(fa_top);
@@ -476,13 +491,42 @@ if (room == GAME)
     }
     
     /*******/
-    
-    draw_set_halign(fa_left);
+   
+    // ++++coins++++
+
+    draw_set_halign(fa_right);
     draw_set_valign(fa_top);
         
-    // coins
-    draw_text_colour(0, 0, "$" + string(global.coins), c_white, c_white, c_lime, c_lime, 1);
+    // coin bg
+    draw_sprite_part_ext(sprHud, -1, 5*TILE, 14*TILE, 6*TILE, TILE+2, 0, 0, 1, 1, c_white, 1);
+    draw_sprite_part_ext(sprHud, -1, 5*TILE, 16*TILE, 6*TILE, TILE+2, 0, 0, 1, 1, c_white, .6);
+        
+    draw_text_colour(6*TILE + 2, 1, "$"+string(global.coins) + " ", c_white, c_white, c_lime, c_lime, 1);
     draw_set_color(c_white);
+    
+    // coin collector stuff
+
+    coinTimer = max(coinTimer - 1, 0);
+    if (coinTimer)
+        draw_text(6*TILE, 1 + TILE - (1 - (coinTimer/maxCoinTimer))*TILE, "+" + string(global.coinCount));
+    if (lastCoinCount != global.coinCount)
+        coinTimer = maxCoinTimer;        
+    lastCoinCount = global.coinCount;
+
+    //++++
+    
+    // kills
+    
+    draw_sprite_part_ext(sprHud, -1, 11*TILE, 14*TILE, 5*TILE, TILE+2, w - 5*TILE, 0, 1, 1, c_white, 1);
+    draw_sprite_part_ext(sprHud, -1, 11*TILE, 16*TILE, 5*TILE, TILE+2, w - 5*TILE, 0, 1, 1, c_white, .6);
+    
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_top);
+    
+    draw_text_colour(w - TILE - 3, 1, string(global.kills) + "/" + string(levelPopulation),
+        c_white, c_white, c_orange, c_orange, 1);
+    
+    //global.kills == levelPopulation
     
     // game over text
     draw_set_halign(fa_center);
@@ -492,7 +536,7 @@ if (room == GAME)
         draw_text(w/2, h/3, "Ending in " + string(ceil(gameOverTimer / SEC)));
     if (global.state == G_OVER)
         global.nextRoom = SHOP;
-        //draw_text(w/2, h/3, "Back to the lair");
+
     
     /*if (global.state == G_OVER)
     {            

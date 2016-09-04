@@ -79,6 +79,7 @@ fSpeed = .1;
     if (in(mouse_y,y - global.coinRadius, y + global.coinRadius))
     {
         global.coins += value;
+        global.coinCount += value;
         taken = true;
     }
 }

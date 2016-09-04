@@ -195,8 +195,11 @@ if (!exploded)
     draw_sprite_part_ext(sprBomb, -1, frame*TILE, 0, TILE, TILE, x, y, 1, 1, c, a);
     
     // fuse
-    var fuseFrame = ((1 - (timer / maxTimer))*5*TILE) div TILE;
-    draw_sprite_part(sprBomb, -1, 8*TILE + fuseFrame*TILE, (global.timer % 10 &gt; 5)*TILE, TILE, TILE, x, y-TILE);
+    if (!holding)
+    {
+        var fuseFrame = ((1 - (timer / maxTimer))*5*TILE) div TILE;
+        draw_sprite_part(sprBomb, -1, 8*TILE + fuseFrame*TILE, (global.timer % 10 &gt; 5)*TILE, TILE, TILE, x, y-TILE);
+    }
 }
 if (exploded)
 {
