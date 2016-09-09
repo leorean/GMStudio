@@ -58,7 +58,7 @@ if (targetSuitable)
    
 if (targetSuitable &amp;&amp; place_meeting(x, y, target))
 {
-    target.hp -= dmg;
+    target.hp -= dmg * global.def;
     spawnBlood(target.x+8, target.y+8, 3);
     instance_destroy();
 }
