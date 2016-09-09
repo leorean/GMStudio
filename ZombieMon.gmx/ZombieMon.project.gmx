@@ -82,6 +82,7 @@
     <sprite>sprites\mskBomb</sprite>
     <sprite>sprites\sprTransition</sprite>
     <sprite>sprites\sprFntSmall</sprite>
+    <sprite>sprites\mskProjectile</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -127,17 +128,19 @@
     <object>objects\objBomb</object>
     <object>objects\objInfector</object>
     <object>objects\objItem</object>
+    <object>objects\objProjectile</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\_LOAD_</room>
-    <room>rooms\TITLE</room>
     <room>rooms\GAME</room>
+    <room>rooms\TITLE</room>
     <room>rooms\SHOP</room>
   </rooms>
-  <constants number="20">
+  <constants number="21">
     <constant name="LAYER_FG">50000</constant>
     <constant name="LAYER_BG">50005</constant>
     <constant name="SEC">60</constant>
+    <constant name="ATTACK">4</constant>
     <constant name="DIE">3</constant>
     <constant name="INFECTED">2</constant>
     <constant name="PANIC">1</constant>

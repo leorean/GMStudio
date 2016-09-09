@@ -51,6 +51,13 @@ delay = 0;
 value = global.value;
 spawnedCoins = false;
 
+// protectors
+violent = choose(true,false);
+attackDmg = 20;
+maxAttackDelay = 15;
+attackDelay = 0;
+attackDist = 96;
+
 // graphics
 type = irandom(8);
 
@@ -130,8 +137,15 @@ if (state == WALK)
                 if (distance_to_object(t) &lt; maxDist)
                 {
                     maxDist = distance_to_object(t);
-                    fleeFrom = t;
-                    state = PANIC;
+                    if (!violent)
+                    {
+                        fleeFrom = t;
+                        state = PANIC;
+                    } else
+                    {
+                        target = t;
+                        state = ATTACK;
+                    }
                 }
             }
         }
@@ -152,8 +166,11 @@ if (state == PANIC)
         fleeFrom = noone;
         if (spawned)
             angle = random(360);
-        walkDist = TILE;
+        walkDist = TILE;        
         var maxDist = 64;
+        
+        if (violent) maxDist = attackDist;
+        
         for (i = 0; i &lt; instance_number(objNpc); i++)
         {
             var t = instance_find(objNpc, i);
@@ -176,9 +193,50 @@ if (state == PANIC)
     }
 }
 
+// a good guy, hunts infected npcs
+if (state == ATTACK)
+{
+    attackDelay = max(attackDelay - 1, 0);
+    xVel = 0; yVel = 0;
+    
+    if (!attackDelay)
+    {
+        attackDelay = maxAttackDelay;
+        
+        var maxDist = attackDist;
+        for (i = 0; i &lt; instance_number(objNpc); i++)
+        {
+            var t = instance_find(objNpc, i);
+            if (instance_exists(t) &amp;&amp; t != self &amp;&amp; t.state == INFECTED)
+            {
+                if (distance_to_object(t) &lt; maxDist
+                 &amp;&amp; !collision_line(x+8,y+8,t.x+8,t.y+8,objSolid,false,true))
+                {
+                    target = t;
+                    maxDist = distance_to_object(t);
+                }
+            }
+        }
+        
+        if (instance_exists(target))
+        {
+            angle = point_direction(x, y, target.x, target.y);
+        
+            var proj = instance_create(x+.5*TILE, y+.5*TILE, objProjectile);
+            proj.angle = angle;
+            proj.target = target;
+            proj.dmg = attackDmg;
+            target = noone;
+        } else
+            state = WALK;
+    }    
+}
+
 // chase other npcs
 if (state == INFECTED)
 {
+    violent = false;
+    
     var spd = min(.25 * global.huntSpeed + global.huntSpeed * (hp / global.infectedHp), 
         global.huntSpeed)
         + boost;
@@ -227,16 +285,8 @@ if (state == INFECTED)
         {
             if (delay == 0)
             {
-                target.hp = max(target.hp - global.dmg, 0);
-                
-                spawnBlood(target.x+8, target.y+8, 2+random(3));
-                
-                /*var _txt = instance_create(x+8, y, objText);
-                _txt.color = c_red;
-                _txt.text = global.dmg;*/
-                
-                //hp = min(hp + global.leech, global.infectedHp);
-
+                target.hp = max(target.hp - global.dmg, 0);                
+                spawnBlood(target.x+8, target.y+8, 2+random(3));                
                 delay = global.delay;
             }
             if (target.hp == 0)
@@ -313,7 +363,11 @@ if (!spawned)
 // cosmetic bullshit
 if (dst == 0)
 {
-    dir = angleToDir(point_direction(xprev, yprev, x, y));
+    if (state != ATTACK)
+        dir = angleToDir(point_direction(xprev, yprev, x, y));
+
+    if (state == ATTACK &amp;&amp; instance_exists(target))
+        dir = angleToDir(point_direction(x, y, target.x, target.y));
 
     xprev = x;
     yprev = y;
@@ -377,6 +431,7 @@ switch(state)
     break;
     case INFECTED:
         fSpeed = .15;
+    case ATTACK:
         col = 4;
     break;
     case DIE:
@@ -399,6 +454,13 @@ switch(dir)
     case RIGHT:
         row = 3 + 4*type;
     break;
+}
+
+if (violent)
+{
+    type = 1;
+    if (state == WALK) col = 4;
+    if (state == ATTACK) col = 6;
 }
 
 //HP bar
