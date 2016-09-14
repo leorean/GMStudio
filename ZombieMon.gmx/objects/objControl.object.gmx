@@ -109,7 +109,7 @@ setUpgradeLevel(u_value, 0);
 setUpgradeLevel(u_coinRadius, 0);
 
 // bombs etc.
-item[0] = 2;
+item[0] = 5;
 item[1] = 0;
 item[2] = 0;
 item[3] = 0;

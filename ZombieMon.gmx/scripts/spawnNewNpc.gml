@@ -36,5 +36,6 @@ if (securityCount > global.kills)
         securityCount--;
         
         show_debug_message(securityCount);
+        show_debug_message("spawned a type " + string(_i) + " enemy");
     }
 }
