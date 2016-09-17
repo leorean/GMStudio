@@ -6,7 +6,16 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskTile</sprite>
+    <sprites name="masks">
+      <sprite>sprites\mskTile</sprite>
+      <sprite>sprites\mskPlayer</sprite>
+    </sprites>
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprCoins</sprite>
+    <sprite>sprites\sprFontSmall</sprite>
+    <sprite>sprites\sprFont</sprite>
+    <sprite>sprites\sprShadow</sprite>
+    <sprite>sprites\mskCamera</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -14,15 +23,23 @@
     <shader type="GLSLES">shaders\shader0.shader</shader>
   </shaders>
   <objects name="objects">
+    <objects name="hierarchy">
+      <object>objects\objAny</object>
+      <object>objects\objSolid</object>
+    </objects>
     <object>objects\objControl</object>
+    <object>objects\objPlayer</object>
+    <object>objects\objShadow</object>
+    <object>objects\objBlock</object>
+    <object>objects\objCamera</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="12">
+  <constants number="18">
     <constant name="TILE">16</constant>
-    <constant name="WIDTH">640</constant>
-    <constant name="HEIGHT">360</constant>
+    <constant name="WIDTH">512</constant>
+    <constant name="HEIGHT">288</constant>
     <constant name="INFINITE">9000000000</constant>
     <constant name="UP">-2</constant>
     <constant name="DOWN">2</constant>
@@ -32,6 +49,12 @@
     <constant name="G_PAUSE">0</constant>
     <constant name="G_PLAY">1</constant>
     <constant name="G_OVER">2</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="WALK">1</constant>
+    <constant name="ATTACK">2</constant>
+    <constant name="JUMP">3</constant>
+    <constant name="HURT">4</constant>
+    <constant name="DIE">5</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
