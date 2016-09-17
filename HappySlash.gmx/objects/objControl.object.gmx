@@ -25,7 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surf = -1; //drawing surface
+            <string>//
+surf = -1; //drawing surface
 global.zoom = 2;
 
 randomize();
@@ -35,7 +36,10 @@ if (os_type == os_windows)
     window_set_size(global.zoom*WIDTH, global.zoom*HEIGHT);
 }
 
-global.xVel = 2;
+global.xVel = 0;
+global.xVelMin = 2.5;
+global.xVelMax = 3;
+
 
 /*
 RPG SYSTEM
@@ -88,6 +92,15 @@ Shield:
             <string>if (keyboard_check_pressed(ord('R'))) room_restart();
 if (keyboard_check_pressed(ord('Q'))) game_restart();
 
+global.timer = (global.timer + 1) % INFINITE;
+
+if (instance_exists(objPlayer))
+{
+    var rx = objPlayer.x - view_xview;
+    var relativeSpeed = clamp(25 * rx / WIDTH/3, .5, 1);
+    global.xVel = max(global.xVelMin, global.xVelMax * relativeSpeed);
+    
+}
 if (view_xview + global.xVel &gt;= room_width/2)
 {
     view_xview -= room_width/2;
@@ -98,6 +111,8 @@ if (view_xview + global.xVel &gt;= room_width/2)
     {
         x -= room_width/2;
     }
+    repeat (3)
+    instance_create(room_width/2 + random(room_width/2), random(room_height), objBlock);
 }
 
 with(objAny)
@@ -152,8 +167,11 @@ if (surface_exists(surf))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(0, 0, objCamera);
+            <string>instance_create(WIDTH/2, HEIGHT/2, objCamera);
 instance_create(2*TILE, HEIGHT/2, objPlayer);
+
+global.timer = 0;
+global.state = G_PLAY;
 </string>
           </argument>
         </arguments>

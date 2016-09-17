@@ -31,14 +31,14 @@ yVel = 0;
 zVel = 0;
 z = 0;
 
-acc = .1;
-maxSpd = 2;
+offX = 0;
+acc = .3;
 
 // shadow
 shadow = instance_create(x, y, objShadow);
 shadow.parent = id;
-shadow.offX = TILE;
-shadow.offY = 1.3*TILE;
+shadow.offX = .5*TILE;
+shadow.offY = 1*TILE - 2;
 
 // graphics
 frame = 0;
@@ -73,12 +73,18 @@ var right = keyboard_check(vk_right);
 var up = keyboard_check(vk_up);
 var down = keyboard_check(vk_down);
 
-//if (left || right || up || down)
+xVel = min((objCamera.x - WIDTH/3 - offX - TILE - x) / 10, global.xVel);
 
-if (left &amp;&amp; !right) xVel = max(xVel - acc, -maxSpd);
-if (right &amp;&amp; !left) xVel = min(xVel + acc, maxSpd);
-if (up &amp;&amp; !down) yVel = max(yVel - acc, -maxSpd);
-if (down &amp;&amp; !up) yVel = min(yVel + acc, maxSpd);
+if (left &amp;&amp; !right) offX = min(offX + 10*acc, WIDTH/6 + TILE);
+if (right &amp;&amp; !left) offX = max(offX - 10*acc, -WIDTH/6);
+
+if (up &amp;&amp; !down) yVel = max(yVel - 1.4*acc, -2.5);
+if (down &amp;&amp; !up) yVel = min(yVel + 1.4*acc, 2.5);
+
+if (!up &amp;&amp; !down) yVel = sign(yVel) * max(abs(yVel) - 2*acc, 0);
+
+if (x + xVel &lt; view_xview)
+   x += global.xVel;
 
 // collision
 if (!place_meeting(x + global.xVel + xVel, y, objSolid) &amp;&amp; x + xVel &gt; view_xview)

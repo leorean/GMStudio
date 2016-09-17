@@ -2,7 +2,7 @@
 <object>
   <spriteName>mskCamera</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -49,18 +49,22 @@ yVel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (instance_exists(objPlayer))
+            <string>/*if (instance_exists(objPlayer))
 {
     xVel = (objPlayer.x - x) / 5;
-    yVel = (objPlayer.y - y) / 5;    
+    yVel = (objPlayer.y - y) / 5;
 } else
 {
     xVel *= .9;
     yVel *= .9;
 }
 
-x += max(xVel , 0);
-y += yVel;
+x += max(xVel , global.xVel);
+y += yVel;*/
+
+//x = objPlayer.x;
+
+x += global.xVel;
 </string>
           </argument>
         </arguments>
