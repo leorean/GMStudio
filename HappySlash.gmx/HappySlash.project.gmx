@@ -41,6 +41,9 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\spawnCoins.gml</script>
+  </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
   </shaders>
@@ -56,6 +59,7 @@
     <object>objects\objCamera</object>
     <object>objects\objHole</object>
     <object>objects\objSword</object>
+    <object>objects\objCoin</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

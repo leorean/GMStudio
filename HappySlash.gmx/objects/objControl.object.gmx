@@ -41,6 +41,9 @@ global.xVelMin = 1;//2.5;
 global.xVelMax = 2;//3;
 
 
+global.coins = 0;
+global.coinRadius = TILE;
+
 /*
 RPG SYSTEM
 
