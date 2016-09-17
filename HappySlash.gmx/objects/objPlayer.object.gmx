@@ -30,9 +30,15 @@ xVel = 0;
 yVel = 0;
 zVel = 0;
 z = 0;
+zGrav = .15;
 
+xO = WIDTH/3;
 offX = 0;
-acc = .3;
+
+// weapon
+
+sword = instance_create(x, y, objSword);
+attacking = false;
 
 // shadow
 shadow = instance_create(x, y, objShadow);
@@ -72,29 +78,82 @@ var left = keyboard_check(vk_left);
 var right = keyboard_check(vk_right);
 var up = keyboard_check(vk_up);
 var down = keyboard_check(vk_down);
+var jumpPressed = keyboard_check_pressed(vk_space) || keyboard_check_pressed(ord('A'));
+var attackPressed = keyboard_check_pressed(ord('S'));
 
-xVel = min((objCamera.x - WIDTH/3 - offX - TILE - x) / 10, global.xVel);
+if (state == WALK || state == JUMP)
+{    
+    if (right &amp;&amp; !left) xVel += .3;
+    if (left &amp;&amp; !right) xVel -= .3;
+    
+    xVel = clamp(xVel, -global.xVel * 1.5, global.xVel);
+    
+    if (x &lt; view_xview + 2*TILE)
+        xVel += .4;
+    if (x + xVel &gt; view_xview + 12*TILE)
+        xVel = 0;
+    
+    if (up &amp;&amp; !down) yVel = max(yVel - .4, -2.5);
+    if (down &amp;&amp; !up) yVel = min(yVel + .4, 2.5);
+    
+    if (!up &amp;&amp; !down) yVel = sign(yVel) * max(abs(yVel) - .1, 0);
+    if (!left &amp;&amp; !right) xVel = sign(xVel) * max(abs(xVel) - .1, 0);
 
-if (left &amp;&amp; !right) offX = min(offX + 10*acc, WIDTH/6 + TILE);
-if (right &amp;&amp; !left) offX = max(offX - 10*acc, -WIDTH/6);
+    if (jumpPressed &amp;&amp; z == 0)
+    {
+        zVel = -3;
+        state = JUMP;
+    }
+    
+    if (attackPressed &amp;&amp; !attacking)
+    {
+        sword.angle = 360+90;
+        attacking = true;
+    }
 
-if (up &amp;&amp; !down) yVel = max(yVel - 1.4*acc, -2.5);
-if (down &amp;&amp; !up) yVel = min(yVel + 1.4*acc, 2.5);
+    if (!attacking)
+        sword.angle = point_direction(x, y, x+8+xVel, y+yVel);
+    
+}
 
-if (!up &amp;&amp; !down) yVel = sign(yVel) * max(abs(yVel) - 2*acc, 0);
+if (attacking)
+{
+    sword.angle = max(sword.angle - 15, 300);
+    
+    if (sword.angle == 300)
+        attacking = false;
+}
 
-if (x + xVel &lt; view_xview)
-   x += global.xVel;
+zVel += zGrav;
+
+z = min(z + zVel, 0);
+if (z == 0) zVel = 0;
+
+if (state == JUMP)
+{
+    yVel *= .95;
+    if (z &gt;= 0) state = WALK;
+}
+
+if (x + global.xVel + xVel &lt; view_xview + TILE)
+{
+    //xVel = 0;
+    offX ++;
+}
 
 // collision
-if (!place_meeting(x + global.xVel + xVel, y, objSolid) &amp;&amp; x + xVel &gt; view_xview)
+if (!place_meeting(x + global.xVel + xVel, y, objSolid))
     x += global.xVel + xVel;
 else
+{
     xVel = 0;
+}
+
 if (!place_meeting(x, y + yVel, objSolid))
     y += yVel;
 else
     yVel = 0;
+
 </string>
           </argument>
         </arguments>

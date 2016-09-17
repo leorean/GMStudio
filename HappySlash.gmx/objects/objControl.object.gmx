@@ -37,8 +37,8 @@ if (os_type == os_windows)
 }
 
 global.xVel = 0;
-global.xVelMin = 2.5;
-global.xVelMax = 3;
+global.xVelMin = 1;//2.5;
+global.xVelMax = 2;//3;
 
 
 /*
@@ -96,11 +96,10 @@ global.timer = (global.timer + 1) % INFINITE;
 
 if (instance_exists(objPlayer))
 {
-    var rx = objPlayer.x - view_xview;
-    var relativeSpeed = clamp(25 * rx / WIDTH/3, .5, 1);
-    global.xVel = max(global.xVelMin, global.xVelMax * relativeSpeed);
-    
+    var relativeSpeed = 1;
+    global.xVel = max(global.xVelMin, global.xVelMax * relativeSpeed);    
 }
+
 if (view_xview + global.xVel &gt;= room_width/2)
 {
     view_xview -= room_width/2;
@@ -111,8 +110,11 @@ if (view_xview + global.xVel &gt;= room_width/2)
     {
         x -= room_width/2;
     }
-    repeat (3)
-    instance_create(room_width/2 + random(room_width/2), random(room_height), objBlock);
+    repeat (5)
+    {
+        var obj = choose(objBlock, objHole);
+        instance_create(room_width/2 + random(room_width/2), random(room_height), obj);
+    }
 }
 
 with(objAny)
