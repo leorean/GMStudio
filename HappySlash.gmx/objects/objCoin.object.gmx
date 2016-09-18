@@ -108,6 +108,12 @@ if (taken)
         instance_destroy();
 }
 
+x += xVel;
+if (in(y + yVel, 0, room_height - TILE))
+    y += yVel;
+else
+    yVel = 0;
+/*
 if (!place_meeting(x + xVel, y, objSolid))
     x += xVel;
 else
@@ -117,6 +123,7 @@ if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height
     y += yVel;
 else
     yVel = 0;
+*/
 </string>
           </argument>
         </arguments>

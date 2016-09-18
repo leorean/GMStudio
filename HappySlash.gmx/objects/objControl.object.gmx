@@ -38,7 +38,7 @@ if (os_type == os_windows)
 
 global.xVel = 0;
 global.xVelMin = 1;//2.5;
-global.xVelMax = 2;//3;
+global.xVelMax = 1;//3;
 
 
 global.coins = 0;
@@ -176,7 +176,7 @@ if (surface_exists(surf))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//instance_create(-100,-100,objDPad);
+            <string>instance_create(-100,-100,objDPad);
 var btnAttack = instance_create(WIDTH-5*TILE,HEIGHT-3*TILE,objButton);
 btnAttack.type = 0;
 
