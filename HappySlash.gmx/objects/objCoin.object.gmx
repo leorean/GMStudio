@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = global.xVel + random(4);
-yVel = -1+random(2);
+            <string>xVel = global.xVel + random(3);
+yVel = -.5+random(1);
 zVel = -2-random(2);
 zGrav = .15;
 z = 0;
@@ -113,7 +113,7 @@ if (!place_meeting(x + xVel, y, objSolid))
 else
     xVel = 0;
     
-if (!place_meeting(x, y + yVel, objSolid))
+if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - TILE))
     y += yVel;
 else
     yVel = 0;
