@@ -38,21 +38,29 @@
     <sprite>sprites\sprShadow</sprite>
     <sprite>sprites\sprSwords</sprite>
     <sprite>sprites\mskSword</sprite>
+    <sprite>sprites\mskDPad</sprite>
+    <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\mskButton</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\spawnCoins.gml</script>
+    <script>scripts\in.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
   </shaders>
   <objects name="objects">
+    <objects name="HUD">
+      <object>objects\objControl</object>
+      <object>objects\objDPad</object>
+      <object>objects\objButton</object>
+    </objects>
     <objects name="hierarchy">
       <object>objects\objAny</object>
       <object>objects\objSolid</object>
     </objects>
-    <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objShadow</object>
     <object>objects\objBlock</object>

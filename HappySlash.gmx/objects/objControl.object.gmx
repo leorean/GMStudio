@@ -51,7 +51,7 @@ Stats:
 
 Str ( == dmg)
 Vit ( == hp)
-Dex ( == crit dmg %)
+Dex ( == crit dmg %) ODER: dex == necessary for hit chance
 Luk ( == crit chance)
 ?Int ( == magic damage)
 ?Agi ( == run spd)
@@ -94,6 +94,11 @@ Shield:
             <kind>1</kind>
             <string>if (keyboard_check_pressed(ord('R'))) room_restart();
 if (keyboard_check_pressed(ord('Q'))) game_restart();
+
+if (keyboard_check(vk_space))
+    room_speed = 5;
+else
+    room_speed = 60;
 
 global.timer = (global.timer + 1) % INFINITE;
 
@@ -172,8 +177,15 @@ if (surface_exists(surf))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(WIDTH/2, HEIGHT/2, objCamera);
-instance_create(2*TILE, HEIGHT/2, objPlayer);
+            <string>instance_create(-100,-100,objDPad);
+var btnAttack = instance_create(WIDTH-5*TILE,HEIGHT-3*TILE,objButton);
+btnAttack.type = 0;
+
+var btnJump = instance_create(WIDTH-2*TILE,HEIGHT-4*TILE,objButton);
+btnJump.type = 1;
+
+instance_create(WIDTH/2, HEIGHT/2, objCamera);
+instance_create(8*TILE, HEIGHT/2, objPlayer);
 
 global.timer = 0;
 global.state = G_PLAY;
