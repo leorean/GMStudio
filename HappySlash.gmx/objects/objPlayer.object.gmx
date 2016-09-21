@@ -85,15 +85,16 @@ state = WALK;
           <argument>
             <kind>1</kind>
             <string>// interaction
-var kLeft = (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right))// || (objDPad.kLeft);// &amp;&amp; objDPad.forceX &gt;= .3);
-var kRight = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left))// || (objDPad.kRight);// &amp;&amp; objDPad.forceX &gt;= .3);
-var kUp = (keyboard_check(vk_up) &amp;&amp; !keyboard_check(vk_down))// || (objDPad.kUp);// &amp;&amp; objDPad.forceY &gt;= .35);
-var kDown = (keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up))// || (objDPad.kDown);// &amp;&amp; objDPad.forceY &gt;= .35);
+var kLeft = (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right)) || (objDPad.kLeft);// &amp;&amp; objDPad.forceX &gt;= .3);
+var kRight = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)) || (objDPad.kRight);// &amp;&amp; objDPad.forceX &gt;= .3);
+var kUp = (keyboard_check(vk_up) &amp;&amp; !keyboard_check(vk_down)) || (objDPad.kUp);// &amp;&amp; objDPad.forceY &gt;= .35);
+var kDown = (keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up)) || (objDPad.kDown);// &amp;&amp; objDPad.forceY &gt;= .35);
 
 var jumpPressed = keyboard_check_pressed(ord('A')) || (button1.pressed);
 var attackPressed = keyboard_check_pressed(ord('S')) || (button2.pressed);
 var attackPressing = keyboard_check(ord('S')) || (button2.pressing);
 
+/*
 if (dev == -1)
 {
     for (i = 0; i &lt; 4; i++)
@@ -111,11 +112,44 @@ if (dev != -1)
     if (!device_mouse_check_button(dev, mb_left))
         dev = -1;    
 }
+*/
+
+//var fx = 2 * objDPad.forceX;
+//var fy = 2 * objDPad.forceY;
 
 if (state == WALK || state == JUMP)
 {    
-    /*if (kRight) xVel += fx;
-    if (kLeft) xVel -= fx;
+    //DPAD MOVE
+    var fx = (2.5+(1*z&lt;0))*max(objDPad.forceX, 0);
+    var fy = (2.5+(1*z&lt;0))*max(objDPad.forceY, 0);
+    
+    // more grip when turning around
+    if (sign(xVel) != sign(lengthdir_x(1,objDPad.angle))) xVel *= .8;
+    if (sign(yVel) != sign(lengthdir_y(1,objDPad.angle))) yVel *= .8;
+    
+    xVel = lengthdir_x(fx, objDPad.angle) - .5*global.xVel;
+    yVel = lengthdir_y(fy, objDPad.angle);
+    
+    xVel = sign(xVel) * min(abs(xVel), 4);
+    yVel = sign(yVel) * min(abs(yVel), 4);
+        
+    if (!kUp &amp;&amp; !kDown) yVel = sign(yVel) * max(abs(yVel) - .1, 0);
+    if (!kLeft &amp;&amp; !kRight) xVel = sign(xVel) * max(abs(xVel) - .1, 0);
+
+    
+    /* NON FREE MOVE
+    if (z == 0)
+    {
+        if (x - view_xview &lt; xO) xVel = min(xVel + .2, global.xVel);
+        if (x - view_xview &gt; xO) xVel *= .9;//max(xVel - .1, -global.xVel);
+    }
+    if (dev != -1)
+        yVel = (device_mouse_y_to_gui(dev) - TILE - y) / 20;
+    else
+        yVel = sign(yVel) * max(abs(yVel) - .1, 0); 
+    
+    */
+    /*
     
     //xVel = goX;
     //yVel = (goY - y) / 20;
@@ -130,31 +164,18 @@ if (state == WALK || state == JUMP)
     if (kUp) yVel = max(yVel - fy, -2.5);
     if (kDown) yVel = min(yVel + fy, 2.5);
     */
-    if (z == 0)
-    {
-        if (x - view_xview &lt; xO) xVel = min(xVel + .2, global.xVel);
-        if (x - view_xview &gt; xO) xVel *= .9;//max(xVel - .1, -global.xVel);
-    }
-        //var _a = -sign(kLeft) + sign(kRight);
+    //var _a = -sign(kLeft) + sign(kRight);
     //var _b = -sign(kUp) + sign(kDown);
         
     //xVel = .1 * objDPad.forceX * _a;
     //yVel = 4 * objDPad.forceY * _b;
     
-    if (dev != -1)
-        yVel = (device_mouse_y_to_gui(dev) - TILE - y) / 20;
-    else
-        yVel = sign(yVel) * max(abs(yVel) - .1, 0); 
     
     // more grip when turning around
     //if (sign(xVel) != sign(_a)) xVel *= .8;
     //if (sign(yVel) != sign(_b)) yVel *= .8;
 
     //xVel = clamp(xVel, -global.xVel * 1.5, global.xVel);
-    yVel = clamp(yVel, -5, 5);
-    
-    //if (!kUp &amp;&amp; !kDown) yVel = sign(yVel) * max(abs(yVel) - .1, 0);
-    //if (!kLeft &amp;&amp; !kRight) xVel = sign(xVel) * max(abs(xVel) - .1, 0);
 
     if (jumpPressed &amp;&amp; z == 0)
     {
@@ -212,16 +233,25 @@ if (x + global.xVel + xVel &lt; view_xview + TILE)
     offX ++;
 }
 
-xVel = sign(xVel) * min(abs(xVel), 8);
-yVel = sign(yVel) * min(abs(yVel), 6);
+xVel = sign(xVel) * min(abs(xVel), 6);
+yVel = sign(yVel) * min(abs(yVel), 5);
+
+xVel += global.xVel;
+
+if (x + xVel &lt; view_xview)
+    xVel = max(xVel, global.xVel);
+if (x + xVel &gt; view_xview+view_wview - TILE)
+    xVel = min(xVel, 0);
 
 // collision
-if (!place_meeting(x + global.xVel + xVel, y, objSolid))
-    x += global.xVel + xVel;
+if (!place_meeting(x + xVel, y, objSolid))
+    x += xVel;
 else
 {
     xVel = 0;
 }
+
+xVel -= global.xVel;
 
 if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - 2*TILE))
     y += yVel;

@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>w = 5*TILE;
 h = 5*TILE;
-radius = w/2+TILE;
+radius = w/2+1*TILE;
 
 kLeft = false;
 kRight = false;
