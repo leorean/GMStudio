@@ -131,12 +131,13 @@ if (state == WALK || state == JUMP)
     
     if (attackPressed &amp;&amp; !attacking)
     {
-        sword.angle = 360+90;
+        sword.angle = objDPad.angle + 360 + 90;//360+90;
+        swordOffset = objDPad.angle + 240;
         attacking = true;
     }
 
-    if (!attacking)
-        sword.angle = point_direction(x, y, x+8+xVel, y+yVel);
+    if (!attacking &amp;&amp; (objDPad.forceX &gt; 0 || objDPad.forceY &gt; 0))
+        sword.angle = objDPad.angle;//point_direction(x, y, x+8+xVel, y+yVel);
 
 }
 
@@ -144,16 +145,16 @@ var enemy = instance_place(x+xVel, y+yVel, objEnemy);
 if (instance_exists(enemy))
 {
     global.state = G_BATTLE;
-    var b = instance_create(view_xview + 5*TILE, view_yview + 2.5*TILE, objBattle);
+    var b = instance_create(view_xview + 5*TILE, view_yview + 2.5*TILE, objBattleMenu);
     b.enemyObj = enemy;
     b.playerObj = id;
 }
 
 if (attacking)
 {
-    sword.angle = max(sword.angle - 15, 300);
+    sword.angle = max(sword.angle - 15, swordOffset);
     
-    if (sword.angle == 300)
+    if (sword.angle == swordOffset)
         attacking = false;
         
     with(sword)

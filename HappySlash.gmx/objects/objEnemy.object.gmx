@@ -33,8 +33,7 @@ hp = maxHp;
 dmg = 3 + (4 * level) + (3 * (level div 3)) + (7 * (level div 4));
 critDmg = 1.5;
 def = level;
-dodge = 0.2;
-lootValue = (10 * level) + (15 * (level div 3)) + (32 * (level div 5)) + 46 * ((level div 8));
+lootValue = (8 * level) + (15 * (level div 3)) + (32 * (level div 5)) + 46 * ((level div 8));
 expValue = 3 * level + (6 * (level div 3)) + (10 * (level div 5)) + (12 * (level div 9));
 </string>
           </argument>

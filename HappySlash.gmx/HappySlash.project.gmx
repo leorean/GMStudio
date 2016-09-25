@@ -77,7 +77,7 @@
     <object>objects\objText</object>
     <objects name="Battle">
       <object>objects\objBattleChar</object>
-      <object>objects\objBattle</object>
+      <object>objects\objBattleMenu</object>
       <object>objects\objBattleDice</object>
       <object>objects\objBattleAttack</object>
     </objects>

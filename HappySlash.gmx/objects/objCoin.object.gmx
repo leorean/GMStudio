@@ -25,13 +25,13 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = global.xVel + random(3);
+            <string>xVel = 0 + random(3);
 yVel = -.5+random(1);
 zVel = -2-random(2);
 zGrav = .15;
 z = 0;
 
-delay = 20;
+delay = SEC;
 
 value = 0;
 taken = 0;

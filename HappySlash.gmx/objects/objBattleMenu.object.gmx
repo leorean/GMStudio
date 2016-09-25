@@ -90,18 +90,7 @@ else
 }
 
 if (player.value != -1 &amp;&amp; enemy.value != -1)
-{
-    // DEAL DMG ETC HERE.
-    
-    /*
-        player.maxHp = (30 + 13 * vit) + (5 * (vit div 3));
-        player.hp = player.maxHp;
-        player.dmg = 1 + (2 * str) + (3 * (str div 5)) + (5 * (str div 8));
-        player.critDmg = 1 + (luk * .1);
-        player.dodge = 0 + log2(dex) * .3 + log2(dex div 5) * .2 + log2(dex div 10) * .2;
-        player.def = level;
-    */
-    
+{    
     // player attacking the enemy
     if (player.value &gt; enemy.value)
     {
@@ -113,34 +102,37 @@ if (player.value != -1 &amp;&amp; enemy.value != -1)
         else
             dmg = playerObj.dmg - enemyObj.def;
         
-        var missed = false;
-
-        if (random(1) &lt;= enemyObj.dodge &amp;&amp; !crit)
-            missed = true;
+        var t = instance_create(enemy.x + TILE, enemy.y + TILE, objText);
+        t.text = dmg;
+        if (crit) t.color = make_color_hsv(35, 255, 255);
         
-        if (!missed)
-        {
-            var t = instance_create(enemy.x + TILE, enemy.y + TILE, objText);
-            t.text = dmg;
-            if (crit) t.color = make_color_hsv(35, 255, 255);
-            
-            enemyObj.hp = max(enemyObj.hp - dmg, 0);
-        }
-        else
-        {
-            var t = instance_create(enemy.x + TILE, enemy.y + TILE, objText);
-            t.text = "miss";        
-        }
-        
+        enemyObj.hp = max(enemyObj.hp - dmg, 0);
     }
+    // enemy attacking player
     else if (player.value &lt; enemy.value)
     {
         instance_create(player.x, player.y, objBattleAttack);
+        
+        var crit = (enemy.value &gt; player.value + 2);
+        
+        if (crit)
+            dmg = floor(enemyObj.dmg * enemyObj.critDmg) - playerObj.def;
+        else
+            dmg = enemyObj.dmg - playerObj.def;
+            
+        var t = instance_create(player.x + TILE, player.y + TILE, objText);
+        t.text = dmg;
+        if (crit) t.color = make_color_hsv(35, 255, 255);
+        
+        playerObj.hp = max(playerObj.hp - dmg, 0); 
     }
     else
     {
-        var t = instance_create(x + w/2, 6 * TILE, objText);
-        t.text = "tie";
+        //var t = instance_create(x + w/2, 6 * TILE, objText);
+        //t.text = "TIE";
+        var t1 = instance_create(player.x + TILE, player.y + TILE, objText);
+        var t2 = instance_create(enemy.x + TILE, enemy.y + TILE, objText);
+        t1.text = "0"; t2.text = "0";
     }
     
     
@@ -165,13 +157,20 @@ else
             
             spawnCoins(enemyObj.lootValue, enemyObj.x, enemyObj.y);
             
-            with(enemyObj) instance_destroy();
             with(objBattleChar) instance_destroy();
-            with(objBattleDice) instance_destroy();
-            
+            with (objBattleDice) instance_destroy();
+            with (enemyObj) instance_destroy();
             instance_destroy();
+        } else if (playerObj.hp == 0)
+        {        
+            with(objBattleChar) instance_destroy();
+            with (objBattleDice) instance_destroy();
+            with (enemyObj) instance_destroy();
+            instance_destroy();            
+            global.state = G_OVER;
         } else
         {
+            with(objBattleDice) value = 1;
             player.value = -1;
             enemy.value = -1;
             playerDice.rolling = true;
@@ -207,13 +206,19 @@ else
             <kind>1</kind>
             <string>draw_sprite_part(sprBattle, -1, 0, 0, 22*TILE, 13*TILE, x, y);
 
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+draw_set_color(c_white);
+
 // player hp bar
 draw_sprite_part(sprBattle, -1, 18*TILE, 15*TILE, 4*TILE, TILE, x + TILE, y + 8*TILE);
 draw_sprite_part(sprBattle, -1, 18*TILE, 16*TILE, 4*TILE*(playerObj.hp/playerObj.maxHp), TILE, x + TILE, y + 8*TILE);
+draw_text(x + 3*TILE, y + 8*TILE, playerObj.hp);
 
 // player hp bar
 draw_sprite_part(sprBattle, -1, 18*TILE, 15*TILE, 4*TILE, TILE, x + w - 5 * TILE, y + 8*TILE);
 draw_sprite_part(sprBattle, -1, 18*TILE, 16*TILE, 4*TILE*(enemyObj.hp/enemyObj.maxHp), TILE, x + w - 5 * TILE, y + 8*TILE);
+draw_text(x + w - 3*TILE, y + 8*TILE, enemyObj.hp);
 </string>
           </argument>
         </arguments>
