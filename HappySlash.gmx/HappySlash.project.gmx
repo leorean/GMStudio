@@ -25,11 +25,15 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprite>sprites\mskButton</sprite>
     <sprites name="masks">
       <sprite>sprites\mskTile</sprite>
+      <sprite>sprites\mskDPad</sprite>
+      <sprite>sprites\mskSword</sprite>
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskHole</sprite>
       <sprite>sprites\mskCamera</sprite>
+      <sprite>sprites\mskEnemy</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprCoins</sprite>
@@ -37,10 +41,10 @@
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprShadow</sprite>
     <sprite>sprites\sprSwords</sprite>
-    <sprite>sprites\mskSword</sprite>
-    <sprite>sprites\mskDPad</sprite>
     <sprite>sprites\sprHud</sprite>
-    <sprite>sprites\mskButton</sprite>
+    <sprite>sprites\sprBattle</sprite>
+    <sprite>sprites\mskBattleChar</sprite>
+    <sprite>sprites\mskBattleDice</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -68,11 +72,18 @@
     <object>objects\objHole</object>
     <object>objects\objSword</object>
     <object>objects\objCoin</object>
+    <object>objects\objEnemy</object>
+    <object>objects\objText</object>
+    <objects name="Battle">
+      <object>objects\objBattleChar</object>
+      <object>objects\objBattle</object>
+      <object>objects\objBattleDice</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="19">
+  <constants number="20">
     <constant name="TILE">16</constant>
     <constant name="WIDTH">512</constant>
     <constant name="HEIGHT">288</constant>
@@ -84,7 +95,8 @@
     <constant name="NONE">0</constant>
     <constant name="G_PAUSE">0</constant>
     <constant name="G_PLAY">1</constant>
-    <constant name="G_OVER">2</constant>
+    <constant name="G_BATTLE">2</constant>
+    <constant name="G_OVER">3</constant>
     <constant name="IDLE">0</constant>
     <constant name="WALK">1</constant>
     <constant name="ATTACK">2</constant>

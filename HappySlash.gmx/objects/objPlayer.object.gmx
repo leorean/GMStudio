@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>self</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -84,7 +84,10 @@ state = WALK;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// interaction
+            <string>if (global.state != G_PLAY)
+    exit;
+
+// interaction
 var kLeft = (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right)) || (objDPad.kLeft);// &amp;&amp; objDPad.forceX &gt;= .3);
 var kRight = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)) || (objDPad.kRight);// &amp;&amp; objDPad.forceX &gt;= .3);
 var kUp = (keyboard_check(vk_up) &amp;&amp; !keyboard_check(vk_down)) || (objDPad.kUp);// &amp;&amp; objDPad.forceY &gt;= .35);
@@ -93,29 +96,6 @@ var kDown = (keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up)) || (objD
 var jumpPressed = keyboard_check_pressed(ord('A')) || (button1.pressed);
 var attackPressed = keyboard_check_pressed(ord('S')) || (button2.pressed);
 var attackPressing = keyboard_check(ord('S')) || (button2.pressing);
-
-/*
-if (dev == -1)
-{
-    for (i = 0; i &lt; 4; i++)
-    {
-        if (device_mouse_x_to_gui(i) &lt; WIDTH/2)
-        if (device_mouse_check_button(i, mb_left))
-        {
-            dev = i;
-            break;
-        }
-    }
-}
-if (dev != -1)
-{
-    if (!device_mouse_check_button(dev, mb_left))
-        dev = -1;    
-}
-*/
-
-//var fx = 2 * objDPad.forceX;
-//var fy = 2 * objDPad.forceY;
 
 if (state == WALK || state == JUMP)
 {    
@@ -136,47 +116,6 @@ if (state == WALK || state == JUMP)
     if (!kUp &amp;&amp; !kDown) yVel = sign(yVel) * max(abs(yVel) - .1, 0);
     if (!kLeft &amp;&amp; !kRight) xVel = sign(xVel) * max(abs(xVel) - .1, 0);
 
-    
-    /* NON FREE MOVE
-    if (z == 0)
-    {
-        if (x - view_xview &lt; xO) xVel = min(xVel + .2, global.xVel);
-        if (x - view_xview &gt; xO) xVel *= .9;//max(xVel - .1, -global.xVel);
-    }
-    if (dev != -1)
-        yVel = (device_mouse_y_to_gui(dev) - TILE - y) / 20;
-    else
-        yVel = sign(yVel) * max(abs(yVel) - .1, 0); 
-    
-    */
-    /*
-    
-    //xVel = goX;
-    //yVel = (goY - y) / 20;
-    
-    xVel = clamp(xVel, -global.xVel * 1.5, global.xVel);
-    
-    if (x &lt; view_xview + 2*TILE)
-        xVel += .4;
-    if (x + xVel &gt; view_xview + view_wview - 2*TILE)
-        xVel = 0;
-    
-    if (kUp) yVel = max(yVel - fy, -2.5);
-    if (kDown) yVel = min(yVel + fy, 2.5);
-    */
-    //var _a = -sign(kLeft) + sign(kRight);
-    //var _b = -sign(kUp) + sign(kDown);
-        
-    //xVel = .1 * objDPad.forceX * _a;
-    //yVel = 4 * objDPad.forceY * _b;
-    
-    
-    // more grip when turning around
-    //if (sign(xVel) != sign(_a)) xVel *= .8;
-    //if (sign(yVel) != sign(_b)) yVel *= .8;
-
-    //xVel = clamp(xVel, -global.xVel * 1.5, global.xVel);
-
     if (jumpPressed &amp;&amp; z == 0)
     {
         zVel = -3;
@@ -192,6 +131,14 @@ if (state == WALK || state == JUMP)
     if (!attacking)
         sword.angle = point_direction(x, y, x+8+xVel, y+yVel);
 
+}
+
+var enemy = instance_place(x+xVel, y+yVel, objEnemy);
+if (instance_exists(enemy))
+{
+    global.state = G_BATTLE;
+    var b = instance_create(view_xview + 5*TILE, view_yview + 2.5*TILE, objBattle);
+    b.enemy = enemy;
 }
 
 if (attacking)
@@ -280,35 +227,36 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != JUMP)
-    fCur = (fCur + fSpeed) % 4;
-else
-    fCur = 0 + 2 * (zVel &gt; 0);
-
-frame = floor(fCur);
-    
-switch(state)
+            <string>if (global.state == G_PLAY)
 {
-    case IDLE: //doesn't exist
-        break;
-    case WALK:
-        fSpeed = .13;
-        row = 0;
-        break;
-    case JUMP:
-        fSpeed = 0;
-        row = 1;
-        break;
-    case HURT:
-    case DIE:
-        fSpeed = 0;
-        row = 2;
-        break;
+    if (state != JUMP)
+        fCur = (fCur + fSpeed) % 4;
+    else
+        fCur = 0 + 2 * (zVel &gt; 0);
+    
+    frame = floor(fCur);
+        
+    switch(state)
+    {
+        case IDLE: //doesn't exist
+            break;
+        case WALK:
+            fSpeed = .13;
+            row = 0;
+            break;
+        case JUMP:
+            fSpeed = 0;
+            row = 1;
+            break;
+        case HURT:
+        case DIE:
+            fSpeed = 0;
+            row = 2;
+            break;
+    }
 }
 
 draw_sprite_part(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE, x, y + z);
-
-//draw_line(x, y, view_xview + device_mouse_x_to_gui(0), view_yview + device_mouse_y_to_gui(0));
 </string>
           </argument>
         </arguments>

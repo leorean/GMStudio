@@ -3,9 +3,9 @@
   <spriteName>mskTile</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-100</depth>
   <persistent>-1</persistent>
-  <parentName>self</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -36,13 +36,24 @@ if (os_type == os_windows)
     window_set_size(global.zoom*WIDTH, global.zoom*HEIGHT);
 }
 
+global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
+
 global.xVel = 0;
 global.xVelMin = 1;//2.5;
 global.xVelMax = 1;//3;
 
-
 global.coins = 0;
 global.coinRadius = TILE;
+
+// RPG STATS:
+global.str = 1;
+global.vit = 1;
+global.dex = 1;
+global.luk = 1;
+global.critPerc = 0.0;
+global.critDmgPerc = 1.5;
+global.dodgeChance = 0.1;
+global.def = 1;
 
 /*
 RPG SYSTEM
@@ -95,39 +106,43 @@ Shield:
             <string>if (keyboard_check_pressed(ord('R'))) room_restart();
 if (keyboard_check_pressed(ord('Q'))) game_restart();
 
-if (keyboard_check(vk_space))
-    room_speed = 5;
+if (keyboard_check(ord('C')))
+    room_speed = 1;
 else
     room_speed = 60;
 
-global.timer = (global.timer + 1) % INFINITE;
-
-if (instance_exists(objPlayer))
+if (global.state == G_PLAY)
 {
-    var relativeSpeed = 1;
-    global.xVel = max(global.xVelMin, global.xVelMax * relativeSpeed);    
-}
-
-if (view_xview + global.xVel &gt;= room_width/2)
-{
-    view_xview -= room_width/2;
-    objPlayer.x -= room_width/2;
-    objCamera.x -= room_width/2;
-
+    
+    global.timer = (global.timer + 1) % INFINITE;
+    
+    if (instance_exists(objPlayer))
+    {
+        var relativeSpeed = 1;
+        global.xVel = max(global.xVelMin, global.xVelMax * relativeSpeed);    
+    }
+    
+    if (view_xview + global.xVel &gt;= room_width/2)
+    {
+        view_xview -= room_width/2;
+        objPlayer.x -= room_width/2;
+        objCamera.x -= room_width/2;
+    
+        with(objAny)
+        {
+            x -= room_width/2;
+        }
+        repeat (8)
+        {
+            instance_create(room_width/2 + random(room_width/2), random(room_height), objBlock);
+        }
+    }
+    
     with(objAny)
     {
-        x -= room_width/2;
+        if ((x + 2*TILE) &lt; view_xview)
+            instance_destroy();
     }
-    repeat (8)
-    {
-        instance_create(room_width/2 + random(room_width/2), random(room_height), objBlock);
-    }
-}
-
-with(objAny)
-{
-    if ((x + 2*TILE) &lt; view_xview)
-        instance_destroy();
 }
 </string>
           </argument>
@@ -176,7 +191,7 @@ if (surface_exists(surf))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(-100,-100,objDPad);
+            <string>instance_create(4*TILE, room_height-4*TILE,objDPad);
 var btnAttack = instance_create(WIDTH-5*TILE,HEIGHT-3*TILE,objButton);
 btnAttack.type = 0;
 
@@ -238,6 +253,7 @@ var xt = (mouse_x / room_width) * w;
 var yt = (mouse_y / room_height) * h;
 
 draw_set_alpha(1);
+draw_set_font(global.fnt);
 draw_set_color(c_white);
 //draw_set_font(global.fnt);
 </string>

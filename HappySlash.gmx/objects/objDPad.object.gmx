@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>w = 5*TILE;
 h = 5*TILE;
-radius = w/2+1*TILE;
+radius = w/2+.5*TILE;
 
 kLeft = false;
 kRight = false;
@@ -46,7 +46,9 @@ forceX = 0;
 forceY = 0;
 angle = 0;
 
-offx = -100; offy = -100;
+offx = x;
+offy = y;
+//offx = -100; offy = -100;
 </string>
           </argument>
         </arguments>
@@ -69,67 +71,67 @@ offx = -100; offy = -100;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state == G_PLAY)
-{
-    
-    for (var i = 0; i &lt; 5; i++)
-        if(in(device_mouse_x_to_gui(i),0,WIDTH/2))
-            if(device_mouse_check_button(i,mb_left))
-            {
-                dev = i;
-            }
-        
-    if (!device_mouse_check_button(dev,mb_left))
-        dev = -1;
-    
-    kLeft = false;
-    kRight = false;
-    kUp = false;
-    kDown = false;
-        
-    if (dev&gt;-1)
-    {
-        if (offx == -100 &amp;&amp; offy == -100)
+            <string>if (global.state != G_PLAY) exit;
+
+for (var i = 0; i &lt; 5; i++)
+    if(in(device_mouse_x_to_gui(i),offx-w/2,offx+w/2)
+        &amp;&amp;in(device_mouse_y_to_gui(i),offy-h/2,offy+h/2))
+        if(device_mouse_check_button(i,mb_left))
         {
-            offx = device_mouse_x_to_gui(dev);
-            offy = device_mouse_y_to_gui(dev);
-            
-            //offx = clamp(offx, radius + TILE, view_wview - radius - TILE);
-            //offy = clamp(offy, radius + TILE, view_hview - radius - TILE);
-
+            dev = i;
         }
-        
-        angle = point_direction(offx, offy, device_mouse_x_to_gui(dev),device_mouse_y_to_gui(dev));
-        var rad_angle = ((angle / 180) * pi);
+    
+if (!device_mouse_check_button(dev,mb_left))
+    dev = -1;
 
-        sx = x + (cos(rad_angle)) * min(abs(offx-device_mouse_x_to_gui(dev)), radius);
-        sy = y -(sin(rad_angle)) * min(abs(offy-device_mouse_y_to_gui(dev)), radius);
-        
-        kRight = in(angle,315,360) || in(angle,0,45);           
-        kUp = in(angle,45,135);
-        kLeft = in(angle,135,225);
-        kDown = in(angle,225,315);
+kLeft = false;
+kRight = false;
+kUp = false;
+kDown = false;
     
-        if (in(angle,30,60))
-            {kRight = true; kUp = true}
-        if (in(angle,120,150))
-            {kLeft = true; kUp = true}
-        if (in(angle,210,240))
-            {kLeft = true; kDown = true}
-        if (in(angle,300,330))
-            {kRight = true; kDown = true}
-        
-    } else
+if (dev&gt;-1)
+{
+    /*if (offx == -100 &amp;&amp; offy == -100)
     {
-        offx = -100;
-        offy = -100;
-        sx = x;
-        sy = y;
-    }
+        offx = device_mouse_x_to_gui(dev);
+        offy = device_mouse_y_to_gui(dev);
+        
+        //offx = clamp(offx, radius + TILE, view_wview - radius - TILE);
+        //offy = clamp(offy, radius + TILE, view_hview - radius - TILE);
+
+    }*/
     
-    forceX = min(abs(x - sx) / (radius-.5*TILE),1);
-    forceY = min(abs(y - sy) / (radius-.5*TILE),1);
+    angle = point_direction(offx, offy, device_mouse_x_to_gui(dev),device_mouse_y_to_gui(dev));
+    var rad_angle = ((angle / 180) * pi);
+
+    sx = x + (cos(rad_angle)) * min(abs(offx-device_mouse_x_to_gui(dev)), radius);
+    sy = y -(sin(rad_angle)) * min(abs(offy-device_mouse_y_to_gui(dev)), radius);
+    
+    kRight = in(angle,315,360) || in(angle,0,45);           
+    kUp = in(angle,45,135);
+    kLeft = in(angle,135,225);
+    kDown = in(angle,225,315);
+
+    if (in(angle,30,60))
+        {kRight = true; kUp = true}
+    if (in(angle,120,150))
+        {kLeft = true; kUp = true}
+    if (in(angle,210,240))
+        {kLeft = true; kDown = true}
+    if (in(angle,300,330))
+        {kRight = true; kDown = true}
+    
+} else
+{
+    //offx = -100;
+    //offy = -100;
+    sx = x;
+    sy = y;
 }
+
+forceX = min(abs(x - sx) / (radius-.5*TILE),1);
+forceY = min(abs(y - sy) / (radius-.5*TILE),1);
+
 </string>
           </argument>
         </arguments>
@@ -152,7 +154,9 @@ offx = -100; offy = -100;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x = view_xview + offx;
+            <string>if (global.state != G_PLAY) exit;
+
+x = view_xview + offx;
 y = view_yview + offy;
 
 draw_set_color(c_black);
