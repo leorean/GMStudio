@@ -92,13 +92,55 @@ else
 if (player.value != -1 &amp;&amp; enemy.value != -1)
 {
     // DEAL DMG ETC HERE.
+    
+    /*
+        player.maxHp = (30 + 13 * vit) + (5 * (vit div 3));
+        player.hp = player.maxHp;
+        player.dmg = 1 + (2 * str) + (3 * (str div 5)) + (5 * (str div 8));
+        player.critDmg = 1 + (luk * .1);
+        player.dodge = 0 + log2(dex) * .3 + log2(dex div 5) * .2 + log2(dex div 10) * .2;
+        player.def = level;
+    */
+    
+    // player attacking the enemy
     if (player.value &gt; enemy.value)
     {
         instance_create(enemy.x, enemy.y, objBattleAttack);
+        
+        var crit = (player.value &gt; enemy.value + 2);
+        if (crit)
+            dmg = ceil(playerObj.dmg * playerObj.critDmg) - enemyObj.def;
+        else
+            dmg = playerObj.dmg - enemyObj.def;
+        
+        var missed = false;
+
+        if (random(1) &lt;= enemyObj.dodge &amp;&amp; !crit)
+            missed = true;
+        
+        if (!missed)
+        {
+            var t = instance_create(enemy.x + TILE, enemy.y + TILE, objText);
+            t.text = dmg;
+            if (crit) t.color = make_color_hsv(35, 255, 255);
+            
+            enemyObj.hp = max(enemyObj.hp - dmg, 0);
+        }
+        else
+        {
+            var t = instance_create(enemy.x + TILE, enemy.y + TILE, objText);
+            t.text = "miss";        
+        }
+        
+    }
+    else if (player.value &lt; enemy.value)
+    {
+        instance_create(player.x, player.y, objBattleAttack);
     }
     else
     {
-        instance_create(player.x, player.y, objBattleAttack);
+        var t = instance_create(x + w/2, 6 * TILE, objText);
+        t.text = "tie";
     }
     
     
@@ -116,14 +158,29 @@ else
     roundTimer = max(roundTimer - 1, 0);
     if (!roundTimer)
     {
-        player.value = -1;
-        enemy.value = -1;
-        playerDice.rolling = true;
-        enemyDice.rolling = true;
-        playerJumped = false;
-        enemyJumped = false;
-        
-        roundOver = false;        
+    
+        if (enemyObj.hp == 0)
+        {            
+            global.state = G_PLAY;
+            
+            spawnCoins(enemyObj.lootValue, enemyObj.x, enemyObj.y);
+            
+            with(enemyObj) instance_destroy();
+            with(objBattleChar) instance_destroy();
+            with(objBattleDice) instance_destroy();
+            
+            instance_destroy();
+        } else
+        {
+            player.value = -1;
+            enemy.value = -1;
+            playerDice.rolling = true;
+            enemyDice.rolling = true;
+            playerJumped = false;
+            enemyJumped = false;
+            
+            roundOver = false;
+        }
     }
 }
 </string>
@@ -149,6 +206,14 @@ else
           <argument>
             <kind>1</kind>
             <string>draw_sprite_part(sprBattle, -1, 0, 0, 22*TILE, 13*TILE, x, y);
+
+// player hp bar
+draw_sprite_part(sprBattle, -1, 18*TILE, 15*TILE, 4*TILE, TILE, x + TILE, y + 8*TILE);
+draw_sprite_part(sprBattle, -1, 18*TILE, 16*TILE, 4*TILE*(playerObj.hp/playerObj.maxHp), TILE, x + TILE, y + 8*TILE);
+
+// player hp bar
+draw_sprite_part(sprBattle, -1, 18*TILE, 15*TILE, 4*TILE, TILE, x + w - 5 * TILE, y + 8*TILE);
+draw_sprite_part(sprBattle, -1, 18*TILE, 16*TILE, 4*TILE*(enemyObj.hp/enemyObj.maxHp), TILE, x + w - 5 * TILE, y + 8*TILE);
 </string>
           </argument>
         </arguments>

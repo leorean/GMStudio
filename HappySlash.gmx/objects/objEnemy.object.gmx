@@ -25,14 +25,17 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>level = 1;
+            <string>level = 1; // TODO: REPLACE WITH GLOBAL LEVEL
 
-hp = 30;
-dmg = 2;
-def = 1;
-dodgeChance = 0.1;
-
-mode = 1; // defines the battle behaviour
+// SET RPG STATS
+maxHp = (15 + 15 * (level - 1)) + (5 * (level div 2)) + (3 * (level div 3)) + (16 * (level div 6));
+hp = maxHp;
+dmg = 3 + (4 * level) + (3 * (level div 3)) + (7 * (level div 4));
+critDmg = 1.5;
+def = level;
+dodge = 0.2;
+lootValue = (10 * level) + (15 * (level div 3)) + (32 * (level div 5)) + 46 * ((level div 8));
+expValue = 3 * level + (6 * (level div 3)) + (10 * (level div 5)) + (12 * (level div 9));
 </string>
           </argument>
         </arguments>

@@ -51,6 +51,7 @@
   <scripts name="scripts">
     <script>scripts\spawnCoins.gml</script>
     <script>scripts\in.gml</script>
+    <script>scripts\setPlayerStats.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

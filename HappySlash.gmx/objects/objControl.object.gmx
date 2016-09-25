@@ -46,41 +46,11 @@ global.coins = 0;
 global.coinRadius = TILE;
 
 // RPG STATS:
-global.str = 1;
-global.vit = 1;
-global.dex = 1;
-global.luk = 1;
-global.critPerc = 0.0;
-global.critDmgPerc = 1.5;
-global.dodgeChance = 0.1;
-global.def = 1;
-
-/*
-RPG SYSTEM
-
-Stats:
-
-Str ( == dmg)
-Vit ( == hp)
-Dex ( == crit dmg %) ODER: dex == necessary for hit chance
-Luk ( == crit chance)
-?Int ( == magic damage)
-?Agi ( == run spd)
-?Mag ( == magic)
-
-Weapons:
-Att Spd (mega-slow, slow, normal, fast, super-fast)
-+Dmg
-+Crit Dmg %
-
-Hat:
-+Def
-+Hp %
-
-Shield:
-+Def
-+Block chance %
-*/
+level = 0;
+str = 1;
+vit = 1;
+dex = 1;
+luk = 1;
 </string>
           </argument>
         </arguments>
@@ -111,22 +81,50 @@ if (keyboard_check(ord('C')))
 else
     room_speed = 60;
 
-if (global.state == G_PLAY)
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (global.state == G_PLAY)
 {
     
     global.timer = (global.timer + 1) % INFINITE;
     
     if (instance_exists(objPlayer))
     {
-        var relativeSpeed = 1;
-        global.xVel = max(global.xVelMin, global.xVelMax * relativeSpeed);    
+        if (objPlayer.x &gt; view_xview + view_wview/2 &amp;&amp; objPlayer.xVel &gt; 0)
+        {
+            global.xVel = objPlayer.xVel;
+        }
+        else
+            global.xVel = 0;
+        
+        view_xview += global.xVel;
     }
     
     if (view_xview + global.xVel &gt;= room_width/2)
     {
         view_xview -= room_width/2;
         objPlayer.x -= room_width/2;
-        objCamera.x -= room_width/2;
+        //objCamera.x -= room_width/2;
     
         with(objAny)
         {
@@ -198,11 +196,13 @@ btnAttack.type = 0;
 var btnJump = instance_create(WIDTH-2*TILE,HEIGHT-4*TILE,objButton);
 btnJump.type = 1;
 
-instance_create(WIDTH/2, HEIGHT/2, objCamera);
+//instance_create(WIDTH/2, HEIGHT/2, objCamera);
 instance_create(12*TILE, HEIGHT/2, objPlayer);
+setPlayerStats(level, vit, str, dex, luk);
 
 global.timer = 0;
 global.state = G_PLAY;
+
 </string>
           </argument>
         </arguments>

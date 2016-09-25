@@ -71,7 +71,7 @@ if (rolling)
 
     if (frame == 0)
     {
-        fSpeed = .1;
+        fSpeed = .06;
     } else
         fSpeed = .4;
         
@@ -87,6 +87,8 @@ if (rolling)
 {
     frame = 0;
 }
+
+draw_sprite_part(sprBattle, -1, (value - 1) * 2*TILE, 13*TILE, 2*TILE, 2*TILE, x,y);
 
 if (frame == 0)
     draw_sprite_part(sprBattle, -1, (value - 1) * 2*TILE, 13*TILE, 2*TILE, 2*TILE, x,y);

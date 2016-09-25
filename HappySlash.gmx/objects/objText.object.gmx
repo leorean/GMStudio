@@ -27,8 +27,8 @@
             <kind>1</kind>
             <string>text = "";
 
-yVel = -.5;
-timer = 1*SEC;
+yVel = -.75;
+timer = .75*SEC;
 alpha = 1;
 color = c_white;
 </string>
@@ -36,7 +36,7 @@ color = c_white;
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="75">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -71,8 +71,7 @@ draw_set_valign(fa_top);
 var w = display_get_gui_width();
 var h = display_get_gui_height();
 
-draw_text_transformed( (x / view_wview) * w,
- (y / view_hview) * h, text, 1, 1, 0);
+draw_text_transformed(x, y, text, 1, 1, 0);
 </string>
           </argument>
         </arguments>

@@ -62,6 +62,13 @@ frame = 0;
 fCur = 0;
 fSpeed = .1;
 state = WALK;
+
+//RPG STATS
+hp = 0;
+maxHp = 0;
+dmg = 0;
+critDmg = 0.0;
+dodge = 0;
 </string>
           </argument>
         </arguments>
@@ -139,6 +146,7 @@ if (instance_exists(enemy))
     global.state = G_BATTLE;
     var b = instance_create(view_xview + 5*TILE, view_yview + 2.5*TILE, objBattle);
     b.enemyObj = enemy;
+    b.playerObj = id;
 }
 
 if (attacking)
@@ -183,10 +191,10 @@ if (x + global.xVel + xVel &lt; view_xview + TILE)
 xVel = sign(xVel) * min(abs(xVel), 6);
 yVel = sign(yVel) * min(abs(yVel), 5);
 
-xVel += global.xVel;
+//xVel += global.xVel;
 
 if (x + xVel &lt; view_xview)
-    xVel = max(xVel, global.xVel);
+    xVel = max(xVel, 0);
 if (x + xVel &gt; view_xview+view_wview - TILE)
     xVel = min(xVel, 0);
 
@@ -198,7 +206,7 @@ else
     xVel = 0;
 }
 
-xVel -= global.xVel;
+//xVel -= global.xVel;
 
 if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; in(y + yVel, 0, room_height - 2*TILE))
     y += yVel;
