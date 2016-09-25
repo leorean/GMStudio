@@ -138,7 +138,7 @@ if (instance_exists(enemy))
 {
     global.state = G_BATTLE;
     var b = instance_create(view_xview + 5*TILE, view_yview + 2.5*TILE, objBattle);
-    b.enemy = enemy;
+    b.enemyObj = enemy;
 }
 
 if (attacking)

@@ -29,6 +29,8 @@
 w = 22*TILE;
 h = 13*TILE;
 
+enemyObj = noone; // real enemy encounter, get stats from.
+
 player = instance_create(x+2*TILE, y+5*TILE, objBattleChar);
 enemy = instance_create(x+w-4*TILE, y+5*TILE, objBattleChar);
 
@@ -37,6 +39,11 @@ enemyDice = instance_create(x+w-4*TILE, y+2*TILE, objBattleDice);
 
 playerJumped = false;
 enemyJumped = false;
+
+timer = 0;
+
+roundTimer = 0;
+roundOver = false;
 </string>
           </argument>
         </arguments>
@@ -67,10 +74,57 @@ enemyJumped = false;
         player.yVel = -5;
         playerJumped = true;
     }
-} else
+    timer = .5*SEC;
+}
+else
 {
-    enemy.yVel = -5;        
-    enemyJumped = true;
+    if (!enemyJumped)
+    {
+        timer = max(timer - 1, 0);
+        if (!timer)
+        {
+            enemy.yVel = -5;        
+            enemyJumped = true;
+        }
+    }
+}
+
+if (player.value != -1 &amp;&amp; enemy.value != -1)
+{
+    // DEAL DMG ETC HERE.
+    if (player.value &gt; enemy.value)
+    {
+        instance_create(enemy.x, enemy.y, objBattleAttack);
+    }
+    else
+    {
+        instance_create(player.x, player.y, objBattleAttack);
+    }
+    
+    
+    player.value = -1;
+    enemy.value = -1;
+    roundOver = true;    
+}
+
+if (!roundOver)
+{
+    roundTimer = .5*SEC;
+}
+else
+{
+    roundTimer = max(roundTimer - 1, 0);
+    if (!roundTimer)
+    {
+        player.value = -1;
+        enemy.value = -1;
+        playerDice.rolling = true;
+        enemyDice.rolling = true;
+        playerJumped = false;
+        enemyJumped = false;
+        
+        roundOver = false;        
+    }
 }
 </string>
           </argument>

@@ -78,6 +78,7 @@
       <object>objects\objBattleChar</object>
       <object>objects\objBattle</object>
       <object>objects\objBattleDice</object>
+      <object>objects\objBattleAttack</object>
     </objects>
   </objects>
   <rooms name="rooms">
