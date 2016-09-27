@@ -7,10 +7,10 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>9</bbox_left>
-  <bbox_right>118</bbox_right>
-  <bbox_top>6</bbox_top>
-  <bbox_bottom>86</bbox_bottom>
+  <bbox_left>0</bbox_left>
+  <bbox_right>127</bbox_right>
+  <bbox_top>0</bbox_top>
+  <bbox_bottom>511</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -18,7 +18,7 @@
   </TextureGroups>
   <For3D>0</For3D>
   <width>128</width>
-  <height>96</height>
+  <height>512</height>
   <frames>
     <frame index="0">images\sprPlayer_0.png</frame>
   </frames>

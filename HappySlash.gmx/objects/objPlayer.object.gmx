@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>1</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -58,12 +58,15 @@ shadow.offX = .5*TILE;
 shadow.offY = 1*TILE - 2;
 
 // graphics
+dir = RIGHT;
+state = IDLE;
 frame = 0;
 fCur = 0;
 fSpeed = .1;
 state = WALK;
 
 //RPG STATS
+level = 0;
 hp = 0;
 maxHp = 0;
 dmg = 0;
@@ -104,12 +107,20 @@ var jumpPressed = keyboard_check_pressed(ord('A')) || (button1.pressed);
 var attackPressed = keyboard_check_pressed(ord('S')) || (button2.pressed);
 var attackPressing = keyboard_check(ord('S')) || (button2.pressing);
 
-if (state == WALK || state == JUMP)
+if (state == WALK || state == JUMP || state == IDLE)
 {    
     //DPAD MOVE
     var fx = (2.5+(1*z&lt;0))*max(objDPad.forceX, 0);
     var fy = (2.5+(1*z&lt;0))*max(objDPad.forceY, 0);
     
+    if ((fx &gt; 0 || fy &gt; 0) &amp;&amp; state == IDLE)
+        state = WALK;
+    
+    if (fx == 0 &amp;&amp; fy == 0 &amp;&amp; state = WALK)
+        state = IDLE;
+    
+    dir = directionFromAngle(objDPad.angle);
+        
     // more grip when turning around
     if (sign(xVel) != sign(lengthdir_x(1,objDPad.angle))) xVel *= .8;
     if (sign(yVel) != sign(lengthdir_y(1,objDPad.angle))) yVel *= .8;
@@ -152,6 +163,7 @@ if (instance_exists(enemy))
 
 if (attacking)
 {
+    state = ATTACK;
     sword.angle = max(sword.angle - 15, swordOffset);
     
     if (sword.angle == swordOffset)
@@ -180,7 +192,7 @@ if (z == 0) zVel = 0;
 if (state == JUMP)
 {
     yVel *= .95;
-    if (z &gt;= 0) state = WALK;
+    if (z &gt;= 0) state = IDLE;
 }
 
 if (x + global.xVel + xVel &lt; view_xview + TILE)
@@ -238,34 +250,52 @@ else
             <kind>1</kind>
             <string>if (global.state == G_PLAY)
 {
-    if (state != JUMP)
-        fCur = (fCur + fSpeed) % 4;
-    else
-        fCur = 0 + 2 * (zVel &gt; 0);
-    
-    frame = floor(fCur);
-        
     switch(state)
     {
-        case IDLE: //doesn't exist
+        case IDLE:
+            fCur = (fCur + .08) % 4;
+            row = 0;            
             break;
         case WALK:
-            fSpeed = .13;
-            row = 0;
+            fCur = (fCur + .13) % 4;
+            row = 1;
+            break;
+        case ATTACK:
+            fCur = min(fCur + .2, 2.9);
+            row = 2;
+            if (fCur == 2.9)
+                state = IDLE;
             break;
         case JUMP:
-            fSpeed = 0;
-            row = 1;
+            fCur = 0;
+            row = 3;
             break;
         case HURT:
         case DIE:
-            fSpeed = 0;
-            row = 2;
             break;
     }
 }
 
-draw_sprite_part(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE, x, y + z);
+frame = floor(fCur);
+
+var _dir;
+switch(dir)
+{
+    case UP:
+        _dir = 0;
+        break;
+    case DOWN:
+        _dir = 1;
+        break;
+    case LEFT:
+        _dir = 2;
+        break;
+    case RIGHT:
+        _dir = 3;
+        break;
+}
+
+draw_sprite_part(sprPlayer, -1, frame*2*TILE, row*8*TILE + _dir*2*TILE, 2*TILE, 2*TILE, x, y + z);
 </string>
           </argument>
         </arguments>

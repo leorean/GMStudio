@@ -56,7 +56,10 @@ else
     y = objPlayer.y + objPlayer.z + TILE + lengthdir_y(1*TILE, angle);
 }
 
-//angle = (angle + 5) % 360;
+if (in(angle % 360, 0, 180))
+    depth = objPlayer.depth + 1;
+else
+    depth = objPlayer.depth - 1;
 </string>
           </argument>
         </arguments>

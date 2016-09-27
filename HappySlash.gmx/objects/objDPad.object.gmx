@@ -3,7 +3,7 @@
   <spriteName>mskDPad</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-99</depth>
+  <depth>-49</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -154,7 +154,11 @@ forceY = min(abs(y - sy) / (radius-.5*TILE),1);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state != G_PLAY) exit;
+            <string>if (global.state != G_PLAY)
+{
+    sx = x;
+    sy = y;
+}
 
 x = view_xview + offx;
 y = view_yview + offy;

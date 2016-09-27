@@ -46,7 +46,7 @@ global.coins = 0;
 global.coinRadius = TILE;
 
 // RPG STATS:
-level = 0;
+level = 1;
 str = 1;
 vit = 1;
 dex = 1;

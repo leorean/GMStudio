@@ -52,6 +52,7 @@
     <script>scripts\spawnCoins.gml</script>
     <script>scripts\in.gml</script>
     <script>scripts\setPlayerStats.gml</script>
+    <script>scripts\directionFromAngle.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -76,8 +77,8 @@
     <object>objects\objEnemy</object>
     <object>objects\objText</object>
     <objects name="Battle">
-      <object>objects\objBattleChar</object>
       <object>objects\objBattleMenu</object>
+      <object>objects\objBattleChar</object>
       <object>objects\objBattleDice</object>
       <object>objects\objBattleAttack</object>
     </objects>

@@ -3,7 +3,7 @@
   <spriteName>mskButton</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-99</depth>
+  <depth>-49</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -124,7 +124,7 @@ if (dev &gt; -1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state != G_PLAY) exit;
+            <string>//if (global.state != G_PLAY) exit;
 
 x = view_xview[0]+offx;
 y = view_yview[0]+offy;
