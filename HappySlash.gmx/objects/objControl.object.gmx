@@ -189,7 +189,7 @@ if (surface_exists(surf))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(4*TILE, room_height-4*TILE,objDPad);
+            <string>instance_create(6*TILE, room_height-6*TILE,objDPad);
 var btnAttack = instance_create(WIDTH-5*TILE,HEIGHT-3*TILE,objButton);
 btnAttack.type = 0;
 
