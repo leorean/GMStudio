@@ -3,7 +3,7 @@
   <spriteName>mskEnemy</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>10</depth>
   <persistent>0</persistent>
   <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -28,13 +28,100 @@
             <string>level = 1; // TODO: REPLACE WITH GLOBAL LEVEL
 
 // SET RPG STATS
-maxHp = (15 + 15 * (level - 1)) + (5 * (level div 2)) + (3 * (level div 3)) + (16 * (level div 6));
+/*maxHp = (15 + 15 * (level - 1)) + (5 * (level div 2)) + (3 * (level div 3)) + (16 * (level div 6));
 hp = maxHp;
 dmg = 3 + (4 * level) + (3 * (level div 3)) + (7 * (level div 4));
-critDmg = 1.5;
-def = level;
 lootValue = (8 * level) + (15 * (level div 3)) + (32 * (level div 5)) + 46 * ((level div 8));
-expValue = 3 * level + (6 * (level div 3)) + (10 * (level div 5)) + (12 * (level div 9));
+expValue = 3 * level + (6 * (level div 3)) + (10 * (level div 5)) + (12 * (level div 9));*/
+
+maxHp = 50;
+hp = maxHp;
+dmg = 3;
+
+type = 0;
+state = WALK;
+xVel = 0;
+yVel = 0;
+yGrav = .15;
+
+attackDelay = 0;
+maxAttackDelay = 60;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+attackDelay = max(attackDelay - 1, 0);
+
+switch(state)
+{
+    case WALK:
+        xVel = -1;
+        if(place_meeting(x - 10*TILE, y, objWarrior))
+            state = IDLE;
+        break;
+    case IDLE:
+    case ATTACK:
+        xVel = 0;
+        var target = instance_place(x, y, objWarrior);
+        if (instance_exists(target) &amp;&amp; target.state != DEAD)
+        {
+            if (!attackDelay)
+            {
+                state = ATTACK;
+                target.hp = max(target.hp - dmg, 0);
+                attackDelay = maxAttackDelay;
+            }
+        }
+        else
+            state = IDLE;
+        break;
+}
+
+x += xVel;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_self();
+
+draw_text(x, y - TILE, state);
 </string>
           </argument>
         </arguments>

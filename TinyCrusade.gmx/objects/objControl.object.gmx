@@ -108,8 +108,9 @@ else
     
     global.timer = (global.timer + 1) % INFINITE;
 
-    if (view_xview + global.xVel &gt;= room_width/2)
+    if (view_xview &gt;= room_width/2)
     {
+
         view_xview -= room_width/2;
         
         show_debug_message("reset position");
@@ -182,14 +183,17 @@ if (surface_exists(surf))
             <string>global.timer = 0;
 global.state = G_PLAY;
 
-instance_create(view_wview/2, view_hview/2, objCamera);
+instance_create(0, view_hview/2, objCamera);
 
 global.xVel = .5;
 
-for (var i = 0; i &lt; 5; i++)
+global.leader = instance_create(WIDTH*.25, GROUND - TILE, objWarrior);
+global.leader.type = 0;
+
+for (var i = 0; i &lt; 1; i++)
 {
     var warrior = instance_create(TILE + i*.5*TILE, GROUND - TILE, objWarrior);
-    warrior.type = 0;
+    warrior.type = 1;
 }
 </string>
           </argument>

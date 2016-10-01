@@ -29,7 +29,7 @@
 type = -1;
 initialized = false;
 
-state = IDLE;
+state = WALK;
 
 xVel = 0;
 yVel = 0;
@@ -38,12 +38,34 @@ yGrav = .1;
 fCur = 0;
 frame = 0;
 
+walkSpeed = .5;
+runSpeed = 1;
 </string>
           </argument>
         </arguments>
       </action>
     </event>
     <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>INIT STATS</string>
+          </argument>
+        </arguments>
+      </action>
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -66,12 +88,15 @@ frame = 0;
     switch (type)
     {
         case 0:        
+            maxHp = 200;
+            dmg = 3;
+            maxAttackDelay = 40;
+            legionState = WALK;
+            break;
+        case 1:
             maxHp = 30;
             dmg = 5;
             maxAttackDelay = 40;
-            
-            break;
-        case 1:
             break;
     }
     
@@ -107,16 +132,84 @@ attackDelay = max(attackDelay - 1, 0);
 
 switch(type)
 {
-    case 0:
-        if (state == IDLE &amp;&amp; abs(x - objCamera.x) &gt; 64)
-            state = WALK;
-    break;
+    case 0: // LEADER
+
+        var nearestEnemy = 
+            instance_nearest(x, y, objEnemy);
+        
+        switch(legionState)
+        {
+            case IDLE: //wait for orders
+                xVel = 0;
+                with(objWarrior) if(hp != 0) state = IDLE;
+                if (mouse_check_button_pressed(mb_left))
+                    legionState = ATTACK;
+                break;
+            case WALK: //walk until the next enemy is in sight
+                xVel = walkSpeed;
+                with(objWarrior) if(hp != 0) state = WALK;
+                
+                if (instance_exists(nearestEnemy) &amp;&amp; nearestEnemy.x - x &lt; 5*TILE)
+                {
+                    legionState = IDLE;
+                }
+                break;
+            case ATTACK: // send warriors out or bring them in position to shoot
+                xVel = 0;
+                if (!instance_exists(objEnemy))
+                    legionState = IDLE;
+                break;
+            case DEFEND: // stop attacking (unless melee and in front of leader) and hold guards
+                break;
+        }
+            
+         break;
+    case 1: // MELEE WARRIOR
+        if (hp &gt; 0)
+        {
+            switch(global.leader.legionState)
+            {
+                case IDLE:
+                    xVel = 0;
+                    break;
+                case WALK:
+                    xVel = walkSpeed;
+                    break;
+                case ATTACK:
+                    xVel = runSpeed;
+                    var enemy = instance_place(x, y, objEnemy);
+                    if (!instance_exists(enemy))
+                        state = WALK;
+                    else
+                    {
+                        xVel = 0;
+                        if (!attackDelay)
+                        {
+                            state = ATTACK;
+                            fCur = 0;
+                            attackDelay = maxAttackDelay;
+                        }
+                    }
+                    break;
+            }
+        }
+        break;
 }
 
-if (state == WALK)
+if (hp == 0)
 {
-    x += global.xVel;
+    if (state != DEAD) fCur = 0;
+    xVel = 0;
+    state = DEAD;
 }
+
+x += xVel;
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -156,14 +249,14 @@ switch(state)
         if (fCur == 3.9)
             state = IDLE;
         break;
-    case DIE:
+    case DEAD:
         fCur = min(fCur + .1, 3);
         row = 3;
         break;
 }
 frame = floor(fCur);
 
-draw_sprite_part(sprWarrior, -1, frame*TILE, row*TILE, TILE, TILE, x, y);
+draw_sprite_part(sprWarrior, -1, frame*TILE, row*TILE + 4*type*TILE, TILE, TILE, x, y);
 </string>
           </argument>
         </arguments>
