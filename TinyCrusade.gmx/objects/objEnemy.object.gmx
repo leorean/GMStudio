@@ -27,25 +27,25 @@
             <kind>1</kind>
             <string>level = 1; // TODO: REPLACE WITH GLOBAL LEVEL
 
-// SET RPG STATS
-/*maxHp = (15 + 15 * (level - 1)) + (5 * (level div 2)) + (3 * (level div 3)) + (16 * (level div 6));
-hp = maxHp;
-dmg = 3 + (4 * level) + (3 * (level div 3)) + (7 * (level div 4));
-lootValue = (8 * level) + (15 * (level div 3)) + (32 * (level div 5)) + 46 * ((level div 8));
-expValue = 3 * level + (6 * (level div 3)) + (10 * (level div 5)) + (12 * (level div 9));*/
-
 maxHp = 50;
 hp = maxHp;
 dmg = 3;
 
 type = 0;
 state = WALK;
+stateprev = state;
 xVel = 0;
 yVel = 0;
 yGrav = .15;
+onGround = false;
 
 attackDelay = 0;
 maxAttackDelay = 60;
+
+target = noone;
+
+fCur = 0;
+frame = 0;
 </string>
           </argument>
         </arguments>
@@ -70,33 +70,106 @@ maxAttackDelay = 60;
             <kind>1</kind>
             <string>
 attackDelay = max(attackDelay - 1, 0);
+onGround = y + yVel &gt;= GROUND - TILE;
 
-switch(state)
+if (hp &gt; 0)
 {
-    case WALK:
-        xVel = -1;
-        if(place_meeting(x - 10*TILE, y, objWarrior))
-            state = IDLE;
-        break;
-    case IDLE:
-    case ATTACK:
-        xVel = 0;
-        var target = instance_place(x, y, objWarrior);
-        if (instance_exists(target) &amp;&amp; target.state != DEAD)
+
+    if (!instance_exists(target) || target.state == DEAD)
+    if (!attackDelay)
+    {
+        for(var i = 0; i &lt; instance_number(objWarrior); i++)
         {
-            if (!attackDelay)
+            var t = instance_find(objWarrior, i);
+            if (place_meeting(x - 2, y, t) &amp;&amp; t.state != DEAD)
             {
-                state = ATTACK;
-                target.hp = max(target.hp - dmg, 0);
+                target = t;
+                break;
+            }
+            else
+                target = noone;
+        }
+        if (instance_exists(target) &amp;&amp; (state == WALK || state == IDLE))
+            state = ATTACK;
+    }
+    
+    // pull back
+    for(var i = 0; i &lt; instance_number(objWarrior); i++)
+    {
+        var t = instance_find(objWarrior, i);
+        if (t.x &gt; x &amp;&amp; t.state != DEAD)
+        {
+            x = max(x, t.x + 2);
+            break;
+        }
+    }
+    
+    if (state == IDLE)
+    {
+        if (!instance_exists(target) || target.state == DEAD)
+            state = WALK;
+        else if(!attackDelay)
+            state = ATTACK;
+    }
+    if (state == ATTACK)
+    {
+        if (!attackDelay)
+        {
+            if (instance_exists(target) &amp;&amp; target.state != DEAD)
+            {
+                switch(type)
+                {
+                    case 0:
+                        if(place_meeting(x - 2, y, target))
+                            dealDamage(target, dmg);
+                        else
+                        {
+                            target = noone;
+                        }
+                        break;
+                    case 1:
+                    
+                }
                 attackDelay = maxAttackDelay;
             }
         }
-        else
-            state = IDLE;
+    }    
+}
+else // DIE
+{
+    if (state != DEAD) fCur = 0;
+    state = DEAD;
+}
+
+switch(state)
+{
+    case IDLE:
+    case ATTACK:
+    case DEAD:
+        xVel *= .9;
+        break;
+    case WALK:
+        xVel = max(xVel - .1, -1);
         break;
 }
 
-x += xVel;
+if (!place_meeting(x + xVel, y, objWarrior) || instance_place(x + xVel, y, objWarrior).state == DEAD)
+    x += xVel;
+else
+{
+    x -= xVel;
+    xVel = 0;
+}
+
+yVel += yGrav;
+
+if (!onGround)
+    y += yVel;
+else
+    yVel = 0;
+
+if (state != stateprev) fCur = 0;
+stateprev = state;
 </string>
           </argument>
         </arguments>
@@ -119,9 +192,31 @@ x += xVel;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_self();
+            <string>var row;
+switch(state)
+{
+    case IDLE:
+        fCur = (fCur + .1) % 4;
+        row = 0;
+        break;
+    case WALK:
+        fCur = (fCur + .15) % 4;
+        row = 1;
+        break;
+    case ATTACK:
+        fCur = min(fCur + .2, 3.9);
+        if (fCur == 3.9)
+            state = IDLE;
+        row = 2;
+        break;
+    case DEAD:
+        fCur = min(fCur + .1, 3);
+        row = 3;
+        break;
+}
+frame = floor(fCur);
 
-draw_text(x, y - TILE, state);
+draw_sprite_part(sprEnemy, -1, frame*TILE, row*TILE + 4*type*TILE, TILE, TILE, x, y);
 </string>
           </argument>
         </arguments>

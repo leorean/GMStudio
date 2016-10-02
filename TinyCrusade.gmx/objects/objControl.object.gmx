@@ -122,13 +122,15 @@ else
         {
             x -= room_width/2;
         }
+        
+        instance_create(room_width * 0.5, GROUND-TILE, objEnemy);
     }
     
     with(objAny)
     {
-        if ((x + 2*TILE) &lt; view_xview)
+        if (x &lt; view_xview - 6 * TILE)
         {
-            show_debug_message(string(id) + "destroyed");
+            show_debug_message(string(id) + " destroyed");
             instance_destroy();
         }
     }
@@ -187,13 +189,10 @@ instance_create(0, view_hview/2, objCamera);
 
 global.xVel = .5;
 
-global.leader = instance_create(WIDTH*.25, GROUND - TILE, objWarrior);
-global.leader.type = 0;
-
-for (var i = 0; i &lt; 1; i++)
+for (var i = 0; i &lt; 8; i++)
 {
     var warrior = instance_create(TILE + i*.5*TILE, GROUND - TILE, objWarrior);
-    warrior.type = 1;
+    warrior.type = choose(0, 1);
 }
 </string>
           </argument>

@@ -39,6 +39,8 @@
     <sprite>sprites\sprBg</sprite>
     <sprite>sprites\mskWarrior</sprite>
     <sprite>sprites\sprWarrior</sprite>
+    <sprite>sprites\mskArrow</sprite>
+    <sprite>sprites\sprEnemy</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -47,6 +49,7 @@
     <script>scripts\in.gml</script>
     <script>scripts\setPlayerStats.gml</script>
     <script>scripts\directionFromAngle.gml</script>
+    <script>scripts\dealDamage.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -65,6 +68,7 @@
     <object>objects\objEnemy</object>
     <object>objects\objText</object>
     <object>objects\objWarrior</object>
+    <object>objects\objArrow</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

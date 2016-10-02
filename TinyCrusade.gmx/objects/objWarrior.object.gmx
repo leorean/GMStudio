@@ -30,16 +30,20 @@ type = -1;
 initialized = false;
 
 state = WALK;
+stateprev = state;
 
 xVel = 0;
 yVel = 0;
 yGrav = .1;
+onGround = false;
 
 fCur = 0;
 frame = 0;
 
 walkSpeed = .5;
-runSpeed = 1;
+hp = 1;
+
+waitTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -88,21 +92,24 @@ runSpeed = 1;
     switch (type)
     {
         case 0:        
-            maxHp = 200;
+            maxHp = 30;
             dmg = 3;
-            maxAttackDelay = 40;
+            maxAttackDelay = 30;
             legionState = WALK;
+            distance = 0;
             break;
         case 1:
-            maxHp = 30;
-            dmg = 5;
-            maxAttackDelay = 40;
+            maxHp = 20;
+            dmg = 8;
+            maxAttackDelay = 60;
+            distance = 6*TILE;
             break;
     }
     
     hp = maxHp;
     attackDelay = 0;
     initialized = true;
+    target = noone;
 }
 </string>
           </argument>
@@ -129,85 +136,172 @@ runSpeed = 1;
             <string>if (!initialized) exit;
 
 attackDelay = max(attackDelay - 1, 0);
+waitTimer = max(waitTimer - 1, 0);
 
-switch(type)
+onGround = y + yVel &gt;= GROUND - TILE;
+
+if (hp &gt; 0)
 {
-    case 0: // LEADER
 
-        var nearestEnemy = 
-            instance_nearest(x, y, objEnemy);
-        
-        switch(legionState)
+    if (!instance_exists(target) || target.state == DEAD)
+    if (!attackDelay)
+    {    
+        target = noone;
+        switch(type)
         {
-            case IDLE: //wait for orders
-                xVel = 0;
-                with(objWarrior) if(hp != 0) state = IDLE;
-                if (mouse_check_button_pressed(mb_left))
-                    legionState = ATTACK;
-                break;
-            case WALK: //walk until the next enemy is in sight
-                xVel = walkSpeed;
-                with(objWarrior) if(hp != 0) state = WALK;
-                
-                if (instance_exists(nearestEnemy) &amp;&amp; nearestEnemy.x - x &lt; 5*TILE)
+            case 0:
+                for(var i = 0; i &lt; instance_number(objEnemy); i++)
                 {
-                    legionState = IDLE;
+                    var t = instance_find(objEnemy, i);        
+                    if (place_meeting(x + distance + 2, y, t) &amp;&amp; t.state != DEAD)
+                    {
+                        target = t;
+                        break;
+                    }
                 }
                 break;
-            case ATTACK: // send warriors out or bring them in position to shoot
-                xVel = 0;
-                if (!instance_exists(objEnemy))
-                    legionState = IDLE;
-                break;
-            case DEFEND: // stop attacking (unless melee and in front of leader) and hold guards
-                break;
-        }
-            
-         break;
-    case 1: // MELEE WARRIOR
-        if (hp &gt; 0)
-        {
-            switch(global.leader.legionState)
-            {
-                case IDLE:
-                    xVel = 0;
-                    break;
-                case WALK:
-                    xVel = walkSpeed;
-                    break;
-                case ATTACK:
-                    xVel = runSpeed;
-                    var enemy = instance_place(x, y, objEnemy);
-                    if (!instance_exists(enemy))
-                        state = WALK;
-                    else
+            case 1:                
+                var maxDist = 0;
+                for(var i = 0; i &lt; instance_number(objEnemy); i++)
+                {
+                    var t = instance_find(objEnemy, i);        
+                    if (t.state != DEAD)
                     {
-                        xVel = 0;
-                        if (!attackDelay)
+                        if (collision_line(x, y + 8, x + distance + 2, y + 8, t, false, true)
+                        &amp;&amp; abs(t.x - x) &gt; maxDist)
                         {
-                            state = ATTACK;
-                            fCur = 0;
-                            attackDelay = maxAttackDelay;
+                            maxDist = abs(t.x - x);
+                            target = t;
                         }
                     }
-                    break;
+                }
+                break;
             }
         }
-        break;
-}
 
-if (hp == 0)
+    // ranged warriors must wait for melee to be front
+    var wait = false;
+    if (state == WALK || state == IDLE)
+    {
+        if (distance &gt; 0) // ranged:
+        {
+            for(var i = 0; i &lt; instance_number(objWarrior); i++)
+            {
+                var t = instance_find(objWarrior, i);
+                if (x + distance &gt; t.x &amp;&amp; distance &gt; t.distance &amp;&amp; t.state != DEAD)
+                {                    
+                    state = IDLE;
+                    wait = true;
+                    break;
+                }
+            }
+        }
+    }
+            
+    if (!wait)
+    {
+        if (!instance_exists(target) || target.state == DEAD)
+            state = WALK;
+        else if(!attackDelay)
+            state = ATTACK;
+    }
+    
+    if (instance_exists(target) &amp;&amp; (state == WALK || state == IDLE))
+        state = ATTACK;
+        
+    // pull back
+    for(var i = 0; i &lt; instance_number(objEnemy); i++)
+    {
+        var t = instance_find(objEnemy, i);
+        if (t.x &lt; x &amp;&amp; t.state != DEAD)
+        {
+            x = min(x, t.x - 2);
+            break;
+        }
+    }
+    
+    if (state == ATTACK)
+    {
+        if (!attackDelay)
+        {
+            if (instance_exists(target) &amp;&amp; target.state != DEAD)
+            {
+                switch(type)
+                {
+                    case 0:
+                        if(place_meeting(x + distance + 2, y, target))
+                            dealDamage(target, dmg);
+                        else
+                        {
+                            target = noone;
+                        }
+                        break;
+                    case 1:
+                        var proj = instance_create(x + 8, y, objArrow);
+                        
+                        proj.x0 = proj.x; proj.y0 = proj.y;
+                        
+                        var v = 0; var g = .12;      
+                        var dX = max(target.x - proj.x, 4);
+                        var dY = target.y - proj.y;
+                        var rad_ang = (arctan2(-dY, dX)+pi/2)/2;
+                        if (rad_ang != pi/2)
+                        {
+                            clc = (cos(rad_ang)*sqrt(2*(dY+tan(rad_ang)*dX)/g));
+                            if (clc != 0)
+                                v = dX / clc;
+                            else
+                                v = 0;
+                            proj.vx0 = lengthdir_x(v,radtodeg(rad_ang));
+                            proj.vy0 = lengthdir_y(v,radtodeg(rad_ang));
+                            proj.g = g;
+                        }
+                        
+                        proj.dmg = dmg;
+                        break;                    
+                }
+                attackDelay = maxAttackDelay;
+            }
+            
+            if (frame == 3)
+                state = IDLE;
+        }        
+    }    
+}
+else // DIE
 {
     if (state != DEAD) fCur = 0;
-    xVel = 0;
     state = DEAD;
 }
 
-x += xVel;
+switch(state)
+{
+    case IDLE:
+    case ATTACK:
+    case DEAD:
+        xVel *= .9;
+        break;
+    case WALK:
+        xVel = min(xVel + .01, walkSpeed);
+        break;
+}
 
+if (!place_meeting(x + xVel, y, objEnemy) || instance_place(x + xVel, y, objEnemy).state == DEAD)
+    x += xVel;
+else
+{
+    x -= xVel;
+    xVel = 0;
+}
 
-
-
+yVel += yGrav;
+if (!onGround)
+    y += yVel;
+else
+    yVel = 0;
+        
+if (state != stateprev) fCur = 0;
+stateprev = state;
 
 
 </string>
@@ -245,9 +339,9 @@ switch(state)
         break;
     case ATTACK:
         fCur = min(fCur + .2, 3.9);
-        row = 2;
         if (fCur == 3.9)
             state = IDLE;
+        row = 2;
         break;
     case DEAD:
         fCur = min(fCur + .1, 3);
