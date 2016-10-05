@@ -78,6 +78,8 @@ luk = 1;
 
 if (keyboard_check_pressed(ord('Q'))) game_restart();
 
+if (keyboard_check_pressed(ord('I'))) global.invincible = !global.invincible;
+
 if (keyboard_check(ord('C')))
     room_speed = 1;
 else
@@ -118,6 +120,11 @@ if (global.state == G_START)
     
     global.timer = (global.timer + 1) % INFINITE;
 
+    if (instance_number(objBall) &lt; 1 &amp;&amp; global.hp &gt; 0)
+    {
+        var ball = instance_create(bar.x, bar.y - TILE, objBall);
+    }
+    
     if (view_xview &gt;= room_width/2)
     {
         view_xview -= room_width/2;
@@ -198,15 +205,17 @@ global.xVel = .5;
 global.mx = 0;
 global.my = 0;
 
-var bar = instance_create(view_wview/2, view_hview - 5*TILE, objBar);
-var ball = instance_create(bar.x, bar.y - TILE, objBall);
+global.invincible = false;
+global.hp = 3;
 
-repeat(3)
+bar = instance_create(view_wview/2, view_hview - 5*TILE, objBar);
+
+/*repeat(3)
 {
     var b = instance_create(random(view_wview), random(view_hview), objBall);    
     b.hold = false;
     b.angle = random(360);
-}
+}*/
 </string>
           </argument>
         </arguments>

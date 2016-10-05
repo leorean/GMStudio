@@ -47,6 +47,7 @@
       <sprite>sprites\mskBallBig</sprite>
       <sprite>sprites\mskBallSmall</sprite>
     </sprites>
+    <sprite>sprites\mskBlock</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -78,6 +79,7 @@
     </objects>
     <object>objects\objBall</object>
     <object>objects\objBar</object>
+    <object>objects\objBlock</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

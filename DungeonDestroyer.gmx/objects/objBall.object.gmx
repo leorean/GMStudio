@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>self</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -77,27 +77,49 @@ if (hold)
 {
 
     /* collide with other balls */
-    var b = collision_circle(x, y, w/2, objBall, false, true);
-    if (instance_exists(b))
-    {
-        b.angle = point_direction(x, y, b.x, b.y);
-        angle = point_direction(b.x, b.y, x, y);
-    }    
+    var c = collision_circle(x, y, w/2, objBall, false, true);
+    if (instance_exists(c))
+    {        
+        c.angle = point_direction(x, y, c.x, c.y);
+        angle = point_direction(c.x, c.y, x, y);
+    }
 
+    /* collide with blocks */
+    var block_hor = collision_circle(x + xVel, y, w/2, objBlock, true, true);
+    var block_ver = collision_circle(x, y + yVel, w/2, objBlock, true, true);
+    
+    if (block_hor)
+    {
+        block_hor.hp = max(block_hor.hp - 1, 0);
+        angle = point_direction(0, 0, -xVel, yVel);
+    }
+    
+    if (block_ver)
+    {
+        if (block_ver != block_hor)
+            block_ver.hp = max(block_ver.hp - 1, 0);
+        angle = point_direction(0, 0, xVel, -yVel);
+    }
+    
     xVel = lengthdir_x(ballSpd, angle);
-    yVel = lengthdir_y(ballSpd, angle);    
+    yVel = lengthdir_y(ballSpd, angle);
+
 }
 
-if (!place_meeting(x + xVel, y, objSolid) 
-    &amp;&amp; in(x + xVel, view_xview + w, view_xview + view_wview - w/2))
+if (y &gt; room_height + w)
+{
+    global.hp = max(global.hp - 1, 0);
+    instance_destroy();
+}
+
+if (in(x + xVel, view_xview + w/2, view_xview + view_wview - w/2))
     x += xVel;
 else
 {
     angle = point_direction(x, y, x - xVel, y + yVel);
 }
-    
-if (!place_meeting(x, y + yVel, objSolid) 
-    &amp;&amp; in(y + yVel, view_yview + w, view_yview + view_hview - w/2))
+
+if (y + yVel &gt; w/2 &amp;&amp; (y + yVel &lt; view_hview - w/2 || !global.invincible))
     y += yVel;
 else
 {
