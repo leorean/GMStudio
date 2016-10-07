@@ -48,6 +48,7 @@
       <sprite>sprites\mskBallSmall</sprite>
     </sprites>
     <sprite>sprites\mskBlock</sprite>
+    <sprite>sprites\sprBar</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
