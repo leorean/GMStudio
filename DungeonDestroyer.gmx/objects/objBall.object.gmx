@@ -29,11 +29,12 @@
 yVel = 0;
 hold = true;
 
-w = choose(8, TILE, 2*TILE);
+w = TILE;
+sprite_index = mskBall;
 
-if (w == 8) sprite_index = mskBallSmall;
+/*if (w == 8) sprite_index = mskBallSmall;
 if (w == TILE) sprite_index = mskBall;
-if (w == 2*TILE) sprite_index = mskBallBig;
+if (w == 2*TILE) sprite_index = mskBallBig;*/
 
 ballSpd = 4;
 angle = 90;
@@ -61,13 +62,13 @@ angle = 90;
             <kind>1</kind>
             <string>if (global.state != G_PLAY) exit;
 
-var col_up = collision_line(bbox_left, bbox_bottom + yVel, bbox_right, bbox_bottom + yVel,
-    objBar, true, true) &amp;&amp; yVel &gt; 0;
-
 if (hold)
 {
-    if (mouse_check_button_released(mb_left))
+    if (device_mouse_check_button(0, mb_left))
+    {
+        angle = point_direction(x, y, global.mx, global.my);
         hold = false;
+    }
     else
     {
         xVel = objBar.xVel;
@@ -91,14 +92,18 @@ if (hold)
     if (block_hor)
     {
         block_hor.hp = max(block_hor.hp - 1, 0);
-        angle = point_direction(0, 0, -xVel, yVel);
-    }
-    
-    if (block_ver)
-    {
-        if (block_ver != block_hor)
-            block_ver.hp = max(block_ver.hp - 1, 0);
-        angle = point_direction(0, 0, xVel, -yVel);
+        
+        if (!block_hor.falling &amp;&amp; block_hor.type != 0)
+            angle = point_direction(0, 0, -xVel, yVel);
+        //ballSpd += .1;
+    }    
+    else if (block_ver)
+    {    
+        block_ver.hp = max(block_ver.hp - 1, 0);
+
+        if (!block_ver.falling &amp;&amp; block_ver.type != 0)
+            angle = point_direction(0, 0, xVel, -yVel);
+        //ballSpd += .1;
     }
     
     xVel = lengthdir_x(ballSpd, angle);
@@ -112,18 +117,20 @@ if (y &gt; room_height + w)
     instance_destroy();
 }
 
-if (in(x + xVel, view_xview + w/2, view_xview + view_wview - w/2))
+if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2))
     x += xVel;
 else
 {
     angle = point_direction(x, y, x - xVel, y + yVel);
+    //ballSpd += .1;
 }
 
-if (y + yVel &gt; w/2 &amp;&amp; (y + yVel &lt; view_hview - w/2 || !global.invincible))
+if (y + yVel &gt; BORDER + w/2 &amp;&amp; (y + yVel &lt; room_height - BORDER - w/2 || !global.invincible))
     y += yVel;
 else
 {
     angle = point_direction(x, y, x + xVel, y - yVel);
+    //ballSpd += .1;
 }
 
 </string>

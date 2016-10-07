@@ -57,7 +57,7 @@ targetY = y;
             <kind>1</kind>
             <string>if (global.state != G_PLAY) exit;
 
-if(device_mouse_check_button(0, mb_left))
+if(!device_mouse_check_button_pressed(0, mb_left) &amp;&amp; device_mouse_check_button(0, mb_left))
 {
     targetX = global.mx;
     targetY = global.my;
@@ -83,14 +83,12 @@ if (ball)
     with(ball) move_outside_all(90 + 180 * (y &gt; objBar.y), 8);
 }
 
-
-
-if (in(x + xVel, view_xview + w/2, view_xview + view_wview - w/2))
+if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2))
     x += xVel;
 else
     xVel = 0;
 
-if (in(y + yVel, view_yview, view_yview + view_hview))
+if (in(y + yVel, BORDER, room_height - BORDER))
     y += yVel;
 else
 {

@@ -85,8 +85,13 @@ if (keyboard_check(ord('C')))
 else
     room_speed = 60;
 
-global.mx = (device_mouse_x(0) / room_width) * view_wview;
-global.my = (device_mouse_y(0) / room_height) * view_hview;
+var w = display_get_gui_width();
+var h = display_get_gui_height();
+
+/*var xt = (mouse_x / room_width) * w;
+var yt = (mouse_y / room_height) * h*/
+global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;//(device_mouse_x(0) / room_width) * display_get_gui_width();
+global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;//(device_mouse_y(0) / room_height) * display_get_gui_height();
 
 if (global.state == G_START)
 {
@@ -115,16 +120,36 @@ if (global.state == G_START)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state == G_PLAY)
+            <string>if (global.state == G_START)
 {
-    
-    global.timer = (global.timer + 1) % INFINITE;
-
+    global.timer = 0;
     if (instance_number(objBall) &lt; 1 &amp;&amp; global.hp &gt; 0)
     {
+        bar.x  = room_width/2;
         var ball = instance_create(bar.x, bar.y - TILE, objBall);
     }
-    
+}
+if (global.state == G_PLAY)
+{
+
+    if (global.timer % (3*SEC) == 0)
+    {
+        for (i = 0; i &lt; WIDTH; i+= TILE)
+        {
+            var b = instance_create(i, - TILE, objBlock);
+            b.type = choose(0, 1, 2);
+        }
+
+        objBlock.move = true;
+    }
+
+    global.timer = (global.timer + 1) % INFINITE;
+        
+    if (instance_number(objBall) &lt; 1 &amp;&amp; global.hp &gt; 0)
+    {
+        global.state = G_START;
+    }
+    /*
     if (view_xview &gt;= room_width/2)
     {
         view_xview -= room_width/2;
@@ -132,7 +157,7 @@ if (global.state == G_START)
         show_debug_message("reset position");
         
         // reset everything, not just objAny
-        objCamera.x -= room_width/2;
+        if (instance_exists(objCamera)) objCamera.x -= room_width/2;
         
         with(objAny)
         {
@@ -147,7 +172,7 @@ if (global.state == G_START)
             show_debug_message(string(id) + " destroyed");
             instance_destroy();
         }
-    }
+    }*/
 }
 </string>
           </argument>
@@ -210,12 +235,6 @@ global.hp = 3;
 
 bar = instance_create(view_wview/2, view_hview - 5*TILE, objBar);
 
-/*repeat(3)
-{
-    var b = instance_create(random(view_wview), random(view_hview), objBall);    
-    b.hold = false;
-    b.angle = random(360);
-}*/
 </string>
           </argument>
         </arguments>
@@ -268,7 +287,6 @@ var yt = (mouse_y / room_height) * h;
 draw_set_alpha(1);
 draw_set_font(global.fnt);
 draw_set_color(c_white);
-
 </string>
           </argument>
         </arguments>
@@ -320,19 +338,6 @@ draw_clear(c_black);
 //++++SURFACE++++
 if (!surface_exists(surf))
 {
-
-    // this keeps the 16:9 aspect:
-    /*
-    zoom = min(view_hport / room_height, view_wport / room_width);
-    
-    view_hview = 640 / zoom; //1.7777776;//room_height;
-    view_wview = 360 / zoom;
-   
-    // center view
-    view_xview = (room_width - view_wview) / 2;
-    view_yview = (room_height - view_hview) / 2;
-    */
-    
     view_hview = HEIGHT;
     view_wview = WIDTH;
     
@@ -394,6 +399,26 @@ else
           <argument>
             <kind>1</kind>
             <string>DISABLE MASK VISIBILITY</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>

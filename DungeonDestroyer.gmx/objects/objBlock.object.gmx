@@ -25,9 +25,21 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>type = 0;
+            <string>type = choose(1, 2);
+
+isCascade = choose(0, 1, 1, 1);
+
 hp = 1;
 
+move = true;
+movey = y;
+
+yGrav = .1;
+yVel = .5;
+yVelMax = 3;
+
+hasAnchor = true;
+falling = false;
 </string>
           </argument>
         </arguments>
@@ -50,10 +62,94 @@ hp = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (hp == 0)
+            <string>if(!falling)
 {
+
+    if (move)
+    {
+        y = min(y + yVel, movey + TILE);
+        if (y == movey + TILE)
+            move = false;
+    }
+    else
+    {
+        movey = y;
+    }
+    
+    hasAnchor = place_meeting(x, y - TILE, objBlock) || y &lt;= 0;
+
+    if (!hasAnchor)
+    {
+        //falling = true;
+        // TODO: find every block that should also fall.
+        falling = true;        
+        for(i = y + TILE; i &lt; room_height; i+= TILE)
+        {
+            var fb = instance_place(x, i, objBlock);
+            if (instance_exists(fb) &amp;&amp; !fb.falling)
+                fb.falling = true;
+            else
+                break;
+        }
+    }
+} else
+{
+    hasAnchor = false;
+    yVel = min(yVel + yGrav, yVelMax);
+    y += yVel;
+}
+
+if(hp == 0)
+{
+    if (isCascade)
+    {
+        var bl = instance_place(x - TILE, y, objBlock);
+        var br = instance_place(x + TILE, y, objBlock);
+        var bu = instance_place(x, y - TILE, objBlock);
+        var bd = instance_place(x, y + TILE, objBlock);
+        
+        if (instance_exists(bl) &amp;&amp; bl.type == type &amp;&amp; !bl.falling) {bl.isCascade = true; bl.hp = 0;}
+        if (instance_exists(br) &amp;&amp; br.type == type &amp;&amp; !br.falling) {br.isCascade = true; br.hp = 0;}
+        if (instance_exists(bu) &amp;&amp; bu.type == type &amp;&amp; !bu.falling) {bu.isCascade = true; bu.hp = 0;}
+        if (instance_exists(bd) &amp;&amp; bd.type == type &amp;&amp; !bd.falling) {bd.isCascade = true; bd.hp = 0;}
+    }
+    
     instance_destroy();
 }
+
+if (y &gt;= room_height) instance_destroy();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>switch(type)
+{
+    case 0: color = c_red; break;
+    case 1: color = c_green; break;
+    case 2: color = c_blue; break;
+    case 3: color = c_yellow; break;    
+}
+
+draw_sprite_ext(mskBlock, -1, x, y, 1, 1, 0, color, 1);
+if (isCascade) draw_sprite_ext(mskBall, -1, x + 8, y + 8, 1, 1, 0, c_white, .5);
 </string>
           </argument>
         </arguments>

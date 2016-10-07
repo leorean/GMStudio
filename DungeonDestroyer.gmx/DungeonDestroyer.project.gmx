@@ -84,10 +84,11 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="20">
+  <constants number="21">
     <constant name="TILE">16</constant>
     <constant name="WIDTH">288</constant>
     <constant name="HEIGHT">512</constant>
+    <constant name="BORDER">0</constant>
     <constant name="INFINITE">9000000000</constant>
     <constant name="UP">-2</constant>
     <constant name="DOWN">2</constant>
