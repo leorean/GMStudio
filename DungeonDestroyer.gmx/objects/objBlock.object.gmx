@@ -26,7 +26,8 @@
           <argument>
             <kind>1</kind>
             <string>type = 0;
-isCascade = choose(0, 1, 1, 1);
+subType = 0;
+isCascade = 0;
 
 hp = 1;
 
@@ -41,6 +42,61 @@ yVelMax = 3;
 marked = false;
 markedTimer = 1*SEC;
 falling = false;
+canFall = false;
+
+initialized = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!initialized)
+{
+
+    switch(type)
+    {
+        case 0: //GRASS
+            hp = 1;
+            isCascade = choose(0, 0, 0, 1);
+            canFall = false;
+        break;
+        case 1: //INVINCIBLE        
+            hp = 1;
+            isCascade = false;
+            canFall = true;
+        break;
+        case 2: //DIRT
+            hp = 1;
+            isCascade = true;
+            canFall = false;
+            subType = choose(0, 1, 2);
+        break;
+        case 3: //TOUGH
+            hp = 3;
+            isCascade = false;
+            canFall = false;
+        break;
+    }
+
+    initialized = true;
+}
 </string>
           </argument>
         </arguments>
@@ -77,11 +133,18 @@ falling = false;
         movey = y;
     }
 
-    if (marked)
+    if (marked &amp;&amp; canFall)
     {
         markedTimer = max(markedTimer - 1, 0);
         if (!markedTimer)
-            falling = true;
+        {
+            if (canFall)
+                falling = true;
+            else
+            {
+                instance_destroy();
+            }
+        }
     }
 } else
 {
@@ -133,10 +196,22 @@ if (y &gt;= room_height) instance_destroy();
             <kind>1</kind>
             <string>switch(type)
 {
-    case 0: color = c_red; break;
-    case 1: color = c_green; break;
-    case 2: color = c_blue; break;
-    case 3: color = c_yellow; break;    
+    case 0:
+        row = 0;
+        col = 0;        
+        break;
+    case 1:
+        row = 1;
+        col = 0;
+        break;
+    case 2:
+        row = 2;
+        col = subType;
+        break;
+    case 3:
+        row = 3;
+        col = 3 - hp;
+        break;
 }
 
 var _ox = 0;
@@ -145,7 +220,8 @@ if (marked &amp;&amp; !falling)
     _ox = -1+random(2);
 }
 
-draw_sprite_ext(mskBlock, -1, x + _ox, y, 1, 1, 0, color, 1);
+draw_sprite_part(sprBlock, -1, col*TILE, row*TILE, TILE, TILE, x + _ox, y);
+
 if (isCascade) draw_sprite_ext(mskBall, -1, x + 8, y + 8, 1, 1, 0, c_white, .5);
 
 

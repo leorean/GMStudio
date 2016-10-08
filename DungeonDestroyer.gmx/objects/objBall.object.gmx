@@ -64,16 +64,17 @@ angle = 90;
 
 if (hold)
 {
-    if (device_mouse_check_button(0, mb_left))
+    /*if (device_mouse_check_button(0, mb_left))
     {
         angle = point_direction(x, y, global.mx, global.my);
         hold = false;
     }
     else
     {
-        xVel = objBar.xVel;
-        yVel = objBar.yVel;
-    }
+    }*/
+    xVel = objBar.xVel;
+    yVel = objBar.yVel;
+    
 } else
 {
 
@@ -91,15 +92,17 @@ if (hold)
     
     if (block_hor)
     {
+        if (block_hor.type != 1)
         block_hor.hp = max(block_hor.hp - 1, 0);
         
         if (!block_hor.falling &amp;&amp; block_hor.type != 0)
             angle = point_direction(0, 0, -xVel, yVel);
         //ballSpd += .1;
     }    
-    else if (block_ver)
-    {    
-        block_ver.hp = max(block_ver.hp - 1, 0);
+    if (block_ver)
+    {
+        if (block_ver.type != 1)
+            block_ver.hp = max(block_ver.hp - 1, 0);
 
         if (!block_ver.falling &amp;&amp; block_ver.type != 0)
             angle = point_direction(0, 0, xVel, -yVel);
@@ -157,7 +160,7 @@ else
           <argument>
             <kind>1</kind>
             <string>draw_sprite(sprite_index, -1, x, y);
-draw_circle(x, y, w/2, 1);
+//draw_circle(x, y, w/2, 1);
 </string>
           </argument>
         </arguments>

@@ -49,6 +49,8 @@
     </sprites>
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\sprBar</sprite>
+    <sprite>sprites\sprArrow</sprite>
+    <sprite>sprites\sprBlock</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

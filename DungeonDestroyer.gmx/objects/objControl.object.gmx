@@ -86,11 +86,11 @@ var yt = (mouse_y / room_height) * h*/
 global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;//(device_mouse_x(0) / room_width) * display_get_gui_width();
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;//(device_mouse_y(0) / room_height) * display_get_gui_height();
 
-if (global.state == G_START)
+/*if (global.state == G_START)
 {
     if (mouse_check_button_pressed(mb_left))
         global.state = G_PLAY;
-}
+}*/
 </string>
           </argument>
         </arguments>
@@ -121,6 +121,16 @@ if (global.state == G_START)
         bar.x  = room_width/2;
         var ball = instance_create(bar.x, bar.y - TILE, objBall);
     }
+    
+
+    if (mouse_check_button_released(mb_left))
+    {
+        global.state = G_PLAY;
+        objBall.angle = point_direction(objBall.x, objBall.y, global.mx, global.my);
+/*        if (objBall.angle &lt; 20 || in(objBall.angle, 160, 180))
+            objBall.angle += sign(objBall.angle - 90) * 35;*/
+        objBall.hold = false;
+    }
 }
 if (global.state == G_PLAY)
 {
@@ -134,7 +144,7 @@ if (global.state == G_PLAY)
         for (i = 0; i &lt; WIDTH; i+= TILE)
         {
             var b = instance_create(i, - TILE, objBlock);
-            b.type = choose(0, 0, 0, 1, 1, 2, 3);
+            b.type = choose(0, 1, 2, 3);
         }
 
         objBlock.move = true;
@@ -225,13 +235,13 @@ global.state = G_START;
 //instance_create(0, view_hview/2, objCamera);
 
 global.xVel = .5;
-global.mx = 0;
-global.my = 0;
+global.mx = WIDTH/2;
+global.my = HEIGHT/2;
 
 global.invincible = false;
 global.hp = 3;
 
-bar = instance_create(view_wview/2, view_hview - 5*TILE, objBar);
+bar = instance_create(view_wview/2, view_hview - 7*TILE, objBar);
 
 </string>
           </argument>
@@ -276,11 +286,11 @@ bar = instance_create(view_wview/2, view_hview - 5*TILE, objBar);
           <argument>
             <kind>1</kind>
             <string>// ++++ DRAW GUI HERE ++++
-var w = display_get_gui_width();
+/*var w = display_get_gui_width();
 var h = display_get_gui_height();
 
 var xt = (mouse_x / room_width) * w;
-var yt = (mouse_y / room_height) * h;
+var yt = (mouse_y / room_height) * h;*/
 
 draw_set_alpha(1);
 draw_set_font(global.fnt);
@@ -416,7 +426,15 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>if (global.state == G_START)
+{
+    if (instance_exists(objBall))
+    {
+        var _ang = point_direction(objBall.x, objBall.y, global.mx, global.my);
+        draw_sprite_ext(sprArrow, -1, objBall.x, objBall.y, 1, 1, _ang, c_white, 1);
+    }
+}
+</string>
           </argument>
         </arguments>
       </action>
