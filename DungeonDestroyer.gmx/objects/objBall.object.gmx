@@ -114,6 +114,7 @@ if (hold)
 if (y &gt; room_height + w)
 {
     global.hp = max(global.hp - 1, 0);
+    objBar.hurt = 1*SEC;
     instance_destroy();
 }
 

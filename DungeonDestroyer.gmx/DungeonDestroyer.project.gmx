@@ -58,6 +58,8 @@
     <script>scripts\setPlayerStats.gml</script>
     <script>scripts\directionFromAngle.gml</script>
     <script>scripts\dealDamage.gml</script>
+    <script>scripts\triggerFallingBlocks.gml</script>
+    <script>scripts\markBlock.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -85,7 +87,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="21">
+  <constants number="23">
     <constant name="TILE">16</constant>
     <constant name="WIDTH">288</constant>
     <constant name="HEIGHT">512</constant>
@@ -100,13 +102,15 @@
     <constant name="G_START">1</constant>
     <constant name="G_PLAY">2</constant>
     <constant name="G_OVER">3</constant>
+    <constant name="SEC">60</constant>
     <constant name="IDLE">0</constant>
     <constant name="WALK">1</constant>
     <constant name="ATTACK">2</constant>
     <constant name="DEFEND">3</constant>
     <constant name="HURT">4</constant>
     <constant name="DEAD">5</constant>
-    <constant name="SEC">60</constant>
+    <constant name="MOVE">6</constant>
+    <constant name="DEFLECT">7</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

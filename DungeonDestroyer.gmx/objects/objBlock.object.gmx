@@ -25,8 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>type = choose(1, 2);
-
+            <string>type = 0;
 isCascade = choose(0, 1, 1, 1);
 
 hp = 1;
@@ -38,7 +37,9 @@ yGrav = .1;
 yVel = .5;
 yVelMax = 3;
 
-hasAnchor = true;
+
+marked = false;
+markedTimer = 1*SEC;
 falling = false;
 </string>
           </argument>
@@ -75,22 +76,12 @@ falling = false;
     {
         movey = y;
     }
-    
-    hasAnchor = place_meeting(x, y - TILE, objBlock) || y &lt;= 0;
 
-    if (!hasAnchor)
+    if (marked)
     {
-        //falling = true;
-        // TODO: find every block that should also fall.
-        falling = true;        
-        for(i = y + TILE; i &lt; room_height; i+= TILE)
-        {
-            var fb = instance_place(x, i, objBlock);
-            if (instance_exists(fb) &amp;&amp; !fb.falling)
-                fb.falling = true;
-            else
-                break;
-        }
+        markedTimer = max(markedTimer - 1, 0);
+        if (!markedTimer)
+            falling = true;
     }
 } else
 {
@@ -148,8 +139,18 @@ if (y &gt;= room_height) instance_destroy();
     case 3: color = c_yellow; break;    
 }
 
-draw_sprite_ext(mskBlock, -1, x, y, 1, 1, 0, color, 1);
+var _ox = 0;
+if (marked &amp;&amp; !falling)
+{
+    _ox = -1+random(2);
+}
+
+draw_sprite_ext(mskBlock, -1, x + _ox, y, 1, 1, 0, color, 1);
 if (isCascade) draw_sprite_ext(mskBall, -1, x + 8, y + 8, 1, 1, 0, c_white, .5);
+
+
+/*if (marked) 
+    draw_sprite_ext(mskBlock, -1, x, y, 1, 1, 0, c_black, 1);*/
 </string>
           </argument>
         </arguments>

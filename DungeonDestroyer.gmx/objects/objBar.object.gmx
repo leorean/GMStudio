@@ -34,7 +34,14 @@ h = TILE;
 targetX = x;
 targetY = y;
 
+// cosmetics
+color = c_white;
 off = 0;
+state = IDLE;
+hurt = false;
+lookLeft = 90;
+lookRight = 90;
+
 </string>
           </argument>
         </arguments>
@@ -61,12 +68,21 @@ off = 0;
 if (global.state != G_PLAY) exit;
 
 off = sign(off) * max(abs(off) - .5, 0);
+if (state == DEFLECT &amp;&amp; off == 0) state = IDLE;
 
 if(!device_mouse_check_button_pressed(0, mb_left) &amp;&amp; device_mouse_check_button(0, mb_left))
 {
     targetX = global.mx;
     targetY = global.my;
+    if (off == 0) state = MOVE;
 }
+
+if (state == MOVE &amp;&amp; abs(xVel) &lt; .2 &amp;&amp; off == 0) state = IDLE;
+
+
+hurt = max(hurt - 1, 0);
+if (hurt) state = HURT;
+if (state == HURT &amp;&amp; hurt == 0) state = IDLE;
 
 xVel = (targetX - x) / 6;
 xVel = sign(xVel) * min(abs(xVel), 8);
@@ -85,7 +101,10 @@ if (ball)
     
     with(ball) move_outside_all(90 + 180 * (y &gt; objBar.y), 8);
     if (ball.y &lt; y)
+    {        
         off = 6;
+        state = DEFLECT;
+    }
 }
 
 if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2))
@@ -124,19 +143,24 @@ else
             <string>//draw_sprite_ext(sprite_index, -1, x, y, 1, 1, 0, c_red, .2);
 //draw_rectangle(x - w/2, y - h/2, x + w/2, y + h/2, 1);
 //draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom, 1);
-for(i = -w/2 + 8; i &lt; w/2 - 8; i+= 8)
-{
-    draw_sprite_part(sprBar, -1, 8, 0, 8, TILE, x + i, y - 8 + off);
-}
 
+// body
+for(i = -w/2 + 8; i &lt; w/2 - 8; i+= 8)
+    draw_sprite_part(sprBar, -1, 8, 0, 8, TILE, x + i, y - 8 + off);
+// body ends
 draw_sprite_part(sprBar, -1, 0, 0, 8, TILE, x - w/2, y - 8 + off);
 draw_sprite_part(sprBar, -1, TILE, 0, 8, TILE, x + w/2 - 8, y - 8 + off);
 
+// mouth
+if (state == IDLE) {row = 0; eyeRow = 0;}
+if (state == MOVE) {row = 1; eyeRow = 0;}
+if (state == DEFLECT) {row = 2; eyeRow = 0;}
+if (state == HURT) {row = 3; eyeRow = 1;}
+
+draw_sprite_part(sprBar, -1, 24,row*TILE, TILE, TILE, x-8, y-8 + off);
 //draw_sprite_part(sprBar, -1, 0, TILE, 5*TILE, 3*TILE, x - 1.5*TILE, y + 8);
 
-var lookLeft = 90;
-var lookRight = 90;
-
+// eye direction
 var eyeXLeft = x - w/2 + 7;
 var eyeXRight = x + w/2 - 7;
 var nearestBall = instance_nearest(x,y, objBall);
@@ -146,23 +170,18 @@ if (instance_exists(nearestBall))
     lookRight = point_direction(eyeXRight, y, nearestBall.x, nearestBall.y);
 }
 
-draw_sprite_part(sprBar, -1, 1.5*TILE, 0, 8, 8, eyeXLeft - 4, y - 5 + off);
-draw_sprite_part(sprBar, -1, 1.5*TILE, 0, 8, 8, eyeXRight - 4, y - 5 + off);
+//eyeballs
+draw_sprite_part(sprBar, -1, 0, TILE + TILE*eyeRow, TILE, TILE, eyeXLeft - 8, y - 9 + off);
+draw_sprite_part(sprBar, -1, 0, TILE + TILE*eyeRow, TILE, TILE, eyeXRight - 8, y - 9 + off);
 
 var exl = lengthdir_x(2, lookLeft);
 var eyl = lengthdir_y(2, lookLeft);
 var exr = lengthdir_x(2, lookRight);
 var eyr = lengthdir_y(2, lookRight);
 
-draw_sprite_part(sprBar, -1, 2*TILE, 0, 8, 8, eyeXLeft - 4 + exl, y - 5 + eyl + off);
-draw_sprite_part(sprBar, -1, 2*TILE, 0, 8, 8, eyeXRight - 4 + exr, y - 5 + eyr + off);
-
-//draw_sprite_ext(sprBarEye, -1, eyeXLeft, y - 2 + off, 1, 1, lookLeft, c_white, 1);
-//draw_sprite_ext(sprBarEye, -1, eyeXRight, y - 2 + off, 1, 1, lookRight, c_white, 1);
-
-//var lookFrame = floor((lookDir / 360) * 10);
-//draw_sprite_part(sprBar, -1, 24+lookFrame*8,0,8,8,x - w/2 + 4, y - 6 + off);
-//draw_sprite_part(sprBar, -1, 24+lookFrame*8,0,8,8,x + w/2 - 8 - 4, y - 6 + off);
+//pupils
+draw_sprite_part(sprBar, -1, TILE, TILE + 8*eyeRow, 8, 8, eyeXLeft - 4 + exl, y - 5 + eyl + off);
+draw_sprite_part(sprBar, -1, TILE, TILE + 8*eyeRow, 8, 8, eyeXRight - 4 + exr, y - 5 + eyr + off);
 </string>
           </argument>
         </arguments>
