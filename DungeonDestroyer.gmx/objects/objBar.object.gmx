@@ -67,7 +67,12 @@ hp = maxHp;
           <argument>
             <kind>1</kind>
             <string>if (keyboard_check_pressed(ord('U'))) w += 8;
-if (global.state == G_PAUSE) exit;
+if (global.state == G_PAUSE || global.state == G_START)
+{
+    xVel = 0;
+    yVel = 0;
+    exit;
+}
 
 if (!broken)
 {
@@ -94,7 +99,9 @@ if (!broken)
             {
                 hp = max(hp - 1, 0);
                 hurt = 1*SEC;
-                collideBlock.hp = 0;
+                var eff = instance_create(collideBlock.x+8, collideBlock.y+8, objEffect);
+                eff.type = 1;
+                with(collideBlock) instance_destroy();
             }
         }
         else //uh-oh, you've been CRUSHED.
@@ -146,14 +153,16 @@ if (!broken)
         }
     }
     
+    var _cbhor = collision_rectangle(x - w/2 + xVel, y - h/2, x + w/2 + xVel, y + h/2, objBlock, false, true);
     if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2)
-        &amp;&amp; (!collision_rectangle(x - w/2 + xVel, y - h/2, x + w/2 + xVel, y + h/2, objBlock, false, true) || hurt))
+        &amp;&amp; (!_cbhor || _cbhor.falling || hurt))
         x += xVel;
     else
         xVel = 0;
     
+    var _cbver = collision_rectangle(x - w/2, y - h/2 + yVel, x + w/2, y + h/2 + yVel, objBlock, false, true);
     if (in(y + yVel, BORDER, room_height - BORDER)
-        &amp;&amp; (!collision_rectangle(x - w/2, y - h/2 + yVel, x + w/2, y + h/2 + yVel, objBlock, false, true) || hurt))
+        &amp;&amp; (!_cbver || _cbver.falling || hurt))
         y += yVel;
     else
     {

@@ -27,13 +27,13 @@
             <kind>1</kind>
             <string>//
 surf = -1; //drawing surface
-global.zoom = 1.5;
+global.zoom = 3;
 
 randomize();
 device_mouse_dbclick_enable(true);
 if (os_type == os_windows)
 {
-    window_set_size(global.zoom*WIDTH, global.zoom*HEIGHT);
+    window_set_size(1*WIDTH, 1*HEIGHT);
 }
 
 global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
@@ -42,11 +42,14 @@ global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
 global.coins = 0;
 global.coinRadius = TILE;
 
-global.segSize = 1; // height of a segment
-segCount = 1;
+global.B1 = ds_grid_create(WIDTH div TILE, (HEIGHT div TILE));
+global.B2 = ds_grid_create(WIDTH div TILE, (HEIGHT div TILE));
 
-global.B1 = ds_grid_create(WIDTH div TILE, (HEIGHT div TILE) + global.segSize);
-global.B2 = ds_grid_create(WIDTH div TILE, (HEIGHT div TILE) + global.segSize);
+seg[0] = loadSegment("seg0.tmx");
+seg[1] = loadSegment("seg1.tmx");
+seg[2] = loadSegment("seg2.tmx");
+
+// TODO: pool for blocks...
 </string>
           </argument>
         </arguments>
@@ -135,32 +138,36 @@ if (global.state == G_START)
         if (mouse_check_button_released(mb_left))
         {
             global.state = G_PLAY;
-            objBall.angle = bar.startAngle;
-            objBall.hold = false;
+            if (instance_exists(objBall))
+            {
+                objBall.angle = bar.startAngle;            
+                objBall.hold = false;
+            }
         }
     }
 }
 if (global.state == G_PLAY)
 {
-
-    if (global.timer % 30 == 0)
-        triggerFallingBlocks();
-
-    //TODO : new segments here
     // NOTE: the interval must be big enough that the blocks have moved by then.
     if (!blockDelay &amp;&amp; !bar.hurt)
-    {
-        segCount --;    
+    {        
+        segCount = max(segCount - 1, 0);    
         if (segCount == 0)
         {
-            for (i = 0; i &lt; WIDTH; i+= TILE)
+            /*for (i = 0; i &lt; WIDTH; i+= TILE)
             {
                 var b = instance_create(i, -TILE - global.segSize * TILE, objBlock);
                 b.type = choose(0, 0, 0, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3);
-            }
+            }*/
+            spawnSegment(seg[choose(0,1,2)]);
             segCount = global.segSize;
+            
+            instance_activate_object(objBlock);
+
         }
-        objBlock.move = true;
+        if (instance_exists(objBlock))
+            objBlock.move = true;
+
         objCamera.move = true;
         
         meters++;
@@ -168,6 +175,9 @@ if (global.state == G_PLAY)
         if (meters % 10 == 0) maxBlockDelay = max(maxBlockDelay - 10, minBlockDelay);
         blockDelay = maxBlockDelay;
     }
+    
+    if (global.timer % 30 == 0)
+        triggerFallingBlocks();
     
     blockDelay = max(blockDelay - 1, 0);
 
@@ -207,6 +217,7 @@ if (global.state == G_PLAY)
             <string>// Free Surface
 if (surface_exists(surf))
     surface_free(surf);
+
 </string>
           </argument>
         </arguments>
@@ -240,6 +251,9 @@ global.my = HEIGHT/2;
 
 global.invincible = false;
 global.hp = 3; // 3 balls
+
+global.segSize = 0;
+segCount = 0;
 
 meters = 0;
 blockDelay = 0;
@@ -291,15 +305,21 @@ bar = instance_create(view_wview/2, view_hview - 7.5*TILE, objBar);
           <argument>
             <kind>1</kind>
             <string>// ++++ DRAW GUI HERE ++++
-/*var w = display_get_gui_width();
-var h = display_get_gui_height();
 
-var xt = (mouse_x / room_width) * w;
-var yt = (mouse_y / room_height) * h;*/
+var w = display_get_gui_width();
+var h = display_get_gui_height();
 
 draw_set_alpha(1);
 draw_set_font(global.fnt);
 draw_set_color(c_white);
+
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+
+draw_text(w, 0, string(meters)+ "m");
+
+draw_set_halign(fa_left);
+draw_text(0, 0, "HP x" + string(global.hp));
 </string>
           </argument>
         </arguments>

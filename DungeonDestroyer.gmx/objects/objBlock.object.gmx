@@ -36,7 +36,7 @@ movey = y;
 
 yGrav = .1;
 yVel = .5;
-yVelMax = 3;
+yVelMax = 2;
 
 
 marked = false;
@@ -169,18 +169,22 @@ fCur = 0;
                 falling = true;
             else
             {
-                broken = true;/*var eff = instance_create(x, y, objBlockEffect);
-                eff.type = type;
-                instance_destroy();*/
+                broken = true;
             }
         }
     }
 } else
 {
-    hasAnchor = false;
     yVel = min(yVel + yGrav, yVelMax);
     y += yVel;
 }
+
+if (y &lt; -TILE)
+{
+    visible = false;
+    exit;
+} else
+    visible = true;
 
 if(hp == 0)
 {
