@@ -2,9 +2,9 @@ ds_grid_clear(global.B1, noone);
 ds_grid_clear(global.B2, 0);
 
 for (i = 0; i < WIDTH div TILE; i++)
-for (j = 0; j < HEIGHT div TILE; j++)
+for (j = 0; j < (HEIGHT div TILE) + global.segSize; j++)
 {
-    var b = instance_place(i * TILE, j * TILE, objBlock);
+    var b = instance_place(i * TILE, (j - global.segSize) * TILE, objBlock);
     if (instance_exists(b) && !b.falling)
         ds_grid_set(global.B1, i, j, b);
 }

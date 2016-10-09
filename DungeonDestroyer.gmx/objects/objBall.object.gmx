@@ -29,7 +29,7 @@
 yVel = 0;
 hold = true;
 
-w = TILE;
+w = TILE - 4;
 sprite_index = mskBall;
 
 /*if (w == 8) sprite_index = mskBallSmall;
@@ -60,25 +60,16 @@ angle = 90;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state != G_PLAY) exit;
+            <string>if (global.state != G_PLAY &amp;&amp; global.state != G_OVER) exit;
 
 if (hold)
-{
-    /*if (device_mouse_check_button(0, mb_left))
-    {
-        angle = point_direction(x, y, global.mx, global.my);
-        hold = false;
-    }
-    else
-    {
-    }*/
+{    
     xVel = objBar.xVel;
-    yVel = objBar.yVel;
-    
+    yVel = objBar.yVel;    
 } else
 {
 
-    /* collide with other balls */
+    // collide with other balls .. if they exist?
     var c = collision_circle(x, y, w/2, objBall, false, true);
     if (instance_exists(c))
     {        
@@ -96,7 +87,10 @@ if (hold)
         block_hor.hp = max(block_hor.hp - 1, 0);
         
         if (!block_hor.falling &amp;&amp; block_hor.type != 0)
+        {
             angle = point_direction(0, 0, -xVel, yVel);
+            x -= xVel;
+        }
         //ballSpd += .1;
     }    
     if (block_ver)
@@ -105,13 +99,15 @@ if (hold)
             block_ver.hp = max(block_ver.hp - 1, 0);
 
         if (!block_ver.falling &amp;&amp; block_ver.type != 0)
+        {
             angle = point_direction(0, 0, xVel, -yVel);
-        //ballSpd += .1;
+            y -= yVel;
+        }    
+        //ballSpd += .1;        
     }
     
     xVel = lengthdir_x(ballSpd, angle);
     yVel = lengthdir_y(ballSpd, angle);
-
 }
 
 if (y &gt; room_height + w)

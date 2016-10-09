@@ -62,6 +62,7 @@
     <script>scripts\dealDamage.gml</script>
     <script>scripts\triggerFallingBlocks.gml</script>
     <script>scripts\markBlock.gml</script>
+    <script>scripts\getDrawMask.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

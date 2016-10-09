@@ -74,23 +74,26 @@ initialized = false;
     {
         case 0: //GRASS
             hp = 1;
-            isCascade = choose(0, 0, 0, 1);
+            subType = 0;            
+            isCascade = false; //choose(0, 0, 0, 1);
             canFall = false;
         break;
         case 1: //INVINCIBLE        
             hp = 1;
+            subType = 0;            
             isCascade = false;
             canFall = true;
         break;
-        case 2: //DIRT
-            hp = 1;
+        case 2: //TOUGH
+            hp = 3;
+            subType = 0;
             isCascade = true;
             canFall = false;
-            subType = choose(0, 1, 2);
         break;
-        case 3: //TOUGH
-            hp = 3;
-            isCascade = false;
+        case 3: // color/dirt blocks
+            hp = 1;
+            subType = choose( 0, 1, 2);
+            isCascade = true;
             canFall = false;
         break;
     }
@@ -98,6 +101,26 @@ initialized = false;
     initialized = true;
 }
 </string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>INIT</string>
           </argument>
         </arguments>
       </action>
@@ -133,7 +156,7 @@ initialized = false;
         movey = y;
     }
 
-    if (marked &amp;&amp; canFall)
+    if (marked)
     {
         markedTimer = max(markedTimer - 1, 0);
         if (!markedTimer)
@@ -162,10 +185,10 @@ if(hp == 0)
         var bu = instance_place(x, y - TILE, objBlock);
         var bd = instance_place(x, y + TILE, objBlock);
         
-        if (instance_exists(bl) &amp;&amp; bl.type == type &amp;&amp; !bl.falling) {bl.isCascade = true; bl.hp = 0;}
-        if (instance_exists(br) &amp;&amp; br.type == type &amp;&amp; !br.falling) {br.isCascade = true; br.hp = 0;}
-        if (instance_exists(bu) &amp;&amp; bu.type == type &amp;&amp; !bu.falling) {bu.isCascade = true; bu.hp = 0;}
-        if (instance_exists(bd) &amp;&amp; bd.type == type &amp;&amp; !bd.falling) {bd.isCascade = true; bd.hp = 0;}
+        if (instance_exists(bl) &amp;&amp; bl.type == type &amp;&amp; bl.subType == subType &amp;&amp; !bl.falling) {bl.isCascade = true; bl.hp = 0;}
+        if (instance_exists(br) &amp;&amp; br.type == type &amp;&amp; br.subType == subType &amp;&amp; !br.falling) {br.isCascade = true; br.hp = 0;}
+        if (instance_exists(bu) &amp;&amp; bu.type == type &amp;&amp; bu.subType == subType &amp;&amp; !bu.falling) {bu.isCascade = true; bu.hp = 0;}
+        if (instance_exists(bd) &amp;&amp; bd.type == type &amp;&amp; bd.subType == subType &amp;&amp; !bd.falling) {bd.isCascade = true; bd.hp = 0;}
     }
     
     instance_destroy();
@@ -206,11 +229,11 @@ if (y &gt;= room_height) instance_destroy();
         break;
     case 2:
         row = 2;
-        col = subType;
+        col = 3 - hp;
         break;
     case 3:
-        row = 3;
-        col = 3 - hp;
+        row = 3 + subType;
+        col = getDrawMask();
         break;
 }
 
@@ -222,7 +245,7 @@ if (marked &amp;&amp; !falling)
 
 draw_sprite_part(sprBlock, -1, col*TILE, row*TILE, TILE, TILE, x + _ox, y);
 
-if (isCascade) draw_sprite_ext(mskBall, -1, x + 8, y + 8, 1, 1, 0, c_white, .5);
+//if (isCascade) draw_sprite_ext(mskBall, -1, x + 8, y + 8, 1, 1, 0, c_white, .5);
 
 
 /*if (marked) 

@@ -42,6 +42,8 @@ hurt = false;
 lookLeft = 90;
 lookRight = 90;
 
+maxHp = 5;
+hp = maxHp;
 </string>
           </argument>
         </arguments>
@@ -79,6 +81,25 @@ if(!device_mouse_check_button_pressed(0, mb_left) &amp;&amp; device_mouse_check_
 
 if (state == MOVE &amp;&amp; abs(xVel) &lt; .2 &amp;&amp; off == 0) state = IDLE;
 
+var collideBlock = collision_rectangle(x - w/2, y - h/2, x + w/2, y + h/2, objBlock, false, true);
+if (collideBlock)
+{
+    // "just" a falling block. hurts but doesn't kill
+    if (collideBlock.falling)
+    {
+        if (!hurt)
+        {
+            hp = max(hp - 1, 0);
+            hurt = 1*SEC;
+        }
+    }
+    else //uh-oh, you've been CRUSHED.
+    {
+        hurt = 1*SEC;
+        hp = 0;
+        global.hp = 0;
+    }
+}
 
 hurt = max(hurt - 1, 0);
 if (hurt) state = HURT;
@@ -107,12 +128,14 @@ if (ball)
     }
 }
 
-if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2))
+if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2)
+    &amp;&amp; (!collision_rectangle(x - w/2 + xVel, y - h/2, x + w/2 + xVel, y + h/2, objBlock, false, true) || hurt))
     x += xVel;
 else
     xVel = 0;
 
-if (in(y + yVel, BORDER, room_height - BORDER))
+if (in(y + yVel, BORDER, room_height - BORDER)
+    &amp;&amp; (!collision_rectangle(x - w/2, y - h/2 + yVel, x + w/2, y + h/2 + yVel, objBlock, false, true) || hurt))
     y += yVel;
 else
 {
@@ -143,6 +166,8 @@ else
             <string>//draw_sprite_ext(sprite_index, -1, x, y, 1, 1, 0, c_red, .2);
 //draw_rectangle(x - w/2, y - h/2, x + w/2, y + h/2, 1);
 //draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom, 1);
+
+draw_text(x, y+2*TILE, hp);
 
 // body
 for(i = -w/2 + 8; i &lt; w/2 - 8; i+= 8)
