@@ -33,6 +33,7 @@ hp = 1;
 
 move = true;
 movey = y;
+moveDistance = 0;
 
 yGrav = .1;
 yVel = .5;
@@ -151,8 +152,8 @@ fCur = 0;
 
     if (move)
     {
-        y = min(y + yVel, movey + TILE);
-        if (y == movey + TILE)
+        y = min(y + yVel, movey + moveDistance);
+        if (y == movey + moveDistance)
             move = false;
     }
     else
@@ -257,7 +258,7 @@ if (!broken)
     var _ox = 0;
     if (marked &amp;&amp; !falling)
     {
-        _ox = -1+random(2);
+        _ox = -1+(global.timer * .3) % 2;
     }
     
     draw_sprite_part(sprBlock, -1, col*TILE, row*TILE, TILE, TILE, x + _ox, y);

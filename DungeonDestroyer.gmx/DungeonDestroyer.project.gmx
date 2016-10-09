@@ -3,7 +3,7 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="4" name="datafiles">
+  <datafiles number="6" name="datafiles">
     <datafile>
       <name>seg0.tmx</name>
       <exists>-1</exists>
@@ -56,9 +56,9 @@
       <filename>seg2.tmx</filename>
     </datafile>
     <datafile>
-      <name>seg2.tmx</name>
+      <name>seg3.tmx</name>
       <exists>-1</exists>
-      <size>8616</size>
+      <size>6564</size>
       <exportAction>2</exportAction>
       <exportDir></exportDir>
       <overwrite>0</overwrite>
@@ -70,7 +70,7 @@
           <CopyToMask>9223372036854775807</CopyToMask>
         </Config>
       </ConfigOptions>
-      <filename>seg2.tmx</filename>
+      <filename>seg3.tmx</filename>
     </datafile>
   </datafiles>
   <NewExtensions/>
@@ -115,6 +115,7 @@
     <script>scripts\getDrawMask.gml</script>
     <script>scripts\loadSegment.gml</script>
     <script>scripts\spawnSegment.gml</script>
+    <script>scripts\callSpawnSegment.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

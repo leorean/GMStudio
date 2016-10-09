@@ -22,3 +22,5 @@ for (var j = 0; j<h; j++)
         break;
     };
 }
+
+exit;
