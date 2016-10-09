@@ -37,22 +37,21 @@
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprBg</sprite>
-    <sprite>sprites\mskWarrior</sprite>
-    <sprite>sprites\sprWarrior</sprite>
-    <sprite>sprites\mskArrow</sprite>
     <sprite>sprites\sprEnemy</sprite>
     <sprites name="Bar">
       <sprite>sprites\mskBar</sprite>
       <sprite>sprites\mskBall</sprite>
-      <sprite>sprites\mskBallBig</sprite>
-      <sprite>sprites\mskBallSmall</sprite>
+      <sprite>sprites\sprBar</sprite>
     </sprites>
     <sprite>sprites\mskBlock</sprite>
-    <sprite>sprites\sprBar</sprite>
     <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprBlock</sprite>
+    <sprite>sprites\sprEffect</sprite>
+    <sprite>sprites\sprMisc</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bg</background>
+  </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\spawnCoins.gml</script>
@@ -86,6 +85,7 @@
     <object>objects\objBall</object>
     <object>objects\objBar</object>
     <object>objects\objBlock</object>
+    <object>objects\objEffect</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

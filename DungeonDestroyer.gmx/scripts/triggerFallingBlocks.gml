@@ -5,7 +5,7 @@ for (i = 0; i < WIDTH div TILE; i++)
 for (j = 0; j < (HEIGHT div TILE) + global.segSize; j++)
 {
     var b = instance_place(i * TILE, (j - global.segSize) * TILE, objBlock);
-    if (instance_exists(b) && !b.falling)
+    if (instance_exists(b) && !b.falling && !b.broken)
         ds_grid_set(global.B1, i, j, b);
 }
 

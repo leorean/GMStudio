@@ -34,11 +34,11 @@ h = TILE;
 targetX = x;
 targetY = y;
 
-// cosmetics
 color = c_white;
 off = 0;
 state = IDLE;
 hurt = false;
+broken = false;
 lookLeft = 90;
 lookRight = 90;
 
@@ -67,79 +67,111 @@ hp = maxHp;
           <argument>
             <kind>1</kind>
             <string>if (keyboard_check_pressed(ord('U'))) w += 8;
-if (global.state != G_PLAY) exit;
+if (global.state == G_PAUSE) exit;
 
-off = sign(off) * max(abs(off) - .5, 0);
-if (state == DEFLECT &amp;&amp; off == 0) state = IDLE;
-
-if(!device_mouse_check_button_pressed(0, mb_left) &amp;&amp; device_mouse_check_button(0, mb_left))
+if (!broken)
 {
-    targetX = global.mx;
-    targetY = global.my;
-    if (off == 0) state = MOVE;
-}
-
-if (state == MOVE &amp;&amp; abs(xVel) &lt; .2 &amp;&amp; off == 0) state = IDLE;
-
-var collideBlock = collision_rectangle(x - w/2, y - h/2, x + w/2, y + h/2, objBlock, false, true);
-if (collideBlock)
-{
-    // "just" a falling block. hurts but doesn't kill
-    if (collideBlock.falling)
+    off = sign(off) * max(abs(off) - .5, 0);
+    if (state == DEFLECT &amp;&amp; off == 0) state = IDLE;
+    
+    if(device_mouse_check_button(0, mb_left) &amp;&amp; hp &gt; 0)
     {
-        if (!hurt)
+        targetX = global.mx;
+        targetY = global.my;
+        if (off == 0) state = MOVE;
+    }
+    
+    if (state == MOVE &amp;&amp; abs(xVel) &lt; .2 &amp;&amp; off == 0) state = IDLE;
+    
+    var th = 4;
+    var collideBlock = collision_rectangle(x - w/2 + th, y, x + w/2 - th, y, objBlock, false, true);
+    if (collideBlock &amp;&amp; !collideBlock.broken)
+    {
+        // "just" a falling block. hurts but doesn't kill
+        if (collideBlock.falling)
         {
-            hp = max(hp - 1, 0);
+            if (!hurt)
+            {
+                hp = max(hp - 1, 0);
+                hurt = 1*SEC;
+                collideBlock.hp = 0;
+            }
+        }
+        else //uh-oh, you've been CRUSHED.
+        {
             hurt = 1*SEC;
+            hp = 0;
+            global.hp = 0;
         }
     }
-    else //uh-oh, you've been CRUSHED.
-    {
-        hurt = 1*SEC;
-        hp = 0;
-        global.hp = 0;
-    }
-}
-
-hurt = max(hurt - 1, 0);
-if (hurt) state = HURT;
-if (state == HURT &amp;&amp; hurt == 0) state = IDLE;
-
-xVel = (targetX - x) / 6;
-xVel = sign(xVel) * min(abs(xVel), 8);
-
-/* ball bounce mechanic here: */
-var ball = collision_rectangle(x -w/2 + xVel, y - h/2 + yVel, x + w/2 + xVel, y + h/2 + yVel, objBall, false, true);
-if (ball)
-{
-    var bs = abs(x - ball.x) / (w/2);
-    var pdir = point_direction(x, y, ball.x, ball.y);
-    pdir = point_direction(0, 0, lengthdir_x(1, pdir) * bs, lengthdir_y(1, pdir));
-    if (ball.y &lt; y)
-        ball.angle = clamp(pdir, 20, 160);
-    else
-        ball.angle = pdir;
     
-    with(ball) move_outside_all(90 + 180 * (y &gt; objBar.y), 8);
-    if (ball.y &lt; y)
-    {        
-        off = 6;
-        state = DEFLECT;
+    hurt = max(hurt - 1, 0);
+    if (hurt)
+    if(hp &gt; 0)
+        state = HURT;
+    else
+        state = DEAD;
+    if (state == HURT &amp;&amp; hurt == 0) state = IDLE;
+    
+    xVel = (targetX - x) / 6;
+    xVel = sign(xVel) * min(abs(xVel), 8);
+    
+    /* ball bounce mechanic here: */
+    var ball = collision_rectangle(x -w/2 + xVel, y - h/2 + yVel, x + w/2 + xVel, y + h/2 + yVel, objBall, false, true);
+    if (ball)
+    {
+        ball.off = .5;
+        with(ball) 
+        {
+            if (!effectTimer)
+            {
+                instance_create(x + xVel, y + yVel, objEffect);
+                effectTimer = maxEffectTimer;
+            }
+        }
+        
+        var bs = abs(x - ball.x) / (w/2);
+        var pdir = point_direction(x, y, ball.x, ball.y);
+        pdir = point_direction(0, 0, lengthdir_x(1, pdir) * bs, lengthdir_y(1, pdir));
+        if (ball.y &lt; y)
+            ball.angle = clamp(pdir, 20, 160);
+        else
+            ball.angle = pdir;
+        
+        with(ball) move_outside_all(90 + 180 * (y &gt; objBar.y), 8);
+        if (ball.y &lt; y)
+        {        
+            off = 6;
+            state = DEFLECT;
+        }
+    }
+    
+    if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2)
+        &amp;&amp; (!collision_rectangle(x - w/2 + xVel, y - h/2, x + w/2 + xVel, y + h/2, objBlock, false, true) || hurt))
+        x += xVel;
+    else
+        xVel = 0;
+    
+    if (in(y + yVel, BORDER, room_height - BORDER)
+        &amp;&amp; (!collision_rectangle(x - w/2, y - h/2 + yVel, x + w/2, y + h/2 + yVel, objBlock, false, true) || hurt))
+        y += yVel;
+    else
+    {
+        yVel = 0;
+    }
+    
+    if (hp == 0)
+    {
+        yVel = -4;
+        //lastX = x;
+        broken = true;
     }
 }
-
-if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2)
-    &amp;&amp; (!collision_rectangle(x - w/2 + xVel, y - h/2, x + w/2 + xVel, y + h/2, objBlock, false, true) || hurt))
-    x += xVel;
-else
-    xVel = 0;
-
-if (in(y + yVel, BORDER, room_height - BORDER)
-    &amp;&amp; (!collision_rectangle(x - w/2, y - h/2 + yVel, x + w/2, y + h/2 + yVel, objBlock, false, true) || hurt))
-    y += yVel;
 else
 {
-    yVel = 0;
+    yVel = min(yVel + .13, 6);
+    y = min(y + yVel, HEIGHT + TILE);    
+    //x = lastX - 1 + random(2);
 }
 </string>
           </argument>
@@ -167,7 +199,21 @@ else
 //draw_rectangle(x - w/2, y - h/2, x + w/2, y + h/2, 1);
 //draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom, 1);
 
-draw_text(x, y+2*TILE, hp);
+if (global.state == G_START)
+{
+    if (instance_exists(objBall))
+    {
+        if (global.my &lt; y)
+            startAngle = point_direction(objBall.x, objBall.y, global.mx, global.my);
+        else
+            startAngle = point_direction(global.mx, global.my, objBall.x, objBall.y);
+        startAngle = clamp(startAngle % 360, 30, 180 - 30);
+        
+        draw_sprite_ext(sprArrow, -1, objBall.x, objBall.y, 1, 1, startAngle, c_white, 1);
+    }
+}
+
+//draw_text(x, y+2*TILE, hp);
 
 // body
 for(i = -w/2 + 8; i &lt; w/2 - 8; i+= 8)
@@ -176,14 +222,14 @@ for(i = -w/2 + 8; i &lt; w/2 - 8; i+= 8)
 draw_sprite_part(sprBar, -1, 0, 0, 8, TILE, x - w/2, y - 8 + off);
 draw_sprite_part(sprBar, -1, TILE, 0, 8, TILE, x + w/2 - 8, y - 8 + off);
 
-// mouth
+// mouth, eyes
 if (state == IDLE) {row = 0; eyeRow = 0;}
 if (state == MOVE) {row = 1; eyeRow = 0;}
 if (state == DEFLECT) {row = 2; eyeRow = 0;}
 if (state == HURT) {row = 3; eyeRow = 1;}
+if (state == DEAD) {row = 2; eyeRow = 2;}
 
 draw_sprite_part(sprBar, -1, 24,row*TILE, TILE, TILE, x-8, y-8 + off);
-//draw_sprite_part(sprBar, -1, 0, TILE, 5*TILE, 3*TILE, x - 1.5*TILE, y + 8);
 
 // eye direction
 var eyeXLeft = x - w/2 + 7;

@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>5</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,9 +27,11 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
+yGrav = .1;
 hold = true;
+broken = false;
 
-w = TILE - 4;
+w = TILE - 2;
 sprite_index = mskBall;
 
 /*if (w == 8) sprite_index = mskBallSmall;
@@ -38,6 +40,11 @@ if (w == 2*TILE) sprite_index = mskBallBig;*/
 
 ballSpd = 4;
 angle = 90;
+
+// effect stuff
+off = 0;
+effectTimer = 0;
+maxEffectTimer = 7;
 </string>
           </argument>
         </arguments>
@@ -60,79 +67,121 @@ angle = 90;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state != G_PLAY &amp;&amp; global.state != G_OVER) exit;
+            <string>if (global.state == G_PAUSE) exit;
 
-if (hold)
-{    
-    xVel = objBar.xVel;
-    yVel = objBar.yVel;    
-} else
+off = max(off - .07, 0);
+effectTimer = max(effectTimer - 1, 0);
+
+if (!broken)
 {
-
-    // collide with other balls .. if they exist?
-    var c = collision_circle(x, y, w/2, objBall, false, true);
-    if (instance_exists(c))
-    {        
-        c.angle = point_direction(x, y, c.x, c.y);
-        angle = point_direction(c.x, c.y, x, y);
-    }
-
-    /* collide with blocks */
-    var block_hor = collision_circle(x + xVel, y, w/2, objBlock, true, true);
-    var block_ver = collision_circle(x, y + yVel, w/2, objBlock, true, true);
-    
-    if (block_hor)
+    if (hold)
+    {    
+        xVel = objBar.xVel;
+        yVel = objBar.yVel;    
+    } else
     {
-        if (block_hor.type != 1)
-        block_hor.hp = max(block_hor.hp - 1, 0);
-        
-        if (!block_hor.falling &amp;&amp; block_hor.type != 0)
+    
+        // collide with other balls .. if they exist?
+        /*var c = collision_circle(x, y, w/2, objBall, false, true);
+        if (instance_exists(c))
+        {        
+            c.angle = point_direction(x, y, c.x, c.y);
+            angle = point_direction(c.x, c.y, x, y);
+            off = .5;
+            instance_create(x + xVel, y + yVel, objEffect);
+        }*/
+    
+        /* collide with blocks */
+        for (i = 0; i &lt; instance_number(objBlock); i++)
         {
-            angle = point_direction(0, 0, -xVel, yVel);
-            x -= xVel;
+            var block = instance_find(objBlock, i);
+            
+            if (collision_circle(x + xVel, y, w/2, block, false, true))
+            {
+                if (block.type != 1) // invincible blocks
+                    block.hp = max(block.hp - 1, 0);
+            
+                if (!block.falling &amp;&amp; !block.broken &amp;&amp; block.type != 0)
+                {
+                    angle = point_direction(0, 0, -xVel, yVel);
+                    x -= xVel;
+                    off = .5;
+                    if (!effectTimer)
+                    {
+                        instance_create(x + xVel, y + yVel, objEffect);
+                        effectTimer = maxEffectTimer;
+                    }
+                }
+                //ballSpd += .1;
+            }    
+            if (collision_circle(x, y + yVel, w/2, block, false, true))
+            {
+                if (block.type != 1) // invincible blocks
+                    block.hp = max(block.hp - 1, 0);
+            
+                if (!block.falling &amp;&amp; !block.broken &amp;&amp; block.type != 0)
+                {
+                    angle = point_direction(0, 0, xVel, -yVel);
+                    y -= yVel;
+                    off = .5;
+                    if (!effectTimer)
+                    {
+                        instance_create(x + xVel, y + yVel, objEffect);
+                        effectTimer = maxEffectTimer;
+                    }                }    
+                //ballSpd += .1;        
+            }
         }
-        //ballSpd += .1;
-    }    
-    if (block_ver)
-    {
-        if (block_ver.type != 1)
-            block_ver.hp = max(block_ver.hp - 1, 0);
-
-        if (!block_ver.falling &amp;&amp; block_ver.type != 0)
-        {
-            angle = point_direction(0, 0, xVel, -yVel);
-            y -= yVel;
-        }    
-        //ballSpd += .1;        
+        
+        xVel = lengthdir_x(ballSpd, angle);
+        yVel = lengthdir_y(ballSpd, angle);
     }
     
-    xVel = lengthdir_x(ballSpd, angle);
-    yVel = lengthdir_y(ballSpd, angle);
+    if (y &gt; room_height + w)
+    {
+        global.hp = max(global.hp - 1, 0);
+        xVel = -1+random(2);
+        yVel = -4;
+        broken = true;
+    }
+    
+    if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2))
+        x += xVel;
+    else
+    {
+        angle = point_direction(x, y, x - xVel, y + yVel);
+        off = .5;
+        if (!effectTimer)
+        {
+            instance_create(x + xVel, y + yVel, objEffect);
+            effectTimer = maxEffectTimer;
+        }        //ballSpd += .1;
+    }
+    
+    if (y + yVel &gt; BORDER + w/2 &amp;&amp; (y + yVel &lt; room_height - BORDER - w/2 || !global.invincible))
+        y += yVel;
+    else
+    {
+        angle = point_direction(x, y, x + xVel, y - yVel);
+        off = .5;
+        if (!effectTimer)
+        {
+            instance_create(x + xVel, y + yVel, objEffect);
+            effectTimer = maxEffectTimer;
+        }        //ballSpd += .1;
+    }
 }
-
-if (y &gt; room_height + w)
+else // broken
 {
-    global.hp = max(global.hp - 1, 0);
-    objBar.hurt = 1*SEC;
-    instance_destroy();
-}
 
-if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2))
+    objBar.hurt = .5*SEC;
+
+    yVel = min(yVel + yGrav, 6);
     x += xVel;
-else
-{
-    angle = point_direction(x, y, x - xVel, y + yVel);
-    //ballSpd += .1;
-}
-
-if (y + yVel &gt; BORDER + w/2 &amp;&amp; (y + yVel &lt; room_height - BORDER - w/2 || !global.invincible))
     y += yVel;
-else
-{
-    angle = point_direction(x, y, x + xVel, y - yVel);
-    //ballSpd += .1;
+    
+    if (y &gt; room_height + 2*w) instance_destroy();
 }
-
 </string>
           </argument>
         </arguments>
@@ -155,8 +204,20 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprite_index, -1, x, y);
+            <string>//draw_sprite(sprite_index, -1, x, y);
 //draw_circle(x, y, w/2, 1);
+
+draw_sprite_ext(mskBall, -1, x, y, 1 - off, 1 + .6*off, 
+    point_direction(x, y, xprevious, yprevious), 
+    c_white, 1);
+
+var lookDir = point_direction(x, y, x + xVel, y + yVel);
+
+draw_sprite_part(sprBar, -1, 0, TILE, TILE, TILE, x-8, y-8);
+draw_sprite_part(sprBar, -1, TILE, TILE, 8, 8,
+    x-4 + lengthdir_x(2, lookDir), 
+    y-4 + lengthdir_y(2, lookDir));
+
 </string>
           </argument>
         </arguments>

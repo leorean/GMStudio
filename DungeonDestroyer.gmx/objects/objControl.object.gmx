@@ -106,7 +106,19 @@ global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
           <argument>
             <kind>1</kind>
             <string>if (global.hp == 0)
+{
+    bar.hurt = true;
+    bar.state = DEAD;
+    bar.hp = 0;
+            
+    if (global.state != G_OVER)
+    {
+        objBall.yVel = -4;
+        objBall.broken = true;
+    }
+    
     global.state = G_OVER;
+}
 
 if (global.state == G_START)
 {
@@ -116,7 +128,6 @@ if (global.state == G_START)
         global.timer = 0;
         if (instance_number(objBall) &lt; 1)
         {
-            bar.x  = room_width/2;
             bar.hp = bar.maxHp;
             var ball = instance_create(bar.x, bar.y - TILE, objBall);
         }
@@ -124,7 +135,7 @@ if (global.state == G_START)
         if (mouse_check_button_released(mb_left))
         {
             global.state = G_PLAY;
-            objBall.angle = point_direction(objBall.x, objBall.y, global.mx, global.my);
+            objBall.angle = bar.startAngle;
             objBall.hold = false;
         }
     }
@@ -137,7 +148,7 @@ if (global.state == G_PLAY)
 
     //TODO : new segments here
     // NOTE: the interval must be big enough that the blocks have moved by then.
-    if (global.timer % (1*SEC) == 0)
+    if (!blockDelay &amp;&amp; !bar.hurt)
     {
         segCount --;    
         if (segCount == 0)
@@ -150,14 +161,24 @@ if (global.state == G_PLAY)
             segCount = global.segSize;
         }
         objBlock.move = true;
+        objCamera.move = true;
+        
+        meters++;
+        
+        if (meters % 10 == 0) maxBlockDelay = max(maxBlockDelay - 10, minBlockDelay);
+        blockDelay = maxBlockDelay;
     }
+    
+    blockDelay = max(blockDelay - 1, 0);
 
     global.timer = (global.timer + 1) % INFINITE;
 
     if (instance_number(objBall) &lt; 1)
     {
         if (objBar.hurt == 0)
+        {
             global.state = G_START;
+        }
     }
     
 }
@@ -211,14 +232,19 @@ if (surface_exists(surf))
             <string>global.timer = 0;
 global.state = G_START;
 
-//instance_create(0, view_hview/2, objCamera);
+instance_create(0, 0, objCamera);
 
 global.xVel = .5;
 global.mx = WIDTH/2;
 global.my = HEIGHT/2;
 
 global.invincible = false;
-global.hp = 3;
+global.hp = 3; // 3 balls
+
+meters = 0;
+blockDelay = 0;
+maxBlockDelay = 5*SEC;
+minBlockDelay = 1*SEC;
 
 bar = instance_create(view_wview/2, view_hview - 7.5*TILE, objBar);
 
@@ -405,15 +431,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state == G_START)
-{
-    if (instance_exists(objBall))
-    {
-        var _ang = point_direction(objBall.x, objBall.y, global.mx, global.my);
-        draw_sprite_ext(sprArrow, -1, objBall.x, objBall.y, 1, 1, _ang, c_white, 1);
-    }
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

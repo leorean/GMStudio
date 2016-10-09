@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-10</depth>
   <persistent>0</persistent>
-  <parentName>objAny</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,56 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>t = 0;
-x0 = x;
-y0 = y;
-vx0 = 0;
-vy0 = 0;
-g = 0;
-
-stuck = false;
-target = noone;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (!stuck)
-{
-
-    t++;
-    x = x0 + vx0 * t;
-    y = y0 + vy0 * t + 0.5*g * t*t;
-    
-    var enemy = instance_place(x, y, objEnemy);
-    
-    if (instance_exists(enemy) &amp;&amp; enemy.state != DEAD)
-    {
-        dealDamage(enemy, dmg);
-        instance_destroy();
-    }
-    
-    if (y + abs(y - yprevious) &gt; GROUND)
-        stuck = true;
-}
-
+            <string>fCur = 0;
+frame = 0;
+type = 0;
 </string>
           </argument>
         </arguments>
@@ -97,10 +50,11 @@ target = noone;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!stuck)
-    angle = point_direction(xprevious, yprevious, x, y);
+            <string>fCur = min(fCur + .25, 6.9);
+frame = floor(fCur);
 
-draw_sprite_ext(mskArrow, -1, x, y, 1, 1, angle, c_white, 1);
+if (fCur == 6.9) instance_destroy();
+draw_sprite_part(sprEffect, -1, frame*2*TILE, type*2*TILE, 2*TILE, 2*TILE, x - TILE, y - TILE);
 </string>
           </argument>
         </arguments>

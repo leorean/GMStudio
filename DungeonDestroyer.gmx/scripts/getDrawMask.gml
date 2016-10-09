@@ -4,10 +4,10 @@ var _br = instance_place(x + TILE, y, objBlock);
 var _bu = instance_place(x, y - TILE, objBlock);
 var _bd = instance_place(x, y + TILE, objBlock);
 
-if (_bl && !_bl.falling && _bl.type == type && _bl.subType == subType) _c += 1;
-if (_br && !_br.falling && _br.type == type && _br.subType == subType) _c += 2;
-if (_bu && !_bu.falling && _bu.type == type && _bu.subType == subType) _c += 4;
-if (_bd && !_bd.falling && _bd.type == type && _bd.subType == subType) _c += 8;
+if (_bl && !_bl.falling && !_bl.broken && _bl.type == type && _bl.subType == subType) _c += 1;
+if (_br && !_br.falling && !_br.broken && _br.type == type && _br.subType == subType) _c += 2;
+if (_bu && !_bu.falling && !_bu.broken && _bu.type == type && _bu.subType == subType) _c += 4;
+if (_bd && !_bd.falling && !_bd.broken && _bd.type == type && _bd.subType == subType) _c += 8;
 
 switch(_c)
 {
