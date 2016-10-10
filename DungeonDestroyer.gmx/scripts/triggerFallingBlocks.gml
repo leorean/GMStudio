@@ -23,6 +23,6 @@ for (j = 0; j < ds_grid_height(global.B1); j++)
     if(ds_grid_get(global.B2, i, j) == 0)
     {
         var _b = ds_grid_get(global.B1, i, j);
-        if (instance_exists(_b) && _b.y > 0) _b.marked = true;
+        if (instance_exists(_b) && _b.y >= TILE) _b.marked = true;
     }
 }

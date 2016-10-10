@@ -41,7 +41,9 @@ yVelMax = 2;
 
 
 marked = false;
-markedTimer = 1*SEC;
+maxMarkedTimer = 1*SEC;
+markedTimer = maxMarkedTimer;
+
 falling = false;
 canFall = false;
 
@@ -99,7 +101,7 @@ fCur = 0;
             hp = 1;
             subType = choose( 0, 1, 2);
             isCascade = true;
-            canFall = false;
+            canFall = true;
         break;
     }
 
@@ -174,10 +176,26 @@ fCur = 0;
             }
         }
     }
-} else
+}
+else
 {
     yVel = min(yVel + yGrav, yVelMax);
-    y += yVel;
+    var down = instance_place(x, y + yVel, objBlock); 
+    if (!instance_exists(down))
+        y += yVel;
+    else
+    {
+        if (broken)
+            yVel = 0;
+        else
+        {
+            y = down.y - TILE;
+            yVel = down.yVel;
+            falling = down.falling;
+            marked = down.marked;
+            markedTimer = down.markedTimer;
+        }
+    }
 }
 
 if (y &lt; -TILE)
@@ -259,6 +277,7 @@ if (!broken)
     if (marked &amp;&amp; !falling)
     {
         _ox = -1+(global.timer * .3) % 2;
+        
     }
     
     draw_sprite_part(sprBlock, -1, col*TILE, row*TILE, TILE, TILE, x + _ox, y);
@@ -272,10 +291,10 @@ else
     draw_sprite_part(sprBlock, -1, 16*TILE + frame*TILE, type*TILE, TILE, TILE, x, y);
 }
 
-if (falling)
+if (marked &amp;&amp; !falling &amp;&amp; !broken)
 {
     _fr = floor(global.timer * .2) % 4;
-    draw_sprite_part(sprMisc, -1, _fr*TILE, 0, TILE, TILE, x, y);
+    draw_sprite_part(sprMisc, -1, _fr*TILE, 0, TILE, TILE, x + _ox, y);
 }
 //if (isCascade) draw_sprite_ext(mskBall, -1, x + 8, y + 8, 1, 1, 0, c_white, .5);
 

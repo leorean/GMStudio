@@ -79,7 +79,7 @@ if (!broken)
     off = sign(off) * max(abs(off) - .5, 0);
     if (state == DEFLECT &amp;&amp; off == 0) state = IDLE;
     
-    if(device_mouse_check_button(0, mb_left) &amp;&amp; hp &gt; 0)
+    if(device_mouse_check_button(0, mb_left) &amp;&amp; hp &gt; 0 &amp;&amp; !hurt)
     {
         targetX = global.mx;
         targetY = global.my;
@@ -114,14 +114,20 @@ if (!broken)
     
     hurt = max(hurt - 1, 0);
     if (hurt)
-    if(hp &gt; 0)
-        state = HURT;
+    {
+        if(hp &gt; 0)
+            state = HURT;
+        else
+            state = DEAD;
+        xVel *= .9;
+    }
     else
-        state = DEAD;
-    if (state == HURT &amp;&amp; hurt == 0) state = IDLE;
+    {
+        xVel = (targetX - x) / 6;
+        xVel = sign(xVel) * min(abs(xVel), 8);
+    }
     
-    xVel = (targetX - x) / 6;
-    xVel = sign(xVel) * min(abs(xVel), 8);
+    if (state == HURT &amp;&amp; hurt == 0) state = IDLE;
     
     /* ball bounce mechanic here: */
     var ball = collision_rectangle(x -w/2 + xVel, y - h/2 + yVel, x + w/2 + xVel, y + h/2 + yVel, objBall, false, true);

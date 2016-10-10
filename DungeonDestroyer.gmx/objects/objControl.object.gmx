@@ -88,6 +88,10 @@ else
 
 global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
+
+var bl = instance_place(global.mx, global.my, objBlock);
+if (instance_exists(bl))
+    bl.broken = true;
 </string>
           </argument>
         </arguments>
@@ -127,6 +131,8 @@ global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 
 if (global.state == G_START)
 {
+    instance_activate_object(objBlock);
+    
     if (global.hp &gt; 0)
     {
         // reset everything
@@ -149,10 +155,13 @@ if (global.state == G_START)
     }
 }
 if (global.state == G_PLAY)
-{    
+{
+
     // NOTE: the interval must be big enough that the blocks have moved by then.
-    if (!blockDelay &amp;&amp; !bar.hurt)
-    {        
+    if (!blockDelay)
+    {
+        instance_activate_object(objBlock);
+        
         segCount = max(segCount - 1, 0);    
         if (segCount == 0)
         {
@@ -161,9 +170,7 @@ if (global.state == G_PLAY)
             spawnSegment(seg[_ind]);
             segCount = global.segSize;
         }
-
-        meters++;
-        if (meters % 10 == 0) maxBlockDelay = max(maxBlockDelay - 10, minBlockDelay);
+        //if (meters % 10 == 0) maxBlockDelay = max(maxBlockDelay - 10, minBlockDelay);
         
         var bottom = noone;
         for (i = 0; i &lt; instance_number(objBlock); i++)
@@ -173,27 +180,43 @@ if (global.state == G_PLAY)
             if (!b.falling &amp;&amp; !b.broken)
                 bottom = b;
         }
-                
-        if (instance_exists(objBlock))
+        
+        if (instance_exists(bottom))
         {
-            objBlock.move = true;
-            objBlock.moveDistance = TILE;
-            
-            if (instance_exists(bottom) &amp;&amp; bottom.y &lt; 6*TILE)
+            if (bottom &amp;&amp; bottom.y &lt; 6*TILE)
             {
-                blockDelay = 8;
-                objBlock.yVel = 3;
-            } else
+                //objBlock.yVel = 0;
+                with(objBlock)
+                {
+                    if (!falling &amp;&amp; !broken) y += TILE;
+                }
+                blockDelay = 4;
+            }
+            else
             {
                 objBlock.yVel = .5;
+                with(objBlock)
+                {
+                    if (y &lt; -2*TILE)
+                        y += TILE;
+                    else
+                    {
+                        objBlock.move = true;
+                        objBlock.moveDistance = TILE;                
+                    }
+                }
+                
+                meters++;
                 blockDelay = maxBlockDelay;
             }
-        }
+        }        
     }
     
     if (global.timer % 30 == 0)
         triggerFallingBlocks();
-    
+
+    instance_deactivate_region(0, - 2 * TILE -global.segSize * TILE, WIDTH, global.segSize*TILE, true, true);
+        
     blockDelay = max(blockDelay - 1, 0);
 
     global.timer = (global.timer + 1) % INFINITE;

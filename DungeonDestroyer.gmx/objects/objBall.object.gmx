@@ -77,7 +77,7 @@ if (!broken)
     if (hold)
     {    
         xVel = objBar.xVel;
-        yVel = objBar.yVel;    
+        yVel = objBar.yVel;
     } else
     {
     
@@ -92,6 +92,9 @@ if (!broken)
         }*/
     
         /* collide with blocks */
+        instance_deactivate_object(objBlock);
+        instance_activate_region(x - w, y - w, 2*w, 2*w, true);
+        
         for (i = 0; i &lt; instance_number(objBlock); i++)
         {
             var block = instance_find(objBlock, i);
@@ -132,6 +135,8 @@ if (!broken)
                 //ballSpd += .1;        
             }
         }
+
+        instance_activate_object(objBlock);
         
         xVel = lengthdir_x(ballSpd, angle);
         yVel = lengthdir_y(ballSpd, angle);
