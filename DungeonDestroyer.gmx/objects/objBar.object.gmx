@@ -159,6 +159,8 @@ if (!broken)
         }
     }
     
+    collectCoins();
+    
     var _cbhor = collision_rectangle(x - w/2 + xVel, y - h/2, x + w/2 + xVel, y + h/2, objBlock, false, true);
     if (in(x + xVel, BORDER + w/2, room_width - BORDER - w/2)
         &amp;&amp; (!_cbhor || _cbhor.falling || hurt))
@@ -252,8 +254,16 @@ var eyeXRight = x + w/2 - 7;
 var nearestBall = instance_nearest(x,y, objBall);
 if (instance_exists(nearestBall))
 {
-    lookLeft = point_direction(eyeXLeft, y, nearestBall.x, nearestBall.y);
-    lookRight = point_direction(eyeXRight, y, nearestBall.x, nearestBall.y);
+    if (!hurt)
+    {    
+        lookLeft = point_direction(eyeXLeft, y, nearestBall.x, nearestBall.y);
+        lookRight = point_direction(eyeXRight, y, nearestBall.x, nearestBall.y);
+    }
+    else
+    {
+        lookLeft = 0;
+        lookRight = 180;
+    }
 }
 
 //eyeballs

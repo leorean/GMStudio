@@ -91,6 +91,8 @@ if (!broken)
             instance_create(x + xVel, y + yVel, objEffect);
         }*/
     
+        collectCoins();
+        
         /* collide with blocks */
         instance_deactivate_object(objBlock);
         instance_activate_region(x - w, y - w, 2*w, 2*w, true);

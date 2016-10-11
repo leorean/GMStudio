@@ -83,7 +83,6 @@
       <sprite>sprites\mskButton</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\sprCoins</sprite>
     <sprite>sprites\sprFontSmall</sprite>
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprHud</sprite>
@@ -99,6 +98,7 @@
     <sprite>sprites\sprBlock</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
+    <sprite>sprites\mskCoin</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -115,7 +115,7 @@
     <script>scripts\getDrawMask.gml</script>
     <script>scripts\loadSegment.gml</script>
     <script>scripts\spawnSegment.gml</script>
-    <script>scripts\callSpawnSegment.gml</script>
+    <script>scripts\collectCoins.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
