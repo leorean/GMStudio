@@ -23,6 +23,25 @@ for (j = 0; j < ds_grid_height(global.B1); j++)
     if(ds_grid_get(global.B2, i, j) == 0)
     {
         var _b = ds_grid_get(global.B1, i, j);
-        if (instance_exists(_b) && _b.y >= TILE) _b.marked = true;
+        if (instance_exists(_b) && _b.y >= TILE && _b.type != 1) _b.marked = true;
+    }
+}
+
+// un-mark blocks that have a ground!
+for (i = 0; i < instance_number(objBlock); i++)
+{
+    var b = instance_find(objBlock, i);
+    if (b.type == 1 && !b.broken)
+    {    
+        var by = b.y;    
+        while (true)
+        {
+            by -= TILE;
+            var top = instance_place(b.x, by, objBlock);
+            if (!instance_exists(top))
+                break;
+            else
+                top.marked = false;
+        }
     }
 }

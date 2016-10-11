@@ -89,7 +89,7 @@ fCur = 0;
             hp = 1;
             subType = 0;            
             isCascade = false;
-            canFall = true;
+            canFall = false;
         break;
         case 2: //TOUGH
             hp = 3;
