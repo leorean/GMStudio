@@ -116,14 +116,13 @@
     <script>scripts\loadSegment.gml</script>
     <script>scripts\spawnSegment.gml</script>
     <script>scripts\collectCoins.gml</script>
+    <script>scripts\adjustBallSpeed.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
   </shaders>
   <objects name="objects">
-    <objects name="HUD">
-      <object>objects\objControl</object>
-    </objects>
+    <object>objects\objControl</object>
     <objects name="hierarchy">
       <object>objects\objAny</object>
       <object>objects\objSolid</object>

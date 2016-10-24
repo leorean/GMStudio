@@ -25,15 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = -.5 + random(1);
-yVel = -2 - random(3);
-yGrav = .14;
-
-delay = 40;
+            <string>xVel = -2 + random(4);
+yVel = -2 + random(4);
 
 value = 0;
 taken = false;
-free = true;
+canBeTaken = false;
+
+z = 0;
 </string>
           </argument>
         </arguments>
@@ -58,16 +57,9 @@ free = true;
             <kind>1</kind>
             <string>if (y &gt; room_height + TILE) instance_destroy();
 
-delay = max(delay - 1, 0);
-
-if (free)
-{
-    if (!place_meeting(x, y, objBlock))
-        free = false;
-}
 if (taken)
 {
-    sp = max(sp + .3, 10);
+    sp = max(sp + .3, 6);
     move_towards_point(target.x, target.y, sp);
 
     if (!instance_exists(target) || place_meeting(x, y, target))
@@ -81,37 +73,15 @@ if (taken)
 
 if (!taken)
 {
-    /*ground = collision_line(bbox_left, bbox_bottom + 1, bbox_right, bbox_bottom + 1,
-        objBlock, false, true);
+    xVel *= .97;
+    yVel *= .97;
     
-    if (yVel &lt; 0 
-    || place_meeting(x, y - 1, objBlock)) ground = noone;
-        
-    if (!ground || ground.broken)
-        yVel += yGrav;
-    else
-    {
-        yVel = 0;
-        y += ground.yVel;
-    }*/
-    
-    yVel += yGrav;    
+    if (abs(xVel) &lt; .1 &amp;&amp; abs(yVel) &lt; .1)
+        canBeTaken = true;
 }
 
-
-if ((!place_meeting(x + xVel, y, objBlock) || free || taken)
-    &amp;&amp; in(x + xVel, 0, room_width))
-    x += xVel;
-else
-    xVel *= -.5;
-
-if (!place_meeting(x, y + yVel, objBlock) || free || taken)
-    y += yVel;
-else
-{    
-    yVel *= -.5;    
-    xVel *= .3;
-}
+x += xVel;
+y += yVel;
 </string>
           </argument>
         </arguments>
@@ -162,7 +132,10 @@ switch(value)
 }
 
 if (!taken)
-    draw_sprite_part(sprMisc, -1, 0, 2*TILE + v * TILE, TILE, TILE, x, y);
+{
+    z += (sin(global.timer * .02) / 6) * canBeTaken;
+    draw_sprite_part(sprMisc, -1, 0, 2*TILE + v * TILE, TILE, TILE, x, y + z);
+}
 else
     draw_sprite_part(sprMisc, -1, TILE, 2*TILE, TILE, TILE, x, y);
 

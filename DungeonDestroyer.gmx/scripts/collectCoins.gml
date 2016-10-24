@@ -7,7 +7,7 @@ for (i = 0; i < instance_number(objCoin); i++)
 {
     var coin = instance_find(objCoin, i);
     var colCoin = collision_circle(x, y, 2*global.coinRadius, coin, false, true);
-    if (colCoin && !colCoin.taken && !colCoin.delay)
+    if (colCoin && !colCoin.taken && colCoin.canBeTaken)
     {
         colCoin.taken = true;
         colCoin.target = id;                

@@ -34,11 +34,7 @@ broken = false;
 w = TILE - 2;
 sprite_index = mskBall;
 
-/*if (w == 8) sprite_index = mskBallSmall;
-if (w == TILE) sprite_index = mskBall;
-if (w == 2*TILE) sprite_index = mskBallBig;*/
-
-ballSpd = 4;
+ballSpd = 2.5;
 angle = 90;
 
 // effect stuff
@@ -116,8 +112,9 @@ if (!broken)
                         instance_create(x + xVel, y + yVel, objEffect);
                         effectTimer = maxEffectTimer;
                     }
-                }
-                //ballSpd += .1;
+                    adjustBallSpeed();
+                    ballSpeedAdjusted = true;
+                }                
             }    
             if (collision_circle(x, y + yVel, w/2, block, false, true))
             {
@@ -133,11 +130,14 @@ if (!broken)
                     {
                         instance_create(x + xVel, y + yVel, objEffect);
                         effectTimer = maxEffectTimer;
-                    }                }    
-                //ballSpd += .1;        
+                    }
+                    adjustBallSpeed();
+                    ballSpeedAdjusted = true;
+                }
             }
         }
-
+        ballSpeedAdjusted = false;
+        
         instance_activate_object(objBlock);
         
         xVel = lengthdir_x(ballSpd, angle);
@@ -162,7 +162,8 @@ if (!broken)
         {
             instance_create(x + xVel, y + yVel, objEffect);
             effectTimer = maxEffectTimer;
-        }        //ballSpd += .1;
+        }
+        adjustBallSpeed();
     }
     
     if (y + yVel &gt; BORDER + w/2 &amp;&amp; (y + yVel &lt; room_height - BORDER - w/2 || !global.invincible))
@@ -175,7 +176,8 @@ if (!broken)
         {
             instance_create(x + xVel, y + yVel, objEffect);
             effectTimer = maxEffectTimer;
-        }        //ballSpd += .1;
+        }
+        adjustBallSpeed();
     }
 }
 else // broken

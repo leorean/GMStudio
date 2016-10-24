@@ -98,7 +98,7 @@ if (!broken)
             if (!hurt)
             {
                 hp = max(hp - 1, 0);
-                hurt = 1*SEC;
+                hurt = .5*SEC;
                 var eff = instance_create(collideBlock.x+8, collideBlock.y+8, objEffect);
                 eff.type = 1;
                 with(collideBlock) instance_destroy();

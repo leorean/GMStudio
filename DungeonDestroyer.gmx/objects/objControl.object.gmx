@@ -46,10 +46,10 @@ global.B1 = ds_grid_create(WIDTH div TILE, (HEIGHT div TILE));
 global.B2 = ds_grid_create(WIDTH div TILE, (HEIGHT div TILE));
 
 seg[0] = loadSegment("seg0.tmx");
-seg[1] = loadSegment("seg1.tmx");
+/*seg[1] = loadSegment("seg1.tmx");
 seg[2] = loadSegment("seg2.tmx");
 seg[3] = loadSegment("seg3.tmx");
-seg[4] = loadSegment("seg4.tmx");
+seg[4] = loadSegment("seg4.tmx");*/
 
 // TODO: pool for blocks...
 </string>
@@ -90,7 +90,7 @@ global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 
 var bl = instance_place(global.mx, global.my, objBlock);
-if (instance_exists(bl) &amp;&amp; mouse_check_button(mb_left))
+if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
     bl.hp = 0;
 </string>
           </argument>
@@ -157,100 +157,107 @@ if (global.state == G_START)
 if (global.state == G_PLAY)
 {
 
+    instance_activate_object(objBlock);
+
+    if (!blockDelay)
+    {       
+        var top = noone;
+        for (i = 0; i &lt; instance_number(objBlock); i++)
+        {
+            var b = instance_find(objBlock, i);
+            if (!instance_exists(top) || top.y &gt; b.y)
+            if (!b.falling &amp;&amp; !b.broken &amp;&amp; !b.marked)
+                top = b;
+        }
+    
+        if ((!top || top.y &gt;= 0)
+            &amp;&amp; !blockDelay)
+        {
+            //show_debug_message("spawning segment");
+            spawnSegment(seg[0]);
+        }
+        
+        for (i = 0; i &lt; instance_number(objBlock); i++)
+        {
+            var b = instance_find(objBlock, i);
+            if (!b.falling &amp;&amp; !b.broken)
+            {
+                b.move = true;
+                b.yVel = .5;
+                b.moveDistance = TILE;
+            }            
+        }
+        
+        blockDelay = 3*SEC;
+        segCount = max(segCount - 1, 0);
+        
+        meters++;
+
+    }
+
+    if (global.timer % 30 == 0)
+    {
+        triggerFallingBlocks();
+    }
+
+    blockDelay = max(blockDelay - 1, 0);
+      
+    /*
     // NOTE: the interval must be big enough that the blocks have moved by then.
     if (!blockDelay)
     {
-        instance_activate_object(objBlock);
         
-        segCount = max(segCount - 1, 0);    
-        if (segCount == 0)
-        {
-            var _ind = irandom(array_length_1d(seg) - 2);
-            show_debug_message("spawning segment #" + string(_ind));
-            spawnSegment(seg[_ind]);
-            segCount = global.segSize;
-        }
-        //if (meters % 10 == 0) maxBlockDelay = max(maxBlockDelay - 10, minBlockDelay);
+        segCount = max(segCount - 1, 0);
         
         var bottom = noone;
         for (i = 0; i &lt; instance_number(objBlock); i++)
         {
             var b = instance_find(objBlock, i);
             if (!instance_exists(bottom) || bottom.y &lt; b.y)
-            if (!b.falling &amp;&amp; !b.broken)
+            if (!b.falling &amp;&amp; !b.broken &amp;&amp; !b.marked)
                 bottom = b;
+        }
+                
+        if (segCount == 0)
+        {
+            var _ind = irandom(max(array_length_1d(seg) - 2, 0));
+            show_debug_message("spawning segment #" + string(_ind));
+            spawnSegment(seg[_ind]);
+            segCount = global.segSize;
         }
         
         with(objBlock)
         {
-            if (!falling)
-                yVel = .5;                
-            if (y &lt; -2*TILE)
-                y += TILE;
-            else
+            if(!falling &amp;&amp; !broken)
             {
-                objBlock.move = true;
-                objBlock.moveDistance = TILE;                
+                move = true;
+                yVel = .5;
+                moveDistance = TILE;
             }
         }
         
-        meters++;
-        blockDelay = maxBlockDelay;
-        
-        /*if (instance_exists(bottom))
+        if (instance_exists(bottom))
         {
-            if (bottom &amp;&amp; bottom.y &lt; 6*TILE)
+            if (bottom &amp;&amp; bottom.y &lt; 12*TILE)
             {
                 with(objBlock)
                 {
-                    if (!falling || true)
-                    {
-                        move = false;
-                        y += abs(bottom.y - 6*TILE);
-                    }
-                        //yVel = 2*TILE;
+                    if(!falling &amp;&amp; !broken)
+                        yVel = .5;
                 }
                 blockDelay = 32;
             }
-        }*/
-        
-        /*if (instance_exists(bottom))
-        {
-            if (bottom &amp;&amp; bottom.y &lt; 6*TILE)
-            {
-                //objBlock.yVel = 0;
-                with(objBlock)
-                {
-                    if (!falling &amp;&amp; !broken) y += TILE;
-                }
-                blockDelay = 0;
-            }
-            else
-            {
-                objBlock.yVel = .5;
-                with(objBlock)
-                {
-                    if (y &lt; -2*TILE)
-                        y += TILE;
-                    else
-                    {
-                        objBlock.move = true;
-                        objBlock.moveDistance = TILE;                
-                    }
-                }
+        } else
+            blockDelay = maxBlockDelay;
                 
-                meters++;
-                blockDelay = maxBlockDelay;
-            }
-        }*/
-    }
-    
-    if (global.timer % 30 == 0)
-        triggerFallingBlocks();
-
-    instance_deactivate_region(0, - 2 * TILE -global.segSize * TILE, WIDTH, global.segSize*TILE, true, true);
+        meters++;
         
-    blockDelay = max(blockDelay - 1, 0);
+        //with(objBlock) y = (y div TILE) * TILE;
+    }*/
+    
+    //if (global.timer % 30 == 0)
+        
+    //instance_deactivate_region(0, - 2 * TILE -global.segSize * TILE, WIDTH, global.segSize*TILE, true, true);
 
     global.timer = (global.timer + 1) % INFINITE;
 
@@ -328,8 +335,9 @@ segCount = 0;
 
 meters = 0;
 blockDelay = 0;
-maxBlockDelay = 5*SEC;
+maxBlockDelay = 3*SEC;
 minBlockDelay = 1*SEC;
+yVel = .5;
 
 bar = instance_create(view_wview/2, view_hview - 7.5*TILE, objBar);
 
