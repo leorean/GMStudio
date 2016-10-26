@@ -32,7 +32,8 @@ for (j = 0; j < ds_grid_height(global.B1); j++)
 for (i = 0; i < instance_number(objBlock); i++)
 {
     var b = instance_find(objBlock, i);
-    if ((b.type == 0 || b.type == 1 || b.type == 2)&& !b.broken)
+    if (!b) break;
+    if ((b.type == 0 || b.type == 1 || b.type == 2) && !b.broken)
     {    
         var by = b.y;    
         while (true)

@@ -133,6 +133,7 @@ if (!broken)
     var ball = collision_rectangle(x -w/2 + xVel, y - h/2 + yVel, x + w/2 + xVel, y + h/2 + yVel, objBall, false, true);
     if (ball)
     {
+        ball.combo = 0;
         ball.off = .5;
         with(ball) 
         {
@@ -146,10 +147,12 @@ if (!broken)
         var bs = abs(x - ball.x) / (w/2);
         var pdir = point_direction(x, y, ball.x, ball.y);
         pdir = point_direction(0, 0, lengthdir_x(1, pdir) * bs, lengthdir_y(1, pdir));
-        if (ball.y &lt; y)
-            ball.angle = clamp(pdir, 20, 160);
-        else
-            ball.angle = pdir;
+        //if (ball.y &lt; y)
+        ball.angle = clamp(pdir, 20, 160);
+        ball.y = min(ball.y, y);
+        
+        //else
+        //    ball.angle = pdir;
         
         with(ball) move_outside_all(90 + 180 * (y &gt; objBar.y), 8);
         if (ball.y &lt; y)

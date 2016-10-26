@@ -81,6 +81,7 @@
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskEnemy</sprite>
       <sprite>sprites\mskButton</sprite>
+      <sprite>sprites\mskBlock</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFontSmall</sprite>
@@ -93,9 +94,8 @@
       <sprite>sprites\mskBall</sprite>
       <sprite>sprites\sprBar</sprite>
     </sprites>
-    <sprite>sprites\mskBlock</sprite>
-    <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprBlock</sprite>
+    <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
     <sprite>sprites\mskCoin</sprite>
@@ -117,6 +117,7 @@
     <script>scripts\spawnSegment.gml</script>
     <script>scripts\collectCoins.gml</script>
     <script>scripts\adjustBallSpeed.gml</script>
+    <script>scripts\addComboScore.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

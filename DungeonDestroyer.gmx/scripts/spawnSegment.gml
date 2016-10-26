@@ -18,13 +18,32 @@ for (var j = 0; j<h; j++)
             b.type = 3;
                         
             if (meters <= 20)
+            {
                 b.subType = choose(0, 1);
+                b.maxHp = 2;
+                b.hp = choose(1, 2);
+            }
             else if (meters <= 40)
+            {
                 b.subType = choose(0, 1, 1, 2);
+                b.maxHp = 1;
+                b.hp = 1;
+            }
             else if (meters <= 70)
+            {
                 b.subType = choose(0, 1, 2, 2);
+                b.maxHp = 1;
+                b.hp = 1;
+            }
             else
+            {            
                 b.subType = choose(0, 1, 2, 3);
+                if (b.subType == 0 || b.subType == 1)
+                {
+                    b.maxHp = 2;
+                    b.hp = 2;
+                }
+            }
         break;
         case 2:
         case 3:

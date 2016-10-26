@@ -30,6 +30,7 @@ subType = 0;
 isCascade = 0;
 
 hp = 1;
+maxHp = -1;
 
 move = true;
 movey = y;
@@ -60,7 +61,91 @@ col = -1;
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="2">
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!initialized)
+{
+
+    switch(type)
+    {
+        case 0: //GRASS
+            hp = 1;
+            subType = 0;
+            isCascade = false; //choose(0, 0, 0, 1);
+            canFall = false;
+        break;
+        case 1: //INVINCIBLE
+            hp = 1;
+            subType = 0;            
+            isCascade = false;
+            canFall = true;
+        break;
+        case 2: //TOUGH
+            hp = choose(1, 2, 3);
+            subType = 0;
+            isCascade = false;
+            canFall = true;
+        break;
+        case 3: // color/dirt blocks
+            //hp = 1;
+            //subType = choose(0, 1, 2, 3, 4);
+            isCascade = true;
+            canFall = true;
+            /*if (random(100) &lt; 10)
+                value = 10 + random(25);*/
+        break;
+        case 4: // color/dirt blocks
+            hp = 1;
+            subType = 0;
+            isCascade = false;
+            canFall = true;
+            value = 300;
+        break;
+    }
+    
+    initialized = true;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>INIT</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -91,7 +176,7 @@ col = -1;
     }
     else
     {
-        movey = floor(y);
+        movey = y;
         yVel = 0;
     }
 
@@ -151,10 +236,47 @@ if(hp == 0)
         var bu = collision_point(x + 8, y - 8, objBlock, false, true);
         var bd = collision_point(x + 8, y + TILE + 8, objBlock, false, true);
         
-        if (instance_exists(bl) &amp;&amp; bl.type == type &amp;&amp; bl.subType == subType &amp;&amp; !bl.falling &amp;&amp; !bl.broken) {bl.isCascade = true; bl.hp = 0;}
-        if (instance_exists(br) &amp;&amp; br.type == type &amp;&amp; br.subType == subType &amp;&amp; !br.falling &amp;&amp; !br.broken) {br.isCascade = true; br.hp = 0;}
-        if (instance_exists(bu) &amp;&amp; bu.type == type &amp;&amp; bu.subType == subType &amp;&amp; !bu.falling &amp;&amp; !bu.broken) {bu.isCascade = true; bu.hp = 0;}
-        if (instance_exists(bd) &amp;&amp; bd.type == type &amp;&amp; bd.subType == subType &amp;&amp; !bd.falling &amp;&amp; !bd.broken) {bd.isCascade = true; bd.hp = 0;}
+        var _cascading = false;
+        
+        if (instance_exists(bl) &amp;&amp; bl.type == type &amp;&amp; bl.subType == subType &amp;&amp; !bl.falling &amp;&amp; !bl.broken) 
+            {bl.isCascade = true; bl.hp = max(bl.hp - 1, 0); _cascading = true;}
+        if (instance_exists(br) &amp;&amp; br.type == type &amp;&amp; br.subType == subType &amp;&amp; !br.falling &amp;&amp; !br.broken)
+            {br.isCascade = true; br.hp = max(br.hp - 1, 0); _cascading = true;}
+        if (instance_exists(bu) &amp;&amp; bu.y &gt;= 0 &amp;&amp; bu.type == type &amp;&amp; bu.subType == subType &amp;&amp; !bu.falling &amp;&amp; !bu.broken)
+            {bu.isCascade = true; bu.hp = max(bu.hp - 1, 0); _cascading = true;}
+        if (instance_exists(bd) &amp;&amp; bd.type == type &amp;&amp; bd.subType == subType &amp;&amp; !bd.falling &amp;&amp; !bd.broken)
+            {bd.isCascade = true; bd.hp = max(bd.hp - 1, 0); _cascading = true;}
+    }
+    
+    if (!broken)
+    {
+        if (_cascading)
+        {
+            var t = instance_create(x + 8, y + 8, objText);
+            t.font = global.fntSmall;
+            t.size = 1.5;        
+
+            t.text = 10;
+            score += 10;
+            
+            //objBall.combo++;
+        }
+        else
+        {
+            /*for(var i = 0; i &lt; instance_number(objText); i++)
+            {
+                var t = instance_find(objText, i);
+                if (t.font == global.fntSmall)
+                    with(t) instance_destroy();
+            }*/
+            
+            var t = instance_create(x + 8, y + 8, objText);
+    
+            objBall.combo++;
+            t.size = 2;            
+            t.text = objBall.combo * 5;
+            score += objBall.combo * 5;        
+        }
     }
     
     if (value &gt; 0 &amp;&amp; !broken)
@@ -165,93 +287,6 @@ if(hp == 0)
 if (!broken) depth = 15; else depth = -5;
 if (y &gt;= room_height) instance_destroy();
 </string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="1">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (type == 3 &amp;&amp; (!move || col == -1))
-    col = getDrawMask();
-
-if (!initialized)
-{
-
-    switch(type)
-    {
-        case 0: //GRASS
-            hp = 1;
-            subType = 0;
-            isCascade = false; //choose(0, 0, 0, 1);
-            canFall = false;
-        break;
-        case 1: //INVINCIBLE        
-            hp = 1;
-            subType = 0;            
-            isCascade = false;
-            canFall = true;
-        break;
-        case 2: //TOUGH
-            hp = choose(1, 2, 3);
-            subType = 0;
-            isCascade = false;
-            canFall = true;
-        break;
-        case 3: // color/dirt blocks
-            hp = 1;
-            //subType = choose(0, 1, 2, 3, 4);
-            isCascade = true;
-            canFall = true;
-            /*if (random(100) &lt; 10)
-                value = 10 + random(25);*/
-        break;
-        case 4: // color/dirt blocks
-            hp = 1;
-            subType = 0;
-            isCascade = false;
-            canFall = true;
-            value = 300;
-        break;
-    }
-
-    initialized = true;
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>605</id>
-        <kind>0</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>0</useapplyto>
-        <exetype>0</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>INIT</string>
           </argument>
         </arguments>
       </action>
@@ -293,8 +328,10 @@ if (!broken)
         case 3:
             row = 3 + subType;
             
-            /* col is in another event*/
-                        
+            if (!move || col == -1)
+                col = getDrawMask();
+
+            /* col is in another event*/            
             break;
         case 4:
             row = 8;
@@ -304,9 +341,17 @@ if (!broken)
     
     if (falling) col = 0;
     
+    // money
     draw_sprite_part(sprBlock, -1, col*TILE, row*TILE, TILE, TILE, x, y);
     if (value &gt; 0 &amp;&amp; type != 4)
         draw_sprite_part(sprBlock, -1, TILE, 0, TILE, TILE, x, y);
+        
+    // fissure
+    draw_set_blend_mode(bm_normal);
+    var _hp = min(hp - 1, 4);
+    draw_sprite_part_ext(sprBlock, -1, TILE + _hp*TILE, TILE, TILE, TILE, x, y, 1, 1,
+        c_white, .5);
+    draw_set_blend_mode(bm_normal);
 }
 else
 {

@@ -37,10 +37,14 @@ sprite_index = mskBall;
 ballSpd = 2.5;
 angle = 90;
 
+lastBlock = noone; //for score things
+
 // effect stuff
 off = 0;
 effectTimer = 0;
 maxEffectTimer = 7;
+
+combo = 0;
 </string>
           </argument>
         </arguments>
@@ -98,10 +102,12 @@ if (!broken)
             var block = instance_find(objBlock, i);
             
             if (collision_circle(x + xVel, y, w/2, block, false, true))
-            {
+            {                
                 if (block.type != 1) // invincible blocks
+                {
                     block.hp = max(block.hp - 1, 0);
-            
+                }
+                            
                 if (!block.falling &amp;&amp; !block.broken &amp;&amp; block.type != 0)
                 {
                     angle = point_direction(0, 0, -xVel, yVel);
@@ -113,14 +119,18 @@ if (!broken)
                         effectTimer = maxEffectTimer;
                     }
                     adjustBallSpeed();
+                    addComboScore(block);
                     ballSpeedAdjusted = true;
                 }                
-            }    
+            }
+            
             if (collision_circle(x, y + yVel, w/2, block, false, true))
             {
                 if (block.type != 1) // invincible blocks
+                {
                     block.hp = max(block.hp - 1, 0);
-            
+                }
+                                            
                 if (!block.falling &amp;&amp; !block.broken &amp;&amp; block.type != 0)
                 {
                     angle = point_direction(0, 0, xVel, -yVel);
@@ -132,10 +142,32 @@ if (!broken)
                         effectTimer = maxEffectTimer;
                     }
                     adjustBallSpeed();
+                    addComboScore(block);
                     ballSpeedAdjusted = true;
                 }
             }
+            
+            if (collision_circle(x, y, w/2, block, false, true)
+                &amp;&amp; block.broken &amp;&amp; lastBlock == noone)
+            {
+                lastBlock = block;
+                
+                var t = instance_create(block.x + 8, block.y + 8, objText);
+                combo++;
+                if (combo == 1)
+                    t.text = "5";
+                else
+                    t.text = "5x" + string(combo);
+                
+                score += combo * 5;
+                
+                t.size = 1.5 + min(combo div 10, 4);
+            }
         }
+        
+        if (!instance_exists(lastBlock)) lastBlock = noone;
+        else if (!collision_circle(x, y, w/2, lastBlock, false, true)) lastBlock = noone;
+        
         ballSpeedAdjusted = false;
         
         instance_activate_object(objBlock);
