@@ -44,16 +44,20 @@
   <sprites name="sprites">
     <sprites name="masks">
       <sprite>sprites\mskTile</sprite>
+      <sprite>sprites\mskCoin</sprite>
+      <sprite>sprites\mskPath</sprite>
+      <sprite>sprites\mskTower</sprite>
+      <sprite>sprites\mskSlime</sprite>
     </sprites>
     <sprite>sprites\sprFontSmall</sprite>
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
-    <sprite>sprites\mskCoin</sprite>
-    <sprite>sprites\mskPath</sprite>
-    <sprite>sprites\mskSlime</sprite>
     <sprite>sprites\sprSlime</sprite>
+    <sprite>sprites\sprTower</sprite>
+    <sprite>sprites\sprProjectile</sprite>
+    <sprite>sprites\mskProjectile</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -74,6 +78,8 @@
     <script>scripts\findPath.gml</script>
     <script>scripts\getNeighbours.gml</script>
     <script>scripts\spawnWave.gml</script>
+    <script>scripts\findEnemies.gml</script>
+    <script>scripts\findEnemy.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
@@ -93,6 +99,8 @@
     <object>objects\objText</object>
     <object>objects\objEffect</object>
     <object>objects\objSlime</object>
+    <object>objects\objTower</object>
+    <object>objects\objProjectile</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

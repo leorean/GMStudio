@@ -40,9 +40,19 @@ global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
 global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
 
 global.coins = 0;
-global.coinRadius = 3*TILE;
 
 map[0] = importLevel("MAP0.tmx");
+
+// basic tower unlocks
+tower[0] = 1; towerPrice[0] = 50; 
+tower[1] = 1; towerPrice[1] = 300;
+tower[2] = 0; towerPrice[2] = 550;
+tower[3] = 0; towerPrice[3] = 800;
+tower[4] = 0; towerPrice[4] = 2400;
+tower[5] = 0; towerPrice[5] = 3200;
+tower[6] = 0; towerPrice[6] = 9999;
+tower[7] = 0; towerPrice[7] = 14000;
+
 </string>
           </argument>
         </arguments>
@@ -78,6 +88,20 @@ else
 global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 
+// toggle speed
+if (in(global.mx, 0, 2*TILE) &amp;&amp; in(global.my, HEIGHT - 2*TILE, HEIGHT))
+if (mouse_check_button_released(mb_left))
+{
+    global.spd = (global.spd + 1);
+    if (global.spd == 4) global.spd = 1;
+}
+
+if (in(global.mx, 2*TILE, 4*TILE) &amp;&amp; in(global.my, HEIGHT - 2*TILE, HEIGHT))
+if (mouse_check_button_released(mb_left))
+{
+    if (global.state == G_PLAY) global.state = G_PAUSE;
+    else if (global.state == G_PAUSE) global.state = G_PLAY;
+}
 </string>
           </argument>
         </arguments>
@@ -125,9 +149,14 @@ if (global.state == G_START)
 if (global.state == G_PLAY)
 {
 
+    /*if (mouse_check_button_pressed(mb_left)
+    &amp;&amp; currentTower == noone)
+        currentTower = instance_create(global.mx, global.my, objTower);
+    */
+
     global.timer = (global.timer + 1) % INFINITE;
     
-    waveTimer = max(waveTimer - 1 , 0);
+    waveTimer = max(waveTimer - global.spd, 0);
     
     if (!waveTimer)
     {
@@ -135,13 +164,6 @@ if (global.state == G_PLAY)
         wave++;
         waveTimer = maxWaveTimer;
     }
-    
-    /*if (global.timer % 60 == 0)
-    {
-        var s = instance_create(WIDTH/2, 2*HEIGHT, objSlime);
-        
-    }*/
-    
 }
 </string>
           </argument>
@@ -207,10 +229,14 @@ createRoom(map[0]);
 global.path = path_map0;
 
 wave = 0;
-maxWaveTimer = 20 * SEC;
+maxWaveTimer = 30 * SEC;
 waveTimer = 0;
 
+global.spd = 1;
 
+global.coins = 50;
+
+currentTower = noone;
 </string>
           </argument>
         </arguments>
@@ -265,13 +291,77 @@ draw_set_color(c_white);
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
-draw_text(w, 0, string(global.coins)+ "$");
+draw_text(w, 0, "$" + string(global.coins));
 
 draw_set_halign(fa_left);
 draw_text(0, 0, "HP: " + string(global.hp));
 
 draw_set_halign(fa_left);
 draw_text(0, TILE, "Wave: " + string(wave));
+
+// draw start
+if (global.state == G_START)
+{
+    draw_set_halign(fa_center);
+    draw_set_valign(fa_center);    
+    draw_text(w/2, h/2, "-Tap to play-");
+}
+
+// draw speedfactor
+draw_sprite_part(sprHud, -1, (global.spd - 1) * 2*TILE, 0, 2*TILE, 2*TILE, 0, h - 2*TILE);
+/*draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+draw_text(TILE, h - TILE + 2, "x" + string(global.spd));*/
+
+// draw pause
+draw_sprite_part(sprHud, -1, 3 * 2*TILE + (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, 2*TILE, h - 2*TILE);
+
+// ++++++++++++++ draw tower shop buttons +++++++++++++++++
+
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+
+var maxTower = 0;
+for (i = 0; i &lt; array_length_1d(tower); i++)
+    if (tower[i]) maxTower++;
+
+for (i = 0; i &lt; maxTower; i++)
+{
+    var _x = room_width/2 - maxTower*1.5*TILE + i*3*TILE;
+    draw_sprite_part(sprHud, -1, 0 + (global.coins &lt; towerPrice[i]) * 3*TILE, 2*TILE, 3*TILE, 3*TILE, _x, h - 3*TILE);    
+    draw_sprite_part(sprHud, -1, i*2*TILE, 5*TILE, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.5*TILE);
+    
+    draw_text(_x + 1.5*TILE, h - TILE, "$" + string(towerPrice[i]));
+    
+    if (in(global.mx, _x, _x + 3*TILE) &amp;&amp; in(global.my, h - 3*TILE, h))
+    {
+        if (currentTower == noone
+        &amp;&amp; global.coins &gt;= towerPrice[i])
+        {
+            if (mouse_check_button_pressed(mb_left))
+            {
+                currentTower = instance_create(global.mx, global.my, objTower);
+                currentTower.price = towerPrice[i];
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -403,7 +493,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_path(global.path, 0, 0, true);
+            <string>//draw_path(global.path, 0, 0, true);
 </string>
           </argument>
         </arguments>

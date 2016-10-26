@@ -50,7 +50,9 @@ type = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = min(fCur + .25, 6.9);
+            <string>if (global.state != G_PAUSE)
+    fCur = min(fCur + .25 * global.spd, 6.9);
+    
 frame = floor(fCur);
 
 if (fCur == 6.9) instance_destroy();
