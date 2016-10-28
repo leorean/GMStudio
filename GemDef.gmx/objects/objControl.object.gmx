@@ -38,6 +38,7 @@ if (os_type == os_windows)
 
 global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
 global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
+global.fntBanner = font_add_sprite(sprFontBanner, ord('0'), true, 0);
 
 global.enemyQueue = ds_queue_create();
 maxEnemyTimer = 40;
@@ -93,14 +94,16 @@ global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 
 // toggle speed
-if (in(global.mx, 0, 2*TILE) &amp;&amp; in(global.my, HEIGHT - 2*TILE, HEIGHT))
+if (in(global.mx, room_width-5*TILE, room_width-3*TILE) &amp;&amp; in(global.my, HEIGHT - 3*TILE, HEIGHT))
 if (mouse_check_button_released(mb_left))
 {
+    if (global.state == G_PAUSE) global.state = G_PLAY;
+    
     global.spd = (global.spd * 2);
     if (global.spd &gt; 4) global.spd = 1;
 }
 
-if (in(global.mx, 2*TILE, 4*TILE) &amp;&amp; in(global.my, HEIGHT - 2*TILE, HEIGHT))
+if (in(global.mx, room_width-3*TILE, room_width) &amp;&amp; in(global.my, HEIGHT - 3*TILE, HEIGHT))
 if (mouse_check_button_released(mb_left))
 {
     if (global.state == G_PLAY) global.state = G_PAUSE;
@@ -333,15 +336,15 @@ if (global.state == G_START)
 if (global.spd == 1) _spf = 0;
 if (global.spd == 2) _spf = 1;
 if (global.spd &gt; 2) _spf = 2;
-draw_sprite_part(sprHud, -1, _spf * 2*TILE, 0, 2*TILE, 2*TILE, 0, h - 2*TILE);
+draw_sprite_part(sprHud, -1, _spf * 2*TILE, 0, 2*TILE, 2*TILE, w - 4.5*TILE, h - 2.5*TILE);
 
 // draw pause
-draw_sprite_part(sprHud, -1, 3 * 2*TILE + (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, 2*TILE, h - 2*TILE);
+draw_sprite_part(sprHud, -1, 3 * 2*TILE + (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, w - 2.5*TILE, h - 2.5*TILE);
 
 //DEBUG:
 draw_set_halign(fa_right);
 draw_set_valign(fa_top);
-draw_text(w, h - TILE, ds_queue_size(global.enemyQueue));
+//draw_text(w, h - TILE, ds_queue_size(global.enemyQueue));
 
 // ++++++++++++++ draw tower shop buttons +++++++++++++++++
 

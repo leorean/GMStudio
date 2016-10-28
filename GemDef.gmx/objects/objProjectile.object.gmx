@@ -26,20 +26,18 @@
           <argument>
             <kind>1</kind>
             <string>type = 0;
+
 x0 = x;
 y0 = y;
 
-
 dmg = 0;
+spd = 0;
+range = 0;
 angle = 0;
+z = 0;
 
 broken = false;
 
-z = 0;
-range = 0;
-
-/*zGrav = .2;
-zVel = 0;*/
 </string>
           </argument>
         </arguments>
@@ -70,8 +68,8 @@ switch(type)
     case 0: //normal projectiles
     if (point_distance(x0, y0, x, y) &lt; range)
     {
-        x += lengthdir_x(2 * global.spd, angle);
-        y += lengthdir_y(2 * global.spd, angle);
+        x += lengthdir_x(spd * global.spd, angle);
+        y += lengthdir_y(spd * global.spd, angle);
     }
     else
     {
@@ -89,8 +87,8 @@ switch(type)
 
 if (broken)
 {
-    var eff = instance_create(x, y + z, objEffect);
-    eff.type = 0;
+    /*var eff = instance_create(x, y + z, objEffect);
+    eff.type = 0;*/
     instance_destroy();
 }
 </string>

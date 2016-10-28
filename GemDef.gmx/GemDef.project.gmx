@@ -51,6 +51,7 @@
     </sprites>
     <sprite>sprites\sprFontSmall</sprite>
     <sprite>sprites\sprFont</sprite>
+    <sprite>sprites\sprFontBanner</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
@@ -58,6 +59,7 @@
     <sprite>sprites\sprTower</sprite>
     <sprite>sprites\sprProjectile</sprite>
     <sprite>sprites\mskProjectile</sprite>
+    <sprite>sprites\mskSolid</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>

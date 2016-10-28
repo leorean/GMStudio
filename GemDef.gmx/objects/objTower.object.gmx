@@ -161,6 +161,7 @@ else
                     proj.angle = point_direction(x, y, e.x, e.y);
                     proj.dmg = dmg;
                     proj.range = range;
+                    proj.spd = 4;
                     proj.type = 0;
                     proj.z = -4;
                     delay = maxDelay;

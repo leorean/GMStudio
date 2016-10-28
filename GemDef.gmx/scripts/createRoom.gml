@@ -24,9 +24,17 @@ for (var i = 0; i<w; i ++)
         if (fg >= 47) //bg tiles
             addTile(fg, i*TILE, j*TILE, LAYER_BG);
 
-        if (fg >= 282) //solid tiles
+        // add specific path tiles here!
+        if (fg == 95
+        || fg == 188
+        || fg == 189
+        || fg == 235
+        || fg == 236
+        || fg >= 282) //solid tiles
             instance_create(i*TILE, j*TILE, objSolid);
 
+        
+            
         switch (obj)
         {            
             case 0: //tower blocking
