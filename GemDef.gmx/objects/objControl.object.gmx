@@ -39,6 +39,10 @@ if (os_type == os_windows)
 global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
 global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
 
+global.enemyQueue = ds_queue_create();
+maxEnemyTimer = 40;
+enemyTimer = maxEnemyTimer;
+
 global.coins = 0;
 
 map[0] = importLevel("MAP0.tmx");
@@ -92,8 +96,8 @@ global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 if (in(global.mx, 0, 2*TILE) &amp;&amp; in(global.my, HEIGHT - 2*TILE, HEIGHT))
 if (mouse_check_button_released(mb_left))
 {
-    global.spd = (global.spd + 1);
-    if (global.spd == 4) global.spd = 1;
+    global.spd = (global.spd * 2);
+    if (global.spd &gt; 4) global.spd = 1;
 }
 
 if (in(global.mx, 2*TILE, 4*TILE) &amp;&amp; in(global.my, HEIGHT - 2*TILE, HEIGHT))
@@ -149,20 +153,35 @@ if (global.state == G_START)
 if (global.state == G_PLAY)
 {
 
-    /*if (mouse_check_button_pressed(mb_left)
-    &amp;&amp; currentTower == noone)
-        currentTower = instance_create(global.mx, global.my, objTower);
-    */
-
-    global.timer = (global.timer + 1) % INFINITE;
+    global.timer = (global.timer + 1 * global.spd) % INFINITE;
     
     waveTimer = max(waveTimer - global.spd, 0);
     
-    if (!waveTimer)
+    if (!waveTimer &amp;&amp; ds_queue_size(global.enemyQueue) &lt; 100)
     {
         spawnWave(wave);
         wave++;
         waveTimer = maxWaveTimer;
+    }
+    
+    enemyTimer = max(enemyTimer - global.spd, 0);
+    if (!enemyTimer)
+    {
+        var _delay = 0;
+        repeat((ds_queue_size(global.enemyQueue) div 50) + 1)
+        {
+            if (ds_queue_size(global.enemyQueue) &gt; 0)
+            { 
+                var s = instance_create(-999, -999, objSlime);
+                
+                var q = ds_queue_dequeue(global.enemyQueue);
+                s.type = q[0];
+                s.banner = q[1];
+                s.delay = _delay;
+                _delay += 10;
+            }
+        }
+        enemyTimer = maxEnemyTimer;
     }
 }
 </string>
@@ -232,9 +251,11 @@ wave = 0;
 maxWaveTimer = 30 * SEC;
 waveTimer = 0;
 
+ds_queue_empty(global.enemyQueue);
+
 global.spd = 1;
 
-global.coins = 50;
+global.coins = 80;
 
 currentTower = noone;
 </string>
@@ -296,8 +317,9 @@ draw_text(w, 0, "$" + string(global.coins));
 draw_set_halign(fa_left);
 draw_text(0, 0, "HP: " + string(global.hp));
 
-draw_set_halign(fa_left);
-draw_text(0, TILE, "Wave: " + string(wave));
+// wave
+draw_sprite_part(sprHud, -1, 10*TILE, 0, 4*TILE, TILE,0, TILE);
+draw_sprite_part(sprHud, -1, 10*TILE, TILE, (waveTimer/maxWaveTimer)*4*TILE, TILE,0, TILE);
 
 // draw start
 if (global.state == G_START)
@@ -308,13 +330,18 @@ if (global.state == G_START)
 }
 
 // draw speedfactor
-draw_sprite_part(sprHud, -1, (global.spd - 1) * 2*TILE, 0, 2*TILE, 2*TILE, 0, h - 2*TILE);
-/*draw_set_halign(fa_center);
-draw_set_valign(fa_top);
-draw_text(TILE, h - TILE + 2, "x" + string(global.spd));*/
+if (global.spd == 1) _spf = 0;
+if (global.spd == 2) _spf = 1;
+if (global.spd &gt; 2) _spf = 2;
+draw_sprite_part(sprHud, -1, _spf * 2*TILE, 0, 2*TILE, 2*TILE, 0, h - 2*TILE);
 
 // draw pause
 draw_sprite_part(sprHud, -1, 3 * 2*TILE + (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, 2*TILE, h - 2*TILE);
+
+//DEBUG:
+draw_set_halign(fa_right);
+draw_set_valign(fa_top);
+draw_text(w, h - TILE, ds_queue_size(global.enemyQueue));
 
 // ++++++++++++++ draw tower shop buttons +++++++++++++++++
 
