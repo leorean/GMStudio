@@ -34,7 +34,6 @@ frame = 0;
 
 placed = false;
 free = false;
-selected = false;
 
 multi = 1;
 range = 0;
@@ -119,7 +118,10 @@ price = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>depth = 10 + room_height - y;
+            <string>if (!placed || global.tower == id)
+    depth = 0;
+else
+    depth = 10 + room_height - y;
 
 if (global.state != G_PLAY) exit;
 
@@ -128,20 +130,22 @@ free = place_free(x, y) &amp;&amp; (y &lt; room_height - 3*TILE);
 if (!placed)
 {
 
-    x = ((global.mx) div TILE) * TILE;
-    y = ((global.my) div TILE) * TILE;
+    x = global.mx - 8;
+    y = global.my - 8;
 
     if (mouse_check_button_released(mb_left))
     {
         if (free)
         {
             global.coins -= price;
+            var t = instance_create(x + 8, y, objText);
+            t.text = "-"+string(price);
             
             placed = true;
         }
         else
             instance_destroy();
-        objControl.currentTower = noone;            
+        //global.tower = noone;
     }
 }
 else
@@ -155,13 +159,13 @@ else
             case 0: // normal towers
                 var e = findEnemy(x + 8, y + 8, range);
 
-                if (instance_exists(e) &amp;&amp; e.hp &gt; 0)
+                if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
                 {
-                    var proj = instance_create(x + 8,y + 8, objProjectile);
-                    proj.angle = point_direction(x, y, e.x, e.y);
+                    var proj = instance_create(x + 8,y + 12, objProjectile);
+                    proj.angle = point_direction(proj.x, proj.y, e.x, e.y);
                     proj.dmg = dmg;
                     proj.range = range;
-                    proj.spd = 4;
+                    proj.spd = 3;
                     proj.type = 0;
                     proj.z = -4;
                     delay = maxDelay;
@@ -199,21 +203,21 @@ if (global.state != G_PAUSE)
     
 frame = floor(fCur);
 
-draw_sprite_part(sprTower, -1, frame*2*TILE, type*2*TILE, 2*TILE, 2*TILE, x - 8, y - 16);
+draw_sprite_part(sprTower, -1, frame*2*TILE, type*2*TILE, 2*TILE, 2*TILE, x - 8, y - 8);
 
-if (!placed)
+//draw_self();
+
+if (global.tower == id)
 {
-    var col = c_green;
-    if (!free)
-        col = c_red;
-
-    draw_sprite_ext(mskTower, -1, x, y, 1, 1, 0, col, .5);
-}
-
-if (selected || !placed)
-{
-    draw_set_color(c_white);
+    
     draw_set_blend_mode(bm_add);
+    var col = c_white;
+    if (!free)
+    {
+        draw_set_blend_mode(bm_normal);    
+        col = c_red;
+    }
+    draw_set_color(col);
     draw_set_alpha(.3);
     draw_circle(x + 8, y + 8, range, 0);
     draw_set_blend_mode(bm_normal);

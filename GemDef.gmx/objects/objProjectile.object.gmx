@@ -77,7 +77,7 @@ switch(type)
     }
     
     var target = instance_place(x, y, objSlime);
-    if (instance_exists(target) &amp;&amp; target.hp &gt; 0)
+    if (instance_exists(target) &amp;&amp; target.initialized &amp;&amp; target.hp &gt; 0)
     {
         target.hp = max(target.hp - dmg, 0);
         broken = true;

@@ -37,7 +37,7 @@ if (os_type == os_windows)
 }
 
 global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
-global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
+global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 1);
 global.fntBanner = font_add_sprite(sprFontBanner, ord('0'), true, 0);
 
 global.enemyQueue = ds_queue_create();
@@ -49,14 +49,22 @@ global.coins = 0;
 map[0] = importLevel("MAP0.tmx");
 
 // basic tower unlocks
-tower[0] = 1; towerPrice[0] = 50; 
-tower[1] = 1; towerPrice[1] = 300;
-tower[2] = 0; towerPrice[2] = 550;
-tower[3] = 0; towerPrice[3] = 800;
-tower[4] = 0; towerPrice[4] = 2400;
-tower[5] = 0; towerPrice[5] = 3200;
-tower[6] = 0; towerPrice[6] = 9999;
-tower[7] = 0; towerPrice[7] = 14000;
+towerUnlocked[0] = 1; towerPrice[0] = 50; towerName[0] = "Poop."
+towerUnlocked[1] = 1; towerPrice[1] = 300; towerName[1] = "something1"
+towerUnlocked[2] = 1; towerPrice[2] = 550; towerName[2] = "something2"
+towerUnlocked[3] = 1; towerPrice[3] = 800; towerName[3] = "something3"
+towerUnlocked[4] = 1; towerPrice[4] = 2400; towerName[4] = "something4"
+towerUnlocked[5] = 1; towerPrice[5] = 3200; towerName[5] = "something5"
+towerUnlocked[6] = 1; towerPrice[6] = 9999; towerName[6] = "something6"
+towerUnlocked[7] = 1; towerPrice[7] = 14000; towerName[7] = "something7"
+towerDesc[0] = "Your standard poo.#Cheap but efficient."
+towerDesc[1] = "TEMP1."
+towerDesc[2] = "TEMP2."
+towerDesc[3] = "TEMP3."
+towerDesc[4] = "TEMP4."
+towerDesc[5] = "TEMP5."
+towerDesc[6] = "TEMP6."
+towerDesc[7] = "TEMP7."
 
 </string>
           </argument>
@@ -94,7 +102,7 @@ global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 
 // toggle speed
-if (in(global.mx, room_width-5*TILE, room_width-3*TILE) &amp;&amp; in(global.my, HEIGHT - 3*TILE, HEIGHT))
+if (in(global.mx, WIDTH-4*TILE, WIDTH) &amp;&amp; in(global.my, HEIGHT - 3*TILE, HEIGHT))
 if (mouse_check_button_released(mb_left))
 {
     if (global.state == G_PAUSE) global.state = G_PLAY;
@@ -103,12 +111,16 @@ if (mouse_check_button_released(mb_left))
     if (global.spd &gt; 4) global.spd = 1;
 }
 
-if (in(global.mx, room_width-3*TILE, room_width) &amp;&amp; in(global.my, HEIGHT - 3*TILE, HEIGHT))
+// toggle pause
+if (in(global.mx, room_width-2*TILE, room_width) &amp;&amp; in(global.my, 0, 2*TILE))
 if (mouse_check_button_released(mb_left))
 {
     if (global.state == G_PLAY) global.state = G_PAUSE;
     else if (global.state == G_PAUSE) global.state = G_PLAY;
 }
+
+if (mouse_check_button_pressed(mb_left) &amp;&amp; (!instance_exists(global.tower) || global.tower.placed = true))
+    global.tower = collision_circle(global.mx, global.my, 8, objTower, false, true);
 </string>
           </argument>
         </arguments>
@@ -155,6 +167,21 @@ if (global.state == G_START)
 }
 if (global.state == G_PLAY)
 {
+
+    //++++SHAKE SCREEN++++
+    if (global.shake)
+    {
+        shakeTimer = 5;
+        global.shake = false;
+    }
+    if (shakeTimer)
+    {
+        shakeTimer = max(shakeTimer-global.spd,0);
+        view_angle = -1+random(2);
+    } else
+    {
+        view_angle = 0;
+    }
 
     global.timer = (global.timer + 1 * global.spd) % INFINITE;
     
@@ -254,13 +281,16 @@ wave = 0;
 maxWaveTimer = 30 * SEC;
 waveTimer = 0;
 
-ds_queue_empty(global.enemyQueue);
+ds_queue_clear(global.enemyQueue);
 
 global.spd = 1;
-
 global.coins = 80;
 
-currentTower = noone;
+selected = -1;
+global.tower = noone;
+
+global.shake = false;
+shakeTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -311,35 +341,42 @@ var h = display_get_gui_height();
 draw_set_alpha(1);
 draw_set_font(global.fnt);
 draw_set_color(c_white);
-
-draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
-draw_text(w, 0, "$" + string(global.coins));
+// hp
+draw_set_halign(fa_center);
+draw_sprite_part(sprHud, -1, 0, 10*TILE, 2*TILE, 2*TILE, 0, 0);
+draw_text(1*TILE, .5*TILE, "" + string(global.hp));
 
+// money
 draw_set_halign(fa_left);
-draw_text(0, 0, "HP: " + string(global.hp));
+draw_sprite_part(sprHud, -1, 0, 8*TILE, 2*TILE, 2*TILE, 2*TILE, 0);
+draw_text(4*TILE, .5*TILE, "" + string(global.coins));
 
 // wave
-draw_sprite_part(sprHud, -1, 10*TILE, 0, 4*TILE, TILE,0, TILE);
-draw_sprite_part(sprHud, -1, 10*TILE, TILE, (waveTimer/maxWaveTimer)*4*TILE, TILE,0, TILE);
+draw_sprite_part(sprHud, -1, 0, 12*TILE, 4*TILE, TILE,.5*TILE, 2*TILE);
+draw_sprite_part(sprHud, -1, 0, 13*TILE, (waveTimer/maxWaveTimer)*4*TILE, TILE,.5*TILE, 2*TILE);
 
 // draw start
 if (global.state == G_START)
 {
     draw_set_halign(fa_center);
-    draw_set_valign(fa_center);    
-    draw_text(w/2, h/2, "-Tap to play-");
+    draw_set_valign(fa_center);
+    draw_text(w/2, h/2, '"Tap to play"');
 }
 
 // draw speedfactor
 if (global.spd == 1) _spf = 0;
 if (global.spd == 2) _spf = 1;
 if (global.spd &gt; 2) _spf = 2;
-draw_sprite_part(sprHud, -1, _spf * 2*TILE, 0, 2*TILE, 2*TILE, w - 4.5*TILE, h - 2.5*TILE);
+
+var inSpdBtn = in(global.mx,w-4*TILE,w)&amp;&amp;in(global.my,h-3*TILE,h) &amp;&amp; mouse_check_button(mb_left);
+
+draw_sprite_part(sprHud, -1, 4*TILE+4*TILE*inSpdBtn,0 , 4*TILE, 3*TILE, w-4*TILE, h-3*TILE);
+draw_sprite_part(sprHud, -1, 12*TILE + _spf * 2*TILE, 0, 2*TILE, 2*TILE, w - 3*TILE, h - 2.5*TILE + inSpdBtn*2);
 
 // draw pause
-draw_sprite_part(sprHud, -1, 3 * 2*TILE + (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, w - 2.5*TILE, h - 2.5*TILE);
+draw_sprite_part(sprHud, -1, (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, w - 2*TILE, 0);
 
 //DEBUG:
 draw_set_halign(fa_right);
@@ -348,34 +385,61 @@ draw_set_valign(fa_top);
 
 // ++++++++++++++ draw tower shop buttons +++++++++++++++++
 
-draw_set_halign(fa_center);
+draw_set_halign(fa_right);
 draw_set_valign(fa_top);
+draw_set_font(global.fntSmall);
 
 var maxTower = 0;
-for (i = 0; i &lt; array_length_1d(tower); i++)
-    if (tower[i]) maxTower++;
+for (i = 0; i &lt; array_length_1d(towerUnlocked); i++)
+    if (towerUnlocked[i]) maxTower++;
 
 for (i = 0; i &lt; maxTower; i++)
 {
-    var _x = room_width/2 - maxTower*1.5*TILE + i*3*TILE;
-    draw_sprite_part(sprHud, -1, 0 + (global.coins &lt; towerPrice[i]) * 3*TILE, 2*TILE, 3*TILE, 3*TILE, _x, h - 3*TILE);    
-    draw_sprite_part(sprHud, -1, i*2*TILE, 5*TILE, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.5*TILE);
+    var _x = i*3*TILE;
+    draw_sprite_part_ext(sprHud, -1, 3*TILE, 2*TILE, 3*TILE, 3*TILE, _x, h - 3*TILE, 1, 1, c_white, .5);
+
+    if (global.coins &gt;= towerPrice[i])
+    {
+        _c = make_color_rgb(99, 255, 64);
+        draw_sprite_part(sprHud, -1, 0, 2*TILE, 3*TILE, 3*TILE, _x, h - 3*TILE);
+    } else
+    {
+        _c = make_color_rgb(200, 200, 200);
+    }
+    draw_sprite_part(sprHud, -1, i*2*TILE, 5*TILE, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.5*TILE);    
+    draw_text_color(_x + 3*TILE, h - TILE, "$" + string(towerPrice[i]), _c, _c, _c, _c, 1);
     
-    draw_text(_x + 1.5*TILE, h - TILE, "$" + string(towerPrice[i]));
+    if (towerPrice[i] &gt; global.coins || global.state != G_PLAY) continue;
     
     if (in(global.mx, _x, _x + 3*TILE) &amp;&amp; in(global.my, h - 3*TILE, h))
     {
-        if (currentTower == noone
-        &amp;&amp; global.coins &gt;= towerPrice[i])
+        //if (global.coins &gt;= towerPrice[i])
         {
             if (mouse_check_button_pressed(mb_left))
             {
-                currentTower = instance_create(global.mx, global.my, objTower);
-                currentTower.price = towerPrice[i];
+                global.tower = instance_create(global.mx, global.my, objTower);
+                global.tower.price = towerPrice[i];
             }
         }
     }
 }
+/*if (selectedTower != -1)
+{
+    draw_sprite_part(sprHud, -1, 6*TILE, 2*TILE, 14*TILE, 3*TILE, w/2-7*TILE, h - 6*TILE);
+    draw_set_valign(fa_top);
+    
+    draw_set_halign(fa_left);
+    draw_set_font(global.fnt);
+    
+    draw_text(w/2 - 7*TILE, h - 6*TILE, towerName[selectedTower]);
+    
+    draw_set_halign(fa_right);
+    draw_text(w/2 + 7*TILE, h - 6*TILE, "$" + string(towerPrice[selectedTower]));
+        
+    draw_set_halign(fa_center);
+    
+    draw_text(w/2, h - 5*TILE, towerDesc[selectedTower]);
+}*/
 
 
 
