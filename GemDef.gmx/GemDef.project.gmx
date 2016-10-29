@@ -52,6 +52,7 @@
     <sprite>sprites\sprFontSmall</sprite>
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprFontBanner</sprite>
+    <sprite>sprites\sprFontThin</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
@@ -83,6 +84,7 @@
     <script>scripts\findEnemies.gml</script>
     <script>scripts\findEnemy.gml</script>
     <script>scripts\array.gml</script>
+    <script>scripts\get.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

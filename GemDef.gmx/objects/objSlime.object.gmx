@@ -165,7 +165,7 @@ if (hp == 0)
     }
     
     var t = instance_create(x, y, objText);
-    t.size = 1.5;
+    t.size = 2;
     t.text = '"' + string(value);
     
     global.coins += value;
