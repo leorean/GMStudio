@@ -96,9 +96,34 @@ frame = 0;
 switch(type)
 {
     case 0: // TODO: subtype!
-        range = 4*TILE;
-        maxDelay = 1*SEC;
-        dmg = 1;
+        switch(upgrade)
+        {
+            case 0:
+                range = 4*TILE;
+                maxDelay = 60;
+                dmg = 1;   
+            break;
+            case 1:
+                range = 5*TILE;
+                maxDelay = 45;
+                dmg = 1;   
+            break;
+            case 2:
+                range = 5*TILE;
+                maxDelay = 45;
+                dmg = 1;   
+            break;
+            case 3:
+                range = 5*TILE;
+                maxDelay = 10;
+                dmg = 1;   
+            break;
+            case 4:
+                range = 6*TILE;
+                maxDelay = 10;
+                dmg = 1;   
+            break;
+        }
     break;
 }
 </string>
@@ -123,7 +148,7 @@ switch(type)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!placed || global.tower == id)
+            <string>if (!placed)
     depth = 0;
 else
     depth = 10 + room_height - y;
@@ -144,7 +169,7 @@ if (!placed)
         {
             global.coins -= price;
             var t = instance_create(x + 8, y, objText);
-            t.text = "-"+string(price);
+            t.text = '-'+string(price)+'"';
             
             createEffect(x + 8, y + 8, 2);
             
@@ -166,20 +191,56 @@ else
     {
         switch(type)
         {
-            case 0: // normal towers. TODO: upgrade nested switch
+            case 0:
+            
                 var e = findEnemy(x + 8, y + 8, range);
-
-                if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
+                switch(upgrade)
                 {
-                    var proj = instance_create(x + 8,y + 12, objProjectile);
-                    proj.angle = point_direction(proj.x, proj.y, e.x, e.y);
-                    proj.dmg = dmg;
-                    proj.range = range;
-                    proj.spd = 3;
-                    proj.type = 0;
-                    proj.z = -4;
-                    delay = maxDelay;
-                }                
+                    case 0:
+                    case 1:
+                    case 3:
+                        if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
+                        {
+                            var proj = instance_create(x + 8,y + 12, objProjectile);
+                            proj.angle = point_direction(proj.x, proj.y, e.x, e.y);
+                            proj.dmg = dmg;
+                            proj.range = range;
+                            proj.spd = 3;
+                            proj.type = 0;
+                            proj.z = -4;
+                            delay = maxDelay;
+                        }
+                    break;
+                    case 2:
+                        if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
+                        {
+                            var proj1 = instance_create(x + 8,y + 12, objProjectile);
+                            var proj2 = instance_create(x + 8,y + 12, objProjectile);
+                            
+                            proj1.angle = point_direction(proj1.x, proj1.y, e.x, e.y);
+                            proj2.angle = point_direction(proj2.x, proj2.y, e.x, e.y);
+                            
+                            proj1.x += lengthdir_x(-4, proj1.angle + 90);
+                            proj1.y += lengthdir_y(-4, proj1.angle + 90);
+                            proj2.x += lengthdir_x(4, proj1.angle + 90);
+                            proj2.y += lengthdir_y(4, proj1.angle + 90);
+                            
+                            proj1.dmg = dmg;
+                            proj1.range = range;
+                            proj1.spd = 3;
+                            proj1.type = 0;
+                            proj1.z = -4;
+                            
+                            proj2.dmg = dmg;
+                            proj2.range = range;
+                            proj2.spd = 3;
+                            proj2.type = 0;
+                            proj2.z = -4;
+                            
+                            delay = maxDelay;
+                        }
+                    break;
+                }
             break;
         }
     }
@@ -211,17 +272,15 @@ else
 //if (spawnDelay) exit;
 
 if (global.state != G_PAUSE)
-    fCur = (fCur + .1) % 3;
+    fCur = (fCur + .1 * global.spd) % 4;
     
 frame = floor(fCur);
 
 var sd = 1 - spawnDelay / maxSpawnDelay;
 
-draw_sprite_part_ext(sprTower, -1, frame*2*TILE, type*2*TILE, 2*TILE, 2*TILE, x - sd*TILE + 8, y - sd*TILE + 8, sd, sd, c_white, 1);
+draw_sprite_part_ext(sprTower, -1, frame*2*TILE + type*8*TILE, upgrade*2*TILE, 2*TILE, 2*TILE, x - sd*TILE + 8, y - sd*TILE + 8, sd, sd, c_white, 1);
 
-//draw_self();
-
-if (global.tower == id &amp;&amp; !spawnDelay)
+/*if (global.tower == id &amp;&amp; !spawnDelay)
 {
     
     draw_set_blend_mode(bm_add);
@@ -235,7 +294,7 @@ if (global.tower == id &amp;&amp; !spawnDelay)
     draw_set_alpha(.3);
     draw_circle(x + 8, y + 8, range, 0);
     draw_set_blend_mode(bm_normal);
-}
+}*/
 </string>
           </argument>
         </arguments>
