@@ -146,8 +146,7 @@ if (!placed)
             var t = instance_create(x + 8, y, objText);
             t.text = "-"+string(price);
             
-            var eff = instance_create(x + 8, y + 8, objEffect);
-            eff.type = 2;
+            createEffect(x + 8, y + 8, 2);
             
             placed = true;
             spawnDelay = maxSpawnDelay;

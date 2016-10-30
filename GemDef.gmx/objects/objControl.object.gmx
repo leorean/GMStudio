@@ -40,6 +40,11 @@ global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
 global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
 global.fntBanner = font_add_sprite(sprFontBanner, ord('0'), true, 0);
 global.fntThin = font_add_sprite(sprFontThin, ord(' '), true, 1);
+global.fntUpgrade = font_add_sprite(sprFontUpgrade, ord(' '), true, 1);
+
+for(i = 0; i &lt; 256; i++)
+global.effectPool[i] = instance_create(-99,-99,objEffect);
+global.effectIndex = 0;
 
 global.enemyQueue = ds_queue_create();
 maxEnemyTimer = 40;
@@ -57,9 +62,9 @@ towerNames[0] = array("Poop.", "Fast poop.", "Double shot", "Ultra fast.", "MEGA
 towerDesc[0] = array(
     "Your standard poo.#Cheap but efficient.",
     "Faster attacks.",
-    "Shoots 2 parallel projectiles.",
-    "Incredibly fast stream of projectiles!",
-    "Where does all that poo come from?");
+    "Shoots 2 parallel#projectiles.",
+    "Incredibly fast#stream of projectiles!",
+    "Where does all that#poo come from?");
 
 towerUnlocked[1] = array(1, 1, 1, 1, 1);
 towerPrices[1] = array(999, 999, 999, 999, 999);
@@ -520,53 +525,95 @@ if (!instance_exists(global.tower))
     
 }
 // +++++ TOWER UPGRADE MENU +++++
-else if (global.tower.placed)
+else
 {
-    if (keyboard_check_pressed(vk_space))
-        global.tower.upgrade ++;
-
-    // draw bottom background
-    draw_sprite_part(sprHud, -1, 0, 15*TILE, 32*TILE, 3*TILE, 0, h-3*TILE);
+    if (!global.tower.placed)
+    {
+        draw_set_font(global.fnt);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(w/2, h - 1.5*TILE, '"Drag and Drop"');
+    }
+    if (global.tower.placed)
+    {
+        if (keyboard_check_pressed(vk_space))
+            global.coins +=50;
     
-    draw_set_halign(fa_left);
-    draw_set_valign(fa_top);
-    draw_set_font(global.fnt);
+        var sale = .5 * get(towerPrices[global.tower.type], global.tower.upgrade);
     
-    draw_text(2*TILE,h-3*TILE, get(towerNames[global.tower.type], global.tower.upgrade));
+        // draw bottom background
+        draw_sprite_part(sprHud, -1, 0, 16*TILE, 32*TILE, 3*TILE, 0, h-3*TILE);
     
-    draw_set_font(global.fntSmall);    
-    draw_text(2*TILE,h-2*TILE, get(towerDesc[global.tower.type], global.tower.upgrade));    
-}
-
-/*if (selectedTower != -1)
-{
-    draw_sprite_part(sprHud, -1, 6*TILE, 2*TILE, 14*TILE, 3*TILE, w/2-7*TILE, h - 6*TILE);
-    draw_set_valign(fa_top);
+        draw_set_valign(fa_top);
+        draw_set_font(global.fntUpgrade);
+            
+        // left info:
+        draw_set_halign(fa_left);
+        _c = make_color_rgb(177, 230, 27);    
+        draw_text_color(.5*TILE,h-3*TILE + 6, get(towerNames[global.tower.type], global.tower.upgrade)
+            ,_c,_c,_c,_c,1);
     
-    draw_set_halign(fa_left);
-    draw_set_font(global.fnt);
-    
-    draw_text(w/2 - 7*TILE, h - 6*TILE, towerName[selectedTower]);
-    
-    draw_set_halign(fa_right);
-    draw_text(w/2 + 7*TILE, h - 6*TILE, "$" + string(towerPrice[selectedTower]));
+        draw_set_font(global.fntThin);
+        draw_set_halign(fa_left);
+        _c = make_color_rgb(177, 130, 27);
+        draw_text_color(.5*TILE,h-2*TILE + 6, get(towerDesc[global.tower.type], global.tower.upgrade)
+            ,_c,_c,_c,_c,1);
         
-    draw_set_halign(fa_center);
-    
-    draw_text(w/2, h - 5*TILE, towerDesc[selectedTower]);
-}*/
-
-
-
-
-
-
-
-
-
-
-
-
+        draw_set_font(global.fntUpgrade);
+        draw_set_halign(fa_right);
+        _c = make_color_rgb(128,128,128);
+        draw_text_color(10.5*TILE,h-3*TILE + 6, "owned",_c,_c,_c,_c,1);
+        
+        draw_sprite_part(sprHud, -1, global.tower.type*2*TILE, 6*TILE
+            + global.tower.upgrade*2*TILE,2*TILE,2*TILE, 12*TILE, 15*TILE);
+        
+        // right info:
+        if (global.tower.upgrade &lt; array_length_1d(towerPrices[global.tower.type]) - 1)
+        {
+            var price = get(towerPrices[global.tower.type], global.tower.upgrade+1);
+            var canBuy = (price &lt;= global.coins);
+            
+            draw_set_halign(fa_left);
+            _c = make_color_rgb(177, 230, 27);    
+            draw_text_color(21.5*TILE,h-3*TILE + 6, get(towerNames[global.tower.type], global.tower.upgrade+1)
+                ,_c,_c,_c,_c,1);
+            
+            draw_set_font(global.fntThin);
+            draw_set_halign(fa_left);
+            _c = make_color_rgb(177, 130, 27);
+            draw_text_color(21.5*TILE,h-2*TILE + 6, get(towerDesc[global.tower.type], global.tower.upgrade+1)
+                ,_c,_c,_c,_c,1);
+        
+            draw_set_font(global.fntUpgrade);
+            draw_set_halign(fa_right);
+            if (canBuy)
+            {
+                _c = make_color_rgb(99, 255, 64);
+                draw_text_color(31.5*TILE,h-3*TILE + 6, '$' + string(price),_c,_c,_c,_c,1);        
+            }
+            else
+            {
+                _c = make_color_rgb(255, 0, 0);
+                draw_text_color(31.5*TILE,h-3*TILE + 6, '$' + string(price),_c,_c,_c,_c,1);
+            }
+        
+            draw_sprite_part(sprHud, -1, global.tower.type*2*TILE, 6*TILE
+                + (global.tower.upgrade + 1)*2*TILE,2*TILE,2*TILE, 18*TILE, 15*TILE);
+            
+            var inBtnBuy = in(global.mx, 14*TILE, 18*TILE) &amp;&amp; in(global.my, h-3*TILE, h);
+            draw_sprite_part(sprHud, -1, 18*TILE + 4*TILE*(inBtnBuy &amp;&amp; mouse_check_button(mb_left)), 3*TILE*(canBuy), 4*TILE, 3*TILE, 14*TILE, h-3*TILE);
+            
+            if (mouse_check_button_released(mb_left) &amp;&amp; canBuy &amp;&amp; inBtnBuy)
+            {
+                global.tower.upgrade++;
+            }
+        }
+        else
+        {
+            draw_sprite_part(sprHud, -1, 26*TILE, 0, 5*TILE, 3*TILE, 24*TILE, h-3*TILE);
+        }
+    }
+}
 
 
 

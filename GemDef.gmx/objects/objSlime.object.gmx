@@ -140,8 +140,7 @@ banner = -1;
 
 if (hp == 0)
 {
-    var eff =instance_create(x, y, objEffect);
-    eff.type = 1;
+    createEffect(x, y, 1);
     
     switch(type)
     {

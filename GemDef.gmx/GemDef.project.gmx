@@ -61,6 +61,7 @@
     <sprite>sprites\sprProjectile</sprite>
     <sprite>sprites\mskProjectile</sprite>
     <sprite>sprites\mskSolid</sprite>
+    <sprite>sprites\sprFontUpgrade</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -85,6 +86,7 @@
     <script>scripts\findEnemy.gml</script>
     <script>scripts\array.gml</script>
     <script>scripts\get.gml</script>
+    <script>scripts\createEffect.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>

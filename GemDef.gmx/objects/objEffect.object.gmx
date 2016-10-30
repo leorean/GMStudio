@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>-10</depth>
-  <persistent>0</persistent>
+  <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -54,10 +54,13 @@ type = 0;
 
 if (global.state != G_PAUSE)
     fCur = min(fCur + .25 * global.spd, 6.9);
-    
+
+if (x != xprevious &amp;&amp; y != yprevious) fCur = 0;
+        
 frame = floor(fCur);
 
-if (fCur == 6.9) instance_destroy();
+if (fCur == 6.9) {x = -99; y = -99;}
+
 draw_sprite_part(sprEffect, -1, frame*2*TILE, type*2*TILE, 2*TILE, 2*TILE, x - TILE, y - TILE);
 </string>
           </argument>
