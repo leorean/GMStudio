@@ -54,16 +54,20 @@ global.coins = 0;
 
 map[0] = importLevel("MAP0.tmx");
 
+// WAVE DATA
+
+global.waves = importWave("waves.dat");
+
 // TOWER DATA
 
 towerUnlocked[0] = array(1, 1, 1, 1, 0);
-towerPrices[0] = array(80, 120, 300, 1000, 3400);
+towerPrices[0] = array(80, 340, 560, 1600, 3400);
 towerNames[0] = array("Poop.", "Spoop.", "Double Spoop", "Laxativo", "MEGA POOP");
 towerDesc[0] = array(
     "Your standard poo.#Cheap but efficient.",
     "Slightly faster#and a wider range.",
     "Shoots 2 parallel#projectiles.",
-    "Incredibly fast#stream of projectiles!",
+    "Even faster#fire rate!",
     "Where does all that#poo come from?");
 
 towerUnlocked[1] = array(1, 1, 1, 0, 0);
@@ -274,15 +278,47 @@ if (global.state == G_PLAY)
 
     global.timer = (global.timer + 1 * global.spd) % INFINITE;
     
-    waveTimer = max(waveTimer - global.spd, 0);
+    //waveTimer = max(waveTimer - global.spd, 0);
     
-    if (!waveTimer &amp;&amp; ds_queue_size(global.enemyQueue) &lt; 100)
+    noMoreSlimes = true;
+    for(i = 0; i &lt; instance_number(objSlime); i++)
     {
+        var _s = instance_find(objSlime, i);
+        if (instance_exists(_s) &amp;&amp; _s.wave == wave)
+            noMoreSlimes = false;            
+    }
+    
+    if (noMoreSlimes)// &amp;&amp; ds_queue_size(global.enemyQueue) &lt; 100)
+    {
+        var t = instance_create(5*TILE,2*TILE,objText);
+        v = 100; // TODO: make tower/upgrade for that money
+        t.text = "+"+string(v)+'"';
+        t.yVel = 0;
+        t.size = 3;
+        t.depth = depth-1;
+        global.coins += v;
+        
         spawnWave(wave);
         wave++;
+        maxWaveTimer = ds_queue_size(global.enemyQueue);
         waveTimer = maxWaveTimer;
     }
     
+    waveTimer = instance_number(objSlime);
+    
+    var _delay = 0;
+    repeat(ds_queue_size(global.enemyQueue))
+    {
+        var s = instance_create(-999, -999, objSlime);
+        
+        var q = ds_queue_dequeue(global.enemyQueue);
+        s.type = q[0];
+        s.banner = q[1];
+        s.delay = _delay;
+        _delay += 32;
+    }
+    
+    /*
     enemyTimer = max(enemyTimer - global.spd, 0);
     if (!enemyTimer)
     {
@@ -301,7 +337,7 @@ if (global.state == G_PLAY)
             }
         }
         enemyTimer = maxEnemyTimer;
-    }
+    }*/
 }
 </string>
           </argument>
@@ -370,7 +406,7 @@ waveTimer = 0;
 ds_queue_clear(global.enemyQueue);
 
 global.spd = 1;
-global.coins = 100;
+global.coins = 0;
 
 global.shake = false;
 shakeTimer = 0;
@@ -462,6 +498,9 @@ draw_text(4*TILE, .5*TILE, "" + string(global.coins));
 // wave
 draw_sprite_part(sprHud, -1, 10*TILE, 3*TILE, 4*TILE, TILE,.5*TILE, 2*TILE);
 draw_sprite_part(sprHud, -1, 10*TILE, 4*TILE, (waveTimer/maxWaveTimer)*4*TILE, TILE,.5*TILE, 2*TILE);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_text(2.5*TILE, 2.5*TILE, wave);
 
 // draw start
 if (global.state == G_START)

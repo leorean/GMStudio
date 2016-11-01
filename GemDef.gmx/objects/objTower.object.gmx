@@ -105,17 +105,17 @@ switch(type)
             break;
             case 1:
                 range = 5*TILE;
-                maxDelay = 45;
+                maxDelay = 50;
                 dmg = 1;   
             break;
             case 2:
                 range = 5*TILE;
-                maxDelay = 45;
+                maxDelay = 50;
                 dmg = 1;   
             break;
             case 3:
                 range = 5*TILE;
-                maxDelay = 10;
+                maxDelay = 20;
                 dmg = 1;   
             break;
             case 4:

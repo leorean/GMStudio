@@ -3,7 +3,24 @@
   <Configs name="configs">
     <Config>Configs\Default</Config>
   </Configs>
-  <datafiles number="12" name="datafiles">
+  <datafiles number="13" name="datafiles">
+    <datafile>
+      <name>waves.dat</name>
+      <exists>-1</exists>
+      <size>0</size>
+      <exportAction>2</exportAction>
+      <exportDir></exportDir>
+      <overwrite>0</overwrite>
+      <freeData>-1</freeData>
+      <removeEnd>0</removeEnd>
+      <store>0</store>
+      <ConfigOptions>
+        <Config name="Default">
+          <CopyToMask>9223372036854775807</CopyToMask>
+        </Config>
+      </ConfigOptions>
+      <filename>waves.dat</filename>
+    </datafile>
     <datafile>
       <name>MAP0.tmx</name>
       <exists>-1</exists>
@@ -72,6 +89,7 @@
   </paths>
   <scripts name="scripts">
     <script>scripts\importLevel.gml</script>
+    <script>scripts\importWave.gml</script>
     <script>scripts\createRoom.gml</script>
     <script>scripts\spawnCoins.gml</script>
     <script>scripts\in.gml</script>
@@ -87,6 +105,7 @@
     <script>scripts\array.gml</script>
     <script>scripts\get.gml</script>
     <script>scripts\createEffect.gml</script>
+    <script>scripts\splitString.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\shader0.shader</shader>
