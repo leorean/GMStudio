@@ -35,6 +35,7 @@ price = 0;
 
 placed = false;
 free = false;
+canSeeInvisible = false;
 
 // stats:
 
@@ -193,7 +194,7 @@ else
         {
             case 0:
             
-                var e = findEnemy(x + 8, y + 8, range);
+                var e = findEnemy(x + 8, y + 8, range, canSeeInvisible);
                 switch(upgrade)
                 {
                     case 0:
@@ -269,6 +270,7 @@ else
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
+draw_sprite_part(sprHud,-1,16*TILE,3*TILE,2*TILE,2*TILE,x - 8, y - TILE + 4);
 //if (spawnDelay) exit;
 
 if (global.state != G_PAUSE)
@@ -278,8 +280,13 @@ frame = floor(fCur);
 
 var sd = 1 - spawnDelay / maxSpawnDelay;
 
-draw_sprite_part_ext(sprTower, -1, frame*2*TILE + type*8*TILE, upgrade*2*TILE, 2*TILE, 2*TILE, x - sd*TILE + 8, y - sd*TILE + 8, sd, sd, c_white, 1);
+draw_sprite_part_ext(sprTower, -1, frame*2*TILE + type*8*TILE, upgrade*2*TILE, 2*TILE, 2*TILE, x - sd*TILE + 8, y - sd*TILE + 4, sd, sd, c_white, 1);
 
+if (global.tower == id &amp;&amp; placed)
+for (i = 0; i &lt; upgrade+1; i++)
+    draw_sprite_part(sprHud,-1,16*TILE,5*TILE,9,8,x - 3 - ((upgrade-1)/2 * 12) + 12*i, y - TILE - 8);
+
+//draw_sprite_ext(mskTower,-1,x,y,1,1,0,c_white,.3);
 /*if (global.tower == id &amp;&amp; !spawnDelay)
 {
     

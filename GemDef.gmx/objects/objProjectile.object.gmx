@@ -37,7 +37,7 @@ angle = 0;
 z = 0;
 
 broken = false;
-
+//canDestroyPoopSlime = false;
 </string>
           </argument>
         </arguments>
@@ -66,22 +66,24 @@ broken = false;
 switch(type)
 {
     case 0: //normal projectiles
-    if (point_distance(x0, y0, x, y) &lt; range)
-    {
-        x += lengthdir_x(spd * global.spd, angle);
-        y += lengthdir_y(spd * global.spd, angle);
-    }
-    else
-    {
-        broken = true;
-    }
-    
-    var target = instance_place(x, y, objSlime);
-    if (instance_exists(target) &amp;&amp; target.initialized &amp;&amp; target.hp &gt; 0)
-    {
-        target.hp = max(target.hp - dmg, 0);
-        broken = true;
-    }
+        if (point_distance(x0, y0, x, y) &lt; range)
+        {
+            x += lengthdir_x(spd * global.spd, angle);
+            y += lengthdir_y(spd * global.spd, angle);
+        }
+        else
+        {
+            broken = true;
+        }
+        
+        var target = instance_place(x, y, objSlime);
+        if (instance_exists(target) &amp;&amp; target.initialized 
+            &amp;&amp; target.hp &gt; 0)
+        {
+            if (!target.immuneToPoop)
+                target.hp = max(target.hp - dmg, 0);
+            broken = true;
+        }
     break;
 }
 

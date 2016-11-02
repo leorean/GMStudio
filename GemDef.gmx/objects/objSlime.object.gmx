@@ -37,6 +37,12 @@ fCur = choose(0, 1, 2, 3);
 delay = 0;
 banner = -1;
 wave = objControl.wave;
+
+immuneToIce = false;
+immuneToFire = false;
+immuneToPoop = false;
+invisible = false;
+
 </string>
           </argument>
         </arguments>
@@ -108,12 +114,55 @@ wave = objControl.wave;
             dmg = 4;
             //value = 1;
         break;
-        case 4:
+        case 4: // blue box
             spd = 3.5;
             hp = 1;
             dmg = 5;
             //value = 1;
         break;
+        case 5: // red box
+            spd = 1.8;
+            hp = 1;
+            dmg = 10;
+        break;
+        case 6: // immune to ice
+            spd = 2;
+            hp = 1;
+            dmg = 11;
+            immuneToIce = true;
+        break;
+        case 7: // immune to fire
+            spd = 2;
+            hp = 1;
+            dmg = 11;
+            immuneToFire = true;
+        break;
+        case 8: // ghost slime
+            spd = 1;
+            hp = 1;
+            dmg = 12;
+            invisible = true;
+        break;
+        case 9: // poop slime
+            spd = 1;
+            hp = 1;
+            dmg = 12;
+            immuneToPoop = true;
+        break;
+        case 10: // pink slime
+            spd = 1.8;
+            hp = 1;
+            dmg = 13;
+            immuneToIce = true;
+            immuneToFire = true;
+        break;
+        case 11: // big ghost
+            spd = 2;
+            dmg = 13;
+            hp = 3;
+            invisible = true;
+        break;
+        // zebra, rainbow, ceramic
     }
    
     initialized = true;
@@ -172,12 +221,85 @@ if (hp == 0)
             s.wave = wave;            
             s.path_position = path_position;
         break;
-        case 4:
+        case 4: // blue cube
             var _pos = 0;
             repeat(2)
             {
                 var s = instance_create(x, y, objSlime);
                 s.type = 3;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 5: // red cube
+            var _pos = 0;
+            repeat(2)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 4;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 6: // ice
+        case 7: // fire 
+            var _pos = 0;
+            repeat(2)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 5;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 8: // ghost
+            var _pos = 0;
+            repeat(3)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 4;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 9: // poop slime
+            var _pos = 0;
+            repeat(2)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 7;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 10: // pink slime
+            var _pos = 0;
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 6;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 7;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 11:
+            var _pos = 0;
+            repeat(3)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 8;
                 s.wave = wave;                
                 s.path_position = path_position + _pos;
                 _pos -= (10 / path_get_length(global.path));
@@ -265,10 +387,12 @@ if (banner != -1)
     draw_set_font(global.fnt);
 }
 
+var alpha = .5 + !invisible * .5;
+
 if (dir == RIGHT)
-    draw_sprite_part(sprSlime, -1, frame*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x - 2*TILE, y - 2*TILE);
+    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x - 2*TILE, y - 2*TILE, 1, 1, c_white, alpha);
 else
-    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x + 2*TILE, y - 2*TILE, -1, 1, c_white, 1);
+    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x + 2*TILE, y - 2*TILE, -1, 1, c_white, alpha);
 </string>
           </argument>
         </arguments>

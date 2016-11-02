@@ -61,7 +61,7 @@ global.waves = importWave("waves.dat");
 // TOWER DATA
 
 towerUnlocked[0] = array(1, 1, 1, 1, 0);
-towerPrices[0] = array(80, 340, 560, 1600, 3400);
+towerPrices[0] = array(180, 160, 460, 1200, 3400);
 towerNames[0] = array("Poop.", "Spoop.", "Double Spoop", "Laxativo", "MEGA POOP");
 towerDesc[0] = array(
     "Your standard poo.#Cheap but efficient.",
@@ -176,7 +176,7 @@ else
 global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
 
-if (!instance_exists(global.tower))
+if (!instance_exists(global.tower) &amp;&amp; global.state != G_OVER)
 {
 
     // toggle speed
@@ -236,7 +236,7 @@ else
 {
 
     // TODO
-        
+    global.spd = 1;
     global.state = G_OVER;
 }
 
@@ -281,12 +281,17 @@ if (global.state == G_PLAY)
     //waveTimer = max(waveTimer - global.spd, 0);
     
     noMoreSlimes = true;
+    waveTimer = 0;
     for(i = 0; i &lt; instance_number(objSlime); i++)
     {
         var _s = instance_find(objSlime, i);
         if (instance_exists(_s) &amp;&amp; _s.wave == wave)
-            noMoreSlimes = false;            
+        {
+            noMoreSlimes = false;
+        }
     }
+
+    waveTimer = min(maxWaveTimer, instance_number(objSlime));
     
     if (noMoreSlimes)// &amp;&amp; ds_queue_size(global.enemyQueue) &lt; 100)
     {
@@ -303,9 +308,7 @@ if (global.state == G_PLAY)
         maxWaveTimer = ds_queue_size(global.enemyQueue);
         waveTimer = maxWaveTimer;
     }
-    
-    waveTimer = instance_number(objSlime);
-    
+        
     var _delay = 0;
     repeat(ds_queue_size(global.enemyQueue))
     {
@@ -406,7 +409,7 @@ waveTimer = 0;
 ds_queue_clear(global.enemyQueue);
 
 global.spd = 1;
-global.coins = 0;
+global.coins = 200;
 
 global.shake = false;
 shakeTimer = 0;
@@ -513,7 +516,7 @@ if (global.state == G_START)
 // draw pause
 draw_sprite_part(sprHud, -1, (global.state == G_PAUSE)*2*TILE, 0, 2*TILE, 2*TILE, w - 2*TILE, 0);
 
-if (!instance_exists(global.tower))
+if (!instance_exists(global.tower) &amp;&amp; global.state != G_OVER)
 {
     // draw speedfactor
     if (global.spd == 1) _spf = 0;
@@ -700,6 +703,9 @@ if (global.state != G_OVER)
                     {
                         createEffect(global.tower.x + 8, global.tower.y + 8, 2);
                         global.tower.upgrade++;
+                        global.coins -= price;
+                        var t = instance_create(global.tower.x + 8, global.tower.y, objText);
+                        t.text = "-"+string(price)+'"';
                     }
                 }
                 else // LOCKED

@@ -26,10 +26,10 @@ for (var i = 0; i<w; i ++)
 
         // add specific path tiles here!
         if (fg == 95
-        || fg == 188
+        /*|| fg == 188
         || fg == 189
         || fg == 235
-        || fg == 236
+        || fg == 236*/
         || fg >= 282) //solid tiles
             instance_create(i*TILE, j*TILE, objSolid);
 

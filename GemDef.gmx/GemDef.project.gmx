@@ -61,6 +61,7 @@
   <sprites name="sprites">
     <sprites name="masks">
       <sprite>sprites\mskTile</sprite>
+      <sprite>sprites\mskSolid</sprite>
       <sprite>sprites\mskCoin</sprite>
       <sprite>sprites\mskPath</sprite>
       <sprite>sprites\mskTower</sprite>
@@ -77,7 +78,6 @@
     <sprite>sprites\sprTower</sprite>
     <sprite>sprites\sprProjectile</sprite>
     <sprite>sprites\mskProjectile</sprite>
-    <sprite>sprites\mskSolid</sprite>
     <sprite>sprites\sprFontUpgrade</sprite>
   </sprites>
   <backgrounds name="background">
