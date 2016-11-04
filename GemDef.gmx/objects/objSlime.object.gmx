@@ -32,11 +32,14 @@ value = 0;
 initialized = false;
 
 frame = 0;
+f = 0;
 fCur = choose(0, 1, 2, 3);
 
 delay = 0;
 banner = -1;
 wave = objControl.wave;
+
+isBoss = false;
 
 immuneToIce = false;
 immuneToFire = false;
@@ -100,25 +103,21 @@ invisible = false;
             spd = 1.4;
             hp = 1;
             dmg = 2;
-            //value = 1;
             break;
         case 2:
             spd = 1.8;
             hp = 1;
             dmg = 3;
-            //value = 1;
         break;
         case 3:
             spd = 3.2;
             hp = 1;
             dmg = 4;
-            //value = 1;
         break;
         case 4: // blue box
             spd = 3.5;
             hp = 1;
             dmg = 5;
-            //value = 1;
         break;
         case 5: // red box
             spd = 1.8;
@@ -162,9 +161,36 @@ invisible = false;
             hp = 3;
             invisible = true;
         break;
-        // zebra, rainbow, ceramic
+        case 12: // sanic
+            spd = 4;
+            dmg = 13;
+            hp = 3;
+            immuneToPoop = true;
+        break;
+        case 13: // golem
+            spd = 2.5;
+            dmg = 35;
+            hp = 10;
+            immuneToPoop = true;
+            value = 3;
+        break;
+        case 14: // queen slime
+            spd = .7;
+            dmg = 100;
+            hp = 300;
+            value = 100;
+            isBoss = true;
+        break;
+        case 15: // queen slime
+            spd = .25;
+            dmg = 500;
+            hp = 700;
+            value = 500;
+            isBoss = true;
+        break;
     }
    
+    maxHp = hp;
     initialized = true;
 }
 </string>
@@ -294,7 +320,7 @@ if (hp == 0)
                 _pos -= (10 / path_get_length(global.path));
             }
         break;
-        case 11:
+        case 11: // big ghost
             var _pos = 0;
             repeat(3)
             {
@@ -303,6 +329,47 @@ if (hp == 0)
                 s.wave = wave;                
                 s.path_position = path_position + _pos;
                 _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 12: // sanic
+            var _pos = 0;
+            repeat(10)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 0;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (5 / path_get_length(global.path));
+            }
+        break;
+        case 13: // golem
+            var _pos = 0;
+            var s = instance_create(x, y, objSlime);
+            s.type = 2;
+            s.wave = wave;                
+            s.path_position = path_position + _pos;
+            _pos -= (10 / path_get_length(global.path));
+        break;
+        case 14: // queen slime
+            var _pos = 0;
+            repeat(4)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 13;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (10 / path_get_length(global.path));
+            }
+        break;
+        case 15: // queen slime
+            var _pos = 0;
+            repeat(4)
+            {
+                var s = instance_create(x, y, objSlime);
+                s.type = 14;
+                s.wave = wave;                
+                s.path_position = path_position + _pos;
+                _pos -= (25 / path_get_length(global.path));
             }
         break;
     }
@@ -359,7 +426,9 @@ depth = 10 + room_height - y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_alpha(1);
+            <string>if (!initialized) exit;
+
+draw_set_alpha(1);
 
 if (global.state != G_PAUSE)
 {
@@ -389,10 +458,20 @@ if (banner != -1)
 
 var alpha = .5 + !invisible * .5;
 
+if (type == 13) f = floor(5 -  5*(hp / 10));// golem
+else f = 0;
+
 if (dir == RIGHT)
-    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x - 2*TILE, y - 2*TILE, 1, 1, c_white, alpha);
+    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE + f*4*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x - 2*TILE, y - 3.75*TILE, 1, 1, c_white, alpha);
 else
-    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x + 2*TILE, y - 2*TILE, -1, 1, c_white, alpha);
+    draw_sprite_part_ext(sprSlime, -1, frame*4*TILE + f*4*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x + 2*TILE, y - 3.75*TILE, -1, 1, c_white, alpha);
+
+if (isBoss)
+{
+    draw_sprite_part(sprHud, -1, 14*TILE, 5*TILE, 2*TILE, 4, x - TILE, y + 5);
+    draw_sprite_part(sprHud, -1, 14*TILE, 5*TILE + 4,2*TILE*(hp/maxHp), 4, x - TILE, y + 5);
+}
+//draw_sprite_ext(mskSlime, -1, x, y,1,1,0,c_white,.4);
 </string>
           </argument>
         </arguments>

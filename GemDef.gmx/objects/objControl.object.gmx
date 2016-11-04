@@ -209,6 +209,8 @@ else
     {
         global.tower = collision_circle(global.mx, global.my, 8, objTower, false, true);
     }
+    
+    if (global.state == G_OVER) global.tower = noone;
 }
 </string>
           </argument>
@@ -554,7 +556,7 @@ if (global.state != G_OVER)
                 draw_sprite_part(sprHud, -1, 0, 3*TILE, 3*TILE, 3*TILE, _x, h - 3*TILE);
     
                 // tower
-                draw_sprite_part(sprTower, -1, i*8*TILE, 0, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.5*TILE);
+                draw_sprite_part(sprTower, -1, i*8*TILE, 0, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.7*TILE);
                 
             } else
             {

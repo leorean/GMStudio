@@ -284,7 +284,7 @@ draw_sprite_part_ext(sprTower, -1, frame*2*TILE + type*8*TILE, upgrade*2*TILE, 2
 
 if (global.tower == id &amp;&amp; placed)
 for (i = 0; i &lt; upgrade+1; i++)
-    draw_sprite_part(sprHud,-1,16*TILE,5*TILE,9,8,x - 3 - ((upgrade-1)/2 * 12) + 12*i, y - TILE - 8);
+    draw_sprite_part(sprHud,-1,16*TILE,5*TILE,9,8, x - 3 - ((upgrade-1)/2 * 12) + 12*i, y - TILE - 8);
 
 //draw_sprite_ext(mskTower,-1,x,y,1,1,0,c_white,.3);
 /*if (global.tower == id &amp;&amp; !spawnDelay)

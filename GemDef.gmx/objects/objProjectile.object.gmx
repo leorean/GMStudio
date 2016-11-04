@@ -82,6 +82,14 @@ switch(type)
         {
             if (!target.immuneToPoop)
                 target.hp = max(target.hp - dmg, 0);
+
+            // still alive
+            if(target.hp &gt; 0)
+            {
+                var eff = instance_create(x, y, objEffect);
+                eff.type = 3;
+            }
+            
             broken = true;
         }
     break;
