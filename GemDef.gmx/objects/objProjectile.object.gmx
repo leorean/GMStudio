@@ -37,7 +37,8 @@ angle = 0;
 z = 0;
 
 broken = false;
-//canDestroyPoopSlime = false;
+
+maxHeight = 0; // for ballistic projectiles
 </string>
           </argument>
         </arguments>
@@ -65,7 +66,7 @@ broken = false;
 
 switch(type)
 {
-    case 0: //normal projectiles
+    case 0: // poop projectiles
         if (point_distance(x0, y0, x, y) &lt; range)
         {
             x += lengthdir_x(spd * global.spd, angle);
@@ -93,14 +94,30 @@ switch(type)
             broken = true;
         }
     break;
+    case 1: // bombs
+    case 2:
+    case 3:
+    
+        var d = (point_distance(x0, y0, x, y)) / (range / 4);        
+        z = -sin(d) * maxHeight;
+        
+        if (z &gt;= 0 &amp;&amp; d &gt; 0)
+        {
+            var e = instance_create(x, y, objExplosion);
+            e.type = type - 1;
+            e.dmg = dmg;
+            instance_destroy();
+        }
+        else
+        {
+            x += lengthdir_x(spd * global.spd, angle);
+            y += lengthdir_y(spd * global.spd, angle);
+        }        
+    break;
 }
 
 if (broken)
-{
-    /*var eff = instance_create(x, y + z, objEffect);
-    eff.type = 0;*/
     instance_destroy();
-}
 </string>
           </argument>
         </arguments>

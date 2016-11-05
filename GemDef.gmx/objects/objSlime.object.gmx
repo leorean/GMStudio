@@ -179,13 +179,15 @@ invisible = false;
             dmg = 100;
             hp = 300;
             value = 100;
+            immuneToIce = true;
             isBoss = true;
         break;
-        case 15: // queen slime
+        case 15: // king slime
             spd = .25;
-            dmg = 500;
+            dmg = 200;
             hp = 700;
             value = 500;
+            immuneToIce = true;
             isBoss = true;
         break;
     }

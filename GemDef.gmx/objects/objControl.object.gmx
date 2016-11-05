@@ -61,7 +61,7 @@ global.waves = importWave("waves.dat");
 // TOWER DATA
 
 towerUnlocked[0] = array(1, 1, 1, 1, 0);
-towerPrices[0] = array(180, 160, 460, 1200, 3400);
+towerPrices[0] = array(180, 160, 360, 900, 3400);
 towerNames[0] = array("Poop.", "Spoop.", "Double Spoop", "Laxativo", "MEGA POOP");
 towerDesc[0] = array(
     "Your standard poo.#Cheap but efficient.",
@@ -70,15 +70,15 @@ towerDesc[0] = array(
     "Even faster#fire rate!",
     "Where does all that#poo come from?");
 
-towerUnlocked[1] = array(1, 1, 1, 0, 0);
-towerPrices[1] = array(999, 999, 999, 999, 999);
-towerNames[1] = array("-name1-", "-name2-", "-name3-", "-name4-", "-name5-");
+towerUnlocked[1] = array(1, 1, 1, 1, 1);
+towerPrices[1] = array(560, 240, 370, 280, 950);
+towerNames[1] = array("Toilet", "Clogged T.", "Gridlocked T.", "Rancid T.", "U.S. Toilet");
 towerDesc[1] = array(
-    "-desc1-",
-    "-desc2-",
-    "-desc3-",
-    "-desc4-",
-    "-desc5-");
+    "Does explosive#area damage.",
+    "Someone didn't flush..#(Range+/Speed+)",
+    "Totally constipaded.#(Range+/Explosion+)",
+    "Ew.. (Range++/Speed++)",
+    '"Shouldn'+"'" + 't have eaten#at that burrito place.."');
 
 towerUnlocked[2] = array(1, 1, 1, 0, 0);
 towerPrices[2] = array(999, 999, 999, 999, 999);
@@ -163,7 +163,8 @@ towerDesc[7] = array(
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(ord('R'))
+            <string>/* DEBUG */
+if (keyboard_check_pressed(ord('R'))
     || keyboard_check_pressed(vk_backspace)) room_restart();
 
 if (keyboard_check_pressed(ord('Q'))) game_restart();
@@ -172,6 +173,11 @@ if (keyboard_check(ord('C')))
     room_speed = 5;
 else
     room_speed = 60;
+    
+if (keyboard_check(vk_space))
+    global.coins +=100;
+    
+/* END DEBUG*/
 
 global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
@@ -205,7 +211,8 @@ else
         // above menu:
         &amp;&amp; global.my &lt; HEIGHT - 3*TILE
         // not in trash icon:
-        &amp;&amp; !(in(global.mx,0,2*TILE) &amp;&amp; in(global.my,HEIGHT-5*TILE,HEIGHT-3*TILE) &amp;&amp; instance_exists(global.tower)))
+        &amp;&amp; !(in(global.mx,0,2*TILE) &amp;&amp; in(global.my,HEIGHT-5*TILE,HEIGHT-3*TILE) &amp;&amp; instance_exists(global.tower))
+        &amp;&amp; global.state == G_PLAY)
     {
         global.tower = collision_circle(global.mx, global.my, 8, objTower, false, true);
     }
@@ -609,9 +616,6 @@ if (global.state != G_OVER)
         }
         if (global.tower.placed)
         {
-            if (keyboard_check(vk_space))
-                global.coins +=50;
-        
             // sell again
             var sale = floor(.5 * get(towerPrices[global.tower.type], global.tower.upgrade));
             var inBtnSell = in(global.mx,0,2*TILE) &amp;&amp; in(global.my,h-5*TILE,h-3*TILE);
@@ -623,7 +627,7 @@ if (global.state != G_OVER)
             draw_text_color(2*TILE + 2, h - 4*TILE + 6, 'Sell: '+string(sale)+"$",
                 _c,_c,_c,_c,1);
                 
-            if (inBtnSell &amp;&amp; mouse_check_button_released(mb_left))
+            if (inBtnSell &amp;&amp; mouse_check_button_pressed(mb_left))
             {
                 createEffect(global.tower.x + 8, global.tower.y + 8, 2);
                 var t = instance_create(global.tower.x + 8, global.tower.y, objText);

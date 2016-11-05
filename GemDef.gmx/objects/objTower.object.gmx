@@ -93,10 +93,9 @@ frame = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// stats
-switch(type)
+            <string>switch(type)
 {
-    case 0: // TODO: subtype!
+    case 0: // poop
         switch(upgrade)
         {
             case 0:
@@ -123,6 +122,41 @@ switch(type)
                 range = 6*TILE;
                 maxDelay = 10;
                 dmg = 1;   
+            break;
+        }
+    break;
+    case 1: // toilet bomb
+        switch(upgrade)
+        {
+            case 0:
+                range = 3*TILE;
+                maxDelay = 90;
+                dmg = 1;
+                bombType = 1;
+            break;
+            case 1:
+                range = 3.5*TILE;
+                maxDelay = 80;
+                dmg = 1;
+                bombType = 1;  
+            break;
+            case 2:
+                range = 4*TILE;
+                maxDelay = 60;
+                dmg = 2;
+                bombType = 2;
+            break;
+            case 3:
+                range = 4.5*TILE;
+                maxDelay = 60;
+                dmg = 2;
+                bombType = 2;
+            break;
+            case 4:
+                range = 5*TILE;
+                maxDelay = 45;
+                dmg = 3;
+                bombType = 3;
             break;
         }
     break;
@@ -160,7 +194,6 @@ free = place_free(x, y) &amp;&amp; (bbox_bottom &lt; room_height - 3*TILE);
 
 if (!placed)
 {
-
     x = global.mx - 8;
     y = global.my - 8;
 
@@ -192,7 +225,7 @@ else
     {
         switch(type)
         {
-            case 0:
+            case 0: // poop
             
                 var e = findEnemy(x + 8, y + 8, range, canSeeInvisible);
                 switch(upgrade)
@@ -200,6 +233,7 @@ else
                     case 0:
                     case 1:
                     case 3:
+                    case 4:
                         if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
                         {
                             var proj = instance_create(x + 8,y + 12, objProjectile);
@@ -243,6 +277,37 @@ else
                     break;
                 }
             break;
+            case 1: // toilet bombs
+                var e = findEnemy(x + 8, y + 8, range, canSeeInvisible);
+                if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
+                {
+                    var proj = instance_create(x + 8,y + 8, objProjectile);
+                    proj.angle = point_direction(proj.x, proj.y, e.x, e.y);
+                    proj.dmg = dmg;
+                    proj.range = point_distance(proj.x, proj.y, e.x, e.y);
+                    proj.maxHeight = proj.range / 2;
+                    proj.type = bombType;
+                    switch(upgrade)
+                    {
+                        case 0:
+                            proj.spd = 1;
+                        break;
+                        case 1:
+                            proj.spd = 1;
+                        break;
+                        case 2:
+                            proj.spd = 1.5;
+                        break;
+                        case 3:
+                            proj.spd = 2;
+                        break;
+                        case 4:
+                            proj.spd = 2.5;
+                        break;
+                    }
+                    delay = maxDelay;
+                }
+            break;
         }
     }
 }
@@ -271,7 +336,6 @@ else
             <string>draw_set_alpha(1);
 
 draw_sprite_part(sprHud,-1,16*TILE,3*TILE,2*TILE,2*TILE,x - 8, y - TILE + 4);
-//if (spawnDelay) exit;
 
 if (global.state != G_PAUSE)
     fCur = (fCur + .1 * global.spd) % 4;
@@ -280,28 +344,12 @@ frame = floor(fCur);
 
 var sd = 1 - spawnDelay / maxSpawnDelay;
 
-draw_sprite_part_ext(sprTower, -1, frame*2*TILE + type*8*TILE, upgrade*2*TILE, 2*TILE, 2*TILE, x - sd*TILE + 8, y - sd*TILE + 4, sd, sd, c_white, 1);
+draw_sprite_part_ext(sprTower, -1, frame*2*TILE + type*8*TILE, upgrade*2*TILE, 2*TILE, 2*TILE, x - sd*TILE + 8, y - sd*TILE - 2, sd, sd, c_white, 1);
 
 if (global.tower == id &amp;&amp; placed)
 for (i = 0; i &lt; upgrade+1; i++)
     draw_sprite_part(sprHud,-1,16*TILE,5*TILE,9,8, x - 3 - ((upgrade-1)/2 * 12) + 12*i, y - TILE - 8);
 
-//draw_sprite_ext(mskTower,-1,x,y,1,1,0,c_white,.3);
-/*if (global.tower == id &amp;&amp; !spawnDelay)
-{
-    
-    draw_set_blend_mode(bm_add);
-    var col = c_white;
-    if (!free)
-    {
-        draw_set_blend_mode(bm_normal);    
-        col = c_red;
-    }
-    draw_set_color(col);
-    draw_set_alpha(.3);
-    draw_circle(x + 8, y + 8, range, 0);
-    draw_set_blend_mode(bm_normal);
-}*/
 </string>
           </argument>
         </arguments>

@@ -66,6 +66,7 @@
       <sprite>sprites\mskPath</sprite>
       <sprite>sprites\mskTower</sprite>
       <sprite>sprites\mskSlime</sprite>
+      <sprite>sprites\mskProjectile</sprite>
     </sprites>
     <sprite>sprites\sprFontSmall</sprite>
     <sprite>sprites\sprFont</sprite>
@@ -77,8 +78,8 @@
     <sprite>sprites\sprSlime</sprite>
     <sprite>sprites\sprTower</sprite>
     <sprite>sprites\sprProjectile</sprite>
-    <sprite>sprites\mskProjectile</sprite>
     <sprite>sprites\sprFontUpgrade</sprite>
+    <sprite>sprites\sprExplosion</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -127,6 +128,7 @@
     <object>objects\objSlime</object>
     <object>objects\objTower</object>
     <object>objects\objProjectile</object>
+    <object>objects\objExplosion</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
