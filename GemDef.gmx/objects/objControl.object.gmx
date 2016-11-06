@@ -60,19 +60,19 @@ global.waves = importWave("waves.dat");
 
 // TOWER DATA
 
-towerUnlocked[0] = array(1, 1, 1, 1, 0);
-towerPrices[0] = array(180, 160, 360, 900, 3400);
-towerNames[0] = array("Poop.", "Spoop.", "Double Spoop", "Laxativo", "MEGA POOP");
+towerUnlocked[0] = array(1, 1, 1, 1, 1);
+towerPrices[0] = array(180, 160, 270, 390, 650);
+towerNames[0] = array("Poop.", "Spoop.", "Double Spoop", "Laxativo", "Gold Nugget");
 towerDesc[0] = array(
     "Your standard poo.#Cheap but efficient.",
     "Slightly faster#and a wider range.",
     "Shoots 2 parallel#projectiles.",
-    "Even faster#fire rate!",
-    "Where does all that#poo come from?");
+    "PewPewPew!#(Fire rate++)",
+    "Can pierce up to 10#slimes!");
 
 towerUnlocked[1] = array(1, 1, 1, 1, 1);
-towerPrices[1] = array(560, 240, 370, 280, 950);
-towerNames[1] = array("Toilet", "Clogged T.", "Gridlocked T.", "Rancid T.", "U.S. Toilet");
+towerPrices[1] = array(350, 240, 230, 380, 950);
+towerNames[1] = array("Toilet", "Clogged T.", "Gridlocked T.", "Rancid T.", "Fiery T.");
 towerDesc[1] = array(
     "Does explosive#area damage.",
     "Someone didn't flush..#(Range+/Speed+)",
@@ -80,15 +80,15 @@ towerDesc[1] = array(
     "Ew.. (Range++/Speed++)",
     '"Shouldn'+"'" + 't have eaten#at that burrito place.."');
 
-towerUnlocked[2] = array(1, 1, 1, 0, 0);
-towerPrices[2] = array(999, 999, 999, 999, 999);
-towerNames[2] = array("-name2-", "-name2-", "-name3-", "-name4-", "-name5-");
+towerUnlocked[2] = array(1, 1, 1, 1, 1);
+towerPrices[2] = array(385, 120, 420, 900, 2600);
+towerNames[2] = array("Frozen Poo", "Deep Freeze", "Deadly Frost", "Arctic Turd", "Pooman");
 towerDesc[2] = array(
-    "-desc1-",
-    "-desc2-",
-    "-desc3-",
-    "-desc4-",
-    "-desc5-");
+    "Freezes slimes for#a short time period.",
+    "Frozen slimes will#become slowed.",
+    "The frost kills#off the weak.",
+    "Stops freezing,#but increases slow effect.",
+    "Do you wanna build#a pooman? (slow+++)");
 
 towerUnlocked[3] = array(0, 0, 0, 0, 0);
 towerPrices[3] = array(999, 999, 999, 999, 999);
@@ -427,7 +427,7 @@ shakeTimer = 0;
 
 selected = -1;
 global.tower = noone;
-
+preText = "";
 </string>
           </argument>
         </arguments>
@@ -540,11 +540,23 @@ if (!instance_exists(global.tower) &amp;&amp; global.state != G_OVER)
 // ++++++++++++++ draw tower shop buttons +++++++++++++++++
 if (global.state != G_OVER)
 {
+
+    if (!instance_exists(global.tower) || !global.tower.placed)
+    {
+        draw_set_font(global.fnt);
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        //draw_text(w/2, h - 1.5*TILE, 'drag &amp; drop');
+        draw_text(w/2, h - 4.5*TILE, preText);
+        if (mouse_check_button_released(mb_left))
+            preText = "";
+    }
+        
     if (!instance_exists(global.tower))
     {
         draw_set_halign(fa_center);
         draw_set_valign(fa_top);
-        
+                
         var indexOffset = 0;
         for (i = 0; i &lt; array_length_1d(towerUnlocked); i++)
         {
@@ -563,7 +575,7 @@ if (global.state != G_OVER)
                 draw_sprite_part(sprHud, -1, 0, 3*TILE, 3*TILE, 3*TILE, _x, h - 3*TILE);
     
                 // tower
-                draw_sprite_part(sprTower, -1, i*8*TILE, 0, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.7*TILE);
+                draw_sprite_part(sprTower, -1, i*8*TILE, 0, 2*TILE, 2*TILE, _x + .5 * TILE, h - 3*TILE);
                 
             } else
             {
@@ -575,9 +587,9 @@ if (global.state != G_OVER)
     
                 // tower
                 if (!isLocked)
-                    draw_sprite_part_ext(sprTower, -1, i*8*TILE, 0, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.5*TILE, 1,1,c_black,.5);
+                    draw_sprite_part_ext(sprTower, -1, i*8*TILE, 0, 2*TILE, 2*TILE, _x + .5 * TILE, h - 3*TILE, 1, 1, c_black,.5);
                 else
-                    draw_sprite_part(sprTower, -1, 16*TILE, 3*TILE, 2*TILE, 2*TILE, _x + .5 * TILE, h - 2.5*TILE);
+                    draw_sprite_part(sprTower, -1, 16*TILE, 3*TILE, 2*TILE, 2*TILE, _x + .5 * TILE, h - 3*TILE);
             
             }
             
@@ -588,17 +600,24 @@ if (global.state != G_OVER)
             if (!isLocked) _text = string(get(towerPrices[i], 0)) else _text = "locked";
             draw_text_color(_x + 1.5*TILE, h - 1*TILE, "" + _text, _c, _c, _c, _c, 1);
             
-            if (!(get(towerPrices[i], 0) &gt; global.coins 
-                || global.state != G_PLAY
-                || isLocked))
+            if (global.state == G_PLAY)
             {
                 if (in(global.mx, _x, _x + 3*TILE) &amp;&amp; in(global.my, h - 3*TILE, h))
                 {
+                    // update info text
+                    if (mouse_check_button(mb_left))
+                        preText =  get(towerDesc[i], 0);
+                 
+                    // pre-purchase action
                     if (mouse_check_button_pressed(mb_left))
                     {
-                        global.tower = instance_create(global.mx, global.my, objTower);
-                        global.tower.price = get(towerPrices[i], 0);
-                        global.tower.type = i;
+                        if (!(get(towerPrices[i], 0) &gt; global.coins 
+                        || isLocked))
+                        {
+                            global.tower = instance_create(global.mx, global.my, objTower);
+                            global.tower.price = get(towerPrices[i], 0);
+                            global.tower.type = i;
+                        }                        
                     }
                 }
             }
@@ -607,18 +626,12 @@ if (global.state != G_OVER)
     // +++++ TOWER UPGRADE MENU +++++
     else
     {
-        if (!global.tower.placed)
-        {
-            draw_set_font(global.fnt);
-            draw_set_halign(fa_center);
-            draw_set_valign(fa_center);
-            draw_text(w/2, h - 1.5*TILE, 'drag &amp; drop');
-        }
         if (global.tower.placed)
         {
             // sell again
             var sale = floor(.5 * get(towerPrices[global.tower.type], global.tower.upgrade));
-            var inBtnSell = in(global.mx,0,2*TILE) &amp;&amp; in(global.my,h-5*TILE,h-3*TILE);
+            var inBtnSell = in(global.mx,0,2*TILE) &amp;&amp; in(global.my,h-5*TILE,h-3*TILE)
+             &amp;&amp; global.state == G_PLAY;
             
             draw_sprite_part(sprHud, -1, 2*TILE*(inBtnSell &amp;&amp;  mouse_check_button(mb_left)), 9*TILE, 2*TILE, 2*TILE, 0, h-5*TILE);
             draw_set_font(global.fntThin);
@@ -664,7 +677,7 @@ if (global.state != G_OVER)
             draw_text_color(10.5*TILE,h-3*TILE + 6, "owned",_c,_c,_c,_c,1);
             
             draw_sprite_part(sprTower, -1, global.tower.type*8*TILE, 
-                global.tower.upgrade*2*TILE,2*TILE,2*TILE, 12*TILE, 15*TILE);
+                global.tower.upgrade*2*TILE,2*TILE,2*TILE, 12*TILE, 15*TILE - 6);
             
             // right info:
             if (global.tower.upgrade &lt; array_length_1d(towerPrices[global.tower.type]) - 1)
@@ -700,9 +713,10 @@ if (global.state != G_OVER)
                     }
                 
                     draw_sprite_part(sprTower, -1, global.tower.type*8*TILE, 0
-                        + (global.tower.upgrade + 1)*2*TILE,2*TILE,2*TILE, 18*TILE, 15*TILE);
+                        + (global.tower.upgrade + 1)*2*TILE,2*TILE,2*TILE, 18*TILE, 15*TILE - 6);
                     
-                    var inBtnBuy = in(global.mx, 14*TILE, 18*TILE) &amp;&amp; in(global.my, h-3*TILE, h);
+                    var inBtnBuy = in(global.mx, 14*TILE, 18*TILE) &amp;&amp; in(global.my, h-3*TILE, h)
+                     &amp;&amp; global.state == G_PLAY;
                     draw_sprite_part(sprHud, -1, 18*TILE + 4*TILE*(inBtnBuy &amp;&amp; mouse_check_button(mb_left)), 3*TILE*(canBuy), 4*TILE, 3*TILE, 14*TILE, h-3*TILE);
                     
                     if (mouse_check_button_released(mb_left) &amp;&amp; canBuy &amp;&amp; inBtnBuy)
@@ -718,7 +732,7 @@ if (global.state != G_OVER)
                 {
                     draw_sprite_part(sprHud, -1, 26*TILE, 3*TILE, 6*TILE, 3*TILE, 23.5*TILE, h-3*TILE);
                     draw_sprite_part_ext(sprTower, -1, global.tower.type*8*TILE,
-                        (global.tower.upgrade + 1)*2*TILE,2*TILE,2*TILE, 18*TILE, 15*TILE, 1, 1, c_black,.5);
+                        (global.tower.upgrade + 1)*2*TILE,2*TILE,2*TILE, 18*TILE, 15*TILE - 6, 1, 1, c_black,.5);
                     
                 }
             }

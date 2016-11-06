@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-12</depth>
+  <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,11 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = 0;
-frame = 0;
+            <string>alpha = 1;
+size = 0;
 type = 0;
-dmg = 0;
-exploded = false;
+frozen = false;
 </string>
           </argument>
         </arguments>
@@ -52,48 +51,59 @@ exploded = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-if (global.state == G_PLAY)
+            <string>if (global.state != G_PAUSE)
 {
-
-    switch(type)
-    {
-        case 0:
-            r = 1.5*TILE;
-        break;
-        case 1:
-            r = 2*TILE;
-        break;
-        case 2:
-            r = 2.5*TILE;
-        break;
-    }
-
-    if (frame == 2 &amp;&amp; !exploded) // so it triggers only one time
-    {
-        exploded = true;
-        instance_deactivate_object(objSlime);
-        instance_activate_region(x-r,y-r,2*r,2*r,true);
-        
-        for(i = 0; i &lt; instance_number(objSlime); i++)
-        {
-            var s = instance_find(objSlime, i);
-            
-            if (instance_exists(s) &amp;&amp; s.initialized &amp;&amp; s.hp &gt; 0 &amp;&amp; distance_to_point(s.x, s.y) &lt;= r
-                &amp;&amp; !s.immuneToFire)
-            {
-                s.hp = max(s.hp - dmg, 0);
-            }
-        }
-        instance_activate_object(objSlime);
-    }
-
-    fCur = min(fCur + .35 * global.spd, 8);
-    frame = floor(fCur);
-    if (fCur == 8) instance_destroy();
+    alpha = max(alpha - .02 * global.spd, 0);
+    size = min(size + .08 * global.spd, 1);
 }
 
-draw_sprite_part(sprExplosion, -1, frame*4*TILE,type*4*TILE,4*TILE,4*TILE,x-2*TILE,y-2*TILE);
+var s = size*3*TILE;
+
+if (size == 1 &amp;&amp; !frozen)
+{
+    instance_deactivate_object(objSlime);
+    instance_activate_region(x-s,y-s,2*s,2*s, true);
+    
+    for(i = 0; i &lt; instance_number(objSlime); i++)
+    {
+        var e = instance_find(objSlime, i);
+        if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0
+         &amp;&amp; distance_to_point(e.x, e.y) &lt; s)
+        {
+            if (!e.immuneToIce)
+            {
+                switch(type)
+                {
+                    case 0:
+                        e.freeze = 30;
+                        createEffect(e.x, e.y, 7);
+                    break;
+                    case 1:
+                        e.freeze = 30;
+                        e.slowFactor = .7;
+                        e.slowDuration = 5*60;
+                        createEffect(e.x, e.y, 7);
+                    break;
+                    case 2:
+                        e.hp = max(e.hp - 1, 0);
+                        createEffect(e.x, e.y - 12, 6);                
+                    break;
+                    // DIFFERENT SLOW HANDLING (directly via tower)
+                    case 3:
+                    case 4:
+                    break;
+                }
+            }
+            else
+                createEffect(e.x, e.y, 3); //symbolizes immunity against ice
+        }
+    }
+    instance_activate_object(objSlime);
+    frozen = true;
+}
+if (alpha == 0) instance_destroy();
+
+draw_sprite_part_ext(sprFrost, -1, 6*TILE*type, 0, 6*TILE, 6*TILE, x - s, y - s, size, size, c_white, alpha);
 </string>
           </argument>
         </arguments>

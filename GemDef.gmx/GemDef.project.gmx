@@ -80,6 +80,7 @@
     <sprite>sprites\sprProjectile</sprite>
     <sprite>sprites\sprFontUpgrade</sprite>
     <sprite>sprites\sprExplosion</sprite>
+    <sprite>sprites\sprFrost</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -129,6 +130,7 @@
     <object>objects\objTower</object>
     <object>objects\objProjectile</object>
     <object>objects\objExplosion</object>
+    <object>objects\objFrost</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

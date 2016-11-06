@@ -31,6 +31,7 @@ type = 0;
 value = 0;
 initialized = false;
 
+dir = LEFT;
 frame = 0;
 f = 0;
 fCur = choose(0, 1, 2, 3);
@@ -40,6 +41,10 @@ banner = -1;
 wave = objControl.wave;
 
 isBoss = false;
+
+freeze = 0;
+slowDuration = 0;
+slowFactor = 1;
 
 immuneToIce = false;
 immuneToFire = false;
@@ -223,6 +228,17 @@ invisible = false;
     exit;
 }
 
+slowDuration = max(slowDuration - global.spd, 0);
+if (!slowDuration)
+{
+    maxSlowDuration = 0;
+    slowFactor = 1;
+}
+else
+    maxSlowDuration = max(maxSlowDuration, slowDuration);
+
+freeze = max(freeze - global.spd, 0);
+
 if (hp == 0)
 {
     createEffect(x, y, 1);
@@ -389,7 +405,10 @@ if (hp == 0)
 
 if (!delay)
 {
-    path_speed = spd * .4 * (global.spd);
+    if (!freeze)
+        path_speed = spd * .4 * slowFactor * global.spd;
+    else
+        path_speed = 0;
 }
 else
 {
@@ -434,13 +453,17 @@ draw_set_alpha(1);
 
 if (global.state != G_PAUSE)
 {
-    fCur = (fCur + .12) % 4;
-    if (x &gt;= xprevious) 
-        dir = RIGHT;
-    else 
-        dir = LEFT;
+    if (!freeze)
+    {
+        fCur = (fCur + .12) % 4;
+        
+        if (x &gt;= xprevious) 
+            dir = RIGHT;
+        else 
+            dir = LEFT;
+    }
 }
-    
+
 frame = floor(fCur);
 
 // BANNER
@@ -458,6 +481,12 @@ if (banner != -1)
     draw_set_font(global.fnt);
 }
 
+if (slowDuration)
+{
+    var _sf = slowDuration/maxSlowDuration;
+    draw_sprite_part_ext(sprSlime, -1, 22*TILE, 0, 2*TILE, 2*TILE, x - _sf*1*TILE, y - TILE - _sf*1*TILE, _sf, _sf, c_white, .7);
+}
+
 var alpha = .5 + !invisible * .5;
 
 if (type == 13) f = floor(5 -  5*(hp / 10));// golem
@@ -467,6 +496,19 @@ if (dir == RIGHT)
     draw_sprite_part_ext(sprSlime, -1, frame*4*TILE + f*4*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x - 2*TILE, y - 3.75*TILE, 1, 1, c_white, alpha);
 else
     draw_sprite_part_ext(sprSlime, -1, frame*4*TILE + f*4*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x + 2*TILE, y - 3.75*TILE, -1, 1, c_white, alpha);
+
+if (freeze)
+{
+    draw_set_blend_mode(bm_add);
+    
+    var _fc = make_color_rgb(168,255,255);
+    
+    if (dir == RIGHT)
+        draw_sprite_part_ext(sprSlime, -1, frame*4*TILE + f*4*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x - 2*TILE, y - 3.75*TILE, 1, 1, _fc, .8);
+    else
+        draw_sprite_part_ext(sprSlime, -1, frame*4*TILE + f*4*4*TILE, type*4*TILE, 4*TILE, 4*TILE, x + 2*TILE, y - 3.75*TILE, -1, 1, _fc, .8);
+    draw_set_blend_mode(bm_normal);
+}
 
 if (isBoss)
 {

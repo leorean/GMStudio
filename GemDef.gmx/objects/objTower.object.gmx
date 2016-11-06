@@ -120,8 +120,8 @@ frame = 0;
             break;
             case 4:
                 range = 6*TILE;
-                maxDelay = 10;
-                dmg = 1;   
+                maxDelay = 30;
+                dmg = 2;   
             break;
         }
     break;
@@ -158,6 +158,32 @@ frame = 0;
                 dmg = 3;
                 bombType = 3;
             break;
+        }
+    break;
+    case 2: // ICE
+        dmg = 1;
+        switch(upgrade)
+        {
+            case 0:
+                range = 3*TILE;
+                maxDelay = 90;
+            break;
+            case 1:
+                range = 3*TILE;
+                maxDelay = 75;
+            break;
+            case 2:
+                range = 3*TILE;
+                maxDelay = 60;
+            break;
+            case 3:
+                range = 3.5*TILE;
+                maxDelay = 5;
+            break;
+            case 4:
+                range = 4*TILE;
+                maxDelay = 5;
+            break;            
         }
     break;
 }
@@ -233,7 +259,6 @@ else
                     case 0:
                     case 1:
                     case 3:
-                    case 4:
                         if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
                         {
                             var proj = instance_create(x + 8,y + 12, objProjectile);
@@ -244,6 +269,12 @@ else
                             proj.type = 0;
                             proj.z = -4;
                             delay = maxDelay;
+                            
+                            if (upgrade == 3) // laxativo
+                            {
+                                //proj.subType = 1; //green color
+                                proj.spd = 4;
+                            }
                         }
                     break;
                     case 2:
@@ -275,6 +306,19 @@ else
                             delay = maxDelay;
                         }
                     break;
+                    case 4: // goldnugget
+                        if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
+                        {
+                            var proj = instance_create(x + 8,y + 12, objProjectile);
+                            proj.angle = point_direction(proj.x, proj.y, e.x, e.y);
+                            proj.dmg = dmg;
+                            proj.range = range;
+                            proj.spd = 2.5;
+                            proj.type = 4;
+                            proj.z = -4;
+                            delay = maxDelay;
+                        }
+                    break;
                 }
             break;
             case 1: // toilet bombs
@@ -290,10 +334,10 @@ else
                     switch(upgrade)
                     {
                         case 0:
-                            proj.spd = 1;
+                            proj.spd = 1.3;
                         break;
                         case 1:
-                            proj.spd = 1;
+                            proj.spd = 1.4;
                         break;
                         case 2:
                             proj.spd = 1.5;
@@ -303,6 +347,56 @@ else
                         break;
                         case 4:
                             proj.spd = 2.5;
+                        break;
+                    }
+                    delay = maxDelay;
+                }
+            break;
+            case 2: // ice
+                var e = findEnemy(x + 8, y + 8, range, canSeeInvisible || upgrade &gt; 2);
+                if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
+                {
+                    /*
+                        "Freezes slimes for#a short time period.",
+                        "Frozen slimes will#become slowed.",
+                        "The frost kills#off the weak.",
+                        "Stops freezing,#but increases slow effect.",
+                        "Do you wanna build#a pooman? (slow+++)");
+                    */
+                    switch(upgrade)
+                    {
+                        case 0:
+                            var f = instance_create(x + 8, y + 8, objFrost);
+                            f.type = 0;
+                        break;
+                        case 1:
+                            var f = instance_create(x + 8, y + 8, objFrost);
+                            f.type = 1;
+                        break;
+                        case 2:
+                            var f = instance_create(x + 8, y + 8, objFrost);
+                            f.type = 2;
+                        break;
+                        case 3:                            
+                        case 4:
+                            instance_deactivate_object(objSlime);
+                            instance_activate_region(x-range,y-range,2*range,2*range, true);
+                            
+                            for(i = 0; i &lt; instance_number(objSlime); i++)
+                            {
+                                var e = instance_find(objSlime, i);
+                                if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0 &amp;&amp; !e.immuneToIce
+                                 &amp;&amp; distance_to_point(e.x, e.y) &lt; range)
+                                {
+                                    e.maxSlowFactor = 0; // just resets
+                                    if (upgrade == 3)
+                                        e.slowFactor = .6;
+                                    if (upgrade == 3)
+                                        e.slowFactor = .3;
+                                    e.slowDuration = 15;
+                                }
+                            }
+                            instance_activate_object(objSlime);
                         break;
                     }
                     delay = maxDelay;

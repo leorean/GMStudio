@@ -36,9 +36,14 @@ range = 0;
 angle = 0;
 z = 0;
 
+subType = 0;
+
 broken = false;
 
 maxHeight = 0; // for ballistic projectiles
+
+enemyVisited = ds_list_create();
+
 </string>
           </argument>
         </arguments>
@@ -87,8 +92,7 @@ switch(type)
             // still alive
             if(target.hp &gt; 0)
             {
-                var eff = instance_create(x, y, objEffect);
-                eff.type = 3;
+                createEffect(x, y, 3);
             }
             
             broken = true;
@@ -96,8 +100,7 @@ switch(type)
     break;
     case 1: // bombs
     case 2:
-    case 3:
-    
+    case 3:    
         var d = (point_distance(x0, y0, x, y)) / (range / 4);        
         z = -sin(d) * maxHeight;
         
@@ -114,10 +117,38 @@ switch(type)
             y += lengthdir_y(spd * global.spd, angle);
         }        
     break;
+    case 4: // goldnugget pierce
+        if (point_distance(x0, y0, x, y) &lt; range)
+        {
+            x += lengthdir_x(spd * global.spd, angle);
+            y += lengthdir_y(spd * global.spd, angle);
+        }
+        else
+        {
+            createEffect(x, y, 5);
+            broken = true;
+        }
+        
+        var target = instance_place(x, y, objSlime);
+        if (instance_exists(target) &amp;&amp; target.initialized 
+            &amp;&amp; target.hp &gt; 0 &amp;&amp; ds_list_find_index(enemyVisited, target) == -1)
+        {
+            target.hp = max(target.hp - dmg, 0);
+
+            createEffect(x, y, 3);
+            
+            ds_list_add(enemyVisited, target);
+            if(ds_list_size(enemyVisited) &gt;= 10)
+                broken = true;
+        }
+    break;
 }
 
 if (broken)
+{
+    ds_list_destroy(enemyVisited);
     instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -141,10 +172,8 @@ if (broken)
           <argument>
             <kind>1</kind>
             <string>draw_set_alpha(1);
-draw_sprite_part_ext(sprProjectile, -1, 0, type*TILE, TILE, TILE, x-8, y-8, 1, 1, c_black, .3);
-draw_sprite_part(sprProjectile, -1, 0, type*TILE, TILE, TILE, x-8, y-8 + z);
-
-
+draw_sprite_part_ext(sprProjectile, -1, subType*TILE, type*TILE, TILE, TILE, x-8, y-8, 1, 1, c_black, .3);
+draw_sprite_part(sprProjectile, -1, subType*TILE, type*TILE, TILE, TILE, x-8, y-8 + z);
 </string>
           </argument>
         </arguments>
