@@ -72,15 +72,16 @@
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprFontBanner</sprite>
     <sprite>sprites\sprFontThin</sprite>
+    <sprite>sprites\sprFontUpgrade</sprite>
     <sprite>sprites\sprHud</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
     <sprite>sprites\sprSlime</sprite>
     <sprite>sprites\sprTower</sprite>
     <sprite>sprites\sprProjectile</sprite>
-    <sprite>sprites\sprFontUpgrade</sprite>
     <sprite>sprites\sprExplosion</sprite>
     <sprite>sprites\sprFrost</sprite>
+    <sprite>sprites\sprStopBar</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>

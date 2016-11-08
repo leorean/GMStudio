@@ -154,8 +154,8 @@ frame = 0;
             break;
             case 4:
                 range = 5*TILE;
-                maxDelay = 45;
-                dmg = 3;
+                maxDelay = 30;
+                dmg = 5;
                 bombType = 3;
             break;
         }
@@ -325,7 +325,7 @@ else
                 var e = findEnemy(x + 8, y + 8, range, canSeeInvisible);
                 if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0)
                 {
-                    var proj = instance_create(x + 8,y + 8, objProjectile);
+                    var proj = instance_create(x + 8,y, objProjectile);
                     proj.angle = point_direction(proj.x, proj.y, e.x, e.y);
                     proj.dmg = dmg;
                     proj.range = point_distance(proj.x, proj.y, e.x, e.y);
@@ -346,7 +346,7 @@ else
                             proj.spd = 2;
                         break;
                         case 4:
-                            proj.spd = 2.5;
+                            proj.spd = 3;
                         break;
                     }
                     delay = maxDelay;
@@ -386,14 +386,14 @@ else
                             {
                                 var e = instance_find(objSlime, i);
                                 if (instance_exists(e) &amp;&amp; e.initialized &amp;&amp; e.hp &gt; 0 &amp;&amp; !e.immuneToIce
-                                 &amp;&amp; distance_to_point(e.x, e.y) &lt; range)
+                                 &amp;&amp; distance_to_point(e.x, e.y) &lt;= range)
                                 {
                                     e.maxSlowFactor = 0; // just resets
                                     if (upgrade == 3)
-                                        e.slowFactor = .6;
-                                    if (upgrade == 3)
-                                        e.slowFactor = .3;
-                                    e.slowDuration = 15;
+                                        e.slowFactor = .7;
+                                    if (upgrade == 4)
+                                        e.slowFactor = .45;
+                                    e.slowDuration = 20;
                                 }
                             }
                             instance_activate_object(objSlime);

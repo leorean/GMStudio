@@ -79,10 +79,12 @@ if (global.state == G_PLAY)
         {
             var s = instance_find(objSlime, i);
             
-            if (instance_exists(s) &amp;&amp; s.initialized &amp;&amp; s.hp &gt; 0 &amp;&amp; distance_to_point(s.x, s.y) &lt;= r
-                &amp;&amp; !s.immuneToFire)
+            if (instance_exists(s) &amp;&amp; s.initialized &amp;&amp; s.hp &gt; 0 &amp;&amp; distance_to_point(s.x, s.y) &lt;= r)
             {
-                s.hp = max(s.hp - dmg, 0);
+                if (!s.immuneToFire)
+                    s.hp = max(s.hp - dmg, 0);
+                else
+                    createEffect(s.x, s.y, 3);
             }
         }
         instance_activate_object(objSlime);

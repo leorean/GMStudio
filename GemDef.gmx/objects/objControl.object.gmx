@@ -71,7 +71,7 @@ towerDesc[0] = array(
     "Can pierce up to 10#slimes!");
 
 towerUnlocked[1] = array(1, 1, 1, 1, 1);
-towerPrices[1] = array(350, 240, 230, 380, 950);
+towerPrices[1] = array(350, 240, 230, 380, 1950);
 towerNames[1] = array("Toilet", "Clogged T.", "Gridlocked T.", "Rancid T.", "Fiery T.");
 towerDesc[1] = array(
     "Does explosive#area damage.",
@@ -304,6 +304,8 @@ if (global.state == G_PLAY)
     
     if (noMoreSlimes)// &amp;&amp; ds_queue_size(global.enemyQueue) &lt; 100)
     {
+    
+        // text at hud for adding money
         var t = instance_create(5*TILE,2*TILE,objText);
         v = 100; // TODO: make tower/upgrade for that money
         t.text = "+"+string(v)+'"';
@@ -517,9 +519,8 @@ draw_text(2.5*TILE, 2.5*TILE, wave);
 // draw start
 if (global.state == G_START)
 {
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_center);
-    draw_text(w/2, h/2, '"Tap to play"');
+    preText = '$ Tap to play $';
+    //draw_text(w/2, h/2, '"Tap to play"');
 }
 
 // draw pause
@@ -541,16 +542,27 @@ if (!instance_exists(global.tower) &amp;&amp; global.state != G_OVER)
 if (global.state != G_OVER)
 {
 
+    if (mouse_check_button(mb_left) &amp;&amp; global.my &lt; h-3*TILE)
+        preText = "";
+
+    // info text
     if (!instance_exists(global.tower) || !global.tower.placed)
     {
-        draw_set_font(global.fnt);
+        if (preText != "")
+            draw_sprite_part_ext(sprHud, -1, 4*TILE, 9*TILE, 11*TILE, 3*TILE, w/2 - 5.5*TILE, h/4 - 1.5*TILE, 1, 1, c_white, 1);
+            
+        draw_set_font(global.fntUpgrade);
         draw_set_halign(fa_center);
         draw_set_valign(fa_center);
-        //draw_text(w/2, h - 1.5*TILE, 'drag &amp; drop');
-        draw_text(w/2, h - 4.5*TILE, preText);
+        var _c = c_white;//make_color_rgb(100,100,100);
+        draw_text_color(w/2, h/4, preText, _c, _c, _c ,_c, 1);
+        draw_set_font(global.fnt);
+        
         if (mouse_check_button_released(mb_left))
             preText = "";
     }
+    if (preText != "")
+        show_debug_message(string_width(preText));
         
     if (!instance_exists(global.tower))
     {
@@ -626,6 +638,9 @@ if (global.state != G_OVER)
     // +++++ TOWER UPGRADE MENU +++++
     else
     {
+        if (!global.tower.placed)
+            draw_sprite_ext(sprStopBar, -1, 0, h-3*TILE, 1, 1, 0, c_black, .5);
+            
         if (global.tower.placed)
         {
             // sell again

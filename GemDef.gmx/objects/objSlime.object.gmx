@@ -123,22 +123,26 @@ invisible = false;
             spd = 3.5;
             hp = 1;
             dmg = 5;
+            value = 1;
         break;
         case 5: // red box
             spd = 1.8;
             hp = 1;
             dmg = 10;
+            value = 1;
         break;
         case 6: // immune to ice
             spd = 2;
             hp = 1;
             dmg = 11;
+            value = 1;
             immuneToIce = true;
         break;
         case 7: // immune to fire
             spd = 2;
             hp = 1;
             dmg = 11;
+            value = 1;
             immuneToFire = true;
         break;
         case 8: // ghost slime
@@ -164,20 +168,22 @@ invisible = false;
             spd = 2;
             dmg = 13;
             hp = 3;
+            value = 1;
             invisible = true;
         break;
         case 12: // sanic
             spd = 4;
             dmg = 13;
             hp = 3;
+            value = 2;
             immuneToPoop = true;
         break;
         case 13: // golem
             spd = 2.5;
             dmg = 35;
             hp = 10;
-            immuneToPoop = true;
             value = 3;
+            immuneToPoop = true;
         break;
         case 14: // queen slime
             spd = .7;
@@ -192,13 +198,13 @@ invisible = false;
             dmg = 200;
             hp = 700;
             value = 500;
+            immuneToFire = true;
             immuneToIce = true;
             isBoss = true;
         break;
     }
    
-    maxHp = hp;
-    initialized = true;
+    maxHp = hp;    
 }
 </string>
           </argument>
@@ -405,6 +411,8 @@ if (hp == 0)
 
 if (!delay)
 {
+    initialized = true;
+    
     if (!freeze)
         path_speed = spd * .4 * slowFactor * global.spd;
     else
