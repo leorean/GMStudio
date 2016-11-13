@@ -31,6 +31,10 @@ upgrade = 0;
 type = 0;
 price = 0;
 
+// for fly hive tower:
+spawnedProj = false;
+alt = 1; //&lt;- for alternatingg fly directions
+
 // flags:
 
 placed = false;
@@ -183,6 +187,32 @@ frame = 0;
             case 4:
                 range = 4*TILE;
                 maxDelay = 5;
+            break;            
+        }
+    break;
+    case 3: // FLYHIVE
+        dmg = 1;
+        switch(upgrade)
+        {
+            case 0:
+                range = 2.5*TILE;
+                maxDelay = 120;
+            break;
+            case 1:
+                range = 2.5*TILE;
+                maxDelay = 90;
+            break;
+            case 2:
+                range = 2.5*TILE;
+                maxDelay = 120;
+            break;
+            case 3:
+                range = 2.5*TILE;
+                maxDelay = 60;
+            break;
+            case 4:
+                range = 1.5*TILE;
+                maxDelay = 0;
             break;            
         }
     break;
@@ -392,12 +422,92 @@ else
                                     if (upgrade == 3)
                                         e.slowFactor = .7;
                                     if (upgrade == 4)
-                                        e.slowFactor = .45;
+                                        e.slowFactor = .4;
                                     e.slowDuration = 20;
                                 }
                             }
                             instance_activate_object(objSlime);
                         break;
+                    }
+                    delay = maxDelay;
+                }
+            break;
+            case 3: // FLY HIVE
+                if (!delay)
+                {
+                    alt = -alt;
+                    switch(upgrade)
+                    {
+                        case 0:
+                            var proj = instance_create(x + 8, y + 8, objProjCircle);
+                            proj.parent = id;
+                            proj.type = 0;
+                            proj.maxEnemies = 2;
+                            proj.spd = 3 * alt;
+                            proj.r = 0;
+                            proj.hp = 2*60;
+                            proj.range = range;
+                        break;
+                        case 1:
+                            var proj = instance_create(x + 8, y + 8, objProjCircle);
+                            proj.parent = id;
+                            proj.type = 1;
+                            proj.maxEnemies = 3;
+                            proj.spd = 4 * alt;
+                            proj.r = 0;
+                            proj.hp = 2*60;
+                            proj.range = range;                            
+                        break;
+                        case 2:
+                            for (i = 0; i &lt; 2; i++)
+                            {
+                                var proj = instance_create(x + 8, y + 8, objProjCircle);
+                                proj.parent = id;
+                                proj.type = 2;
+                                proj.maxEnemies = 4;
+                                proj.spd = 1.5;
+                                proj.r = i * 180 + (alt == 1)*90;
+                                proj.hp = 3*60;
+                                proj.range = range;                                
+                            }
+                        break;
+                        case 3:
+                            var proj = instance_create(x + 8, y + 8, objProjCircle);
+                            proj.parent = id;
+                            proj.type = 3;
+                            proj.maxEnemies = 5;
+                            proj.spd = 2;
+                            proj.r = 0;
+                            proj.hp = 3*60;
+                            proj.range = range;                            
+                        break;
+                        case 4:
+                            if (!spawnedProj)
+                            {
+                                var proj = instance_create(x + 8, y + 8, objProjCircle);
+                                proj.parent = id;
+                                proj.type = 4;
+                                proj.maxEnemies = -1;
+                                proj.spd = 1;
+                                proj.r = 270;
+                                proj.hp = -1;
+                                proj.range = range;
+                                proj.dmg = .1;                                
+                            
+                                var proj = instance_create(x + 8, y + 8, objProjCircle);
+                                proj.parent = id;
+                                proj.type = 4;
+                                proj.maxEnemies = -1;
+                                proj.spd = 1;
+                                proj.r = 90;
+                                proj.hp = -1;
+                                proj.range = range;
+                                proj.dmg = .1;                            
+                                
+                                spawnedProj = true;
+                            }
+                        break;
+                    
                     }
                     delay = maxDelay;
                 }
@@ -429,10 +539,49 @@ else
             <kind>1</kind>
             <string>draw_set_alpha(1);
 
+// pillar
 draw_sprite_part(sprHud,-1,16*TILE,3*TILE,2*TILE,2*TILE,x - 8, y - TILE + 4);
 
+// frost tower
+if (type == 2)
+{
+    if (upgrade &lt; 3)
+    {
+        rot1 = 0;
+        rot2 = 0;
+        rot3 = 0;
+    }
+    else
+    {
+        draw_set_blend_mode(bm_add);
+    }
+    if (upgrade == 3) // small storm
+    {
+        if (global.state != G_PAUSE)
+        {
+            rot1 = (rot1 + 2) % 360;
+            rot2 = (rot2 - 3) % 360;
+        }
+        draw_sprite_ext(sprFrost, 3, x+8, y+8, 1, 1, rot1, c_white, .15);
+        draw_sprite_ext(sprFrost, 4, x+8, y+8, .7, .7, rot2, c_white, .2);
+    }
+    if (upgrade == 4) // bigger storm
+    {
+        if (global.state != G_PAUSE)
+        {
+            rot1 = (rot1 + 1) % 360;
+            rot2 = (rot2 - 2) % 360;
+            rot3 = (rot3 + 3) % 360;
+        }
+        draw_sprite_ext(sprFrost, 3, x+8, y+8, 1.3, 1.3, rot1, c_white, .15);
+        draw_sprite_ext(sprFrost, 4, x+8, y+8, .95, .95, rot2, c_white, .15);
+        draw_sprite_ext(sprFrost, 4, x+8, y+8, .75, .75, rot3, c_white, .2);
+    }
+    draw_set_blend_mode(bm_normal);
+}
+
 if (global.state != G_PAUSE)
-    fCur = (fCur + .1 * global.spd) % 4;
+    fCur = (fCur + .1 /* * global.spd*/) % 4;
     
 frame = floor(fCur);
 

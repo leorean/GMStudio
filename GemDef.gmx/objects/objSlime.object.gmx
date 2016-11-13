@@ -115,12 +115,12 @@ invisible = false;
             dmg = 3;
         break;
         case 3:
-            spd = 3.2;
+            spd = 2.8;
             hp = 1;
             dmg = 4;
         break;
         case 4: // blue box
-            spd = 3.5;
+            spd = 3;
             hp = 1;
             dmg = 5;
             value = 1;
@@ -135,32 +135,35 @@ invisible = false;
             spd = 2;
             hp = 1;
             dmg = 11;
-            value = 1;
+            value = 2;
             immuneToIce = true;
         break;
         case 7: // immune to fire
             spd = 2;
             hp = 1;
             dmg = 11;
-            value = 1;
+            value = 2;
             immuneToFire = true;
         break;
         case 8: // ghost slime
             spd = 1;
             hp = 1;
             dmg = 12;
+            value = 2;
             invisible = true;
         break;
         case 9: // poop slime
             spd = 1;
             hp = 1;
             dmg = 12;
+            value = 2;
             immuneToPoop = true;
         break;
         case 10: // pink slime
             spd = 1.8;
             hp = 1;
             dmg = 13;
+            value = 2;
             immuneToIce = true;
             immuneToFire = true;
         break;
@@ -168,21 +171,21 @@ invisible = false;
             spd = 2;
             dmg = 13;
             hp = 3;
-            value = 1;
+            value = 3;
             invisible = true;
         break;
         case 12: // sanic
             spd = 4;
             dmg = 13;
             hp = 3;
-            value = 2;
+            value = 3;
             immuneToPoop = true;
         break;
         case 13: // golem
             spd = 2.5;
             dmg = 35;
             hp = 10;
-            value = 3;
+            value = 4;
             immuneToPoop = true;
         break;
         case 14: // queen slime

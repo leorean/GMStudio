@@ -103,7 +103,8 @@ if (size == 1 &amp;&amp; !frozen)
 }
 if (alpha == 0) instance_destroy();
 
-draw_sprite_part_ext(sprFrost, -1, 6*TILE*type, 0, 6*TILE, 6*TILE, x - s, y - s, size, size, c_white, alpha);
+//draw_sprite_part_ext(sprFrost, -1, 6*TILE*type, 0, 6*TILE, 6*TILE, x - s, y - s, size, size, c_white, alpha);
+draw_sprite_ext(sprFrost, type, x, y, size, size, 0, c_white, alpha);
 </string>
           </argument>
         </arguments>

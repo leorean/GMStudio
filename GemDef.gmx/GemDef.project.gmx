@@ -82,6 +82,7 @@
     <sprite>sprites\sprExplosion</sprite>
     <sprite>sprites\sprFrost</sprite>
     <sprite>sprites\sprStopBar</sprite>
+    <sprite>sprites\sprProjectileCircle</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -132,6 +133,7 @@
     <object>objects\objProjectile</object>
     <object>objects\objExplosion</object>
     <object>objects\objFrost</object>
+    <object>objects\objProjCircle</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

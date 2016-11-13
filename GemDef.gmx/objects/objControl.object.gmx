@@ -81,7 +81,7 @@ towerDesc[1] = array(
     '"Shouldn'+"'" + 't have eaten#at that burrito place.."');
 
 towerUnlocked[2] = array(1, 1, 1, 1, 1);
-towerPrices[2] = array(385, 120, 420, 900, 2600);
+towerPrices[2] = array(385, 120, 420, 870, 2600);
 towerNames[2] = array("Frozen Poo", "Deep Freeze", "Deadly Frost", "Arctic Turd", "Pooman");
 towerDesc[2] = array(
     "Freezes slimes for#a short time period.",
@@ -90,15 +90,15 @@ towerDesc[2] = array(
     "Stops freezing,#but increases slow effect.",
     "Do you wanna build#a pooman? (slow+++)");
 
-towerUnlocked[3] = array(0, 0, 0, 0, 0);
-towerPrices[3] = array(999, 999, 999, 999, 999);
-towerNames[3] = array("-name3-", "-name2-", "-name3-", "-name4-", "-name5-");
+towerUnlocked[3] = array(1, 1, 1, 1, 1);
+towerPrices[3] = array(125, 240, 320, 560, 3550);
+towerNames[3] = array("The Hive", "Big Hive", "Burning Hive", "Fiery Flies", "Mecha Hive");
 towerDesc[3] = array(
-    "-desc1-",
-    "-desc2-",
-    "-desc3-",
-    "-desc4-",
-    "-desc5-");
+    "Spawns orbiting flies#killing 2 slimes at once.",
+    "Bigger and faster flies,#piercing 3 slimes.",
+    "Shit's on fire, yo.#(double spawn, piercing 4)",
+    "Scorching up to 5 slimes#with a faster spawn rate.",
+    "2 infinite slime grinders #kill everything!");
 
 towerUnlocked[4] = array(0, 0, 0, 0, 0);
 towerPrices[4] = array(999, 999, 999, 999, 999);
@@ -561,8 +561,6 @@ if (global.state != G_OVER)
         if (mouse_check_button_released(mb_left))
             preText = "";
     }
-    if (preText != "")
-        show_debug_message(string_width(preText));
         
     if (!instance_exists(global.tower))
     {
