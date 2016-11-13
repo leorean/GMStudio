@@ -106,6 +106,9 @@ else
             &amp;&amp; ds_list_find_index(enemiesKilled, s) == -1
             &amp;&amp; (ds_list_size(enemiesKilled) &lt; maxEnemies || maxEnemies == -1))
         {
+            if ((type == 2 || type == 3) &amp;&amp; s.immuneToFire)
+                continue;
+            
             s.hp = max(s.hp - dmg, 0);
             if (maxEnemies != -1)
                 ds_list_add(enemiesKilled, s);

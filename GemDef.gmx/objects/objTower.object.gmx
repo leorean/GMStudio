@@ -190,17 +190,17 @@ frame = 0;
             break;            
         }
     break;
-    case 3: // FLYHIVE
+    case 3: // FLY HIVE
         dmg = 1;
         switch(upgrade)
         {
             case 0:
                 range = 2.5*TILE;
-                maxDelay = 120;
+                maxDelay = 90;
             break;
             case 1:
                 range = 2.5*TILE;
-                maxDelay = 90;
+                maxDelay = 60;
             break;
             case 2:
                 range = 2.5*TILE;
@@ -211,7 +211,7 @@ frame = 0;
                 maxDelay = 60;
             break;
             case 4:
-                range = 1.5*TILE;
+                range = 2*TILE;
                 maxDelay = 0;
             break;            
         }
@@ -442,20 +442,20 @@ else
                             var proj = instance_create(x + 8, y + 8, objProjCircle);
                             proj.parent = id;
                             proj.type = 0;
-                            proj.maxEnemies = 2;
+                            proj.maxEnemies = 3;
                             proj.spd = 3 * alt;
                             proj.r = 0;
-                            proj.hp = 2*60;
+                            proj.hp = 3*60;
                             proj.range = range;
                         break;
                         case 1:
                             var proj = instance_create(x + 8, y + 8, objProjCircle);
                             proj.parent = id;
                             proj.type = 1;
-                            proj.maxEnemies = 3;
+                            proj.maxEnemies = 4;
                             proj.spd = 4 * alt;
                             proj.r = 0;
-                            proj.hp = 2*60;
+                            proj.hp = 3*60;
                             proj.range = range;                            
                         break;
                         case 2:
@@ -464,10 +464,10 @@ else
                                 var proj = instance_create(x + 8, y + 8, objProjCircle);
                                 proj.parent = id;
                                 proj.type = 2;
-                                proj.maxEnemies = 4;
+                                proj.maxEnemies = 8;
                                 proj.spd = 1.5;
                                 proj.r = i * 180 + (alt == 1)*90;
-                                proj.hp = 3*60;
+                                proj.hp = 4*60;
                                 proj.range = range;                                
                             }
                         break;
@@ -475,7 +475,7 @@ else
                             var proj = instance_create(x + 8, y + 8, objProjCircle);
                             proj.parent = id;
                             proj.type = 3;
-                            proj.maxEnemies = 5;
+                            proj.maxEnemies = 12;
                             proj.spd = 2;
                             proj.r = 0;
                             proj.hp = 3*60;
@@ -502,7 +502,7 @@ else
                                 proj.r = 90;
                                 proj.hp = -1;
                                 proj.range = range;
-                                proj.dmg = .1;                            
+                                proj.dmg = .1;
                                 
                                 spawnedProj = true;
                             }

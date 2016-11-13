@@ -71,7 +71,7 @@ towerDesc[0] = array(
     "Can pierce up to 10#slimes!");
 
 towerUnlocked[1] = array(1, 1, 1, 1, 1);
-towerPrices[1] = array(350, 240, 230, 380, 1950);
+towerPrices[1] = array(350, 240, 230, 380, 970);
 towerNames[1] = array("Toilet", "Clogged T.", "Gridlocked T.", "Rancid T.", "Fiery T.");
 towerDesc[1] = array(
     "Does explosive#area damage.",
@@ -81,7 +81,7 @@ towerDesc[1] = array(
     '"Shouldn'+"'" + 't have eaten#at that burrito place.."');
 
 towerUnlocked[2] = array(1, 1, 1, 1, 1);
-towerPrices[2] = array(385, 120, 420, 870, 2600);
+towerPrices[2] = array(285, 160, 420, 870, 2600);
 towerNames[2] = array("Frozen Poo", "Deep Freeze", "Deadly Frost", "Arctic Turd", "Pooman");
 towerDesc[2] = array(
     "Freezes slimes for#a short time period.",
@@ -91,14 +91,14 @@ towerDesc[2] = array(
     "Do you wanna build#a pooman? (slow+++)");
 
 towerUnlocked[3] = array(1, 1, 1, 1, 1);
-towerPrices[3] = array(125, 240, 320, 560, 3550);
+towerPrices[3] = array(200, 240, 320, 560, 3550);
 towerNames[3] = array("The Hive", "Big Hive", "Burning Hive", "Fiery Flies", "Mecha Hive");
 towerDesc[3] = array(
-    "Spawns orbiting flies#killing 2 slimes at once.",
-    "Bigger and faster flies,#piercing 3 slimes.",
-    "Shit's on fire, yo.#(double spawn, piercing 4)",
-    "Scorching up to 5 slimes#with a faster spawn rate.",
-    "2 infinite slime grinders #kill everything!");
+    "Spawns orbiting flies#killing multiple slimes.",
+    "Bigger and faster flies.#(piercing+)",
+    "Shit's on fire, yo.#(double spawn, piercing++)",
+    "Scorching many slimes#with a faster spawn rate.",
+    "2 infinite slime grinders # that kill everything!");
 
 towerUnlocked[4] = array(0, 0, 0, 0, 0);
 towerPrices[4] = array(999, 999, 999, 999, 999);
@@ -549,7 +549,7 @@ if (global.state != G_OVER)
     if (!instance_exists(global.tower) || !global.tower.placed)
     {
         if (preText != "")
-            draw_sprite_part_ext(sprHud, -1, 4*TILE, 9*TILE, 11*TILE, 3*TILE, w/2 - 5.5*TILE, h/4 - 1.5*TILE, 1, 1, c_white, 1);
+            draw_sprite_part_ext(sprHud, -1, 4*TILE, 9*TILE, 13*TILE, 3*TILE, w/2 - 6.5*TILE, h/4 - 1.5*TILE, 1, 1, c_white, 1);
             
         draw_set_font(global.fntUpgrade);
         draw_set_halign(fa_center);
