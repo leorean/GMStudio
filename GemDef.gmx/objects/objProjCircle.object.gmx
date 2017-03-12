@@ -34,6 +34,7 @@ frame = 0;
 
 r = 0; // set this so projectiles are in a good angular distance to each other
 range = 0;
+d = 0;
 
 dmg = 1;
 
@@ -85,7 +86,7 @@ else
     
     // diameter
     d = 4;
-    if (type == 4) d = 8;
+    if (type == 4) d = 12;
     
     if (hp &gt; 0)
         hp = max(hp - 1 * global.spd, 0);

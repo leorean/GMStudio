@@ -69,6 +69,14 @@ for (var i = 0; i<w; i ++)
                 addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 instance_create(i*TILE,j*TILE,objPlatform);
             break;
+            case 71:
+                addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                instance_create(i*TILE,j*TILE,objSlopeL);
+            break;
+            case 73:
+                addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                instance_create(i*TILE,j*TILE,objSlopeR);
+            break;
             default:
                 if (fg>=32)
                     addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);
@@ -80,4 +88,16 @@ for (var i = 0; i<w; i ++)
             break;
         }
     }
+}
+
+//remove blocks next to slope
+with(objSlopeL)
+{
+    br = instance_place(x + TILE, y, objBlock);
+    with (br) instance_destroy();
+}
+with(objSlopeR)
+{
+    br = instance_place(x + TILE, y, objBlock);
+    with (br) instance_destroy();
 }

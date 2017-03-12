@@ -135,6 +135,8 @@
     <sprite>sprites\sprFntDefault</sprite>
     <sprite>sprites\sprScreenRect</sprite>
     <sprite>sprites\sprHud</sprite>
+    <sprite>sprites\mskSlopeL</sprite>
+    <sprite>sprites\mskSlopeR</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprTiles</background>
@@ -164,6 +166,9 @@
       <object>objects\objSolid</object>
       <object>objects\objPlatform</object>
       <object>objects\objBlock</object>
+      <object>objects\objSlopeL</object>
+      <object>objects\objSlopeR</object>
+      <object>objects\objSlope</object>
     </objects>
     <object>objects\objCoin</object>
     <object>objects\objCollect</object>

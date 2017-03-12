@@ -90,6 +90,9 @@ path = noone;
     cx = x + TILE/2;
     cy = y + TILE/2;
     
+    w = abs(sprite_get_bbox_right(sprite_index)-sprite_get_bbox_left(sprite_index));
+    h = abs(sprite_get_bbox_bottom(sprite_index)-sprite_get_bbox_top(sprite_index));
+    
     /*if (onPlatform)
     {
         //y = (platform.y div TILE) * TILE - TILE;
@@ -304,6 +307,71 @@ path = noone;
         }
     }
     //++++collision and move routine++++
+    
+    onSlope = false;
+    var slopeL = collision_rectangle(x-2,bbox_bottom-1,x+2,bbox_bottom+3,objSlopeL,true,true);
+    var slopeR = collision_rectangle(x-2,bbox_bottom-1,x+2,bbox_bottom+3,objSlopeR,true,true);
+
+    if (yVel &gt;= 0)
+    {
+        if (slopeR != noone)
+        {
+            var off, shift;
+            shift = 
+            max(min(floor(slopeR.y - (.5*(slopeR.x + 2*TILE-x + 8))),
+            slopeR.y), slopeR.y - TILE);
+            if (y &gt;= shift)
+            {
+                y = shift + 2;
+                yVel = 2;
+                onSlope = true;
+            }
+        }
+        if (slopeL != noone)
+        {
+            var off, shift;
+            shift = 
+            max(min(floor(slopeL.y - (.5*(x - slopeL.x + 8))),
+            slopeL.y), slopeL.y - TILE);
+            if (y &gt;= shift)
+            {
+                y = shift + 2;
+                yVel = 2;
+                onSlope = true;
+            }
+        }
+    } else
+    {
+        onSlope = false;
+    }
+    
+    if (in(x,view_xview[0],view_xview[0]+view_wview[0])
+        &amp;&amp; in(y,view_yview[0],view_yview[0]+view_hview[0]+TILE))
+
+        if (slopeL == noone &amp;&amp; slopeR == noone)
+        {
+            if ((!place_meeting(x, y + yVel, objBlock)
+                &amp;&amp; !(place_meeting(x,y+yVel,objPlatform) &amp;&amp; (yVel &gt; 0 &amp;&amp; !place_meeting(x,y-1,objPlatform)))) || onSlope)
+            {
+                y += yVel;
+            }
+            else
+            {    
+                yVel = min(yVel * -.3, 0);
+            }
+        }
+        
+        if (in(x + xVel, 0, room_width - TILE) &amp;&amp; !place_meeting(x + xVel, y, objBlock) || onSlope)
+            x += xVel;
+        else
+        {
+            if (abs(xVel) &gt; 1.5)
+                    xVel *= -.3;
+                else
+                    xVel *= .5;
+        }
+    
+    /*
     if (in(x,view_xview[0],view_xview[0]+view_wview[0])
         &amp;&amp; in(y,view_yview[0],view_yview[0]+view_hview[0]+TILE))
     {    
@@ -321,12 +389,20 @@ path = noone;
             x += xVel;
         else
         {
-            if (abs(xVel) &gt; 1.5)
-                xVel *= -.3;
+            if (onSlope &amp;&amp; place_meeting(x + xVel, y + max(abs(yVel), 2), objSlope))
+            {
+                x += xVel;
+                y -= max(abs(xVel), 2);
+            }
             else
-                xVel *= .5;
+            {
+                if (abs(xVel) &gt; 1.5)
+                    xVel *= -.3;
+                else
+                    xVel *= .5;
+            }
         }
-    }
+    }*/
 }
 
 if (global.state == G_WIN)

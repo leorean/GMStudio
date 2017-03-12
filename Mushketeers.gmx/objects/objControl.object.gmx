@@ -356,7 +356,6 @@ if (room == WORLDMAP)
 
 if (room == GAME)
 {
-
     global.curtain.state = OPEN;
     global.curtain.timer = 1*SEC;
 
