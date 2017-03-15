@@ -5,9 +5,30 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
-  <backgrounds name="background"/>
+  <sprites name="sprites">
+    <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\mskControl</sprite>
+    <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\sprStage</sprite>
+  </sprites>
+  <backgrounds name="background">
+    <background>background\sprBg</background>
+  </backgrounds>
   <paths name="paths"/>
+  <objects name="objects">
+    <object>objects\objControl</object>
+    <object>objects\objPlayer</object>
+    <object>objects\objStage</object>
+  </objects>
+  <rooms name="rooms">
+    <room>rooms\GAME</room>
+  </rooms>
+  <constants number="4">
+    <constant name="TILE">16</constant>
+    <constant name="WIDTH">768</constant>
+    <constant name="HEIGHT">432</constant>
+    <constant name="GROUND">336</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
