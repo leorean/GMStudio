@@ -29,7 +29,7 @@
 yVel = 0;
 yGrav = .2;
 
-ropeHeight = GROUND - 6*TILE;
+ropeHeight = GROUND - 9*TILE;
 </string>
           </argument>
         </arguments>
@@ -88,8 +88,8 @@ else
 draw_set_alpha(1);
 
 rh = max(y, ropeHeight);
-draw_line_width(objStage.x - 5*TILE, ropeHeight, x, rh, 2);
-draw_line_width(objStage.x + 5*TILE, ropeHeight, x, rh, 2);
+draw_line_width(objStage.x - 4.65*TILE, ropeHeight, x, rh, 2);
+draw_line_width(objStage.x + 4.65*TILE, ropeHeight, x, rh, 2);
 
 draw_sprite_part(sprPlayer, -1, 0, 0, 4*TILE, 4*TILE, x - 2*TILE, y - 4*TILE);
 
