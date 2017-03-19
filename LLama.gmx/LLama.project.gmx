@@ -15,6 +15,9 @@
     <background>background\sprBg</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\in.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
@@ -23,11 +26,22 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="4">
+  <constants number="15">
     <constant name="TILE">16</constant>
-    <constant name="WIDTH">768</constant>
-    <constant name="HEIGHT">432</constant>
-    <constant name="GROUND">336</constant>
+    <constant name="WIDTH">880</constant>
+    <constant name="HEIGHT">496</constant>
+    <constant name="GROUND">400</constant>
+    <constant name="LEFT">-1</constant>
+    <constant name="RIGHT">1</constant>
+    <constant name="PLAY">0</constant>
+    <constant name="PAUSE">1</constant>
+    <constant name="GAMEOVER">2</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="WALK">1</constant>
+    <constant name="JUMP">2</constant>
+    <constant name="ATTACK">3</constant>
+    <constant name="HURT">4</constant>
+    <constant name="DIE">5</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

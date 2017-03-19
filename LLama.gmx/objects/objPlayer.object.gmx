@@ -27,9 +27,11 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
-yGrav = .2;
+yGrav = .22;
 
-ropeHeight = GROUND - 9*TILE;
+dir = RIGHT;
+
+ropeHeight = GROUND - 9*TILE + 4;
 </string>
           </argument>
         </arguments>
@@ -52,11 +54,41 @@ ropeHeight = GROUND - 9*TILE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-if(y &lt; ropeHeight)
-    yVel += yGrav;
+            <string>if (mouse_check_button(mb_left))
+{
+    if (abs(x - mouse_x) &gt; TILE)
+    {
+        if (mouse_x &gt; x)
+        {
+            dir = RIGHT;
+            xVel = min(xVel + .2,  2);
+        }
+        if (mouse_x &lt; x)
+        {
+            dir = LEFT;
+            xVel = max(xVel - .2, -2);
+        }
+    }
+}
+
+xVel *= .95;
+
+yVel += yGrav;
+if(y &gt;= ropeHeight)
+{
+    yVel -= .65;
+    if (yVel &lt; 0) // boing!
+        yVel = -6;
+}
+
+// x collision
+
+if (in(x + xVel, WIDTH/2 - 4.5*TILE, WIDTH/2 + 4.5*TILE))
+    x += xVel;
 else
-    yVel -= .3;
+    xVel = 0;
+
+// y collision
 
 if (y + yVel &lt; GROUND)
     y += yVel;
@@ -88,10 +120,13 @@ else
 draw_set_alpha(1);
 
 rh = max(y, ropeHeight);
-draw_line_width(objStage.x - 4.65*TILE, ropeHeight, x, rh, 2);
-draw_line_width(objStage.x + 4.65*TILE, ropeHeight, x, rh, 2);
+draw_line_width(objStage.x - 5.5*TILE, ropeHeight, x, rh, 2);
+draw_line_width(objStage.x + 5.5*TILE, ropeHeight, x, rh, 2);
 
-draw_sprite_part(sprPlayer, -1, 0, 0, 4*TILE, 4*TILE, x - 2*TILE, y - 4*TILE);
+if (dir == RIGHT)
+    draw_sprite_part(sprPlayer, -1, 0, 0, 4*TILE, 4*TILE, round(x) - 2*TILE, round(y) - 4*TILE);
+else
+    draw_sprite_part_ext(sprPlayer, -1, 0, 0, 4*TILE, 4*TILE, round(x) + 2*TILE, round(y) - 4*TILE, -1, 1, c_white, 1);
 
 </string>
           </argument>
