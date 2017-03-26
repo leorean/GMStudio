@@ -30,8 +30,17 @@ yVel = 0;
 yGrav = .22;
 
 dir = RIGHT;
+state = JUMP;
 
 ropeHeight = GROUND - 9*TILE + 4;
+
+// visual effects
+faceDelay = 20;
+face = 0;
+oldFace = 0;
+boingHappened = false;
+attackCooldown = 0;
+maxAttackCooldown = 30;
 </string>
           </argument>
         </arguments>
@@ -69,6 +78,28 @@ ropeHeight = GROUND - 9*TILE + 4;
             xVel = max(xVel - .2, -2);
         }
     }
+    
+    state = ATTACK;    
+    faceDelay = 10;
+    face = 0;
+}
+
+faceDelay = max(faceDelay - 1, 0); 
+
+if (!faceDelay)
+    state = JUMP;
+
+if (state == ATTACK)
+{
+}
+
+attackCooldown = max(attackCooldown - 1, 0);
+if (mouse_check_button_pressed(mb_left))
+{
+    if (!attackCooldown)
+    {
+        attackCooldown = maxAttackCooldown;
+    }
 }
 
 xVel *= .95;
@@ -78,12 +109,23 @@ if(y &gt;= ropeHeight)
 {
     yVel -= .65;
     if (yVel &lt; 0) // boing!
+    {
+        if (!boingHappened)
+        {
+            while (face == oldFace)
+                face = irandom(3);
+            oldFace = face;
+            boingHappened = true;
+        }
         yVel = -6;
+    }
 }
+else
+    boingHappened = false;
 
 // x collision
 
-if (in(x + xVel, WIDTH/2 - 4.5*TILE, WIDTH/2 + 4.5*TILE))
+if (in(x + xVel, WIDTH/2 - 3.5*TILE, WIDTH/2 + 3.5*TILE))
     x += xVel;
 else
     xVel = 0;
@@ -123,10 +165,12 @@ rh = max(y, ropeHeight);
 draw_line_width(objStage.x - 5.5*TILE, ropeHeight, x, rh, 2);
 draw_line_width(objStage.x + 5.5*TILE, ropeHeight, x, rh, 2);
 
+var frame = (face + 1) *(faceDelay == 0);
+
 if (dir == RIGHT)
-    draw_sprite_part(sprPlayer, -1, 0, 0, 4*TILE, 4*TILE, round(x) - 2*TILE, round(y) - 4*TILE);
+    draw_sprite_part(sprPlayer, -1, frame*4*TILE, 0, 4*TILE, 4*TILE, round(x) - 2*TILE, round(y) - 4*TILE);
 else
-    draw_sprite_part_ext(sprPlayer, -1, 0, 0, 4*TILE, 4*TILE, round(x) + 2*TILE, round(y) - 4*TILE, -1, 1, c_white, 1);
+    draw_sprite_part_ext(sprPlayer, -1, frame*4*TILE, 0, 4*TILE, 4*TILE, round(x) + 2*TILE, round(y) - 4*TILE, -1, 1, c_white, 1);
 
 </string>
           </argument>

@@ -6,9 +6,9 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskControl</sprite>
     <sprite>sprites\mskPlayer</sprite>
+    <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprStage</sprite>
   </sprites>
   <backgrounds name="background">
