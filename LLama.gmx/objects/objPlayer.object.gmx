@@ -35,12 +35,14 @@ state = JUMP;
 ropeHeight = GROUND - 9*TILE + 4;
 
 // visual effects
-faceDelay = 20;
 face = 0;
 oldFace = 0;
 boingHappened = false;
 attackCooldown = 0;
 maxAttackCooldown = 30;
+
+//spit parameters
+
 </string>
           </argument>
         </arguments>
@@ -70,34 +72,32 @@ maxAttackCooldown = 30;
         if (mouse_x &gt; x)
         {
             dir = RIGHT;
-            xVel = min(xVel + .2,  2);
+            xVel = min(xVel + .1,  2);
         }
         if (mouse_x &lt; x)
         {
             dir = LEFT;
-            xVel = max(xVel - .2, -2);
+            xVel = max(xVel - .1, -2);
         }
     }
-    
-    state = ATTACK;    
-    faceDelay = 10;
-    face = 0;
-}
-
-faceDelay = max(faceDelay - 1, 0); 
-
-if (!faceDelay)
-    state = JUMP;
-
-if (state == ATTACK)
-{
 }
 
 attackCooldown = max(attackCooldown - 1, 0);
-if (mouse_check_button_pressed(mb_left))
+
+if (mouse_check_button(mb_left))
 {
     if (!attackCooldown)
     {
+        // ++++++++++++++++++++++++++++++++
+        var ox = x + 23*dir; var oy = y - 32;
+        var s = instance_create(ox, oy, objSpit);
+        
+        //for (a = point_direction(ox, oy, mx, my); a &lt; 
+        
+        var mx = mouse_x; var my = mouse_y;
+        
+        
+        // ++++++++++++++++++++++++++++++++        
         attackCooldown = maxAttackCooldown;
     }
 }
@@ -165,7 +165,7 @@ rh = max(y, ropeHeight);
 draw_line_width(objStage.x - 5.5*TILE, ropeHeight, x, rh, 2);
 draw_line_width(objStage.x + 5.5*TILE, ropeHeight, x, rh, 2);
 
-var frame = (face + 1) *(faceDelay == 0);
+var frame = (face + 1) *(attackCooldown &lt; maxAttackCooldown - 20);
 
 if (dir == RIGHT)
     draw_sprite_part(sprPlayer, -1, frame*4*TILE, 0, 4*TILE, 4*TILE, round(x) - 2*TILE, round(y) - 4*TILE);

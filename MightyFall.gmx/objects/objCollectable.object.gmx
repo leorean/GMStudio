@@ -87,7 +87,8 @@ if (active)
                 txt.yGrav = 0;
             break;
             case T_HP:
-                objPlayer.hp = min(objPlayer.hp+1,objPlayer.maxHp);
+                if (objPlayer.hp != 0)
+                    objPlayer.hp = min(objPlayer.hp+1,objPlayer.maxHp);
             break;
         }
         instance_destroy();

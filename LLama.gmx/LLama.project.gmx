@@ -10,6 +10,7 @@
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprStage</sprite>
+    <sprite>sprites\mskSpit</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\sprBg</background>
@@ -22,6 +23,7 @@
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <object>objects\objStage</object>
+    <object>objects\objSpit</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

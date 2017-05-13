@@ -77,8 +77,14 @@ if (!global.gameOver)
     for (i = 0; i &lt; 5; i++)
         if (device_mouse_check_button(i,mb_any))
         {
+        
+            // if on mobile, create offset for fingers
+            var offy = 0;
+            if (os_type == os_android || os_type == os_ios) {
+                offy = 5*TILE;
+            }
             tx = device_mouse_x(i);
-            ty = device_mouse_y(i);
+            ty = device_mouse_y(i) - offy;
             //global.lifeLine = ty;
             global.lifeLine += sign(ty-global.lifeLine)*min(abs(ty-global.lifeLine)/6,14);
         }
