@@ -136,20 +136,22 @@ else if (kRight) {
 xVel = sign(xVel) * min(abs(xVel), 4);
 yVel = sign(yVel) * min(abs(yVel), 6);
 
-if (!place_meeting(x + xVel, y - 1, objBlock))
+if (!place_meeting(x + xVel, y - 2, objBlock))
 {
     x += xVel;    
-    if (place_meeting(x + xVel + sign(xVel), y + yVel, objSolid))
+    // lift up against slopes
+    if (place_meeting(x + xVel + sign(xVel), y + yVel, objSlope))
     {
         move_outside_solid(90, sqrt(abs(xVel)*abs(yVel)));
     }
 }
 else
 {
-    move_contact_solid(180*(xVel &lt; 0), max(abs(xVel), 6))
+    //move_contact_solid(180*(xVel &lt; 0), max(abs(xVel), 6))
     xVel = 0;
 }
 
+// push down against slopes
 if(place_meeting(x, y + yVel + 5, objSlope))
 {
     move_contact_solid(270, 5);
