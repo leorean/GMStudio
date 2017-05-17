@@ -30,7 +30,7 @@ dir = RIGHT;
 xVel = 0;
 yVel = 0;
 yGrav = 0;
-yGravJump = .1;
+yGravJump = .08;
 yGravNormal = .16;
 angle = 0;
 
@@ -39,7 +39,11 @@ jumps = 0;
 maxJumps = 2;
 onFloor = false;
 
-hook = noone;
+wallJumpTimer = 0;
+wallJumpReady = false;
+
+xs = 1;
+ys = 1;
 </string>
           </argument>
         </arguments>
@@ -64,6 +68,8 @@ hook = noone;
             <kind>1</kind>
             <string>kLeft = keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right);
 kRight = keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left);
+kDown = keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up);
+
 kJump = keyboard_check(vk_up);
 kJumpPressed = keyboard_check_pressed(vk_up);
 kJumpReleased = keyboard_check_released(vk_up);
@@ -77,34 +83,24 @@ if (keyboard_check(ord('C')))
 else
     room_speed = 60;
 
-headAgainstCeil = collision_line(bbox_left, bbox_top + min(yVel, -2), bbox_right, bbox_top + min(yVel, -2), objSolid, true, true)
-
-hooked = instance_exists(hook) &amp;&amp; hook.hooked;
+headAgainstCeil = collision_line(bbox_left, bbox_top + min(yVel, 0), bbox_right, bbox_top + min(yVel, 0), objSolid, true, true)
 
 if (kAction)
 {
-    if (!instance_exists(hook))
-    {
-        hook = instance_create(x, y, objHook);
-        hook.angle = point_direction(x, y, x + xVel, y + yVel);
-    } else
-    {
-        with(hook)
-            instance_destroy();
-    }
+    
 }
    
 if (onFloor)
 {
     jumps = 0;    
-    jumpTimer = 30;    
+    jumpTimer = 40;    
 }
 
 if (jumps &lt; maxJumps)
 {
     if (kJumpPressed)
     {
-        yVel = -4;
+        yVel = -3.5;
         
     }
     
@@ -120,34 +116,91 @@ if (jumps &lt; maxJumps)
     }
 }
 
+// walk velocity
+
 if (kLeft)
 {
     dir = LEFT;
-    xVel = max(xVel - .2, -2.5);
+    xVel = max(xVel - .18, -2.7);
 }
 else if (kRight) {
     dir = RIGHT;
-    xVel = min(xVel + .2, 2.5);
+    xVel = min(xVel + .18, 2.7);
 } else
 {
     xVel *= .8;
 }
 
+// walljumps
+
+if (place_meeting(x + sign(dir) + xVel, y, objBlock) &amp;&amp; !onFloor
+    &amp;&amp; (dir == LEFT &amp;&amp; kLeft || dir == RIGHT &amp;&amp; kRight))
+{
+    
+    if (place_meeting(x + 3*sign(dir), y, objSolid))
+    {
+        if (!kDown)
+        {
+            yVel = min(yVel, .5);
+        } else
+        {
+            yVel = 2;
+        }
+        
+        jumps = 0;
+        jumpTimer = 40;
+        
+        if (kJumpPressed)
+        {
+            xVel = - sign(dir) * 2;
+        }
+    }
+}
+
+///////////// physics /////////////
+
+// damping on slopes
+
+l1 = place_meeting(x, y + 2, objSlopeL);
+l2 = place_meeting(x, y + 2, objSlopeLL);
+r1 = place_meeting(x, y + 2, objSlopeR);
+r2 = place_meeting(x, y + 2, objSlopeRR);
+
+if (xVel &gt; 0)
+{
+    if (l1) xVel *= .95;
+    if (l2) xVel *= .9;
+    if (r1) xVel *= 1.02;
+    if (r2) xVel *= 1.06;
+    
+} else
+{
+    if (r1) xVel *= .95;
+    if (r2) xVel *= .9;
+    if (l1) xVel *= 1.02;
+    if (l2) xVel *= 1.06;
+}
+
 xVel = sign(xVel) * min(abs(xVel), 4);
 yVel = sign(yVel) * min(abs(yVel), 6);
 
-if (!place_meeting(x + xVel, y - 2, objBlock))
+if (instance_place(x + xVel, y + 1, objSolid))
+    move_outside_solid(90, 1);
+
+if (!collision_rectangle(floor(bbox_left + xVel), bbox_top, ceil(bbox_right + xVel), bbox_bottom - 4, objSolid, true, true)) 
 {
     x += xVel;    
     // lift up against slopes
-    if (place_meeting(x + xVel + sign(xVel), y + yVel, objSlope))
+    if (place_meeting(x + xVel + 2 * sign(xVel), y + yVel, objSlope))
     {
         move_outside_solid(90, sqrt(abs(xVel)*abs(yVel)));
     }
 }
 else
 {
-    //move_contact_solid(180*(xVel &lt; 0), max(abs(xVel), 6))
+    if (abs(xVel) &gt; .5)
+        xs = .5;
+    
     xVel = 0;
 }
 
@@ -159,21 +212,64 @@ if(place_meeting(x, y + yVel + 5, objSlope))
 
 yVel += yGrav;
 
-if (!place_meeting(x, y + yVel, objSolid))
+onPlatform = yVel &gt;= 0 &amp;&amp; collision_rectangle(bbox_left, bbox_bottom, bbox_right, bbox_bottom + max(yVel, 0), objPlatform, true, true);
+
+if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; !onPlatform)
 {
     onFloor = false;
     y += yVel;
 }
 else
 {
+
+    if (ys == 1 &amp;&amp; yVel &gt; 1)
+    {
+        ys = .5;
+    }
+
     if (yVel &gt; 0)
         onFloor = true;
     
-    if !(headAgainstCeil)
-        move_contact_solid(270, max(abs(yVel), 6));
     yVel = 0;
+    
+    /*if !(headAgainstCeil)
+    {
+        move_contact_solid(270, max(abs(yVel), 6));
+        yVel = 0;
+    }
+    else
+    {
+        //if (yVel &lt; 0) yVel *= .5;
+    }*/
 }
 
+////////// pre-graphic stuff ///////////
+
+xs = min(xs * 1.1, 1);
+ys = min(ys * 1.1, 1);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_sprite_ext(mskPlayer, -1, x, y, xs, ys, 0, c_white, 1);
 </string>
           </argument>
         </arguments>

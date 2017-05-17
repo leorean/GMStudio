@@ -12,7 +12,7 @@
     <sprite>sprites\mskSlopeR</sprite>
     <sprite>sprites\mskSlopeLL</sprite>
     <sprite>sprites\mskSlopeRR</sprite>
-    <sprite>sprites\mskHook</sprite>
+    <sprite>sprites\mskPlatform</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -27,7 +27,7 @@
     <object>objects\objSlopeRR</object>
     <object>objects\objSlopeL</object>
     <object>objects\objSlopeR</object>
-    <object>objects\objHook</object>
+    <object>objects\objPlatform</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
