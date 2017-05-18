@@ -195,15 +195,15 @@ r2 = place_meeting(x, y + 2, objSlopeRR);
 
 if (xVel &gt; 0)
 {
-    if (l1) xVel *= .95;
-    if (l2) xVel *= .9;
+    if (l1) xVel *= .97;
+    if (l2) xVel *= .92;
     if (r1) xVel *= 1.02;
     if (r2) xVel *= 1.06;
     
 } else
 {
-    if (r1) xVel *= .95;
-    if (r2) xVel *= .9;
+    if (r1) xVel *= .97;
+    if (r2) xVel *= .92;
     if (l1) xVel *= 1.02;
     if (l2) xVel *= 1.06;
 }
@@ -211,23 +211,26 @@ if (xVel &gt; 0)
 xVel = sign(xVel) * min(abs(xVel), 4);
 yVel = sign(yVel) * min(abs(yVel), 6);
 
+// check if stuck in floor
 if (instance_place(x + xVel, y + 1, objSolid))
     move_outside_solid(90, 1);
 
-if (!collision_rectangle(floor(bbox_left + xVel), bbox_top, ceil(bbox_right + xVel), bbox_bottom - 4, objSolid, true, true)) 
+// x-collision
+    
+if (!collision_rectangle(floor(bbox_left + xVel), bbox_top, ceil(bbox_right + xVel), bbox_bottom - 6, objSolid, true, true)) 
 {
     x += xVel;    
     // lift up against slopes
     if (place_meeting(x + xVel + 2 * sign(xVel), y + yVel, objSlope))
     {
-        move_outside_solid(90, sqrt(abs(xVel)*abs(yVel)));
+        move_outside_solid(90, max(2, sqrt(abs(xVel)*abs(yVel))));
     }
 }
 else
 {
     if (abs(xVel) &gt; .5)
         xs = .5;
-    
+        
     xVel = 0;
 }
 
@@ -257,17 +260,7 @@ else
     if (yVel &gt; 0)
         onFloor = true;
     
-    yVel = 0;
-    
-    /*if !(headAgainstCeil)
-    {
-        move_contact_solid(270, max(abs(yVel), 6));
-        yVel = 0;
-    }
-    else
-    {
-        //if (yVel &lt; 0) yVel *= .5;
-    }*/
+    yVel = 0;    
 }
 
 ////////// pre-graphic stuff ///////////
