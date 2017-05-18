@@ -39,8 +39,7 @@ jumps = 0;
 maxJumps = 2;
 onFloor = false;
 
-wallJumpTimer = 0;
-wallJumpReady = false;
+againstWall = false;
 
 xs = 1;
 ys = 1;
@@ -66,14 +65,31 @@ ys = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>kLeft = keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right);
-kRight = keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left);
-kDown = keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up);
+            <string>var kLeft, kRight, kUp, kDown, kJump, kJumpPressed, kJumpReleased, kAction;
+var gLeft, gRight, gUp, gDown, gJump, gJumpPressed, gJumpReleased, gAction;
 
-kJump = keyboard_check(vk_up);
-kJumpPressed = keyboard_check_pressed(vk_up);
-kJumpReleased = keyboard_check_released(vk_up);
-kAction = keyboard_check_pressed(ord('S'));
+if (gamepad_is_supported() &amp;&amp; gamepad_is_connected(0))
+{
+    gLeft = gamepad_axis_value(0, gp_axislh) &lt; -.5;
+    gRight = gamepad_axis_value(0, gp_axislh) &gt; .5;
+    gUp = gamepad_axis_value(0, gp_axislv) &lt; -.5;
+    gDown = gamepad_axis_value(0, gp_axislv) &gt; .5;
+    gJump = gamepad_button_check(0, gp_face1);
+    gJumpPressed = gamepad_button_check_pressed(0, gp_face1);
+    gJumpReleased = gamepad_button_check_released(0, gp_face1);
+    gAction = gamepad_button_check_pressed(0, gp_face3);
+
+}
+
+kLeft = (keyboard_check(vk_left) &amp;&amp; !keyboard_check(vk_right)) || gLeft;
+kRight = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)) || gRight;
+kDown = (keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up)) || gDown;
+kUp = (keyboard_check(vk_up) &amp;&amp; !keyboard_check(vk_down)) || gUp;
+
+kJump = keyboard_check(vk_up) || gJump;
+kJumpPressed = keyboard_check_pressed(vk_up) || gJumpPressed;
+kJumpReleased = keyboard_check_released(vk_up) || gJumpReleased;
+kAction = keyboard_check_pressed(ord('S')) || gAction;
 
 if (keyboard_check(ord('R')))
     room_restart();
@@ -136,6 +152,13 @@ else if (kRight) {
 if (place_meeting(x + sign(dir) + xVel, y, objBlock) &amp;&amp; !onFloor
     &amp;&amp; (dir == LEFT &amp;&amp; kLeft || dir == RIGHT &amp;&amp; kRight))
 {
+    againstWall = true;
+}
+
+if (againstWall)
+{   
+    if (dir == LEFT &amp;&amp; !kLeft || dir == RIGHT &amp;&amp; !kRight)
+        againstWall = false;
     
     if (place_meeting(x + 3*sign(dir), y, objSolid))
     {
@@ -152,8 +175,12 @@ if (place_meeting(x + sign(dir) + xVel, y, objBlock) &amp;&amp; !onFloor
         
         if (kJumpPressed)
         {
-            xVel = - sign(dir) * 2;
+            xVel = - sign(dir) * 1.5;
+            againstWall = false;
         }
+    } else
+    {
+        againstWall = false;
     }
 }
 
