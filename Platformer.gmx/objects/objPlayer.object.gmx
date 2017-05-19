@@ -41,8 +41,34 @@ onFloor = false;
 
 againstWall = false;
 
+kLeft = false;
+kRight = false;
+kUp = false;
+kDown = false;
+kJump = false;
+kJumpPressed = false;
+kJumpReleased = false;
+kAction = false;
+
+gLeft = false;
+gRight = false;
+gUp = false;
+gDown = false;
+gJump = false;
+gJumpPressed = false;
+gJumpReleased = false;
+gAction = false;
+
 xs = 1;
 ys = 1;
+
+// tentacles
+/*
+t[1] = instance_create(x - 6, y + 10, objTentacle);
+t[2] = instance_create(x - 2, y + 12, objTentacle);
+t[3] = instance_create(x + 2, y + 12, objTentacle);
+t[4] = instance_create(x + 6, y + 10, objTentacle);*/
+
 </string>
           </argument>
         </arguments>
@@ -65,10 +91,7 @@ ys = 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var kLeft, kRight, kUp, kDown, kJump, kJumpPressed, kJumpReleased, kAction;
-var gLeft, gRight, gUp, gDown, gJump, gJumpPressed, gJumpReleased, gAction;
-
-if (gamepad_is_supported() &amp;&amp; gamepad_is_connected(0))
+            <string>if (gamepad_is_supported() &amp;&amp; gamepad_is_connected(0))
 {
     gLeft = gamepad_axis_value(0, gp_axislh) &lt; -.5;
     gRight = gamepad_axis_value(0, gp_axislh) &gt; .5;
@@ -160,7 +183,7 @@ if (againstWall)
     if (dir == LEFT &amp;&amp; !kLeft || dir == RIGHT &amp;&amp; !kRight)
         againstWall = false;
     
-    if (place_meeting(x + 3*sign(dir), y, objSolid))
+    if (place_meeting(x + 3*sign(dir), y, objBlock))
     {
         if (!kDown)
         {

@@ -13,6 +13,7 @@
     <sprite>sprites\mskSlopeLL</sprite>
     <sprite>sprites\mskSlopeRR</sprite>
     <sprite>sprites\mskPlatform</sprite>
+    <sprite>sprites\mskTentacle</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -28,6 +29,7 @@
     <object>objects\objSlopeL</object>
     <object>objects\objSlopeR</object>
     <object>objects\objPlatform</object>
+    <object>objects\objTentacle</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
