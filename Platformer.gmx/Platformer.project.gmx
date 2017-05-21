@@ -14,6 +14,7 @@
     <sprite>sprites\mskSlopeRR</sprite>
     <sprite>sprites\mskPlatform</sprite>
     <sprite>sprites\mskTentacle</sprite>
+    <sprite>sprites\sprPlayer</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -34,15 +35,17 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="8">
+  <constants number="10">
     <constant name="TILE">16</constant>
-    <constant name="IDLE">0</constant>
-    <constant name="WALK">1</constant>
-    <constant name="JUMP">2</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="UP">-2</constant>
     <constant name="DOWN">2</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="WALK">1</constant>
+    <constant name="JUMPUP">2</constant>
+    <constant name="JUMPDOWN">3</constant>
+    <constant name="WALL">4</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
