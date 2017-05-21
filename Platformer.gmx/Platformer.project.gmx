@@ -15,6 +15,7 @@
     <sprite>sprites\mskPlatform</sprite>
     <sprite>sprites\mskTentacle</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\mskWater</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -31,6 +32,7 @@
     <object>objects\objSlopeR</object>
     <object>objects\objPlatform</object>
     <object>objects\objTentacle</object>
+    <object>objects\objWater</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

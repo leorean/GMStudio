@@ -67,13 +67,7 @@ gAction = false;
 xs = 1;
 ys = 1;
 
-// tentacles
-/*
-t[1] = instance_create(x - 6, y + 10, objTentacle);
-t[2] = instance_create(x - 2, y + 12, objTentacle);
-t[3] = instance_create(x + 2, y + 12, objTentacle);
-t[4] = instance_create(x + 6, y + 10, objTentacle);*/
-
+inWater = false;
 </string>
           </argument>
         </arguments>
@@ -129,6 +123,8 @@ else
 
 headAgainstCeil = collision_line(bbox_left, bbox_top + min(yVel, 0), bbox_right, bbox_top + min(yVel, 0), objSolid, true, true)
 
+inWater = collision_rectangle(bbox_left, bbox_top + 8, bbox_right, bbox_bottom, objWater, true, true);
+
 if (kAction)
 {
     
@@ -140,9 +136,15 @@ if (onFloor)
     jumpTimer = 40;    
 }
 
+if (inWater) 
+{
+    jumpTimer = 0;
+    jumps = 0;
+}
+
 if (jumps &lt; maxJumps)
 {
-    if (kJumpPressed)
+    if (kJumpPressed || (kJump &amp;&amp; inWater))
     {
         yVel = -3.5;
         state = JUMPUP;
@@ -187,7 +189,11 @@ else if (kRight) {
 if (place_meeting(x + sign(dir) + xVel, y, objBlock) &amp;&amp; !onFloor
     &amp;&amp; (dir == LEFT &amp;&amp; kLeft || dir == RIGHT &amp;&amp; kRight))
 {
-    againstWall = true;
+    if (!inWater 
+        &amp;&amp; !place_meeting(x, y + TILE + 12, objSolid)
+        &amp;&amp; !place_meeting(x, y + TILE, objWater)
+        &amp;&amp; yVel &gt; -1)
+        againstWall = true;
 }
 
 if (againstWall)
@@ -251,6 +257,16 @@ if (xVel &gt; 0)
 xVel = sign(xVel) * min(abs(xVel), 4);
 yVel = sign(yVel) * min(abs(yVel), 6);
 
+if (inWater)
+{
+    xVel = sign(xVel) * min(abs(xVel), 1.5);
+    yVel = sign(yVel) * min(abs(yVel), 1);
+    
+    if (yVel &lt; 0 &amp;&amp; kUp &amp;&amp; !place_meeting(x, y - 8, objWater))
+        yVel = -4;
+}
+
+
 // check if stuck in floor
 if (instance_place(x + xVel, y + 1, objSolid))
     move_outside_solid(90, 1);
@@ -275,12 +291,12 @@ else
 }
 
 // push down against slopes
-if(place_meeting(x, y + yVel + 5, objSlope))
+if(place_meeting(x, y + yVel + 5, objSlope) &amp;&amp; !inWater)
 {
     move_contact_solid(270, 5);
 }
 
-yVel += yGrav;
+yVel += .5 * yGrav + .5 * yGrav * !inWater;
 
 onPlatform = yVel &gt;= 0 &amp;&amp; collision_rectangle(bbox_left, bbox_bottom, bbox_right, bbox_bottom + max(yVel, 0), objPlatform, true, true);
 
