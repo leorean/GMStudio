@@ -262,7 +262,7 @@ if (inWater)
     xVel = sign(xVel) * min(abs(xVel), 1.5);
     yVel = sign(yVel) * min(abs(yVel), 1);
     
-    if (yVel &lt; 0 &amp;&amp; kUp &amp;&amp; !place_meeting(x, y - 8, objWater))
+    if (yVel &lt; 0 &amp;&amp; (kUp || kJump) &amp;&amp; !place_meeting(x, y - 8, objWater))
         yVel = -4;
 }
 
