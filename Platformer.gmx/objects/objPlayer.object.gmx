@@ -122,7 +122,6 @@ else
     room_speed = 60;
 
 headAgainstCeil = collision_line(bbox_left, bbox_top + min(yVel, 0), bbox_right, bbox_top + min(yVel, 0), objSolid, true, true)
-
 inWater = collision_rectangle(bbox_left, bbox_top + 8, bbox_right, bbox_bottom, objWater, true, true);
 
 if (kAction)
@@ -190,14 +189,16 @@ if (place_meeting(x + sign(dir) + xVel, y, objBlock) &amp;&amp; !onFloor
     &amp;&amp; (dir == LEFT &amp;&amp; kLeft || dir == RIGHT &amp;&amp; kRight))
 {
     if (!inWater 
-        &amp;&amp; !place_meeting(x, y + TILE + 12, objSolid)
+        &amp;&amp; !collision_rectangle(bbox_left + 1, bbox_bottom, bbox_right - 1, bbox_bottom + 5, objSolid, true, true)
         &amp;&amp; !place_meeting(x, y + TILE, objWater)
-        &amp;&amp; yVel &gt; -1)
+        &amp;&amp; yVel &gt; -1
+        &amp;&amp; abs(xVel) &lt; .5)
         againstWall = true;
 }
 
 if (againstWall)
 {   
+
     state = WALL;
     
     if (dir == LEFT &amp;&amp; !kLeft || dir == RIGHT &amp;&amp; !kRight)
@@ -342,6 +343,13 @@ if (state == JUMPUP)
     if (yVel &gt;= 0)
         state = JUMPDOWN;
 }
+
+if (inWater &amp;&amp; !onFloor)
+{
+    if (state == JUMPUP || state == JUMPDOWN)
+        state = SWIM;
+}
+if (state == SWIM &amp;&amp; !inWater) state = JUMPUP;
 </string>
           </argument>
         </arguments>
@@ -389,8 +397,10 @@ switch(state)
         row = 4;
         fSpeed = .1;
     break;
-    //case IDLE:
-    //break;
+    case SWIM:
+        row = 5;
+        fSpeed = .07;
+    break;
 }
 
 draw_sprite_part_ext(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE, x-TILE + 2*(dir==LEFT)*TILE, y-TILE, -1*(dir == LEFT) + (dir == RIGHT), 1, c_white,1);
