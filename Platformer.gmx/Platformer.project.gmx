@@ -16,6 +16,9 @@
     <sprite>sprites\mskTentacle</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\mskWater</sprite>
+    <sprite>sprites\mskInk</sprite>
+    <sprite>sprites\sprGfx</sprite>
+    <sprite>sprites\sprInk</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -33,6 +36,7 @@
     <object>objects\objPlatform</object>
     <object>objects\objTentacle</object>
     <object>objects\objWater</object>
+    <object>objects\objInk</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

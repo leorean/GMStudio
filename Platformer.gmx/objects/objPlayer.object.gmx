@@ -31,7 +31,7 @@ xVel = 0;
 yVel = 0;
 yGrav = 0;
 yGravJump = .08;
-yGravNormal = .16;
+yGravNormal = .18;
 angle = 0;
 
 jumpTimer = 0;
@@ -131,11 +131,13 @@ if (kAction)
     {
         state = ATTACK;
         fCur = 0;
+        jumps = maxJumps;
         
-        if (onFloor)
-            yVel = -1;
-        xVel = -sign(dir)* 1 + xVel;
-        
+        var ink = instance_create(x + xVel, y + yVel, objInk);
+        if (!inWater)
+            ink.xVel = sign(dir)*4.5;
+        else
+            ink.xVel = sign(dir)*2.5;
     }
 }
    
@@ -163,12 +165,12 @@ if (jumps &lt; maxJumps &amp;&amp; state != ATTACK)
     {
         jumpTimer = max(jumpTimer - 1, 0);
         yGrav = yGravJump;
-    }
-    if (kJumpReleased || !jumpTimer)
-    {   
-        yGrav = yGravNormal;
-        jumps++;
-    }
+    }    
+}
+if (kJumpReleased || !jumpTimer)
+{   
+    yGrav = yGravNormal;
+    jumps++;
 }
 
 // walk velocity
@@ -198,11 +200,12 @@ else if (kRight) {
 if (state == ATTACK)
 {
     canAttack = false;
-    if (fCur &gt;= fMax - fSpeed)
-    {
+}
+if (fCur &gt;= fMax - fSpeed)
+{
+    if (state == ATTACK)
         state = IDLE;
-        canAttack = true;
-    }
+    canAttack = true;
 }
 
 // walljumps
@@ -267,14 +270,14 @@ if (xVel &gt; 0)
     if (l1) xVel *= .97;
     if (l2) xVel *= .92;
     if (r1) xVel *= 1.02;
-    if (r2) xVel *= 1.06;
+    if (r2) xVel *= 1.04;
     
 } else
 {
     if (r1) xVel *= .97;
     if (r2) xVel *= .92;
     if (l1) xVel *= 1.02;
-    if (l2) xVel *= 1.06;
+    if (l2) xVel *= 1.04;
 }
 
 xVel = sign(xVel) * min(abs(xVel), 4);
@@ -335,7 +338,7 @@ if (!place_meeting(x, y + yVel, objSolid) &amp;&amp; !onPlatform)
 else
 {
 
-    if (ys == 1 &amp;&amp; yVel &gt; 1)
+    if (ys == 1 &amp;&amp; abs(yVel) &gt; 1)
     {
         ys = .5;
     }
@@ -429,7 +432,12 @@ switch(state)
     break;
 }
 
-draw_sprite_part_ext(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE, x-TILE + 2*(dir==LEFT)*TILE, y-TILE, -1*(dir == LEFT) + (dir == RIGHT), 1, c_white,1);
+draw_sprite_part_ext(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE,
+    x-TILE + 2*(dir==LEFT)*TILE + sign(dir) * (1 - xs) * 1.5 * TILE,// - (dir == LEFT) * (1 - xs) * 1.5 * TILE, 
+    y-TILE + (1-ys)*1.5*TILE, 
+    xs * (-1*(dir == LEFT) + (dir == RIGHT)), 
+    ys, 
+    c_white,1);
 //draw_sprite_part_ext(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE, x-TILE + 2*(dir==LEFT)*TILE, y-TILE, xs * -1*(dir == LEFT) + xs * (dir == RIGHT), ys, c_white,1);
 
 //draw_sprite_ext(mskPlayer, -1, x, y, xs, ys, 0, c_white, 1);
