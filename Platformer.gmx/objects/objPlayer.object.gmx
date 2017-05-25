@@ -45,6 +45,7 @@ fMax = 4;
 fSpeed = .1;
 
 againstWall = false;
+canAttack = true;
 
 kLeft = false;
 kRight = false;
@@ -126,7 +127,16 @@ inWater = collision_rectangle(bbox_left, bbox_top + 8, bbox_right, bbox_bottom, 
 
 if (kAction)
 {
-    
+    if (state != WALL &amp;&amp; canAttack)
+    {
+        state = ATTACK;
+        fCur = 0;
+        
+        if (onFloor)
+            yVel = -1;
+        xVel = -sign(dir)* 1 + xVel;
+        
+    }
 }
    
 if (onFloor)
@@ -141,7 +151,7 @@ if (inWater)
     jumps = 0;
 }
 
-if (jumps &lt; maxJumps)
+if (jumps &lt; maxJumps &amp;&amp; state != ATTACK)
 {
     if (kJumpPressed || (kJump &amp;&amp; inWater))
     {
@@ -166,13 +176,13 @@ if (jumps &lt; maxJumps)
 if (kLeft)
 {
     dir = LEFT;
-    if (onFloor) state = WALK;
+    if (onFloor &amp;&amp; state != ATTACK) state = WALK;
     
     xVel = max(xVel - .18, -2.7);
 }
 else if (kRight) {
     dir = RIGHT;
-    if (onFloor) state = WALK;
+    if (onFloor &amp;&amp; state != ATTACK) state = WALK;
     
     xVel = min(xVel + .18, 2.7);
 } else
@@ -181,6 +191,18 @@ else if (kRight) {
         state = IDLE;
 
     xVel *= .8;
+}
+
+// attack
+
+if (state == ATTACK)
+{
+    canAttack = false;
+    if (fCur &gt;= fMax - fSpeed)
+    {
+        state = IDLE;
+        canAttack = true;
+    }
 }
 
 // walljumps
@@ -400,6 +422,10 @@ switch(state)
     case SWIM:
         row = 5;
         fSpeed = .07;
+    break;
+    case ATTACK:
+        row = 6;
+        fSpeed = .2;
     break;
 }
 

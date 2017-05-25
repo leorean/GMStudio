@@ -37,7 +37,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="11">
+  <constants number="12">
     <constant name="TILE">16</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
@@ -49,6 +49,7 @@
     <constant name="JUMPDOWN">3</constant>
     <constant name="WALL">4</constant>
     <constant name="SWIM">5</constant>
+    <constant name="ATTACK">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>
