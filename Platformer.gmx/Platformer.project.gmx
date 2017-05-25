@@ -19,6 +19,8 @@
     <sprite>sprites\mskInk</sprite>
     <sprite>sprites\sprGfx</sprite>
     <sprite>sprites\sprInk</sprite>
+    <sprite>sprites\mskEnemy1</sprite>
+    <sprite>sprites\sprEnemy1</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -26,6 +28,7 @@
     <objects name="hierarchy">
       <object>objects\objSlope</object>
       <object>objects\objSolid</object>
+      <object>objects\objEnemy</object>
     </objects>
     <object>objects\objPlayer</object>
     <object>objects\objBlock</object>
@@ -37,11 +40,12 @@
     <object>objects\objTentacle</object>
     <object>objects\objWater</object>
     <object>objects\objInk</object>
+    <object>objects\objEnemy1</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="12">
+  <constants number="14">
     <constant name="TILE">16</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
@@ -54,6 +58,8 @@
     <constant name="WALL">4</constant>
     <constant name="SWIM">5</constant>
     <constant name="ATTACK">6</constant>
+    <constant name="HURT">7</constant>
+    <constant name="DEAD">8</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

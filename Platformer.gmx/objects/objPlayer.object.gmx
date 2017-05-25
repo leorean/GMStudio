@@ -218,12 +218,15 @@ if (place_meeting(x + sign(dir) + xVel, y, objBlock) &amp;&amp; !onFloor
         &amp;&amp; !place_meeting(x, y + TILE, objWater)
         &amp;&amp; yVel &gt; -1
         &amp;&amp; abs(xVel) &lt; .5)
-        againstWall = true;
+        &amp;&amp; !againstWall
+        {
+            againstWall = true;
+            yVel = 0;
+        }
 }
 
 if (againstWall)
 {   
-
     state = WALL;
     
     if (dir == LEFT &amp;&amp; !kLeft || dir == RIGHT &amp;&amp; !kRight)
@@ -310,7 +313,7 @@ if (!collision_rectangle(floor(bbox_left + xVel), bbox_top, ceil(bbox_right + xV
 }
 else
 {
-    if (abs(xVel) &gt; .5)
+    if (xs == 1 &amp;&amp; abs(xVel) &gt; .5)
         xs = .5;
         
     xVel = 0;
