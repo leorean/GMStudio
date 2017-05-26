@@ -63,30 +63,46 @@ state = WALK;
             <kind>1</kind>
             <string>hurt = max(hurt - 1, 0);
 
-if (!hurt)
+if (hp == 0) instance_destroy();
+
+xVel = sign(dir)*.5 - sign(dir)*(hurt &gt; 0) * .4;
+
+/*if (!hurt)
 {
     xVel = sign(dir)*.5;
+    state = WALK;
 }
 else
 {
+    if (state != HURT)
+    {
+        xVel = 0;
+        yVel = -2;
+    }
     state = HURT;
 }
 
+if (state == HURT)
+{
+    if (!place_meeting(x + xVel, y, objSolid))
+        x += xVel;
+}*/
+
 if (state == WALK)
 {
-    if (!collision_point(x + 8 + sign(dir)*8 + xVel, y + 8, objSolid, true, true))
+    if (!collision_rectangle(bbox_left + sign(dir) * 2, bbox_top, bbox_right + sign(dir) * 2, bbox_top + 8, objBlock, true, true))
+    {
         x += xVel;
+
+        if (!collision_line(bbox_left + 4, bbox_bottom + 8, bbox_right - 4, bbox_bottom + 8, objSolid, true, true)
+            &amp;&amp; (abs(yVel) &lt;= yGrav))
+            dir = -dir;
+    }
     else
     {
         dir = -dir;
     }
     
-    if (!place_meeting(x + sign(dir) * TILE, y + TILE, objSolid))
-        dir = -dir;
-}
-else
-{
-    xVel = 0;
 }
 
 yVel = min(yVel + yGrav, 4);
@@ -129,11 +145,16 @@ else
 if (state == WALK)
     fCur = (fCur + fSpeed) % fMax;
 else
-    fCur = fMax + 1;
+    fCur = fMax;
 frame = floor(fCur);
 
+if (hurt % 6 &gt; 3)
+    a = 0;
+else
+    a = 1;
+
 draw_sprite_part_ext(sprEnemy1, -1, frame*2*TILE, 0, 2*TILE, 2*TILE, 
-    x - (dir == LEFT) * 8 + (dir == RIGHT) * 24, y - 8, -(dir == RIGHT) + (dir == LEFT), 1, c_white, 1);
+    x - (dir == LEFT) * 8 + (dir == RIGHT) * 24, y - 8, -(dir == RIGHT) + (dir == LEFT), 1, c_white, a);
 </string>
           </argument>
         </arguments>

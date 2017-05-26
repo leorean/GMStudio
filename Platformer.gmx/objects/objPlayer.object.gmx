@@ -69,6 +69,9 @@ xs = 1;
 ys = 1;
 
 inWater = false;
+
+hurt = 0;
+hp = 3;
 </string>
           </argument>
         </arguments>
@@ -125,7 +128,7 @@ else
 headAgainstCeil = collision_line(bbox_left, bbox_top + min(yVel, 0), bbox_right, bbox_top + min(yVel, 0), objSolid, true, true)
 inWater = collision_rectangle(bbox_left, bbox_top + 8, bbox_right, bbox_bottom, objWater, true, true);
 
-if (kAction)
+if (kAction &amp;&amp; hurt &lt; 40)
 {
     if (state != WALL &amp;&amp; canAttack)
     {
@@ -135,9 +138,9 @@ if (kAction)
         
         var ink = instance_create(x + xVel, y + yVel, objInk);
         if (!inWater)
-            ink.xVel = sign(dir)*4.5;
+            ink.xVel = sign(dir)*3.5;
         else
-            ink.xVel = sign(dir)*2.5;
+            ink.xVel = sign(dir)*2.3;
     }
 }
    
@@ -153,7 +156,7 @@ if (inWater)
     jumps = 0;
 }
 
-if (jumps &lt; maxJumps &amp;&amp; state != ATTACK)
+if (jumps &lt; maxJumps &amp;&amp; state != ATTACK &amp;&amp; hurt &lt; 40)
 {
     if (kJumpPressed || (kJump &amp;&amp; inWater))
     {
@@ -175,19 +178,23 @@ if (kJumpReleased || !jumpTimer)
 
 // walk velocity
 
-if (kLeft)
+if (hurt &lt; 40)
 {
-    dir = LEFT;
-    if (onFloor &amp;&amp; state != ATTACK) state = WALK;
-    
-    xVel = max(xVel - .18, -2.7);
+    if (kLeft)
+    {
+        dir = LEFT;
+        if (onFloor &amp;&amp; state != ATTACK) state = WALK;
+        
+        xVel = max(xVel - .18, -2.7);
+    }
+    else if (kRight) {
+        dir = RIGHT;
+        if (onFloor &amp;&amp; state != ATTACK) state = WALK;
+        
+        xVel = min(xVel + .18, 2.7);
+    }
 }
-else if (kRight) {
-    dir = RIGHT;
-    if (onFloor &amp;&amp; state != ATTACK) state = WALK;
-    
-    xVel = min(xVel + .18, 2.7);
-} else
+if (!kLeft &amp;&amp; !kRight)
 {
     if (state == WALK)
         state = IDLE;
@@ -257,6 +264,22 @@ if (againstWall)
 } else if (state == WALL)
 {
     state = JUMPUP;
+}
+
+enemy = instance_place(x, y, objEnemy);
+if (enemy != noone &amp;&amp; enemy.hp &gt; 0 &amp;&amp; !hurt)
+{
+    xVel = sign(x - ((enemy.bbox_left + enemy.bbox_right)/2))*2;
+    yVel = -2.5;
+    hurt = 60;
+    hp = max(hp - 1, 0);
+}
+
+hurt = max(hurt - 1, 0);
+
+if (hurt &gt; 60)
+{
+    if (onFloor) xVel *= .8;
 }
 
 ///////////// physics /////////////
@@ -435,12 +458,14 @@ switch(state)
     break;
 }
 
+a = (hurt % 6 &lt; 3);
+
 draw_sprite_part_ext(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE,
     x-TILE + 2*(dir==LEFT)*TILE + sign(dir) * (1 - xs) * 1.5 * TILE,// - (dir == LEFT) * (1 - xs) * 1.5 * TILE, 
     y-TILE + (1-ys)*1.5*TILE, 
     xs * (-1*(dir == LEFT) + (dir == RIGHT)), 
     ys, 
-    c_white,1);
+    c_white, a);
 //draw_sprite_part_ext(sprPlayer, -1, frame*2*TILE, row*2*TILE, 2*TILE, 2*TILE, x-TILE + 2*(dir==LEFT)*TILE, y-TILE, xs * -1*(dir == LEFT) + xs * (dir == RIGHT), ys, c_white,1);
 
 //draw_sprite_ext(mskPlayer, -1, x, y, xs, ys, 0, c_white, 1);

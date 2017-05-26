@@ -32,7 +32,7 @@ alive = true;
 
 fCur = 0;
 fSpeed = .4;
-fMax = 4;
+fMax = 5;
 </string>
           </argument>
         </arguments>
@@ -58,13 +58,15 @@ fMax = 4;
             <string>if (alive)
 {
 
+    fCur = (fCur + .2) % 3;
+
     timer = max(timer - 1, 0);
 
     var enemy = instance_place(x, y, objEnemy);
     if (enemy != noone &amp;&amp; enemy.hp &gt; 0 &amp;&amp; !enemy.hurt)
     {
         enemy.hp = max(enemy.hp - 1, 0);
-        enemy.hurt = 40;
+        enemy.hurt = 20;
         alive = false;
     }
     
