@@ -32,7 +32,7 @@ alive = true;
 
 fCur = 0;
 fSpeed = .4;
-fMax = 5;
+fMax = 4;
 </string>
           </argument>
         </arguments>
@@ -58,7 +58,7 @@ fMax = 5;
             <string>if (alive)
 {
 
-    fCur = (fCur + .2) % 3;
+    //fCur = (fCur + .2) % 2;
 
     timer = max(timer - 1, 0);
 
@@ -110,7 +110,7 @@ else
           <argument>
             <kind>1</kind>
             <string>frame = floor(fCur);
-draw_sprite_part(sprInk, -1, frame*TILE, 0, TILE, TILE, x - 8, y - 8);
+draw_sprite_part_ext(sprInk, -1, frame*TILE, 0, TILE, TILE, x - 8 + (xVel &lt; 0) * TILE, y - 8, -1*(xVel &lt; 0)+ 1*(xVel &gt;= 0), 1, c_white, 1);
 </string>
           </argument>
         </arguments>

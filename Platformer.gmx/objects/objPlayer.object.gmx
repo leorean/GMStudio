@@ -156,11 +156,12 @@ if (inWater)
     jumps = 0;
 }
 
-if (jumps &lt; maxJumps &amp;&amp; state != ATTACK &amp;&amp; hurt &lt; 40)
+if (jumps &lt; maxJumps &amp;&amp; /*state != ATTACK &amp;&amp;*/ hurt &lt; 40)
 {
     if (kJumpPressed || (kJump &amp;&amp; inWater))
     {
         yVel = -3.5;
+        fCur = 0;
         state = JUMPUP;
     }
     
@@ -185,13 +186,13 @@ if (hurt &lt; 40)
         dir = LEFT;
         if (onFloor &amp;&amp; state != ATTACK) state = WALK;
         
-        xVel = max(xVel - .18, -2.7);
+        xVel = max(xVel - .1, -2);
     }
     else if (kRight) {
         dir = RIGHT;
         if (onFloor &amp;&amp; state != ATTACK) state = WALK;
         
-        xVel = min(xVel + .18, 2.7);
+        xVel = min(xVel + .1, 2);
     }
 }
 if (!kLeft &amp;&amp; !kRight)
@@ -438,11 +439,12 @@ switch(state)
     break;
     case JUMPUP:
         row = 2;
-        fSpeed = .15;
+        fSpeed = .3;
+        fCur = min(fCur, fMax - 1);
     break;
     case JUMPDOWN:
         row = 3;
-        fSpeed = .15;
+        fSpeed = .3;
     break;
     case WALL:
         row = 4;
