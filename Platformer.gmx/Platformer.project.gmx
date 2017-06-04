@@ -24,6 +24,11 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\importLevel.gml</script>
+    <script>scripts\addTile.gml</script>
+    <script>scripts\createRoom.gml</script>
+  </scripts>
   <objects name="objects">
     <objects name="hierarchy">
       <object>objects\objSlope</object>
