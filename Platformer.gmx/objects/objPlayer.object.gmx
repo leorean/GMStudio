@@ -294,17 +294,17 @@ r2 = place_meeting(x, y + 2, objSlopeRR);
 
 if (xVel &gt; 0)
 {
-    if (l1) xVel *= .97;
-    if (l2) xVel *= .92;
-    if (r1) xVel *= 1.02;
-    if (r2) xVel *= 1.04;
+    if (l1) xVel *= .95;
+    if (l2) xVel *= .9;
+    if (r1) xVel *= 1.01;
+    if (r2) xVel *= 1.01;
     
 } else
 {
-    if (r1) xVel *= .97;
-    if (r2) xVel *= .92;
-    if (l1) xVel *= 1.02;
-    if (l2) xVel *= 1.04;
+    if (r1) xVel *= .95;
+    if (r2) xVel *= .9;
+    if (l1) xVel *= 1.01;
+    if (l2) xVel *= 1.01;
 }
 
 xVel = sign(xVel) * min(abs(xVel), 4);

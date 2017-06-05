@@ -53,6 +53,7 @@
     <script>scripts\in.gml</script>
   </scripts>
   <objects name="objects">
+    <object>objects\objCamera</object>
     <object>objects\objControl</object>
     <objects name="hierarchy">
       <object>objects\objSlope</object>

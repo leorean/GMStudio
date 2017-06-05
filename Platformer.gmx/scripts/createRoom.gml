@@ -39,8 +39,8 @@ for (var i = 0; i<w; i ++)
                 global.spawnx = p.x;
                 global.spawny = p.y;
                 
-                /*with(global.camera) instance_destroy();
-                global.camera = instance_create(objPlayer.x, objPlayer.y, objCamera);*/
+                with(global.camera) instance_destroy();
+                global.camera = instance_create(objPlayer.x, objPlayer.y, objCamera);
                 
             break;
             case 1: //checkpoint
@@ -67,6 +67,7 @@ for (var i = 0; i<w; i ++)
         }
         switch(fg)
         {
+            case -1:
             case 0:
             break;
             case rowSize: //platform
@@ -82,16 +83,16 @@ for (var i = 0; i<w; i ++)
                 instance_create(i*TILE,j*TILE,objSlopeR);
             break;*/
             default:
-            
-                addTile(fg,i*TILE,j*TILE,LAYER_FG);
-            
+                        
                 if (fg >= 2* rowSize && fg < 3 * rowSize)
-                {                
+                {   
+                             
+                    addTile(fg,i*TILE,j*TILE,LAYER_FG);
+                    
                     var sl = (fg - 2*rowSize) % 6;
                     switch(sl)
                     {
                         case 0:
-                            show_debug_message("SLOPE L ");
                             instance_create(i*TILE,j*TILE,objSlopeL);
                         break;
                         case 2:
@@ -106,8 +107,10 @@ for (var i = 0; i<w; i ++)
                         default: break;
                     }
                 }
-                if (fg>=3*rowSize)
-                    //addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);
+                // grass etc
+                else if (fg >= 4*rowSize && fg < 5*rowSize)
+                    addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);
+                else // normal blocks
                 {
                     addTile(fg,i*TILE,j*TILE,LAYER_FG);
                     instance_create(i*TILE,j*TILE,objBlock);
