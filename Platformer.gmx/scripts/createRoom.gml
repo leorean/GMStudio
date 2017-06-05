@@ -6,6 +6,10 @@ var fg = 0;
 var bg = 0;
 var obj = 0;
 
+// how many indices one row in the tileset has
+var rowSize = (background_get_width(sprTiles)/TILE);
+var colSize = (background_get_height(sprTiles)/TILE);
+
 if (room_width!=w*TILE || room_height!=h*TILE)
 {
     room_set_width(room,w*TILE);
@@ -35,8 +39,8 @@ for (var i = 0; i<w; i ++)
                 global.spawnx = p.x;
                 global.spawny = p.y;
                 
-                with(global.camera) instance_destroy();
-                global.camera = instance_create(objPlayer.cx,objPlayer.cy,objCamera);
+                /*with(global.camera) instance_destroy();
+                global.camera = instance_create(objPlayer.x, objPlayer.y, objCamera);*/
                 
             break;
             case 1: //checkpoint
@@ -65,22 +69,45 @@ for (var i = 0; i<w; i ++)
         {
             case 0:
             break;
-            case 192: //platform
+            case rowSize: //platform
                 addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 instance_create(i*TILE,j*TILE,objPlatform);
             break;
-            case 71:
+            /*case 2 * rowSize:
                 addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 instance_create(i*TILE,j*TILE,objSlopeL);
             break;
             case 73:
                 addTile(fg,i*TILE,j*TILE,LAYER_FG);
                 instance_create(i*TILE,j*TILE,objSlopeR);
-            break;
+            break;*/
             default:
-                if (fg>=32)
-                    addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);
-                if (fg>=64)
+            
+                addTile(fg,i*TILE,j*TILE,LAYER_FG);
+            
+                if (fg >= 2* rowSize && fg < 3 * rowSize)
+                {                
+                    var sl = (fg - 2*rowSize) % 6;
+                    switch(sl)
+                    {
+                        case 0:
+                            show_debug_message("SLOPE L ");
+                            instance_create(i*TILE,j*TILE,objSlopeL);
+                        break;
+                        case 2:
+                            instance_create(i*TILE,j*TILE,objSlopeR);
+                        break;
+                        case 4:
+                            instance_create(i*TILE,j*TILE,objSlopeLL);
+                        break;
+                        case 5:
+                            instance_create(i*TILE,j*TILE,objSlopeRR);
+                        break;
+                        default: break;
+                    }
+                }
+                if (fg>=3*rowSize)
+                    //addTile(fg,i*TILE,j*TILE,LAYER_BG - 1);
                 {
                     addTile(fg,i*TILE,j*TILE,LAYER_FG);
                     instance_create(i*TILE,j*TILE,objBlock);
@@ -88,16 +115,4 @@ for (var i = 0; i<w; i ++)
             break;
         }
     }
-}
-
-//remove blocks next to slope
-with(objSlopeL)
-{
-    br = instance_place(x + TILE, y, objBlock);
-    with (br) instance_destroy();
-}
-with(objSlopeR)
-{
-    br = instance_place(x + TILE, y, objBlock);
-    with (br) instance_destroy();
 }
