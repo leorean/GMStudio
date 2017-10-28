@@ -65,14 +65,20 @@ if (mouse_check_button_pressed(mb_left)
 
 if (mouse_check_button(mb_left))
 {
-    ship.xVel = 0;
-    ship.yVel = 0;
+    if (instance_exists(ship))
+    {
+        ship.xVel = 0;
+        ship.yVel = 0;
+    }
 }
 
 if (mouse_check_button_released(mb_left))
 {
-    ship.xVel = (mouse_x - mx) / 32;
-    ship.yVel = (mouse_y - my) / 32;
+    if (instance_exists(ship))
+    {
+        ship.xVel = (mouse_x - mx) / 32;
+        ship.yVel = (mouse_y - my) / 32;
+    }
     ship = noone;
 }
 </string>

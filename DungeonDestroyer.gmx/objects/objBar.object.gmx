@@ -31,6 +31,8 @@ yVel = 0;
 w = 3*TILE;
 h = TILE;
 
+hp = 1;
+
 targetX = x;
 targetY = y;
 
@@ -41,9 +43,6 @@ hurt = false;
 broken = false;
 lookLeft = 90;
 lookRight = 90;
-
-maxHp = 5;
-hp = maxHp;
 </string>
           </argument>
         </arguments>
@@ -95,6 +94,7 @@ if (!broken)
         // "just" a falling block. hurts but doesn't kill
         if (collideBlock.falling)
         {
+            /*
             if (!hurt)
             {
                 hp = max(hp - 1, 0);
@@ -102,7 +102,7 @@ if (!broken)
                 var eff = instance_create(collideBlock.x+8, collideBlock.y+8, objEffect);
                 eff.type = 1;
                 with(collideBlock) instance_destroy();
-            }
+            }*/
         }
         else //uh-oh, you've been CRUSHED.
         {

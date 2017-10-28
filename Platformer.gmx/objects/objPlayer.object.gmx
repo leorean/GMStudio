@@ -294,15 +294,15 @@ r2 = place_meeting(x, y + 2, objSlopeRR);
 
 if (xVel &gt; 0)
 {
-    if (l1) xVel *= .95;
-    if (l2) xVel *= .9;
+    if (l1) xVel *= .97;
+    if (l2) xVel *= .95;
     if (r1) xVel *= 1.01;
     if (r2) xVel *= 1.01;
     
 } else
 {
-    if (r1) xVel *= .95;
-    if (r2) xVel *= .9;
+    if (r1) xVel *= .97;
+    if (r2) xVel *= .95;
     if (l1) xVel *= 1.01;
     if (l2) xVel *= 1.01;
 }
@@ -435,7 +435,7 @@ switch(state)
     break;
     case WALK:
         row = 1;
-        fSpeed = .15;
+        fSpeed = .2;
     break;
     case JUMPUP:
         row = 2;

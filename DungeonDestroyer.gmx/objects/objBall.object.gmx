@@ -34,7 +34,7 @@ broken = false;
 w = TILE - 2;
 sprite_index = mskBall;
 
-ballSpd = 2.5;
+ballSpd = 3;
 angle = 90;
 
 lastBlock = noone; //for score things
@@ -198,7 +198,7 @@ if (!broken)
         adjustBallSpeed();
     }
     
-    if (y + yVel &gt; BORDER + w/2 &amp;&amp; (y + yVel &lt; room_height - BORDER - w/2 || !global.invincible))
+    if (y + yVel &gt; BORDER + w/2 &amp;&amp; (y + yVel &lt; room_height - BORDER - w/2))// || !global.invincible))
         y += yVel;
     else
     {

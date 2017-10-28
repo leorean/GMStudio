@@ -36,16 +36,14 @@ kDown = false;
 
 dev = -1;
 
-cx = x;
-cy = y;
-
-sx = cx;
-sy = cy;
-
 forceX = 0;
 forceY = 0;
 angle = 0;
 
+cx = x;
+cy = y;
+sx = x;
+sy = y;
 offx = x;
 offy = y;
 //offx = -100; offy = -100;
@@ -79,10 +77,14 @@ for (var i = 0; i &lt; 5; i++)
         if(device_mouse_check_button(i,mb_left))
         {
             dev = i;
+            visible = true;            
         }
-    
+           
 if (!device_mouse_check_button(dev,mb_left))
+{
     dev = -1;
+    visible = false;
+}
 
 kLeft = false;
 kRight = false;

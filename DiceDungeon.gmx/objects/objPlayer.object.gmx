@@ -43,8 +43,9 @@ goffY = 0;
 // assign buttons
 with(objButton)
 {
-    if (type == 1) objPlayer.button1 = id;
-    if (type == 0) objPlayer.button2 = id;
+    //if (type == 1) objPlayer.button1 = id;
+    //if (type == 0) 
+    objPlayer.btnAttack = id;
 }
 
 // weapon
@@ -103,9 +104,9 @@ var kRight = (keyboard_check(vk_right) &amp;&amp; !keyboard_check(vk_left)) || (
 var kUp = (keyboard_check(vk_up) &amp;&amp; !keyboard_check(vk_down)) || (objDPad.kUp);// &amp;&amp; objDPad.forceY &gt;= .35);
 var kDown = (keyboard_check(vk_down) &amp;&amp; !keyboard_check(vk_up)) || (objDPad.kDown);// &amp;&amp; objDPad.forceY &gt;= .35);
 
-var jumpPressed = keyboard_check_pressed(ord('A')) || (button1.pressed);
-var attackPressed = keyboard_check_pressed(ord('S')) || (button2.pressed);
-var attackPressing = keyboard_check(ord('S')) || (button2.pressing);
+//var jumpPressed = keyboard_check_pressed(ord('A')) || (button1.pressed);
+var attackPressed = keyboard_check_pressed(ord('S')) || (btnAttack.pressed);
+var attackPressing = keyboard_check(ord('S')) || (btnAttack.pressing);
 
 if (state == WALK || state == JUMP || state == IDLE)
 {    
@@ -134,11 +135,11 @@ if (state == WALK || state == JUMP || state == IDLE)
     if (!kUp &amp;&amp; !kDown) yVel = sign(yVel) * max(abs(yVel) - .1, 0);
     if (!kLeft &amp;&amp; !kRight) xVel = sign(xVel) * max(abs(xVel) - .1, 0);
 
-    if (jumpPressed &amp;&amp; z == 0)
+    /*if (jumpPressed &amp;&amp; z == 0)
     {
         zVel = -3;
         state = JUMP;
-    }
+    }*/
     
     if (attackPressed &amp;&amp; !attacking)
     {

@@ -114,7 +114,7 @@ if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.hp == 0)
+            <string>/*if (global.hp == 0)
 {
     bar.hurt = true;
     bar.state = DEAD;
@@ -127,30 +127,26 @@ if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
     }
     
     global.state = G_OVER;
-}
+}*/
 
 if (global.state == G_START)
 {
     instance_activate_object(objBlock);
     
-    if (global.hp &gt; 0)
+    // reset everything
+    global.timer = 0;
+    if (instance_number(objBall) &lt; 1)
     {
-        // reset everything
-        global.timer = 0;
-        if (instance_number(objBall) &lt; 1)
+        var ball = instance_create(bar.x, bar.y - TILE, objBall);
+    }
+    
+    if (mouse_check_button_released(mb_left))
+    {
+        global.state = G_PLAY;
+        if (instance_exists(objBall))
         {
-            bar.hp = bar.maxHp;
-            var ball = instance_create(bar.x, bar.y - TILE, objBall);
-        }
-        
-        if (mouse_check_button_released(mb_left))
-        {
-            global.state = G_PLAY;
-            if (instance_exists(objBall))
-            {
-                objBall.angle = bar.startAngle;            
-                objBall.hold = false;
-            }
+            objBall.angle = bar.startAngle;            
+            objBall.hold = false;
         }
     }
 }
@@ -328,9 +324,6 @@ global.xVel = .5;
 global.mx = WIDTH/2;
 global.my = HEIGHT/2;
 
-global.invincible = false;
-global.hp = 3; // 3 balls
-
 score = 0;
 
 global.segSize = 0;
@@ -402,11 +395,11 @@ draw_set_valign(fa_top);
 draw_text(w, 0, string(meters)+ "m");
 draw_text(w, TILE, string(global.coins)+ "$");
 
-draw_set_halign(fa_left);
-draw_text(0, 0, "HP x" + string(global.hp));
+/*draw_set_halign(fa_left);
+draw_text(0, 0, "HP x" + string(global.hp));*/
 
 draw_set_halign(fa_left);
-draw_text(0, TILE, "Score:" + string(score));
+draw_text(0, 0, "" + string(score));
 </string>
           </argument>
         </arguments>
