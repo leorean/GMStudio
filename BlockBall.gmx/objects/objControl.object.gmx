@@ -157,8 +157,11 @@ if (global.state == G_PLAY)
     {
         with(objBlock)
         {
+            moveDistance = 16;
             move = true;
+            yVel = .2;
         }
+        show_debug_message("ASDF");
         blockDelay = maxBlockDelay;
     }
     

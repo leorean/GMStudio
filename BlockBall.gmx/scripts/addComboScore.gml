@@ -1,7 +1,7 @@
 if (!ballSpeedAdjusted)
 {
     combo++;
-    var t = instance_create(argument0.x + 8, argument0.y + 8, objText);
+    var t = instance_create(argument0.x + 16, argument0.y + 16, objText);
 
     var _v;
     if (argument0.hp == 0)

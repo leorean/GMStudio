@@ -75,7 +75,8 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="23">
+  <constants number="24">
+    <constant name="BLOCK">32</constant>
     <constant name="TILE">16</constant>
     <constant name="WIDTH">288</constant>
     <constant name="HEIGHT">512</constant>
