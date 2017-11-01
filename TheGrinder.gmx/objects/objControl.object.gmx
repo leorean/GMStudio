@@ -116,10 +116,9 @@ if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
     // reset everything
     global.timer = 0;
     
-    if (mouse_check_button_released(mb_left))
+    if (mouse_check_button(mb_left))
     {
         global.state = G_PLAY;
-        objPlayer.state = WALK;
     }
 }
 if (global.state == G_PLAY)
@@ -128,12 +127,27 @@ if (global.state == G_PLAY)
 
     blockDelay = max(blockDelay - 1, 0);
     
+    for(i = 0; i &lt; instance_number(objAny); i++)
+    {
+        var instance = instance_find(objAny, i);
+        instance.y += global.yVel;
+    }
     // move blocks down
     if (!blockDelay)
     {
-        //move blocks
-        blockDelay = maxBlockDelay;
-    }        
+        if (moveBlock)
+        {
+            global.yVel = .5;
+            moveBlock = max(moveBlock - global.yVel, 0);
+        } else
+        {        
+            global.yVel = 0;
+            blockDelay = maxBlockDelay;
+        }        
+    } else
+    {
+        moveBlock = 16;
+    }     
 }
 </string>
           </argument>
@@ -195,10 +209,11 @@ score = 0;
 
 meters = 0;
 blockDelay = 0;
+moveBlock = 16;
 maxBlockDelay = 2*SEC;
-yVel = .5;
+global.yVel = .5;
 
-instance_create(room_width/2 - TILE, room_height - 6*TILE, objPlayer);
+instance_create(room_width/2, room_height - 7*TILE, objPlayer);
 for(i = 0; i &lt; room_width; i+= TILE)
 {
     instance_create(i, room_height - 5*TILE, objBlock);
@@ -206,6 +221,11 @@ for(i = 0; i &lt; room_width; i+= TILE)
 instance_create(2*TILE, room_height-6*TILE, objBlock);
 instance_create(1*TILE, room_height-7*TILE, objBlock);
 instance_create(0*TILE, room_height-8*TILE, objBlock);
+instance_create(6*TILE, room_height-7*TILE, objBlock);
+instance_create(8*TILE, room_height-8*TILE, objBlock);
+
+instance_create(7*TILE, room_height-6*TILE, objTrampoline);
+instance_create(8*TILE, room_height-6*TILE, objPlatform);
 </string>
           </argument>
         </arguments>

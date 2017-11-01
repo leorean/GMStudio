@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -30,7 +30,15 @@ yVel = 0;
 dir = RIGHT;
 state = IDLE;
 jump = false;
-canStomp = false;
+
+// input vars
+mx = mouse_x;
+my = mouse_y;
+kVel = 0; // walk velocity (0 - 1)
+kLeft = false;
+kRight = false;
+kJump = false;
+dev = -1;
 </string>
           </argument>
         </arguments>
@@ -53,77 +61,133 @@ canStomp = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>onGround = (yVel &gt;= 0 &amp;&amp; collision_line(bbox_left,bbox_bottom + max(yVel, 1), bbox_right, bbox_bottom + max(yVel, 1),
-    objBlock, false, true));
-    
-if (onGround)
+            <string>// input
+for (i = 0; i &lt; 5; i ++)
 {
-    jump = false;
-    canStomp = false;
-    if (state != IDLE)
-        state = WALK;
-}
-
-if (state == IDLE)
-{
-    xVel = 0;
-    yVel = 0;
-}
-
-yVel = min(yVel + .12, 4);
-
-if (state == WALK)
-{
-    xVel = sign(dir) * 1.5;
-
-    if (!jump)
+    if (dev == -1)
     {
-        if (mouse_check_button_pressed(mb_left))
+        mx = device_mouse_x(i);
+        my = device_mouse_y(i);
+        
+        if (device_mouse_check_button(i, mb_left))
+            dev = i;
+    }
+    
+    if (dev != -1)
+    {
+        kLeft = (mx - device_mouse_x(dev)) &gt; 10;
+        kRight = (mx - device_mouse_x(dev)) &lt; 10;
+        
+        kVel = min(abs(mx - device_mouse_x(dev)) / 40, 1);
+        
+        if (abs(mx - device_mouse_x(dev)) &lt; 10)
         {
-            yVel = -4;
-            jump = true;
-            state = JUMP;
+            kLeft = false;
+            kRight = false;
+        }
+
+        kJump = (my - device_mouse_y(dev)) &gt; 40;
+                
+        if (device_mouse_check_button_released(dev, mb_left))
+        {
+            dev = -1;
         }
     }
-}
-
-if (state == JUMP)
-{
-    if (mouse_check_button_released(mb_left))
-        canStomp = true;
-        
-    if (mouse_check_button(mb_left) &amp;&amp; canStomp)
+    else
     {
-        state = STOMP;
+        kVel = 0;
+        kLeft = false;
+        kRight = false;
+        kJump = false;
     }
 }
 
-if (state == STOMP)
+// flags
+
+// platforms
+onPlatform = collision_line(bbox_left, bbox_bottom + max(1, yVel + global.yVel), bbox_right, bbox_bottom + max(1, yVel + global.yVel), objPlatform, false, true);
+if (onPlatform)
 {
-    xVel = 0;
-    yVel = 8;
+    y = onPlatform.y;
+    yVel = 0;
+}
+onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
+
+// trampoline jump
+if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
+{
+    yVel = -6;
+    state = JUMP;
+}
+    
+// control/state
+if (kLeft || kRight)
+{
+    if (onGround) state = WALK;
 }
 
-
-
-if (!in(bbox_left + xVel, 0, room_width) || !in(bbox_right + xVel, 0, room_width))
+if (kLeft) 
 {
-    xVel = -xVel;
-    dir = -dir;
+    state = WALK;
+    xVel = -2 * kVel;
+    dir = LEFT;
+}
+else if (kRight) 
+{
+    state = WALK;
+    xVel = 2 * kVel;
+    dir = RIGHT;
+}
+else
+{
+    if (onGround)
+        xVel *= .8;
+    if (onGround) state = IDLE;
 }
 
-if (!place_meeting(x + xVel, y, objBlock))
+if (!onGround) state = JUMP;
+
+if (state == JUMP &amp;&amp; yVel &lt; 0)
+{
+    instance_deactivate_object(objBlock);
+    instance_activate_region(x - TILE, y - TILE, 2* TILE, 2* TILE, true);
+    for (i = 0; i &lt; instance_number(objBlock); i++)
+    {    
+        var block = instance_find(objBlock, i);
+        
+        if (place_meeting(x, y + yVel + global.yVel - 1, block) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt; 0 &amp;&amp; state == JUMP)
+        {
+            block.hp = max(block.hp - 1, 0);
+            block.yOff = -4;
+        }
+    }
+    
+    instance_activate_object(objBlock);
+}
+
+yVel = min(yVel + .15, 5);
+
+if (state == IDLE || state == WALK)
+{
+    if (kJump)
+    {
+        yVel = -4.5;
+        state = JUMP;
+    }
+}
+
+// x collision
+if (!place_meeting(x + xVel, y - global.yVel, objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
 {
     x += xVel;
 }
 else
 {
     xVel = 0;
-    if (onGround)
-        dir = -dir;
 }
 
-if (!place_meeting(x, y + yVel, objBlock))
+// y collision
+if (!place_meeting(x, y + yVel + global.yVel, objSolid))
 {
     y += yVel;
 }

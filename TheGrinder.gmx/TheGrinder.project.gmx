@@ -11,6 +11,7 @@
     <sprites name="masks">
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskBlock</sprite>
+      <sprite>sprites\mskPlatform</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFontSmall</sprite>
@@ -19,6 +20,7 @@
     <sprite>sprites\sprBlock</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
+    <sprite>sprites\mskTrampoline</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -43,6 +45,8 @@
     <object>objects\objBlock</object>
     <object>objects\objEffect</object>
     <object>objects\objPlayer</object>
+    <object>objects\objTrampoline</object>
+    <object>objects\objPlatform</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
