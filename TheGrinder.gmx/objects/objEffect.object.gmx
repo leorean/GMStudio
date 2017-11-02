@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-10</depth>
+  <depth>-50</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -54,7 +54,7 @@ type = 0;
 frame = floor(fCur);
 
 if (fCur == 6.9) instance_destroy();
-draw_sprite_part(sprEffect, -1, frame*2*TILE, type*2*TILE, 2*TILE, 2*TILE, x - TILE, y - TILE);
+draw_sprite_part(sprEffects, -1, frame*32, type*32, 32, 32, x - 16, y - 16);
 </string>
           </argument>
         </arguments>

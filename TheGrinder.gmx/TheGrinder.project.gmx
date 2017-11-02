@@ -14,13 +14,14 @@
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskBlock</sprite>
       <sprite>sprites\mskPlatform</sprite>
+      <sprite>sprites\mskParticle</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFontSmall</sprite>
     <sprite>sprites\sprFont</sprite>
     <sprite>sprites\sprBg</sprite>
     <sprite>sprites\sprBlock</sprite>
-    <sprite>sprites\sprEffect</sprite>
+    <sprite>sprites\sprEffects</sprite>
     <sprite>sprites\sprMisc</sprite>
     <sprite>sprites\sprParticles</sprite>
     <sprite>sprites\sprGrinder</sprite>

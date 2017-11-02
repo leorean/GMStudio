@@ -51,10 +51,17 @@ fMax = 7;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = (fCur + fSpeed) % fMax;
+            <string>if (global.state == G_START)
+    fSpeed = .1;    
+if (global.state == G_PLAY)
+    fSpeed = .3;
+if (global.state == G_OVER)
+    fSpeed = .5;
+
+fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 
-off = round(sin(global.timer / 5) * 6);
+off = round(sin(global.timer / 5) * 16);
 
 draw_sprite_part(sprGrinder, -1, 0, frame*2*TILE, WIDTH, 2*TILE, x + off, y);
 draw_sprite_part(sprGrinder, -1, WIDTH - TILE, frame*2*TILE, TILE, 2*TILE, x - TILE + off, y);

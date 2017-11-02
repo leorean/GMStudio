@@ -116,7 +116,7 @@ if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
     // reset everything
     global.timer = 0;
     
-    if (mouse_check_button(mb_left))
+    if (mouse_check_button_pressed(mb_left))
     {
         global.state = G_PLAY;
     }
@@ -142,12 +142,18 @@ if (global.state == G_PLAY)
         } else
         {        
             global.yVel = 0;
+            meters += 1;
             blockDelay = maxBlockDelay;
         }        
     } else
     {
         moveBlock = 16;
     }     
+}
+if (global.state == G_OVER)
+{
+    if (mouse_check_button_pressed(mb_left))
+        room_restart();
 }
 </string>
           </argument>
@@ -217,7 +223,7 @@ global.yVel = .5;
 instance_create(0, room_height - 2*TILE + 6, objGrinder);
 
 instance_create(room_width/2, room_height - 7*TILE, objPlayer);
-for(i = 0; i &lt; room_width; i+= TILE)
+for(i = 4*TILE; i &lt; room_width; i+= TILE)
 {
     instance_create(i, room_height - 5*TILE, objBlock);
 }
@@ -284,13 +290,8 @@ draw_set_halign(fa_right);
 draw_set_valign(fa_top);
 
 draw_text(w, 0, string(meters)+ "m");
-draw_text(w, TILE, string(global.coins)+ "$");
-
-/*draw_set_halign(fa_left);
-draw_text(0, 0, "HP x" + string(global.hp));*/
-
 draw_set_halign(fa_left);
-draw_text(0, 0, "" + string(score));
+draw_text(0, 0, string(global.coins)+ "$");
 </string>
           </argument>
         </arguments>

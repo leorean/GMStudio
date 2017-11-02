@@ -25,7 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (place_meeting(x, y, objGrinder)) instance_destroy();
+            <string>if (place_meeting(x, y, objGrinder))
+{
+    var eff = instance_create(x + 16, y + 32, objEffect);
+    eff.type = 0;
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
