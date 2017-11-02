@@ -33,7 +33,7 @@ randomize();
 device_mouse_dbclick_enable(true);
 if (os_type == os_windows)
 {
-    window_set_size(2*WIDTH, 2*HEIGHT);
+    window_set_size(1.5*WIDTH, 1.5*HEIGHT);
 }
 
 global.fnt = font_add_sprite(sprFont, ord(' '), true, 1);
@@ -212,6 +212,9 @@ blockDelay = 0;
 moveBlock = 16;
 maxBlockDelay = 2*SEC;
 global.yVel = .5;
+
+// grinder
+instance_create(0, room_height - 2*TILE + 6, objGrinder);
 
 instance_create(room_width/2, room_height - 7*TILE, objPlayer);
 for(i = 0; i &lt; room_width; i+= TILE)

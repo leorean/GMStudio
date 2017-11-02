@@ -7,8 +7,10 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskPlayer</sprite>
     <sprites name="masks">
+      <sprite>sprites\mskGrinder</sprite>
+      <sprite>sprites\mskPlayer</sprite>
+      <sprite>sprites\mskTrampoline</sprite>
       <sprite>sprites\mskCamera</sprite>
       <sprite>sprites\mskBlock</sprite>
       <sprite>sprites\mskPlatform</sprite>
@@ -20,7 +22,8 @@
     <sprite>sprites\sprBlock</sprite>
     <sprite>sprites\sprEffect</sprite>
     <sprite>sprites\sprMisc</sprite>
-    <sprite>sprites\mskTrampoline</sprite>
+    <sprite>sprites\sprParticles</sprite>
+    <sprite>sprites\sprGrinder</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -47,6 +50,8 @@
     <object>objects\objPlayer</object>
     <object>objects\objTrampoline</object>
     <object>objects\objPlatform</object>
+    <object>objects\objParticle</object>
+    <object>objects\objGrinder</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>

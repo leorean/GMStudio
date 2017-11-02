@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-15</depth>
   <persistent>0</persistent>
   <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,9 +27,11 @@
             <kind>1</kind>
             <string>xVel = 0;
 yVel = 0;
+yGrav = .15;
 dir = RIGHT;
 state = IDLE;
 jump = false;
+hp = 1;
 
 // input vars
 mx = mouse_x;
@@ -61,140 +63,160 @@ dev = -1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// input
-for (i = 0; i &lt; 5; i ++)
+            <string>if (state != DEAD)
 {
-    if (dev == -1)
+    // input
+    for (i = 0; i &lt; 5; i ++)
     {
-        mx = device_mouse_x(i);
-        my = device_mouse_y(i);
-        
-        if (device_mouse_check_button(i, mb_left))
-            dev = i;
-    }
-    
-    if (dev != -1)
-    {
-        kLeft = (mx - device_mouse_x(dev)) &gt; 10;
-        kRight = (mx - device_mouse_x(dev)) &lt; 10;
-        
-        kVel = min(abs(mx - device_mouse_x(dev)) / 40, 1);
-        
-        if (abs(mx - device_mouse_x(dev)) &lt; 10)
+        if (dev == -1)
         {
+            mx = device_mouse_x(i);
+            my = device_mouse_y(i);
+            
+            if (device_mouse_check_button(i, mb_left))
+                dev = i;
+        }
+        
+        if (dev != -1)
+        {
+            kLeft = (mx - device_mouse_x(dev)) &gt; 10;
+            kRight = (mx - device_mouse_x(dev)) &lt; 10;
+            
+            kVel = min(abs(mx - device_mouse_x(dev)) / 40, 1);
+            
+            if (abs(mx - device_mouse_x(dev)) &lt; 10)
+            {
+                kLeft = false;
+                kRight = false;
+            }
+    
+            kJump = (my - device_mouse_y(dev)) &gt; 40;
+                    
+            if (device_mouse_check_button_released(dev, mb_left))
+            {
+                dev = -1;
+            }
+        }
+        else
+        {
+            kVel = 0;
             kLeft = false;
             kRight = false;
+            kJump = false;
         }
-
-        kJump = (my - device_mouse_y(dev)) &gt; 40;
-                
-        if (device_mouse_check_button_released(dev, mb_left))
-        {
-            dev = -1;
-        }
+    }
+    
+    // flags
+    
+    // platforms
+    onPlatform = collision_line(bbox_left, bbox_bottom + max(1, yVel + global.yVel), bbox_right, bbox_bottom + max(1, yVel + global.yVel), objPlatform, false, true);
+    if (onPlatform)
+    {
+        y = onPlatform.y;
+        yVel = 0;
+    }
+    onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
+    
+    // trampoline jump
+    if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
+    {
+        yVel = -6;
+        state = JUMP;
+    }
+        
+    // control/state
+    if (kLeft || kRight)
+    {
+        if (onGround) state = WALK;
+    }
+    
+    if (kLeft) 
+    {
+        state = WALK;
+        xVel = -2 * kVel;
+        dir = LEFT;
+    }
+    else if (kRight) 
+    {
+        state = WALK;
+        xVel = 2 * kVel;
+        dir = RIGHT;
     }
     else
     {
-        kVel = 0;
-        kLeft = false;
-        kRight = false;
-        kJump = false;
+        if (onGround)
+            xVel *= .8;
+        if (onGround) state = IDLE;
     }
-}
-
-// flags
-
-// platforms
-onPlatform = collision_line(bbox_left, bbox_bottom + max(1, yVel + global.yVel), bbox_right, bbox_bottom + max(1, yVel + global.yVel), objPlatform, false, true);
-if (onPlatform)
-{
-    y = onPlatform.y;
-    yVel = 0;
-}
-onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
-
-// trampoline jump
-if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
-{
-    yVel = -6;
-    state = JUMP;
-}
     
-// control/state
-if (kLeft || kRight)
-{
-    if (onGround) state = WALK;
-}
-
-if (kLeft) 
-{
-    state = WALK;
-    xVel = -2 * kVel;
-    dir = LEFT;
-}
-else if (kRight) 
-{
-    state = WALK;
-    xVel = 2 * kVel;
-    dir = RIGHT;
-}
-else
-{
-    if (onGround)
-        xVel *= .8;
-    if (onGround) state = IDLE;
-}
-
-if (!onGround) state = JUMP;
-
-if (state == JUMP &amp;&amp; yVel &lt; 0)
-{
-    instance_deactivate_object(objBlock);
-    instance_activate_region(x - TILE, y - TILE, 2* TILE, 2* TILE, true);
-    for (i = 0; i &lt; instance_number(objBlock); i++)
-    {    
-        var block = instance_find(objBlock, i);
+    if (!onGround) state = JUMP;
+    
+    if (state == JUMP &amp;&amp; yVel &lt; 0)
+    {
+        instance_deactivate_object(objBlock);
+        instance_activate_region(x - TILE, y - TILE, 2* TILE, 2* TILE, true);
+        for (i = 0; i &lt; instance_number(objBlock); i++)
+        {    
+            var block = instance_find(objBlock, i);
+            
+            if (place_meeting(x, y + yVel + global.yVel - 1, block) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt; 0 &amp;&amp; state == JUMP)
+            {
+                block.hp = max(block.hp - 1, 0);
+                block.yOff = -4;
+            }
+        }
         
-        if (place_meeting(x, y + yVel + global.yVel - 1, block) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt; 0 &amp;&amp; state == JUMP)
+        instance_activate_object(objBlock);
+    }
+    
+    yVel = min(yVel + yGrav, 5);
+    
+    if (state == IDLE || state == WALK)
+    {
+        if (kJump)
         {
-            block.hp = max(block.hp - 1, 0);
-            block.yOff = -4;
+            yVel = -4.5;
+            state = JUMP;
         }
     }
     
-    instance_activate_object(objBlock);
-}
-
-yVel = min(yVel + .15, 5);
-
-if (state == IDLE || state == WALK)
-{
-    if (kJump)
+    // x collision
+    if (!place_meeting(x + xVel, y - global.yVel, objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
     {
-        yVel = -4.5;
-        state = JUMP;
+        x += xVel;
+    }
+    else
+    {
+        xVel = 0;
+    }
+    
+    // y collision
+    if (!place_meeting(x, y + yVel + global.yVel, objSolid))
+    {
+        y += yVel;
+    }
+    else
+    {    
+        if (yVel &gt;= 0) move_contact_solid(270, 8);
+        yVel = 0;
+    }
+    
+    if (place_meeting(x, y, objGrinder)) hp = 0;
+    
+    if (hp &lt;= 0)
+    {
+        xVel = -.5 + random(1);
+        yVel = -3;
+        state = DEAD;
     }
 }
-
-// x collision
-if (!place_meeting(x + xVel, y - global.yVel, objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
+else //DEAD
 {
     x += xVel;
-}
-else
-{
-    xVel = 0;
-}
-
-// y collision
-if (!place_meeting(x, y + yVel + global.yVel, objSolid))
-{
+    yVel += yGrav;
     y += yVel;
-}
-else
-{    
-    if (yVel &gt;= 0) move_contact_solid(270, 8);
-    yVel = 0;
+    
+    if (bbox_top &gt; room_height) instance_destroy();
 }
 
 </string>
