@@ -1,17 +1,23 @@
-for(i = 0; i < room_width; i+= TILE)
+#define script4
+
+#define spawnSegment
+// spawn segments
+if (!collision_rectangle(0, -TILE, room_width, 0, objAny, false, true))
 {
-    var b = choose(0, 0, 0, 1, 1, 1, 1, 2, 2, 2);
-    switch(b)
+    for(i = 0; i < room_width; i+= TILE)
     {
-        case 0:
-            break;
-        case 1:
-            var b = instance_create(i, argument0, objBlock);
-                b.type = choose(0, 0, 1);
-            break;
-        case 2:
-            instance_create(i, argument0, objPlatform);
-            break;
+        var b = choose(0, 0, 0, 1, 1, 1, 1, 2, 2, 2);
+        switch(b)
+        {
+            case 0:
+                break;
+            case 1:
+                instance_create(i, -TILE, objBlock);
+                break;
+            case 2:
+                instance_create(i, -TILE, objPlatform);
+                break;
+        }
     }
 }
 

@@ -26,9 +26,46 @@
           <argument>
             <kind>1</kind>
             <string>type = 0;
-hp = 2;
+hp = 0;
 broken = false;
 yOff = 0;
+
+init = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!init)
+{
+    init = true;
+    switch(type)
+    {
+        case 0:
+            hp = 1;
+        break;
+        case 1:
+            hp = 2;
+        break;
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -90,7 +127,7 @@ if (hp == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprBlock, -1, type*TILE, 0, TILE, TILE, x, y + yOff);
+            <string>draw_sprite_part(sprBlocks, -1, (hp - 1)*TILE, type*TILE, TILE, TILE, x, y + yOff);
 </string>
           </argument>
         </arguments>

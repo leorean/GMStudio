@@ -74,6 +74,15 @@ fMax = 4;
     // input
     for (i = 0; i &lt; 5; i ++)
     {
+    
+        //if(dev != -1)
+        {
+            if(device_mouse_check_button_pressed(i, mb_left))
+                kJump = true;
+            else if(device_mouse_check_button(i, mb_left))
+                kJump = false;
+        }
+    
         if (dev == -1)
         {
             mx = device_mouse_x(i);
@@ -88,15 +97,16 @@ fMax = 4;
             kLeft = (mx - device_mouse_x(dev)) &gt; 10;
             kRight = (mx - device_mouse_x(dev)) &lt; 10;
             
-            kVel = min(abs(mx - device_mouse_x(dev)) / 40, 1);
+            kVel = max(min(abs(mx - device_mouse_x(dev)) / 40, 1), .2);
             
-            if (abs(mx - device_mouse_x(dev)) &lt; 10)
+            if (abs(mx - device_mouse_x(dev)) &lt; 1)
             {
                 kLeft = false;
                 kRight = false;
             }
     
-            kJump = (my - device_mouse_y(dev)) &gt; 40;
+            if (!kJump)
+                kJump = (my - device_mouse_y(dev)) &gt; 40;
                     
             if (device_mouse_check_button_released(dev, mb_left))
             {
@@ -124,10 +134,12 @@ fMax = 4;
     }
     onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
     
+    //if(onGround) move_outside_solid(90, 1);
+    
     // trampoline jump
     if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
     {
-        yVel = -6;
+        yVel = -6.5;
         state = JUMP;
     }
         
@@ -188,7 +200,7 @@ fMax = 4;
     }
     
     // x collision
-    if (!place_meeting(x + xVel, y - global.yVel, objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
+    if (!place_meeting(x + xVel, y - max(global.yVel, 1), objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
     {
         x += xVel;
     }
@@ -205,6 +217,10 @@ fMax = 4;
     else
     {    
         if (yVel &gt;= 0) move_contact_solid(270, 8);
+
+        if (yVel &lt;= 0 &amp;&amp; collision_line(bbox_left,bbox_top,bbox_right,bbox_top,objSolid, false, true))
+            y+= 1;
+        
         yVel = 0;
     }
     
@@ -226,6 +242,8 @@ else //DEAD
 
     if (place_meeting(x, y, objGrinder))
     {
+        var eff = instance_create(x, y - 16, objEffect);
+        eff.type = 0;
         repeat(15)
         {
             var p = instance_create(x, y, objParticle);
@@ -262,11 +280,7 @@ else //DEAD
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*draw_self();
-draw_text(x, y - TILE, state);
-*/
-draw_self();
-var row = 0;
+            <string>var row = 0;
 switch(state)
 {
     case IDLE:
