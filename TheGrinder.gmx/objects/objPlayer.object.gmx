@@ -32,6 +32,7 @@ dir = RIGHT;
 state = IDLE;
 jump = false;
 hp = 1;
+trampolineBoost = false;
 
 // input vars
 mx = mouse_x;
@@ -134,14 +135,14 @@ fMax = 4;
     }
     onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
     
-    //if(onGround) move_outside_solid(90, 1);
-    
     // trampoline jump
     if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
     {
-        yVel = -6.5;
+        yVel = -9;//-6.5;
         state = JUMP;
+        trampolineBoost = true;
     }
+    if (yVel &gt;= 0) trampolineBoost = false;
         
     // control/state
     if (kLeft || kRight)
@@ -170,17 +171,21 @@ fMax = 4;
     
     if (!onGround) state = JUMP;
     
+    // destroying blocks with head
     if (yVel &lt;= 0)
     {
         instance_deactivate_object(objBlock);
-        instance_activate_region(x - TILE, y - TILE, 2* TILE, 2* TILE, true);
+        instance_activate_region(x - TILE, y - 2* TILE, 2* TILE, 4* TILE, true);
         for (i = 0; i &lt; instance_number(objBlock); i++)
         {    
             var block = instance_find(objBlock, i);
             
-            if (place_meeting(x, y - max(abs(yVel), 1), block) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt; 0 &amp;&amp; state == JUMP)
+            if (place_meeting(x, y - max(abs(yVel), 3) - global.yVel, block) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt; 0 &amp;&amp; state == JUMP)
             {
-                block.hp = max(block.hp - 1, 0);
+                if (trampolineBoost)
+                    block.hp = 0;
+                else
+                    block.hp = max(block.hp - 1, 0);
                 block.yOff = -4;
             }
         }
@@ -190,11 +195,12 @@ fMax = 4;
     
     yVel = min(yVel + yGrav, 5);
     
+    // jump
     if (state == IDLE || state == WALK)
     {
         if (kJump)
         {
-            yVel = -4.5;
+            yVel = -4.5;//-4.5;
             state = JUMP;
         }
     }
@@ -210,7 +216,7 @@ fMax = 4;
     }
     
     // y collision
-    if (!place_meeting(x, y + yVel + global.yVel, objSolid))
+    if (!place_meeting(x, y + yVel + global.yVel, objSolid) || (yVel &lt; 0 &amp;&amp; trampolineBoost))
     {
         y += yVel;
     }

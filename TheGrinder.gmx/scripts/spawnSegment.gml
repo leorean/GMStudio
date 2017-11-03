@@ -1,102 +1,49 @@
-for(i = 0; i < room_width; i+= TILE)
+
+// spawns random blocks, makes sure that the path way is not interrupted
+/*
+for (var i = 0; i < global.segHeight; i++)
 {
-    var b = choose(0, 0, 0, 1, 1, 1, 1, 2, 2, 2);
-    switch(b)
+    var p = min(max(irandom(room_width/TILE) - 1, 0), room_width/TILE - 1);
+    instance_create(p*TILE, argument0 - i*TILE, objPlatform);
+}*/
+
+for (var j = argument0; j > argument0 - global.segHeight * TILE; j -= TILE)
+{
+    var platforms = 0;
+    for(var i = 0; i < room_width; i+= TILE)
     {
-        case 0:
-            break;
-        case 1:
-            var b = instance_create(i, argument0, objBlock);
-                b.type = choose(0, 0, 1);
-            break;
-        case 2:
-            instance_create(i, argument0, objPlatform);
-            break;
+        if (place_meeting(i, j, objAny))
+            continue;
+          
+        var b = choose(0, 0, 0, 1, 1, 1, 1, 1, 2, 2);
+        switch(b)
+        {
+            case 0:
+                break;
+            case 1:
+                var b = instance_create(i, j, objBlock);
+                    b.type = choose(0, 0, 1);
+                break;
+            case 2:
+                instance_create(i, j, objPlatform);
+                platforms++;
+                break;
+        }
+    }
+    while (platforms < 2)
+    {
+        var k = irandom(room_width/TILE) * TILE;
+        var b = instance_place(k, j, objAny);        
+        if (instance_exists(b))
+        {
+            if (object_get_name(b) == "objPlatform")
+                continue;
+            else
+            {
+                with(b) instance_destroy();
+                instance_create(k, j, objPlatform);
+                platforms++;
+            }
+        }
     }
 }
-
-/*var data = argument0;
-
-var w = ds_grid_width(data);
-var h = ds_grid_height(data);
-var t = 0;
-
-_h = h;
-
-for (var i = 0; i<w; i ++)
-for (var j = 0; j<h; j++)
-{
-    t = ds_grid_get(data,i,j);
-
-    switch (t)
-    {
-        case 0:
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 3;
-                        
-            if (meters <= 20)
-            {
-                b.subType = choose(0, 1);
-                b.maxHp = 2;
-                b.hp = choose(1, 2);
-            }
-            else if (meters <= 40)
-            {
-                b.subType = choose(0, 1, 1, 2);
-                b.maxHp = 1;
-                b.hp = 1;
-            }
-            else if (meters <= 70)
-            {
-                b.subType = choose(0, 1, 2, 2);
-                b.maxHp = 1;
-                b.hp = 1;
-            }
-            else
-            {            
-                b.subType = choose(0, 1, 2, 3);
-                if (b.subType == 0 || b.subType == 1)
-                {
-                    b.maxHp = 2;
-                    b.hp = 2;
-                }
-            }
-        break;
-        case 2:
-        case 3:
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = t;
-            break;
-        case 4:        
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 3;
-            b.subType = choose(0);
-        break;
-        case 5:
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 3;
-            b.subType = choose(0, 1);
-            break;
-        case 6:
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 3;
-            b.subType = choose(0, 1, 2);
-            break;
-        case 7:
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 3;
-            b.subType = choose(0, 1, 2, 3);
-            break;
-        case 8:
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 3;
-            b.subType = choose(0, 1, 2, 3, 4);
-            break;
-        case 9: //treasure
-            var b = instance_create(i*TILE,-_h*TILE + j*TILE,objBlock);
-            b.type = 4;
-            break;            
-    };
-}
-
-return h;*/

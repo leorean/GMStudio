@@ -48,26 +48,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*a = ((a + viewSpd *.3) % WIDTH);
-b = ((b + viewSpd *.5) % WIDTH);
-c = ((c + viewSpd *.7) % WIDTH);
-d = ((d + viewSpd * 1) % WIDTH);
-
-draw_sprite_part(sprBg, -1, 0*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (a - 0*WIDTH), 0);
-draw_sprite_part(sprBg, -1, 0*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (a - 1*WIDTH), 0);
-
-draw_sprite_part(sprBg, -1, 1*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (b - 0*WIDTH), 0);
-draw_sprite_part(sprBg, -1, 1*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (b - 1*WIDTH), 0);
-
-draw_sprite_part(sprBg, -1, 2*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (c - 0*WIDTH), 0);
-draw_sprite_part(sprBg, -1, 2*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (c - 1*WIDTH), 0);
-
-draw_sprite_part(sprBg, -1, 3*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (d - 0*WIDTH), 0);
-draw_sprite_part(sprBg, -1, 3*WIDTH, 0, WIDTH, HEIGHT, (view_xview) - (d - 1*WIDTH), 0);*/
-
-//y = y % HEIGHT;
-
-a = (_y * .5) % HEIGHT;
+            <string>a = (_y * .5) % HEIGHT;
 b = (_y * .7) % HEIGHT;
 
 draw_background_part(bg, 0, 0, WIDTH, HEIGHT, 0, a);

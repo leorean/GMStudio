@@ -29,6 +29,7 @@
 fSpeed = .3;
 frame = 0;
 fMax = 7;
+yVel = 0;
 </string>
           </argument>
         </arguments>
@@ -56,7 +57,12 @@ fMax = 7;
 if (global.state == G_PLAY)
     fSpeed = .3;
 if (global.state == G_OVER)
+{
+    if (!instance_exists(objPlayer))
+        yVel = max(yVel - .05, -3);
+    y = max(y + yVel, -2*TILE);
     fSpeed = .5;
+}
 
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);

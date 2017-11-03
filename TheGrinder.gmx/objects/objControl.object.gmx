@@ -42,6 +42,8 @@ global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
 global.coins = 0;
 global.coinRadius = 3*TILE;
 
+global.segHeight = 4;
+
 /*seg[0] = loadSegment("seg0.tmx");
 seg[1] = loadSegment("seg1.tmx");
 seg[2] = loadSegment("seg2.tmx");
@@ -76,6 +78,9 @@ seg[4] = loadSegment("seg4.tmx");*/
 
 if (keyboard_check_pressed(ord('Q'))) game_restart();
 
+if (keyboard_check_pressed(ord('K')))
+    objPlayer.hp = 0;
+
 if (keyboard_check(ord('C')))
     room_speed = 5;
 else
@@ -83,10 +88,6 @@ else
 
 global.mx = (device_mouse_x(0) / room_width) * view_wview + view_xview;
 global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
-/*
-var bl = instance_place(global.mx, global.my, objBlock);
-if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
-    bl.hp = 0;*/
 </string>
           </argument>
         </arguments>
@@ -121,15 +122,19 @@ if (instance_exists(bl) &amp;&amp; keyboard_check(vk_space))
         global.state = G_PLAY;
     }
 }
-if (global.state == G_PLAY)
+
+if(global.state != G_PAUSE)
 {
     global.timer = (global.timer + 1) % INFINITE;
-    
-    if (instance_exists(objPlayer) &amp;&amp; objPlayer.y &lt; room_height - 12*TILE)
+}
+
+if (global.state == G_PLAY)
+{    
+    if (instance_exists(objPlayer) &amp;&amp; objPlayer.y &lt; 7*TILE)
     {
         with(objAny)
             y += max(-objPlayer.yVel, 0);
-        objCamera._y += max(-objPlayer.yVel, 0);
+        objCamera._y = (objCamera._y + max(-objPlayer.yVel, 0)) % INFINITE;
     }
     
     var highest = noone;
@@ -244,42 +249,17 @@ instance_create(0, room_height - 2*TILE + 6, objGrinder);
 
 // start objects
 instance_create(room_width/2, room_height - 5*TILE, objPlayer);
-for(i = 0; i &lt; room_width; i+= TILE)
+for(var i = 0; i &lt; room_width; i+= TILE)
 {
     instance_create(i, room_height - 5*TILE, objPlatform);
 }
 instance_create(room_width - 3*TILE, room_height-6*TILE, objTrampoline);
 instance_create(2*TILE, room_height-6*TILE, objTrampoline);
 
-for(j = 0; j &lt;= room_height-8*TILE; j+= TILE)
+global.path = max(irandom(room_width/TILE) - 1, 0);
+
+for(var j = 0; j &lt;= 4*TILE; j+= global.segHeight*TILE)
     spawnSegment(j);
-/*for(j = 0; j &lt; room_height - 8*TILE; j+= TILE)
-    for(i = 0; i &lt; room_width; i+= TILE)
-    {
-        var b = choose(0, 0, 0, 1, 1, 1, 1, 2, 2, 2);
-        switch(b)
-        {
-            case 0:
-                break;
-            case 1:
-                instance_create(i, j, objBlock);
-                break;
-            case 2:
-                instance_create(i, j, objPlatform);
-                break;
-            /*case 3:
-                instance_create(i, j, objTrampoline);
-                break;*
-        }
-    }*/
-
-/*instance_create(2*TILE, room_height-6*TILE, objBlock);
-instance_create(1*TILE, room_height-7*TILE, objBlock);
-instance_create(0*TILE, room_height-8*TILE, objBlock);
-instance_create(6*TILE, room_height-7*TILE, objBlock);
-instance_create(8*TILE, room_height-8*TILE, objBlock);
-
-instance_create(8*TILE, room_height-6*TILE, objPlatform);*/
 </string>
           </argument>
         </arguments>
