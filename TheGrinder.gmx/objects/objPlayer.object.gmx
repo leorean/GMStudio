@@ -132,7 +132,8 @@ fMax = 4;
         y = onPlatform.y;
         yVel = 0;
         onPlatform = true;
-    }
+    } else
+        onPlatform = false;
     onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
     
     // trampoline jump
@@ -235,7 +236,7 @@ fMax = 4;
     if (hp &lt;= 0)
     {
         xVel = -.5 + random(1);
-        yVel = -3;
+        yVel = -4;
         state = DEAD;        
         global.state = G_OVER;        
     }
@@ -246,7 +247,7 @@ else //DEAD
     yVel += yGrav;
     y += yVel;
 
-    if (place_meeting(x, y, objGrinder))
+    if (place_meeting(x, y, objGrinder) || yVel &gt;= 0)
     {
         var eff = instance_create(x, y - 16, objEffect);
         eff.type = 0;
@@ -254,6 +255,7 @@ else //DEAD
         {
             var p = instance_create(x, y, objParticle);
             p.type = 1;
+            p.yVel = -3 - random(2);
         }
         instance_destroy();
     }
@@ -295,13 +297,13 @@ switch(state)
     break;
     case WALK:
         row = 1;
-        fSpeed = .2 * kVel;
+        fSpeed = .2 * max(kVel, .3);
     break;
     case JUMP:
         row = 2;
         if (yVel &lt; 0)
             fCur = 0;
-        else fCur = 2;
+        else fCur = 1;
     break;
     case DEAD:
         fCur = 0;
