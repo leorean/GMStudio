@@ -27,8 +27,10 @@
             <kind>1</kind>
             <string>type = 0;
 hp = 0;
-broken = false;
+maxHp = 0;
 yOff = 0;
+taken = false;
+invincible = false;
 
 init = false;
 </string>
@@ -56,13 +58,16 @@ init = false;
             <string>if (!init)
 {
     init = true;
+    
     switch(type)
     {
         case 0:
-            hp = 1;
+            hp = choose(1, 1, 2);
+            maxHp = 2;
         break;
         case 1:
-            hp = 2;
+            invincible = true;
+            taken = false;
         break;
     }
 }
@@ -127,7 +132,7 @@ if (hp == 0)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprBlocks, -1, (hp - 1)*TILE, type*TILE, TILE, TILE, x, y + yOff);
+            <string>draw_sprite_part(sprBlocks, -1, (maxHp - 1 - floor(hp/maxHp))*TILE, type*TILE, TILE, TILE, x, y + yOff);
 </string>
           </argument>
         </arguments>

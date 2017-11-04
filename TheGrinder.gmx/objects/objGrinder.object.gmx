@@ -67,11 +67,11 @@ if (global.state == G_OVER)
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 
-off = round(sin(global.timer / 5) * 16);
+off = round(sin(global.timer / 8) * TILE);
 
 draw_sprite_part(sprGrinder, -1, 0, frame*2*TILE, WIDTH, 2*TILE, x + off, y);
-draw_sprite_part(sprGrinder, -1, WIDTH - TILE, frame*2*TILE, TILE, 2*TILE, x - TILE + off, y);
-draw_sprite_part(sprGrinder, -1, 0, frame*2*TILE, TILE, 2*TILE, x + WIDTH + off, y);
+draw_sprite_part(sprGrinder, -1, WIDTH - 2*TILE, frame*2*TILE, 2*TILE, 2*TILE, x - 2*TILE + off, y);
+draw_sprite_part(sprGrinder, -1, 0, frame*2*TILE, 2*TILE, 2*TILE, x + WIDTH + off, y);
 </string>
           </argument>
         </arguments>

@@ -33,7 +33,7 @@
   <scripts name="scripts">
     <script>scripts\in.gml</script>
     <script>scripts\loadSegment.gml</script>
-    <script>scripts\spawnSegment.gml</script>
+    <script>scripts\spawnRandomSegment.gml</script>
     <script>scripts\collectCoins.gml</script>
   </scripts>
   <shaders name="shaders">

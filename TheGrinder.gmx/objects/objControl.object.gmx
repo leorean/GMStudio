@@ -42,7 +42,7 @@ global.fntSmall = font_add_sprite(sprFontSmall, ord(' '), true, 0);
 global.coins = 0;
 global.coinRadius = 3*TILE;
 
-global.segHeight = 4;
+global.segHeight = 5;
 
 /*seg[0] = loadSegment("seg0.tmx");
 seg[1] = loadSegment("seg1.tmx");
@@ -135,6 +135,7 @@ if (global.state == G_PLAY)
         with(objAny)
             y += max(-objPlayer.yVel, 0);
         objCamera._y = (objCamera._y + max(-objPlayer.yVel, 0)) % INFINITE;
+        _m += max(-objPlayer.yVel, 0);
     }
     
     var highest = noone;
@@ -151,9 +152,10 @@ if (global.state == G_PLAY)
     objCamera._y += global.yVel;
     if (instance_exists(highest) &amp;&amp; highest.y &gt; 0)
     {
-        spawnSegment(highest.y-TILE);
-        meters++;
+        spawnRandomSegment(highest.y-global.segHeight*TILE);
     }
+    
+    _m += global.yVel;
     
     // move blocks down
     if (!blockDelay)
@@ -172,7 +174,9 @@ if (global.state == G_PLAY)
         moveBlock = 16;
     }
     
-    blockDelay = max(blockDelay - 1, 0);    
+    blockDelay = max(blockDelay - 1, 0);
+    
+    meters = floor(_m / TILE);
 }
 if (global.state == G_OVER)
 {
@@ -237,12 +241,12 @@ global.my = 0;
 
 score = 0;
 
+_m = 0;
 meters = 0;
 blockDelay = 0;
 moveBlock = 16;
-maxBlockDelay = 1*SEC;
+maxBlockDelay = 1.5*SEC;
 global.yVel = 0;
-segSpawned = false;
 
 // grinder
 instance_create(0, room_height - 2*TILE + 6, objGrinder);
@@ -256,10 +260,7 @@ for(var i = 0; i &lt; room_width; i+= TILE)
 instance_create(room_width - 3*TILE, room_height-6*TILE, objTrampoline);
 instance_create(2*TILE, room_height-6*TILE, objTrampoline);
 
-global.path = max(irandom(room_width/TILE) - 1, 0);
-
-for(var j = 0; j &lt;= 4*TILE; j+= global.segHeight*TILE)
-    spawnSegment(j);
+spawnRandomSegment(0);
 </string>
           </argument>
         </arguments>

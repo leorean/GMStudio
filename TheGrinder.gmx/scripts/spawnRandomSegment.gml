@@ -1,13 +1,4 @@
-
-// spawns random blocks, makes sure that the path way is not interrupted
-/*
-for (var i = 0; i < global.segHeight; i++)
-{
-    var p = min(max(irandom(room_width/TILE) - 1, 0), room_width/TILE - 1);
-    instance_create(p*TILE, argument0 - i*TILE, objPlatform);
-}*/
-
-for (var j = argument0; j > argument0 - global.segHeight * TILE; j -= TILE)
+for (var j = argument0; j < argument0 + global.segHeight*TILE; j += TILE)
 {
     var platforms = 0;
     for(var i = 0; i < room_width; i+= TILE)
@@ -22,7 +13,7 @@ for (var j = argument0; j > argument0 - global.segHeight * TILE; j -= TILE)
                 break;
             case 1:
                 var b = instance_create(i, j, objBlock);
-                    b.type = choose(0, 0, 1);
+                b.type = 0;                
                 break;
             case 2:
                 instance_create(i, j, objPlatform);
