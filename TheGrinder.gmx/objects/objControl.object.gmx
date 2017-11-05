@@ -112,11 +112,6 @@ global.my = (device_mouse_y(0) / room_height) * view_hview + view_yview;
             <kind>1</kind>
             <string>if (global.state == G_START)
 {
-    instance_activate_object(objBlock);
-    
-    // reset everything
-    global.timer = 0;
-    
     if (mouse_check_button_pressed(mb_left))
     {
         global.state = G_PLAY;

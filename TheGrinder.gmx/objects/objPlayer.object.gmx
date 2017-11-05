@@ -219,6 +219,11 @@ fMax = 4;
         }
     }
     
+    // collect coins
+    var c = instance_place(x, y, objCoin);
+    if(instance_exists(c) &amp;&amp; !c.taken)
+        c.taken = true;
+    
     // x collision
     if (!place_meeting(x + xVel, y - max(global.yVel, 1), objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
     {
@@ -238,7 +243,7 @@ fMax = 4;
     {    
         if (yVel &gt;= 0) move_contact_solid(270, 8);
 
-        if (yVel &lt;= 0 &amp;&amp; collision_line(bbox_left,bbox_top,bbox_right,bbox_top,objSolid, false, true))
+        if (yVel &lt;= 0 &amp;&amp; collision_line(bbox_left, bbox_top, bbox_right, bbox_top, objSolid, false, true))
             y+= 1;
         
         yVel = 0;
@@ -310,7 +315,7 @@ switch(state)
     break;
     case WALK:
         row = 1;
-        fSpeed = .2 * max(kVel, .3);
+        fSpeed = .2 * max(kVel, .5);
     break;
     case JUMP:
         row = 2;

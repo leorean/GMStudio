@@ -15,6 +15,8 @@
       <sprite>sprites\mskBlock</sprite>
       <sprite>sprites\mskPlatform</sprite>
       <sprite>sprites\mskParticle</sprite>
+      <sprite>sprites\mskControl</sprite>
+      <sprite>sprites\mskCoin</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprFontSmall</sprite>
@@ -24,7 +26,6 @@
     <sprite>sprites\sprMisc</sprite>
     <sprite>sprites\sprParticles</sprite>
     <sprite>sprites\sprGrinder</sprite>
-    <sprite>sprites\mskControl</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -53,6 +54,7 @@
     <object>objects\objPlatform</object>
     <object>objects\objParticle</object>
     <object>objects\objGrinder</object>
+    <object>objects\objCoin</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
