@@ -53,8 +53,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-var f = floor((global.timer / 10) % 4);
+            <string>var f = floor((global.timer / 10) % 4);
 draw_sprite_part(sprMisc, -1, f*TILE, TILE, TILE, TILE, x, y);
 </string>
           </argument>

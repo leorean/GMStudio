@@ -50,10 +50,13 @@ type = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>fCur = min(fCur + .28, 6.9);
-frame = floor(fCur);
-
-if (fCur == 6.9) instance_destroy();
+            <string>if (global.state != G_PAUSE)
+{
+    fCur = min(fCur + .28, 6.9);
+    frame = floor(fCur);
+    
+    if (fCur == 6.9) instance_destroy();
+}
 if (frame &gt;= 0)
     draw_sprite_part(sprEffects, -1, frame*32, type*32, 32, 32, x - 16, y - 16);
 </string>

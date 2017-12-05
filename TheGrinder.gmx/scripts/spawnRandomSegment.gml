@@ -10,12 +10,12 @@ for (var j = argument0; j < argument0 + global.segHeight*TILE; j += TILE)
         switch(b)
         {
             case 0:
-                if (choose(0,0,0,0,1) == 1)
+                if (choose(0,0,0,0,0,1) == 1)
                     instance_create(i, j, objCoin);
                 break;
             case 1:
                 var b = instance_create(i, j, objBlock);
-                b.type = 0;                
+                b.type = choose(0,0,0,0,0,0,0,0,0,0,0,0,1);
                 break;
             case 2:
                 instance_create(i, j, objPlatform);

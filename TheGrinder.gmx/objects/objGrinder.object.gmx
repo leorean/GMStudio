@@ -52,7 +52,9 @@ yVel = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state == G_START)
+            <string>if (global.state == G_PAUSE)
+    fSpeed = 0;
+if (global.state == G_START)
     fSpeed = .1;    
 if (global.state == G_PLAY)
     fSpeed = .3;

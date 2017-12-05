@@ -92,11 +92,14 @@ down = false; // flag for connection pipe
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (place_meeting(x, y, objGrinder))
+            <string>if (global.state != G_PAUSE)
 {
-    var eff = instance_create(x + 16, y, objEffect);
-    eff.type = 0;
-    instance_destroy();
+    if (place_meeting(x, y, objGrinder))
+    {
+        var eff = instance_create(x + 16, y, objEffect);
+        eff.type = 0;
+        instance_destroy();
+    }
 }
 </string>
           </argument>

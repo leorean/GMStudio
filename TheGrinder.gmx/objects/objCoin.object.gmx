@@ -54,55 +54,59 @@ foff = instance_number(objCoin) % 10; // frame offset
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (canFall)
+            <string>if (global.state != G_PAUSE)
 {
-    if (!place_meeting(x + xVel, y, objSolid))
-        x += xVel;
-    else
+    
+    if (canFall)
     {
-        x -= xVel;
-        xVel = -xVel;
-    }
-        
-    yVel += yGrav;        
-    if (!place_meeting(x, y + yVel + global.yVel, objSolid))
-        y += yVel;
-    else
-    {
-        if (yVel &gt;= 0) move_contact_solid(270, 8);
-        yVel = 0;
-        xVel *= .9;
-    }
-}
-
-if (place_meeting(x, y, objGrinder) || y &gt;= room_height + TILE)
-{
-    var eff = instance_create(x + 16, y + 16, objEffect);
-    eff.type = 0;
-    instance_destroy();
-}
-
-if (!taken)
-{
-    yoff = 0;
-}
-
-if (taken)
-{
-    if (yoff == 0)
-    {
-        for(var i = 0; i &lt; 5; i++)
+        if (!place_meeting(x + xVel, y, objSolid))
+            x += xVel;
+        else
         {
-            var eff = instance_create(x + 8 + random(16), y + 8 + random(16), objEffect);
-            eff.type = 1;
-            eff.fCur = -i;
+            x -= xVel;
+            xVel = -xVel;
         }
-        global.coins++;
+            
+        yVel += yGrav;        
+        if (!place_meeting(x, y + yVel + global.yVel, objSolid))
+            y += yVel;
+        else
+        {
+            if (yVel &gt;= 0) move_contact_solid(270, 8);
+            yVel = 0;
+            xVel *= .9;
+        }
     }
     
-    yoff = max(yoff - 2, -TILE);
-    if (yoff &lt;= -TILE)
+    if (place_meeting(x, y, objGrinder) || y &gt;= room_height + TILE)
+    {
+        var eff = instance_create(x + 16, y + 16, objEffect);
+        eff.type = 0;
         instance_destroy();
+    }
+    
+    if (!taken)
+    {
+        yoff = 0;
+    }
+    
+    if (taken)
+    {
+        if (yoff == 0)
+        {
+            for(var i = 0; i &lt; 5; i++)
+            {
+                var eff = instance_create(x + 8 + random(16), y + 8 + random(16), objEffect);
+                eff.type = 1;
+                eff.fCur = -i;
+            }
+            global.coins++;
+        }
+        
+        yoff = max(yoff - 2, -TILE);
+        if (yoff &lt;= -TILE)
+            instance_destroy();
+    }
 }
 </string>
           </argument>
@@ -127,7 +131,7 @@ if (taken)
           <argument>
             <kind>1</kind>
             <string>var frame = (foff + floor(global.timer / (5 - taken*4))) % 10;
-draw_sprite_part_ext(sprMisc, -1, frame*TILE, 2*TILE, TILE, TILE, x, y + yoff, 1, 1, c_white, .5 + .5*!taken);
+draw_sprite_part_ext(sprMisc, -1, frame*TILE, 2*TILE, TILE, TILE, x, y + yoff, 1, 1, c_white, .8 + .2*!taken);
 </string>
           </argument>
         </arguments>

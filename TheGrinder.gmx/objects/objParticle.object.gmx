@@ -52,31 +52,33 @@ t = irandom(2); //subtype
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>x += xVel;
-yVel += yGrav;
-y += yVel;
-
-if (place_meeting(x, y, objGrinder))
+            <string>if (global.state != G_PAUSE)
 {
-    if (t == 0 || t == 1)
+    x += xVel;
+    yVel += yGrav;
+    y += yVel;
+    
+    if (place_meeting(x, y, objGrinder))
     {
-        repeat(3)
+        if (t == 0 || t == 1)
         {
-            var p = instance_create(x, y - 4, objParticle);
-            p.type = type;
-            p.yVel = -1-random(1);
-            p.t = t + 1;
+            repeat(3)
+            {
+                var p = instance_create(x, y - 4, objParticle);
+                p.type = type;
+                p.yVel = -1-random(1);
+                p.t = t + 1;
+            }
         }
+        instance_destroy();
     }
-    instance_destroy();
+    
+    if (!in(x, -TILE, room_width + TILE))
+        instance_destroy();
+    
+    if (y &gt; room_height)
+        instance_destroy();
 }
-
-if (!in(x, -TILE, room_width + TILE))
-    instance_destroy();
-
-if (y &gt; room_height)
-    instance_destroy();
-
 draw_sprite_part(sprParticles, -1, t*16, type*16, 16, 16, x - 8, y - 8);
 </string>
           </argument>

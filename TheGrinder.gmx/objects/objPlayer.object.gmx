@@ -70,219 +70,248 @@ fMax = 4;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != DEAD)
+            <string>if (global.state != G_PAUSE)
 {
-    // input
-    if (global.state == G_PLAY)
-    for (i = 0; i &lt; 5; i ++)
+    if (state != DEAD)
     {
-    
-        //if(dev != -1)
+        kJump = false;
+        
+        // input
+        if (global.state == G_PLAY)
+        for (i = 0; i &lt; 5; i ++)
         {
-            if(device_mouse_check_button_pressed(i, mb_left))
+        
+            /*if(device_mouse_check_button_pressed(i, mb_left))
             {
                 kJump = true;
             }
             else if(device_mouse_check_button(i, mb_left))
-                kJump = false;
-        }
-    
-        if (dev == -1)
-        {
-            mx = device_mouse_x(i);
-            my = device_mouse_y(i);
+                kJump = false;*/
             
-            if (device_mouse_check_button(i, mb_left))
-                dev = i;
-        }
-        
-        if (dev != -1)
-        {
-            kLeft = (mx - device_mouse_x(dev)) &gt; 10;
-            kRight = (mx - device_mouse_x(dev)) &lt; 10;
-            
-            kVel = max(min(abs(mx - device_mouse_x(dev)) / 40, 1), .2);
-            
-            if (abs(mx - device_mouse_x(dev)) &lt; 1)
+            if (dev == -1)
             {
+                mx = device_mouse_x(i);
+                //my = max(device_mouse_y(i), my);
+                
+                if (device_mouse_check_button(i, mb_left))
+                    dev = i;
+            }
+            
+            if (dev != -1)
+            {
+                kLeft = (mx - device_mouse_x(dev)) &gt; 10;
+                kRight = (mx - device_mouse_x(dev)) &lt; 10;
+                
+                kVel = max(min(abs(mx - device_mouse_x(dev)) / 40, 1), .2);
+                
+                if (abs(mx - device_mouse_x(dev)) &lt; 1)
+                {
+                    kLeft = false;
+                    kRight = false;
+                }
+        
+                if (!kJump)
+                    kJump = (my - device_mouse_y(dev)) &gt; 40;
+                    
+                if (kJump) my = device_mouse_y(dev);
+                else 
+                    my = max(device_mouse_y(i), my);
+                        
+                if (device_mouse_check_button_released(dev, mb_left))
+                {
+                    dev = -1;
+                }
+            }
+            else
+            {
+                kVel = 0;
                 kLeft = false;
                 kRight = false;
+                kJump = false;
             }
-    
-            if (!kJump)
-                kJump = (my - device_mouse_y(dev)) &gt; 40;
-                    
-            if (device_mouse_check_button_released(dev, mb_left))
+        }
+        
+        // flags
+        
+        // platforms
+        onPlatform = collision_line(bbox_left, bbox_bottom + max(1, yVel + global.yVel), bbox_right, bbox_bottom + max(1, yVel + global.yVel), objPlatform, false, true);
+        if (onPlatform &amp;&amp; yVel &gt;= 0)
+        {
+            y = onPlatform.y;
+            yVel = 0;
+            onPlatform = true;
+        } else
+            onPlatform = false;
+        onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
+        
+        // trampoline jump
+        if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
+        {
+            yVel = -9;//-6.5;
+            state = JUMP;
+            trampolineBoost = true;
+        }
+        
+        if (trampolineBoost)
+        {
+            if (global.timer % 4 == 0)
             {
-                dev = -1;
+                var eff = instance_create(x - 10 + random(20), y - 10 + random(20), objEffect);
+                eff.type = 1;
             }
+            if (yVel &gt;= 0)
+                trampolineBoost = false;
+        }
+            
+        // control/state
+        if (kLeft || kRight)
+        {
+            if (onGround) state = WALK;
+        }
+        
+        if (kLeft) 
+        {
+            state = WALK;
+            xVel = -2 * kVel;
+            dir = LEFT;
+        }
+        else if (kRight) 
+        {
+            state = WALK;
+            xVel = 2 * kVel;
+            dir = RIGHT;
         }
         else
         {
-            kVel = 0;
-            kLeft = false;
-            kRight = false;
-            kJump = false;
+            if (onGround)
+                xVel *= .8;
+            if (onGround) state = IDLE;
         }
-    }
-    
-    // flags
-    
-    // platforms
-    onPlatform = collision_line(bbox_left, bbox_bottom + max(1, yVel + global.yVel), bbox_right, bbox_bottom + max(1, yVel + global.yVel), objPlatform, false, true);
-    if (onPlatform &amp;&amp; yVel &gt;= 0)
-    {
-        y = onPlatform.y;
-        yVel = 0;
-        onPlatform = true;
-    } else
-        onPlatform = false;
-    onGround = onPlatform || collision_line(bbox_left,bbox_bottom + max(yVel + global.yVel, 1), bbox_right, bbox_bottom + max(yVel + global.yVel, 1), objSolid, false, true) &amp;&amp; yVel &gt;= 0;
-    
-    // trampoline jump
-    if (place_meeting(x, y, objTrampoline) &amp;&amp; yVel &gt;= 0)
-    {
-        yVel = -9;//-6.5;
-        state = JUMP;
-        trampolineBoost = true;
-    }
-    
-    if (trampolineBoost)
-    {
-        if (global.timer % 4 == 0)
-        {
-            var eff = instance_create(x - 10 + random(20), y - 10 + random(20), objEffect);
-            eff.type = 1;
-        }
-        if (yVel &gt;= 0)
-            trampolineBoost = false;
-    }
         
-    // control/state
-    if (kLeft || kRight)
-    {
-        if (onGround) state = WALK;
-    }
+        if (!onGround) state = JUMP;
+        
+        // destroying blocks with head
+        if (yVel &lt;= 0)
+        {
+            instance_deactivate_object(objBlock);
+            instance_activate_region(x - 2* TILE, y - 2* TILE, 4* TILE, 4* TILE, true);
+            for (i = 0; i &lt; instance_number(objBlock); i++)
+            {    
+                var block = instance_find(objBlock, i);
+                
+                if (collision_line(bbox_left, bbox_top - max(abs(yVel), 2), bbox_right, bbox_top - max(abs(yVel), 2), block, false, true) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt;= 0 &amp;&amp; state == JUMP)
+                {
+                    if (!block.invincible)
+                    {
+                        if (trampolineBoost)
+                            block.hp = 0;
+                        else
+                            block.hp = max(block.hp - 1, 0);
+                    }
+                    
+                    // coin blocks
+                    if (block.type == 1)
+                    {
+                        if(block.value &gt; 0)
+                        {
+                            with(block)
+                            {
+                                value = max(value - 1, 0);
+                                var c = instance_create(x, y - 16, objCoin);
+                                c.taken = true;
+                            }
+                        }
+                        else block.hp = max(block.hp - 1, 0);
+                    }
     
-    if (kLeft) 
-    {
-        state = WALK;
-        xVel = -2 * kVel;
-        dir = LEFT;
-    }
-    else if (kRight) 
-    {
-        state = WALK;
-        xVel = 2 * kVel;
-        dir = RIGHT;
-    }
-    else
-    {
-        if (onGround)
-            xVel *= .8;
-        if (onGround) state = IDLE;
-    }
-    
-    if (!onGround) state = JUMP;
-    
-    // destroying blocks with head
-    if (yVel &lt;= 0)
-    {
-        instance_deactivate_object(objBlock);
-        instance_activate_region(x - TILE, y - 2* TILE, 2* TILE, 4* TILE, true);
-        for (i = 0; i &lt; instance_number(objBlock); i++)
-        {    
-            var block = instance_find(objBlock, i);
+                    block.yOff = -4;
+                }
+            }
             
-            if (place_meeting(x, y - max(abs(yVel), 3) - global.yVel, block) &amp;&amp; block.yOff == 0 &amp;&amp; yVel &lt; 0 &amp;&amp; state == JUMP)
+            instance_activate_object(objBlock);
+        }
+        
+        yVel = min(yVel + yGrav, 5);
+        
+        // jump
+        if (state == IDLE || state == WALK)
+        {
+            if (kJump)
             {
-                if (trampolineBoost)
-                    block.hp = 0;
-                else
-                    block.hp = max(block.hp - 1, 0);
-                block.yOff = -4;
+                yVel = -4.5;
+                state = JUMP;
             }
         }
         
-        instance_activate_object(objBlock);
-    }
-    
-    yVel = min(yVel + yGrav, 5);
-    
-    // jump
-    if (state == IDLE || state == WALK)
-    {
-        if (kJump)
+        // collect coins
+        var c = instance_place(x, y, objCoin);
+        if(instance_exists(c) &amp;&amp; !c.taken)
+            c.taken = true;
+        
+        // x collision
+        if (!place_meeting(x + xVel, y - max(global.yVel, 1), objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
         {
-            yVel = -4.5;//-4.5;
-            state = JUMP;
+            x += xVel;
+        }
+        else
+        {
+            xVel = 0;
+        }
+        
+        // y collision
+        var b = instance_place(x, y + yVel + global.yVel, objSolid);
+        if (!instance_exists(b))
+        {
+            y += yVel;
+        }
+        else
+        {
+            if (instance_exists(b) &amp;&amp; b.object_index == objBlock &amp;&amp; b.hp == 0 &amp;&amp; yVel &lt;= 0)
+            {
+                y += yVel;
+            }
+            else
+            {
+                if (yVel &gt;= 0) move_contact_solid(270, 8);    
+                if (yVel &lt;= 0 &amp;&amp; collision_line(bbox_left, bbox_top, bbox_right, bbox_top, objSolid, false, true))
+                    y+= 1;
+                
+                yVel = 0;
+            }
+        }
+        
+        if (place_meeting(x, y, objGrinder)) hp = 0;
+        
+        if (hp &lt;= 0)
+        {
+            xVel = -.5 + random(1);
+            yVel = -4;
+            state = DEAD;        
+            global.state = G_OVER;        
         }
     }
-    
-    // collect coins
-    var c = instance_place(x, y, objCoin);
-    if(instance_exists(c) &amp;&amp; !c.taken)
-        c.taken = true;
-    
-    // x collision
-    if (!place_meeting(x + xVel, y - max(global.yVel, 1), objSolid) &amp;&amp; in(bbox_left + xVel, 0, room_width) &amp;&amp; in(bbox_right + xVel, 0, room_width))
+    else //DEAD
     {
         x += xVel;
-    }
-    else
-    {
-        xVel = 0;
-    }
-    
-    // y collision
-    if (!place_meeting(x, y + yVel + global.yVel, objSolid) || (yVel &lt; 0 &amp;&amp; trampolineBoost))
-    {
+        yVel += yGrav;
         y += yVel;
-    }
-    else
-    {    
-        if (yVel &gt;= 0) move_contact_solid(270, 8);
-
-        if (yVel &lt;= 0 &amp;&amp; collision_line(bbox_left, bbox_top, bbox_right, bbox_top, objSolid, false, true))
-            y+= 1;
-        
-        yVel = 0;
-    }
     
-    if (place_meeting(x, y, objGrinder)) hp = 0;
-    
-    if (hp &lt;= 0)
-    {
-        xVel = -.5 + random(1);
-        yVel = -4;
-        state = DEAD;        
-        global.state = G_OVER;        
-    }
-}
-else //DEAD
-{
-    x += xVel;
-    yVel += yGrav;
-    y += yVel;
-
-    if (place_meeting(x, y, objGrinder) || yVel &gt;= 0)
-    {
-        var eff = instance_create(x, y - 16, objEffect);
-        eff.type = 0;
-        repeat(15)
+        if (place_meeting(x, y, objGrinder) || yVel &gt;= 0)
         {
-            var p = instance_create(x, y, objParticle);
-            p.type = 1;
-            p.yVel = -3 - random(2);
+            var eff = instance_create(x, y - 16, objEffect);
+            eff.type = 0;
+            repeat(15)
+            {
+                var p = instance_create(x, y, objParticle);
+                p.type = 1;
+                p.yVel = -3 - random(2);
+            }
+            instance_destroy();
         }
-        instance_destroy();
+            
+        if (bbox_top &gt; room_height) instance_destroy();
     }
-        
-    if (bbox_top &gt; room_height) instance_destroy();
 }
-
-/*if (place_meeting(x, y + 8, objGrinder))
-    instance_destroy();*/
 
 </string>
           </argument>
@@ -328,7 +357,8 @@ switch(state)
         row = 3;
     break;
 }
-fCur = (fCur + fSpeed) % fMax;
+if (global.state != G_PAUSE)
+    fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur);
 draw_sprite_part_ext(sprPlayer, -1, frame*32, row*32, 32, 32, x + 16*(dir==LEFT) - 16*(dir==RIGHT), y - 32, -1 + 2*(dir == RIGHT), 1, c_white, 1);
 </string>
