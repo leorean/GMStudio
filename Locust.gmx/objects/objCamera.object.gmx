@@ -51,10 +51,13 @@ _y = y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = (objPlayer.x - x) / 32;
-yVel = (objPlayer.y - y) / 32;
-_x += xVel;
-_y += yVel;
+            <string>if (max(abs(objPlayer.x - x), abs(objPlayer.y - y)) &gt; 10)
+{
+    xVel = (objPlayer.x - x) / 64;
+    yVel = (objPlayer.y - y) / 64;
+    _x += xVel;
+    _y += yVel;
+}
 x = round(_x);
 y = round(_y);
 </string>

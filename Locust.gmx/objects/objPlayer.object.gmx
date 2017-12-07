@@ -26,13 +26,86 @@
           <argument>
             <kind>1</kind>
             <string>jumpVel = 10000;
-torque = 650;
+torque = 700;
 
 image_speed = .1;
 dir = RIGHT;
 jumped = false;
 
 attached = ds_list_create();
+
+dev = -1;
+kJump = false;
+kLeft = false;
+kRight = false;
+kVel = 0;
+mx = 0;
+my = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>kLeft = false;
+kRight = false;
+kJump = false;
+
+for (i = 0; i &lt; 5; i ++)
+{
+    if (dev == -1)
+    {
+        if (device_mouse_check_button(i, mb_left))
+            dev = i;
+    }
+    
+    if (dev != -1)
+    {        
+        if (device_mouse_check_button(dev, mb_left))
+        {
+            kLeft = (device_mouse_x_to_gui(dev) &lt; view_wview *.3);
+            kRight = (device_mouse_x_to_gui(dev) &gt; view_wview *.6)
+        }
+        
+        if (device_mouse_check_button_released(dev, mb_left))
+        {
+            dev = -1;
+        }
+    }
+    else
+    {
+        kVel = 0;        
+    }   
+    if (device_mouse_check_button_pressed(i, mb_right))
+        kJump = true;
+
+    if (i &gt; 0 &amp;&amp; device_mouse_check_button_pressed(i, mb_left))
+        kJump = true;
+        
+}
+
+if (mouse_check_button_pressed(mb_right))
+    kJump = true;
+
+if (!kLeft) kLeft = keyboard_check(vk_left);
+if (!kRight) kRight = keyboard_check(vk_right);
+if (!kJump) kJump = keyboard_check_pressed(vk_up);
 </string>
           </argument>
         </arguments>
@@ -55,22 +128,7 @@ attached = ds_list_create();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var kLeft = keyboard_check(vk_left);
-var kRight = keyboard_check(vk_right);
-var kJump = keyboard_check_pressed(vk_up);
-
-for (i = 0; i &lt; 5; i++)
-{
-    if (device_mouse_x_to_gui(i) &lt; WIDTH/3 &amp;&amp; device_mouse_check_button(i, mb_left))
-        kLeft = true;
-    if (device_mouse_x_to_gui(i) &gt; 2*WIDTH/3 &amp;&amp; device_mouse_check_button(i, mb_left))
-        kRight = true;
-        
-    if (device_mouse_check_button_pressed(i, mb_right))
-        kJump = true;
-}
-
-phy_rotation = phy_rotation % 360;
+            <string>phy_rotation = phy_rotation % 360;
 
 if (kLeft)
 {

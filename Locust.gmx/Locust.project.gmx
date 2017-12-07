@@ -13,9 +13,11 @@
     <sprite>sprites\mskBlock</sprite>
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprBall</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts"/>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>

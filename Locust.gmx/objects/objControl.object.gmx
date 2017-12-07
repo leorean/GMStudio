@@ -51,6 +51,14 @@ device_mouse_dbclick_enable(true);
             <kind>1</kind>
             <string>if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
     room_restart();
+
+var w = view_wview;
+var h = view_hview;        
+instance_deactivate_object(objSolid);
+instance_activate_region(view_xview - w/2, view_yview - h/2, view_wview + w/2, view_hview + h/2, true);
+instance_deactivate_object(objBall); // OR ANY "LIVING"
+instance_activate_region(view_xview - w/3, view_yview - h/3, view_wview + w/3, view_hview + h/3, true);
+
 </string>
           </argument>
         </arguments>
