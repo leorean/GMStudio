@@ -31,12 +31,16 @@
     <room>rooms\L0</room>
     <room>rooms\testroom</room>
   </rooms>
-  <constants number="5">
+  <constants number="9">
     <constant name="TILE">16</constant>
-    <constant name="HEIGHT">288</constant>
-    <constant name="WIDTH">512</constant>
+    <constant name="HEIGHT">1024</constant>
+    <constant name="WIDTH">576</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="JUMP">1</constant>
+    <constant name="WON">2</constant>
+    <constant name="DEAD">3</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

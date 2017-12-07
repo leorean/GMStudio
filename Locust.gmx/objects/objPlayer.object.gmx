@@ -25,8 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>jumpVel = 10000;
-torque = 700;
+            <string>jumpVel = 60000;//10000;
+torque = 12000;//700;
 
 image_speed = .1;
 dir = RIGHT;
@@ -41,6 +41,13 @@ kRight = false;
 kVel = 0;
 mx = 0;
 my = 0;
+
+fCur = 0;
+fMin = 0;
+fMax = 0;
+fSpeed = 0;
+frame = 0;
+state = IDLE;
 </string>
           </argument>
         </arguments>
@@ -129,57 +136,50 @@ if (!kJump) kJump = keyboard_check_pressed(vk_up);
           <argument>
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
+// check if outside room
+if (x &lt; 20)
+{
+    /*phy_linear_velocity_x = max(phy_linear_velocity_x, 0);
+    physics_apply_local_force(0, 0, 100, 0);*/
+    phy_position_x = max(phy_position_x, 20);
+}
+if (x &gt; room_width - 20)
+{
+    phy_linear_velocity_x = min(phy_linear_velocity_x, 0);
+    phy_position_x = min(phy_position_x, room_width - 20);
+}
 
 if (kLeft)
 {
     if (phy_linear_velocity_x &lt; -20)
         dir = LEFT;
-    physics_apply_torque(-torque);
+    physics_apply_torque(-torque); 
 }
 if (kRight)
 {
     if (phy_linear_velocity_x &gt; 20)
-    dir = RIGHT;
+        dir = RIGHT;
     physics_apply_torque(torque);    
+}
+
+// reset jump
+if (physics_test_overlap(x, y + 3, phy_rotation, objSolid) &amp;&amp; phy_linear_velocity_y &gt;= 0)
+{
+    jumped = false;
+    if (state == JUMP) state = IDLE;
 }
 
 if (kJump)
 {
     if (!jumped)
     {
+        phy_linear_velocity_y = min(phy_linear_velocity_y, 0);
         physics_apply_local_force(0, 0, 0, -jumpVel);
         jumped = true;
+        if (state == IDLE) state = JUMP;
     }
 }
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objSolid">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (phy_linear_velocity_y &gt;= 0)
-{
-    if (jumped)
-        show_debug_message(phy_linear_velocity_y);
-    jumped = false;
-}
 </string>
           </argument>
         </arguments>
@@ -202,7 +202,34 @@ if (kJump)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprite_index, -1, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+            <string>switch(state)
+{
+    case IDLE:
+        fMin = 0;
+        fMax = 4;
+        fSpeed = .15;
+    break;
+    case JUMP:
+        fMin = 4;
+        fMax = 4;
+        fSpeed = .15;
+    break;
+    case WON:
+        fMin = 8;
+        fMax = 4;
+        fSpeed = .15;
+    break;
+    case DEAD:
+        fMin = 12;
+        fMax = 4;
+        fSpeed = .15;
+    break;
+}
+
+fCur = (fCur + fSpeed) % fMax;
+frame = floor(fCur) + fMin;
+
+draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
 </string>
           </argument>
         </arguments>
