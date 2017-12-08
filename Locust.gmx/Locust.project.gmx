@@ -6,20 +6,26 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskBall</sprite>
-    <sprite>sprites\mskControl</sprite>
-    <sprite>sprites\mskSlopeL1</sprite>
-    <sprite>sprites\mskSlopeR1</sprite>
-    <sprite>sprites\mskBlock</sprite>
-    <sprite>sprites\mskPlayer</sprite>
+    <sprites name="masks">
+      <sprite>sprites\mskBlock</sprite>
+      <sprite>sprites\mskPlayer</sprite>
+      <sprite>sprites\mskSpike</sprite>
+      <sprite>sprites\mskButton</sprite>
+      <sprite>sprites\mskControl</sprite>
+      <sprite>sprites\mskBall</sprite>
+    </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprBall</sprite>
-    <sprite>sprites\mskSpike</sprite>
+    <sprite>sprites\sprButton</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
   </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\in.gml</script>
+    <script>scripts\playerInput.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
@@ -28,6 +34,7 @@
     <object>objects\objSolid</object>
     <object>objects\objCamera</object>
     <object>objects\objSpike</object>
+    <object>objects\objButton</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>

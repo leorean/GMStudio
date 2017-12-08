@@ -70,7 +70,13 @@ state = IDLE;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>kLeft = false;
+            <string>playerInput();
+
+/*kLeft = false;
+kRight = false;
+kJump = false;*/
+
+/*kLeft = false;
 kRight = false;
 kJump = false;
 
@@ -109,10 +115,7 @@ for (i = 0; i &lt; 5; i ++)
 
 if (mouse_check_button_pressed(mb_right))
     kJump = true;
-
-if (!kLeft) kLeft = keyboard_check(vk_left);
-if (!kRight) kRight = keyboard_check(vk_right);
-if (!kJump) kJump = keyboard_check_pressed(vk_up);
+*/
 </string>
           </argument>
         </arguments>
@@ -260,7 +263,7 @@ if (kJump)
     case DEAD:
         fMin = 12;
         fMax = 4;
-        fSpeed = .1;
+        fSpeed = 0;
     break;
 }
 
