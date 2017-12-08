@@ -14,10 +14,12 @@
     <sprite>sprites\mskPlayer</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprBall</sprite>
+    <sprite>sprites\mskSpike</sprite>
   </sprites>
-  <backgrounds name="background"/>
+  <backgrounds name="background">
+    <background>background\bg</background>
+  </backgrounds>
   <paths name="paths"/>
-  <scripts name="scripts"/>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
@@ -25,6 +27,7 @@
     <object>objects\objBlock</object>
     <object>objects\objSolid</object>
     <object>objects\objCamera</object>
+    <object>objects\objSpike</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>
@@ -33,8 +36,8 @@
   </rooms>
   <constants number="9">
     <constant name="TILE">16</constant>
-    <constant name="HEIGHT">1024</constant>
-    <constant name="WIDTH">576</constant>
+    <constant name="HEIGHT">576</constant>
+    <constant name="WIDTH">1024</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
     <constant name="IDLE">0</constant>

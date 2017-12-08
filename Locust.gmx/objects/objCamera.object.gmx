@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>100</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -29,6 +29,9 @@
 yVel = 0;
 _x = x;
 _y = y;
+
+w = WIDTH / 2;
+h = HEIGHT / 2;
 </string>
           </argument>
         </arguments>
@@ -60,6 +63,42 @@ _y = y;
 }
 x = round(_x);
 y = round(_y);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>a = (view_xview * .7) % WIDTH;
+b = (view_yview * .7) % HEIGHT;
+//c = (view_xview * .7) % WIDTH;
+//d = (view_yview * .7) % HEIGHT;
+
+draw_background_part_ext(bg, 0, 0, w, h, view_xview, view_yview, 2, 2, c_white, 1);
+
+for (var i = -1; i &lt; 2; i++)
+for (var j = -1; j &lt; 2; j++)
+{
+    draw_background_part_ext(bg, w, 0, w, h, a + i*WIDTH, b + j*HEIGHT, 2, 2, c_white, 1);
+}
+
+
 </string>
           </argument>
         </arguments>

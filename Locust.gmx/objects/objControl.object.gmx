@@ -27,6 +27,8 @@
             <kind>1</kind>
             <string>room_goto_next();
 device_mouse_dbclick_enable(true);
+
+
 </string>
           </argument>
         </arguments>
@@ -83,6 +85,16 @@ instance_activate_region(view_xview - w/3, view_yview - h/3, view_wview + w/3, v
             <kind>1</kind>
             <string>if(instance_exists(objPlayer))
     instance_create(objPlayer.x, objPlayer.y, objCamera);
+    
+view_visible[0] = true;
+view_enabled[0] = true;
+view_object[0] = objCamera;
+view_wview[0] = WIDTH;
+view_hview[0] = HEIGHT;
+view_wport[0] = WIDTH;
+view_hport[0] = HEIGHT;
+view_vborder[0] = 999;
+view_hborder[0] = 999;
 </string>
           </argument>
         </arguments>
