@@ -182,9 +182,18 @@ if (physics_test_overlap(x, y + 3, phy_rotation, objSolid) &amp;&amp; phy_linear
 if (kJump)
 {
     if (!jumped)
-    {
+    {        
         phy_linear_velocity_y = min(phy_linear_velocity_y, 0);
+        if (kLeft) phy_linear_velocity_x = min(phy_linear_velocity_x, -40);
+        if (kRight) phy_linear_velocity_x = max(phy_linear_velocity_x, 40);
+        
+        var rot = point_direction(x, y, x + phy_linear_velocity_x, y + min(phy_linear_velocity_y, 0) - 150);
+        //var vel = sign(phy_linear_velocity_x) * max(abs(phy_linear_velocity_x), 0);
+        
+        phy_rotation = -rot + 90;
+        
         physics_apply_local_force(0, 0, 0, -jumpVel);
+
         jumped = true;
         if (state == IDLE) state = JUMP;
     }
@@ -271,6 +280,12 @@ fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur) + fMin;
 
 draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+
+draw_set_color(c_green);
+var rot = point_direction(x, y, x + phy_linear_velocity_x, y + min(phy_linear_velocity_y, 0) - 150);
+var l1 = lengthdir_x(50, rot);
+var l2 = lengthdir_y(50, rot)
+draw_line(x, y, x + l1 , y +l2);
 </string>
           </argument>
         </arguments>

@@ -7,7 +7,6 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="masks">
-      <sprite>sprites\mskBlock</sprite>
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskSpike</sprite>
       <sprite>sprites\mskButton</sprite>
@@ -17,6 +16,12 @@
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprBall</sprite>
     <sprite>sprites\sprButton</sprite>
+    <sprites name="blocks">
+      <sprite>sprites\sprBlock0</sprite>
+      <sprite>sprites\sprBlock1</sprite>
+      <sprite>sprites\sprBlock2</sprite>
+    </sprites>
+    <sprite>sprites\sprFont1</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -29,8 +34,12 @@
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
+    <objects name="blocks">
+      <object>objects\objBlock0</object>
+      <object>objects\objBlock1</object>
+      <object>objects\objBlock2</object>
+    </objects>
     <object>objects\objBall</object>
-    <object>objects\objBlock</object>
     <object>objects\objSolid</object>
     <object>objects\objCamera</object>
     <object>objects\objSpike</object>
@@ -39,7 +48,9 @@
   <rooms name="rooms">
     <room>rooms\MENU</room>
     <room>rooms\L0</room>
-    <room>rooms\testroom</room>
+    <room>rooms\L1</room>
+    <room>rooms\L2</room>
+    <room>rooms\L3</room>
   </rooms>
   <constants number="9">
     <constant name="TILE">16</constant>

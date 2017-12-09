@@ -25,9 +25,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>room_goto_next();
+            <string>//room_goto_next();
 device_mouse_dbclick_enable(true);
 
+global.font1 = font_add_sprite(sprFont1, ord(' '), true, 0);
+//!"#$%&amp;'()*+,-.(0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
+global.levelMap = ds_map_create();
+ds_map_add(global.levelMap, L0, "Do the tutorial");
+ds_map_add(global.levelMap, L1, "Collect the stuff");
+ds_map_add(global.levelMap, L2, "Roll around");
+ds_map_add(global.levelMap, L3, "Dig yourself out");
+
+global.maxLevel = ds_map_size(global.levelMap) - 1;
 
 </string>
           </argument>
@@ -95,6 +105,13 @@ view_hport[0] = HEIGHT;
 view_vborder[0] = 999;
 view_hborder[0] = 999;
 
+// main menu
+if(room == MENU)
+{
+    
+}
+
+// normal playable levels
 if(instance_exists(objPlayer))
 {
     instance_create(objPlayer.x, objPlayer.y, objCamera);
@@ -111,6 +128,30 @@ if(instance_exists(objPlayer))
     
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_font(global.font1);
+draw_text_transformed(32, 32, "Hello this is a Text. 01 05 10 12 87", 1, 1, 0);
 </string>
           </argument>
         </arguments>
