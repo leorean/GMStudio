@@ -187,8 +187,10 @@ if (kJump)
         if (kLeft) phy_linear_velocity_x = min(phy_linear_velocity_x, -40);
         if (kRight) phy_linear_velocity_x = max(phy_linear_velocity_x, 40);
         
-        var rot = point_direction(x, y, x + phy_linear_velocity_x, y + min(phy_linear_velocity_y, 0) - 150);
+        var rot = point_direction(x, y, x + phy_linear_velocity_x, y - 200);
         //var vel = sign(phy_linear_velocity_x) * max(abs(phy_linear_velocity_x), 0);
+        
+        rot = min(max(rot, 45), 135);
         
         phy_rotation = -rot + 90;
         
@@ -281,11 +283,13 @@ frame = floor(fCur) + fMin;
 
 draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
 
+/*
 draw_set_color(c_green);
 var rot = point_direction(x, y, x + phy_linear_velocity_x, y + min(phy_linear_velocity_y, 0) - 150);
 var l1 = lengthdir_x(50, rot);
 var l2 = lengthdir_y(50, rot)
 draw_line(x, y, x + l1 , y +l2);
+*/
 </string>
           </argument>
         </arguments>
