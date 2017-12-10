@@ -139,6 +139,10 @@ if (mouse_check_button_pressed(mb_right))
           <argument>
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
+
+onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
+ &amp;&amp; ((phy_position_y - phy_position_yprevious) &gt;= -2);
+ 
 // check if outside room
 if (x &lt; 20)
 {
@@ -163,17 +167,17 @@ if (kLeft)
 {
     if (phy_linear_velocity_x &lt; -20)
         dir = LEFT;
-    physics_apply_torque(-torque); 
+    physics_apply_torque(-torque);
 }
 if (kRight)
 {
     if (phy_linear_velocity_x &gt; 20)
         dir = RIGHT;
-    physics_apply_torque(torque);    
+    physics_apply_torque(torque);
 }
 
 // reset jump
-if (physics_test_overlap(x, y + 3, phy_rotation, objSolid) &amp;&amp; phy_linear_velocity_y &gt;= 0)
+if (onGround)
 {
     jumped = false;
     if (state == JUMP) state = IDLE;
@@ -184,17 +188,18 @@ if (kJump)
     if (!jumped)
     {        
         phy_linear_velocity_y = min(phy_linear_velocity_y, 0);
-        if (kLeft) phy_linear_velocity_x = min(phy_linear_velocity_x, -40);
-        if (kRight) phy_linear_velocity_x = max(phy_linear_velocity_x, 40);
         
-        var rot = point_direction(x, y, x + phy_linear_velocity_x, y - 200);
-        //var vel = sign(phy_linear_velocity_x) * max(abs(phy_linear_velocity_x), 0);
+        var jx = 0;
+        if (kLeft) jx = -120;
+        if (kRight) jx = 120;
         
-        rot = min(max(rot, 45), 135);
+        var rot = point_direction(phy_position_x, phy_position_y, phy_position_x + jx, phy_position_y - 400);
+        rot = -min(max(rot, 60), 150);
+        var jv = 1200;
+        var jumpXvel = lengthdir_x(jv, rot);
+        var jumpYvel = lengthdir_y(-jv, rot);
         
-        phy_rotation = -rot + 90;
-        
-        physics_apply_local_force(0, 0, 0, -jumpVel);
+        physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
 
         jumped = true;
         if (state == IDLE) state = JUMP;
@@ -302,9 +307,9 @@ draw_line(x, y, x + l1 , y +l2);
   <PhysicsObjectDensity>2.5</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0.200000002980232</PhysicsObjectLinearDamping>
+  <PhysicsObjectLinearDamping>0.00999999977648258</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>10</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>5</PhysicsObjectFriction>
+  <PhysicsObjectFriction>2</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
