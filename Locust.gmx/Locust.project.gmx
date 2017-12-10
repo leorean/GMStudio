@@ -6,6 +6,7 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprite>sprites\sprFont1</sprite>
     <sprites name="masks">
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskSpike</sprite>
@@ -21,7 +22,7 @@
       <sprite>sprites\sprBlock1</sprite>
       <sprite>sprites\sprBlock2</sprite>
     </sprites>
-    <sprite>sprites\sprFont1</sprite>
+    <sprite>sprites\sprLevelMenu</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -30,6 +31,7 @@
   <scripts name="scripts">
     <script>scripts\in.gml</script>
     <script>scripts\playerInput.gml</script>
+    <script>scripts\array.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -44,15 +46,19 @@
     <object>objects\objCamera</object>
     <object>objects\objSpike</object>
     <object>objects\objButton</object>
+    <objects name="menu">
+      <object>objects\objLevelMenu</object>
+      <object>objects\objLevelMenuItem</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>
-    <room>rooms\L0</room>
     <room>rooms\L1</room>
     <room>rooms\L2</room>
     <room>rooms\L3</room>
+    <room>rooms\L4</room>
   </rooms>
-  <constants number="9">
+  <constants number="12">
     <constant name="TILE">16</constant>
     <constant name="HEIGHT">576</constant>
     <constant name="WIDTH">1024</constant>
@@ -62,6 +68,9 @@
     <constant name="JUMP">1</constant>
     <constant name="WON">2</constant>
     <constant name="DEAD">3</constant>
+    <constant name="G_PLAY">0</constant>
+    <constant name="G_PAUSE">1</constant>
+    <constant name="G_WON">2</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -145,16 +145,9 @@ onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation
  
 // check if outside room
 if (x &lt; 20)
-{
-    /*phy_linear_velocity_x = max(phy_linear_velocity_x, 0);
-    physics_apply_local_force(0, 0, 100, 0);*/
     phy_position_x = max(phy_position_x, 20);
-}
 if (x &gt; room_width - 20)
-{
-    phy_linear_velocity_x = min(phy_linear_velocity_x, 0);
     phy_position_x = min(phy_position_x, room_width - 20);
-}
 
 if (state == DEAD)
 {
@@ -305,7 +298,7 @@ draw_line(x, y, x + l1 , y +l2);
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>2.5</PhysicsObjectDensity>
-  <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
+  <PhysicsObjectRestitution>0.300000011920929</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.00999999977648258</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>10</PhysicsObjectAngularDamping>

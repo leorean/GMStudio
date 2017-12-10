@@ -31,13 +31,30 @@ device_mouse_dbclick_enable(true);
 global.font1 = font_add_sprite(sprFont1, ord(' '), true, 0);
 //!"#$%&amp;'()*+,-.(0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 
-global.levelMap = ds_map_create();
-ds_map_add(global.levelMap, L0, "Do the tutorial");
-ds_map_add(global.levelMap, L1, "Collect the stuff");
-ds_map_add(global.levelMap, L2, "Roll around");
-ds_map_add(global.levelMap, L3, "Dig yourself out");
+global.levelText = "";
+global.level = 3;
+global.levels = ds_list_create();
+// room, name, description, stars
+ds_list_add(global.levels, array(L1, "01", "Do The Tutorial", 0));
+ds_list_add(global.levels, array(L2, "02", "Roll Around", 2));
+ds_list_add(global.levels, array(L3, "03", "Cook A Soup", 1));
+ds_list_add(global.levels, array(L4, "04", "Boop The Gloop", 0));
 
-global.maxLevel = ds_map_size(global.levelMap) - 1;
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "XX", "---", 0));
 
 </string>
           </argument>
@@ -154,10 +171,29 @@ if(instance_exists(objPlayer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_set_font(global.font1);
-if (room == MENU)
-    draw_text_transformed(32, 32, "Hello this is a Text. 01 05 10 12 87", 1, 1, 0);
-</string>
+            <string></string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>605</id>
+        <kind>0</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//invisible</string>
           </argument>
         </arguments>
       </action>
