@@ -27,13 +27,18 @@
             <kind>1</kind>
             <string>page = 0;
 maxPage = ds_list_size(global.levels) div 10;
+goto = MENU;
+slideUp = false;
+
+xpotato = 32;
+ypotato = HEIGHT + 128;
 
 // fill menu
 //L1, "01", "Do The Tutorial", 0
 for (var i = 0; i &lt; ds_list_size(global.levels); i++)
 {
     var level = ds_list_find_value(global.levels, i);
-    item = instance_create(288 + (i % 5) * 96, 128 + ((i div 5) % 10) * 128, objLevelMenuItem);
+    item = instance_create(288 + (i % 5) * 96, 128 + ((i % 10) div 5) * 128, objLevelMenuItem);
     item.goto = level[0];
     item.name = level[1];
     item.description = level[2];
@@ -46,7 +51,7 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="64">
+    <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -63,19 +68,36 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// menu border
-draw_sprite_part(sprLevelMenu, -1, 0, 0, 512, 432, 256, 32);
+            <string>// funny potato stuff
+ypotato = max(ypotato - 1, HEIGHT - 64);
+draw_sprite_part(sprLevelMenu, -1, 256, 432, 96, 128, xpotato, ypotato);
+if (ypotato == HEIGHT - 64)
+    draw_sprite_part(sprLevelMenu, -1, 352, 432, 48, 48, xpotato + 80, ypotato - 32);
+    
+if (slideUp)
+{
+    var s = 16;
+    
+    y -= s;
+    with (objLevelMenuItem) y -= s;
+    
+    if (y &lt;= -HEIGHT)
+        room_goto(goto);
+}
+
+// menu border
+draw_sprite_part(sprLevelMenu, -1, 0, 0, 512, 432, x + 256, y + 32);
 
 draw_set_font(global.font1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
-draw_text(WIDTH/2, 3*TILE, "Level Select");
-
+draw_text(x + WIDTH/2, y + 3*TILE, "Level Select");
+    
 // page thingy
-for (var i = 0; i &lt; maxPage; i++)
+for (var i = 0; i &lt;= maxPage; i++)
 {
-    px = WIDTH/2 - 24*maxPage + i*24;
-    draw_sprite_part(sprLevelMenu, -1, 96 + 16*(page == i), 496, 16, 16,px, 384);
+    px = WIDTH/2 - 8 - 12*(maxPage) + i*24;
+    draw_sprite_part(sprLevelMenu, -1, 96 + 16*(page != i), 496, 16, 16, x + px, y + 384);
 }
 
 //buttons
@@ -83,21 +105,28 @@ left = false;
 right = false;
 if (page &gt; 0)
 {
-    if (in(mouse_x, 128, 128+64) &amp;&amp; in(mouse_y, 432, 432+64))
+    if (in(mouse_x, x + 400, x + 400+64) &amp;&amp; in(mouse_y, y + 416, y + 416+64))
     {
-        if (mouse_check_button(mb_left)) left = true;
-        if (mouse_check_button_pressed(mb_left)) page--;
+        if (!slideUp)
+        {
+            if (mouse_check_button(mb_left)) left = true;
+            if (mouse_check_button_released(mb_left)) page--;
+        }
     }
-    draw_sprite_part(sprLevelMenu, -1, 128, 432 + 80 * left,64, 80, WIDTH/2 - 128, 418);
+    draw_sprite_part(sprLevelMenu, -1, 128, 432 + 80 * left,64, 80, x + 400, y + 416);
 }
+
 if (page &lt; maxPage)
 {
-    if (in(mouse_x, 192, 192+64) &amp;&amp; in(mouse_y, 432, 432+64))
+    if (in(mouse_x, x + 560, x + 560+64) &amp;&amp; in(mouse_y, y + 416, y + 416+64))
     {
-        if (mouse_check_button(mb_left)) right = true;
-        if (mouse_check_button_pressed(mb_left)) page++;
+        if (!slideUp)
+        {
+            if (mouse_check_button(mb_left)) right = true;
+            if (mouse_check_button_released(mb_left)) page++;
+        }
     }
-    draw_sprite_part(sprLevelMenu, -1, 192, 432 + 80 * right,64, 80, WIDTH/2 + 128, 418);
+    draw_sprite_part(sprLevelMenu, -1, 192, 432 + 80 * right,64, 80, x + 560, y + 416);
 }
 </string>
           </argument>

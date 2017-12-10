@@ -32,18 +32,18 @@ global.font1 = font_add_sprite(sprFont1, ord(' '), true, 0);
 //!"#$%&amp;'()*+,-.(0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 
 global.levelText = "";
-global.level = 3;
+global.level = 1;
 global.levels = ds_list_create();
 // room, name, description, stars
 ds_list_add(global.levels, array(L1, "01", "Do The Tutorial", 0));
-ds_list_add(global.levels, array(L2, "02", "Roll Around", 2));
-ds_list_add(global.levels, array(L3, "03", "Cook A Soup", 1));
+ds_list_add(global.levels, array(L2, "02", "Roll Around", 0));
+ds_list_add(global.levels, array(L3, "03", "Cook A Soup", 0));
 ds_list_add(global.levels, array(L4, "04", "Boop The Gloop", 0));
 
-ds_list_add(global.levels, array(L1, "XX", "---", 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0));
+ds_list_add(global.levels, array(L1, "12", "---", 0));
+ds_list_add(global.levels, array(L1, "96", "---", 0));
+ds_list_add(global.levels, array(L1, "85", "---", 0));
+ds_list_add(global.levels, array(L1, "34", "---", 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0));
@@ -78,7 +78,10 @@ ds_list_add(global.levels, array(L1, "XX", "---", 0));
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
+            <string>if (keyboard_check_pressed(ord('Q')))
+    room_goto(MENU);
+
+if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
 {
     if (room == MENU) room_goto_next();
     else
@@ -129,7 +132,7 @@ view_hborder[0] = 999;
 // main menu
 if(room == MENU)
 {
-    
+    instance_create(0, 0, objLevelMenu);   
 }
 
 // normal playable levels

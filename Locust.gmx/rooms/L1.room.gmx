@@ -103,6 +103,12 @@
     <instance objName="objBall" x="704" y="352" name="inst_C6AA95EB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBall" x="752" y="256" name="inst_1EE358D2" locked="0" code="" scaleX="0.75" scaleY="0.75" colour="4294967295" rotation="0"/>
     <instance objName="objBall" x="784" y="304" name="inst_C34E78AA" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="0" y="352" name="inst_2DCA01EA" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="0" y="320" name="inst_50A127FC" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="0" y="352" name="inst_F2B9AE2F" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="0" y="352" name="inst_40261BF5" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="0" y="288" name="inst_F84E8DDD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="0" y="256" name="inst_29A2D732" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>-1</PhysicsWorld>

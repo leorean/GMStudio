@@ -298,7 +298,7 @@ draw_line(x, y, x + l1 , y +l2);
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>2.5</PhysicsObjectDensity>
-  <PhysicsObjectRestitution>0.300000011920929</PhysicsObjectRestitution>
+  <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.00999999977648258</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>10</PhysicsObjectAngularDamping>
