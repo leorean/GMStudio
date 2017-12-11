@@ -55,7 +55,7 @@ b = (b + .5) % 80;
 for (i = -80; i &lt; WIDTH + 80; i += 80)
 for (j = -80; j &lt; HEIGHT + 80; j += 80)
 {
-    draw_sprite_part(sprLevelMenu, -1, 400, 432, 80, 80, a + i, b + j);
+    draw_sprite_part(sprUI, -1, 400, 432, 80, 80, a + i, b + j);
 }
 </string>
           </argument>

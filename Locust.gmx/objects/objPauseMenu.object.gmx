@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>100</depth>
+  <depth>-150</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,13 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = 0;
-yVel = 0;
-_x = x;
-_y = y;
-
-w = WIDTH / 2;
-h = HEIGHT / 2;
+            <string>playPressing = false;
+restartPressing = false;
+homePressing = false;
+mutePressing = false;
 </string>
           </argument>
         </arguments>
@@ -54,24 +51,12 @@ h = HEIGHT / 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!instance_exists(objPlayer))
-    exit;
-    
-if (max(abs(objPlayer.x - x), abs(objPlayer.y - y)) &gt; 10)
-{
-    xVel = (objPlayer.x - x) / 64;
-    yVel = (objPlayer.y - y) / 64;
-    _x += xVel;
-    _y += yVel;
-}
-x = round(_x);
-y = round(_y);
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -88,15 +73,69 @@ y = round(_y);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = (view_xview * .7) % WIDTH;
-//b = (view_yview * .7) % HEIGHT;
+            <string>// bg
+draw_sprite_part(sprUI, -1, 512, 0, 384, 304, WIDTH/2 - 192, 48);
 
-draw_background_part_ext(bg, 0, 0, w, h, view_xview, view_yview, 2, 2, c_white, 1);
+draw_set_font(global.font1);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_text(WIDTH/2, 96, "-Paused-");
 
-for (var i = -1; i &lt; 2; i++)
-    draw_background_part_ext(bg, w, 0, w, h, a + i*WIDTH, view_yview, 2, 2, c_white, 1);
+var mx = device_mouse_x_to_gui(0);
+var my = device_mouse_y_to_gui(0);
 
+// PLAY
+if (in(mx, 480, 480+64) &amp;&amp; in(my, 128, 128+80))
+{
+    if (device_mouse_check_button(0, mb_left))
+        playPressing = true;
+    if (device_mouse_check_button_released(0, mb_left))
+    {
+        global.state = G_PLAY;
+        instance_destroy();
+    }
+} else
+    playPressing = false;
+draw_sprite_part(sprUI, -1, 512, 304 + 80 * playPressing, 64, 80, 480, 128);
 
+// RESTART
+if (in(mx, 352, 352+64) &amp;&amp; in(my, 192, 192+80))
+{
+    if (device_mouse_check_button(0, mb_left))
+        restartPressing = true;
+    if (device_mouse_check_button_released(0, mb_left))
+    {
+        room_restart();
+    }
+} else
+    restartPressing = false;
+draw_sprite_part(sprUI, -1, 576, 304 + 80 * restartPressing, 64, 80, 352, 192);
+
+// HOME
+if (in(mx, 480, 480+64) &amp;&amp; in(my, 256, 256+80))
+{
+    if (device_mouse_check_button(0, mb_left))
+        homePressing = true;
+    if (device_mouse_check_button_released(0, mb_left))
+    {
+        room_goto(MENU);
+    }
+} else
+    homePressing = false;
+draw_sprite_part(sprUI, -1, 768, 304 + 80 * homePressing, 64, 80, 480, 256);
+
+// MUTE
+if (in(mx, 608, 608+64) &amp;&amp; in(my, 192, 192+80))
+{
+    if (device_mouse_check_button(0, mb_left))
+        mutePressing = true;
+    if (device_mouse_check_button_released(0, mb_left))
+    {
+        global.mute = !global.mute;
+    }
+} else
+    mutePressing = false;
+draw_sprite_part(sprUI, -1, 640+64*global.mute, 304 + 80 * mutePressing, 64, 80, 608, 192);
 </string>
           </argument>
         </arguments>

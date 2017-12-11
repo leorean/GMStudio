@@ -81,9 +81,9 @@ if (!confettiTimer)
 
 // funny potato stuff
 ypotato = max(ypotato - 1, HEIGHT - 64);
-draw_sprite_part(sprLevelMenu, -1, 256, 432, 96, 128, xpotato, ypotato);
+draw_sprite_part(sprUI, -1, 256, 432, 96, 128, xpotato, ypotato);
 if (ypotato == HEIGHT - 64)
-    draw_sprite_part(sprLevelMenu, -1, 352, 432, 48, 48, xpotato + 80, ypotato - 32);
+    draw_sprite_part(sprUI, -1, 352, 432, 48, 48, xpotato + 80, ypotato - 32);
     
 if (slideUp)
 {
@@ -97,7 +97,7 @@ if (slideUp)
 }
 
 // menu border
-draw_sprite_part(sprLevelMenu, -1, 0, 0, 512, 432, x + 256, y + 32);
+draw_sprite_part(sprUI, -1, 0, 0, 512, 432, x + 256, y + 32);
 
 draw_set_font(global.font1);
 draw_set_halign(fa_center);
@@ -108,7 +108,7 @@ draw_text(x + WIDTH/2, y + 3*TILE, "Level Select");
 for (var i = 0; i &lt;= maxPage; i++)
 {
     px = WIDTH/2 - 8 - 12*(maxPage) + i*24;
-    draw_sprite_part(sprLevelMenu, -1, 96 + 16*(page != i), 496, 16, 16, x + px, y + 384);
+    draw_sprite_part(sprUI, -1, 96 + 16*(page != i), 496, 16, 16, x + px, y + 384);
 }
 
 //buttons
@@ -124,7 +124,7 @@ if (page &gt; 0)
             if (mouse_check_button_released(mb_left)) page--;
         }
     }
-    draw_sprite_part(sprLevelMenu, -1, 128, 432 + 80 * left,64, 80, x + 400, y + 416);
+    draw_sprite_part(sprUI, -1, 128, 432 + 80 * left,64, 80, x + 400, y + 416);
 }
 
 if (page &lt; maxPage)
@@ -137,7 +137,7 @@ if (page &lt; maxPage)
             if (mouse_check_button_released(mb_left)) page++;
         }
     }
-    draw_sprite_part(sprLevelMenu, -1, 192, 432 + 80 * right,64, 80, x + 560, y + 416);
+    draw_sprite_part(sprUI, -1, 192, 432 + 80 * right,64, 80, x + 560, y + 416);
 }
 </string>
           </argument>

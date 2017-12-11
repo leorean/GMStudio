@@ -53,20 +53,13 @@ page = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*goto = L1;
-name = "00";
-description = "--";
-stars = 0;
-locked = true;
-page = 0;*/
-
-if (objLevelMenu.page != page) exit;
+            <string>if (objLevelMenu.page != page) exit;
 
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
 //background
-draw_sprite_part(sprLevelMenu, -1, 0 + 64*locked, 432, 64, 64, x, y);
+draw_sprite_part(sprUI, -1, 0 + 64*locked, 432, 64, 64, x, y);
 //name
 if (!locked)
     draw_text_transformed(x + 32, y + 38, name, 1, 1, 0);
@@ -75,7 +68,7 @@ for (var i = 0; i &lt;3; i++)
 {
     var _ = stars &gt; i;
     if (locked) _ = 2;
-    draw_sprite_part(sprLevelMenu, -1, 32*_, 496, 32, 32, x - 8 + i*24, y + 64 + 8*(i!=1));
+    draw_sprite_part(sprUI, -1, 32*_, 496, 32, 32, x - 8 + i*24, y + 64 + 8*(i!=1));
 }
 
 if (in(mouse_x, x, x + 64) &amp;&amp; in(mouse_y, y, y + 64) 

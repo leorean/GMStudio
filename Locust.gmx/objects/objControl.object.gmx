@@ -3,7 +3,7 @@
   <spriteName>mskControl</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-100</depth>
+  <depth>-99</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -33,13 +33,20 @@ device_mouse_dbclick_enable(true);
 global.font1 = font_add_sprite(sprFont1, ord(' '), true, 0);
 //!"#$%&amp;'()*+,-.(0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 
+global.state = G_PLAY;
+pauseScreen = noone;
+
+global.mute = false; // &lt;- save/load
+
 levelTextAlpha = 0;
 global.levelText = "";
-global.level = 1;
+
+global.level = 1; // &lt;- save/load
+
 global.levels = ds_list_create();
 // room, name, description, stars
-ds_list_add(global.levels, array(L1, "01", "Do The Tutorial", 0));
-ds_list_add(global.levels, array(L2, "02", "Roll Around", 0));
+ds_list_add(global.levels, array(L1, "01", "Tutorial", 0));
+ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0));
 ds_list_add(global.levels, array(L3, "03", "Cook A Soup", 0));
 ds_list_add(global.levels, array(L4, "04", "Boop The Gloop", 0));
 
@@ -81,7 +88,9 @@ ds_list_add(global.levels, array(L1, "XX", "---", 0));
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (keyboard_check_pressed(ord('Q')))
+            <string>display_set_gui_size(view_wview, view_hview);
+
+if (keyboard_check_pressed(ord('Q')))
     room_goto(MENU);
 
 if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
@@ -91,14 +100,24 @@ if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
         room_restart();
 }
 
-var w = view_wview;
-var h = view_hview;        
-instance_deactivate_object(objSolid);
-instance_activate_region(view_xview - w/2, view_yview - h/2, view_wview + w/2, view_hview + h/2, true);
-instance_deactivate_object(objBall); // OR ANY "LIVING"
-instance_activate_region(view_xview - w/3, view_yview - h/3, view_wview + w/3, view_hview + h/3, true);
+if (global.state == G_PLAY)
+{
+    var w = view_wview;
+    var h = view_hview;        
+    instance_deactivate_object(objSolid);
+    instance_activate_region(view_xview - w/2, view_yview - h/2, view_wview + w/2, view_hview + h/2, true);
+    instance_deactivate_object(objBall); // OR ANY "LIVING"
+    instance_activate_region(view_xview - w/3, view_yview - h/3, view_wview + w/3, view_hview + h/3, true);
+    
+    physics_pause_enable(false);
+}
 
-display_set_gui_size(view_wview, view_hview);
+if (global.state == G_PAUSE)
+{
+    physics_pause_enable(true);
+    instance_deactivate_all(true);
+    instance_activate_object(objPauseMenu);
+}
 </string>
           </argument>
         </arguments>
@@ -135,12 +154,16 @@ view_hborder[0] = 999;
 // main menu
 if(room == MENU)
 {
-    instance_create(0, 0, objLevelMenu);   
+    instance_create(0, 0, objLevelMenu);
+    global.state = G_NOTHING;
+    levelTextAlpha = 0;
 }
 
 // normal playable levels
 if(instance_exists(objPlayer))
 {
+    global.state = G_PLAY;
+    
     instance_create(objPlayer.x, objPlayer.y, objCamera);
     global.left = instance_create(5*TILE, view_hview - 6*TILE, objButton);
     global.left.type = 0;
@@ -179,12 +202,32 @@ if(instance_exists(objPlayer))
             <string>draw_set_font(global.font1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
-if (levelTextAlpha &gt; 0)
+
+if (global.state == G_PAUSE)
+{
+    if (pauseScreen != noone)
+    draw_sprite(pauseScreen, -1, 0, 0);
+}
+
+if (global.state == G_PLAY &amp;&amp; levelTextAlpha &gt; 0)
 {
     draw_text_colour(WIDTH/2, 32, global.levelText, c_white, c_white, c_white, c_white, levelTextAlpha);
     levelTextAlpha = max(levelTextAlpha - .01, 0);
 }
 
+if (global.state == G_PLAY)
+{
+    draw_sprite_part_ext(sprUI, -1, 0, 528, 48, 48, 0, 0, 1, 1, c_white, .6);
+    if (in(device_mouse_x_to_gui(0), 0, 48) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 48)
+        &amp;&amp; mouse_check_button_released(mb_left))
+    {
+        global.state = G_PAUSE;
+        
+        var ax = application_get_position();        
+        pauseScreen = sprite_create_from_surface(application_surface,0, 0,surface_get_width(application_surface),surface_get_height(application_surface),0,0,0,0);
+        instance_create(0, 0, objPauseMenu);
+    }
+}
 </string>
           </argument>
         </arguments>
