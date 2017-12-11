@@ -33,6 +33,9 @@ slideUp = false;
 xpotato = 32;
 ypotato = HEIGHT + 128;
 
+instance_create(0, 0, objLevelMenuBackground);
+confettiTimer = 0;
+
 // fill menu
 //L1, "01", "Do The Tutorial", 0
 for (var i = 0; i &lt; ds_list_size(global.levels); i++)
@@ -68,7 +71,15 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// funny potato stuff
+            <string>// confetti stuff
+confettiTimer = max(confettiTimer - 1, 0);
+if (!confettiTimer)
+{
+    instance_create(0 + random(WIDTH) - 64, -64, objLevelMenuConfetti);
+    confettiTimer = 20;
+}
+
+// funny potato stuff
 ypotato = max(ypotato - 1, HEIGHT - 64);
 draw_sprite_part(sprLevelMenu, -1, 256, 432, 96, 128, xpotato, ypotato);
 if (ypotato == HEIGHT - 64)

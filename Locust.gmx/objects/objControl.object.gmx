@@ -3,7 +3,7 @@
   <spriteName>mskControl</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-100</depth>
   <persistent>-1</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,12 +25,15 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//room_goto_next();
+            <string>randomize();
+
+//room_goto_next();
 device_mouse_dbclick_enable(true);
 
 global.font1 = font_add_sprite(sprFont1, ord(' '), true, 0);
 //!"#$%&amp;'()*+,-.(0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 
+levelTextAlpha = 0;
 global.levelText = "";
 global.level = 1;
 global.levels = ds_list_create();
@@ -148,8 +151,7 @@ if(instance_exists(objPlayer))
     global.jump = instance_create(view_wview - 5*TILE, view_hview - 6*TILE, objButton);
     global.jump.type = 2;
     
-    
-    
+    levelTextAlpha = 4;
 }
 
 </string>
@@ -174,7 +176,16 @@ if(instance_exists(objPlayer))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>draw_set_font(global.font1);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+if (levelTextAlpha &gt; 0)
+{
+    draw_text_colour(WIDTH/2, 32, global.levelText, c_white, c_white, c_white, c_white, levelTextAlpha);
+    levelTextAlpha = max(levelTextAlpha - .01, 0);
+}
+
+</string>
           </argument>
         </arguments>
       </action>

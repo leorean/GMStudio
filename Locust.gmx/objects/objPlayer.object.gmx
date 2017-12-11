@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>jumpVel = 60000;//10000;
-torque = 12000;//700;
+torque = 9000;//12000;
 
 image_speed = .1;
 dir = RIGHT;
@@ -141,6 +141,8 @@ if (mouse_check_button_pressed(mb_right))
             <string>phy_rotation = phy_rotation % 360;
 
 onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
+ &amp;&amp; (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock) || !kLeft)
+ &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock) || !kRight)
  &amp;&amp; ((phy_position_y - phy_position_yprevious) &gt;= -2);
  
 // check if outside room
@@ -161,12 +163,22 @@ if (kLeft)
     if (phy_linear_velocity_x &lt; -20)
         dir = LEFT;
     physics_apply_torque(-torque);
+    if (!onGround &amp;&amp; jumped)
+        phy_linear_velocity_x = max(phy_linear_velocity_x - 5, -200);
 }
 if (kRight)
 {
     if (phy_linear_velocity_x &gt; 20)
         dir = RIGHT;
     physics_apply_torque(torque);
+    if (!onGround &amp;&amp; jumped)
+        phy_linear_velocity_x = min(phy_linear_velocity_x + 5, 200);
+}
+
+if (abs(phy_position_y - phy_position_yprevious) &gt;= 2)
+{
+    jumped = true;
+    if (state == IDLE) state = JUMP;    
 }
 
 // reset jump
@@ -302,7 +314,7 @@ draw_line(x, y, x + l1 , y +l2);
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.00999999977648258</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>10</PhysicsObjectAngularDamping>
-  <PhysicsObjectFriction>2</PhysicsObjectFriction>
+  <PhysicsObjectFriction>5</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>

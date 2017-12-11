@@ -23,6 +23,7 @@
       <sprite>sprites\sprBlock2</sprite>
     </sprites>
     <sprite>sprites\sprLevelMenu</sprite>
+    <sprite>sprites\sprLevelMenuConfetti</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -37,6 +38,7 @@
     <object>objects\objControl</object>
     <object>objects\objPlayer</object>
     <objects name="blocks">
+      <object>objects\objBlock</object>
       <object>objects\objBlock0</object>
       <object>objects\objBlock1</object>
       <object>objects\objBlock2</object>
@@ -49,6 +51,8 @@
     <objects name="menu">
       <object>objects\objLevelMenu</object>
       <object>objects\objLevelMenuItem</object>
+      <object>objects\objLevelMenuBackground</object>
+      <object>objects\objLevelMenuConfetti</object>
     </objects>
   </objects>
   <rooms name="rooms">
