@@ -16,7 +16,6 @@
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprBall</sprite>
-    <sprite>sprites\sprButton</sprite>
     <sprites name="blocks">
       <sprite>sprites\sprBlock0</sprite>
       <sprite>sprites\sprBlock1</sprite>

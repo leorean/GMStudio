@@ -91,12 +91,16 @@ ds_list_add(global.levels, array(L1, "XX", "---", 0));
             <string>display_set_gui_size(view_wview, view_hview);
 
 if (keyboard_check_pressed(ord('Q')))
-    room_goto(MENU);
+    game_restart();
 
-if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
+if (room == MENU)
 {
-    if (room == MENU) room_goto_next();
-    else
+    if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
+        room_goto_next();
+}
+else
+{
+    if (keyboard_check_pressed(ord('R')))
         room_restart();
 }
 
@@ -200,6 +204,7 @@ if(instance_exists(objPlayer))
           <argument>
             <kind>1</kind>
             <string>draw_set_font(global.font1);
+draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
@@ -215,11 +220,13 @@ if (global.state == G_PLAY &amp;&amp; levelTextAlpha &gt; 0)
     levelTextAlpha = max(levelTextAlpha - .01, 0);
 }
 
+if (global.state != G_NOTHING)
+    draw_sprite_part_ext(sprUI, -1, 64*(global.state == G_PAUSE), 528, 64, 64, 0, 0, 1, 1, c_white, .6);
+
 if (global.state == G_PLAY)
 {
-    draw_sprite_part_ext(sprUI, -1, 0, 528, 48, 48, 0, 0, 1, 1, c_white, .6);
-    if (in(device_mouse_x_to_gui(0), 0, 48) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 48)
-        &amp;&amp; mouse_check_button_released(mb_left))
+    if ((keyboard_check_pressed(ord('P')) || keyboard_check_pressed(vk_backspace)) || ((in(device_mouse_x_to_gui(0), 0, 64) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 64)
+        &amp;&amp; mouse_check_button_released(mb_left))))
     {
         global.state = G_PAUSE;
         

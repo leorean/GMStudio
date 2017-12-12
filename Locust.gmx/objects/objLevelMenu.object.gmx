@@ -99,7 +99,9 @@ if (slideUp)
 // menu border
 draw_sprite_part(sprUI, -1, 0, 0, 512, 432, x + 256, y + 32);
 
+// draw text
 draw_set_font(global.font1);
+draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 draw_text(x + WIDTH/2, y + 3*TILE, "Level Select");

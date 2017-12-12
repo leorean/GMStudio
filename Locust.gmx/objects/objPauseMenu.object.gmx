@@ -29,6 +29,8 @@
 restartPressing = false;
 homePressing = false;
 mutePressing = false;
+
+mouse_clear(mb_any);
 </string>
           </argument>
         </arguments>
@@ -74,7 +76,7 @@ mutePressing = false;
           <argument>
             <kind>1</kind>
             <string>// bg
-draw_sprite_part(sprUI, -1, 512, 0, 384, 304, WIDTH/2 - 192, 48);
+draw_sprite_part(sprUI, -1, 512, 0, 384, 304, 320, 48);
 
 draw_set_font(global.font1);
 draw_set_halign(fa_center);
@@ -83,6 +85,16 @@ draw_text(WIDTH/2, 96, "-Paused-");
 
 var mx = device_mouse_x_to_gui(0);
 var my = device_mouse_y_to_gui(0);
+
+// PLAY (click outside)
+if (!in(mx, 320, 704) || !in(my, 48, 352))
+{
+    if (device_mouse_check_button_released(0, mb_left))
+    {
+        global.state = G_PLAY;
+        instance_destroy();
+    }
+}
 
 // PLAY
 if (in(mx, 480, 480+64) &amp;&amp; in(my, 128, 128+80))
@@ -132,6 +144,7 @@ if (in(mx, 608, 608+64) &amp;&amp; in(my, 192, 192+80))
     if (device_mouse_check_button_released(0, mb_left))
     {
         global.mute = !global.mute;
+        mutePressing = false;
     }
 } else
     mutePressing = false;

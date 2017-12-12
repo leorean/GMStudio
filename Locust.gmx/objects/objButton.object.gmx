@@ -89,10 +89,7 @@ for(i = 0; i &lt; 5; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprButton, type, x, y, 1, 1, 0, c_white, .6 * !pressing);
-//draw_set_blend_mode(bm_add);
-draw_sprite_ext(sprButton, type + 3, x, y, 1, 1, 0, c_white, .6 * pressing);
-//draw_set_blend_mode(bm_normal);
+            <string>draw_sprite_part_ext(sprUI, -1, 112*type, 592 + 112*pressing, 112, 112, x - 56, y - 56, 1, 1, c_white, .6);
 </string>
           </argument>
         </arguments>
