@@ -32,7 +32,6 @@ rotVel = -2+random(4);
 sine = 0;
 sineVel = .01 + random(.09);
 scale = .5 + random(1.5);
-color = make_color_hsv(130+random(25),255,255);
 
 frame = choose(0,0,0,0,1);
 </string>
@@ -88,7 +87,7 @@ rot = (rot + rotVel) % 360;
           <argument>
             <kind>1</kind>
             <string>draw_set_blend_mode(bm_add);
-draw_sprite_ext(sprConfetti, frame, x, y, scale, scale, rot, color, .3);
+draw_sprite_ext(sprConfetti, frame, x, y, scale, scale, rot, c_white, .3);
 draw_set_blend_mode(bm_normal);
 </string>
           </argument>

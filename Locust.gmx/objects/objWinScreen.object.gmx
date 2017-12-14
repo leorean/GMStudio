@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>100</depth>
+  <depth>-100</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,47 +25,12 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xVel = 0;
-yVel = 0;
-_x = x;
-_y = y;
+            <string>alpha = -1;
 
-w = WIDTH / 2;
-h = HEIGHT / 2;
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="3" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (!instance_exists(objPlayer))
-    exit;
-    
-if (max(abs(objPlayer.x - x), abs(objPlayer.y - y)) &gt; 10)
-{
-    xVel = (objPlayer.x - x) / 64;
-    yVel = (objPlayer.y - y) / 64;
-    _x += xVel;
-    _y += yVel;
-}
-x = round(_x);
-y = round(_y);
+yt = view_yview[0] - 64;
+
+starTimer = 0;
+starShown = 0;
 </string>
           </argument>
         </arguments>
@@ -88,14 +53,53 @@ y = round(_y);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>a = (view_xview * .7) % WIDTH;
+            <string>alpha = min(alpha + .01, 1);
 
-draw_background_part_ext(bg, 0, (HEIGHT / 2)*global.background, w, h, view_xview, view_yview, 2, 2, c_white, 1);
+draw_background_ext(bgWinScreen, view_xview[0], view_yview[0], 2, 2, 0, c_white, alpha);
+draw_set_font(global.font1);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_color(c_white);
 
-for (var i = -1; i &lt; 2; i++)
-    draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, a + i*WIDTH, view_yview, 2, 2, c_white, 1);
-
-
+if (alpha &gt; 0)
+{
+    yt = min(yt + 2, view_yview[0] + 96);
+    draw_text(view_xview[0] + WIDTH/2, view_yview[0] + yt, "You did the thing!");
+}
+if(yt == view_yview[0] + 96)
+{
+    starTimer = max(starTimer - 1, 0);
+    //var px = WIDTH/2 - 40*(global.stars - 1) + starShown*80;
+    var px = WIDTH/2 - 40*(2) + starShown*80;
+    for (var i = 0; i&lt;3; i++)
+    {
+        var pxx = WIDTH/2 - 40*(2) + i*80;
+        draw_sprite_ext(sprWinStar, 0, view_xview[0] + pxx, view_yview[0] + HEIGHT/2, 1, 1, 0, c_white, .5);
+    }    
+    if (!starTimer)
+    {
+        if (starShown &lt; global.stars)
+        {
+            instance_create(
+                view_xview[0] + px,
+                view_yview[0] + HEIGHT/2, objWinStar);
+    
+            starTimer = 1*SEC;
+            starShown++;
+        }
+        
+        if (mouse_check_button_released(mb_left))
+        {
+            // L1 -&gt; 1, and so on..
+            var num = real(string_digits(room_get_name(room)));
+            finishLevel(num);
+            
+            save();
+            
+            room_goto(MENU);
+        }
+    }    
+}
 </string>
           </argument>
         </arguments>

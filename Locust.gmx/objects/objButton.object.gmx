@@ -55,18 +55,20 @@ yo = y - view_yview;
             <string>
 pressed = false;
 pressing = false;
-for(i = 0; i &lt; 5; i++)
+if (global.state == G_PLAY)
 {
-    if (in(device_mouse_x_to_gui(i), x - 56, x + 56)
-        &amp;&amp; in(device_mouse_y_to_gui(i), y - 56, y + 56))
+    for(i = 0; i &lt; 5; i++)
     {
-        if (device_mouse_check_button(i, mb_any))
-            pressing = true;
-        if (device_mouse_check_button_pressed(i, mb_any))
-            pressed = true;        
+        if (in(device_mouse_x_to_gui(i), x - 56, x + 56)
+            &amp;&amp; in(device_mouse_y_to_gui(i), y - 56, y + 56))
+        {
+            if (device_mouse_check_button(i, mb_any))
+                pressing = true;
+            if (device_mouse_check_button_pressed(i, mb_any))
+                pressed = true;        
+        }
     }
 }
-
 </string>
           </argument>
         </arguments>
@@ -89,7 +91,8 @@ for(i = 0; i &lt; 5; i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part_ext(sprUI, -1, 112*type, 592 + 112*pressing, 112, 112, x - 56, y - 56, 1, 1, c_white, .6);
+            <string>if (global.state == G_PLAY)
+    draw_sprite_part_ext(sprUI, -1, 112*type, 592 + 112*pressing, 112, 112, x - 56, y - 56, 1, 1, c_white, .6);
 </string>
           </argument>
         </arguments>

@@ -1,6 +1,7 @@
 kLeft = false;
 kRight = false;
 kJump = false;
+if (global.state != G_PLAY) exit;
 
 if (global.left != noone && global.right != noone && global.jump != noone)
 {

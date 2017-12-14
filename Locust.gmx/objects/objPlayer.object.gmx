@@ -31,8 +31,7 @@ torque = 9000;//12000;
 image_speed = .1;
 dir = RIGHT;
 jumped = false;
-
-attached = ds_list_create();
+onGround = false;
 
 dev = -1;
 kJump = false;
@@ -139,10 +138,11 @@ if (mouse_check_button_pressed(mb_right))
           <argument>
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
-
 onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
- &amp;&amp; (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock) || !kLeft)
- &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock) || !kRight)
+ &amp;&amp; (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock)
+    || physics_test_overlap(phy_position_x + 2, phy_position_y + 2, phy_rotation, objSolid))
+ &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock)
+    || physics_test_overlap(phy_position_x - 2, phy_position_y + 2, phy_rotation, objSolid))
  &amp;&amp; ((phy_position_y - phy_position_yprevious) &gt;= -2);
  
 // check if outside room
@@ -151,11 +151,37 @@ if (x &lt; 20)
 if (x &gt; room_width - 20)
     phy_position_x = min(phy_position_x, room_width - 20);
 
+
+    
+// WON
+if (state == WON)
+{
+    depth = -101;
+    if (global.state != G_WON)
+    {
+        phy_rotation = 0;
+        instance_create(x, y, objWinScreen);
+        global.state = G_WON;
+    }
+    phy_linear_velocity_x = 0;
+    
+    if (onGround)
+    {
+        phy_linear_velocity_y = 0;
+        if (abs(phy_rotation) &gt; 5) phy_rotation -= (sign(phy_rotation))*2;
+    }
+}
+ 
+// LOST   
 if (state == DEAD)
 {
     kLeft = false;
     kRight = false;
     kJump = false;
+    if (global.state != G_OVER)
+    {
+        global.state = G_OVER;
+    }
 }
 
 if (kLeft)
@@ -163,7 +189,7 @@ if (kLeft)
     if (phy_linear_velocity_x &lt; -20)
         dir = LEFT;
     physics_apply_torque(-torque);
-    if (!onGround &amp;&amp; jumped)
+    if (!onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x - 2, phy_position_y, phy_rotation, objBlock))
         phy_linear_velocity_x = max(phy_linear_velocity_x - 5, -200);
 }
 if (kRight)
@@ -171,12 +197,13 @@ if (kRight)
     if (phy_linear_velocity_x &gt; 20)
         dir = RIGHT;
     physics_apply_torque(torque);
-    if (!onGround &amp;&amp; jumped)
+    if (!onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x + 2, phy_position_y, phy_rotation, objBlock))
         phy_linear_velocity_x = min(phy_linear_velocity_x + 5, 200);
 }
 
-if (abs(phy_position_y - phy_position_yprevious) &gt;= 2)
+if (abs(phy_position_y - phy_position_yprevious) &gt;= 4)
 {
+    onGround = false;
     jumped = true;
     if (state == IDLE) state = JUMP;    
 }
@@ -211,6 +238,35 @@ if (kJump)
     }
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objFlag">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (global.state == G_PLAY)
+{
+    if (state != DEAD)
+    {
+        state = WON;
+    }
+}
 </string>
           </argument>
         </arguments>

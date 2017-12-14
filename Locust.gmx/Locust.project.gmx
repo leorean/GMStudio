@@ -13,6 +13,7 @@
       <sprite>sprites\mskButton</sprite>
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskBall</sprite>
+      <sprite>sprites\mskFlag</sprite>
     </sprites>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprBall</sprite>
@@ -20,18 +21,27 @@
       <sprite>sprites\sprBlock0</sprite>
       <sprite>sprites\sprBlock1</sprite>
       <sprite>sprites\sprBlock2</sprite>
+      <sprite>sprites\sprBlock</sprite>
     </sprites>
-    <sprite>sprites\sprUI</sprite>
-    <sprite>sprites\sprConfetti</sprite>
+    <sprite>sprites\sprFlag</sprite>
+    <sprites name="UI">
+      <sprite>sprites\sprUI</sprite>
+      <sprite>sprites\sprConfetti</sprite>
+      <sprite>sprites\sprWinStar</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
+    <background>background\bgWinScreen</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
     <script>scripts\playerInput.gml</script>
     <script>scripts\array.gml</script>
+    <script>scripts\load.gml</script>
+    <script>scripts\save.gml</script>
+    <script>scripts\finishLevel.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -53,7 +63,12 @@
       <object>objects\objLevelMenuConfetti</object>
       <object>objects\objButton</object>
       <object>objects\objPauseMenu</object>
+      <objects name="WinScreen">
+        <object>objects\objWinScreen</object>
+        <object>objects\objWinStar</object>
+      </objects>
     </objects>
+    <object>objects\objFlag</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>
@@ -62,7 +77,8 @@
     <room>rooms\L3</room>
     <room>rooms\L4</room>
   </rooms>
-  <constants number="13">
+  <constants number="15">
+    <constant name="SEC">60</constant>
     <constant name="TILE">16</constant>
     <constant name="HEIGHT">576</constant>
     <constant name="WIDTH">1024</constant>
@@ -75,6 +91,7 @@
     <constant name="G_PLAY">0</constant>
     <constant name="G_PAUSE">1</constant>
     <constant name="G_WON">2</constant>
+    <constant name="G_OVER">3</constant>
     <constant name="G_NOTHING">-1</constant>
   </constants>
   <help>

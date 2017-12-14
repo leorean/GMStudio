@@ -31,6 +31,7 @@ description = "--";
 stars = 0;
 locked = true;
 page = 0;
+background = 0;
 </string>
           </argument>
         </arguments>
@@ -77,6 +78,7 @@ if (in(mouse_x, x, x + 64) &amp;&amp; in(mouse_y, y, y + 64)
     &amp;&amp; !locked)
 {
     global.levelText = description;
+    global.background = background;
     //room_goto(goto);
     objLevelMenu.slideUp = true;
     objLevelMenu.goto = goto;
