@@ -116,6 +116,13 @@ else
         room_restart();
 }
 
+if (global.state == G_OVER)
+{
+    // TODO: GAMEOVER MENU
+    if (mouse_check_button_released(mb_left))
+        room_restart();
+}
+
 if (global.state == G_PLAY)
 {
     var w = view_wview;
@@ -205,7 +212,7 @@ if(instance_exists(objPlayer))
     
     levelTextAlpha = 4;
     confettiTimer = 0;
-    global.stars = 2;
+    global.stars = 0;
 }
 
 </string>

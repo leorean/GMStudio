@@ -29,7 +29,7 @@
 
 yt = view_yview[0] - 64;
 
-starTimer = 0;
+starTimer = 1*SEC;
 starShown = 0;
 </string>
           </argument>
@@ -61,33 +61,26 @@ draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_color(c_white);
 
+// draw the max stars
+for (var i = 0; i&lt;3; i++)
+{
+    var pxx = WIDTH/2 - 40*(2) + i*80;
+    draw_sprite_ext(sprWinStar, 0, view_xview[0] + pxx, view_yview[0] + HEIGHT/2, 1, 1, 0, c_white, alpha * .5);
+}    
+
+// draw text
 if (alpha &gt; 0)
 {
     yt = min(yt + 2, view_yview[0] + 96);
     draw_text(view_xview[0] + WIDTH/2, view_yview[0] + yt, "You did the thing!");
 }
+
+// draw stars out of maxstars
 if(yt == view_yview[0] + 96)
 {
-    starTimer = max(starTimer - 1, 0);
-    //var px = WIDTH/2 - 40*(global.stars - 1) + starShown*80;
-    var px = WIDTH/2 - 40*(2) + starShown*80;
-    for (var i = 0; i&lt;3; i++)
+    // after the first star, player can click away the screen
+    if (starShown &gt; 1 || (global.stars &lt;= 1 &amp;&amp; !starTimer))
     {
-        var pxx = WIDTH/2 - 40*(2) + i*80;
-        draw_sprite_ext(sprWinStar, 0, view_xview[0] + pxx, view_yview[0] + HEIGHT/2, 1, 1, 0, c_white, .5);
-    }    
-    if (!starTimer)
-    {
-        if (starShown &lt; global.stars)
-        {
-            instance_create(
-                view_xview[0] + px,
-                view_yview[0] + HEIGHT/2, objWinStar);
-    
-            starTimer = 1*SEC;
-            starShown++;
-        }
-        
         if (mouse_check_button_released(mb_left))
         {
             // L1 -&gt; 1, and so on..
@@ -98,7 +91,22 @@ if(yt == view_yview[0] + 96)
             
             room_goto(MENU);
         }
-    }    
+    }
+    
+    starTimer = max(starTimer - 1, 0);
+    var px = WIDTH/2 - 40*(2) + starShown*80;
+    if (!starTimer)
+    {
+        if (starShown &lt; global.stars)
+        {
+            instance_create(
+                view_xview[0] + px,
+                view_yview[0] + HEIGHT/2, objWinStar);
+    
+            starTimer = 1*SEC;
+            starShown++;
+        }        
+    }
 }
 </string>
           </argument>

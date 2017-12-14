@@ -29,6 +29,7 @@
       <sprite>sprites\sprConfetti</sprite>
       <sprite>sprites\sprWinStar</sprite>
     </sprites>
+    <sprite>sprites\sprStar</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -69,6 +70,7 @@
       </objects>
     </objects>
     <object>objects\objFlag</object>
+    <object>objects\objStar</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>
@@ -77,7 +79,8 @@
     <room>rooms\L3</room>
     <room>rooms\L4</room>
   </rooms>
-  <constants number="15">
+  <constants number="16">
+    <constant name="INFINITE">900000000000</constant>
     <constant name="SEC">60</constant>
     <constant name="TILE">16</constant>
     <constant name="HEIGHT">576</constant>
