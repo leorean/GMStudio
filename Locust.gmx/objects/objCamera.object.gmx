@@ -54,7 +54,7 @@ h = HEIGHT / 2;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!instance_exists(objPlayer))
+            <string>if (!instance_exists(objPlayer) || global.state != G_PLAY)
     exit;
     
 if (max(abs(objPlayer.x - x), abs(objPlayer.y - y)) &gt; 10)

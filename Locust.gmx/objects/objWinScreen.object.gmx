@@ -65,14 +65,17 @@ draw_set_color(c_white);
 for (var i = 0; i&lt;3; i++)
 {
     var pxx = WIDTH/2 - 40*(2) + i*80;
-    draw_sprite_ext(sprWinStar, 0, view_xview[0] + pxx, view_yview[0] + HEIGHT/2, 1, 1, 0, c_white, alpha * .5);
+    draw_sprite_ext(sprStar, 4, view_xview[0] + pxx, view_yview[0] + HEIGHT/2, 1, 1, 0, c_white, alpha * .5);
 }    
 
 // draw text
 if (alpha &gt; 0)
 {
+    var lvl = ds_list_find_value(global.levels, global.level);
+    var name = string(real(lvl[1]));
     yt = min(yt + 2, view_yview[0] + 96);
-    draw_text(view_xview[0] + WIDTH/2, view_yview[0] + yt, "You did the thing!");
+    draw_text(view_xview[0] + WIDTH/2, view_yview[0] + yt, 
+        "Level " + name + " clear!");
 }
 
 // draw stars out of maxstars

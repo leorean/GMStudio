@@ -27,7 +27,7 @@
     <sprites name="UI">
       <sprite>sprites\sprUI</sprite>
       <sprite>sprites\sprConfetti</sprite>
-      <sprite>sprites\sprWinStar</sprite>
+      <sprite>sprites\sprStarBig</sprite>
     </sprites>
     <sprite>sprites\sprStar</sprite>
   </sprites>
