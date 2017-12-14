@@ -71,8 +71,7 @@ for (var i = 0; i&lt;3; i++)
 // draw text
 if (alpha &gt; 0)
 {
-    var lvl = ds_list_find_value(global.levels, global.level);
-    var name = string(real(lvl[1]));
+    var name = string(string_digits(room_get_name(room)));
     yt = min(yt + 2, view_yview[0] + 96);
     draw_text(view_xview[0] + WIDTH/2, view_yview[0] + yt, 
         "Level " + name + " clear!");
