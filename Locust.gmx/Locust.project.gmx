@@ -6,7 +6,17 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprFont1</sprite>
+    <sprites name="blocks">
+      <sprite>sprites\sprBlock0</sprite>
+      <sprite>sprites\sprBlock1</sprite>
+      <sprite>sprites\sprBlock2</sprite>
+      <sprite>sprites\sprBlock</sprite>
+    </sprites>
+    <sprites name="UI">
+      <sprite>sprites\sprUI</sprite>
+      <sprite>sprites\sprConfetti</sprite>
+      <sprite>sprites\sprStarBig</sprite>
+    </sprites>
     <sprites name="masks">
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskSpike</sprite>
@@ -14,22 +24,14 @@
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskBall</sprite>
       <sprite>sprites\mskFlag</sprite>
+      <sprite>sprites\mskBallSpawner</sprite>
     </sprites>
+    <sprite>sprites\sprFont1</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprBall</sprite>
-    <sprites name="blocks">
-      <sprite>sprites\sprBlock0</sprite>
-      <sprite>sprites\sprBlock1</sprite>
-      <sprite>sprites\sprBlock2</sprite>
-      <sprite>sprites\sprBlock</sprite>
-    </sprites>
     <sprite>sprites\sprFlag</sprite>
-    <sprites name="UI">
-      <sprite>sprites\sprUI</sprite>
-      <sprite>sprites\sprConfetti</sprite>
-      <sprite>sprites\sprStarBig</sprite>
-    </sprites>
     <sprite>sprites\sprStar</sprite>
+    <sprite>sprites\mskPlatform</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -46,15 +48,19 @@
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
+    <objects name="hierarchy">
+      <object>objects\objSolid</object>
+      <object>objects\objAny</object>
+      <object>objects\objBlock</object>
+    </objects>
     <object>objects\objPlayer</object>
     <objects name="blocks">
-      <object>objects\objBlock</object>
       <object>objects\objBlock0</object>
       <object>objects\objBlock1</object>
       <object>objects\objBlock2</object>
+      <object>objects\objPlatform</object>
     </objects>
     <object>objects\objBall</object>
-    <object>objects\objSolid</object>
     <object>objects\objCamera</object>
     <object>objects\objSpike</object>
     <objects name="UI">
@@ -71,6 +77,7 @@
     </objects>
     <object>objects\objFlag</object>
     <object>objects\objStar</object>
+    <object>objects\objBallSpawner</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>

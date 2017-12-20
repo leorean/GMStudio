@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -31,6 +31,9 @@ touched = false;
 fCur = 0;
 fMax = 6;
 fSpeed = .3;
+
+xo = phy_position_x;
+yo = phy_position_y;
 </string>
           </argument>
         </arguments>
@@ -55,10 +58,15 @@ fSpeed = .3;
             <kind>1</kind>
             <string>if (!init)
 {
-    init = true;
+    phy_position_x = xo;
+    phy_position_y = yo;
+    phy_linear_velocity_x = 0;
+    phy_linear_velocity_y = 0;
+    phy_rotation = 0;
     var obj = instance_place(x, y + 1, objSolid);
     if (obj != noone)
     {
+        init = true;
         joint = physics_joint_revolute_create(id, obj, x, y, -13, 13, true, 0, 0, 0, true);
     }
 

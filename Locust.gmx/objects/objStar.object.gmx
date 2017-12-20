@@ -148,6 +148,6 @@ if (taken)
   <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>32,32</point>
-    <point>22,32</point>
+    <point>28,32</point>
   </PhysicsShapePoints>
 </object>

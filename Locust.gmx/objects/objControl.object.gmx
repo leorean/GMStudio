@@ -42,13 +42,13 @@ levelTextAlpha = 0;
 global.levelText = "";
 global.background = 0;
 
-global.level = 0; // &lt;- save/load
+global.level = 10; // &lt;- save/load
 
 global.levels = ds_list_create();
 // room, name, description, stars, bg
 ds_list_add(global.levels, array(L1, "01", "Tutorial", 0, 0));
-ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 1));
-ds_list_add(global.levels, array(L3, "03", "Cook A Soup", 0, 0));
+ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0));
+ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0));
 ds_list_add(global.levels, array(L4, "04", "Boop The Gloop", 0, 0));
 
 ds_list_add(global.levels, array(L1, "12", "---", 0, 0));
@@ -118,7 +118,7 @@ if (keyboard_check_pressed(ord('K')))
 if (room == MENU)
 {
     if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
-        room_goto_next();
+        room_goto(L3);
 }
 else
 {
@@ -131,18 +131,6 @@ if (global.state == G_OVER)
     // TODO: GAMEOVER MENU
     if (mouse_check_button_released(mb_left))
         room_restart();
-}
-
-if (global.state == G_PLAY)
-{
-    var w = view_wview;
-    var h = view_hview;        
-    instance_deactivate_object(objSolid);
-    instance_activate_region(view_xview - w/2, view_yview - h/2, view_wview + w/2, view_hview + h/2, true);
-    instance_deactivate_object(objBall); // OR ANY "LIVING"
-    instance_activate_region(view_xview - w/3, view_yview - h/3, view_wview + w/3, view_hview + h/3, true);
-    
-    physics_pause_enable(false);
 }
 
 if (global.state == G_PAUSE)
@@ -163,6 +151,47 @@ if (global.state == G_WON)
         confettiTimer = 20;
     }
 
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (global.state == G_PLAY)
+{
+    var w = view_wview;
+    var h = view_hview;        
+
+    with(objAny)
+    {
+        phy_active = false;
+    }
+    instance_deactivate_object(objAny);
+    
+    instance_activate_region(view_xview - w, view_yview - h, view_wview + w, view_hview + h, true);
+    with(objAny)
+    {
+        phy_active = true;
+    }
+
+    physics_pause_enable(false);
 }
 </string>
           </argument>
@@ -258,15 +287,26 @@ if (global.state == G_PAUSE)
     draw_sprite(pauseScreen, -1, 0, 0);
 }
 
-if (global.state == G_PLAY &amp;&amp; levelTextAlpha &gt; 0)
+if (global.state == G_PLAY)
 {
-    draw_text_colour(WIDTH/2, 32, global.levelText, c_white, c_white, c_white, c_white, levelTextAlpha);
-    levelTextAlpha = max(levelTextAlpha - .01, 0);
+    // level text
+    if (levelTextAlpha &gt; 0)
+    {
+        draw_text_colour(WIDTH/2, 32, global.levelText, c_white, c_white, c_white, c_white, levelTextAlpha);
+        levelTextAlpha = max(levelTextAlpha - .01, 0);
+    }
+    
+    // # of stars
+    draw_sprite_part(sprUI, -1, 352, 480, 48, 48, WIDTH-48, 0);
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_center);
+    draw_text(WIDTH-48, 32, string(global.stars) + "x");
 }
 
 if (global.state == G_PLAY || global.state == G_PAUSE)
     draw_sprite_part_ext(sprUI, -1, 64*(global.state == G_PAUSE), 528, 64, 64, 0, 0, 1, 1, c_white, .6);
 
+//toggle pause menu
 if (global.state == G_PLAY)
 {
     if ((keyboard_check_pressed(ord('P')) || keyboard_check_pressed(vk_backspace)) || ((in(device_mouse_x_to_gui(0), 0, 64) &amp;&amp; in(device_mouse_y_to_gui(0), 0, 64)

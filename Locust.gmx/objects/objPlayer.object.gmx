@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -150,9 +150,33 @@ if (x &lt; 20)
     phy_position_x = max(phy_position_x, 20);
 if (x &gt; room_width - 20)
     phy_position_x = min(phy_position_x, room_width - 20);
+if (y &gt; room_height + 80)
+{
+    phy_linear_velocity_y = 0;
+    phy_position_y = room_height + 80;
+}
+if (state != DEAD)
+{
+    if (y &gt; room_height)
+    {
+        phy_linear_velocity_x = 0;
+        phy_linear_velocity_y = -200;
+        physics_apply_angular_impulse(999);
+        state = DEAD;
+    }
+}
 
+// PLATFORMS
+with(objPlatform) phy_active = false;
+if ((phy_position_y - phy_position_yprevious) &gt;= -6)
+{
+    with(objPlatform)
+    {
+        if(phy_position_y &gt; objPlayer.phy_position_y)
+            phy_active = true;
+    }
+}
 
-    
 // WON
 if (state == WON)
 {
@@ -238,6 +262,29 @@ if (kJump)
     }
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objPlatform">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//
 </string>
           </argument>
         </arguments>
