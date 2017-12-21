@@ -63,7 +63,7 @@ yo = phy_position_y;
     phy_linear_velocity_x = 0;
     phy_linear_velocity_y = 0;
     phy_rotation = 0;
-    var obj = instance_place(x, y + 1, objSolid);
+    var obj = instance_place(x, y + 1, objAny);
     if (obj != noone)
     {
         init = true;

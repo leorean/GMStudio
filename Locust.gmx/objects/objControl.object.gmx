@@ -128,8 +128,10 @@ else
 
 if (global.state == G_OVER)
 {
-    // TODO: GAMEOVER MENU
-    if (mouse_check_button_released(mb_left))
+    deathTimer = max(deathTimer - 1, 0);
+
+    // TODO: GAMEOVER MENU?
+    if (!deathTimer &amp;&amp; mouse_check_button_released(mb_left))
         room_restart();
 }
 
@@ -174,26 +176,31 @@ if (global.state == G_WON)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (global.state == G_PLAY)
+            <string>if(global.state == G_PLAY)
 {
     /*
-    var w = view_wview;
-    var h = view_hview;        
+    with(objAny) phy_active = false;
+    instance_deactivate_all(true);
 
-    with(objAny)
-    {
-        phy_active = false;
-    }
-    instance_deactivate_object(objAny);
+    instance_activate_object(objCamera);
+    instance_activate_object(objButton);
+    instance_activate_object(objPlayer);    
     
-    instance_activate_region(view_xview - 2*w, view_yview - 2*h, view_wview + 2*w, view_hview + 2*h, true);
-    with(objAny)
-    {
-        phy_active = true;
-    }
+    var w = 512;
+    var h = 512;
+    
+    instance_activate_region(objCamera.x - w, objCamera.y - h, 2*w, 2*h, true);
+    
+    instance_deactivate_object(objBall);
+    instance_deactivate_object(objFlag);
+    instance_deactivate_object(objSpawner);    
 
-    physics_pause_enable(false);*/
-    physics_pause_enable(false);
+    w *= .5;
+    h *= .5;
+    
+    instance_activate_region(objCamera.x - w, objCamera.y - h, 2*w, 2*h, true);
+    with(objAny) phy_active = true;
+    */
 }
 </string>
           </argument>
@@ -254,6 +261,7 @@ if(instance_exists(objPlayer))
     levelTextAlpha = 4;
     confettiTimer = 0;
     global.stars = 0;
+    deathTimer = 1.5*SEC;
 }
 
 </string>

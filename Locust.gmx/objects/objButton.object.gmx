@@ -52,8 +52,7 @@ yo = y - view_yview;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-pressed = false;
+            <string>pressed = false;
 pressing = false;
 if (global.state == G_PLAY)
 {

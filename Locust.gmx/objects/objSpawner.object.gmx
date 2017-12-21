@@ -27,6 +27,7 @@
             <kind>1</kind>
             <string>spawnTime = 3*SEC;
 s = 0;
+object = objBall;
 </string>
           </argument>
         </arguments>
@@ -56,11 +57,11 @@ s = max(s - 1, 0);
        
 if (!s)
 {
-    if (instance_place(x, y, objBall))
+    if (instance_place(x, y, object))
         exit;
     
     s = spawnTime;
-    instance_create(x,y, objBall);
+    instance_create(x,y, object);
 }
 </string>
           </argument>

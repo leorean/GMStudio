@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>alpha = -1;
 
-yt = view_yview[0] - 64;
+yt = - 64;
 
 starTimer = 1*SEC;
 starShown = 0;
@@ -72,13 +72,13 @@ for (var i = 0; i&lt;3; i++)
 if (alpha &gt; 0)
 {
     var name = string(string_digits(room_get_name(room)));
-    yt = min(yt + 2, view_yview[0] + 96);
+    yt = min(yt + 2, 96);
     draw_text(view_xview[0] + WIDTH/2, view_yview[0] + yt, 
         "Level " + name + " clear!");
 }
 
 // draw stars out of maxstars
-if(yt == view_yview[0] + 96)
+if(yt == 96)
 {
     // after the first star, player can click away the screen
     if (starShown &gt; 1 || (global.stars &lt;= 1 &amp;&amp; !starTimer))

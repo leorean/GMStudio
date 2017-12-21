@@ -147,8 +147,8 @@ onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation
  &amp;&amp; ((phy_position_y - phy_position_yprevious) &gt;= -2);
 
 // PLATFORMS
-with(objPlatform) phy_active = false;
-if ((phy_position_y - phy_position_yprevious) &gt;= -2)
+/*with(objPlatform) phy_active = false;
+/if ((phy_position_y - phy_position_yprevious) &gt;= -2)
 {
     with(objPlatform)
     {
@@ -162,7 +162,7 @@ if ((phy_position_y - phy_position_yprevious) &gt;= -2)
             }
         }
     }
-}
+}*/
  
 // check if outside room
 if (x &lt; 20)
