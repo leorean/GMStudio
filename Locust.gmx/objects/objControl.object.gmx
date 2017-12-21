@@ -148,7 +148,7 @@ if (global.state == G_WON)
     confettiTimer = max(confettiTimer - 1, 0);
     if (!confettiTimer)
     {
-        var i = instance_create(0 + random(WIDTH) - 64, -64, objLevelMenuConfetti);
+        var i = instance_create(view_xview + random(WIDTH) - 64, -64, objLevelMenuConfetti);
         i.depth = -101;
         confettiTimer = 20;
     }
