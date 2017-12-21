@@ -138,12 +138,31 @@ if (mouse_check_button_pressed(mb_right))
           <argument>
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
+
 onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
  &amp;&amp; (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock)
     || physics_test_overlap(phy_position_x + 2, phy_position_y + 2, phy_rotation, objSolid))
  &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock)
     || physics_test_overlap(phy_position_x - 2, phy_position_y + 2, phy_rotation, objSolid))
  &amp;&amp; ((phy_position_y - phy_position_yprevious) &gt;= -2);
+
+// PLATFORMS
+with(objPlatform) phy_active = false;
+if ((phy_position_y - phy_position_yprevious) &gt;= -2)
+{
+    with(objPlatform)
+    {
+        if(phy_position_y &gt; objPlayer.phy_position_y)
+        {
+            phy_active = true;
+            if (physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlayer)
+            &amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objPlayer))
+            {
+                objPlayer.onGround = true;
+            }
+        }
+    }
+}
  
 // check if outside room
 if (x &lt; 20)
@@ -163,17 +182,6 @@ if (state != DEAD)
         phy_linear_velocity_y = -200;
         physics_apply_angular_impulse(999);
         state = DEAD;
-    }
-}
-
-// PLATFORMS
-with(objPlatform) phy_active = false;
-if ((phy_position_y - phy_position_yprevious) &gt;= -6)
-{
-    with(objPlatform)
-    {
-        if(phy_position_y &gt; objPlayer.phy_position_y)
-            phy_active = true;
     }
 }
 

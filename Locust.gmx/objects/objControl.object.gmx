@@ -176,6 +176,7 @@ if (global.state == G_WON)
             <kind>1</kind>
             <string>if (global.state == G_PLAY)
 {
+    /*
     var w = view_wview;
     var h = view_hview;        
 
@@ -185,12 +186,13 @@ if (global.state == G_WON)
     }
     instance_deactivate_object(objAny);
     
-    instance_activate_region(view_xview - w, view_yview - h, view_wview + w, view_hview + h, true);
+    instance_activate_region(view_xview - 2*w, view_yview - 2*h, view_wview + 2*w, view_hview + 2*h, true);
     with(objAny)
     {
         phy_active = true;
     }
 
+    physics_pause_enable(false);*/
     physics_pause_enable(false);
 }
 </string>
