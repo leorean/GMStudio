@@ -2,7 +2,7 @@
 <object>
   <spriteName>sprSpawner</spriteName>
   <solid>0</solid>
-  <visible>0</visible>
+  <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>objAny</parentName>
@@ -26,10 +26,17 @@
           <argument>
             <kind>1</kind>
             <string>spawnTime = 3*SEC;
-s = 0;
 object = objBall;
+pow = 200;
 
+//private:
+
+s = 0;
 frame = 0;
+fMax = 9;
+fCur = 0;
+fSpeed = .3;
+
 </string>
           </argument>
         </arguments>
@@ -62,8 +69,19 @@ if (!s)
     if (instance_place(x, y, object))
         exit;
     
-    s = spawnTime;
-    instance_create(x,y, object);
+    fCur = min(fCur + fSpeed, fMax);
+    if (fCur == fMax)
+    {
+        fCur = 0;
+        s = spawnTime;
+        angle = - phy_rotation + 90;
+        var o = instance_create(x + lengthdir_x(64, angle),
+            y + lengthdir_y(64, angle), object);
+        o.phy_linear_velocity_x = lengthdir_x(pow, angle);
+        o.phy_linear_velocity_y = lengthdir_y(pow, angle);
+        
+        //with(o) physics_apply_impulse(phy_position_x, phy_position_y, 200
+    }
 }
 </string>
           </argument>
@@ -87,7 +105,10 @@ if (!s)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprSpawner, frame, x, y, image_xscale, image_yscale, phy_rotation, c_white, 1);
+            <string>draw_sprite_ext(sprSpawner, frame, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
+frame = floor(fCur);
+
+draw_text(x, y, phy_rotation);
 </string>
           </argument>
         </arguments>
@@ -106,7 +127,7 @@ if (!s)
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>16,16</point>
+    <point>64,64</point>
     <point>16,16</point>
   </PhysicsShapePoints>
 </object>
