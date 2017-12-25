@@ -49,6 +49,7 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
     item.locked = i &gt; global.level;
     item.page = i div 10; // 10 levels per page
     item.background = level[4];
+    item.colortheme = level[5];
 }
 </string>
           </argument>

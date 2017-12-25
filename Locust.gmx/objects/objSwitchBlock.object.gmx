@@ -66,6 +66,7 @@ on = true;
 if (anti) on = !on;
 
 phy_active = on;
+
 </string>
           </argument>
         </arguments>
@@ -88,7 +89,16 @@ phy_active = on;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprSwitchBlock, 0 + !on, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .5 + (.5*on));
+            <string>var c = global.switchcolors[group];
+if (!on)
+{
+    draw_sprite_ext(sprSwitchBlock, 2, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .5);
+}
+else
+{
+    draw_sprite_ext(sprSwitchBlock, 0, x, y, image_xscale, image_yscale, -phy_rotation, c, 1);
+    draw_sprite_ext(sprSwitchBlock, 1, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
+}
 
 </string>
           </argument>

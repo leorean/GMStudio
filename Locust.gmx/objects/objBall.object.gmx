@@ -8,30 +8,6 @@
   <parentName>objSolid</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>var c = choose(0, 15, 30, 45, 60, 75, 120, 135, 145, 200, 225);
-color = make_color_hsv(c, 255, 255);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -49,7 +25,8 @@ color = make_color_hsv(c, 255, 255);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprBall, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, color, 1);
+            <string>var c = global.colors[global.colortheme];
+draw_sprite_ext(sprBall, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, c[5], 1);
 draw_set_blend_mode(bm_add);
 draw_sprite_ext(sprBall, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, c_white, .2);
 
@@ -81,6 +58,6 @@ if (y - 128 &gt; room_height)
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>32,32</point>
-    <point>32,8</point>
+    <point>31,32</point>
   </PhysicsShapePoints>
 </object>

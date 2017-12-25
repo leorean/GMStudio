@@ -8,30 +8,6 @@
   <parentName>objSolid</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
-    <event eventtype="0" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>var c = choose(0, 15, 30, 45, 60, 75, 120, 135, 145, 200, 225);
-color = make_color_hsv(c, 255, 255);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="8" enumb="0">
       <action>
         <libid>1</libid>
@@ -49,11 +25,12 @@ color = make_color_hsv(c, 255, 255);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprSquare, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, color, 1);
+            <string>var c = global.colors[global.colortheme];
+draw_sprite_ext(sprSquare, 0, x, y, image_xscale, image_yscale, -phy_rotation, c[6], 1);
 draw_set_blend_mode(bm_add);
-draw_sprite_ext(sprSquare, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, c_white, .2);
+/*draw_sprite_ext(sprSquare, 0, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .2);*/
 
-draw_sprite_ext(sprSquare, 1, x, y, image_xscale, image_yscale, -phy_rotation + 180, c_white, .2);
+draw_sprite_ext(sprSquare, 1, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .2);
 
 draw_set_blend_mode(bm_normal);
 draw_sprite_ext(sprSquare, 2, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);

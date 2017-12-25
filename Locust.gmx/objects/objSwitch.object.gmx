@@ -118,7 +118,10 @@ if (triggered)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprSwitch, on, phy_position_x, phy_position_y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
+            <string>var c = global.switchcolors[group];
+draw_sprite_ext(sprSwitch, 0, phy_position_x, phy_position_y, image_xscale, image_yscale, -phy_rotation, c, 1);
+if (on)
+    draw_sprite_ext(sprSwitch, 1, phy_position_x, phy_position_y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
 </string>
           </argument>
         </arguments>

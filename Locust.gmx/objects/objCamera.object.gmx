@@ -90,11 +90,13 @@ y = round(_y);
             <kind>1</kind>
             <string>a = (view_xview * .7) % WIDTH;
 
-draw_background_part_ext(bg, 0, (HEIGHT / 2)*global.background, w, h, view_xview, view_yview, 2, 2, c_white, 1);
+var c = global.colors[global.colortheme];
 
-draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a - WIDTH, view_yview, 2, 2, c_white, 1);
-draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a, view_yview, 2, 2, c_white, 1);
-draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a + WIDTH, view_yview, 2, 2, c_white, 1);        
+draw_background_part_ext(bg, 0, (HEIGHT / 2)*global.background, w, h, view_xview, view_yview, 2, 2, c[0], 1);
+
+draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a - WIDTH, view_yview, 2, 2, c[1], 1);
+draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a, view_yview, 2, 2, c[1], 1);
+draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a + WIDTH, view_yview, 2, 2, c[1], 1);        
 </string>
           </argument>
         </arguments>

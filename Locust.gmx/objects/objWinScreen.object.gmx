@@ -55,7 +55,8 @@ starShown = 0;
             <kind>1</kind>
             <string>alpha = min(alpha + .01, 1);
 
-draw_background_ext(bgWinScreen, view_xview[0], view_yview[0], 2, 2, 0, c_white, alpha);
+var c = global.colors[global.colortheme];
+draw_background_ext(bgWinScreen, view_xview[0], view_yview[0], 2, 2, 0, c[4], alpha);
 draw_set_font(global.font1);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
