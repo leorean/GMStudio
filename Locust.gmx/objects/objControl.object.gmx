@@ -42,14 +42,14 @@ levelTextAlpha = 0;
 global.levelText = "";
 global.background = 0;
 
-global.level = 10; // &lt;- save/load
+global.level = 3; // &lt;- save/load (0, 1, 2, 3... = L1, L2, L3, L4...)
 
 global.levels = ds_list_create();
 // room, name, description, stars, bg
 ds_list_add(global.levels, array(L1, "01", "Tutorial", 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0));
 ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0));
-ds_list_add(global.levels, array(L4, "04", "Boop The Gloop", 0, 0));
+ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0));
 
 ds_list_add(global.levels, array(L1, "12", "---", 0, 0));
 ds_list_add(global.levels, array(L1, "96", "---", 0, 0));
@@ -118,12 +118,17 @@ if (keyboard_check_pressed(ord('K')))
 if (room == MENU)
 {
     if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
-        room_goto(L3);
+        room_goto(L4);
 }
 else
 {
     if (keyboard_check_pressed(ord('R')))
         room_restart();
+}
+
+if (global.state == G_PLAY)
+{
+    physics_pause_enable(false);
 }
 
 if (global.state == G_OVER)

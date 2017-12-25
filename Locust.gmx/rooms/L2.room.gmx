@@ -51,13 +51,12 @@
     <view visible="0" objName="&lt;undefined&gt;" xview="0" yview="0" wview="1024" hview="768" xport="0" yport="0" wport="1024" hport="768" hborder="32" vborder="32" hspeed="-1" vspeed="-1"/>
   </views>
   <instances>
-    <instance objName="objPlayer" x="160" y="224" name="inst_8D408EB0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBall" x="256" y="224" name="inst_783A9632" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="128" y="256" name="inst_E85F13EA" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="objPlayer" x="128" y="256" name="inst_8D408EB0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBall" x="192" y="256" name="inst_783A9632" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="160" y="288" name="inst_E85F13EA" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="224" y="288" name="inst_E302BCAA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="256" y="288" name="inst_C6124937" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="198" y="266" name="inst_B8658841" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="-19"/>
-    <instance objName="objBlock2" x="192" y="288" name="inst_2D62B9F2" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="128" y="320" name="inst_2D62B9F2" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="288" y="288" name="inst_319CF7BA" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="-31"/>
     <instance objName="objBlock1" x="339" y="320" name="inst_DD79F053" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="-46"/>
     <instance objName="objBlock1" x="359" y="342" name="inst_56C89346" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="-27"/>
@@ -108,7 +107,7 @@
     <instance objName="objBlock2" x="1376" y="256" name="inst_3DE7C0CB" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1344" y="272" name="inst_22A06B47" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="-5"/>
     <instance objName="objStar" x="896" y="192" name="inst_DB16F131" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objStar" x="448" y="224" name="inst_C386BE12" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objStar" x="128" y="128" name="inst_C386BE12" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objStar" x="1440" y="224" name="inst_11E4BC52" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1440" y="256" name="inst_DC3ECA6D" locked="0" code="" scaleX="3" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1504" y="192" name="inst_33C3B2C7" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
@@ -119,8 +118,8 @@
     <instance objName="objBlock1" x="1184" y="320" name="inst_D90DD370" locked="0" code="" scaleX="1.44000005722046" scaleY="1.03125" colour="4294967295" rotation="42"/>
     <instance objName="objBlock1" x="1232" y="288" name="inst_01696CC0" locked="0" code="" scaleX="1.37999999523163" scaleY="1.09375" colour="4294967295" rotation="42"/>
     <instance objName="objBlock2" x="1520" y="176" name="inst_91C2F5CD" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="96" y="256" name="inst_7BCCBA5C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="72" y="68" name="inst_63F797AB" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="-7"/>
+    <instance objName="objBlock1" x="96" y="288" name="inst_7BCCBA5C" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="72" y="4" name="inst_63F797AB" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="-7"/>
     <instance objName="objBlock2" x="32" y="208" name="inst_D64633CC" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="64" y="272" name="inst_E5D84BCA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="64" y="176" name="inst_1C4A3F4F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -128,15 +127,15 @@
     <instance objName="objBlock2" x="48" y="160" name="inst_868064DA" locked="0" code="" scaleX="1.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="32" y="176" name="inst_C7561544" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1344" y="256" name="inst_FA2641FB" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="1376" y="160" name="inst_9B103A53" locked="0" code="" scaleX="2" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="240" y="128" name="inst_E25AD9B2" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="224" y="96" name="inst_EC453AC3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="272" y="112" name="inst_8BA54519" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="256" y="80" name="inst_2F4E5192" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="256" y="112" name="inst_D85102A4" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="224" y="64" name="inst_A4CBF9D1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="288" y="80" name="inst_C1424096" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="256" y="64" name="inst_3B89140C" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="1376" y="160" name="inst_9B103A53" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="64" y="64" name="inst_E25AD9B2" locked="0" code="" scaleX="1" scaleY="2" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="96" y="192" name="inst_EC453AC3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="144" y="176" name="inst_8BA54519" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="128" y="176" name="inst_D85102A4" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="96" y="160" name="inst_A4CBF9D1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="128" y="160" name="inst_3B89140C" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objPlatform" x="176" y="192" name="inst_034474C8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objPlatform" x="240" y="240" name="inst_3F72C2B8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>-1</PhysicsWorld>

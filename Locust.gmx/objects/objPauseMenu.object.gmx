@@ -84,6 +84,7 @@ if (in(mx, 480, 480+64) &amp;&amp; in(my, 128, 128+80))
     {
         global.state = G_PLAY;
         instance_destroy();
+        instance_activate_object(all);        
     }
 } else
     playPressing = false;

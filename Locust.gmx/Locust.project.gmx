@@ -33,6 +33,8 @@
     <sprite>sprites\sprStar</sprite>
     <sprite>sprites\sprPlatform</sprite>
     <sprite>sprites\sprSpawner</sprite>
+    <sprite>sprites\sprSwitch</sprite>
+    <sprite>sprites\sprSwitchBlock</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -79,6 +81,8 @@
     <object>objects\objFlag</object>
     <object>objects\objStar</object>
     <object>objects\objSpawner</object>
+    <object>objects\objSwitch</object>
+    <object>objects\objSwitchBlock</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>

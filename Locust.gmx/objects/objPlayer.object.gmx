@@ -32,6 +32,7 @@ image_speed = .1;
 dir = RIGHT;
 jumped = false;
 onGround = false;
+inObject = false;
 
 dev = -1;
 kJump = false;
@@ -71,50 +72,43 @@ state = IDLE;
             <kind>1</kind>
             <string>playerInput();
 
-/*kLeft = false;
-kRight = false;
-kJump = false;*/
-
-/*kLeft = false;
-kRight = false;
-kJump = false;
-
-for (i = 0; i &lt; 5; i ++)
+// PLATFORMS
+inObject = physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlatform);
+with(objPlatform) phy_active = false;
+if (phy_speed_y &gt;= -2)
 {
-    if (dev == -1)
+    with(objPlatform)
     {
-        if (device_mouse_check_button(i, mb_left))
-            dev = i;
-    }
-    
-    if (dev != -1)
-    {        
-        if (device_mouse_check_button(dev, mb_left))
+        if(phy_position_y &gt; objPlayer.phy_position_y)
         {
-            kLeft = (device_mouse_x_to_gui(dev) &lt; view_wview *.3);
-            kRight = (device_mouse_x_to_gui(dev) &gt; view_wview *.6)
-        }
-        
-        if (device_mouse_check_button_released(dev, mb_left))
-        {
-            dev = -1;
+            if (!objPlayer.inObject)
+            {
+                phy_active = true;
+                
+                if (physics_test_overlap(phy_position_x, phy_position_y - 2, 0, objPlayer)
+                 &amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y, 0, objPlayer))
+                {
+                    objPlayer.onGround = true;
+                }
+            }
         }
     }
-    else
-    {
-        kVel = 0;        
-    }   
-    if (device_mouse_check_button_pressed(i, mb_right))
-        kJump = true;
-
-    if (i &gt; 0 &amp;&amp; device_mouse_check_button_pressed(i, mb_left))
-        kJump = true;
-        
 }
 
-if (mouse_check_button_pressed(mb_right))
-    kJump = true;
-*/
+if (!onGround)
+    onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
+     &amp;&amp; (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock)
+        || physics_test_overlap(phy_position_x + 2, phy_position_y + 2, phy_rotation, objSolid))
+     &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock)
+        || physics_test_overlap(phy_position_x - 2, phy_position_y + 2, phy_rotation, objSolid))
+     &amp;&amp; (phy_speed_y &gt;= -2);
+
+if (!onGround &amp;&amp; (phy_speed_y &gt;= -2))
+{
+    var b = instance_place(phy_position_x, phy_position_y + 4, objSwitchBlock);
+    if(instance_exists(b) &amp;&amp; b.on)
+        onGround = true;
+}
 </string>
           </argument>
         </arguments>
@@ -139,31 +133,6 @@ if (mouse_check_button_pressed(mb_right))
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
 
-onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
- &amp;&amp; (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock)
-    || physics_test_overlap(phy_position_x + 2, phy_position_y + 2, phy_rotation, objSolid))
- &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock)
-    || physics_test_overlap(phy_position_x - 2, phy_position_y + 2, phy_rotation, objSolid))
- &amp;&amp; ((phy_position_y - phy_position_yprevious) &gt;= -2);
-
-// PLATFORMS
-/*with(objPlatform) phy_active = false;
-/if ((phy_position_y - phy_position_yprevious) &gt;= -2)
-{
-    with(objPlatform)
-    {
-        if(phy_position_y &gt; objPlayer.phy_position_y)
-        {
-            phy_active = true;
-            if (physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlayer)
-            &amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objPlayer))
-            {
-                objPlayer.onGround = true;
-            }
-        }
-    }
-}*/
- 
 // check if outside room
 if (x &lt; 20)
     phy_position_x = max(phy_position_x, 20);
@@ -429,13 +398,13 @@ draw_line(x, y, x + l1 , y +l2);
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>26,6</point>
-    <point>42,8</point>
-    <point>48,18</point>
-    <point>50,46</point>
-    <point>42,56</point>
-    <point>22,56</point>
-    <point>12,42</point>
-    <point>14,18</point>
+    <point>18,12</point>
+    <point>28,6</point>
+    <point>44,8</point>
+    <point>50,30</point>
+    <point>50,50</point>
+    <point>40,56</point>
+    <point>20,56</point>
+    <point>12,36</point>
   </PhysicsShapePoints>
 </object>
