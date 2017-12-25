@@ -25,9 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>spawnTime = 2*SEC;
+            <string>// SET IN EDITOR:
+
+timer = 2*SEC;
 object = objBall;
-pow = 250;
+pow = 250; // shooting power
 
 //private:
 
@@ -66,15 +68,16 @@ s = max(s - 1, 0);
        
 if (!s)
 {
-    if (instance_place(x, y, object))
+    angle = - phy_rotation + 90;
+
+    if (instance_place(x + lengthdir_x(80, angle), y + lengthdir_y(80, angle), object))
         exit;
     
     fCur = min(fCur + fSpeed, fMax);
     if (fCur == fMax)
     {
         fCur = 0;
-        s = spawnTime;
-        angle = - phy_rotation + 90;
+        s = timer;
         var o = instance_create(x + lengthdir_x(64, angle),
             y + lengthdir_y(64, angle), object);
         o.phy_linear_velocity_x = lengthdir_x(pow, angle);

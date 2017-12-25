@@ -35,6 +35,7 @@
     <sprite>sprites\sprSpawner</sprite>
     <sprite>sprites\sprSwitch</sprite>
     <sprite>sprites\sprSwitchBlock</sprite>
+    <sprite>sprites\sprSquare</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -64,6 +65,7 @@
       <object>objects\objPlatform</object>
     </objects>
     <object>objects\objBall</object>
+    <object>objects\objSquare</object>
     <object>objects\objCamera</object>
     <object>objects\objSpike</object>
     <objects name="UI">
