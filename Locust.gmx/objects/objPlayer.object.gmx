@@ -3,7 +3,7 @@
   <spriteName>sprPlayer</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-3</depth>
   <persistent>0</persistent>
   <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -153,7 +153,7 @@ if (y &gt; room_height + 80)
     phy_linear_velocity_y = 0;
     phy_position_y = room_height + 80;
 }
-if (state != DEAD)
+if (state != DEAD &amp;&amp; state != WON)
 {
     if (y &gt; room_height)
     {
@@ -254,6 +254,35 @@ if (kJump)
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="objEnemy">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (state != DEAD &amp;&amp; state != WON)
+{
+    phy_linear_velocity_x = 0;
+    phy_linear_velocity_y = -200;
+    physics_apply_angular_impulse(999);
+    state = DEAD;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="objFlag">
       <action>
         <libid>1</libid>
@@ -277,35 +306,6 @@ if (kJump)
     {
         state = WON;
     }
-}
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objSpike">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (state != DEAD)
-{
-    phy_linear_velocity_x = 0;
-    phy_linear_velocity_y = -200;
-    physics_apply_angular_impulse(999);
-    state = DEAD;
 }
 </string>
           </argument>

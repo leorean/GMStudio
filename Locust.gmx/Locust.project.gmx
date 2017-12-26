@@ -22,6 +22,7 @@
       <sprite>sprites\mskButton</sprite>
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskBall</sprite>
+      <sprite>sprites\mskEvilBall</sprite>
       <sprite>sprites\mskFlag</sprite>
       <sprite>sprites\mskBallSpawner</sprite>
     </sprites>
@@ -36,6 +37,8 @@
     <sprite>sprites\sprSwitch</sprite>
     <sprite>sprites\sprSwitchBlock</sprite>
     <sprite>sprites\sprSquare</sprite>
+    <sprite>sprites\sprArrow</sprite>
+    <sprite>sprites\sprBounceBlock</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -52,22 +55,15 @@
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
+    <object>objects\objCamera</object>
+    <object>objects\objPlayer</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
       <object>objects\objAny</object>
       <object>objects\objBlock</object>
+      <object>objects\objMovable</object>
+      <object>objects\objEnemy</object>
     </objects>
-    <object>objects\objPlayer</object>
-    <objects name="blocks">
-      <object>objects\objBlock0</object>
-      <object>objects\objBlock1</object>
-      <object>objects\objBlock2</object>
-      <object>objects\objPlatform</object>
-    </objects>
-    <object>objects\objBall</object>
-    <object>objects\objSquare</object>
-    <object>objects\objCamera</object>
-    <object>objects\objSpike</object>
     <objects name="UI">
       <object>objects\objLevelMenu</object>
       <object>objects\objLevelMenuItem</object>
@@ -80,11 +76,27 @@
         <object>objects\objWinStar</object>
       </objects>
     </objects>
-    <object>objects\objFlag</object>
-    <object>objects\objStar</object>
-    <object>objects\objSpawner</object>
-    <object>objects\objSwitch</object>
-    <object>objects\objSwitchBlock</object>
+    <objects name="blocks">
+      <object>objects\objBlock0</object>
+      <object>objects\objBlock1</object>
+      <object>objects\objBlock2</object>
+      <object>objects\objPlatform</object>
+      <object>objects\objBounceBlock</object>
+      <object>objects\objSwitchBlock</object>
+    </objects>
+    <objects name="level objects">
+      <objects name="scenery">
+        <object>objects\objArrow</object>
+      </objects>
+      <object>objects\objSwitch</object>
+      <object>objects\objStar</object>
+      <object>objects\objSpawner</object>
+      <object>objects\objFlag</object>
+      <object>objects\objSpike</object>
+      <object>objects\objSquare</object>
+      <object>objects\objBall</object>
+      <object>objects\objEvilBall</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>
@@ -92,6 +104,7 @@
     <room>rooms\L2</room>
     <room>rooms\L3</room>
     <room>rooms\L4</room>
+    <room>rooms\L5</room>
   </rooms>
   <constants number="16">
     <constant name="INFINITE">900000000000</constant>

@@ -62,7 +62,8 @@ cur = noone;
 
 if (!triggered)
 {
-    phy_linear_velocity_y = -spd*.5;
+    phy_linear_velocity_y = min(phy_linear_velocity_y, 0);    
+    phy_linear_velocity_y = max(phy_linear_velocity_y - .5, -spd*.5);
     phy_position_y = max(phy_position_y, yo);
     if (phy_position_y == yo)
         phy_linear_velocity_y = 0;

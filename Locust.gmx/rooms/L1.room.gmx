@@ -3,7 +3,7 @@
   <caption></caption>
   <width>2048</width>
   <height>576</height>
-  <vsnap>16</vsnap>
+  <vsnap>32</vsnap>
   <hsnap>16</hsnap>
   <isometric>0</isometric>
   <speed>60</speed>
@@ -128,6 +128,7 @@
     <instance objName="objBlock2" x="640" y="368" name="inst_267ED4B6" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="560" y="320" name="inst_939ADD78" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="560" y="304" name="inst_C4AFE6E0" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objArrow" x="112" y="288" name="inst_E7B0928C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="-90"/>
   </instances>
   <tiles/>
   <PhysicsWorld>-1</PhysicsWorld>

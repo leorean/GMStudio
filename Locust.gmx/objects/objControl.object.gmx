@@ -42,26 +42,29 @@ levelTextAlpha = 0;
 global.levelText = "";
 global.background = 0;
 
-global.level = 3; // &lt;- save/load (0, 1, 2, 3... = L1, L2, L3, L4...)
+global.level = 4; // &lt;- save/load (0, 1, 2, 3... = L1, L2, L3, L4...)
 
 
 // color themes ($BGR):
 //$89E1B5 .... schönes graugrün
+//$10D6AD .... sattes grün
 //                       bg1      bg2      main1    sub1     goal     obj1     obj2
-global.colors[0] = array($A9E8FF, $E6FDFF, $10D6AD, $0689DC, $FEE2A4, $CA64F4, $FFFFA3); // green/brown with yellow sky
-global.colors[1] = array($E4F6C4, $FFFFFF, $F8C862, $7ADCA1, $FEE2A4, $DCF505, $73FFB2); // teal and green with blue sky
+global.colors[0] = array($87BFFF, $C1E8FF, $21CDFF, $8E9DC2, $FEE2A4, $CA64F4, $FFFFA3); // green/brown with yellow sky
+global.colors[1] = array($FFFFFF, $FFFFFF, $7AD353, $6699BA, $C5F2FF, $DCF505, $73FFB2); // forest with blue sky
+//global.colors[1] = array($FFFFFF/*$E4F6C4*/, $FFFFFF, $F8C862, $7ADCA1, $FEE2A4, $DCF505, $73FFB2); // teal and green with blue sky
 //global.colors[1] = array($E8E3C0, $FFFFFF, $A8FF2B, $7BA6DB, $FEE2A4, $F8C862, $CA64F4); // teal and light purple with blue sky
 global.colortheme = 0;
 
-// blue, red, yellow, ...
-global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2);// $23C3FF);
+// blue, red, yellow, orange, ...
+global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2, $5689EE );// $23C3FF);
 
 global.levels = ds_list_create();
-// room, name, description, stars, bg, colortheme
+//                              room, name, description, stars, bg, colortheme
 ds_list_add(global.levels, array(L1, "01", "Tutorial", 0, 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0, 0));
-ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 1));
-ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 1));
+ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 0));
+ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
+ds_list_add(global.levels, array(L5, "05", "Switcharoo", 0, 1, 1));
 
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
@@ -70,32 +73,6 @@ ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
-/*ds_list_add(global.levels, array(L1, "96", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "85", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "34", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0));
-*/
-
 </string>
           </argument>
         </arguments>
@@ -136,7 +113,7 @@ if (keyboard_check_pressed(ord('K')))
 if (room == MENU)
 {
     if (keyboard_check_pressed(ord('R')) || keyboard_check_pressed(vk_backspace))
-        room_goto(L4);
+        room_goto(room_last);
 }
 else
 {
