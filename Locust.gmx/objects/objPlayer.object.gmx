@@ -73,8 +73,10 @@ state = IDLE;
             <string>playerInput();
 
 // PLATFORMS
-inObject = physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlatform);
 with(objPlatform) phy_active = false;
+instance_deactivate_object(objPlatform);
+instance_activate_region(phy_position_x - 20, phy_position_y + 10, 40, 30, true);
+inObject = physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlatform);
 if (phy_speed_y &gt;= -2)
 {
     with(objPlatform)
@@ -94,6 +96,7 @@ if (phy_speed_y &gt;= -2)
         }
     }
 }
+instance_activate_object(objPlatform);
 
 var sides = (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock)
         || physics_test_overlap(phy_position_x + 2, phy_position_y + 2, phy_rotation, objSolid))
@@ -251,29 +254,6 @@ if (kJump)
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="objPlatform">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>//
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
     <event eventtype="4" ename="objFlag">
       <action>
         <libid>1</libid>
@@ -324,11 +304,32 @@ if (kJump)
 {
     phy_linear_velocity_x = 0;
     phy_linear_velocity_y = -200;
-    
-    //physics_apply_local_force(0, 0, 0, -8000);
     physics_apply_angular_impulse(999);
     state = DEAD;
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objPlatform">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>//
 </string>
           </argument>
         </arguments>

@@ -19,7 +19,6 @@
     </sprites>
     <sprites name="masks">
       <sprite>sprites\mskPlayer</sprite>
-      <sprite>sprites\mskSpike</sprite>
       <sprite>sprites\mskButton</sprite>
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskBall</sprite>
@@ -31,6 +30,7 @@
     <sprite>sprites\sprBall</sprite>
     <sprite>sprites\sprFlag</sprite>
     <sprite>sprites\sprStar</sprite>
+    <sprite>sprites\sprSpike</sprite>
     <sprite>sprites\sprPlatform</sprite>
     <sprite>sprites\sprSpawner</sprite>
     <sprite>sprites\sprSwitch</sprite>

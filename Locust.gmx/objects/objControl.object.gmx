@@ -48,18 +48,20 @@ global.level = 3; // &lt;- save/load (0, 1, 2, 3... = L1, L2, L3, L4...)
 // color themes ($BGR):
 //$89E1B5 .... schönes graugrün
 //                       bg1      bg2      main1    sub1     goal     obj1     obj2
-global.colors[0] = array($A9E8FF, $E6FDFF, $10D6AD, $0689DC, $FEE2A4, $CA64F4, $FFFFA3);
+global.colors[0] = array($A9E8FF, $E6FDFF, $10D6AD, $0689DC, $FEE2A4, $CA64F4, $FFFFA3); // green/brown with yellow sky
+global.colors[1] = array($E4F6C4, $FFFFFF, $F8C862, $7ADCA1, $FEE2A4, $DCF505, $73FFB2); // teal and green with blue sky
+//global.colors[1] = array($E8E3C0, $FFFFFF, $A8FF2B, $7BA6DB, $FEE2A4, $F8C862, $CA64F4); // teal and light purple with blue sky
 global.colortheme = 0;
 
 // blue, red, yellow, ...
-global.switchcolors = array($F8C862, $2426C9, $23C3FF);
+global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2);// $23C3FF);
 
 global.levels = ds_list_create();
 // room, name, description, stars, bg, colortheme
 ds_list_add(global.levels, array(L1, "01", "Tutorial", 0, 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0, 0));
-ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 2));
-ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
+ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 1));
+ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 1));
 
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
@@ -328,10 +330,12 @@ if (global.state == G_PLAY)
     }
     
     // # of stars
-    draw_sprite_part(sprUI, -1, 352, 480, 48, 48, WIDTH-48, 0);
-    draw_set_halign(fa_right);
-    draw_set_valign(fa_center);
-    draw_text(WIDTH-48, 32, string(global.stars) + "x");
+    for (var i = 0; i &lt; 3; i++)
+    {
+        draw_sprite_part_ext(sprUI, -1, 352, 480, 48, 48, WIDTH-144 + 48*i, 0, 1, 1, c_white, .5);
+        if (global.stars &gt; i)
+            draw_sprite_part(sprUI, -1, 352, 528, 48, 48, WIDTH-144 + 48*i, 0);
+    }
 }
 
 if (global.state == G_PLAY || global.state == G_PAUSE)
@@ -373,6 +377,29 @@ if (global.state == G_PLAY)
           <argument>
             <kind>1</kind>
             <string>//invisible</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_set_blend_mode(bm_normal);
+draw_set_alpha(1);
+draw_set_color(c_white);
+</string>
           </argument>
         </arguments>
       </action>

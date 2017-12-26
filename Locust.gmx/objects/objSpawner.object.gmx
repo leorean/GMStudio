@@ -65,15 +65,31 @@ fSpeed = .3;
     exit;
 
 s = max(s - 1, 0);
-       
+
 if (!s)
 {
     angle = - phy_rotation + 90;
-
-    if (instance_place(x + lengthdir_x(80, angle), y + lengthdir_y(80, angle), object))
-        exit;
+    var willShoot = true;
     
-    fCur = min(fCur + fSpeed, fMax);
+    instance_deactivate_object(objAny);
+    instance_activate_region(x - 128, y - 128, 2*128, 2*128, true);
+    for (var i = 0; i &lt; instance_number(objAny); i++)
+    {
+        var o = instance_find(objAny, i);
+        if (instance_place(x + lengthdir_x(48, angle), y + lengthdir_y(48, angle), o)
+            &amp;&amp; (o.phy_active))
+        {
+            if (o.object_index != objPlatform)
+            {
+                willShoot = false;
+            }
+        }
+    }
+
+    if(!willShoot)
+        fCur = max(fCur - fSpeed, 0);
+    else
+        fCur = min(fCur + fSpeed, fMax);
     if (fCur == fMax)
     {
         fCur = 0;
@@ -81,11 +97,11 @@ if (!s)
         var o = instance_create(x + lengthdir_x(64, angle),
             y + lengthdir_y(64, angle), object);
         o.phy_linear_velocity_x = lengthdir_x(pow, angle);
-        o.phy_linear_velocity_y = lengthdir_y(pow, angle);
-        
-        //with(o) physics_apply_impulse(phy_position_x, phy_position_y, 200
+        o.phy_linear_velocity_y = lengthdir_y(pow, angle);        
     }
+    instance_activate_object(objAny);
 }
+
 </string>
           </argument>
         </arguments>
@@ -108,7 +124,9 @@ if (!s)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprSpawner, frame, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
+            <string>var c = global.colors[global.colortheme];
+draw_sprite_ext(sprSpawner, frame, x, y, image_xscale, image_yscale, -phy_rotation, c[3], 1);
+
 frame = floor(fCur);
 </string>
           </argument>
