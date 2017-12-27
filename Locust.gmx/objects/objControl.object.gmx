@@ -49,8 +49,10 @@ global.level = 4; // &lt;- save/load (0, 1, 2, 3... = L1, L2, L3, L4...)
 //$89E1B5 .... schönes graugrün
 //$10D6AD .... sattes grün
 //                       bg1      bg2      main1    sub1     goal     obj1     obj2
-global.colors[0] = array($CFE6FF, $D9F7FF, $FFD69C, $CCBFF3, $FEE2A4, $CA64F4, $FFFFA3); // green/brown with yellow sky
+global.colors[0] = array($91D4FF, $D9F7FF, $8F73F4, $F2E2C4, $FEE2A4, $CA64F4, $FFFFA3); // pink/grayblue with yellow sky
 global.colors[1] = array($FFFFFF, $FFFFFF, $7AD353, $6699BA, $C5F2FF, $DCF505, $73FFB2); // forest with blue sky
+//global.colors[0] = array($CFE6FF, $D9F7FF, $6BC6F7, $F2E2C4, $FEE2A4, $CA64F4, $FFFFA3); // yellow/grayblue with yellow sky
+//global.colors[0] = array($2081F1, $20A0F2, $FFD69C, $CCBFF3, $FEE2A4, $CA64F4, $FFFFA3); // blue/palepurple with yellow sky
 //global.colors[1] = array($FFFFFF/*$E4F6C4*/, $FFFFFF, $F8C862, $7ADCA1, $FEE2A4, $DCF505, $73FFB2); // teal and green with blue sky
 //global.colors[1] = array($E8E3C0, $FFFFFF, $A8FF2B, $7BA6DB, $FEE2A4, $F8C862, $CA64F4); // teal and light purple with blue sky
 global.colortheme = 0;

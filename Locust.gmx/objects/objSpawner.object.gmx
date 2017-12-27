@@ -125,7 +125,7 @@ if (!s)
           <argument>
             <kind>1</kind>
             <string>var c = global.colors[global.colortheme];
-draw_sprite_ext(sprSpawner, frame, x, y, image_xscale, image_yscale, -phy_rotation, c[2], 1);
+draw_sprite_ext(sprSpawner, frame, x, y, image_xscale, image_yscale, -phy_rotation, c[3], 1);
 
 frame = floor(fCur);
 </string>

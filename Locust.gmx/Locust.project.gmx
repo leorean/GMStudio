@@ -39,6 +39,7 @@
     <sprite>sprites\sprSquare</sprite>
     <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprBounceBlock</sprite>
+    <sprite>sprites\sprLolly</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -87,6 +88,7 @@
     <objects name="level objects">
       <objects name="scenery">
         <object>objects\objArrow</object>
+        <object>objects\objLolly</object>
       </objects>
       <object>objects\objSwitch</object>
       <object>objects\objStar</object>
