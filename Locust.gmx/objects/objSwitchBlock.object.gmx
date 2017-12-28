@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>2</depth>
   <persistent>0</persistent>
-  <parentName>objAny</parentName>
+  <parentName>self</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -33,6 +33,7 @@ anti = false; // if anti, then negate the logic
 // ----
 
 on = true;
+block = noone;
 </string>
           </argument>
         </arguments>
@@ -64,9 +65,7 @@ if (!on)
     {
         var o = instance_find(objAny, i);
         if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o)
-        /*if (collision_circle(phy_position_x + .5*image_yscale * 32, phy_position_y + .5*image_yscale * 32, sqrt(image_xscale * image_yscale) * 16,
-            o, true, true)*/
-            &amp;&amp; o != id)// &amp;&amp; o.object_index != objPlayer)        
+            &amp;&amp; o != id &amp;&amp; o != block)
         {
             inObject = true;
             break;
@@ -85,8 +84,23 @@ for(i = 0; i &lt; instance_number(objSwitch); i++)
 }
 
 if (anti) on = !on &amp;&amp; !inObject;
-phy_active = on;
 
+if (on)
+{
+    if (!instance_exists(block))
+    {
+        block = instance_create(phy_position_x, phy_position_y, objSwitchBlockOn);
+        block.image_xscale = image_xscale;
+        block.image_yscale = image_yscale;
+        block.phy_rotation = phy_rotation;
+        block.group = group;
+    }
+}
+
+if (!on &amp;&amp; instance_exists(block))
+{
+    with(block) instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -109,16 +123,8 @@ phy_active = on;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var c = global.switchcolors[group];
-if (!on)
-{
-    draw_sprite_ext(sprSwitchBlock, 2, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .5);
-}
-else
-{
-    draw_sprite_ext(sprSwitchBlock, 0, x, y, image_xscale, image_yscale, -phy_rotation, c, 1);
-    draw_sprite_ext(sprSwitchBlock, 1, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
-}
+            <string>draw_sprite_ext(sprSwitchBlock, 2, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .5);
+
 
 </string>
           </argument>
@@ -127,7 +133,7 @@ else
     </event>
   </events>
   <PhysicsObject>-1</PhysicsObject>
-  <PhysicsObjectSensor>0</PhysicsObjectSensor>
+  <PhysicsObjectSensor>-1</PhysicsObjectSensor>
   <PhysicsObjectShape>1</PhysicsObjectShape>
   <PhysicsObjectDensity>0</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>

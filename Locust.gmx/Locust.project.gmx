@@ -40,6 +40,7 @@
     <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprBounceBlock</sprite>
     <sprite>sprites\sprLolly</sprite>
+    <sprite>sprites\sprEvilBall</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -58,6 +59,7 @@
     <object>objects\objControl</object>
     <object>objects\objCamera</object>
     <object>objects\objPlayer</object>
+    <object>objects\objSwitchBlockOn</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
       <object>objects\objAny</object>
@@ -107,6 +109,7 @@
     <room>rooms\L3</room>
     <room>rooms\L4</room>
     <room>rooms\L5</room>
+    <room>rooms\L6</room>
   </rooms>
   <constants number="16">
     <constant name="INFINITE">900000000000</constant>

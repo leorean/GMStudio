@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>5</depth>
   <persistent>0</persistent>
-  <parentName>self</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -53,36 +53,43 @@ ys = image_yscale;
 ys = min(ys + .1, image_yscale);
 
 instance_deactivate_object(objAny);
-instance_activate_object(objMovable);
-instance_activate_object(objPlayer);
-for (var i = 0; i &lt; instance_number(objMovable); i++)
+instance_activate_region(
+    phy_position_x - image_xscale * 48, phy_position_y - image_yscale * 48,
+    2*image_xscale*48, 2*image_yscale*48, true);
+
+for (var i = 0; i &lt; instance_number(objAny); i++)
 {
     var o = instance_find(objAny, i);
     if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o))
-    {
-        if (xs == image_xscale &amp;&amp; ys == image_yscale)
+    {    
+        if (o.object_index == objMovable
+        || (o.object_index == objPlayer &amp;&amp; o.state != DEAD &amp;&amp; o.state != WON)
+        || o.object_index == objEvilBall)
         {
-            var angle = point_direction(
-                phy_position_x,
-                phy_position_y,
-                o.x,
-                o.y);
-    
-            if(o.object_index == objPlayer)
+            if (xs == image_xscale &amp;&amp; ys == image_yscale)
             {
-                if (o.phy_position_y &lt; phy_position_y)
+                /*if(o.object_index == objPlayer)
                 {
-                    o.jumped = false;
-                    o.onGround = true;
-                }
+                    if (o.phy_position_y &lt; phy_position_y)
+                    {
+                        o.jumped = false;
+                        o.onGround = true;
+                    }
+                }*/
+                
+                var angle = point_direction(
+                    phy_position_x,
+                    phy_position_y,
+                    o.x,
+                    o.y);
+                    
+                o.phy_speed_x = lengthdir_x(8, angle);
+                o.phy_speed_y = lengthdir_y(8, angle);
+                
+                xs = .5*image_xscale;
+                ys = .5*image_yscale;
             }
-            o.phy_speed_x = lengthdir_x(8, angle);
-            o.phy_speed_y = lengthdir_y(8, angle);
-            
-        }    
-        
-        xs = .5*image_xscale;
-        ys = .5*image_yscale;
+        }
     }
 }
 instance_activate_object(objAny);
@@ -118,7 +125,7 @@ instance_activate_object(objAny);
     </event>
   </events>
   <PhysicsObject>-1</PhysicsObject>
-  <PhysicsObjectSensor>0</PhysicsObjectSensor>
+  <PhysicsObjectSensor>-1</PhysicsObjectSensor>
   <PhysicsObjectShape>1</PhysicsObjectShape>
   <PhysicsObjectDensity>0</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>

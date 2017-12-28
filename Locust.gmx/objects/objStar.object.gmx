@@ -2,7 +2,7 @@
 <object>
   <spriteName>sprStar</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>-5</depth>
   <persistent>0</persistent>
   <parentName>objAny</parentName>
@@ -43,6 +43,7 @@ siney = 0;
 
 pulse = random(2);
 pa = 0;
+
 </string>
           </argument>
         </arguments>
@@ -67,6 +68,7 @@ pa = 0;
             <kind>1</kind>
             <string>if(!taken)
 {
+    ds_list_add(global.starlist, id);
     global.stars++;
     taken = true;
 }

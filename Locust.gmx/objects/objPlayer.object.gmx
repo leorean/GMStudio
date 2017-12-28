@@ -107,18 +107,21 @@ if (!onGround)
     onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
      &amp;&amp; sides &amp;&amp; (phy_speed_y &gt;= -2);
 
-if (!onGround &amp;&amp; (phy_speed_y &gt;= -2))
+
+     
+/*if (!onGround &amp;&amp; (phy_speed_y &gt;= -2))
 {
     var b = instance_place(phy_position_x, phy_position_y, objSwitchBlock);
     if(instance_exists(b) &amp;&amp; b.on
         &amp;&amp; sides)
         onGround = true;
 
-    if (physics_test_overlap(phy_position_x - 4, phy_position_y - 2, phy_rotation, objSwitchBlock)
-    || physics_test_overlap(phy_position_x + 4, phy_position_y - 2, phy_rotation, objSwitchBlock))
+    if ((physics_test_overlap(phy_position_x - 4, phy_position_y - 4, phy_rotation, objSwitchBlock)
+    || physics_test_overlap(phy_position_x + 4, phy_position_y - 4, phy_rotation, objSwitchBlock))
+        &amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y + 1, phy_rotation, objSwitchBlock))
         onGround = false;
         
-}
+}*/
 </string>
           </argument>
         </arguments>
