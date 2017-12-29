@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprEvilBall, 0, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
+            <string>// water
+if (physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
+    physics_apply_force(phy_position_x, phy_position_y, 0, -1000);
+
+draw_sprite_ext(sprEvilBall, 0, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
 
 draw_set_blend_mode(bm_add);
 draw_sprite_ext(sprEvilBall, 1, x, y, image_xscale, image_yscale, phy_rotation, c_yellow, .05);
@@ -36,19 +40,6 @@ draw_sprite_ext(sprEvilBall, 3, x, y, image_xscale, image_yscale, 0, c_yellow, .
 draw_sprite_ext(sprEvilBall, 4, x, y, image_xscale, image_yscale, 0, c_white, .1);
 draw_sprite_ext(sprEvilBall, 5, x, y, image_xscale, image_yscale, 0, c_white, .1);
 draw_set_blend_mode(bm_normal);
-
-/*var c = global.colors[global.colortheme];
-draw_sprite_ext(sprEvilBall, 0, x, y, image_xscale, image_yscale, -phy_rotation * 2, c_white, 1);
-draw_sprite_ext(sprEvilBall, 1, x, y, image_xscale, image_yscale, -phy_rotation, $3400CA, 1);
-draw_set_blend_mode(bm_add);
-draw_sprite_ext(sprEvilBall, 1, x, y, image_xscale, image_yscale, -phy_rotation + 180, c_white, .2);
-
-draw_sprite_ext(sprEvilBall, 2, x, y, image_xscale, image_yscale, 0, c_white, .2);
-draw_sprite_ext(sprEvilBall, 3, x, y, image_xscale, image_yscale, 0, c_white, .15);
-draw_sprite_ext(sprEvilBall, 4, x, y, image_xscale, image_yscale, 0, c_white, .25);
-draw_set_blend_mode(bm_normal);
-
-draw_sprite_ext(sprEvilBall, 5, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);*/
 
 if (y - 128 &gt; room_height)
     instance_destroy();

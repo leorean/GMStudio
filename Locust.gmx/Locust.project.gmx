@@ -41,6 +41,11 @@
     <sprite>sprites\sprBounceBlock</sprite>
     <sprite>sprites\sprLolly</sprite>
     <sprite>sprites\sprEvilBall</sprite>
+    <sprite>sprites\sprWater</sprite>
+    <sprite>sprites\sprScuba</sprite>
+    <sprite>sprites\sprBubble</sprite>
+    <sprite>sprites\sprCork</sprite>
+    <sprite>sprites\sprSwirl</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -59,6 +64,7 @@
     <object>objects\objControl</object>
     <object>objects\objCamera</object>
     <object>objects\objPlayer</object>
+    <object>objects\objBubble</object>
     <object>objects\objSwitchBlockOn</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
@@ -100,6 +106,8 @@
       <object>objects\objSquare</object>
       <object>objects\objBall</object>
       <object>objects\objEvilBall</object>
+      <object>objects\objWater</object>
+      <object>objects\objCork</object>
     </objects>
   </objects>
   <rooms name="rooms">

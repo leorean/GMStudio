@@ -70,7 +70,7 @@ ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 0));
 ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
 ds_list_add(global.levels, array(L5, "05", "Timing Is The Key", 0, 0, 0));
 // forest
-ds_list_add(global.levels, array(L6, "06", "---", 0, 1, 1));
+ds_list_add(global.levels, array(L6, "06", "Leaky Lake", 0, 1, 1));
 ds_list_add(global.levels, array(L1, "07", "---", 0, 1, 1));
 ds_list_add(global.levels, array(L1, "08", "---", 0, 1, 1));
 ds_list_add(global.levels, array(L1, "09", "---", 0, 1, 1));
@@ -181,33 +181,7 @@ if (global.state == G_WON)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(global.state == G_PLAY)
-{
-    /*
-    with(objAny) phy_active = false;
-    instance_deactivate_all(true);
-
-    instance_activate_object(objCamera);
-    instance_activate_object(objButton);
-    instance_activate_object(objPlayer);    
-    
-    var w = 512;
-    var h = 512;
-    
-    instance_activate_region(objCamera.x - w, objCamera.y - h, 2*w, 2*h, true);
-    
-    instance_deactivate_object(objBall);
-    instance_deactivate_object(objFlag);
-    instance_deactivate_object(objSpawner);    
-
-    w *= .5;
-    h *= .5;
-    
-    instance_activate_region(objCamera.x - w, objCamera.y - h, 2*w, 2*h, true);
-    with(objAny) phy_active = true;
-    */
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

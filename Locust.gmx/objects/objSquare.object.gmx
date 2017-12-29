@@ -25,10 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var c = global.colors[global.colortheme];
+            <string>// water
+if (physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
+    physics_apply_force(phy_position_x, phy_position_y, 0, -1000);
+
+
+var c = global.colors[global.colortheme];
 draw_sprite_ext(sprSquare, 0, x, y, image_xscale, image_yscale, -phy_rotation, c[6], 1);
 draw_set_blend_mode(bm_add);
-/*draw_sprite_ext(sprSquare, 0, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .2);*/
 
 draw_sprite_ext(sprSquare, 1, x, y, image_xscale, image_yscale, -phy_rotation, c_white, .2);
 

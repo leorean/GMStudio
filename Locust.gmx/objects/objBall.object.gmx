@@ -25,7 +25,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var c = global.colors[global.colortheme];
+            <string>// water
+if (physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
+    physics_apply_force(phy_position_x, phy_position_y, 0, -1000);
+
+var c = global.colors[global.colortheme];
 draw_sprite_ext(sprBall, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, c[5], 1);
 draw_set_blend_mode(bm_add);
 draw_sprite_ext(sprBall, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, c_white, .2);

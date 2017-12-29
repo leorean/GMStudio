@@ -33,6 +33,7 @@ dir = RIGHT;
 jumped = false;
 onGround = false;
 inObject = false;
+inWater = false;
 
 dev = -1;
 kJump = false;
@@ -156,6 +157,7 @@ if (y &gt; room_height + 80)
     phy_linear_velocity_y = 0;
     phy_position_y = room_height + 80;
 }
+
 if (state != DEAD &amp;&amp; state != WON)
 {
     if (y &gt; room_height)
@@ -166,6 +168,28 @@ if (state != DEAD &amp;&amp; state != WON)
         state = DEAD;
     }
 }
+
+// max jump vel check
+phy_linear_velocity_y = max(phy_linear_velocity_y, -400);
+
+// WATER
+if (physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
+{
+    inWater = true;
+    jumped = true;
+    onGround = false;
+    physics_apply_force(phy_position_x, phy_position_y, 0, -2400);
+    phy_linear_velocity_x = sign(phy_linear_velocity_x) * min(abs(phy_linear_velocity_x), 100);
+    phy_linear_velocity_y = sign(phy_linear_velocity_y) * min(abs(phy_linear_velocity_y), 100);
+}
+if (inWater)
+{
+    phy_linear_velocity_x *= .99;
+    phy_linear_velocity_y *= .99;
+}
+
+if (!physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objWater))
+    inWater = false;
 
 // WON
 if (state == WON)
@@ -202,16 +226,22 @@ if (kLeft)
 {
     if (phy_linear_velocity_x &lt; -20)
         dir = LEFT;
-    physics_apply_torque(-torque);
-    if (!onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x - 2, phy_position_y, phy_rotation, objBlock))
+    if (!inWater)
+        physics_apply_torque(-torque);
+    else
+        physics_apply_torque(-.6*torque);//phy_rotation -= 3;
+    if (!inWater &amp;&amp; !onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x - 2, phy_position_y, phy_rotation, objBlock))
         phy_linear_velocity_x = max(phy_linear_velocity_x - 5, -200);
 }
 if (kRight)
 {
     if (phy_linear_velocity_x &gt; 20)
         dir = RIGHT;
-    physics_apply_torque(torque);
-    if (!onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x + 2, phy_position_y, phy_rotation, objBlock))
+    if (!inWater)
+        physics_apply_torque(torque);
+    else
+        physics_apply_torque(.6*torque);//phy_rotation += 3;
+    if (!inWater &amp;&amp; !onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x + 2, phy_position_y, phy_rotation, objBlock))
         phy_linear_velocity_x = min(phy_linear_velocity_x + 5, 200);
 }
 
@@ -231,24 +261,44 @@ if (onGround)
 
 if (kJump)
 {
-    if (!jumped)
-    {        
-        phy_linear_velocity_y = min(phy_linear_velocity_y, 0);
-        
-        var jx = 0;
-        if (kLeft) jx = -120;
-        if (kRight) jx = 120;
-        
-        var rot = point_direction(phy_position_x, phy_position_y, phy_position_x + jx, phy_position_y - 400);
-        rot = -min(max(rot, 60), 150);
-        var jv = 1200;
-        var jumpXvel = lengthdir_x(jv, rot);
-        var jumpYvel = lengthdir_y(-jv, rot);
-        
-        physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
+    if (!inWater)
+    {
+        if (!jumped)
+        {        
+            phy_linear_velocity_y = min(phy_linear_velocity_y, 0);
+            
+            var jx = 0;
+            if (kLeft) jx = -120;
+            if (kRight) jx = 120;
+            
+            var rot = point_direction(phy_position_x, phy_position_y, phy_position_x + jx, phy_position_y - 400);
+            rot = -min(max(rot, 60), 150);
+            var jv = 1200;
+            var jumpXvel = lengthdir_x(jv, rot);
+            var jumpYvel = lengthdir_y(-jv, rot);
+            
+            physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
+    
+            jumped = true;
+            if (state == IDLE) state = JUMP;
+        }        
+    }
+    else        
+    {
+            var rot = -phy_rotation+90;
+            var jv = 350;
+            var jumpXvel = lengthdir_x(jv, rot);
+            var jumpYvel = lengthdir_y(2*jv, rot);
+            
+            physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
 
-        jumped = true;
-        if (state == IDLE) state = JUMP;
+            // bubble effect
+            for (var i = -1; i &lt; 2; i++)
+            {
+                var b = instance_create(phy_position_x + lengthdir_x(-20, rot), phy_position_y + lengthdir_y(-20, rot), objBubble);
+                b.phy_linear_velocity_x = lengthdir_x(-70, rot + i*10);
+                b.phy_linear_velocity_y = lengthdir_y(-70, rot + i*10);
+            }       
     }
 }
 
@@ -383,6 +433,10 @@ fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur) + fMin;
 
 draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+
+if (inWater)
+    draw_sprite_ext(sprScuba, 0, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+
 
 /*
 draw_set_color(c_green);
