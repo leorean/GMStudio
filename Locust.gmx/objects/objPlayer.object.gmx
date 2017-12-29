@@ -37,6 +37,7 @@ inWater = false;
 
 dev = -1;
 kJump = false;
+kJumpPressing = false;
 kLeft = false;
 kRight = false;
 kVel = 0;
@@ -283,27 +284,32 @@ if (kJump)
             if (state == IDLE) state = JUMP;
         }        
     }
-    else        
-    {
-            phy_linear_velocity_x = 0;
-            phy_linear_velocity_y = 0;
-            
-            var rot = -phy_rotation+90;
-            var jv = 500;//350;
-            var jumpXvel = lengthdir_x(jv, rot);
-            var jumpYvel = lengthdir_y(jv, rot);
-            
-            physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
-
-            // bubble effect
-            for (var i = -1; i &lt; 2; i++)
-            {
-                var b = instance_create(phy_position_x + lengthdir_x(-20, rot), phy_position_y + lengthdir_y(-20, rot), objBubble);
-                b.phy_linear_velocity_x = lengthdir_x(-70, rot + i*10);
-                b.phy_linear_velocity_y = lengthdir_y(-70, rot + i*10);
-            }       
-    }
 }
+if(inWater &amp;&amp; kJumpPressing)
+{
+    phy_linear_velocity_x = 0;
+    phy_linear_velocity_y = 0;
+    
+    var rot = -phy_rotation+90;
+    var jv = 500;//350;
+    var jumpXvel = lengthdir_x(jv, rot);
+    var jumpYvel = lengthdir_y(jv, rot);
+    
+    physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
+
+    // bubble effect    
+    for (var i = -1; i &lt; 2; i++)
+    {
+        var r = irandom(20);
+        if (r == 2)
+        {
+            var b = instance_create(phy_position_x + lengthdir_x(-20, rot), phy_position_y + lengthdir_y(-20, rot), objBubble);
+            b.phy_linear_velocity_x = lengthdir_x(-70, rot + i*10);
+            b.phy_linear_velocity_y = lengthdir_y(-70, rot + i*10);
+        }
+    }       
+}
+
 
 </string>
           </argument>

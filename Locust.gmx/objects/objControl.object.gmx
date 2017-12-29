@@ -203,7 +203,12 @@ if (global.state == G_WON)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// view stuff
+            <string>if (os_type == os_windows)
+{
+    window_set_size(2*WIDTH, 2*HEIGHT);
+}
+
+// view stuff
 view_visible[0] = true;
 view_enabled[0] = true;
 view_object[0] = objCamera;
