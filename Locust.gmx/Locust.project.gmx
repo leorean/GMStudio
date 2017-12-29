@@ -38,7 +38,7 @@
     <sprite>sprites\sprSwitchBlock</sprite>
     <sprite>sprites\sprSquare</sprite>
     <sprite>sprites\sprArrow</sprite>
-    <sprite>sprites\sprBounceBlock</sprite>
+    <sprite>sprites\sprBounce</sprite>
     <sprite>sprites\sprLolly</sprite>
     <sprite>sprites\sprEvilBall</sprite>
     <sprite>sprites\sprWater</sprite>
@@ -90,7 +90,7 @@
       <object>objects\objBlock1</object>
       <object>objects\objBlock2</object>
       <object>objects\objPlatform</object>
-      <object>objects\objBounceBlock</object>
+      <object>objects\objBounce</object>
       <object>objects\objSwitchBlock</object>
     </objects>
     <objects name="level objects">
@@ -112,12 +112,17 @@
   </objects>
   <rooms name="rooms">
     <room>rooms\MENU</room>
-    <room>rooms\L1</room>
-    <room>rooms\L2</room>
-    <room>rooms\L3</room>
-    <room>rooms\L4</room>
-    <room>rooms\L5</room>
-    <room>rooms\L6</room>
+    <rooms name="1 - Potato World">
+      <room>rooms\L1</room>
+      <room>rooms\L2</room>
+      <room>rooms\L3</room>
+      <room>rooms\L4</room>
+      <room>rooms\L5</room>
+    </rooms>
+    <rooms name="2 - Forest">
+      <room>rooms\L6</room>
+      <room>rooms\L7</room>
+    </rooms>
   </rooms>
   <constants number="16">
     <constant name="INFINITE">900000000000</constant>

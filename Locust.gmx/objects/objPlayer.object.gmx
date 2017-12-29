@@ -285,10 +285,13 @@ if (kJump)
     }
     else        
     {
+            phy_linear_velocity_x = 0;
+            phy_linear_velocity_y = 0;
+            
             var rot = -phy_rotation+90;
-            var jv = 350;
+            var jv = 500;//350;
             var jumpXvel = lengthdir_x(jv, rot);
-            var jumpYvel = lengthdir_y(2*jv, rot);
+            var jumpYvel = lengthdir_y(jv, rot);
             
             physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
 
@@ -302,35 +305,6 @@ if (kJump)
     }
 }
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="4" ename="objEnemy">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (state != DEAD &amp;&amp; state != WON)
-{
-    phy_linear_velocity_x = 0;
-    phy_linear_velocity_y = -200;
-    physics_apply_angular_impulse(999);
-    state = DEAD;
-}
 </string>
           </argument>
         </arguments>
@@ -383,6 +357,35 @@ if (kJump)
           <argument>
             <kind>1</kind>
             <string>//
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objEnemy">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (state != DEAD &amp;&amp; state != WON)
+{
+    phy_linear_velocity_x = 0;
+    phy_linear_velocity_y = -200;
+    physics_apply_angular_impulse(999);
+    state = DEAD;
+}
 </string>
           </argument>
         </arguments>

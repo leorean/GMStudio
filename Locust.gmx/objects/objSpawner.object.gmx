@@ -29,6 +29,7 @@
 
 timer = 2*SEC;
 object = objBall;
+delay = 0*SEC;
 pow = 250; // shooting power
 
 //private:
@@ -64,6 +65,12 @@ fSpeed = .3;
             <string>if (global.state != G_PLAY)
     exit;
 
+if (delay)
+{
+    delay = max(delay - 1, 0);
+    exit;
+}
+    
 s = max(s - 1, 0);
 
 if (!s)

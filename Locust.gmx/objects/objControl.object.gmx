@@ -70,11 +70,11 @@ ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 0));
 ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
 ds_list_add(global.levels, array(L5, "05", "Timing Is The Key", 0, 0, 0));
 // forest
-ds_list_add(global.levels, array(L6, "06", "Leaky Lake", 0, 1, 1));
-ds_list_add(global.levels, array(L1, "07", "---", 0, 1, 1));
-ds_list_add(global.levels, array(L1, "08", "---", 0, 1, 1));
-ds_list_add(global.levels, array(L1, "09", "---", 0, 1, 1));
-ds_list_add(global.levels, array(L1, "10", "---", 0, 1, 1));
+ds_list_add(global.levels, array(L6, "06", "Where The Forest Begins", 0, 1, 1));
+ds_list_add(global.levels, array(L7, "07", "Leaky Lake", 0, 1, 1));
+ds_list_add(global.levels, array(L1, "08", "???", 0, 1, 1));
+ds_list_add(global.levels, array(L1, "09", "???", 0, 1, 1));
+ds_list_add(global.levels, array(L1, "10", "???", 0, 1, 1));
 
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));

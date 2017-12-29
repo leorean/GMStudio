@@ -78,7 +78,7 @@ if (activated)
         with(w) instance_destroy();
     }
 
-    yt += .2;
+    yt += .4;
     
 }
 </string>
@@ -116,7 +116,7 @@ if (activated)
     }
     
     if(instance_exists(o))
-        yt = o.phy_position_y;
+        yt = o.phy_position_y - 64;
 }
 </string>
           </argument>
@@ -155,12 +155,12 @@ if (activated &amp;&amp; instance_exists(objWater))
 
     fCur = ((fCur + .15) % 4);
     frame = floor(fCur);
-    draw_sprite_part_ext(sprSwirl, -1, ((frame + 2)%4)*64, 0, 64, 64, xo - 32*.5*image_xscale, yo - 48*.5*image_yscale, .5*image_xscale, .5*image_yscale, c_white, .3*a);
-    draw_sprite_part_ext(sprSwirl, -1, frame*64, 0, 64, 64, xo - 32*image_xscale, yo - 48*image_yscale, image_xscale, image_yscale, c_white, .25*a);
-    draw_sprite_part_ext(sprSwirl, -1, ((frame + 3)%4)*64, 0, 64, 64, xo - 32*.75*image_xscale, yo - 48*.75*image_yscale, .75*image_xscale, .75*image_yscale, c_white, .15*a);
+    draw_sprite_part_ext(sprSwirl, -1, ((frame + 2)%4)*64, 0, 64, 64, xo - 32*.5*image_xscale, yo - 32*.5*image_yscale, .5*image_xscale, .5*image_yscale, c_white, .3*a);
+    draw_sprite_part_ext(sprSwirl, -1, frame*64, 0, 64, 64, xo - 32*image_xscale, yo - 32*image_yscale, image_xscale, image_yscale, c_white, .25*a);
+    draw_sprite_part_ext(sprSwirl, -1, ((frame + 3)%4)*64, 0, 64, 64, xo - 32*.75*image_xscale, yo - 32*.75*image_yscale, .75*image_xscale, .75*image_yscale, c_white, .15*a);
     
     if (irandom(3) == 1)
-        instance_create(xo, yo, objBubble);
+        instance_create(xo, yo + 28, objBubble);
 }
 </string>
           </argument>
