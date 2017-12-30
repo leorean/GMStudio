@@ -256,6 +256,7 @@ if(instance_exists(objPlayer))
     global.stars = 0;
     deathTimer = 1.5*SEC;
     
+    // reload saved stars from level
     with(objStar)
     {
         if (ds_list_find_index(global.starlist, id) != -1)
@@ -264,6 +265,22 @@ if(instance_exists(objPlayer))
             instance_destroy();
         }
         visible = true;
+    }
+    
+    // adjust tiles to color theme
+    var c = global.colors[global.colortheme];
+    for (var i = 0; i &lt; room_width; i+= 32)
+    for (var j = 0; j &lt; room_height; j+= 32)
+    {
+        var t = tile_layer_find(1000000, i, j);
+        if (t != -1)
+        {
+            // top rows in tileset main color, else sub color
+            if (tile_get_top(t) == 0 || tile_get_top(t) == 32)
+                tile_set_blend(t, c[2]);            
+            else
+                tile_set_blend(t, c[3]);
+        }
     }
 }
 

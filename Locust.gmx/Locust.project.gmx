@@ -52,6 +52,7 @@
   <backgrounds name="background">
     <background>background\bg</background>
     <background>background\bgWinScreen</background>
+    <background>background\tiles</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -94,7 +95,6 @@
       <object>objects\objBlock3</object>
       <object>objects\objBlock4</object>
       <object>objects\objPlatform</object>
-      <object>objects\objBounce</object>
       <object>objects\objSwitchBlock</object>
     </objects>
     <objects name="level objects">
@@ -102,11 +102,12 @@
         <object>objects\objArrow</object>
         <object>objects\objLolly</object>
       </objects>
-      <object>objects\objSwitch</object>
-      <object>objects\objStar</object>
-      <object>objects\objSpawner</object>
       <object>objects\objFlag</object>
+      <object>objects\objStar</object>
+      <object>objects\objSwitch</object>
+      <object>objects\objSpawner</object>
       <object>objects\objSpike</object>
+      <object>objects\objBounce</object>
       <object>objects\objSquare</object>
       <object>objects\objBall</object>
       <object>objects\objEvilBall</object>
