@@ -26,6 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>randomize();
+window_center();
 
 //room_goto_next();
 device_mouse_dbclick_enable(true);
@@ -211,7 +212,6 @@ if (global.state == G_WON)
             <string>if (os_type == os_windows)
 {
     window_set_size(2*WIDTH, 2*HEIGHT);
-    window_center();
 }
 
 // view stuff

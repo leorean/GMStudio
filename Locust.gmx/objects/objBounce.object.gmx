@@ -62,7 +62,7 @@ for (var i = 0; i &lt; instance_number(objAny); i++)
     var o = instance_find(objAny, i);
     if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o))
     {    
-        if (o.object_index == objMovable
+        if (object_is_ancestor(o.object_index, objMovable)
         || (o.object_index == objPlayer &amp;&amp; o.state != DEAD &amp;&amp; o.state != WON)
         || o.object_index == objEvilBall)
         {
@@ -129,7 +129,7 @@ instance_activate_object(objAny);
   <PhysicsObjectShape>0</PhysicsObjectShape>
   <PhysicsObjectDensity>0</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
-  <PhysicsObjectGroup>0</PhysicsObjectGroup>
+  <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
