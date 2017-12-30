@@ -34,6 +34,7 @@ jumped = false;
 onGround = false;
 inObject = false;
 inWater = false;
+waterRotation = phy_rotation;
 
 dev = -1;
 kJump = false;
@@ -230,7 +231,10 @@ if (kLeft)
     if (!inWater)
         physics_apply_torque(-torque);
     else
-        physics_apply_torque(-.6*torque);//phy_rotation -= 3;
+    {
+        physics_apply_torque(-.6*torque);
+        waterRotation -= 3;
+    }
     if (!inWater &amp;&amp; !onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x - 2, phy_position_y, phy_rotation, objBlock))
         phy_linear_velocity_x = max(phy_linear_velocity_x - 5, -200);
 }
@@ -241,7 +245,10 @@ if (kRight)
     if (!inWater)
         physics_apply_torque(torque);
     else
-        physics_apply_torque(.6*torque);//phy_rotation += 3;
+    {
+        physics_apply_torque(.6*torque);
+        waterRotation += 3;
+    }
     if (!inWater &amp;&amp; !onGround &amp;&amp; jumped &amp;&amp; !physics_test_overlap(phy_position_x + 2, phy_position_y, phy_rotation, objBlock))
         phy_linear_velocity_x = min(phy_linear_velocity_x + 5, 200);
 }
@@ -285,29 +292,36 @@ if (kJump)
         }        
     }
 }
-if(inWater &amp;&amp; kJumpPressing)
-{
-    phy_linear_velocity_x = 0;
-    phy_linear_velocity_y = 0;
-    
-    var rot = -phy_rotation+90;
-    var jv = 500;//350;
-    var jumpXvel = lengthdir_x(jv, rot);
-    var jumpYvel = lengthdir_y(jv, rot);
-    
-    physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
 
-    // bubble effect    
-    for (var i = -1; i &lt; 2; i++)
+if (!inWater) waterRotation = phy_rotation;
+if(inWater)
+{
+    phy_rotation = waterRotation;
+    
+    if (kJumpPressing)
     {
-        var r = irandom(20);
-        if (r == 2)
+        phy_linear_velocity_x = 0;
+        phy_linear_velocity_y = 0;
+        
+        var rot = -waterRotation+90;
+        var jv = 500;//350;
+        var jumpXvel = lengthdir_x(jv, rot);
+        var jumpYvel = lengthdir_y(jv, rot);
+        
+        physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
+    
+        // bubble effect    
+        for (var i = -1; i &lt; 2; i++)
         {
-            var b = instance_create(phy_position_x + lengthdir_x(-20, rot), phy_position_y + lengthdir_y(-20, rot), objBubble);
-            b.phy_linear_velocity_x = lengthdir_x(-70, rot + i*10);
-            b.phy_linear_velocity_y = lengthdir_y(-70, rot + i*10);
+            var r = irandom(20);
+            if (r == 2)
+            {
+                var b = instance_create(phy_position_x + lengthdir_x(-20, rot), phy_position_y + lengthdir_y(-20, rot), objBubble);
+                b.phy_linear_velocity_x = lengthdir_x(-70, rot + i*10);
+                b.phy_linear_velocity_y = lengthdir_y(-70, rot + i*10);
+            }
         }
-    }       
+    }   
 }
 
 

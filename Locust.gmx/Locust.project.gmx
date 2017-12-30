@@ -10,6 +10,8 @@
       <sprite>sprites\sprBlock0</sprite>
       <sprite>sprites\sprBlock1</sprite>
       <sprite>sprites\sprBlock2</sprite>
+      <sprite>sprites\sprBlock3</sprite>
+      <sprite>sprites\sprBlock4</sprite>
       <sprite>sprites\sprBlock</sprite>
     </sprites>
     <sprites name="UI">
@@ -89,6 +91,8 @@
       <object>objects\objBlock0</object>
       <object>objects\objBlock1</object>
       <object>objects\objBlock2</object>
+      <object>objects\objBlock3</object>
+      <object>objects\objBlock4</object>
       <object>objects\objPlatform</object>
       <object>objects\objBounce</object>
       <object>objects\objSwitchBlock</object>
