@@ -75,7 +75,10 @@ if (activated)
         var w = instance_place(i, yt, objWater);
         
         if (instance_exists(w))
-        with(w) instance_destroy();
+        {
+            with(w) instance_destroy();
+            with(objWater) init = false;
+        }        
     }
 
     yt += .4;

@@ -73,7 +73,7 @@ ds_list_add(global.levels, array(L5, "05", "Timing Is The Key", 0, 0, 0));
 // forest
 ds_list_add(global.levels, array(L6, "06", "Where The Forest Begins", 0, 1, 1));
 ds_list_add(global.levels, array(L7, "07", "Leaky Lake", 0, 1, 1));
-ds_list_add(global.levels, array(L1, "08", "???", 0, 1, 1));
+ds_list_add(global.levels, array(L8, "08", "Seesaw", 0, 1, 1));
 ds_list_add(global.levels, array(L1, "09", "???", 0, 1, 1));
 ds_list_add(global.levels, array(L1, "10", "???", 0, 1, 1));
 
@@ -275,10 +275,11 @@ if(instance_exists(objPlayer))
         var t = tile_layer_find(1000000, i, j);
         if (t != -1)
         {
-            // top rows in tileset main color, else sub color
+            // top rows in tileset main color
             if (tile_get_top(t) == 0 || tile_get_top(t) == 32)
-                tile_set_blend(t, c[2]);            
-            else
+                tile_set_blend(t, c[2]);
+            // next 2 rows sub color
+            if (tile_get_top(t) == 64 || tile_get_top(t) == 96)
                 tile_set_blend(t, c[3]);
         }
     }

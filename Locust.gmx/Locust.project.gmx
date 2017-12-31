@@ -13,6 +13,7 @@
       <sprite>sprites\sprBlock3</sprite>
       <sprite>sprites\sprBlock4</sprite>
       <sprite>sprites\sprBlock</sprite>
+      <sprite>sprites\sprPlatform</sprite>
     </sprites>
     <sprites name="UI">
       <sprite>sprites\sprUI</sprite>
@@ -34,7 +35,7 @@
     <sprite>sprites\sprFlag</sprite>
     <sprite>sprites\sprStar</sprite>
     <sprite>sprites\sprSpike</sprite>
-    <sprite>sprites\sprPlatform</sprite>
+    <sprite>sprites\sprPlatform0</sprite>
     <sprite>sprites\sprSpawner</sprite>
     <sprite>sprites\sprSwitch</sprite>
     <sprite>sprites\sprSwitchBlock</sprite>
@@ -48,6 +49,9 @@
     <sprite>sprites\sprBubble</sprite>
     <sprite>sprites\sprCork</sprite>
     <sprite>sprites\sprSwirl</sprite>
+    <sprite>sprites\mskJoint</sprite>
+    <sprite>sprites\sprSeesaw</sprite>
+    <sprite>sprites\sprMushroom</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -68,11 +72,13 @@
     <object>objects\objCamera</object>
     <object>objects\objPlayer</object>
     <object>objects\objBubble</object>
+    <object>objects\objJoint</object>
     <object>objects\objSwitchBlockOn</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
       <object>objects\objAny</object>
       <object>objects\objBlock</object>
+      <object>objects\objPlatform</object>
       <object>objects\objMovable</object>
       <object>objects\objEnemy</object>
     </objects>
@@ -94,7 +100,7 @@
       <object>objects\objBlock2</object>
       <object>objects\objBlock3</object>
       <object>objects\objBlock4</object>
-      <object>objects\objPlatform</object>
+      <object>objects\objPlatform0</object>
       <object>objects\objSwitchBlock</object>
     </objects>
     <objects name="level objects">
@@ -113,6 +119,8 @@
       <object>objects\objEvilBall</object>
       <object>objects\objWater</object>
       <object>objects\objCork</object>
+      <object>objects\objSeesaw</object>
+      <object>objects\objMushroom</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -127,6 +135,7 @@
     <rooms name="2 - Forest">
       <room>rooms\L6</room>
       <room>rooms\L7</room>
+      <room>rooms\L8</room>
     </rooms>
   </rooms>
   <constants number="16">

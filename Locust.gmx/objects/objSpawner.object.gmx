@@ -86,7 +86,7 @@ if (!s)
         if (instance_place(x + lengthdir_x(48, angle), y + lengthdir_y(48, angle), o)
             &amp;&amp; (o.phy_active))
         {
-            if (o.object_index != objPlatform
+            if (!object_is_ancestor(o.object_index, objPlatform)
                 &amp;&amp; o.object_index != objSpike)
             {
                 willShoot = false;

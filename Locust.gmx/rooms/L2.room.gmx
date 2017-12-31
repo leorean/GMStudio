@@ -134,8 +134,8 @@
     <instance objName="objBlock2" x="128" y="176" name="inst_D85102A4" locked="0" code="" scaleX="0.25" scaleY="0.25" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="96" y="160" name="inst_A4CBF9D1" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="128" y="160" name="inst_3B89140C" locked="0" code="" scaleX="0.5" scaleY="0.25" colour="4294967295" rotation="0"/>
-    <instance objName="objPlatform" x="176" y="192" name="inst_034474C8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objPlatform" x="240" y="240" name="inst_3F72C2B8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objPlatform0" x="176" y="192" name="inst_034474C8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objPlatform0" x="240" y="240" name="inst_3F72C2B8" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tiles" x="96" y="320" w="32" h="32" xo="0" yo="64" id="10000184" name="inst_02819088" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

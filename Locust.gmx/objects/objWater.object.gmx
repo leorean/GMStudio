@@ -8,6 +8,30 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>frame = 0;
+init = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="3" enumb="0">
       <action>
         <libid>1</libid>
@@ -25,7 +49,19 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i = irandom(1600);
+            <string>if (!init)
+{
+    init = true;
+    frame = 0;
+    if (!collision_point(phy_position_x + 16, phy_position_y - 16, objWater, true, true)
+        &amp;&amp; !collision_point(phy_position_x + 16, phy_position_y - 16, objBlock, true, true))
+    {
+        frame = 1;
+    }
+}
+
+
+var i = irandom(1600);
 if (i == 1)
     instance_create(phy_position_x + random(32*image_xscale), phy_position_y + random(32*image_yscale), objBubble);
     
@@ -51,13 +87,7 @@ if (i == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var f = 0;
-if (!collision_point(phy_position_x + 16, phy_position_y - 16, objWater, true, true)
-    &amp;&amp; !collision_point(phy_position_x + 16, phy_position_y - 16, objBlock, true, true))
-{
-    f = 1;
-}
-draw_sprite(sprWater, f, phy_position_x, phy_position_y);
+            <string>draw_sprite(sprWater, frame, phy_position_x, phy_position_y);
 </string>
           </argument>
         </arguments>
