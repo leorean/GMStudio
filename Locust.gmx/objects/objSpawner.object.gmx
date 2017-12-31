@@ -83,7 +83,9 @@ if (!s)
     for (var i = 0; i &lt; instance_number(objAny); i++)
     {
         var o = instance_find(objAny, i);
-        if (instance_place(x + lengthdir_x(48, angle), y + lengthdir_y(48, angle), o)
+        if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o)
+            &amp;&amp; o.id != id
+        //if (instance_place(x + lengthdir_x(48, angle), y + lengthdir_y(48, angle), o)
             &amp;&amp; (o.phy_active))
         {
             if (!object_is_ancestor(o.object_index, objPlatform)
@@ -154,7 +156,7 @@ frame = floor(fCur);
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>64,64</point>
-    <point>16,16</point>
+    <point>64,-16</point>
+    <point>16,64</point>
   </PhysicsShapePoints>
 </object>

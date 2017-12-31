@@ -52,6 +52,7 @@
     <sprite>sprites\mskJoint</sprite>
     <sprite>sprites\sprSeesaw</sprite>
     <sprite>sprites\sprMushroom</sprite>
+    <sprite>sprites\sprScrew</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
