@@ -42,7 +42,6 @@
     <sprite>sprites\sprSquare</sprite>
     <sprite>sprites\sprArrow</sprite>
     <sprite>sprites\sprBounce</sprite>
-    <sprite>sprites\sprLolly</sprite>
     <sprite>sprites\sprEvilBall</sprite>
     <sprite>sprites\sprWater</sprite>
     <sprite>sprites\sprScuba</sprite>
@@ -53,6 +52,10 @@
     <sprite>sprites\sprSeesaw</sprite>
     <sprite>sprites\sprMushroom</sprite>
     <sprite>sprites\sprScrew</sprite>
+    <sprite>sprites\sprTutorial0</sprite>
+    <sprite>sprites\sprTutorial1</sprite>
+    <sprite>sprites\sprTutorial2</sprite>
+    <sprite>sprites\sprTutorial3</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -82,6 +85,7 @@
       <object>objects\objPlatform</object>
       <object>objects\objMovable</object>
       <object>objects\objEnemy</object>
+      <object>objects\objTutorial</object>
     </objects>
     <objects name="UI">
       <object>objects\objLevelMenu</object>
@@ -107,7 +111,10 @@
     <objects name="level objects">
       <objects name="scenery">
         <object>objects\objArrow</object>
-        <object>objects\objLolly</object>
+        <object>objects\objTutorial0</object>
+        <object>objects\objTutorial1</object>
+        <object>objects\objTutorial2</object>
+        <object>objects\objTutorial3</object>
       </objects>
       <object>objects\objFlag</object>
       <object>objects\objStar</object>

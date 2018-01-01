@@ -83,6 +83,10 @@ for (var i = 0; i &lt; instance_number(objAny); i++)
                     o.x,
                     o.y);
                     
+                if(o.object_index == objPlayer
+                    &amp;&amp; o.phy_position_y &lt; phy_position_y &amp;&amp; in(o.phy_position_x, phy_position_x - 16*image_xscale, phy_position_x + 16*image_xscale))
+                    angle = 90;
+                    
                 o.phy_speed_x = lengthdir_x(8, angle);
                 o.phy_speed_y = lengthdir_y(8, angle);
                 

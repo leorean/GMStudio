@@ -65,7 +65,7 @@ global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2, $5689EE );// $23C3FF);
 global.levels = ds_list_create();
 //                              room, name, description, stars, bg, colortheme
 // potato world
-ds_list_add(global.levels, array(L1, "01", "Tutorial", 0, 0, 0));
+ds_list_add(global.levels, array(L1, "01", "Hello Potato.", 0, 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0, 0));
 ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 0));
 ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
