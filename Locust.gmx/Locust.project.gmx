@@ -57,6 +57,7 @@
     <sprite>sprites\sprTutorial1</sprite>
     <sprite>sprites\sprTutorial2</sprite>
     <sprite>sprites\sprTutorial3</sprite>
+    <sprite>sprites\sprMushroomShaft</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -116,6 +117,7 @@
         <object>objects\objTutorial1</object>
         <object>objects\objTutorial2</object>
         <object>objects\objTutorial3</object>
+        <object>objects\objMushroomShaft</object>
       </objects>
       <object>objects\objFlag</object>
       <object>objects\objStar</object>
@@ -145,6 +147,8 @@
       <room>rooms\L6</room>
       <room>rooms\L7</room>
       <room>rooms\L8</room>
+      <room>rooms\L9</room>
+      <room>rooms\L10</room>
     </rooms>
   </rooms>
   <constants number="16">

@@ -92,7 +92,7 @@
     <instance objName="objSpike" x="1440" y="896" name="inst_75F344D3" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSpike" x="1472" y="896" name="inst_731BE164" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSpike" x="1408" y="896" name="inst_E16EEFDA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSpawner" x="1120" y="640" name="inst_B77C5890" locked="0" code="timer = 5*SEC;&#xA;pow = 0;&#xA;object = objSquare;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="-180"/>
+    <instance objName="objSpawner" x="1120" y="640" name="inst_B77C5890" locked="0" code="timer = 4*SEC;&#xA;pow = 0;&#xA;object = objSquare;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="-180"/>
     <instance objName="objBlock1" x="1632" y="832" name="inst_BE7D72DF" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1760" y="832" name="inst_D5DAB153" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1088" y="608" name="inst_626C31A2" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
@@ -102,19 +102,19 @@
     <instance objName="objPlatform0" x="864" y="864" name="inst_CBC48403" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="800" y="864" name="inst_1E6BA0B6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="832" y="864" name="inst_8A5AC3B5" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSwitchBlock" x="1728" y="704" name="inst_D3CBBEA1" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSwitchBlock" x="1696" y="704" name="inst_512F05D8" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSwitchBlock" x="1728" y="672" name="inst_D3CBBEA1" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSwitchBlock" x="1696" y="672" name="inst_512F05D8" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSwitchBlock" x="1088" y="704" name="inst_56ECB0C8" locked="0" code="group = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSwitchBlock" x="1120" y="704" name="inst_D1DBCB75" locked="0" code="group = 2;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSwitch" x="1024" y="896" name="inst_280A13F7" locked="0" code="group = 2;&#xA;object = objPlayer;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="1664" y="640" name="inst_FB660556" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock1" x="1760" y="640" name="inst_CD0B88EB" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="1664" y="608" name="inst_FB660556" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="1760" y="608" name="inst_CD0B88EB" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1792" y="832" name="inst_4E1FD44B" locked="0" code="" scaleX="1.03225803375244" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1856" y="832" name="inst_8699A01C" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1952" y="704" name="inst_8413EE1F" locked="0" code="" scaleX="0.5" scaleY="0.75" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1984" y="768" name="inst_8E7F77FA" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBall" x="1728" y="672" name="inst_0856D5FD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="1664" y="704" name="inst_40CE59E5" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objBall" x="1728" y="640" name="inst_0856D5FD" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="1664" y="672" name="inst_40CE59E5" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1856" y="704" name="inst_692B55D0" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1984" y="832" name="inst_C6B549E9" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1984" y="736" name="inst_473F5E75" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
@@ -122,8 +122,8 @@
     <instance objName="objSwitchBlock" x="1024" y="832" name="inst_A15F8712" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSwitchBlock" x="992" y="832" name="inst_9B948538" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSwitchBlock" x="1664" y="832" name="inst_6936C789" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSwitchBlock" x="1696" y="832" name="inst_6EC475C7" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSwitchBlock" x="1728" y="832" name="inst_27FE0B0B" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSwitchBlock" x="1856" y="768" name="inst_6EC475C7" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSwitchBlock" x="1856" y="736" name="inst_27FE0B0B" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1664" y="864" name="inst_ADED94DE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1696" y="864" name="inst_39ADBEEF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1728" y="864" name="inst_3C5DE6DA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
@@ -146,7 +146,7 @@
     <instance objName="objBlock2" x="1792" y="672" name="inst_FCFB33C2" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1856" y="672" name="inst_06CCC4A9" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1888" y="704" name="inst_BE65F169" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock2" x="1760" y="704" name="inst_242D72EF" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock2" x="1760" y="672" name="inst_242D72EF" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objSwitch" x="1936" y="864" name="inst_D6B6D023" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1888" y="864" name="inst_8B03F46A" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1056" y="608" name="inst_9DAA0A1A" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="0"/>
@@ -162,9 +162,9 @@
     <instance objName="objBlock2" x="1536" y="896" name="inst_B480BD7C" locked="0" code="" scaleX="1.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="1568" y="928" name="inst_AA27A744" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="-7"/>
     <instance objName="objBlock2" x="1856" y="898" name="inst_15A6E251" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="-6"/>
-    <instance objName="objSwitchBlock" x="1088" y="800" name="inst_015AB74B" locked="0" code="group = 2;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objSwitchBlock" x="1120" y="800" name="inst_D0DE0399" locked="0" code="group = 2;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objArrow" x="1728" y="608" name="inst_8A29CF4F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="90"/>
+    <instance objName="objSwitchBlock" x="992" y="704" name="inst_015AB74B" locked="0" code="group = 2;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSwitchBlock" x="960" y="704" name="inst_D0DE0399" locked="0" code="group = 2;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objArrow" x="1728" y="576" name="inst_8A29CF4F" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="90"/>
     <instance objName="objBlock1" x="1568" y="832" name="inst_44DB688B" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1504" y="832" name="inst_C121C134" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock1" x="1536" y="832" name="inst_C2943043" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
@@ -193,6 +193,9 @@
     <instance objName="objSwitchBlock" x="1184" y="928" name="inst_977F5428" locked="0" code="group = 1;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1184" y="608" name="inst_B21D3CD7" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1216" y="608" name="inst_A0A480BA" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock1" x="1104" y="810" name="inst_8D1E3B77" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="-45"/>
+    <instance objName="objSwitchBlock" x="1728" y="832" name="inst_4E159C99" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objSwitchBlock" x="1696" y="832" name="inst_0167E9AE" locked="0" code="group = 1;&#xA;anti = true;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tiles" x="608" y="768" w="64" h="32" xo="0" yo="32" id="10000476" name="inst_D77CA1A0" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

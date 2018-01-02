@@ -59,11 +59,11 @@ global.colors[1] = array($FFFFFF, $FFFFFF, $7AD353, $6699BA, $C5F2FF, $DCF505, $
 //global.colors[1] = array($E8E3C0, $FFFFFF, $A8FF2B, $7BA6DB, $FEE2A4, $F8C862, $CA64F4); // teal and light purple with blue sky
 global.colortheme = 0;
 
-// blue, red, yellow, orange, ...
+// blue, purple, yellow, orange, ...
 global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2, $5689EE );// $23C3FF);
 
 global.levels = ds_list_create();
-//                              room, name, description, stars, bg, colortheme
+// room, name, description, stars, bg, colortheme
 // potato world
 ds_list_add(global.levels, array(L1, "01", "Hello Potato.", 0, 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0, 0));
@@ -74,7 +74,7 @@ ds_list_add(global.levels, array(L5, "05", "Timing Is The Key", 0, 0, 0));
 ds_list_add(global.levels, array(L6, "06", "Where The Forest Begins", 0, 1, 1));
 ds_list_add(global.levels, array(L7, "07", "Leaky Lake", 0, 1, 1));
 ds_list_add(global.levels, array(L8, "08", "Seesaw Thicket", 0, 1, 1));
-ds_list_add(global.levels, array(L1, "09", "???", 0, 1, 1));
+ds_list_add(global.levels, array(L9, "09", "Fungal Cliff", 0, 1, 1));
 ds_list_add(global.levels, array(L1, "10", "???", 0, 1, 1));
 
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
@@ -187,7 +187,8 @@ if (global.state == G_WON)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>global.timer = (global.timer + 1) % INFINITE;
+</string>
           </argument>
         </arguments>
       </action>
@@ -213,6 +214,8 @@ if (global.state == G_WON)
 {
     window_set_size(2*WIDTH, 2*HEIGHT);
 }
+
+global.timer = 0;
 
 // view stuff
 view_visible[0] = true;

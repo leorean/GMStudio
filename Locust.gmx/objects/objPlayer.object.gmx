@@ -80,18 +80,18 @@ with(objPlatform) phy_active = false;
 instance_deactivate_object(objPlatform);
 instance_activate_region(phy_position_x - 20, phy_position_y + 10, 40, 30, true);
 inObject = physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlatform);
-if (phy_speed_y &gt;= -2)
+if (phy_speed_y &gt;= -4)
 {
     with(objPlatform)
     {
-        if(phy_position_y &gt; objPlayer.phy_position_y)
+        if(true)//phy_position_y &gt; objPlayer.phy_position_y)
         {
             if (!objPlayer.inObject)
             {
                 phy_active = true;
                 
-                if (physics_test_overlap(phy_position_x, phy_position_y - 2, 0, objPlayer)
-                 &amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y, 0, objPlayer))
+                if (physics_test_overlap(phy_position_x, phy_position_y - 2, phy_rotation, objPlayer))
+                 //&amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y, 0, objPlayer))
                 {
                     objPlayer.onGround = true;
                 }

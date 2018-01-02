@@ -7,7 +7,166 @@
   <persistent>0</persistent>
   <parentName>objPlatform</parentName>
   <maskName>&lt;undefined&gt;</maskName>
-  <events/>
+  <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>s = 0;
+init = false;
+
+shafts = ds_list_create();
+random_set_seed(id);
+image_alpha = 0;
+on = false;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!init)
+{
+
+    if (distance_to_object(objPlayer) &gt; 96)
+        exit;
+
+    init = true;
+    
+    var j = phy_position_x;
+    var r = phy_rotation;
+    var dst = 24;
+    
+    for (var i = phy_position_y + dst * image_yscale; i &lt; room_height + dst*image_yscale; i+= dst * image_yscale)
+    {
+    
+        j += lengthdir_x(dst * image_xscale, -r-90);
+        
+        r += -8+random(16);
+        
+        var o = instance_create(j, i, objMushroomShaft);
+        o.phy_rotation = r;
+        o.image_xscale = image_xscale;
+        o.image_yscale = image_yscale;
+        o.parent = id;
+                
+        ds_list_add(shafts, o);
+    }
+}
+
+if (distance_to_object(objPlayer) &lt;= 96)
+{
+    on = true;
+}
+if (distance_to_object(objPlayer) &gt; 128)
+{
+    on = false;
+}
+
+if (on)
+{
+    image_alpha = min(image_alpha + .06, 1);
+    s = min(s + .08, 1);
+
+}
+else
+{
+    image_alpha = max(image_alpha - .06, 0);
+    s = max(s - .05, 0);
+}
+
+for(var i = 0; i &lt; ds_list_size(shafts); i++)
+{
+    var o = ds_list_find_value(shafts, i);
+    if (instance_exists(o))
+        o.image_alpha = image_alpha;// * (1 - ((i - 1) / ds_list_size(shafts)));
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objPlayer">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*if (s == 1)
+{
+    s = .9;
+}*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>draw_sprite_ext(sprMushroom, -1, phy_position_x, phy_position_y, image_xscale * s, image_yscale * s, -phy_rotation, c_white, image_alpha);
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+  </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>2</PhysicsObjectShape>
