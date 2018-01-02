@@ -51,7 +51,7 @@
             <string>if(distance_to_object(objPlayer) &gt; 80)
     image_alpha = max(image_alpha - .05, 0.1);
 else
-    image_alpha = min(image_alpha + .05, .7);
+    image_alpha = min(image_alpha + .05, 1);
 
 if (floor(image_index) == 0)// || (object_index==objTutorial2 &amp;&amp; floor(image_index) == 3))
     image_speed = .02;
@@ -80,6 +80,7 @@ else
           <argument>
             <kind>1</kind>
             <string>//draw_set_blend_mode(bm_add);
+draw_sprite_ext(sprTutorialBg, -1, x, y, 1, 1, 0, c_white, image_alpha);
 draw_sprite_ext(sprite_index, floor(image_index), x, y, 1, 1, 0, c_white, image_alpha);
 //draw_set_blend_mode(bm_normal);
 </string>

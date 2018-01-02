@@ -53,6 +53,7 @@
     <sprite>sprites\sprMushroom</sprite>
     <sprite>sprites\sprScrew</sprite>
     <sprite>sprites\sprTutorial0</sprite>
+    <sprite>sprites\sprTutorialBg</sprite>
     <sprite>sprites\sprTutorial1</sprite>
     <sprite>sprites\sprTutorial2</sprite>
     <sprite>sprites\sprTutorial3</sprite>
