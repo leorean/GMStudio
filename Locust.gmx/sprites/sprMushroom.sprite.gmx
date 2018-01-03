@@ -7,8 +7,8 @@
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>0</bbox_left>
-  <bbox_right>127</bbox_right>
+  <bbox_left>1</bbox_left>
+  <bbox_right>126</bbox_right>
   <bbox_top>0</bbox_top>
   <bbox_bottom>31</bbox_bottom>
   <HTile>0</HTile>
@@ -21,5 +21,6 @@
   <height>32</height>
   <frames>
     <frame index="0">images\sprMushroom_0.png</frame>
+    <frame index="1">images\sprMushroom_1.png</frame>
   </frames>
 </sprite>

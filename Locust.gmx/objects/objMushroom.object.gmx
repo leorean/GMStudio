@@ -25,13 +25,18 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>s = 0;
+            <string>// editor: 
+type = 0;
+
+//
+s = 0;
 init = false;
 
 shafts = ds_list_create();
 random_set_seed(id);
 image_alpha = 0;
 on = false;
+
 </string>
           </argument>
         </arguments>
@@ -56,7 +61,6 @@ on = false;
             <kind>1</kind>
             <string>if (!init)
 {
-
     if (distance_to_object(objPlayer) &gt; 96)
         exit;
 
@@ -64,7 +68,7 @@ on = false;
     
     var j = phy_position_x;
     var r = phy_rotation;
-    var dst = 24;
+    var dst = 20;
     
     for (var i = phy_position_y + dst * image_yscale; i &lt; room_height + dst*image_yscale; i+= dst * image_yscale)
     {
@@ -78,12 +82,13 @@ on = false;
         o.image_xscale = image_xscale;
         o.image_yscale = image_yscale;
         o.parent = id;
+        o.type = type;
                 
         ds_list_add(shafts, o);
     }
 }
 
-if (distance_to_object(objPlayer) &lt;= 96)
+if (distance_to_object(objPlayer) &lt;= 64)
 {
     on = true;
 }
@@ -133,10 +138,14 @@ for(var i = 0; i &lt; ds_list_size(shafts); i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*if (s == 1)
+            <string>if (type == 1)
 {
-    s = .9;
-}*/
+    if (s == 1)
+    {
+        s = .5;
+        objPlayer.phy_speed_y = min(objPlayer.phy_speed_y, -40);
+    }
+}
 </string>
           </argument>
         </arguments>
@@ -159,7 +168,7 @@ for(var i = 0; i &lt; ds_list_size(shafts); i++)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprMushroom, -1, phy_position_x, phy_position_y, image_xscale * s, image_yscale * s, -phy_rotation, c_white, image_alpha);
+            <string>draw_sprite_ext(sprMushroom, type, phy_position_x, phy_position_y, image_xscale * s, image_yscale * s, -phy_rotation, c_white, image_alpha);
 
 </string>
           </argument>
