@@ -58,6 +58,8 @@
     <sprite>sprites\sprTutorial2</sprite>
     <sprite>sprites\sprTutorial3</sprite>
     <sprite>sprites\sprMushroomShaft</sprite>
+    <sprite>sprites\sprWantBall</sprite>
+    <sprite>sprites\sprWantPotato</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bg</background>
@@ -119,6 +121,8 @@
         <object>objects\objTutorial2</object>
         <object>objects\objTutorial3</object>
         <object>objects\objMushroomShaft</object>
+        <object>objects\objWantBall</object>
+        <object>objects\objWantPotato</object>
       </objects>
       <object>objects\objFlag</object>
       <object>objects\objStar</object>
