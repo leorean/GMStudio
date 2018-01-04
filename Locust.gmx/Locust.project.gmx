@@ -79,6 +79,7 @@
     <object>objects\objPlayer</object>
     <object>objects\objBubble</object>
     <object>objects\objJoint</object>
+    <object>objects\objWaterSurface</object>
     <object>objects\objSwitchBlockOn</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>

@@ -25,8 +25,40 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>frame = 0;
-init = false;
+            <string>surface = noone;
+color = c_white;
+yo = phy_position_y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (!instance_exists(surface))
+{
+    if (!collision_point(phy_position_x + 16, phy_position_y - 1, objWater, true, true)
+    &amp;&amp; !collision_point(phy_position_x + 16, phy_position_y - 1, objBlock, true, true))
+    {
+        surface = instance_create(phy_position_x, phy_position_y, objWaterSurface);
+    }
+}
+
 </string>
           </argument>
         </arguments>
@@ -49,22 +81,20 @@ init = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (!init)
+            <string>if (instance_exists(objCork))
 {
-    init = true;
-    frame = 0;
-    if (!collision_point(phy_position_x + 16, phy_position_y - 16, objWater, true, true)
-        &amp;&amp; !collision_point(phy_position_x + 16, phy_position_y - 16, objBlock, true, true))
-    {
-        frame = 1;
-    }
+    phy_position_y = max(objCork.yt, phy_position_y);
+}
+if (phy_position_y &gt;= yo + 32)
+{
+    with(surface) instance_destroy();
+    instance_destroy();
 }
 
-
+// bubbles
 var i = irandom(1600);
 if (i == 1)
-    instance_create(phy_position_x + random(32*image_xscale), phy_position_y + random(32*image_yscale), objBubble);
-    
+    instance_create(phy_position_x + random(32), phy_position_y + random(32), objBubble);    
 </string>
           </argument>
         </arguments>
@@ -87,7 +117,8 @@ if (i == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite(sprWater, frame, phy_position_x, phy_position_y);
+            <string>var i = (phy_position_y - yo);
+draw_sprite_part_ext(sprWater, 0, 0, i, sprite_width, 32 - i, phy_position_x, yo + i, 1, 1, color, 1);
 </string>
           </argument>
         </arguments>
@@ -95,7 +126,7 @@ if (i == 1)
     </event>
   </events>
   <PhysicsObject>-1</PhysicsObject>
-  <PhysicsObjectSensor>-1</PhysicsObjectSensor>
+  <PhysicsObjectSensor>0</PhysicsObjectSensor>
   <PhysicsObjectShape>1</PhysicsObjectShape>
   <PhysicsObjectDensity>0</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>

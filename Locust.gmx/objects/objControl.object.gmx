@@ -188,6 +188,20 @@ if (global.state == G_WON)
           <argument>
             <kind>1</kind>
             <string>global.timer = (global.timer + 1) % INFINITE;
+
+/*if (instance_exists(objWater))
+{
+repeat(instance_number(objWater))
+{
+    var w = instance_find(objWater, irandom(instance_number(objWater)));
+    if (instance_exists(w))
+    {
+        var i = irandom(2500);
+        if (i == 1)
+            instance_create(w.phy_position_x, w.phy_position_y, objBubble);
+    }
+}   
+}*/
 </string>
           </argument>
         </arguments>
@@ -311,6 +325,7 @@ if(instance_exists(objPlayer))
           <argument>
             <kind>1</kind>
             <string>draw_set_font(global.font1);
+draw_set_blend_mode(bm_normal);
 draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);

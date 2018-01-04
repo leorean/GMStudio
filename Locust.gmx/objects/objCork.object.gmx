@@ -3,7 +3,7 @@
   <spriteName>sprCork</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-5</depth>
+  <depth>2</depth>
   <persistent>0</persistent>
   <parentName>objSolid</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -35,6 +35,8 @@ frame = 0;
 
 xo = phy_position_x;
 yo = phy_position_y;
+
+init = false;
 </string>
           </argument>
         </arguments>
@@ -60,28 +62,32 @@ yo = phy_position_y;
             <string>if (!instance_exists(objWater))
     exit;
 
+if (!init)
+{
+    var o = noone;
+    for(var i = 0; i &lt; instance_number(objWater); i++)
+    {
+        var w = instance_find(objWater, i);
+        if (o == noone || w.phy_position_y &lt; o.phy_position_y)
+            o = w;
+    }
+    
+    if(instance_exists(o))
+        yt = o.phy_position_y - 64;
+    init = true;
+}
+    
 if (activated)
 {
-
+    // float in water    
     if (!physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objWater))
         phy_linear_velocity_y = max(phy_linear_velocity_y, 0);
-        
-    // water    
     if (phy_linear_velocity_y &gt; -40 &amp;&amp; physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
         physics_apply_force(phy_position_x, phy_position_y, 0, -800);
 
-    for(i = 0; i &lt; room_width; i+= 32)
-    {
-        var w = instance_place(i, yt, objWater);
-        
-        if (instance_exists(w))
-        {
-            with(w) instance_destroy();
-            with(objWater) init = false;
-        }        
-    }
-
-    yt += .4;
+    // let out water
+    if (instance_exists(objWater))
+        yt += .4;
     
 }
 </string>
@@ -109,17 +115,6 @@ if (activated)
             <string>if (!activated)
 {
     activated = true;
-    
-    var o = noone;
-    for(var i = 0; i &lt; instance_number(objWater); i++)
-    {
-        var w = instance_find(objWater, i);
-        if (o == noone || w.phy_position_y &lt; o.phy_position_y)
-            o = w;
-    }
-    
-    if(instance_exists(o))
-        yt = o.phy_position_y - 64;
 }
 </string>
           </argument>
