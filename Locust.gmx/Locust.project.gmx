@@ -30,7 +30,9 @@
       <sprite>sprites\mskBallSpawner</sprite>
     </sprites>
     <sprite>sprites\sprFont1</sprite>
+    <sprite>sprites\sprFont2</sprite>
     <sprite>sprites\sprPlayer</sprite>
+    <sprite>sprites\sprAccessoires</sprite>
     <sprite>sprites\sprBall</sprite>
     <sprite>sprites\sprFlag</sprite>
     <sprite>sprites\sprStar</sprite>
@@ -103,6 +105,7 @@
         <object>objects\objWinScreen</object>
         <object>objects\objWinStar</object>
       </objects>
+      <object>objects\objShopMenu</object>
     </objects>
     <objects name="blocks">
       <object>objects\objBlock0</object>

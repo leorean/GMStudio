@@ -32,6 +32,7 @@ window_center();
 device_mouse_dbclick_enable(true);
 
 global.font1 = font_add_sprite(sprFont1, ord(' '), true, 0);
+global.font2 = font_add_sprite(sprFont2, ord(' '), true, 0);
 //!"#$%&amp;'()*+,-.(0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 
 global.starlist = ds_list_create();
@@ -47,6 +48,17 @@ global.background = 0;
 
 global.level = real(string_digits(room_get_name(room_last))) - 1; // &lt;- save/load (0, 1, 2, 3... = L1, L2, L3, L4...)
 
+// ACCESSOIRES +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+global.prices = ds_list_create();
+ds_list_add(global.prices, 0);
+ds_list_add(global.prices, 3);
+ds_list_add(global.prices, 8);
+ds_list_add(global.prices, 15);
+ds_list_add(global.prices, 26);
+
+// COLORS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 // color themes ($BGR):
 //$89E1B5 .... schönes graugrün
 //$10D6AD .... sattes grün
@@ -61,6 +73,8 @@ global.colortheme = 0;
 
 // blue, purple, yellow, orange, ...
 global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2, $5689EE );// $23C3FF);
+
+// LEVELS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 global.levels = ds_list_create();
 // room, name, description, stars, bg, colortheme
@@ -189,19 +203,6 @@ if (global.state == G_WON)
             <kind>1</kind>
             <string>global.timer = (global.timer + 1) % INFINITE;
 
-/*if (instance_exists(objWater))
-{
-repeat(instance_number(objWater))
-{
-    var w = instance_find(objWater, irandom(instance_number(objWater)));
-    if (instance_exists(w))
-    {
-        var i = irandom(2500);
-        if (i == 1)
-            instance_create(w.phy_position_x, w.phy_position_y, objBubble);
-    }
-}   
-}*/
 </string>
           </argument>
         </arguments>
@@ -250,7 +251,7 @@ if(room == MENU)
     levelTextAlpha = 0;
     
     // reset taken stars
-    ds_list_clear(global.starlist);
+    ds_list_clear(global.starlist);    
 }
 
 // normal playable levels

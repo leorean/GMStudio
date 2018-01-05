@@ -30,11 +30,21 @@ maxPage = ds_list_size(global.levels) div 10;
 goto = MENU;
 slideUp = false;
 
+// shop stuff
+slideLeft = false;
+slideRight = false;
+shopPressed = false;
+
 xpotato = 32;
 ypotato = HEIGHT + 128;
 
 instance_create(0, 0, objLevelMenuBackground);
 confettiTimer = 0;
+
+instance_create(0, 0, objShopMenu);
+
+star = instance_create(WIDTH - 32, HEIGHT - 32, objStar);
+star.depth = depth + 1;
 
 // fill menu
 //L1, "01", "Do The Tutorial", 0
@@ -77,7 +87,8 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
 confettiTimer = max(confettiTimer - 1, 0);
 if (!confettiTimer)
 {
-    instance_create(0 + random(WIDTH) - 64, -64, objLevelMenuConfetti);
+    if (x == 0)
+        instance_create(0 + random(WIDTH) - 64, -64, objLevelMenuConfetti);
     confettiTimer = 20;
 }
 
@@ -86,7 +97,29 @@ ypotato = max(ypotato - 1, HEIGHT - 64);
 draw_sprite_part(sprUI, -1, 256, 432, 96, 128, xpotato, ypotato);
 if (ypotato == HEIGHT - 64)
     draw_sprite_part(sprUI, -1, 352, 432, 48, 48, xpotato + 80, ypotato - 32);
+
+// amount of stars
+global.stars = 0;
+for(var i = 0; i &lt; instance_number(objLevelMenuItem); i++)
+{
+    var l = instance_find(objLevelMenuItem, i);
+    global.stars += l.stars;
+}
+
+draw_set_color(c_white);
+draw_set_halign(fa_center);
+draw_set_valign(fa_center);
+draw_set_font(global.font2);
+if (global.stars &gt; 0)
+{
+    star.visible = true;
+    draw_text(WIDTH - 32, HEIGHT - 28, string(global.stars));
+}
+    else
+        star.visible = false;
+draw_set_font(global.font1);
     
+// sliding up then starting level
 if (slideUp)
 {
     var s = 16;
@@ -143,6 +176,55 @@ if (page &lt; maxPage)
     }
     draw_sprite_part(sprUI, -1, 192, 432 + 80 * right,64, 80, x + 560, y + 416);
 }
+
+// +++++++++++++++++++++++++++++++++++++ SHOP STUFF ++++++++++++++++++++++++++++++++++++++++++++
+
+var slideSpd = 32;
+if (slideLeft)
+{
+    with(objLevelMenuItem) { visible = false; }
+    x = max(x - slideSpd, -WIDTH);
+    if (x &lt;= -WIDTH)
+    {
+        slideLeft = false;
+    }
+}
+if (slideRight)
+{
+    x = min(x + slideSpd, 0);
+    if (x &gt;= 0)
+    {
+        with(objLevelMenuItem) visible = true;
+        slideRight = false;
+    }
+}
+
+if (!slideLeft &amp;&amp; !slideRight)
+{
+    shopPressed = false;
+    draw_sprite_part(sprUI, -1, 512 + 96*(x &lt; 0), 464, 96, 112, 928, 0);
+}
+
+if (in(mouse_x, 928, 1024) &amp;&amp; in(mouse_y, 0, 96))
+{
+    if (!slideLeft &amp;&amp; !slideRight)
+    {
+        if (mouse_check_button(mb_left))
+            shopPressed = true;
+
+        if (mouse_check_button_released(mb_left))
+        {
+            if (x == 0)
+                slideLeft = true;
+            else
+                slideRight = true;
+        }
+    }
+}
+
+if (shopPressed)
+    draw_sprite_part(sprUI, -1, 512 + 96*(x &lt; 0), 464 + 112, 96, 112, 928, 0);
+
 </string>
           </argument>
         </arguments>
