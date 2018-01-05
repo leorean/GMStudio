@@ -87,8 +87,7 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
 confettiTimer = max(confettiTimer - 1, 0);
 if (!confettiTimer)
 {
-    if (x == 0)
-        instance_create(0 + random(WIDTH) - 64, -64, objLevelMenuConfetti);
+    instance_create(0 + random(WIDTH) - 64, -64, objLevelMenuConfetti);
     confettiTimer = 20;
 }
 
@@ -110,13 +109,8 @@ draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_font(global.font2);
-if (global.stars &gt; 0)
-{
-    star.visible = true;
-    draw_text(WIDTH - 32, HEIGHT - 28, string(global.stars));
-}
-    else
-        star.visible = false;
+star.visible = true;
+draw_text(WIDTH - 32, HEIGHT - 28, "x" + string(global.stars));
 draw_set_font(global.font1);
     
 // sliding up then starting level
@@ -203,6 +197,12 @@ if (!slideLeft &amp;&amp; !slideRight)
 {
     shopPressed = false;
     draw_sprite_part(sprUI, -1, 512 + 96*(x &lt; 0), 464, 96, 112, 928, 0);
+    
+    if (x &lt; 0)
+    {
+        if (keyboard_check_pressed(vk_backspace))
+            slideRight = true;
+    }
 }
 
 if (in(mouse_x, 928, 1024) &amp;&amp; in(mouse_y, 0, 96))
@@ -217,7 +217,9 @@ if (in(mouse_x, 928, 1024) &amp;&amp; in(mouse_y, 0, 96))
             if (x == 0)
                 slideLeft = true;
             else
+            {                
                 slideRight = true;
+            }
         }
     }
 }

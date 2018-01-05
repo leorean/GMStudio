@@ -32,7 +32,8 @@
 // 12 stars.. cape
 
 
-index = 0;
+t = 0;
+z = 1;
 maxIndex = ds_list_size(global.prices);
 </string>
           </argument>
@@ -81,50 +82,92 @@ y = objLevelMenu.y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprUI, -1, 400, 512, 96, 96, x + WIDTH/2 - 48, y + HEIGHT/2 - 48);
+            <string>draw_sprite_part_ext(sprUI, -1, 400, 576, 96, 128, x + WIDTH/2 - 48, y + HEIGHT/2 - 64, 1, 1, c_white, 1);
+draw_sprite_part(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2 - 32, y + HEIGHT/2 - 32);
 
-var left = x + WIDTH/2 - 64 - 32;
-var right = x + WIDTH/2 + 64 - 32;
-var top = y + HEIGHT/2 + 64;
+var left = x + WIDTH/2 - 256 - 32;
+var right = x + WIDTH/2 + 256 - 32;
+var top = y + HEIGHT/2;
 var inLeft = in(mouse_x, left, left + 64) &amp;&amp; in(mouse_y, top, top + 64);
 var inRight = in(mouse_x, right, right + 64) &amp;&amp; in(mouse_y, top, top + 64);
 
 //testing : TODO: REMOVE
-global.stars = 26;
+global.stars = 16;
 
-//352, 258, 48, 48
+draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+draw_set_font(global.font2);
+draw_set_color(c_white);
+draw_set_alpha(1);
 
-draw_sprite(sprAccessoires, index, x + WIDTH/2, y + HEIGHT/2);
+//352, 480, 48, 48
 
-if (index &gt; 0)
+// middle
+draw_sprite(sprAccessoires, global.accessory, x + WIDTH/2, y + HEIGHT/2);
+// middle star
+draw_sprite_part(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory) &lt;= global.stars), 48, 48, 
+    x + WIDTH/2 - 24, y + HEIGHT/2 + 64 - 24);
+draw_text(x + WIDTH/2, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory)));
+
+// middle selector
+t = (t + .1) % (2*pi);
+z = 1.2 + .2 * sin(t);
+
+draw_sprite_ext(sprSelector, -1, x + WIDTH/2, y + HEIGHT/2, z, z, 0, c_white, 1);
+
+if (global.accessory &gt; 0)
 {
-    draw_sprite_part_ext(sprUI, -1, 400, 512, 96, 96, x + WIDTH/2  - 128 - 48, y + HEIGHT/2 - 48, 1, 1, c_black, .5);
-    draw_sprite_ext(sprAccessoires, index-1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .5);
+    draw_sprite_part_ext(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2  - 128 - 32, y + HEIGHT/2 - 32, 1, 1, c_black, .5);
+    draw_sprite_ext(sprAccessoires, global.accessory-1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .5);
+
+    // left star
+    draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory-1) &lt;= global.stars), 48, 48, 
+        x + WIDTH/2 - 128 - 24, y + HEIGHT/2 + 64 - 24, 1, 1, c_white, .5);
+    draw_set_alpha(.5);
+    draw_text(x + WIDTH/2 - 128, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory-1)));
 
 }
     
-if (index &lt; maxIndex - 1)
+if (global.accessory &lt; maxIndex - 1)
 {
-    draw_sprite_part_ext(sprUI, -1, 400, 512, 96, 96, x + WIDTH/2 + 128 - 48, y + HEIGHT/2 - 48, 1, 1, c_black, .5);
-    draw_sprite_ext(sprAccessoires, index+1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .5);
+    draw_set_alpha(1);
+    draw_sprite_part_ext(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2 + 128 - 32, y + HEIGHT/2 - 32, 1, 1, c_black, .5);
+    draw_sprite_ext(sprAccessoires, global.accessory+1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .5);
+    
+    //right star
+        draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory+1) &lt;= global.stars), 48, 48, 
+        x + WIDTH/2 + 128 - 24, y + HEIGHT/2 + 64 - 24, 1, 1, c_white, .5);
+    draw_set_alpha(.5);
+    draw_text(x + WIDTH/2 + 128, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory+1)));
+
+    if (global.stars &lt; ds_list_find_value(global.prices, global.accessory+1))
+    {
+        draw_set_color(c_red);
+        draw_set_blend_mode(bm_add);
+        draw_text(x + WIDTH/2 + 128, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory+1)));
+    }
+    draw_set_color(c_white);
+    draw_set_blend_mode(bm_normal);
 }
 
-// left
-if (index &gt; 0)
+// left button
+if (global.accessory &gt; 0)
 {
-    draw_sprite_part(sprUI, -1, 128, 432 + 80*inLeft*mouse_check_button(mb_left), 64, 80,left, top);
+    draw_set_alpha(1);
+    draw_sprite_part(sprUI, -1, 128, 432 + 80*inLeft*mouse_check_button(mb_left), 64, 80, left, top);
     
     if (inLeft &amp;&amp; mouse_check_button_released(mb_left))
-        index--;
+        global.accessory--;
 }
 
-// right
-if (index &lt; maxIndex - 1 &amp;&amp; global.stars &gt;= ds_list_find_value(global.prices, index + 1))
+// right button
+if (global.accessory &lt; maxIndex - 1 &amp;&amp; global.stars &gt;= ds_list_find_value(global.prices, global.accessory + 1))
 {
+    draw_set_alpha(1);
     draw_sprite_part(sprUI, -1, 128+64, 432 + 80*inRight*mouse_check_button(mb_left), 64, 80, right, top);
 
     if (inRight &amp;&amp; mouse_check_button_released(mb_left))
-        index++;
+        global.accessory++;
 }
 
 

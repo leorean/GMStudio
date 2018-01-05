@@ -19,6 +19,7 @@
       <sprite>sprites\sprUI</sprite>
       <sprite>sprites\sprConfetti</sprite>
       <sprite>sprites\sprStarBig</sprite>
+      <sprite>sprites\sprSelector</sprite>
     </sprites>
     <sprites name="masks">
       <sprite>sprites\mskPlayer</sprite>
@@ -95,6 +96,7 @@
       <object>objects\objTutorial</object>
     </objects>
     <objects name="UI">
+      <object>objects\objShopMenu</object>
       <object>objects\objLevelMenu</object>
       <object>objects\objLevelMenuItem</object>
       <object>objects\objLevelMenuBackground</object>
@@ -105,7 +107,6 @@
         <object>objects\objWinScreen</object>
         <object>objects\objWinStar</object>
       </objects>
-      <object>objects\objShopMenu</object>
     </objects>
     <objects name="blocks">
       <object>objects\objBlock0</object>
