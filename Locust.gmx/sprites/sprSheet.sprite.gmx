@@ -2,15 +2,15 @@
 <sprite>
   <type>0</type>
   <xorig>64</xorig>
-  <yorigin>64</yorigin>
+  <yorigin>72</yorigin>
   <colkind>1</colkind>
   <coltolerance>0</coltolerance>
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
-  <bbox_left>4</bbox_left>
+  <bbox_left>3</bbox_left>
   <bbox_right>123</bbox_right>
-  <bbox_top>4</bbox_top>
-  <bbox_bottom>121</bbox_bottom>
+  <bbox_top>0</bbox_top>
+  <bbox_bottom>143</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
@@ -18,8 +18,9 @@
   </TextureGroups>
   <For3D>0</For3D>
   <width>128</width>
-  <height>128</height>
+  <height>144</height>
   <frames>
-    <frame index="0">images\sprStarBig_0.png</frame>
+    <frame index="0">images\sprSheet_0.png</frame>
+    <frame index="1">images\sprSheet_1.png</frame>
   </frames>
 </sprite>

@@ -229,7 +229,9 @@ if (global.state == G_WON)
             <kind>1</kind>
             <string>if (os_type == os_windows)
 {
+    window_center();
     window_set_size(2*WIDTH, 2*HEIGHT);
+    
 }
 
 global.timer = 0;

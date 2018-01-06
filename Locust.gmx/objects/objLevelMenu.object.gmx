@@ -110,7 +110,7 @@ draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 draw_set_font(global.font2);
 star.visible = true;
-draw_text(WIDTH - 32, HEIGHT - 28, "x" + string(global.stars));
+draw_text(WIDTH - 32, HEIGHT - 28, "" + string(global.stars));
 draw_set_font(global.font1);
     
 // sliding up then starting level
@@ -155,6 +155,7 @@ if (page &gt; 0)
             if (mouse_check_button_released(mb_left)) page--;
         }
     }
+    draw_sprite_part_ext(sprUI, -1, 128, 432 + 80 * left,64, 80, x + 400, y + 416 + 4, 1, 1, c_black, .4);
     draw_sprite_part(sprUI, -1, 128, 432 + 80 * left,64, 80, x + 400, y + 416);
 }
 
@@ -168,6 +169,7 @@ if (page &lt; maxPage)
             if (mouse_check_button_released(mb_left)) page++;
         }
     }
+    draw_sprite_part_ext(sprUI, -1, 192, 432 + 80 * right,64, 80, x + 560, y + 416 + 4, 1, 1, c_black, .4);
     draw_sprite_part(sprUI, -1, 192, 432 + 80 * right,64, 80, x + 560, y + 416);
 }
 

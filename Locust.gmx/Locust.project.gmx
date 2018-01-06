@@ -19,7 +19,11 @@
       <sprite>sprites\sprUI</sprite>
       <sprite>sprites\sprConfetti</sprite>
       <sprite>sprites\sprStarBig</sprite>
+      <sprite>sprites\sprPencil</sprite>
       <sprite>sprites\sprSelector</sprite>
+      <sprite>sprites\sprSheet</sprite>
+      <sprite>sprites\sprLockedAccessory</sprite>
+      <sprite>sprites\sprPencilOverlay</sprite>
     </sprites>
     <sprites name="masks">
       <sprite>sprites\mskPlayer</sprite>
@@ -69,7 +73,9 @@
     <background>background\bgWinScreen</background>
     <background>background\tiles</background>
   </backgrounds>
-  <paths name="paths"/>
+  <paths name="paths">
+    <path>paths\pencilPath</path>
+  </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
     <script>scripts\playerInput.gml</script>
@@ -77,6 +83,7 @@
     <script>scripts\load.gml</script>
     <script>scripts\save.gml</script>
     <script>scripts\finishLevel.gml</script>
+    <script>scripts\createPencilOverlay.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
@@ -97,6 +104,7 @@
     </objects>
     <objects name="UI">
       <object>objects\objShopMenu</object>
+      <object>objects\objPencil</object>
       <object>objects\objLevelMenu</object>
       <object>objects\objLevelMenuItem</object>
       <object>objects\objLevelMenuBackground</object>
@@ -107,6 +115,7 @@
         <object>objects\objWinScreen</object>
         <object>objects\objWinStar</object>
       </objects>
+      <object>objects\objPencilOverlay</object>
     </objects>
     <objects name="blocks">
       <object>objects\objBlock0</object>

@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1</depth>
+  <depth>-2</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -27,14 +27,11 @@
             <kind>1</kind>
             <string>// 50 lvls a la 3 stars = 150 stars in total
 
-// 3 stars.. straw hat
-// 8 stars.. tophat
-// 12 stars.. cape
-
-
 t = 0;
 z = 1;
 maxIndex = ds_list_size(global.prices);
+
+pencil = instance_create(WIDTH/2 - 16, HEIGHT/2 + 32, objPencil);
 </string>
           </argument>
         </arguments>
@@ -82,14 +79,23 @@ y = objLevelMenu.y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part_ext(sprUI, -1, 400, 576, 96, 128, x + WIDTH/2 - 48, y + HEIGHT/2 - 64, 1, 1, c_white, 1);
-draw_sprite_part(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2 - 32, y + HEIGHT/2 - 32);
+            <string>draw_sprite_part(sprUI, 0, 0, 0, 512, 423, x + 256, y + 96);
+
+draw_sprite_ext(sprSheet, 0, x + WIDTH/2 + 4, y + HEIGHT/2 + 4, 1, 1, 0, c_black, .3);
+draw_sprite_ext(sprSheet, 0, x + WIDTH/2, y + HEIGHT/2, 1, 1, 0, c_white, 1);
+
+//draw_sprite_part(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2 - 32, y + HEIGHT/2 - 32);
 
 var left = x + WIDTH/2 - 256 - 32;
 var right = x + WIDTH/2 + 256 - 32;
 var top = y + HEIGHT/2;
 var inLeft = in(mouse_x, left, left + 64) &amp;&amp; in(mouse_y, top, top + 64);
 var inRight = in(mouse_x, right, right + 64) &amp;&amp; in(mouse_y, top, top + 64);
+
+if (x != 0) pencil.visible = false;
+else
+    pencil.visible = true;
+
 
 //testing : TODO: REMOVE
 global.stars = 16;
@@ -105,49 +111,50 @@ draw_set_alpha(1);
 // middle
 draw_sprite(sprAccessoires, global.accessory, x + WIDTH/2, y + HEIGHT/2);
 // middle star
-draw_sprite_part(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory) &lt;= global.stars), 48, 48, 
-    x + WIDTH/2 - 24, y + HEIGHT/2 + 64 - 24);
-draw_text(x + WIDTH/2, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory)));
+draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory) &lt;= global.stars), 48, 48, 
+    x + WIDTH/2 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);
+draw_text(x + WIDTH/2, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory)));
 
 // middle selector
-t = (t + .1) % (2*pi);
+/*t = (t + .1) % (2*pi);
 z = 1.2 + .2 * sin(t);
+draw_sprite_ext(sprSelector, -1, x + WIDTH/2, y + HEIGHT/2, z, z, 0, c_white, 1);*/
 
-draw_sprite_ext(sprSelector, -1, x + WIDTH/2, y + HEIGHT/2, z, z, 0, c_white, 1);
+if (x != 0)
+    with(objPencilOverlay) instance_destroy();
+
 
 if (global.accessory &gt; 0)
 {
-    draw_sprite_part_ext(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2  - 128 - 32, y + HEIGHT/2 - 32, 1, 1, c_black, .5);
-    draw_sprite_ext(sprAccessoires, global.accessory-1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .5);
+    // left background
+    draw_sprite_ext(sprSheet, 1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
+    draw_sprite_ext(sprAccessoires, global.accessory-1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
 
     // left star
     draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory-1) &lt;= global.stars), 48, 48, 
-        x + WIDTH/2 - 128 - 24, y + HEIGHT/2 + 64 - 24, 1, 1, c_white, .5);
-    draw_set_alpha(.5);
-    draw_text(x + WIDTH/2 - 128, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory-1)));
+        x + WIDTH/2 - 128 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);
+    //draw_set_alpha(.5);
+    draw_text(x + WIDTH/2 - 128, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory-1)));
 
 }
     
 if (global.accessory &lt; maxIndex - 1)
 {
     draw_set_alpha(1);
-    draw_sprite_part_ext(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2 + 128 - 32, y + HEIGHT/2 - 32, 1, 1, c_black, .5);
-    draw_sprite_ext(sprAccessoires, global.accessory+1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .5);
+    // right background
+    draw_sprite_ext(sprSheet, 1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
+    draw_sprite_ext(sprAccessoires, global.accessory+1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
     
     //right star
-        draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory+1) &lt;= global.stars), 48, 48, 
-        x + WIDTH/2 + 128 - 24, y + HEIGHT/2 + 64 - 24, 1, 1, c_white, .5);
-    draw_set_alpha(.5);
-    draw_text(x + WIDTH/2 + 128, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory+1)));
-
+    draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory+1) &lt;= global.stars), 48, 48, 
+        x + WIDTH/2 + 128 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);
+    draw_set_alpha(1);
+    draw_text(x + WIDTH/2 + 128, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory+1)));
+    
+    // locked
     if (global.stars &lt; ds_list_find_value(global.prices, global.accessory+1))
-    {
-        draw_set_color(c_red);
-        draw_set_blend_mode(bm_add);
-        draw_text(x + WIDTH/2 + 128, y + HEIGHT/2 + 64 + 16, "x" + string(ds_list_find_value(global.prices, global.accessory+1)));
-    }
-    draw_set_color(c_white);
-    draw_set_blend_mode(bm_normal);
+    draw_sprite(sprLockedAccessory, -1, x + WIDTH/2 + 128, y + HEIGHT/2 - 48);
+    
 }
 
 // left button
@@ -157,7 +164,11 @@ if (global.accessory &gt; 0)
     draw_sprite_part(sprUI, -1, 128, 432 + 80*inLeft*mouse_check_button(mb_left), 64, 80, left, top);
     
     if (inLeft &amp;&amp; mouse_check_button_released(mb_left))
+    {
+        createPencilOverlay();
+        pencil.start = true;
         global.accessory--;
+    }
 }
 
 // right button
@@ -167,7 +178,11 @@ if (global.accessory &lt; maxIndex - 1 &amp;&amp; global.stars &gt;= ds_list_fin
     draw_sprite_part(sprUI, -1, 128+64, 432 + 80*inRight*mouse_check_button(mb_left), 64, 80, right, top);
 
     if (inRight &amp;&amp; mouse_check_button_released(mb_left))
+    {
+        createPencilOverlay();    
+        pencil.start = true;
         global.accessory++;
+    }
 }
 
 
