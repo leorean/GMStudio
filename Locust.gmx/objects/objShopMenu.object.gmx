@@ -82,7 +82,13 @@ y = objLevelMenu.y;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_part(sprUI, 0, 0, 0, 512, 423, x + 256, y + 96);
+            <string>draw_set_halign(fa_center);
+draw_set_valign(fa_top);
+draw_set_color(c_white);
+draw_set_alpha(1);
+draw_set_font(global.font1);
+draw_sprite_part(sprUI, 0, 0, 0, 512, 423, x + 256, y + 96);
+draw_text(x + WIDTH/2, y + HEIGHT/2 - 180, ds_list_find_value(global.priceNames, global.accessory));
 
 draw_sprite_ext(sprSheet, 0, x + WIDTH/2 + 4, y + HEIGHT/2 + 4, 1, 1, 0, c_black, .3);
 draw_sprite_ext(sprSheet, 0, x + WIDTH/2, y + HEIGHT/2, 1, 1, 0, c_white, 1);
@@ -95,19 +101,15 @@ var top = y + HEIGHT/2;
 var inLeft = in(mouse_x, left, left + 64) &amp;&amp; in(mouse_y, top, top + 64);
 var inRight = in(mouse_x, right, right + 64) &amp;&amp; in(mouse_y, top, top + 64);
 
-if (x != 0) pencil.visible = false;
+if (x != 0)
+{
+    with(objPencilOverlay) instance_destroy();
+    pencil.visible = false;
+}
 else
     pencil.visible = true;
 
-
-//testing : TODO: REMOVE
-//global.stars = 16;
-
-draw_set_halign(fa_center);
-draw_set_valign(fa_top);
 draw_set_font(global.font2);
-draw_set_color(c_white);
-draw_set_alpha(1);
 
 // middle
 draw_sprite(sprAccessoires, global.accessory, x + WIDTH/2, y + HEIGHT/2);
@@ -116,15 +118,6 @@ draw_sprite(sprAccessoires, global.accessory, x + WIDTH/2, y + HEIGHT/2);
     x + WIDTH/2 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);*/
 draw_sprite(sprStar, 0, x + WIDTH/2, y + HEIGHT/2 + 96);
 draw_text(x + WIDTH/2, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory)));
-
-// middle selector
-/*t = (t + .1) % (2*pi);
-z = 1.2 + .2 * sin(t);
-draw_sprite_ext(sprSelector, -1, x + WIDTH/2, y + HEIGHT/2, z, z, 0, c_white, 1);*/
-
-if (x != 0)
-    with(objPencilOverlay) instance_destroy();
-
 
 if (global.accessory &gt; 0)
 {

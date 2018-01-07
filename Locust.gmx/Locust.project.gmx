@@ -85,10 +85,12 @@
     <script>scripts\save.gml</script>
     <script>scripts\finishLevel.gml</script>
     <script>scripts\createPencilOverlay.gml</script>
+    <script>scripts\addAccessory.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objCamera</object>
+    <object>objects\objPlayerAccessory</object>
     <object>objects\objPlayer</object>
     <object>objects\objBubble</object>
     <object>objects\objJoint</object>

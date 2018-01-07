@@ -51,6 +51,9 @@ fMax = 0;
 fSpeed = 0;
 frame = 0;
 state = IDLE;
+
+//accessory = instance_create(phy_position_x, phy_position_y, objPlayerAccessory);
+
 </string>
           </argument>
         </arguments>
@@ -455,12 +458,16 @@ if(inWater)
 fCur = (fCur + fSpeed) % fMax;
 frame = floor(fCur) + fMin;
 
-draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+var z = 1;
+if (frame % 4 == 0) z = 0;
 
-draw_sprite_ext(sprAccessoires, global.accessory, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+var angle = -phy_rotation + 180*(dir == LEFT);
+var accAngle = -phy_rotation - 90;
+draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, angle, c_white, 1);
+draw_sprite_ext(sprAccessoires, global.accessory, x + lengthdir_x(z, accAngle), y + lengthdir_y(z, accAngle), image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
 
 if (inWater)
-    draw_sprite_ext(sprScuba, 0, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+    draw_sprite_ext(sprScuba, 0, x + lengthdir_x(z, accAngle), y + lengthdir_y(z, accAngle), image_xscale, image_yscale * dir, angle, c_white, 1);
 
 
 /*

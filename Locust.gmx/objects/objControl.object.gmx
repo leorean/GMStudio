@@ -50,14 +50,15 @@ global.level = real(string_digits(room_get_name(room_last))) - 1; // &lt;- save/
 
 // ACCESSOIRES +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-global.accessory = 0;
+global.accessory = 1; // TODO: 0
 
 global.prices = ds_list_create();
-ds_list_add(global.prices, 0);
-ds_list_add(global.prices, 3);
-ds_list_add(global.prices, 8);
-ds_list_add(global.prices, 15);
-ds_list_add(global.prices, 26);
+global.priceNames = ds_list_create();
+addAccessory(0, "Default");
+addAccessory(3, "Magic Hat");
+addAccessory(8, "Harry Potato");
+addAccessory(15, "?");
+addAccessory(26, "?");
 
 // COLORS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
