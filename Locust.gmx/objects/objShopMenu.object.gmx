@@ -92,7 +92,11 @@ draw_text(x + WIDTH/2, y + HEIGHT/2 - 180, ds_list_find_value(global.priceNames,
 draw_sprite_ext(sprSheet, 0, x + WIDTH/2 + 4, y + HEIGHT/2 + 4, 1, 1, 0, c_black, .3);
 draw_sprite_ext(sprSheet, 0, x + WIDTH/2, y + HEIGHT/2, 1, 1, 0, c_white, 1);
 
-//draw_sprite_part(sprUI, -1, 400, 512, 64, 64, x + WIDTH/2 - 32, y + HEIGHT/2 - 32);
+//TODO: REMOVEEEE!!!!
+if (in(mouse_x, x, x + 16) &amp;&amp; in(mouse_y, y, y + 16) &amp;&amp; mouse_check_button_pressed(mb_right))
+{
+    global.stars = 150;
+}
 
 var left = x + WIDTH/2 - 256 - 32;
 var right = x + WIDTH/2 + 256 - 32;

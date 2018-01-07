@@ -56,10 +56,13 @@ global.accessory = 0;
 global.prices = ds_list_create();
 global.priceNames = ds_list_create();
 addAccessory(0, "Default");
-addAccessory(3, "Magic Hat");
-addAccessory(8, "Harry Potato");
-addAccessory(15, "?");
+addAccessory(3, "Peel With It");
+addAccessory(8, "Magic Hat");
+addAccessory(15, "Majestic Mustache");
 addAccessory(26, "?");
+addAccessory(39, "Harry Potato");
+addAccessory(61, "?");
+addAccessory(150, "?");
 
 // COLORS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
