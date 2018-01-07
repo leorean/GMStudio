@@ -41,6 +41,7 @@ ypotato = HEIGHT + 128;
 instance_create(0, 0, objLevelMenuBackground);
 confettiTimer = 0;
 
+starsCounted = false;
 instance_create(0, 0, objShopMenu);
 
 star = instance_create(WIDTH - 32, HEIGHT - 32, objStar);
@@ -98,11 +99,15 @@ if (ypotato == HEIGHT - 64)
     draw_sprite_part(sprUI, -1, 352, 432, 48, 48, xpotato + 80, ypotato - 32);
 
 // amount of stars
-global.stars = 0;
-for(var i = 0; i &lt; instance_number(objLevelMenuItem); i++)
+if (!starsCounted)
 {
-    var l = instance_find(objLevelMenuItem, i);
-    global.stars += l.stars;
+    starsCounted = true;
+    global.stars = 0;
+    for(var i = 0; i &lt; instance_number(objLevelMenuItem); i++)
+    {
+        var l = instance_find(objLevelMenuItem, i);
+        global.stars += l.stars;
+    }
 }
 
 draw_set_color(c_white);

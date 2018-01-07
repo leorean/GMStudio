@@ -31,7 +31,10 @@ t = 0;
 z = 1;
 maxIndex = ds_list_size(global.prices);
 
-pencil = instance_create(WIDTH/2 - 16, HEIGHT/2 + 32, objPencil);
+pencil = instance_create(WIDTH/2 - 48, HEIGHT/2 - 48, objPencil);
+
+lockAngle = -15;
+lockAngleVel = 0;
 </string>
           </argument>
         </arguments>
@@ -98,7 +101,7 @@ else
 
 
 //testing : TODO: REMOVE
-global.stars = 16;
+//global.stars = 16;
 
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
@@ -106,13 +109,12 @@ draw_set_font(global.font2);
 draw_set_color(c_white);
 draw_set_alpha(1);
 
-//352, 480, 48, 48
-
 // middle
 draw_sprite(sprAccessoires, global.accessory, x + WIDTH/2, y + HEIGHT/2);
 // middle star
-draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory) &lt;= global.stars), 48, 48, 
-    x + WIDTH/2 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);
+/*draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory) &lt;= global.stars), 48, 48, 
+    x + WIDTH/2 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);*/
+draw_sprite(sprStar, 0, x + WIDTH/2, y + HEIGHT/2 + 96);
 draw_text(x + WIDTH/2, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory)));
 
 // middle selector
@@ -128,12 +130,12 @@ if (global.accessory &gt; 0)
 {
     // left background
     draw_sprite_ext(sprSheet, 1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
-    draw_sprite_ext(sprAccessoires, global.accessory-1, x + WIDTH/2 - 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
+    // left accessory
+    draw_sprite_ext(sprAccessoires, global.accessory-1, x + WIDTH/2 - 128, y + HEIGHT/2 + 0, 1, 1, 0, c_black, .3);
 
     // left star
     draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory-1) &lt;= global.stars), 48, 48, 
         x + WIDTH/2 - 128 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);
-    //draw_set_alpha(.5);
     draw_text(x + WIDTH/2 - 128, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory-1)));
 
 }
@@ -143,7 +145,8 @@ if (global.accessory &lt; maxIndex - 1)
     draw_set_alpha(1);
     // right background
     draw_sprite_ext(sprSheet, 1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
-    draw_sprite_ext(sprAccessoires, global.accessory+1, x + WIDTH/2 + 128, y + HEIGHT/2, 1, 1, 0, c_black, .3);
+    // right accessory
+    draw_sprite_ext(sprAccessoires, global.accessory+1, x + WIDTH/2 + 128, y + HEIGHT/2 + 0, 1, 1, 0, c_black, .3);
     
     //right star
     draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory+1) &lt;= global.stars), 48, 48, 
@@ -153,8 +156,17 @@ if (global.accessory &lt; maxIndex - 1)
     
     // locked
     if (global.stars &lt; ds_list_find_value(global.prices, global.accessory+1))
-    draw_sprite(sprLockedAccessory, -1, x + WIDTH/2 + 128, y + HEIGHT/2 - 48);
+    {
+        draw_sprite_ext(sprLockedAccessory, -1, x + WIDTH/2 + 128, y + HEIGHT/2 - 56, 1, 1, lockAngle, c_white, 1);
+        var c = $353EED;
+        draw_text_color(x + WIDTH/2 + 128, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory+1)),
+            c, c, c, c, 1);    
+    }
     
+    if (lockAngle &lt; 0) lockAngleVel += .1;
+    if (lockAngle &gt; 0) lockAngleVel -= .1;
+    
+    lockAngle += lockAngleVel;
 }
 
 // left button
@@ -182,6 +194,7 @@ if (global.accessory &lt; maxIndex - 1 &amp;&amp; global.stars &gt;= ds_list_fin
         createPencilOverlay();    
         pencil.start = true;
         global.accessory++;
+        lockAngle = -15;
     }
 }
 

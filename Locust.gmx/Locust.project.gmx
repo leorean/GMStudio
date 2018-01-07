@@ -20,7 +20,6 @@
       <sprite>sprites\sprConfetti</sprite>
       <sprite>sprites\sprStarBig</sprite>
       <sprite>sprites\sprPencil</sprite>
-      <sprite>sprites\sprSelector</sprite>
       <sprite>sprites\sprSheet</sprite>
       <sprite>sprites\sprLockedAccessory</sprite>
       <sprite>sprites\sprPencilOverlay</sprite>
@@ -75,6 +74,8 @@
   </backgrounds>
   <paths name="paths">
     <path>paths\pencilPath</path>
+    <path>paths\path2</path>
+    <path>paths\path1</path>
   </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>

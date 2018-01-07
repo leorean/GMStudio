@@ -457,6 +457,8 @@ frame = floor(fCur) + fMin;
 
 draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
 
+draw_sprite_ext(sprAccessoires, global.accessory, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
+
 if (inWater)
     draw_sprite_ext(sprScuba, 0, x, y, image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
 

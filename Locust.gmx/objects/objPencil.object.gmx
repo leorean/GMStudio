@@ -54,17 +54,19 @@ start = false;
 {
     x = xo;
     y = yo;
-    path_start(pencilPath, 8, path_action_stop, false);
+    path_start(pencilPath, 4, path_action_stop, false);
     start = false;
 }
 
-var o = collision_circle(x, y, 32, objPencilOverlay, false, true);
+var o = collision_circle(x, y, 24, objPencilOverlay, false, true);
 if (instance_exists(o)) with(o) instance_destroy();
 
 //if (x == xo &amp;&amp; y == yo) with(objPencilOverlay)instance_destroy();
 
+draw_sprite_ext(sprPencil, 1, x - 6, y + 12, 1, 1, 0, c_black, .3);
+
 var angle = point_direction(xprevious, yprevious, x + 16, y + 16);
-draw_sprite_ext(sprPencil, -1, x, y, 1, 1, angle, c_white, 1);
+draw_sprite_ext(sprPencil, 0, x, y, 1, 1, angle, c_white, 1);
 </string>
           </argument>
         </arguments>
