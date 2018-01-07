@@ -55,11 +55,11 @@ global.accessory = 0;
 
 global.prices = ds_list_create();
 global.priceNames = ds_list_create();
-addAccessory(0, "Default");
+addAccessory(0, "Potato");
 addAccessory(3, "Peel With It");
 addAccessory(8, "Magic Hat");
 addAccessory(15, "Majestic Mustache");
-addAccessory(26, "?");
+addAccessory(26, "Late To The Meeting");
 addAccessory(39, "Harry Potato");
 addAccessory(61, "?");
 addAccessory(150, "?");
@@ -86,7 +86,7 @@ global.switchcolors = array($F8C862, $FF9DE6, $6CC2F2, $5689EE );// $23C3FF);
 global.levels = ds_list_create();
 // room, name, description, stars, bg, colortheme
 // potato world
-ds_list_add(global.levels, array(L1, "01", "Hello Potato.", 0, 0, 0));
+ds_list_add(global.levels, array(L1, "01", "Welcome To Potato World", 0, 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0, 0));
 ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 0));
 ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
@@ -428,6 +428,9 @@ if (global.state == G_PLAY)
             <string>draw_set_blend_mode(bm_normal);
 draw_set_alpha(1);
 draw_set_color(c_white);
+
+
+texture_set_interpolation(false);
 </string>
           </argument>
         </arguments>

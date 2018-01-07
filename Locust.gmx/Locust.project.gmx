@@ -87,6 +87,9 @@
     <script>scripts\createPencilOverlay.gml</script>
     <script>scripts\addAccessory.gml</script>
   </scripts>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\outlineShader.shader</shader>
+  </shaders>
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objCamera</object>
