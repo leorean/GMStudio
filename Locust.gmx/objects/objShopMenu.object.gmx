@@ -25,9 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// 50 lvls a la 3 stars = 150 stars in total
-
-t = 0;
+            <string>t = 0;
 z = 1;
 maxIndex = ds_list_size(global.prices);
 
@@ -35,6 +33,7 @@ pencil = instance_create(WIDTH/2 - 48, HEIGHT/2 - 48, objPencil);
 
 lockAngle = -15;
 lockAngleVel = 0;
+playerAlpha = 0;
 </string>
           </argument>
         </arguments>
@@ -98,8 +97,8 @@ draw_sprite_ext(sprSheet, 0, x + WIDTH/2, y + HEIGHT/2, 1, 1, 0, c_white, 1);
 var left = x + WIDTH/2 - 256 - 32;
 var right = x + WIDTH/2 + 256 - 32;
 var top = y + HEIGHT/2;
-var inLeft = in(mouse_x, left, left + 64) &amp;&amp; in(mouse_y, top, top + 64);
-var inRight = in(mouse_x, right, right + 64) &amp;&amp; in(mouse_y, top, top + 64);
+var inLeft = in(mouse_x, left, left + 64 + 144) &amp;&amp; in(mouse_y, top - 64, top + 128);
+var inRight = in(mouse_x, right - 144, right + 64) &amp;&amp; in(mouse_y, top - 64, top + 128);
 
 if (x != 0)
 {
@@ -112,10 +111,14 @@ else
 draw_set_font(global.font2);
 
 // middle
+
+if (!instance_exists(objPencilOverlay)) playerAlpha = min(playerAlpha + .05, 1);
+else
+    playerAlpha = 0;
+draw_sprite_ext(sprPlayer, 0, x + WIDTH/2, y + HEIGHT/2, 1, 1, 0, c_white, playerAlpha);
+
 draw_sprite(sprAccessoires, global.accessory, x + WIDTH/2, y + HEIGHT/2);
 // middle star
-/*draw_sprite_part_ext(sprUI, -1, 352, 480 + 48*(ds_list_find_value(global.prices, global.accessory) &lt;= global.stars), 48, 48, 
-    x + WIDTH/2 - 24, y + HEIGHT/2 + 96 - 24, 1, 1, c_black, .3);*/
 draw_sprite(sprStar, 0, x + WIDTH/2, y + HEIGHT/2 + 96);
 draw_text(x + WIDTH/2, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory)));
 
@@ -150,6 +153,7 @@ if (global.accessory &lt; maxIndex - 1)
     // locked
     if (global.stars &lt; ds_list_find_value(global.prices, global.accessory+1))
     {
+        draw_sprite_ext(sprLockedAccessory, -1, x + WIDTH/2 + 128 + 3, y + HEIGHT/2 - 56 + 3, 1, 1, lockAngle, c_black, .3);
         draw_sprite_ext(sprLockedAccessory, -1, x + WIDTH/2 + 128, y + HEIGHT/2 - 56, 1, 1, lockAngle, c_white, 1);
         var c = $353EED;
         draw_text_color(x + WIDTH/2 + 128, y + HEIGHT/2 + 96 - 14, "x" + string(ds_list_find_value(global.prices, global.accessory+1)),

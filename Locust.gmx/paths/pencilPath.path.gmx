@@ -7,16 +7,17 @@
   <vsnap>16</vsnap>
   <points>
     <point>192,176,100</point>
-    <point>224,176,100</point>
+    <point>256,176,100</point>
     <point>192,192,100</point>
     <point>192,208,100</point>
-    <point>256,176,100</point>
-    <point>176,240,100</point>
     <point>272,176,100</point>
+    <point>176,240,100</point>
+    <point>288,176,100</point>
     <point>176,256,100</point>
-    <point>256,208,100</point>
-    <point>224,240,100</point>
+    <point>272,208,100</point>
+    <point>256,256,100</point>
     <point>224,208,100</point>
+    <point>208,256,100</point>
     <point>192,256,100</point>
   </points>
 </path>

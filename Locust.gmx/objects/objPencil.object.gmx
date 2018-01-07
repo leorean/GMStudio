@@ -54,11 +54,11 @@ start = false;
 {
     x = xo;
     y = yo;
-    path_start(pencilPath, 4, path_action_stop, false);
+    path_start(pencilPath, 6, path_action_stop, false);
     start = false;
 }
 
-var o = collision_circle(x, y, 24, objPencilOverlay, false, true);
+var o = collision_circle(x, y, 32, objPencilOverlay, false, true);
 if (instance_exists(o)) with(o) instance_destroy();
 
 //if (x == xo &amp;&amp; y == yo) with(objPencilOverlay)instance_destroy();

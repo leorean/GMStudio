@@ -50,7 +50,8 @@ global.level = real(string_digits(room_get_name(room_last))) - 1; // &lt;- save/
 
 // ACCESSOIRES +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-global.accessory = 1; // TODO: 0
+// 50 lvls a la 3 stars = 150 stars in total
+global.accessory = 0;
 
 global.prices = ds_list_create();
 global.priceNames = ds_list_create();
