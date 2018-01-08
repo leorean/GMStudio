@@ -88,7 +88,7 @@
     <script>scripts\addAccessory.gml</script>
   </scripts>
   <shaders name="shaders">
-    <shader type="GLSLES">shaders\outlineShader.shader</shader>
+    <shader type="GLSLES">shaders\gaussianShader.shader</shader>
   </shaders>
   <objects name="objects">
     <object>objects\objControl</object>

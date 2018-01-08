@@ -120,7 +120,7 @@ instance_activate_object(objAny);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprBounce, -1, phy_position_x, phy_position_y, xs, ys, -phy_rotation, c_white, 1);
+            <string>draw_sprite_ext(sprBounce, -1, x, y, xs, ys, -phy_rotation, c_white, 1);
 
 </string>
           </argument>

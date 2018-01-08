@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>surface = noone;
 color = c_white;
-yo = phy_position_y;
+yo = y;
 </string>
           </argument>
         </arguments>
@@ -117,8 +117,8 @@ if (i == 1)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var i = (phy_position_y - yo);
-draw_sprite_part_ext(sprWater, 0, 0, i, sprite_width, 32 - i, phy_position_x, yo + i, 1, 1, color, 1);
+            <string>var i = (y - yo);
+draw_sprite_part_ext(sprWater, 0, 0, i, sprite_width, 32 - i, x, yo + i, 1, 1, color, .5);
 </string>
           </argument>
         </arguments>

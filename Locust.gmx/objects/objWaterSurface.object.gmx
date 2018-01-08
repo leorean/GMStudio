@@ -90,7 +90,9 @@ else
             <string>if (instance_exists(objCork))
     phy_position_y = max(objCork.yt - 1, phy_position_y);
 
-draw_sprite_ext(sprWater, 1, phy_position_x, phy_position_y, 1, 1, 0, c_white, 1);    
+draw_set_blend_mode(bm_add);
+draw_sprite_ext(sprWater, 1, x, y, 1, 1, 0, c_white, .5);    
+draw_set_blend_mode(bm_normal);
 
 </string>
           </argument>

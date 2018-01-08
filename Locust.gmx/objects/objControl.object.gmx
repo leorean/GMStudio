@@ -43,6 +43,7 @@ pauseScreen = noone;
 global.mute = false; // &lt;- save/load
 
 levelTextAlpha = 0;
+pausedAlpha = 0;
 global.levelText = "";
 global.background = 0;
 
@@ -213,6 +214,8 @@ if (global.state == G_WON)
             <kind>1</kind>
             <string>global.timer = (global.timer + 1) % INFINITE;
 
+if (global.state != G_PAUSE)
+    tile_layer_show(1000000);
 </string>
           </argument>
         </arguments>
@@ -243,6 +246,8 @@ if (global.state == G_WON)
 }
 
 global.timer = 0;
+
+surface_resize(application_surface, 4*WIDTH, 4*HEIGHT);
 
 // view stuff
 view_visible[0] = true;
@@ -343,12 +348,6 @@ draw_set_color(c_white);
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
-if (global.state == G_PAUSE)
-{
-    if (pauseScreen != noone)
-    draw_sprite(pauseScreen, -1, 0, 0);
-}
-
 if (global.state == G_PLAY)
 {
     // level text
@@ -369,7 +368,7 @@ if (global.state == G_PLAY)
 
 if (global.state == G_PLAY || global.state == G_PAUSE)
     draw_sprite_part_ext(sprUI, -1, 64*(global.state == G_PAUSE), 528, 64, 64, 0, 0, 1, 1, c_white, .6);
-
+    
 //toggle pause menu
 if (global.state == G_PLAY)
 {
@@ -377,11 +376,55 @@ if (global.state == G_PLAY)
         &amp;&amp; mouse_check_button_released(mb_left))))
     {
         global.state = G_PAUSE;
+
+        // AVOID MEMORY LEAKS
+        if(sprite_exists(pauseScreen))
+            sprite_delete(pauseScreen);
+
+        var tempSprite = sprite_create_from_surface(application_surface, 0, 0, surface_get_width(application_surface), surface_get_height(application_surface),0,0,0,0);
+        var tw = WIDTH;
+        var th = HEIGHT;
+
+        var smallSurface = surface_create(tw, th);
+        surface_set_target(smallSurface);
+        draw_clear(c_white);
+        shader_set(gaussianShader);        
+        var size = shader_get_uniform(gaussianShader, "size");
+        shader_set_uniform_f(size, WIDTH, HEIGHT, 4);
+
+        draw_sprite_stretched(tempSprite, 0, 0, 0, tw, th);
+        shader_reset();
         
-        var ax = application_get_position();        
-        pauseScreen = sprite_create_from_surface(application_surface,0, 0,surface_get_width(application_surface),surface_get_height(application_surface),0,0,0,0);
-        instance_create(0, 0, objPauseMenu);
+        draw_set_color(c_white); draw_set_alpha(.2);
+        draw_rectangle(0, 0, WIDTH, HEIGHT, 0);
+        draw_set_color(c_white); draw_set_alpha(1);
+        
+        pauseScreen = sprite_create_from_surface(smallSurface, 0, 0, tw, th, 0, 0, 0, 0);
+        surface_reset_target();
+        sprite_delete(tempSprite);
+        surface_free(smallSurface);
+        instance_create(0, 0, objPauseMenu);        
     }
+}
+
+if (global.state == G_PAUSE)
+    pausedAlpha = 1;
+else
+{
+    pausedAlpha = max(pausedAlpha - .04, 0);
+        
+    if (pausedAlpha == 0)
+        if(sprite_exists(pauseScreen))
+            sprite_delete(pauseScreen);
+}
+
+if (sprite_exists(pauseScreen))
+    draw_sprite_stretched_ext(pauseScreen, 0, 0, 0, WIDTH, HEIGHT, c_white, pausedAlpha);
+
+
+if (global.state == G_PAUSE)
+{
+    tile_layer_hide(1000000);
 }
 </string>
           </argument>
@@ -430,7 +473,6 @@ draw_set_alpha(1);
 draw_set_color(c_white);
 
 
-texture_set_interpolation(false);
 </string>
           </argument>
         </arguments>

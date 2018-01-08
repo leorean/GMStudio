@@ -26,7 +26,7 @@
           <argument>
             <kind>1</kind>
             <string>var c = global.colors[global.colortheme];
-draw_sprite_ext(sprBlock4, 0, phy_position_x, phy_position_y, image_xscale, image_yscale, -phy_rotation, c[3], 1);
+draw_sprite_ext(sprBlock4, 0, x, y, image_xscale, image_yscale, -phy_rotation, c[3], 1);
 
 </string>
           </argument>

@@ -66,30 +66,7 @@ pa = 0;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>t = (t + 1) % INFINITE;
-r0 = (r0 - 2) % 360;
-r1 = (r1 + 1) % 360;
-r2 = (r2 + 3) % 360;
-
-sine0 = abs(sin(t * .06));
-sine1 = abs(-sin(t * .04));
-sine2 = abs(sin(t * .02));
-
-if (room != MENU)
-    siney = 3 * sin(t * 0.1);
-
-zbig = max(min((z - 1) / 2.5, 1), 0);
-pulse = (pulse + .04 + .1*taken) % 1.5;
-pa = 1 - max(min(1, pulse/1.5), 0);
-
-if (taken)
-{
-    //rot = (rot + 8) % 360;
-    a = max(a - .04, 0);
-    z += .08;
-    if (a == 0) instance_destroy();
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -139,7 +116,31 @@ if (taken)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>draw_sprite_ext(sprStar, 1, x, y, image_xscale *1.5, image_yscale *1.5, 0, c_white, .3 * a);
+            <string>t = (t + 1) % INFINITE;
+r0 = (r0 - 2) % 360;
+r1 = (r1 + 1) % 360;
+r2 = (r2 + 3) % 360;
+
+sine0 = abs(sin(t * .06));
+sine1 = abs(-sin(t * .04));
+sine2 = abs(sin(t * .02));
+
+if (room != MENU)
+    siney = 3 * sin(t * 0.1);
+
+zbig = max(min((z - 1) / 2.5, 1), 0);
+pulse = (pulse + .04 + .1*taken) % 1.5;
+pa = 1 - max(min(1, pulse/1.5), 0);
+
+if (taken)
+{
+    //rot = (rot + 8) % 360;
+    a = max(a - .04, 0);
+    z += .08;
+    if (a == 0) instance_destroy();
+}
+
+draw_sprite_ext(sprStar, 1, x, y, image_xscale *1.5, image_yscale *1.5, 0, c_white, .3 * a);
 draw_sprite_ext(sprStar, 1, x, y, image_xscale *1.2, image_yscale *1.2, 0, c_white, .3 * a);
 draw_sprite_ext(sprStar, 2, x, y, image_xscale *2.0, image_yscale *2.0, r0, c_white, .3 * sine0 * a);
 draw_sprite_ext(sprStar, 2, x, y, image_xscale *1.6, image_yscale *1.6, r1, c_white, .3 * sine1 * a);
