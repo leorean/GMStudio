@@ -68,6 +68,8 @@
     <sprite>sprites\sprWantBall</sprite>
     <sprite>sprites\sprWantPotato</sprite>
     <sprite>sprites\sprBG</sprite>
+    <sprite>sprites\sprRope</sprite>
+    <sprite>sprites\sprSpecialPlatform</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgWinScreen</background>
@@ -75,8 +77,7 @@
   </backgrounds>
   <paths name="paths">
     <path>paths\pencilPath</path>
-    <path>paths\path2</path>
-    <path>paths\path1</path>
+    <path>paths\pathCircle</path>
   </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>
@@ -87,6 +88,7 @@
     <script>scripts\finishLevel.gml</script>
     <script>scripts\createPencilOverlay.gml</script>
     <script>scripts\addAccessory.gml</script>
+    <script>scripts\createRope.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\gaussianShader.shader</shader>
@@ -100,6 +102,7 @@
     <object>objects\objJoint</object>
     <object>objects\objWaterSurface</object>
     <object>objects\objSwitchBlockOn</object>
+    <object>objects\objRope</object>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
       <object>objects\objAny</object>
@@ -154,7 +157,12 @@
       <object>objects\objBall</object>
       <object>objects\objEvilBall</object>
       <object>objects\objWater</object>
+      <objects name="specialPlatforms">
+        <object>objects\objHoldingPlatform</object>
+        <object>objects\objMovingPlatform</object>
+      </objects>
       <object>objects\objCork</object>
+      <object>objects\objRopeHolder</object>
       <object>objects\objSeesaw</object>
       <object>objects\objMushroom</object>
     </objects>

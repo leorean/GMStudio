@@ -104,7 +104,7 @@ draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview
 draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a + WIDTH, view_yview, 2, 2, c[1], 1);
 */
 
-texture_set_interpolation(true);
+//texture_set_interpolation(true);
 
 draw_sprite_ext(sprBG, 2*global.background, view_xview, view_yview, 2, 2, 0, c[0], 1);
 
@@ -112,7 +112,7 @@ draw_sprite_ext(sprBG, 2*global.background + 1, view_xview - a - WIDTH, view_yvi
 draw_sprite_ext(sprBG, 2*global.background + 1, view_xview - a, view_yview, 2, 2, 0, c[1], 1);
 draw_sprite_ext(sprBG, 2*global.background + 1, view_xview - a + WIDTH, view_yview, 2, 2, 0, c[1], 1);
 
-texture_set_interpolation(false);
+//texture_set_interpolation(false);
 
 /*draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a - WIDTH, view_yview, 2, 2, c[1], 1);
 draw_background_part_ext(bg, w, (HEIGHT / 2)*global.background, w, h, view_xview - a, view_yview, 2, 2, c[1], 1);
