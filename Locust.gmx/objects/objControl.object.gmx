@@ -43,7 +43,6 @@ pauseScreen = noone;
 global.mute = false; // &lt;- save/load
 
 levelTextAlpha = 0;
-pausedAlpha = 0;
 global.levelText = "";
 global.background = 0;
 
@@ -260,6 +259,8 @@ view_hport[0] = HEIGHT;
 view_vborder[0] = 999;
 view_hborder[0] = 999;
 
+pausedAlpha = 0;
+
 // main menu
 if(room == MENU)
 {
@@ -285,7 +286,7 @@ if(instance_exists(objPlayer))
     
     global.jump = instance_create(view_wview - 5*TILE, view_hview - 6*TILE, objButton);
     global.jump.type = 2;
-    
+
     levelTextAlpha = 4;
     confettiTimer = 0;
     global.stars = 0;
@@ -411,7 +412,7 @@ if (global.state == G_PAUSE)
     pausedAlpha = 1;
 else
 {
-    pausedAlpha = max(pausedAlpha - .04, 0);
+    pausedAlpha = max(pausedAlpha - .06, 0);
         
     if (pausedAlpha == 0)
         if(sprite_exists(pauseScreen))

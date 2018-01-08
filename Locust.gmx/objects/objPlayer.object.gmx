@@ -87,7 +87,7 @@ if (phy_speed_y &gt;= -4)
 {
     with(objPlatform)
     {
-        if(true)//phy_position_y &gt; objPlayer.phy_position_y)
+        if(true)
         {
             if (!objPlayer.inObject)
             {
@@ -112,22 +112,6 @@ var sides = (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_r
 if (!onGround)
     onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)
      &amp;&amp; sides &amp;&amp; (phy_speed_y &gt;= -2);
-
-
-     
-/*if (!onGround &amp;&amp; (phy_speed_y &gt;= -2))
-{
-    var b = instance_place(phy_position_x, phy_position_y, objSwitchBlock);
-    if(instance_exists(b) &amp;&amp; b.on
-        &amp;&amp; sides)
-        onGround = true;
-
-    if ((physics_test_overlap(phy_position_x - 4, phy_position_y - 4, phy_rotation, objSwitchBlock)
-    || physics_test_overlap(phy_position_x + 4, phy_position_y - 4, phy_rotation, objSwitchBlock))
-        &amp;&amp; !physics_test_overlap(phy_position_x, phy_position_y + 1, phy_rotation, objSwitchBlock))
-        onGround = false;
-        
-}*/
 </string>
           </argument>
         </arguments>
@@ -175,7 +159,7 @@ if (state != DEAD &amp;&amp; state != WON)
 }
 
 // max jump vel check
-phy_linear_velocity_y = max(phy_linear_velocity_y, -400);
+phy_linear_velocity_y = max(phy_linear_velocity_y, -450);
 
 // WATER
 if (physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
@@ -307,7 +291,7 @@ if(inWater)
         phy_linear_velocity_y = 0;
         
         var rot = -waterRotation+90;
-        var jv = 500;//350;
+        var jv = 700;//500;
         var jumpXvel = lengthdir_x(jv, rot);
         var jumpYvel = lengthdir_y(jv, rot);
         
@@ -464,22 +448,7 @@ if (frame % 4 == 0) z = 0;
 var angle = -phy_rotation + 180*(dir == LEFT);
 var accAngle = -phy_rotation - 90;
 
-
-/*pixelW = shader_get_uniform(outlineShader, "pixelWidth");
-pixelH = shader_get_uniform(outlineShader, "pixelHeight");
-texelW = texture_get_texel_width(sprite_get_texture(sprite_index, 0));
-texelH = texture_get_texel_height(sprite_get_texture(sprite_index, 0));
-shader_set_uniform_f(pixelW, texelW);
-shader_set_uniform_f(pixelH, texelH);*/
-
-/*shader_set(blurShader);
-var tex = sprite_get_texture(sprPlayer, frame); // REPLACE THIS WITH THE SPRITE YOU WANT TO DRAW
-shader_set_uniform_f(shader_get_uniform(blurShader, "u_texel"), texture_get_texel_width(tex), texture_get_texel_height(tex));
-shader_set_uniform_f(shader_get_uniform(blurShader, "u_strength"), 1);
-*/
-//draw_sprite_ext(sprPlayer, frame, x + 3, y + 3, image_xscale, image_yscale * dir, angle, c_black, .3);
 draw_sprite_ext(sprPlayer, frame, x, y, image_xscale, image_yscale * dir, angle, c_white, 1);
-
 draw_sprite_ext(sprAccessoires, global.accessory, x + lengthdir_x(z, accAngle), y + lengthdir_y(z, accAngle), image_xscale, image_yscale * dir, -phy_rotation + 180*(dir == LEFT), c_white, 1);
 
 if (inWater)

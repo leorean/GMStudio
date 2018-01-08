@@ -28,7 +28,7 @@
             <string>// water
 if (physics_test_overlap(phy_position_x, phy_position_y - 16, phy_rotation, objWater))
     physics_apply_force(phy_position_x, phy_position_y, 0, -1000);
-
+    
 var c = global.colors[global.colortheme];
 draw_sprite_ext(sprBall, 0, x, y, image_xscale, image_yscale, -phy_rotation + 180, c[5], 1);
 draw_set_blend_mode(bm_add);
@@ -40,6 +40,11 @@ draw_sprite_ext(sprBall, 3, x, y, image_xscale, image_yscale, 0, c_white, .25);
 draw_set_blend_mode(bm_normal);
 
 draw_sprite_ext(sprBall, 4, x, y, image_xscale, image_yscale, -phy_rotation, c_white, 1);
+
+// rotation outline
+draw_sprite_ext(sprBallOutline, 0, x, y, image_xscale *.5, image_yscale *.5, -phy_rotation + 180 + 145, c_white, 1);
+//draw_sprite_ext(sprBallOutline, 0, x, y, image_xscale *.5, image_yscale *.5, -phy_rotation + 180 + 45, c_white, .5);
+
 
 if (y - 128 &gt; room_height)
     instance_destroy();

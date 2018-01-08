@@ -37,6 +37,7 @@
     <sprite>sprites\sprFont2</sprite>
     <sprite>sprites\sprPlayer</sprite>
     <sprite>sprites\sprAccessoires</sprite>
+    <sprite>sprites\sprBallOutline</sprite>
     <sprite>sprites\sprBall</sprite>
     <sprite>sprites\sprFlag</sprite>
     <sprite>sprites\sprStar</sprite>
@@ -66,9 +67,9 @@
     <sprite>sprites\sprMushroomShaft</sprite>
     <sprite>sprites\sprWantBall</sprite>
     <sprite>sprites\sprWantPotato</sprite>
+    <sprite>sprites\sprBG</sprite>
   </sprites>
   <backgrounds name="background">
-    <background>background\bg</background>
     <background>background\bgWinScreen</background>
     <background>background\tiles</background>
   </backgrounds>
