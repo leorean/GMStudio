@@ -89,6 +89,7 @@
     <script>scripts\createPencilOverlay.gml</script>
     <script>scripts\addAccessory.gml</script>
     <script>scripts\createRope.gml</script>
+    <script>scripts\setVisibility.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\gaussianShader.shader</shader>

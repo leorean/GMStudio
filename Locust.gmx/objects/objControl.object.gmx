@@ -89,8 +89,8 @@ global.levels = ds_list_create();
 ds_list_add(global.levels, array(L1, "01", "Welcome To Potato World", 0, 0, 0));
 ds_list_add(global.levels, array(L2, "02", "Rollin' Around", 0, 0, 0));
 ds_list_add(global.levels, array(L3, "03", "Against The Stream", 0, 0, 0));
-ds_list_add(global.levels, array(L4, "04", "Building A Bridge", 0, 0, 0));
-ds_list_add(global.levels, array(L5, "05", "Timing Is The Key", 0, 0, 0));
+ds_list_add(global.levels, array(L4, "04", "Switch Hills", 0, 0, 0));
+ds_list_add(global.levels, array(L5, "05", "Timing Trouble", 0, 0, 0));
 // forest
 ds_list_add(global.levels, array(L6, "06", "Where The Forest Begins", 0, 1, 1));
 ds_list_add(global.levels, array(L7, "07", "Leaky Lake", 0, 1, 1));
@@ -100,6 +100,12 @@ ds_list_add(global.levels, array(L10, "10", "???", 0, 1, 1));
 
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -147,6 +153,11 @@ if (keyboard_check_pressed(ord('G')))
 if (keyboard_check_pressed(ord('K')))
     with(objPlayer) state = DEAD;
 
+// make sure these objects are only drawn when inside the view
+setVisibility(objBlock);
+setVisibility(objWater);
+setVisibility(objWaterSurface);
+setVisibility(objStar);
 
 // +++++++++++++++++++++++
 

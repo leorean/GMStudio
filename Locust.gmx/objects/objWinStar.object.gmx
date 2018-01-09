@@ -50,7 +50,7 @@ a = 0;
           <argument>
             <kind>1</kind>
             <string>depth = -105 - floor(10*z);
-z = max(z - .3, 1);
+z = max(z - .4, 1);
 a = min(a + .015, 1);
 
 zbig = z / 15;

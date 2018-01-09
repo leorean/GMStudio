@@ -87,7 +87,6 @@
     <instance objName="objBlock2" x="0" y="256" name="inst_29A2D732" locked="0" code="" scaleX="0.5" scaleY="1" colour="4294967295" rotation="-14"/>
     <instance objName="objBlock2" x="832" y="320" name="inst_3E21F952" locked="0" code="" scaleX="0.5" scaleY="0.75" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="848" y="368" name="inst_494528F6" locked="0" code="" scaleX="0.75" scaleY="0.5" colour="4294967295" rotation="0"/>
-    <instance objName="objBlock" x="1056" y="0" name="inst_73B4B80A" locked="0" code="" scaleX="1" scaleY="3" colour="4294967295" rotation="0"/>
     <instance objName="objFlag" x="992" y="256" name="inst_888CD54A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock2" x="768" y="384" name="inst_D9A37C34" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objStar" x="528" y="256" name="inst_8EF59E4C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>

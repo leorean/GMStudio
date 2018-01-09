@@ -29,7 +29,7 @@
 
 yt = - 64;
 
-starTimer = 1*SEC;
+starTimer = 0;
 starShown = 0;
 </string>
           </argument>
@@ -106,7 +106,7 @@ if(yt == 96)
                 view_xview[0] + px,
                 view_yview[0] + HEIGHT/2, objWinStar);
     
-            starTimer = 1*SEC;
+            starTimer = .5*SEC;
             starShown++;
         }        
     }
