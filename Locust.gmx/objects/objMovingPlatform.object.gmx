@@ -28,6 +28,9 @@
             <string>path = pathCircle;
 spd = 1;
 init = false;
+
+xprev = phy_position_x;
+yprev = phy_position_y;
 </string>
           </argument>
         </arguments>
@@ -55,6 +58,9 @@ init = false;
     init = true;
     path_start(path, spd, path_action_continue, false);
 }
+
+xprev = phy_position_x;
+yprev = phy_position_y;
 </string>
           </argument>
         </arguments>

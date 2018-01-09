@@ -52,8 +52,43 @@ fSpeed = 0;
 frame = 0;
 state = IDLE;
 
+attachedObject = noone;
+colX = 0;
+colY = 0;
 //accessory = instance_create(phy_position_x, phy_position_y, objPlayerAccessory);
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (attachedObject != noone)
+{
+    if (!kLeft &amp;&amp; !kRight)
+        phy_position_x = attachedObject.phy_position_x + colX;
+    if (!kJumpPressing)
+        phy_position_y = attachedObject.phy_position_y + colY;
+}
+
+if (kLeft || kRight || kJump)
+    attachedObject = noone;
 </string>
           </argument>
         </arguments>
@@ -135,6 +170,9 @@ if (!onGround)
           <argument>
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
+
+
+//
 
 // check if outside room
 if (x &lt; 20)
@@ -311,6 +349,38 @@ if(inWater)
     }   
 }
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objMovingPlatform">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/*if (attachedObject == noone)
+{
+    attachedObject = other;
+    colX = phy_position_x - attachedObject.phy_position_x;
+    colY = phy_position_y - attachedObject.phy_position_y;
+}*/
+
+phy_position_x += (other.phy_position_x - other.xprev);
+phy_position_y += (other.phy_position_y - other.yprev);
 
 </string>
           </argument>
