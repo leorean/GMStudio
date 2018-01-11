@@ -171,8 +171,35 @@ if (!onGround)
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
 
-
-//
+// jumping on top of vulnerable enemies
+for(var i = 0; i &lt; instance_number(objEnemyVulnerable); i++)
+{
+    var o = instance_find(objEnemyVulnerable, i);
+    if (physics_test_overlap(phy_position_x, phy_position_y + 10, phy_rotation, o)
+        &amp;&amp; ! physics_test_overlap(phy_position_x - 2, phy_position_y - 10, phy_rotation, o)
+        &amp;&amp; ! physics_test_overlap(phy_position_x + 2, phy_position_y - 10, phy_rotation, o)
+        &amp;&amp; ! physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o)
+        &amp;&amp; o.state != DEAD)
+    {
+        phy_speed_y = -5;
+        with(o)physics_apply_angular_impulse(300);
+        o.state = DEAD;
+    }
+}
+// dieing from all enemies
+if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objEnemy))
+{
+    if (state != DEAD &amp;&amp; state != WON)
+    {
+        if (other.state != DEAD &amp;&amp; other.phy_active)
+        {
+            phy_linear_velocity_x = 0;
+            phy_linear_velocity_y = -200;
+            physics_apply_angular_impulse(999);
+            state = DEAD;
+        }
+    }
+}
 
 // check if outside room
 if (x &lt; 20)
@@ -433,14 +460,7 @@ phy_position_y += (other.phy_position_y - other.yprev);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != DEAD &amp;&amp; state != WON)
-{
-    phy_linear_velocity_x = 0;
-    phy_linear_velocity_y = -200;
-    physics_apply_angular_impulse(999);
-    state = DEAD;
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>

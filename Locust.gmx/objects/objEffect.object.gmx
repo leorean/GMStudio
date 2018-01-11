@@ -3,9 +3,9 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-50</depth>
   <persistent>0</persistent>
-  <parentName>objAny</parentName>
+  <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,7 +25,41 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>state = IDLE;
+            <string>fCur = 0;
+frame = 0;
+type = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (global.state == G_PAUSE)
+    exit;
+
+fCur = min(fCur + .28, 6.9);
+frame = floor(fCur);
+
+if (fCur == 6.9) instance_destroy();
+    
+if (frame &gt;= 0)
+    draw_sprite_part(sprEffects, -1, frame*48, type*48, 48, 48, x - 24, y - 24);
 </string>
           </argument>
         </arguments>

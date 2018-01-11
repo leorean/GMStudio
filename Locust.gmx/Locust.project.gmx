@@ -70,6 +70,8 @@
     <sprite>sprites\sprBG</sprite>
     <sprite>sprites\sprRope</sprite>
     <sprite>sprites\sprSpecialPlatform</sprite>
+    <sprite>sprites\sprEnemyMushroom</sprite>
+    <sprite>sprites\sprEffects</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgWinScreen</background>
@@ -90,6 +92,7 @@
     <script>scripts\addAccessory.gml</script>
     <script>scripts\createRope.gml</script>
     <script>scripts\setVisibility.gml</script>
+    <script>scripts\createEffect.gml</script>
   </scripts>
   <shaders name="shaders">
     <shader type="GLSLES">shaders\gaussianShader.shader</shader>
@@ -97,6 +100,7 @@
   <objects name="objects">
     <object>objects\objControl</object>
     <object>objects\objCamera</object>
+    <object>objects\objEffect</object>
     <object>objects\objPlayerAccessory</object>
     <object>objects\objPlayer</object>
     <object>objects\objBubble</object>
@@ -112,6 +116,7 @@
       <object>objects\objMovable</object>
       <object>objects\objEnemy</object>
       <object>objects\objTutorial</object>
+      <object>objects\objEnemyVulnerable</object>
     </objects>
     <objects name="UI">
       <object>objects\objShopMenu</object>
@@ -156,7 +161,6 @@
       <object>objects\objBounce</object>
       <object>objects\objSquare</object>
       <object>objects\objBall</object>
-      <object>objects\objEvilBall</object>
       <object>objects\objWater</object>
       <objects name="specialPlatforms">
         <object>objects\objHoldingPlatform</object>
@@ -166,6 +170,10 @@
       <object>objects\objRopeHolder</object>
       <object>objects\objSeesaw</object>
       <object>objects\objMushroom</object>
+    </objects>
+    <objects name="enemies">
+      <object>objects\objEvilBall</object>
+      <object>objects\objEnemyMushroom</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -177,6 +185,7 @@
       <room>rooms\L4</room>
       <room>rooms\L4_old</room>
       <room>rooms\L5</room>
+      <room>rooms\L5_old</room>
     </rooms>
     <rooms name="2 - Forest">
       <room>rooms\L6</room>
