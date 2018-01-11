@@ -70,8 +70,9 @@
     <sprite>sprites\sprBG</sprite>
     <sprite>sprites\sprRope</sprite>
     <sprite>sprites\sprSpecialPlatform</sprite>
-    <sprite>sprites\sprEnemyMushroom</sprite>
+    <sprite>sprites\sprEnemyJump</sprite>
     <sprite>sprites\sprEffects</sprite>
+    <sprite>sprites\mskTurnAround</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgWinScreen</background>
@@ -172,8 +173,9 @@
       <object>objects\objMushroom</object>
     </objects>
     <objects name="enemies">
+      <object>objects\objTurnAround</object>
       <object>objects\objEvilBall</object>
-      <object>objects\objEnemyMushroom</object>
+      <object>objects\objEnemyJump</object>
     </objects>
   </objects>
   <rooms name="rooms">

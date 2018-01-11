@@ -176,13 +176,13 @@ for(var i = 0; i &lt; instance_number(objEnemyVulnerable); i++)
 {
     var o = instance_find(objEnemyVulnerable, i);
     if (physics_test_overlap(phy_position_x, phy_position_y + 10, phy_rotation, o)
-        &amp;&amp; ! physics_test_overlap(phy_position_x - 2, phy_position_y - 10, phy_rotation, o)
-        &amp;&amp; ! physics_test_overlap(phy_position_x + 2, phy_position_y - 10, phy_rotation, o)
-        &amp;&amp; ! physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o)
-        &amp;&amp; o.state != DEAD)
+        &amp;&amp; phy_position_y &lt; o.phy_position_y &amp;&amp; phy_speed_y &gt; 0
+        &amp;&amp; o.state != DEAD &amp;&amp; state != DEAD)
     {
+    createEffect(1,(phy_position_x + o.phy_position_x)/2,(phy_position_y + o.phy_position_y)/2);
         phy_speed_y = -5;
         with(o)physics_apply_angular_impulse(300);
+        with(o)phy_speed_y = -2;
         o.state = DEAD;
     }
 }
