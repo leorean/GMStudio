@@ -31,8 +31,10 @@ frame = 0;
 s = 1;
 
 jumpVel = 3;
-spd = 1.5;
+spd = 1;
 shouldTurnAround = false;
+frame = 0;
+fCur = 0;
 </string>
           </argument>
         </arguments>
@@ -59,15 +61,23 @@ shouldTurnAround = false;
 
 if (state == JUMP)
 {
+    if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objPlayer))
+        dir = sign(phy_position_x - objPlayer.phy_position_x);
+    
+    if (physics_test_overlap(phy_position_x + sign(dir)*10, phy_position_y - 10, phy_rotation, objSolid))
+        dir = -dir;
+        
     phy_rotation = 0;
-    if (phy_speed_y &gt; 0) frame = 1; else frame = 0;
+    //if (phy_speed_y &gt; 0) frame = 1; else frame = 0;
+    fCur = (fCur + .15) % 4;
+    frame = floor(fCur);
     
     phy_speed_x = sign(dir) *spd;
 }
 if (state == DEAD)
 {
     phy_speed_x = 0;
-    frame = 2;
+    frame = 4;
 }
 </string>
           </argument>
@@ -117,8 +127,12 @@ if (state == DEAD)
             <kind>1</kind>
             <string>if (state != DEAD)
 {
-    s = .9;
-    phy_speed_y = -jumpVel;
+    //s = .9;
+    if (phy_speed_y &gt;= 0)
+        phy_speed_y = -jumpVel;
+    
+    phy_speed_x = 0;
+    
     if (shouldTurnAround)
     {
         dir = -dir;
@@ -153,7 +167,7 @@ if (state == DEAD)
           <argument>
             <kind>1</kind>
             <string>var angle = -phy_rotation + 180*(dir == LEFT);
-draw_sprite_ext(sprEnemyMushroom, frame, x, y, image_xscale, image_yscale * s * dir, angle, c_white, 1);
+draw_sprite_ext(sprite_index, frame, x, y, image_xscale, image_yscale * s * dir, angle, c_white, 1);
 </string>
           </argument>
         </arguments>
@@ -162,17 +176,20 @@ draw_sprite_ext(sprEnemyMushroom, frame, x, y, image_xscale, image_yscale * s * 
   </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
-  <PhysicsObjectShape>0</PhysicsObjectShape>
+  <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>2</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.100000001490116</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>0.100000001490116</PhysicsObjectAngularDamping>
+  <PhysicsObjectAngularDamping>2</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>24,26</point>
-    <point>16,24</point>
+    <point>28,18</point>
+    <point>54,32</point>
+    <point>60,64</point>
+    <point>4,64</point>
+    <point>8,18</point>
   </PhysicsShapePoints>
 </object>
