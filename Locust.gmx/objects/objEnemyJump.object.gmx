@@ -112,7 +112,6 @@ if (state == JUMP)
 if (state == DEAD)
 {
     if (frame != 4) phy_speed_y = -4;
-    
     phy_speed_x = 0;
     phy_rotation = -180;
     fCur = 4;
