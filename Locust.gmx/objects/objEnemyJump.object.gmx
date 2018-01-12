@@ -59,6 +59,38 @@ fCur = 0;
             <kind>1</kind>
             <string>s = min(s + .05, 1);
 
+if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objSolid))
+{
+    if (state != DEAD)
+    {
+        if (fCur == 3) fCur = 0;
+        phy_speed_x = 0;
+            
+        fCur = min(fCur + .25, 2);    
+        if (fCur == 2)
+        {
+            if (phy_speed_y &gt;= 0)
+                phy_speed_y = -jumpVel;
+            
+            if (shouldTurnAround)
+            {
+                dir = -dir;
+                shouldTurnAround = false;
+            }
+            fCur = 3;
+        }
+    }
+    if (state == DEAD)
+    {
+        createEffect(0, phy_position_x, phy_position_y);
+        instance_destroy();
+    }
+}
+else
+{
+    if (state != DEAD) phy_speed_x = sign(dir)*spd;    
+}
+
 if (state == JUMP)
 {
     if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objPlayer))
@@ -68,17 +100,14 @@ if (state == JUMP)
         dir = -dir;
         
     phy_rotation = 0;
-    //if (phy_speed_y &gt; 0) frame = 1; else frame = 0;
-    fCur = (fCur + .15) % 4;
-    frame = floor(fCur);
-    
-    phy_speed_x = sign(dir) *spd;
 }
 if (state == DEAD)
 {
     phy_speed_x = 0;
-    frame = 4;
+    fCur = 4;
 }
+frame = floor(fCur);
+
 </string>
           </argument>
         </arguments>
@@ -125,26 +154,7 @@ if (state == DEAD)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (state != DEAD)
-{
-    //s = .9;
-    if (phy_speed_y &gt;= 0)
-        phy_speed_y = -jumpVel;
-    
-    phy_speed_x = 0;
-    
-    if (shouldTurnAround)
-    {
-        dir = -dir;
-        shouldTurnAround = false;
-    }
-}
-if (state == DEAD)
-{
-    createEffect(0, phy_position_x, phy_position_y);
-    instance_destroy();
-}
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
@@ -176,7 +186,7 @@ draw_sprite_ext(sprite_index, frame, x, y, image_xscale, image_yscale * s * dir,
   </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
-  <PhysicsObjectShape>2</PhysicsObjectShape>
+  <PhysicsObjectShape>1</PhysicsObjectShape>
   <PhysicsObjectDensity>2</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
@@ -186,10 +196,9 @@ draw_sprite_ext(sprite_index, frame, x, y, image_xscale, image_yscale * s * dir,
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>28,18</point>
-    <point>54,32</point>
-    <point>60,64</point>
-    <point>4,64</point>
-    <point>8,18</point>
+    <point>8,12</point>
+    <point>40,12</point>
+    <point>40,36</point>
+    <point>8,36</point>
   </PhysicsShapePoints>
 </object>

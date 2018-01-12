@@ -171,35 +171,44 @@ if (!onGround)
             <kind>1</kind>
             <string>phy_rotation = phy_rotation % 360;
 
-// jumping on top of vulnerable enemies
-for(var i = 0; i &lt; instance_number(objEnemyVulnerable); i++)
+instance_deactivate_object(objEnemy);
+instance_activate_region(bbox_left - 16, bbox_top - 16, abs(bbox_left-bbox_right) + 16, abs(bbox_top-bbox_bottom) + 16, true);
+for(var i = 0; i &lt; instance_number(objEnemy); i++)
 {
-    var o = instance_find(objEnemyVulnerable, i);
-    if (physics_test_overlap(phy_position_x, phy_position_y + 10, phy_rotation, o)
-        &amp;&amp; phy_position_y &lt; o.phy_position_y &amp;&amp; phy_speed_y &gt; 0
-        &amp;&amp; o.state != DEAD &amp;&amp; state != DEAD)
+    var o = instance_find(objEnemy, i);
+    // jumping on top of vulnerable enemies
+    if (object_is_ancestor(o.object_index, objEnemyVulnerable))
     {
-    createEffect(1,(phy_position_x + o.phy_position_x)/2,(phy_position_y + o.phy_position_y)/2);
-        phy_speed_y = -5;
-        with(o)physics_apply_angular_impulse(300);
-        with(o)phy_speed_y = -2;
-        o.state = DEAD;
-    }
-}
-// dieing from all enemies
-if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objEnemy))
-{
-    if (state != DEAD &amp;&amp; state != WON)
-    {
-        if (other.state != DEAD &amp;&amp; other.phy_active)
+        if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o)
+            &amp;&amp; bbox_bottom &lt; o.bbox_bottom &amp;&amp; phy_speed_y &gt; 0
+            &amp;&amp; o.state != DEAD &amp;&amp; state != DEAD)
         {
-            phy_linear_velocity_x = 0;
-            phy_linear_velocity_y = -200;
-            physics_apply_angular_impulse(999);
-            state = DEAD;
+        createEffect(1,(phy_position_x + o.phy_position_x)/2,(phy_position_y + o.phy_position_y)/2);
+            phy_speed_y = -5;
+            with(o)physics_apply_angular_impulse(300);
+            with(o)phy_speed_y = -2;
+            o.state = DEAD;
+        }
+    }
+    if (object_is_ancestor(o.object_index, objEnemy))
+    {
+        // dieing from all enemies
+        if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o))
+        {
+            if (state != DEAD &amp;&amp; state != WON)
+            {
+                if (o.state != DEAD &amp;&amp; o.phy_active)
+                {
+                    phy_linear_velocity_x = 0;
+                    phy_linear_velocity_y = -200;
+                    physics_apply_angular_impulse(999);
+                    state = DEAD;
+                }
+            }
         }
     }
 }
+instance_activate_object(objEnemy);
 
 // check if outside room
 if (x &lt; 20)
@@ -544,7 +553,7 @@ draw_sprite_ext(sprAccessoires, global.accessory, x + lengthdir_x(z, accAngle), 
 if (inWater)
     draw_sprite_ext(sprScuba, 0, x + lengthdir_x(z, accAngle), y + lengthdir_y(z, accAngle), image_xscale, image_yscale * dir, angle, c_white, 1);
 
-    
+/*draw_rectangle(bbox_left,bbox_top,bbox_right,bbox_bottom,1);*/
 </string>
           </argument>
         </arguments>
