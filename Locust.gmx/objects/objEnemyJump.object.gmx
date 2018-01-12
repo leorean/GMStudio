@@ -30,11 +30,12 @@ dir = RIGHT;
 frame = 0;
 s = 1;
 
-jumpVel = 3;
-spd = 1;
+jumpVel = 1.8;
+spd = 0.75;
 shouldTurnAround = false;
 frame = 0;
 fCur = 0;
+dirTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -80,7 +81,7 @@ if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objSolid)
             fCur = 3;
         }
     }
-    if (state == DEAD)
+    if (state == DEAD &amp;&amp; phy_speed_y &gt;= 0)
     {
         createEffect(0, phy_position_x, phy_position_y);
         instance_destroy();
@@ -91,19 +92,29 @@ else
     if (state != DEAD) phy_speed_x = sign(dir)*spd;    
 }
 
+dirTimer = max(dirTimer - 1, 0);
 if (state == JUMP)
 {
     if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objPlayer))
         dir = sign(phy_position_x - objPlayer.phy_position_x);
     
     if (physics_test_overlap(phy_position_x + sign(dir)*10, phy_position_y - 10, phy_rotation, objSolid))
-        dir = -dir;
-        
+    {
+        if (!dirTimer)
+        {
+            dirTimer = .5*SEC;
+            dir = -dir;
+        }
+    }
+               
     phy_rotation = 0;
 }
 if (state == DEAD)
 {
+    if (frame != 4) phy_speed_y = -4;
+    
     phy_speed_x = 0;
+    phy_rotation = -180;
     fCur = 4;
 }
 frame = floor(fCur);
@@ -132,6 +143,35 @@ frame = floor(fCur);
             <kind>1</kind>
             <string>shouldTurnAround = (dir == LEFT &amp;&amp; phy_position_x &gt; other.phy_position_x)
     || (dir == RIGHT &amp;&amp; phy_position_x &lt; other.phy_position_x);
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="objMovable">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (abs(other.phy_speed) &gt; 1.2 &amp;&amp; other.phy_position_y &lt; phy_position_y)
+    state = DEAD;
+
+/*if (physics_test_overlap(phy_position_x, phy_position_y - 10, phy_rotation, objMovable))
+{
+    state = DEAD;
+}*/
 </string>
           </argument>
         </arguments>
@@ -196,9 +236,9 @@ draw_sprite_ext(sprite_index, frame, x, y, image_xscale, image_yscale * s * dir,
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
-    <point>8,12</point>
-    <point>40,12</point>
-    <point>40,36</point>
-    <point>8,36</point>
+    <point>16,30</point>
+    <point>52,30</point>
+    <point>52,64</point>
+    <point>16,64</point>
   </PhysicsShapePoints>
 </object>

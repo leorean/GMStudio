@@ -185,8 +185,6 @@ for(var i = 0; i &lt; instance_number(objEnemy); i++)
         {
         createEffect(1,(phy_position_x + o.phy_position_x)/2,(phy_position_y + o.phy_position_y)/2);
             phy_speed_y = -5;
-            with(o)physics_apply_angular_impulse(300);
-            with(o)phy_speed_y = -2;
             o.state = DEAD;
         }
     }
