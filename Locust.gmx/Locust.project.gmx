@@ -32,6 +32,7 @@
       <sprite>sprites\mskEvilBall</sprite>
       <sprite>sprites\mskFlag</sprite>
       <sprite>sprites\mskBallSpawner</sprite>
+      <sprite>sprites\mskWater</sprite>
     </sprites>
     <sprite>sprites\sprFont1</sprite>
     <sprite>sprites\sprFont2</sprite>

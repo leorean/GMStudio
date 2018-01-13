@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// SET THE MAXIMUM ROPECOUNT (1 -&gt; 1 tile downwards)
+            <string>object = objMovable; // set to specific object type
+
+// SET THE MAXIMUM ROPECOUNT (1 -&gt; 1 tile downwards)
 // if you want a movable object attached, place it under the holder within the ropecount
 ropeCount = 15;
 init = false;
@@ -57,7 +59,7 @@ target = noone;
     init = true;
     offy = 0;
     
-    createRope(ropeCount);
+    createRope(ropeCount, object);
 }
 </string>
           </argument>

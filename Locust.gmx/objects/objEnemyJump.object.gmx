@@ -167,7 +167,7 @@ frame = floor(fCur);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (abs(other.phy_speed) &gt; 1.2 &amp;&amp; other.phy_position_y &lt; phy_position_y)
+            <string>if (abs(other.phy_speed) &gt; 0.5 &amp;&amp; other.phy_position_y &lt; phy_position_y)
     state = DEAD;
 
 /*if (physics_test_overlap(phy_position_x, phy_position_y - 10, phy_rotation, objMovable))

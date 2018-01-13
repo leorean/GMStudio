@@ -23,9 +23,9 @@ repeat(argument0)
     nextRope.parent = lastRope;
     
     if (!instance_exists(target))
-    for(var i = 0; i < instance_number(objMovable); i++)
+    for(var i = 0; i < instance_number(argument1); i++)
     {
-        var t = instance_find(objMovable, i);
+        var t = instance_find(argument1, i);
         if(physics_test_overlap(nextRope.x, nextRope.y, phy_rotation, t))
         {
             target = t;                                
