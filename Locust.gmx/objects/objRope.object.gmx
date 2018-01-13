@@ -3,7 +3,7 @@
   <spriteName>sprRope</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>-1</depth>
+  <depth>4</depth>
   <persistent>0</persistent>
   <parentName>objAny</parentName>
   <maskName>&lt;undefined&gt;</maskName>

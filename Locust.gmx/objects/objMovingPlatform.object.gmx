@@ -3,7 +3,7 @@
   <spriteName>sprSpecialPlatform</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>3</depth>
   <persistent>0</persistent>
   <parentName>objMovable</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -31,6 +31,8 @@ init = false;
 
 xprev = phy_position_x;
 yprev = phy_position_y;
+xo = -1;
+yo = -1;
 </string>
           </argument>
         </arguments>
@@ -61,6 +63,46 @@ yprev = phy_position_y;
 
 xprev = phy_position_x;
 yprev = phy_position_y;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if (xo == -1 &amp;&amp; yo == -1)
+{
+    xo = x - path_get_x(path, 0);
+    yo = y - path_get_y(path, 0);
+}
+
+for (var i = 0; i &lt; 100; i ++)
+{
+    var pos = i / 16;
+    
+    if (pos &gt; 1) break;
+    
+    var px = xo + path_get_x(path, pos);
+    var py = yo + path_get_y(path, pos);
+    
+    draw_sprite(sprPath, -1, round(px), round(py));
+}
+draw_self();
 </string>
           </argument>
         </arguments>

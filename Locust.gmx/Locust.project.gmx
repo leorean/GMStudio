@@ -73,6 +73,7 @@
     <sprite>sprites\sprEnemyJump</sprite>
     <sprite>sprites\sprEffects</sprite>
     <sprite>sprites\mskTurnAround</sprite>
+    <sprite>sprites\sprPath</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\bgWinScreen</background>
@@ -194,6 +195,7 @@
       <room>rooms\L6_old</room>
       <room>rooms\L7</room>
       <room>rooms\L8</room>
+      <room>rooms\L8_old</room>
       <room>rooms\L9</room>
       <room>rooms\L10</room>
     </rooms>
