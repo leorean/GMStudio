@@ -64,7 +64,7 @@ draw_sprite(sprScrew, -1, phy_position_x, phy_position_y);
   <PhysicsObjectRestitution>0</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
   <PhysicsObjectLinearDamping>0.5</PhysicsObjectLinearDamping>
-  <PhysicsObjectAngularDamping>3</PhysicsObjectAngularDamping>
+  <PhysicsObjectAngularDamping>2</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>0.200000002980232</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
