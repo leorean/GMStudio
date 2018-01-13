@@ -25,10 +25,14 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>path = pathCircle;
+            <string>// EDITOR:
+path = pathCircle;
 spd = 1;
-init = false;
+endAction = path_action_continue;
+segCount = 16;
 
+//
+init = false;
 xprev = phy_position_x;
 yprev = phy_position_y;
 xo = -1;
@@ -58,7 +62,7 @@ yo = -1;
             <string>if (!init)
 {
     init = true;
-    path_start(path, spd, path_action_continue, false);
+    path_start(path, spd, endAction, false);
 }
 
 xprev = phy_position_x;
@@ -93,7 +97,7 @@ yprev = phy_position_y;
 
 for (var i = 0; i &lt; 100; i ++)
 {
-    var pos = i / 16;
+    var pos = i / segCount;
     
     if (pos &gt; 1) break;
     

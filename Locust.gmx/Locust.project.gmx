@@ -82,6 +82,8 @@
   <paths name="paths">
     <path>paths\pencilPath</path>
     <path>paths\pathCircle</path>
+    <path>paths\pathL10_1</path>
+    <path>paths\pathL10_2</path>
   </paths>
   <scripts name="scripts">
     <script>scripts\in.gml</script>

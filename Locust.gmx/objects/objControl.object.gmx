@@ -97,7 +97,7 @@ ds_list_add(global.levels, array(L6, "06", "Where The Forest Begins", 0, 1, 1));
 ds_list_add(global.levels, array(L7, "07", "Leaky Lake", 0, 1, 1));
 ds_list_add(global.levels, array(L8, "08", "Seesaw Thicket", 0, 1, 1));
 ds_list_add(global.levels, array(L9, "09", "Shroudshroom Valley", 0, 1, 1));
-ds_list_add(global.levels, array(L10, "10", "???", 0, 1, 1));
+ds_list_add(global.levels, array(L10, "10", "Where The Forest Ends", 0, 1, 1));
 
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
