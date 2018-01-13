@@ -191,6 +191,7 @@
     </rooms>
     <rooms name="2 - Forest">
       <room>rooms\L6</room>
+      <room>rooms\L6_old</room>
       <room>rooms\L7</room>
       <room>rooms\L8</room>
       <room>rooms\L9</room>

@@ -35,7 +35,9 @@ spd = 0.75;
 shouldTurnAround = false;
 frame = 0;
 fCur = 0;
+
 dirTimer = 0;
+deathTimer = 0;
 </string>
           </argument>
         </arguments>
@@ -81,7 +83,7 @@ if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, objSolid)
             fCur = 3;
         }
     }
-    if (state == DEAD &amp;&amp; phy_speed_y &gt;= 0)
+    if (state == DEAD &amp;&amp; deathTimer &gt;= 1*SEC)
     {
         createEffect(0, phy_position_x, phy_position_y);
         instance_destroy();
@@ -111,6 +113,7 @@ if (state == JUMP)
 }
 if (state == DEAD)
 {
+    deathTimer++;
     if (frame != 4) phy_speed_y = -4;
     phy_speed_x = 0;
     phy_rotation = -180;
