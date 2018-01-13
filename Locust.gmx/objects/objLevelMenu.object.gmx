@@ -38,6 +38,9 @@ shopPressed = false;
 xpotato = 32;
 ypotato = HEIGHT + 128;
 
+newY = 0;
+newSine = 0;
+
 instance_create(0, 0, objLevelMenuBackground);
 confettiTimer = 0;
 
@@ -179,6 +182,31 @@ if (page &lt; maxPage)
 }
 
 // +++++++++++++++++++++++++++++++++++++ SHOP STUFF ++++++++++++++++++++++++++++++++++++++++++++
+
+if (x == 0)
+{
+    var highestAcc = 0;
+    for (var i = 0; i &lt; ds_list_size(global.prices); i++)
+    {
+        if (global.stars &gt;= ds_list_find_value(global.prices, i))
+            highestAcc = i;
+    }
+    if (global.highestAccessory &lt; highestAcc)
+    {
+        if (irandom(10) == 1)
+        {
+            var eff = instance_create(x + 928 + random(96), y + random(96), objEffect);
+            eff.type = 2;
+            eff.depth = depth - 1;
+        }
+        draw_set_halign(fa_center);
+        draw_set_valign(fa_center);
+        draw_text(x + 1024 - 48, 128 + newY, "New");
+        
+        newSine =(newSine + .1) % (2*pi);
+        newY = 3*sin(newSine);
+    }
+}
 
 var slideSpd = 32;
 if (slideLeft)

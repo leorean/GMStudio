@@ -52,6 +52,7 @@ global.level = real(string_digits(room_get_name(room_last))) - 1; // &lt;- save/
 
 // 50 lvls a la 3 stars = 150 stars in total
 global.accessory = 0;
+global.highestAccessory = 0; // if there is a higher accessory than the highest visited, do some "new" effect in the menu
 
 global.prices = ds_list_create();
 global.priceNames = ds_list_create();
