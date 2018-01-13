@@ -37,15 +37,15 @@
   <PhysicsObjectDensity>2</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.00999999977648258</PhysicsObjectRestitution>
   <PhysicsObjectGroup>1</PhysicsObjectGroup>
-  <PhysicsObjectLinearDamping>0.200000002980232</PhysicsObjectLinearDamping>
+  <PhysicsObjectLinearDamping>1</PhysicsObjectLinearDamping>
   <PhysicsObjectAngularDamping>25</PhysicsObjectAngularDamping>
   <PhysicsObjectFriction>5</PhysicsObjectFriction>
   <PhysicsObjectAwake>-1</PhysicsObjectAwake>
   <PhysicsObjectKinematic>0</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>0,0</point>
-    <point>96,0</point>
-    <point>96,16</point>
-    <point>0,16</point>
+    <point>100,0</point>
+    <point>100,20</point>
+    <point>0,20</point>
   </PhysicsShapePoints>
 </object>

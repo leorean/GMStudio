@@ -58,13 +58,13 @@
     <sprite>sprites\mskJoint</sprite>
     <sprite>sprites\sprSeesaw</sprite>
     <sprite>sprites\sprMushroom</sprite>
+    <sprite>sprites\sprMushroomShaft</sprite>
     <sprite>sprites\sprScrew</sprite>
     <sprite>sprites\sprTutorial0</sprite>
     <sprite>sprites\sprTutorialBg</sprite>
     <sprite>sprites\sprTutorial1</sprite>
     <sprite>sprites\sprTutorial2</sprite>
     <sprite>sprites\sprTutorial3</sprite>
-    <sprite>sprites\sprMushroomShaft</sprite>
     <sprite>sprites\sprWantBall</sprite>
     <sprite>sprites\sprWantPotato</sprite>
     <sprite>sprites\sprBG</sprite>

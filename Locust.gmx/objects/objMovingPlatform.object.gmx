@@ -80,8 +80,8 @@ yprev = phy_position_y;
   <PhysicsObjectKinematic>-1</PhysicsObjectKinematic>
   <PhysicsShapePoints>
     <point>0,0</point>
-    <point>96,0</point>
-    <point>96,16</point>
-    <point>0,16</point>
+    <point>100,0</point>
+    <point>100,20</point>
+    <point>0,20</point>
   </PhysicsShapePoints>
 </object>

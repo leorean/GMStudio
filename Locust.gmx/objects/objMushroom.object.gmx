@@ -69,7 +69,7 @@ on = false;
     var i = phy_position_x;
     var j = phy_position_y;
     var r = phy_rotation;
-    var dst = 10;
+    var dst = 16;
     
     phy_rotation = (phy_rotation + 360) % 360;
     while (j &lt; room_height + dst * image_yscale)
@@ -147,7 +147,7 @@ for(var i = 0; i &lt; ds_list_size(shafts); i++)
             <kind>1</kind>
             <string>if (type == 1)
 {
-    if (s == 1)
+    //if (s == 1)
     {
         s = .5;
         objPlayer.phy_speed_y = min(objPlayer.phy_speed_y, -40);

@@ -158,6 +158,8 @@ setVisibility(objBlock);
 setVisibility(objWater);
 setVisibility(objWaterSurface);
 setVisibility(objStar);
+setVisibility(objMushroom);
+setVisibility(objMushroomShaft);
 
 // +++++++++++++++++++++++
 

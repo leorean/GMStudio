@@ -1,8 +1,12 @@
 var lastRope = noone;
 var nextRope = instance_create(x, y, objRope);
 var joint = physics_joint_revolute_create(id, nextRope, x, y, 0, 0, 0, 0, 0, 0, false);
-physics_joint_set_value(joint, phy_joint_damping_ratio, 5);
-physics_joint_set_value(joint, phy_joint_frequency, 10);
+
+var damp = 1;
+var fq = 30;
+
+physics_joint_set_value(joint, phy_joint_damping_ratio, damp);
+physics_joint_set_value(joint, phy_joint_frequency, fq);
 
 nextRope.parent = id;
 
@@ -13,6 +17,9 @@ repeat(argument0)
     nextRope = instance_create(x, y+offy, objRope);
     
     joint = physics_joint_distance_create(lastRope, nextRope, lastRope.x, lastRope.y, nextRope.x, nextRope.y, false);        
+    physics_joint_set_value(joint, phy_joint_damping_ratio, damp);
+    physics_joint_set_value(joint, phy_joint_frequency, fq);
+
     nextRope.parent = lastRope;
     
     if (!instance_exists(target))
@@ -31,6 +38,8 @@ repeat(argument0)
         var dsty = (nextRope.y - target.y);
 
         joint = physics_joint_distance_create(nextRope, target, nextRope.x, nextRope.y, target.x + dstx, target.y + dsty, false);
+        physics_joint_set_value(joint, phy_joint_damping_ratio, damp);
+        physics_joint_set_value(joint, phy_joint_frequency, fq);
         break;
     }
 }
