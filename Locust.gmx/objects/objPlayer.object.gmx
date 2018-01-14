@@ -140,9 +140,9 @@ if (phy_speed_y &gt;= -4)
 instance_activate_object(objPlatform);
 
 var sides = (!physics_test_overlap(phy_position_x - 2, phy_position_y - 2, phy_rotation, objBlock)
-        || physics_test_overlap(phy_position_x + 2, phy_position_y + 2, phy_rotation, objSolid))
+        || physics_test_overlap(phy_position_x + 2, phy_position_y + 4, phy_rotation, objSolid))
      &amp;&amp; (!physics_test_overlap(phy_position_x + 2, phy_position_y - 2, phy_rotation, objBlock)
-        || physics_test_overlap(phy_position_x - 2, phy_position_y + 2, phy_rotation, objSolid));
+        || physics_test_overlap(phy_position_x - 2, phy_position_y + 4, phy_rotation, objSolid));
 
 if (!onGround)
     onGround = physics_test_overlap(phy_position_x, phy_position_y + 2, phy_rotation, objSolid)

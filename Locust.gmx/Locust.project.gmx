@@ -12,6 +12,10 @@
       <sprite>sprites\sprBlock2</sprite>
       <sprite>sprites\sprBlock3</sprite>
       <sprite>sprites\sprBlock4</sprite>
+      <sprite>sprites\sprBlock5</sprite>
+      <sprite>sprites\sprBlock6</sprite>
+      <sprite>sprites\sprBlock7</sprite>
+      <sprite>sprites\sprBlock8</sprite>
       <sprite>sprites\sprBlock</sprite>
       <sprite>sprites\sprPlatform</sprite>
     </sprites>
@@ -144,8 +148,11 @@
       <object>objects\objBlock2</object>
       <object>objects\objBlock3</object>
       <object>objects\objBlock4</object>
+      <object>objects\objBlock5</object>
+      <object>objects\objBlock6</object>
+      <object>objects\objBlock7</object>
+      <object>objects\objBlock8</object>
       <object>objects\objPlatform0</object>
-      <object>objects\objSwitchBlock</object>
     </objects>
     <objects name="level objects">
       <objects name="scenery">
@@ -160,6 +167,7 @@
       </objects>
       <object>objects\objFlag</object>
       <object>objects\objStar</object>
+      <object>objects\objSwitchBlock</object>
       <object>objects\objSwitch</object>
       <object>objects\objSpawner</object>
       <object>objects\objSpike</object>
