@@ -79,6 +79,7 @@
     <sprite>sprites\sprEffects</sprite>
     <sprite>sprites\mskTurnAround</sprite>
     <sprite>sprites\sprPath</sprite>
+    <sprite>sprites\sprQuicksand</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\tiles</background>
@@ -183,6 +184,7 @@
       <object>objects\objRopeHolder</object>
       <object>objects\objSeesaw</object>
       <object>objects\objMushroom</object>
+      <object>objects\objQuicksand</object>
     </objects>
     <objects name="enemies">
       <object>objects\objTurnAround</object>
@@ -208,6 +210,7 @@
     </rooms>
     <rooms name="3 - Desert">
       <room>rooms\L11</room>
+      <room>rooms\L12</room>
     </rooms>
   </rooms>
   <constants number="16">

@@ -230,6 +230,31 @@ if (state != DEAD &amp;&amp; state != WON)
     }
 }
 
+// QUICKSAND
+if (physics_test_overlap(phy_position_x, phy_position_y - 4, phy_rotation, objQuicksand))
+{
+    phy_linear_velocity_y = min(phy_linear_velocity_y, 35);
+    phy_linear_velocity_y = max(phy_linear_velocity_y, -250);
+        
+    if (phy_linear_velocity_y == 35)
+    {
+        jumped = false;
+        onGround = true;
+    }    
+    phy_linear_velocity_x *= .75;
+    if (kLeft) phy_linear_velocity_x = -60;
+    if (kRight) phy_linear_velocity_x = 60;
+    phy_angular_velocity *= .7;
+    phy_linear_velocity_y *= .9;
+    
+    if (global.timer % 20 == 0)
+    {
+        createEffect(3, phy_position_x - 10, phy_position_y + 25);
+        createEffect(3, phy_position_x + 10, phy_position_y + 25);        
+    }
+    
+}
+
 // max jump vel check
 phy_linear_velocity_y = max(phy_linear_velocity_y, -450);
 
@@ -332,7 +357,7 @@ if (kJump)
     {
         if (!jumped)
         {        
-            phy_linear_velocity_y = min(phy_linear_velocity_y, 0);
+            phy_linear_velocity = 0;
             
             var jx = 0;
             if (kLeft) jx = -120;
@@ -344,7 +369,9 @@ if (kJump)
             var jumpXvel = lengthdir_x(jv, rot);
             var jumpYvel = lengthdir_y(-jv, rot);
             
-            physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);
+            //physics_apply_impulse(phy_position_x, phy_position_y, jumpXvel, jumpYvel);            
+            //phy_linear_velocity_y = max(phy_linear_velocity_y, -450);
+            phy_linear_velocity_y = -320;
     
             jumped = true;
             if (state == IDLE) state = JUMP;
@@ -406,14 +433,7 @@ if(inWater)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/*if (attachedObject == noone)
-{
-    attachedObject = other;
-    colX = phy_position_x - attachedObject.phy_position_x;
-    colY = phy_position_y - attachedObject.phy_position_y;
-}*/
-
-phy_position_x += (other.phy_position_x - other.xprev);
+            <string>phy_position_x += (other.phy_position_x - other.xprev);
 phy_position_y += (other.phy_position_y - other.yprev);
 
 </string>
@@ -453,12 +473,12 @@ phy_position_y += (other.phy_position_y - other.yprev);
     <event eventtype="4" ename="objEnemy">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>605</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
@@ -475,12 +495,12 @@ phy_position_y += (other.phy_position_y - other.yprev);
     <event eventtype="4" ename="objPlatform">
       <action>
         <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
+        <id>605</id>
+        <kind>0</kind>
         <userelative>0</userelative>
         <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
+        <useapplyto>0</useapplyto>
+        <exetype>0</exetype>
         <functionname></functionname>
         <codestring></codestring>
         <whoName>self</whoName>
@@ -489,8 +509,7 @@ phy_position_y += (other.phy_position_y - other.yprev);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
