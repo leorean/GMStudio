@@ -189,18 +189,17 @@
       <room>rooms\L2</room>
       <room>rooms\L3</room>
       <room>rooms\L4</room>
-      <room>rooms\L4_old</room>
       <room>rooms\L5</room>
-      <room>rooms\L5_old</room>
     </rooms>
     <rooms name="2 - Forest">
       <room>rooms\L6</room>
-      <room>rooms\L6_old</room>
       <room>rooms\L7</room>
       <room>rooms\L8</room>
-      <room>rooms\L8_old</room>
       <room>rooms\L9</room>
       <room>rooms\L10</room>
+    </rooms>
+    <rooms name="3 - Desert">
+      <room>rooms\L11</room>
     </rooms>
   </rooms>
   <constants number="16">

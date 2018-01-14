@@ -73,6 +73,8 @@ addAccessory(150, "?");
 //                       bg1      bg2      main1    sub1     goal     obj1     obj2
 global.colors[0] = array($FFFFFF, $FFFFFF, $BEC35A, $6486D4, $FEE2A4, $CA64F4, $FFFFA3); // (tutorial theme) pink/grayblue with yellow sky
 global.colors[1] = array($FFFFFF, $FFFFFF, $7AD353, $6699BA, $C5F2FF, $DCF505, $73FFB2); // (forest theme ) green with blue sky
+global.colors[2] = array($FFFFFF, $FFFFFF, $5AF2B7, $84CFFA, $C5F2FF, $DCF505, $73FFB2); // (forest theme ) green with blue sky
+
 //global.colors[0] = array($CFE6FF, $D9F7FF, $6BC6F7, $F2E2C4, $FEE2A4, $CA64F4, $FFFFA3); // (bonbon theme) yellow/grayblue with yellow sky
 //global.colors[0] = array($2081F1, $20A0F2, $FFD69C, $CCBFF3, $FEE2A4, $CA64F4, $FFFFA3); // blue/palepurple with yellow sky
 //global.colors[1] = array($FFFFFF/*$E4F6C4*/, $FFFFFF, $F8C862, $7ADCA1, $FEE2A4, $DCF505, $73FFB2); // teal and green with blue sky
@@ -98,8 +100,8 @@ ds_list_add(global.levels, array(L7, "07", "Leaky Lake", 0, 1, 1));
 ds_list_add(global.levels, array(L8, "08", "Seesaw Thicket", 0, 1, 1));
 ds_list_add(global.levels, array(L9, "09", "Shroudshroom Valley", 0, 1, 1));
 ds_list_add(global.levels, array(L10, "10", "Where The Forest Ends", 0, 1, 1));
-
-ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
+// desert
+ds_list_add(global.levels, array(L11, "11", "Hot Hot Hot", 0, 2, 2));
 ds_list_add(global.levels, array(L1, "XX", "---", 0, 0, 0));
 
 

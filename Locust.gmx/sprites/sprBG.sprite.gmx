@@ -24,5 +24,7 @@
     <frame index="1">images\sprBG_1.png</frame>
     <frame index="2">images\sprBG_2.png</frame>
     <frame index="3">images\sprBG_3.png</frame>
+    <frame index="4">images\sprBG_4.png</frame>
+    <frame index="5">images\sprBG_5.png</frame>
   </frames>
 </sprite>
