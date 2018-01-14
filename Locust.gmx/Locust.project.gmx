@@ -81,8 +81,8 @@
     <sprite>sprites\sprPath</sprite>
   </sprites>
   <backgrounds name="background">
-    <background>background\bgWinScreen</background>
     <background>background\tiles</background>
+    <background>background\bgWinScreen</background>
   </backgrounds>
   <paths name="paths">
     <path>paths\pencilPath</path>
