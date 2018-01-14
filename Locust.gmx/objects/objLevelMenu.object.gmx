@@ -62,6 +62,7 @@ for (var i = 0; i &lt; ds_list_size(global.levels); i++)
     item.stars = level[3];
     item.locked = i &gt; global.level;
     item.page = i div 10; // 10 levels per page
+    if (!item.locked) page = max(page, i div 10); // scroll to the right page
     item.background = level[4];
     item.colortheme = level[5];
 }
