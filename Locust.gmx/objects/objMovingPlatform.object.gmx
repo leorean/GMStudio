@@ -95,16 +95,19 @@ yprev = phy_position_y;
     yo = y - path_get_y(path, 0);
 }
 
-for (var i = 0; i &lt; 100; i ++)
+if (segCount &gt; 0)
 {
-    var pos = i / segCount;
-    
-    if (pos &gt; 1) break;
-    
-    var px = xo + path_get_x(path, pos);
-    var py = yo + path_get_y(path, pos);
-    
-    draw_sprite(sprPath, -1, round(px), round(py));
+    for (var i = 0; i &lt; 100; i ++)
+    {
+        var pos = i / segCount;
+        
+        if (pos &gt; 1) break;
+        
+        var px = xo + path_get_x(path, pos);
+        var py = yo + path_get_y(path, pos);
+        
+        draw_sprite(sprPath, -1, round(px), round(py));
+    }
 }
 draw_self();
 </string>

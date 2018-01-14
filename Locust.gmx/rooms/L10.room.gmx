@@ -185,7 +185,7 @@
     <instance objName="objSpike" x="1632" y="640" name="inst_59E83C4D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSpike" x="1664" y="640" name="inst_4CE35934" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objSpike" x="1696" y="640" name="inst_380B1B3A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
-    <instance objName="objMovingPlatform" x="1440" y="608" name="inst_6959633C" locked="0" code="path = pathL10_2;&#xA;endAction = path_action_restart;&#xA;segCount = 20;&#xA;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objMovingPlatform" x="1440" y="608" name="inst_6959633C" locked="0" code="path = pathHorizontal8;&#xA;endAction = path_action_restart;&#xA;segCount = 20;" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1152" y="896" name="inst_89B509C4" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objPlatform0" x="1120" y="896" name="inst_40863B2E" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock3" x="1824" y="576" name="inst_04CCDA87" locked="0" code="" scaleX="1.5" scaleY="1" colour="4294967295" rotation="0"/>

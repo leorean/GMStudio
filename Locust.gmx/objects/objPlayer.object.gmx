@@ -433,8 +433,11 @@ if(inWater)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>phy_position_x += (other.phy_position_x - other.xprev);
-phy_position_y += (other.phy_position_y - other.yprev);
+            <string>if (phy_position_y &lt; other.phy_position_y)
+{
+    phy_position_x += (other.phy_position_x - other.xprev);
+    phy_position_y += (other.phy_position_y - other.yprev);
+}
 
 </string>
           </argument>
