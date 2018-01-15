@@ -18,9 +18,12 @@
       <sprite>sprites\sprBlock8</sprite>
       <sprite>sprites\sprBlock</sprite>
       <sprite>sprites\sprPlatform</sprite>
+      <sprite>sprites\sprPlatform0</sprite>
     </sprites>
     <sprites name="UI">
       <sprite>sprites\sprUI</sprite>
+      <sprite>sprites\sprFont1</sprite>
+      <sprite>sprites\sprFont2</sprite>
       <sprite>sprites\sprConfetti</sprite>
       <sprite>sprites\sprStarBig</sprite>
       <sprite>sprites\sprPencil</sprite>
@@ -37,49 +40,56 @@
       <sprite>sprites\mskFlag</sprite>
       <sprite>sprites\mskBallSpawner</sprite>
       <sprite>sprites\mskWater</sprite>
+      <sprite>sprites\mskJoint</sprite>
+      <sprite>sprites\mskTurnAround</sprite>
     </sprites>
-    <sprite>sprites\sprFont1</sprite>
-    <sprite>sprites\sprFont2</sprite>
-    <sprite>sprites\sprPlayer</sprite>
-    <sprite>sprites\sprAccessoires</sprite>
-    <sprite>sprites\sprBallOutline</sprite>
-    <sprite>sprites\sprBall</sprite>
-    <sprite>sprites\sprFlag</sprite>
-    <sprite>sprites\sprStar</sprite>
-    <sprite>sprites\sprSpike</sprite>
-    <sprite>sprites\sprPlatform0</sprite>
-    <sprite>sprites\sprSpawner</sprite>
-    <sprite>sprites\sprSwitch</sprite>
-    <sprite>sprites\sprSwitchBlock</sprite>
-    <sprite>sprites\sprSquare</sprite>
-    <sprite>sprites\sprArrow</sprite>
-    <sprite>sprites\sprBounce</sprite>
-    <sprite>sprites\sprEvilBall</sprite>
-    <sprite>sprites\sprWater</sprite>
-    <sprite>sprites\sprScuba</sprite>
-    <sprite>sprites\sprBubble</sprite>
-    <sprite>sprites\sprCork</sprite>
-    <sprite>sprites\sprSwirl</sprite>
-    <sprite>sprites\mskJoint</sprite>
-    <sprite>sprites\sprSeesaw</sprite>
-    <sprite>sprites\sprMushroom</sprite>
-    <sprite>sprites\sprMushroomShaft</sprite>
-    <sprite>sprites\sprScrew</sprite>
-    <sprite>sprites\sprTutorial0</sprite>
-    <sprite>sprites\sprTutorialBg</sprite>
-    <sprite>sprites\sprTutorial1</sprite>
-    <sprite>sprites\sprTutorial2</sprite>
-    <sprite>sprites\sprTutorial3</sprite>
-    <sprite>sprites\sprWantBall</sprite>
-    <sprite>sprites\sprWantPotato</sprite>
-    <sprite>sprites\sprBG</sprite>
-    <sprite>sprites\sprRope</sprite>
-    <sprite>sprites\sprSpecialPlatform</sprite>
-    <sprite>sprites\sprEnemyJump</sprite>
-    <sprite>sprites\sprEffects</sprite>
-    <sprite>sprites\mskTurnAround</sprite>
-    <sprite>sprites\sprPath</sprite>
-    <sprite>sprites\sprQuicksand</sprite>
+    <sprites name="main">
+      <sprite>sprites\sprBG</sprite>
+      <sprite>sprites\sprPlayer</sprite>
+      <sprite>sprites\sprAccessoires</sprite>
+      <sprite>sprites\sprScuba</sprite>
+      <sprite>sprites\sprFlag</sprite>
+      <sprite>sprites\sprStar</sprite>
+    </sprites>
+    <sprites name="level objects">
+      <sprites name="tutorial">
+        <sprite>sprites\sprArrow</sprite>
+        <sprite>sprites\sprTutorialBg</sprite>
+        <sprite>sprites\sprTutorial0</sprite>
+        <sprite>sprites\sprTutorial1</sprite>
+        <sprite>sprites\sprTutorial2</sprite>
+        <sprite>sprites\sprTutorial3</sprite>
+        <sprite>sprites\sprWantBall</sprite>
+        <sprite>sprites\sprWantPotato</sprite>
+      </sprites>
+      <sprite>sprites\sprQuicksand</sprite>
+      <sprite>sprites\sprBall</sprite>
+      <sprite>sprites\sprBallOutline</sprite>
+      <sprite>sprites\sprSquare</sprite>
+      <sprite>sprites\sprSwitch</sprite>
+      <sprite>sprites\sprSpecialPlatform</sprite>
+      <sprite>sprites\sprMushroom</sprite>
+      <sprite>sprites\sprCork</sprite>
+      <sprite>sprites\sprPath</sprite>
+      <sprite>sprites\sprMushroomShaft</sprite>
+      <sprite>sprites\sprWater</sprite>
+      <sprite>sprites\sprScrew</sprite>
+      <sprite>sprites\sprRope</sprite>
+      <sprite>sprites\sprSwitchBlock</sprite>
+      <sprite>sprites\sprSpawner</sprite>
+      <sprite>sprites\sprBounce</sprite>
+      <sprite>sprites\sprSeesaw</sprite>
+    </sprites>
+    <sprites name="effects">
+      <sprite>sprites\sprEffects</sprite>
+      <sprite>sprites\sprBubble</sprite>
+      <sprite>sprites\sprSwirl</sprite>
+    </sprites>
+    <sprites name="enemies">
+      <sprite>sprites\sprEvilBall</sprite>
+      <sprite>sprites\sprSpike</sprite>
+      <sprite>sprites\sprEnemyJump</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background">
     <background>background\tiles</background>
@@ -108,16 +118,22 @@
     <shader type="GLSLES">shaders\gaussianShader.shader</shader>
   </shaders>
   <objects name="objects">
-    <object>objects\objControl</object>
-    <object>objects\objCamera</object>
-    <object>objects\objEffect</object>
-    <object>objects\objPlayerAccessory</object>
-    <object>objects\objPlayer</object>
-    <object>objects\objBubble</object>
-    <object>objects\objJoint</object>
-    <object>objects\objWaterSurface</object>
-    <object>objects\objSwitchBlockOn</object>
-    <object>objects\objRope</object>
+    <objects name="main">
+      <object>objects\objControl</object>
+      <object>objects\objCamera</object>
+      <object>objects\objPlayer</object>
+      <object>objects\objStar</object>
+      <object>objects\objFlag</object>
+    </objects>
+    <objects name="misc">
+      <object>objects\objEffect</object>
+      <object>objects\objPlayerAccessory</object>
+      <object>objects\objBubble</object>
+      <object>objects\objWaterSurface</object>
+      <object>objects\objJoint</object>
+      <object>objects\objSwitchBlockOn</object>
+      <object>objects\objRope</object>
+    </objects>
     <objects name="hierarchy">
       <object>objects\objSolid</object>
       <object>objects\objAny</object>
@@ -145,6 +161,7 @@
     </objects>
     <objects name="blocks">
       <object>objects\objBlock0</object>
+      <object>objects\objPlatform0</object>
       <object>objects\objBlock1</object>
       <object>objects\objBlock2</object>
       <object>objects\objBlock3</object>
@@ -153,7 +170,6 @@
       <object>objects\objBlock6</object>
       <object>objects\objBlock7</object>
       <object>objects\objBlock8</object>
-      <object>objects\objPlatform0</object>
     </objects>
     <objects name="level objects">
       <objects name="scenery">
@@ -166,20 +182,17 @@
         <object>objects\objWantBall</object>
         <object>objects\objWantPotato</object>
       </objects>
-      <object>objects\objFlag</object>
-      <object>objects\objStar</object>
-      <object>objects\objSwitchBlock</object>
-      <object>objects\objSwitch</object>
-      <object>objects\objSpawner</object>
-      <object>objects\objSpike</object>
-      <object>objects\objBounce</object>
-      <object>objects\objSquare</object>
-      <object>objects\objBall</object>
-      <object>objects\objWater</object>
       <objects name="specialPlatforms">
         <object>objects\objHoldingPlatform</object>
         <object>objects\objMovingPlatform</object>
       </objects>
+      <object>objects\objSwitchBlock</object>
+      <object>objects\objSwitch</object>
+      <object>objects\objSpawner</object>
+      <object>objects\objBounce</object>
+      <object>objects\objSquare</object>
+      <object>objects\objBall</object>
+      <object>objects\objWater</object>
       <object>objects\objCork</object>
       <object>objects\objRopeHolder</object>
       <object>objects\objSeesaw</object>
@@ -188,6 +201,7 @@
     </objects>
     <objects name="enemies">
       <object>objects\objTurnAround</object>
+      <object>objects\objSpike</object>
       <object>objects\objEvilBall</object>
       <object>objects\objEnemyJump</object>
     </objects>

@@ -102,7 +102,17 @@ ds_list_add(global.levels, array(L9, "09", "Shroudshroom Valley", 0, 1, 1));
 ds_list_add(global.levels, array(L10, "10", "Where The Forest Ends", 0, 1, 1));
 // desert
 ds_list_add(global.levels, array(L11, "11", "Hot Sands", 0, 2, 2));
-ds_list_add(global.levels, array(L12, "XX", "---", 0, 2, 2));
+/*ds_list_add(global.levels, array(L12, "XX", "Inside The Pyramid", 0, 2, 2));
+ds_list_add(global.levels, array(L12, "XX", "Oasis", 0, 2, 2));
+ds_list_add(global.levels, array(L12, "XX", "Wastelands", 0, 2, 2));
+ds_list_add(global.levels, array(L12, "XX", "Temple Ruins", 0, 2, 2));*/
+// Candy World
+// Gloomtown
+// Toy Land
+// Mount Icewind
+// ? 
+// ?
+// The Castle
 
 
 
