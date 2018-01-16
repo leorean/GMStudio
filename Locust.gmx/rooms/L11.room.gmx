@@ -498,6 +498,17 @@
     <instance objName="objQuicksand" x="3424" y="448" name="inst_69121E4D" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="objBlock6" x="3680" y="480" name="inst_C4F842F0" locked="0" code="" scaleX="1" scaleY="0.5" colour="4294967295" rotation="0"/>
     <instance objName="objBlock6" x="3744" y="480" name="inst_3138F9CD" locked="0" code="" scaleX="0.5" scaleY="0.5" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemyMummy" x="256" y="672" name="inst_A1A448C1" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock6" x="192" y="448" name="inst_3EE0B5AC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock6" x="256" y="448" name="inst_7F3A6947" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock6" x="320" y="448" name="inst_814C8749" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock6" x="448" y="416" name="inst_283036E2" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock6" x="128" y="416" name="inst_862E5DEE" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemyMummy" x="256" y="448" name="inst_601D334C" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objBlock6" x="384" y="448" name="inst_665FEEBC" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="30"/>
+    <instance objName="objBlock6" x="512" y="384" name="inst_FE55647A" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemyMummy" x="384" y="672" name="inst_9644C304" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="objEnemyMummy" x="480" y="416" name="inst_D3895AD6" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles>
     <tile bgName="tiles" x="192" y="576" w="32" h="64" xo="704" yo="0" id="10004071" name="inst_AF946BE2" depth="1000000" locked="0" colour="4294967295" scaleX="1" scaleY="1"/>

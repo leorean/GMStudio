@@ -89,6 +89,7 @@
       <sprite>sprites\sprEvilBall</sprite>
       <sprite>sprites\sprSpike</sprite>
       <sprite>sprites\sprEnemyJump</sprite>
+      <sprite>sprites\sprEnemyMummy</sprite>
     </sprites>
   </sprites>
   <backgrounds name="background">
@@ -204,6 +205,7 @@
       <object>objects\objSpike</object>
       <object>objects\objEvilBall</object>
       <object>objects\objEnemyJump</object>
+      <object>objects\objEnemyMummy</object>
     </objects>
   </objects>
   <rooms name="rooms">
@@ -227,7 +229,7 @@
       <room>rooms\L12</room>
     </rooms>
   </rooms>
-  <constants number="16">
+  <constants number="17">
     <constant name="INFINITE">900000000000</constant>
     <constant name="SEC">60</constant>
     <constant name="TILE">16</constant>
@@ -239,6 +241,7 @@
     <constant name="JUMP">1</constant>
     <constant name="WON">2</constant>
     <constant name="DEAD">3</constant>
+    <constant name="WALK">4</constant>
     <constant name="G_PLAY">0</constant>
     <constant name="G_PAUSE">1</constant>
     <constant name="G_WON">2</constant>
