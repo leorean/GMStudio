@@ -112,13 +112,17 @@ kRight = kRight &amp;&amp; !kLeft;
 
 if (kLeft) {
     //turn around
-    if (xVel &gt; 0) xVel -= .15;
+    if (xVel &gt; 0) {
+        xVel -= .15;
+    }
     else
         xVel = max(xVel - .25, -2);
 }
 else if (kRight) {
     // turn around
-    if (xVel &lt; 0) xVel += .15;
+    if (xVel &lt; 0) {
+        xVel += .15;
+    }
     else
         xVel = min(xVel + .25, 2);
 }
@@ -135,19 +139,25 @@ if (onGround) {
 if (jumped == 0 &amp;&amp; kJumpPressed) {
     jumped = 1;
     jumpVel = 0;
-    yVel = -3;
 }
 if (jumped == 1) {
 
-    yVel = min(yVel, -3);
+    yVel = min(yVel, -3.2);
     
     if (kJump) {
-        jumpVel = min(jumpVel + .01, .15);
+        jumpVel = min(jumpVel + .2, 2.4);
     }
     
-    if (jumpVel &gt;= .15 || kJumpReleased) {
+    if (jumpVel &gt;= 2.4 || kJumpReleased) {
         jumped = 2;
     }
+}
+
+if (collision_line(bbox_left, bbox_top + yVel, bbox_right, bbox_top + yVel, objSolid, false, true))
+{
+    move_contact_solid(90, TILE);
+    yVel = max(yVel, 0);
+    jumped = 2;
 }
 
 // actual movement:

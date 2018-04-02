@@ -1,0 +1,43 @@
+Terra
+~~~~~
+
+2D Metroidvania Platformer:
+	Collect skills, get to new areas
+
+Focus on pixel art and design
+PC ONLY (+XBOX Controller)
+
+Story:
+Player is a robot, sent to a mission to explore the planet and find its core.
+Every planet has a core - player has to collect the core and only then will he be sent home.
+Collecting the core will destroy the planet.
+
+Design/Style:
+
+Pixel art, ASCII Text, 16x16 Tiles, 640 x 384 res
+
+Player States:
+	Idle
+	Walk
+	Jump
+	Turn-Around
+	Wall
+	Hurt
+	Dead
+	Acquire
+
+Powers:
+	Walk
+	Jump
+	Dash
+	Walljump
+	Shoot
+	Hook
+	Jetpack
+
+Objects:
+	Blocks
+	Platforms
+	Spikes
+	Switch & Door
+	Collectables - just for fun? Ammo?
