@@ -3,7 +3,7 @@
   <spriteName>mskPlayer</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-5</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -41,14 +41,20 @@ kDown = 0;
 kJump = 0;
 kJumpPressed = 0;
 kJumpReleased = 0;
+kAttack = 0;
+kAttackPressed = 0;
+kAttackReleased = 0;
 
 jumped = 0;
 jumpVel = 0;
 jumpVelMax = 2;
 
 // weapon
+wx = x;
+wy = y;
 weaponAngle = 0;
 weapon = 0;
+weaponCooldown = 0;
 
 // animations
 state = IDLE;
@@ -86,10 +92,12 @@ kLeft = keyboard_check(vk_left);
 kRight = keyboard_check(vk_right);
 kUp = keyboard_check(vk_up);
 kDown = keyboard_check(vk_down);
-kAttack = keyboard_check(ord('S'));
 kJump = keyboard_check(ord('A'));
 kJumpPressed = keyboard_check_pressed(ord('A'));
 kJumpReleased = keyboard_check_released(ord('A'));
+kAttack = keyboard_check(ord('S'));
+kAttackPressed = keyboard_check_pressed(ord('S'));
+kAttackReleased = keyboard_check_released(ord('S'));
 
 var d = 1*kRight + 10*kUp + 100*kLeft + 1000*kDown;
 switch(d) {
@@ -104,12 +112,8 @@ switch(d) {
     default: weaponAngle = 0 + 180*(dir==LEFT); break;
 }
 
-/*if (dir == LEFT &amp;&amp; weaponAngle == 0) weaponAngle = 180;
-if (dir == RIGHT &amp;&amp; weaponAngle == 180) weaponAngle = 0;*/
-
 // disable gamepad if it was enabled
-if (kUp || kDown || kLeft || kRight || kJump || kAttack)
-    gamepad = -1;
+if (kUp || kDown || kLeft || kRight || kJump || kAttack) gamepad = -1;
 
 // gamepad:
 
@@ -119,24 +123,32 @@ if (gamepad_is_supported() &amp;&amp; gamepad_get_device_count() &gt; 0 &amp;&am
     }
 }
 
-if (gamepad == -1) exit;
-
-var T = .55;
-
-kUp = gamepad_axis_value(0, gp_axislv) &lt; -T;
-kDown = gamepad_axis_value(0, gp_axislv) &gt; T;
-kLeft = gamepad_axis_value(0, gp_axislh) &lt; -T;
-kRight = gamepad_axis_value(0, gp_axislh) &gt; T;
-kJump = gamepad_button_check(0, gp_face1);
-kJumpPressed = gamepad_button_check_pressed(0, gp_face1);
-kJumpReleased = gamepad_button_check_released(0, gp_face1);
-kAttack = gamepad_button_check(0, gp_face3);
-
-weaponAngle = point_direction(0, 0, gamepad_axis_value(0, gp_axislh), gamepad_axis_value(0, gp_axislv));
-if (!kDown &amp;&amp; !kUp &amp;&amp; !kLeft &amp;&amp; !kRight) weaponAngle = 180*(dir==LEFT);
-
-
-
+if (gamepad &gt; -1) {
+    
+    var T = .55;
+    kUp = gamepad_axis_value(0, gp_axislv) &lt; -T;
+    kDown = gamepad_axis_value(0, gp_axislv) &gt; T;
+    kLeft = gamepad_axis_value(0, gp_axislh) &lt; -T;
+    kRight = gamepad_axis_value(0, gp_axislh) &gt; T;
+    kJump = gamepad_button_check(0, gp_face1);
+    kJumpPressed = gamepad_button_check_pressed(0, gp_face1);
+    kJumpReleased = gamepad_button_check_released(0, gp_face1);
+    kAttack = gamepad_button_check(0, gp_face3);
+    kAttackPressed = gamepad_button_check_pressed(0, gp_face3);
+    kAttackReleased = gamepad_button_check_released(0, gp_face3);
+    
+    weaponAngle = point_direction(0, 0, gamepad_axis_value(0, gp_axislh), gamepad_axis_value(0, gp_axislv));
+    if (!kDown &amp;&amp; !kUp &amp;&amp; !kLeft &amp;&amp; !kRight) weaponAngle = 180*(dir==LEFT);
+}
+/*
+if (dir == LEFT) {
+    if (weaponAngle &lt; 90 || weaponAngle &gt; 270) weaponAngle = 90;
+    if (weaponAngle &gt; 270) weaponAngle = 270;
+}
+if (dir == RIGHT) {
+    if (weaponAngle &gt; 90 &amp;&amp; weaponAngle &lt; 270) weaponAngle = 90;
+    if (weaponAngle &lt; 270) weaponAngle = 270;
+}*/
 </string>
           </argument>
         </arguments>
@@ -165,6 +177,20 @@ onGround = yVel &gt;= 0 &amp;&amp;
     collision_rectangle(bbox_left, bbox_bottom, bbox_right, 
     bbox_bottom + max(yVel, 1), objSolid, false, true);
 
+// pew pew
+var wl = 7; // "length" of weapon
+if (kAttack &amp;&amp; !weaponCooldown)
+{
+    weaponCooldown = 15;
+    var pew = instance_create(
+        wx + lengthdir_x(wl, weaponAngle),
+        wy + lengthdir_y(wl, weaponAngle),
+        objWeaponProjectile);
+    pew.angle = weaponAngle;
+}
+
+weaponCooldown = max(weaponCooldown - 1, 0);
+    
 // input -&gt; action
 
 kLeft = kLeft &amp;&amp; !kRight;
@@ -321,7 +347,9 @@ frame = floor(fCur);
 draw_sprite_ext(sprPlayer, frame, x, y, sign(dir), 1, 0, c_white, 1);
 
 // draw weapon
-draw_sprite_ext(sprWeapon, weapon, x + sign(dir) * 7, y + 8, sign(dir), 1, weaponAngle + 180*(dir==LEFT), c_white, 1);
+wx = x + sign(dir) * 7;
+wy = y + 8;
+draw_sprite_ext(sprWeapon, weapon, wx, wy, sign(dir), 1, weaponAngle + 180*(dir==LEFT), c_white, 1);
 
 </string>
           </argument>

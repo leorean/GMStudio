@@ -29,11 +29,13 @@
       <sprite>sprites\mskControl</sprite>
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskBlock</sprite>
+      <sprite>sprites\mskCrystal</sprite>
     </sprites>
     <sprites name="Player">
       <sprite>sprites\sprPlayer</sprite>
       <sprite>sprites\sprWeapon</sprite>
     </sprites>
+    <sprite>sprites\mskWeaponProjectile</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -45,6 +47,8 @@
       <object>objects\objBlock</object>
     </objects>
     <object>objects\objPlayer</object>
+    <object>objects\objWeaponProjectile</object>
+    <object>objects\objCrystal</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
