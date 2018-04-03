@@ -25,9 +25,12 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\mskControl</sprite>
-    <sprite>sprites\mskBlock</sprite>
-    <sprite>sprites\mskPlayer</sprite>
+    <sprites name="Masks">
+      <sprite>sprites\mskControl</sprite>
+      <sprite>sprites\mskPlayer</sprite>
+      <sprite>sprites\mskBlock</sprite>
+    </sprites>
+    <sprite>sprites\sprPlayer</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -43,7 +46,7 @@
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="7">
+  <constants number="14">
     <constant name="HEIGHT">384</constant>
     <constant name="WIDTH">640</constant>
     <constant name="TILE">16</constant>
@@ -51,6 +54,13 @@
     <constant name="DOWN">2</constant>
     <constant name="LEFT">-1</constant>
     <constant name="RIGHT">1</constant>
+    <constant name="IDLE">0</constant>
+    <constant name="WALK">1</constant>
+    <constant name="TURN">2</constant>
+    <constant name="JUMP">3</constant>
+    <constant name="HURT">4</constant>
+    <constant name="DEAD">5</constant>
+    <constant name="ACQUIRE">6</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

@@ -44,6 +44,14 @@ jumped = 0;
 jumpVel = 0;
 jumpVelMax = 2;
 
+// animations
+state = IDLE;
+fCur = 0;
+fMin = 0;
+fMax = 0;
+fSpeed = 0;
+frame = 0;
+
 </string>
           </argument>
         </arguments>
@@ -114,19 +122,28 @@ if (kLeft) {
     //turn around
     if (xVel &gt; 0) {
         xVel -= .15;
+        if (onGround) state = TURN;
     }
-    else
+    else {
+        if (onGround) state = WALK;
+        dir = LEFT;
         xVel = max(xVel - .25, -2);
+    }
 }
 else if (kRight) {
     // turn around
     if (xVel &lt; 0) {
         xVel += .15;
+        if (onGround) state = TURN;
     }
-    else
+    else {
+        if (onGround) state = WALK;
+        dir = RIGHT;
         xVel = min(xVel + .25, 2);
+    }
 }
 else {
+    if (onGround) state = IDLE;
     xVel  *= .8;
 }
 
@@ -135,10 +152,14 @@ else {
 if (onGround) {
     jumped = 0;
 }
+else {
+    state = JUMP;
+}
 
 if (jumped == 0 &amp;&amp; kJumpPressed) {
     jumped = 1;
     jumpVel = 0;
+    state = JUMP;
 }
 if (jumped == 1) {
 
@@ -153,6 +174,7 @@ if (jumped == 1) {
     }
 }
 
+// hit head
 if (collision_line(bbox_left, bbox_top + yVel, bbox_right, bbox_top + yVel, objSolid, false, true))
 {
     move_contact_solid(90, TILE);
@@ -186,6 +208,64 @@ if (!place_meeting(x, y + yVel, objSolid)) {
     }
 }*/
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>switch(state) {
+    case IDLE:
+        fMin = 0;
+        fMax = 3;
+        fSpeed = .12;
+    break;
+    case WALK:
+        fMin = 4;
+        fMax = 7;
+        fSpeed = .2;
+    break;
+    case TURN:
+        fMin = 8;
+        fMax = 8;
+        fSpeed = 0;
+    break;
+    case JUMP:
+        fMin = 9;
+        fMax = 9;
+        fSpeed = 0;
+    break;
+    case HURT:
+        fMin = 10;
+        fMax = 10;
+        fSpeed = 0;
+    break;
+    case DEAD:
+        fMin = 11;
+        fMax = 11;
+        fSpeed = 0;
+    break;
+}
+fCur = max(fMin, (fCur + fSpeed) % (fMax + 1));
+frame = floor(fCur);
+
+draw_sprite_ext(sprPlayer, frame, x, y, sign(dir), 1, 0, c_white, 1);
 </string>
           </argument>
         </arguments>
