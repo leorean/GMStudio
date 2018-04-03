@@ -162,6 +162,9 @@ if (collision_line(bbox_left, bbox_top + yVel, bbox_right, bbox_top + yVel, objS
 
 // actual movement:
 
+xVel = sign(xVel) * min(abs(xVel), 6);
+yVel = sign(yVel) * min(abs(yVel), 6);
+
 yVel += yGrav;
 if (!place_meeting(x + xVel, y, objSolid)) {
     x += xVel;
@@ -171,7 +174,7 @@ if (!place_meeting(x + xVel, y, objSolid)) {
 if (!place_meeting(x, y + yVel, objSolid)) {
     y += yVel;
 } else {
-    move_contact_solid(270, abs(yVel));
+    move_contact_solid(270, TILE);
     yVel = 0;
 }
 /*for (var i = 0; i &lt; ceil(yVel); i++) {
