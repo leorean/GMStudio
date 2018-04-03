@@ -30,7 +30,10 @@
       <sprite>sprites\mskPlayer</sprite>
       <sprite>sprites\mskBlock</sprite>
     </sprites>
-    <sprite>sprites\sprPlayer</sprite>
+    <sprites name="Player">
+      <sprite>sprites\sprPlayer</sprite>
+      <sprite>sprites\sprWeapon</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>

@@ -19,11 +19,11 @@ Pixel art, ASCII Text, 16x16 Tiles, 640 x 384 res
 Player States:
 	Idle *
 	Walk *
-	Jump
-	Turn-Around
+	Jump *
+	Turn-Around *
 	Wall
-	Hurt
-	Dead
+	Hurt *
+	Dead *
 	Acquire
 
 Powers:
