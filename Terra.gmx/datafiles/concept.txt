@@ -41,3 +41,31 @@ Objects:
 	Spikes
 	Switch & Door
 	Collectables - just for fun? Ammo?
+
+----------------------------------------------------------
+
+New Concept:
+
+Waves -> Enemies try to destroy the crystal
+Player must defeat Enemies in order to defeat spawners -> All enemies dead -> Level won
+LATER!! Enemies drop coins -> Shop
+
+Player States:
+	Idle *
+	Walk *
+	Jump *
+	Turn-Around *
+	Hurt *
+	Dead *
+	Acquire ?
+
+Enemies:
+	Types:
+		GROUND Walk & Jump -> Speed & Jump height varies
+		FLY Fly -> Sine, Circle, Straight
+		HUNT Hunt (Through Walls) -> Speed & Approximation varies
+		
+Enemy States:
+	Move (Enemies don't idle!)
+	Hurt
+	Dead

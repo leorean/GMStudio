@@ -36,24 +36,40 @@
       <sprite>sprites\sprWeapon</sprite>
     </sprites>
     <sprite>sprites\mskWeaponProjectile</sprite>
+    <sprite>sprites\mskSpawn</sprite>
+    <sprite>sprites\mskEnemyGround</sprite>
+    <sprite>sprites\mskHook</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\in.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\objControl</object>
     <objects name="Hierarchy">
       <object>objects\objAny</object>
       <object>objects\objSolid</object>
       <object>objects\objBlock</object>
+      <object>objects\objEnemy</object>
     </objects>
-    <object>objects\objPlayer</object>
     <object>objects\objWeaponProjectile</object>
-    <object>objects\objCrystal</object>
+    <objects name="Level">
+      <object>objects\objCrystal</object>
+      <object>objects\objSpawn</object>
+      <object>objects\objPlayer</object>
+      <object>objects\objHook</object>
+    </objects>
+    <objects name="Enemies">
+      <object>objects\objEnemyGround</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\GAME</room>
   </rooms>
-  <constants number="14">
+  <constants number="17">
+    <constant name="SEC">60</constant>
+    <constant name="INF">90000000000</constant>
     <constant name="HEIGHT">384</constant>
     <constant name="WIDTH">640</constant>
     <constant name="TILE">16</constant>
@@ -68,6 +84,7 @@
     <constant name="HURT">4</constant>
     <constant name="DEAD">5</constant>
     <constant name="ACQUIRE">6</constant>
+    <constant name="MOVE">7</constant>
   </constants>
   <help>
     <rtf>help.rtf</rtf>

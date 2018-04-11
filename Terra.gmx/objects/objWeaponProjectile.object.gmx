@@ -69,6 +69,21 @@ if (!place_meeting(x, y + yVel, objSolid))
 else
     instance_destroy();
 
+instance_deactivate_object(objEnemy);
+instance_activate_region(x - TILE, y - TILE, 2*TILE, 2*TILE, true);
+for (var i = 0; i &lt; instance_number(objEnemy); i++) {
+    var e = instance_find(objEnemy, i);
+    if (place_meeting(x + xVel, y + yVel, e)) {
+        if (!e.hurt &amp;&amp; e.hp &gt; 0) {
+            e.hp = max(e.hp - dmg, 0);
+            e.hurt = 10;
+            e.xVel = -sign(x - e.x) * .5;
+            e.yVel = -2;
+            instance_destroy(); // TODO - pierce
+        }
+    }
+}
+instance_activate_object(objEnemy);
 </string>
           </argument>
         </arguments>

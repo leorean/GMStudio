@@ -56,6 +56,9 @@ weaponAngle = 0;
 weapon = 0;
 weaponCooldown = 0;
 
+hook = noone;
+hooked = false;
+
 // animations
 state = IDLE;
 fCur = 0;
@@ -112,6 +115,10 @@ switch(d) {
     default: weaponAngle = 0 + 180*(dir==LEFT); break;
 }
 
+if (state == TURN &amp;&amp; (kLeft || kRight)) {
+    weaponAngle = -sign(xVel &lt; 0)*180;
+}
+
 // disable gamepad if it was enabled
 if (kUp || kDown || kLeft || kRight || kJump || kAttack) gamepad = -1;
 
@@ -125,7 +132,7 @@ if (gamepad_is_supported() &amp;&amp; gamepad_get_device_count() &gt; 0 &amp;&am
 
 if (gamepad &gt; -1) {
     
-    var T = .55;
+    var T = .75;
     kUp = gamepad_axis_value(0, gp_axislv) &lt; -T;
     kDown = gamepad_axis_value(0, gp_axislv) &gt; T;
     kLeft = gamepad_axis_value(0, gp_axislh) &lt; -T;
@@ -177,16 +184,37 @@ onGround = yVel &gt;= 0 &amp;&amp;
     collision_rectangle(bbox_left, bbox_bottom, bbox_right, 
     bbox_bottom + max(yVel, 1), objSolid, false, true);
 
-// pew pew
+// hook
+
+if (!instance_exists(hook)) {
+    hooked = false;
+    hook = noone;
+}
+
 var wl = 7; // "length" of weapon
-if (kAttack &amp;&amp; !weaponCooldown)
+if (kAttackPressed)
 {
-    weaponCooldown = 15;
+/*  weaponCooldown = 15;
     var pew = instance_create(
         wx + lengthdir_x(wl, weaponAngle),
         wy + lengthdir_y(wl, weaponAngle),
         objWeaponProjectile);
     pew.angle = weaponAngle;
+    pew.dmg = 1;*/
+    
+    if (!instance_exists(hook)) {
+        hook = instance_create(
+        wx + lengthdir_x(wl, weaponAngle),
+        wy + lengthdir_y(wl, weaponAngle),
+        objHook);
+        hook.angle = weaponAngle;
+    }
+}
+
+if (!kAttack) {
+    if (hook) {
+        hook.contract = true;
+    }
 }
 
 weaponCooldown = max(weaponCooldown - 1, 0);
@@ -196,33 +224,38 @@ weaponCooldown = max(weaponCooldown - 1, 0);
 kLeft = kLeft &amp;&amp; !kRight;
 kRight = kRight &amp;&amp; !kLeft;
 
-if (kLeft) {
-    //turn around
-    if (xVel &gt; 0) {
-        xVel -= .15;
-        if (onGround) state = TURN;
+if (!hooked) {
+    if (kLeft) {
+        //turn around
+        if (xVel &gt; 0) {
+            xVel -= .15;
+            if (onGround) state = TURN;
+        }
+        else {
+            if (onGround) state = WALK;
+            dir = LEFT;
+            xVel = max(xVel - .25, -2);
+        }
+    }
+    else if (kRight) {
+        // turn around
+        if (xVel &lt; 0) {
+            xVel += .15;
+            if (onGround) state = TURN;
+        }
+        else {
+            if (onGround) state = WALK;
+            dir = RIGHT;
+            xVel = min(xVel + .25, 2);
+        }
     }
     else {
-        if (onGround) state = WALK;
-        dir = LEFT;
-        xVel = max(xVel - .25, -2);
+        if (onGround) state = IDLE;
+        xVel  *= .8;
     }
-}
-else if (kRight) {
-    // turn around
-    if (xVel &lt; 0) {
-        xVel += .15;
-        if (onGround) state = TURN;
-    }
-    else {
-        if (onGround) state = WALK;
-        dir = RIGHT;
-        xVel = min(xVel + .25, 2);
-    }
-}
-else {
-    if (onGround) state = IDLE;
-    xVel  *= .8;
+} else {
+    if (kLeft) dir = LEFT;
+    if (kRight) dir = RIGHT;
 }
 
 // jumping
@@ -234,7 +267,7 @@ else {
     state = JUMP;
 }
 
-if (jumped == 0 &amp;&amp; kJumpPressed) {
+if (jumped == 0 &amp;&amp; kJumpPressed &amp;&amp; !hooked) {
     jumped = 1;
     jumpVel = 0;
     state = JUMP;
@@ -255,18 +288,26 @@ if (jumped == 1) {
 // hit head
 if (collision_line(bbox_left, bbox_top + yVel, bbox_right, bbox_top + yVel, objSolid, false, true))
 {
-    move_contact_solid(90, TILE);
+    //move_contact_solid(90, TILE);
     yVel = max(yVel, 0);
     jumped = 2;
 }
 
 // actual movement:
+if (!hooked) {
+    yVel += yGrav;
+} else {
+
+    var hookAngle = point_direction(x, y, hook.x, hook.y);
+
+    xVel += (hook.x - x) / 250;
+    yVel += (hook.y - y) / 250;
+}
 
 xVel = sign(xVel) * min(abs(xVel), 6);
 yVel = sign(yVel) * min(abs(yVel), 6);
-
-yVel += yGrav;
-if (!place_meeting(x + xVel, y, objSolid)) {
+    
+if (!place_meeting(x + xVel, y, objSolid) &amp;&amp; in(x + xVel, 0, room_width)) {
     x += xVel;
 } else {
     xVel = 0;
@@ -274,17 +315,10 @@ if (!place_meeting(x + xVel, y, objSolid)) {
 if (!place_meeting(x, y + yVel, objSolid)) {
     y += yVel;
 } else {
-    move_contact_solid(270, TILE);
+    if(yVel &gt; 0)
+        move_contact_solid(270, TILE);
     yVel = 0;
 }
-/*for (var i = 0; i &lt; ceil(yVel); i++) {
-    if (!place_meeting(x, y + sign(yVel), objSolid)) {
-        y += (yVel / ceil(yVel));
-    } else {
-        yVel = 0;
-        break;
-    }
-}*/
 
 </string>
           </argument>
