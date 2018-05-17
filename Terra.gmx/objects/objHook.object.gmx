@@ -32,8 +32,8 @@ contract = false;
 
 xo = x;
 yo = y;
-hookDistance = 6*TILE;
-spd = 6;
+hookDistance = 8*TILE;
+spd = 5.5;
 </string>
           </argument>
         </arguments>

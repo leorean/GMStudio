@@ -300,8 +300,8 @@ if (!hooked) {
 
     var hookAngle = point_direction(x, y, hook.x, hook.y);
 
-    xVel += (hook.x - x) / 250;
-    yVel += (hook.y - y) / 250;
+    xVel =(hook.x - x) / 8;//+= (hook.x - x) / 250;
+    yVel =(hook.y - y) / 8;//+= (hook.y - y) / 250;
 }
 
 xVel = sign(xVel) * min(abs(xVel), 6);
