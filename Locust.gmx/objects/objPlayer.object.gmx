@@ -189,7 +189,7 @@ if (!onGround)
             <string>phy_rotation = phy_rotation % 360;
 
 instance_deactivate_object(objEnemy);
-instance_activate_region(bbox_left - 16, bbox_top - 16, abs(bbox_left-bbox_right) + 16, abs(bbox_top-bbox_bottom) + 16, true);
+instance_activate_region(bbox_left - 32, bbox_top - 32, abs(bbox_left-bbox_right) + 32, abs(bbox_top-bbox_bottom) + 32, true);
 for(var i = 0; i &lt; instance_number(objEnemy); i++)
 {
     var o = instance_find(objEnemy, i);
@@ -205,7 +205,7 @@ for(var i = 0; i &lt; instance_number(objEnemy); i++)
             o.state = DEAD;
         }
     }
-    if (object_is_ancestor(o.object_index, objEnemy))
+    else if (object_is_ancestor(o.object_index, objEnemy))
     {
         // dieing from all enemies
         if (physics_test_overlap(phy_position_x, phy_position_y, phy_rotation, o))
@@ -251,7 +251,7 @@ if (state != DEAD &amp;&amp; state != WON)
 if (physics_test_overlap(phy_position_x, phy_position_y - 4, phy_rotation, objQuicksand))
 {
     phy_linear_velocity_y = min(phy_linear_velocity_y, 35);
-    phy_linear_velocity_y = max(phy_linear_velocity_y, -250);
+    phy_linear_velocity_y = max(phy_linear_velocity_y, -350);
         
     if (phy_linear_velocity_y == 35)
     {

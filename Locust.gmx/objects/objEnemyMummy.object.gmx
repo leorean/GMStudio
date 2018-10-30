@@ -63,6 +63,11 @@ if (state == WALK)
     phy_rotation = 0;
     fCur = (fCur + .15)  % 4;
     phy_speed_x = sign(dir) * spd;
+    
+    if (shouldTurnAround) {
+        dir = -dir;
+        shouldTurnAround = false;
+    }
 }
 if (state == DEAD &amp;&amp; deathTimer &gt;= 1*SEC)
 {
@@ -194,7 +199,7 @@ frame = floor(fCur);
 draw_sprite_ext(sprite_index, frame, x, y, image_xscale, image_yscale * dir, angle, c_white, 1);
 
 
-draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, 1);
+//draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, 1);
 </string>
           </argument>
         </arguments>
@@ -203,7 +208,7 @@ draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, 1);
   </events>
   <PhysicsObject>-1</PhysicsObject>
   <PhysicsObjectSensor>0</PhysicsObjectSensor>
-  <PhysicsObjectShape>1</PhysicsObjectShape>
+  <PhysicsObjectShape>2</PhysicsObjectShape>
   <PhysicsObjectDensity>0.5</PhysicsObjectDensity>
   <PhysicsObjectRestitution>0.100000001490116</PhysicsObjectRestitution>
   <PhysicsObjectGroup>0</PhysicsObjectGroup>
@@ -215,7 +220,9 @@ draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, 1);
   <PhysicsShapePoints>
     <point>16,10</point>
     <point>48,10</point>
-    <point>48,64</point>
-    <point>16,64</point>
+    <point>48,48</point>
+    <point>44,60</point>
+    <point>20,60</point>
+    <point>16,48</point>
   </PhysicsShapePoints>
 </object>
